@@ -2,121 +2,36 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>Le Petit Prince des Jardiniers - Formulaire</title>
+    <title>Semer une annonce</title>
     <style>
-        /* Ambiance visuelle sans liens externes */
-        body {
-            background-color: #FFF8E1; /* Fond crème doux */
-            color: #000080; /* Bleu marine */
-            font-family: "Comic Sans MS", cursive, sans-serif;
-            text-align: center;
-            margin: 0;
-            padding: 20px;
-        }
-        
-        h1 {
-            color: #FF0000; /* Rouge vif */
-            text-decoration: underline;
-            font-size: 24px;
-        }
-
-        .cadre-formulaire {
-            background-color: #FFFFFF; /* Fond blanc pour le formulaire */
-            border: 4px double #000080; /* Double bordure bleue marine */
-            display: inline-block;
-            text-align: left;
-            padding: 25px;
-            max-width: 500px;
-            width: 95%;
-            margin-top: 10px;
-        }
-
-        label {
-            font-weight: bold;
-            display: block;
-            margin-top: 15px;
-            font-size: 14px;
-        }
-
-        input, textarea, select {
-            width: 100%;
-            padding: 10px;
-            border: 1px solid #000080;
-            box-sizing: border-box;
-            font-family: Arial, sans-serif;
-            background-color: #FAFAFA;
-        }
-
-        button {
-            background-color: #FF0000;
-            color: #FFFFFF;
-            font-weight: bold;
-            border: 2px solid #000080;
-            padding: 15px;
-            width: 100%;
-            margin-top: 25px;
-            cursor: pointer;
-            font-size: 16px;
-        }
-
-        button:hover {
-            background-color: #D30000;
-        }
-
-        .note-discrete {
-            font-size: 11px;
-            margin-top: 20px;
-            text-align: center;
-            font-style: italic;
-            color: #555;
-            line-height: 1.4;
-        }
-
-        footer {
-            margin-top: 30px;
-            font-size: 12px;
-        }
+        body { background-color: #FFF8E1; color: #000080; font-family: "Comic Sans MS", cursive, sans-serif; text-align: center; padding: 20px; }
+        form { background-color: white; border: 3px double #000080; padding: 25px; text-align: left; border-radius: 15px; display: inline-block; max-width: 500px; width: 90%; }
+        h1 { color: #FF0000; text-decoration: underline; }
+        label { font-weight: bold; display: block; margin-top: 15px; }
+        input, textarea, select { width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 8px; box-sizing: border-box; }
+        button { background-color: #FF0000; color: white; padding: 15px; border: 2px solid #000080; cursor: pointer; font-weight: bold; width: 100%; margin-top: 25px; font-size: 18px; }
+        .note { font-size: 11px; color: #555; margin-top: 20px; text-align: center; font-style: italic; }
     </style>
 </head>
 <body>
-
-    <br>
     <h1>Semer une proposition</h1>
-
-    <div class="cadre-formulaire">
-        <form action="https://script.google.com/macros/s/AKfycbxuILkBo4L8JIK6ks1XsLpWMxvcviXSyMekJZI_sz-L_hRJygEDAoSVSzZ526DvsnTN/exec" method="POST">
-            
-            <label>Ton Identifiant (Pseudo) :</label>
-            <input type="text" name="identifiant" required placeholder="Ton nom">
-
-            <label>Pays / Ville :</label>
-            <input type="text" name="ville" required placeholder="Ex: France, Lyon">
-
-            <label>Description (Graines, outils, aide...) :</label>
-            <textarea name="description" rows="4" required></textarea>
-
-            <label>Moyen de contact ou lieu de rendez-vous :</label>
-            <textarea name="contact" rows="3" required>Email ou téléphone ou moyen de contact ou lieu de rendez-vous...</textarea>
-
-            <label>Durée de visibilité :</label>
-            <select name="duree">
-                <option value="30">30 jours</option>
-                <option value="90">90 jours</option>
-                <option value="365" selected>365 jours</option>
-            </select>
-
-            <button type="submit">SEMER DANS LE JARDIN</button>
-
-            <p class="note-discrete">
-                L'annonce s'efface automatiquement selon la durée choisie.<br>
-                Me contacter discrètement pour effacer l'annonce avant.
-            </p>
-        </form>
-    </div>
-    
-    <footer>
-        © 2000 | Le Petit Prince des Jardiniers
-    </footer>
-
+    <form action="https://script.google.com/macros/s/AKfycbxuILkBo4L8JIK6ks1XsLpWMxvcviXSyMekJZI_sz-L_hRJygEDAoSVSzZ526DvsnTN/exec" method="POST">
+        <label>Ton Identifiant (Pseudo) :</label>
+        <input type="text" name="identifiant" required>
+        <label>Pays / Ville :</label>
+        <input type="text" name="ville" required placeholder="Ex: France, Lyon">
+        <label>Description (Graines, outils, aide...) :</label>
+        <textarea name="description" rows="4" required></textarea>
+        <label>Moyen de contact ou lieu de rendez-vous :</label>
+        <textarea name="contact" rows="3" required>Email ou téléphone ou moyen de contact ou lieu de rendez-vous...</textarea>
+        <label>Durée de l'annonce :</label>
+        <select name="duree">
+            <option value="30">30 jours</option>
+            <option value="90">90 jours</option>
+            <option value="365" selected>1 an</option>
+        </select>
+        <button type="submit">SEMER DANS LE JARDIN</button>
+        <p class="note">L'annonce s'effacera seule à la fin de la durée choisie.<br>Me contacter discrètement pour effacer l'annonce avant.</p>
+    </form>
 </body>
 </html>
