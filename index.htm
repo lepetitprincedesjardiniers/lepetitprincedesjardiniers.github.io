@@ -1,26 +1,76 @@
+Je comprends tout à fait ta confusion. C'est comme assembler un meuble : on a toutes les pièces, mais il faut maintenant les visser ensemble pour que tout tienne debout.
+
+Pour que ton site fonctionne, il faut imaginer que ta page index.html est le panneau de direction à l'entrée du jardin.
+
+1. Créer les liens sur ta page d'accueil (index.html)
+Pour que les gens puissent aller sur "Contact" ou sur le "Mur des annonces", tu dois mettre à jour ton fichier index.html sur GitHub avec ce code. Il contient les boutons (liens) vers toutes tes pages.
+
+HTML
 <!DOCTYPE html>
-<html>
+<html lang="fr">
 <head>
     <meta charset="UTF-8">
     <title>Le Petit Prince des Jardiniers</title>
     <style>
-        body { background-color: #FFF8E1; color: #000080; font-family: "Comic Sans MS", cursive, sans-serif; text-align: center; padding: 50px 20px; }
-        .cadre { border: 4px double #000080; background-color: #FFFFFF; display: inline-block; padding: 40px; max-width: 700px; }
-        h1 { color: #FF0000; text-decoration: underline; }
-        .lien-semis { display: inline-block; color: #FF0000; text-decoration: none; font-weight: bold; font-size: 22px; border: 2px solid #FF0000; padding: 15px 30px; margin-top: 20px; }
-        .footer { margin-top: 50px; font-size: 13px; }
+        body { background-color: #FFF8E1; color: #000080; font-family: "Comic Sans MS", cursive, sans-serif; text-align: center; padding: 50px; }
+        .menu { margin-top: 50px; display: flex; flex-direction: column; gap: 15px; align-items: center; }
+        .bouton { 
+            width: 280px; padding: 15px; font-size: 18px; font-weight: bold;
+            color: white; background-color: #FF0000; border: 2px solid #000080;
+            border-radius: 15px; text-decoration: none; 
+        }
+        .bouton:hover { background-color: #000080; }
     </style>
 </head>
 <body>
-    <div class="cadre">
-        <h1>Le Petit Prince des Jardiniers</h1>
-        <p><b>"S'il vous plaît... dessine-moi un jardin !"</b></p>
-        <p>Bienvenue dans cet espace de partage. Ici, nous cultivons la solidarité et le don.</p>
-        <a href="formulaire.htm" class="lien-semis">🌻 CLIQUE ICI POUR SEMER TON ANNONCE 🌻</a>
+    <h1>Le Petit Prince des Jardiniers</h1>
+    
+    <div class="menu">
+        <a href="formulaire.htm" class="bouton">🌻 SEMER UNE ANNONCE</a>
+        
+        <a href="jardin.html" class="bouton">👀 VOIR LE JARDIN</a>
+        
+        <a href="contact.html" class="bouton">📧 ME CONTACTER</a>
     </div>
-    <div class="footer">
-        <hr width="50%" color="#000080">
-        © 2000 | Franck José Baptiste Pinon
-    </div>
+</body>
+</html>
+2. Faire la page "Mur des annonces" (jardin.html)
+Sur GitHub, crée un nouveau fichier nommé jardin.html. C'est ici que les gens verront les messages stockés dans ton Google Sheets. Copie ce code dedans :
+
+HTML
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Le Mur des Annonces</title>
+    <style>
+        body { background-color: #FFF8E1; color: #000080; font-family: "Comic Sans MS", cursive, sans-serif; text-align: center; padding: 20px; }
+        .annonce { background: white; border: 2px solid #000080; border-radius: 10px; padding: 15px; margin: 10px auto; max-width: 500px; text-align: left; }
+        h1 { color: #FF0000; }
+        .bouton-retour { color: #FF0000; font-weight: bold; text-decoration: none; }
+    </style>
+</head>
+<body>
+    <a href="index.html" class="bouton-retour">⬅ Retour à l'accueil</a>
+    <h1>Le Mur des Annonces</h1>
+    <div id="listeAnnonces">Chargement des graines en cours...</div>
+
+    <script>
+        // On récupère les données de ton script Google
+        fetch("https://script.google.com/macros/s/AKfycbxuILkBo4L8JIK6ks1XsLpWMxvcviXSyMekJZI_sz-L_hRJygEDAoSVSzZ526DvsnTN/exec")
+        .then(res => res.json())
+        .then(data => {
+            let html = "";
+            data.reverse().forEach(annonce => {
+                html += `<div class="annonce">
+                    <strong>Prénom :</strong> ${annonce.identifiant}<br>
+                    <strong>Ville :</strong> ${annonce.ville}<br>
+                    <strong>Annonce :</strong> ${annonce.description}<br>
+                    <strong>Contact :</strong> ${annonce.contact}
+                </div>`;
+            });
+            document.getElementById("listeAnnonces").innerHTML = html;
+        });
+    </script>
 </body>
 </html>
