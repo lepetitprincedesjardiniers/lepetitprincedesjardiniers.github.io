@@ -1,82 +1,96 @@
 <!DOCTYPE html>
-<html>
+<html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <title>Le Petit Prince des Jardiniers - Accueil</title>
+    <title>Accueil - Le Petit Prince des Jardiniers</title>
     <style>
+        /* Style fidèle à l'univers du Petit Prince */
         body {
             background-color: #FFF8E1; /* Fond crème */
             color: #000080; /* Bleu marine */
             font-family: "Comic Sans MS", cursive, sans-serif;
             text-align: center;
             margin: 0;
-            padding: 50px 20px;
+            padding: 40px 20px;
         }
-        
-        .bienvenue {
-            border: 4px double #000080;
+
+        .cadre-accueil {
             background-color: #FFFFFF;
-            display: inline-block;
-            padding: 40px;
+            border: 5px double #000080;
             max-width: 700px;
+            margin: 0 auto;
+            padding: 40px;
             border-radius: 20px;
+            box-shadow: 10px 10px 0px rgba(0, 0, 128, 0.05);
         }
 
         h1 {
             color: #FF0000; /* Rouge */
             text-decoration: underline;
             font-size: 32px;
+            margin-top: 0;
         }
 
-        p {
+        .citation {
+            font-style: italic;
+            color: #555;
+            margin: 20px 0;
             font-size: 18px;
-            line-height: 1.6;
         }
 
-        .bouton-semis {
+        .presentation {
+            font-size: 19px;
+            line-height: 1.6;
+            margin-bottom: 30px;
+        }
+
+        /* Le bouton pour aller vers le formulaire */
+        .bouton-action {
             display: inline-block;
             background-color: #FF0000;
             color: #FFFFFF !important;
             padding: 20px 40px;
             text-decoration: none;
             font-weight: bold;
-            font-size: 22px;
+            font-size: 20px;
             border: 2px solid #000080;
-            margin-top: 30px;
             border-radius: 10px;
-            transition: transform 0.2s;
+            cursor: pointer;
         }
 
-        .bouton-semis:hover {
-            transform: scale(1.05);
+        .bouton-action:hover {
             background-color: #D30000;
+            transform: scale(1.02);
         }
 
-        .footer {
-            margin-top: 60px;
+        footer {
+            margin-top: 50px;
             font-size: 12px;
-            color: #666;
+            color: #000080;
         }
     </style>
 </head>
 <body>
 
-    <div class="bienvenue">
+    <div class="cadre-accueil">
         <h1>Le Petit Prince des Jardiniers</h1>
         
-        <p><i>"C'est le temps que tu as perdu pour ta rose qui fait ta rose si importante."</i></p>
+        <p class="citation">"S'il vous plaît... dessine-moi un jardin !"</p>
         
-        <p>Bienvenue dans notre jardin partagé. Ici, nous semons des propositions de partage, 
-        des graines d'entraide et des outils pour faire fleurir la solidarité.</p>
+        <div class="presentation">
+            Bienvenue dans ce jardin d'échange et de partage.<br>
+            Ici, chaque graine semée est une proposition généreuse : 
+            un don, un prêt d'outil ou un coup de main entre passionnés.
+        </div>
 
-        <a href="formulaire.html" class="bouton-semis">
+        <a href="formulaire.html" class="bouton-action">
             🌻 SEMER UNE PROPOSITION 🌻
         </a>
     </div>
 
-    <div class="footer">
-        © 2000 | Franck José Baptiste Pinon
-    </div>
+    <footer>
+        © 2000-2026 | Franck José Baptiste Pinon
+    </footer>
 
 </body>
 </html>
