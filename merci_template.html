@@ -1,43 +1,66 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <title>Contact - Le Petit Prince des Jardiniers</title>
+    <base target="_top">
+    <style>
+        /* Plus aucun lien vers free.fr ici */
+        body {
+            background-color: #FFF8E1; /* Une couleur crème douce (style vieux papier) */
+            color: #000080; /* Bleu marine comme vous aimez */
+            font-family: "Comic Sans MS", cursive, sans-serif;
+            text-align: center;
+            margin: 0;
+            padding: 20px;
+        }
+        .cadre-annonce {
+            background-color: #FFFFFF; /* Fond blanc pour le texte */
+            border: 3px double #000080;
+            width: 80%;
+            max-width: 600px;
+            margin: 30px auto;
+            padding: 20px;
+            box-shadow: 5px 5px 15px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #FF0000; /* Rouge vif pour le titre */
+            text-decoration: underline;
+        }
+        .bouton-retour {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 12px 24px;
+            background-color: #FF0000;
+            color: #FFFFFF !important;
+            text-decoration: none;
+            font-weight: bold;
+            border: 2px solid #000080;
+        }
+    </style>
 </head>
-<body bgcolor="#FFFFFF" background="http://thiaha.free.fr/improFranckcopyrith.bmp" text="#000080">
+<body>
 
-<center>
-    <br><br>
-    <font face="Comic Sans MS" size="6" color="#FF0000">
-        <u><b>Contactez le Jardinier</b></u>
-    </font>
+    <center>
+        <br>
+        <h1>Merci ! Ta proposition a bien été semée.</h1>
+        
+        <div class="cadre-annonce">
+            <p style="font-size: 1.2em;">
+                <b>Le récapitulatif de ta proposition de partage cadeau est OK.</b>
+            </p>
+            <p>
+                Ton annonce va maintenant fleurir dans le jardin et sera visible <br>
+                par tous les autres petits princes jardiniers.
+            </p>
+        </div>
 
-    <br><br>
+        <a href="https://lepetitprincedesjardiniers.github.io/" class="bouton-retour">
+            RETOUR AU JARDIN
+        </a>
 
-    <table border="2" cellpadding="20" cellspacing="0" width="70%" bordercolor="#000080" bgcolor="#F9F9F9">
-        <tr>
-            <td align="center">
-                <font face="Comic Sans MS" size="4">
-                    Une question, une idée ou un petit mot doux ?<br><br>
-                    <font size="5" color="#FF0000"><b>Franck José Baptiste Pinon</b></font><br><br>
-                    
-                    <a href="mailto:ton-email@exemple.com" style="color: #000080; font-weight: bold;">
-                        [ Cliquez ici pour m'envoyer un e-mail ]
-                    </a>
-                </font>
-            </td>
-        </tr>
-    </table>
-
-    <br><br>
-
-    <a href="index.html" style="font-family: Comic Sans MS; color: #FF0000; font-weight: bold; text-decoration: none;">
-        <<< Retour à l'accueil du Jardin >>>
-    </a>
-
-    <br><br><br>
-    <font face="Comic Sans MS" size="2">© 2000 | Le Petit Prince des Jardiniers</font>
-</center>
+        <br><br><br>
+        <font size="2">© 2000 | Le Petit Prince des Jardiniers - Franck José Baptiste Pinon</font>
+    </center>
 
 </body>
 </html>
+Pourquoi ce code est "propre" :
