@@ -1,65 +1,71 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html>
 <head>
     <meta charset="UTF-8">
     <title>Le Petit Prince des Jardiniers</title>
     <style>
         body {
-            background-color: #FFF8E1; /* Fond crème identique */
+            background-color: #FFF8E1; /* Le jaune crème de ton univers */
             color: #000080; /* Bleu marine */
             font-family: "Comic Sans MS", cursive, sans-serif;
             margin: 0;
             padding: 0;
-        }
-
-        /* Conteneur principal pour centrer comme sur Free */
-        .main-table {
-            width: 100%;
-            max-width: 800px;
-            margin: 0 auto;
             text-align: center;
         }
 
+        /* Cadre principal style "Ancienne Mise en Page" */
+        .page-container {
+            width: 90%;
+            max-width: 750px;
+            margin: 40px auto;
+            border: 4px double #000080; /* La double bordure marine */
+            background-color: #FFFFFF;
+            padding: 30px;
+        }
+
         h1 {
-            color: #FF0000; /* Rouge vif */
+            color: #FF0000; /* Le rouge vif pour le titre */
             text-decoration: underline;
             font-size: 28px;
-            margin-top: 30px;
+            margin-bottom: 30px;
         }
 
-        .cadre-central {
-            border: 4px double #000080; /* Double bordure bleue */
-            background-color: #FFFFFF;
-            padding: 25px;
-            margin: 20px;
-            display: inline-block;
-            width: 90%;
-        }
-
-        .paragraphe {
+        .citation {
+            font-style: italic;
             font-size: 18px;
-            line-height: 1.5;
-            margin: 15px 0;
+            margin-bottom: 25px;
         }
 
-        .bouton-lien {
-            color: #FF0000; /* Rouge */
+        .texte-presentation {
+            font-size: 18px;
+            line-height: 1.6;
+            margin-bottom: 35px;
+        }
+
+        /* Le lien qui ressemble à un bouton d'époque */
+        .lien-formulaire {
+            color: #FF0000;
             font-weight: bold;
             font-size: 22px;
             text-decoration: none;
-            display: inline-block;
-            margin: 20px 0;
-            padding: 10px 20px;
             border: 2px solid #FF0000;
+            padding: 15px 25px;
+            display: inline-block;
         }
 
-        .bouton-lien:hover {
+        .lien-formulaire:hover {
             background-color: #FF0000;
             color: #FFFFFF;
         }
 
-        footer {
-            margin-top: 40px;
+        hr {
+            width: 60%;
+            border: 0;
+            border-top: 1px solid #000080;
+            margin: 40px auto 20px auto;
+        }
+
+        .signature {
             font-size: 12px;
             padding-bottom: 20px;
         }
@@ -67,35 +73,30 @@
 </head>
 <body>
 
-    <div class="main-table">
-        <br>
+    <div class="page-container">
         <h1>Le Petit Prince des Jardiniers</h1>
 
-        <div class="cadre-central">
-            <p class="paragraphe">
-                <b>"S'il vous plaît... dessine-moi un jardin !"</b>
-            </p>
-            
-            <p class="paragraphe">
-                Bienvenue dans cet espace de partage.<br>
-                Ici, nous cultivons la solidarité et le don.
-            </p>
-
-            <p class="paragraphe">
-                Chaque annonce est une graine que vous semez<br>
-                pour aider un autre jardinier.
-            </p>
-
-            <a href="formulaire.htm" class="bouton-lien">
-                🌻 CLIQUE ICI POUR SEMER TON ANNONCE 🌻
-            </a>
+        <div class="citation">
+            "S'il vous plaît... dessine-moi un jardin !"
         </div>
 
-        <footer>
-            <hr width="50%" color="#000080">
+        <div class="texte-presentation">
+            Bienvenue dans cet espace de partage.<br>
+            Ici, nous cultivons la solidarité et le don.<br><br>
+            Chaque annonce est une graine que vous semez<br>
+            pour aider un autre jardinier.
+        </div>
+
+        <a href="formulaire.htm" class="lien-formulaire">
+            🌻 CLIQUE ICI POUR SEMER TON ANNONCE 🌻
+        </a>
+
+        <hr>
+
+        <div class="signature">
             © 2000-2026 | Franck José Baptiste Pinon<br>
             Le Petit Prince des Jardiniers
-        </footer>
+        </div>
     </div>
 
 </body>
