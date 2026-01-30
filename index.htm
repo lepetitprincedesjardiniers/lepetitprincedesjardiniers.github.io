@@ -1,76 +1,78 @@
-Je comprends tout à fait ta confusion. C'est comme assembler un meuble : on a toutes les pièces, mais il faut maintenant les visser ensemble pour que tout tienne debout.
-
-Pour que ton site fonctionne, il faut imaginer que ta page index.html est le panneau de direction à l'entrée du jardin.
-
-1. Créer les liens sur ta page d'accueil (index.html)
-Pour que les gens puissent aller sur "Contact" ou sur le "Mur des annonces", tu dois mettre à jour ton fichier index.html sur GitHub avec ce code. Il contient les boutons (liens) vers toutes tes pages.
-
-HTML
 <!DOCTYPE html>
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Le Petit Prince des Jardiniers</title>
     <style>
-        body { background-color: #FFF8E1; color: #000080; font-family: "Comic Sans MS", cursive, sans-serif; text-align: center; padding: 50px; }
-        .menu { margin-top: 50px; display: flex; flex-direction: column; gap: 15px; align-items: center; }
-        .bouton { 
-            width: 280px; padding: 15px; font-size: 18px; font-weight: bold;
-            color: white; background-color: #FF0000; border: 2px solid #000080;
-            border-radius: 15px; text-decoration: none; 
+        /* Style inspiré du Petit Prince : Doux et coloré */
+        body { 
+            background-color: #FFF8E1; 
+            color: #000080; 
+            font-family: "Comic Sans MS", cursive, sans-serif; 
+            text-align: center; 
+            padding: 50px 20px;
+            margin: 0;
         }
-        .bouton:hover { background-color: #000080; }
+        h1 { 
+            color: #FF0000; 
+            text-shadow: 2px 2px #FFD700; 
+            font-size: 35px;
+            text-decoration: underline;
+        }
+        .citation { 
+            font-style: italic; 
+            margin-bottom: 40px; 
+            color: #555; 
+        }
+        .menu { 
+            display: flex; 
+            flex-direction: column; 
+            gap: 20px; 
+            align-items: center; 
+            margin-top: 30px;
+        }
+        /* Style des boutons de navigation */
+        .bouton { 
+            width: 280px; 
+            padding: 20px; 
+            font-size: 18px; 
+            font-weight: bold;
+            color: white; 
+            background-color: #FF0000; 
+            border: 2px solid #000080;
+            border-radius: 15px; 
+            text-decoration: none; 
+            transition: transform 0.2s, background-color 0.2s;
+            box-shadow: 4px 4px 0px #000080;
+        }
+        .bouton:hover { 
+            background-color: #000080; 
+            transform: scale(1.05); 
+        }
+        .footer {
+            margin-top: 60px;
+            font-size: 14px;
+            opacity: 0.8;
+        }
     </style>
 </head>
 <body>
+
     <h1>Le Petit Prince des Jardiniers</h1>
-    
+    <p class="citation">"S'il vous plaît... dessine-moi un jardin."</p>
+
     <div class="menu">
-        <a href="formulaire.htm" class="bouton">🌻 SEMER UNE ANNONCE</a>
+        <a href="formulaire.htm" class="bouton">🌻 SEMER (Annoncer)</a>
         
         <a href="jardin.html" class="bouton">👀 VOIR LE JARDIN</a>
         
         <a href="contact.html" class="bouton">📧 ME CONTACTER</a>
     </div>
-</body>
-</html>
-2. Faire la page "Mur des annonces" (jardin.html)
-Sur GitHub, crée un nouveau fichier nommé jardin.html. C'est ici que les gens verront les messages stockés dans ton Google Sheets. Copie ce code dedans :
 
-HTML
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-    <meta charset="UTF-8">
-    <title>Le Mur des Annonces</title>
-    <style>
-        body { background-color: #FFF8E1; color: #000080; font-family: "Comic Sans MS", cursive, sans-serif; text-align: center; padding: 20px; }
-        .annonce { background: white; border: 2px solid #000080; border-radius: 10px; padding: 15px; margin: 10px auto; max-width: 500px; text-align: left; }
-        h1 { color: #FF0000; }
-        .bouton-retour { color: #FF0000; font-weight: bold; text-decoration: none; }
-    </style>
-</head>
-<body>
-    <a href="index.html" class="bouton-retour">⬅ Retour à l'accueil</a>
-    <h1>Le Mur des Annonces</h1>
-    <div id="listeAnnonces">Chargement des graines en cours...</div>
+    <div class="footer">
+        <p>Échangeons nos graines, nos outils et nos sourires.</p>
+    </div>
 
-    <script>
-        // On récupère les données de ton script Google
-        fetch("https://script.google.com/macros/s/AKfycbxuILkBo4L8JIK6ks1XsLpWMxvcviXSyMekJZI_sz-L_hRJygEDAoSVSzZ526DvsnTN/exec")
-        .then(res => res.json())
-        .then(data => {
-            let html = "";
-            data.reverse().forEach(annonce => {
-                html += `<div class="annonce">
-                    <strong>Prénom :</strong> ${annonce.identifiant}<br>
-                    <strong>Ville :</strong> ${annonce.ville}<br>
-                    <strong>Annonce :</strong> ${annonce.description}<br>
-                    <strong>Contact :</strong> ${annonce.contact}
-                </div>`;
-            });
-            document.getElementById("listeAnnonces").innerHTML = html;
-        });
-    </script>
 </body>
 </html>
