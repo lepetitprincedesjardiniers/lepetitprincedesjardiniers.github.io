@@ -5,21 +5,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Contact - Le Petit Prince des Jardiniers</title>
     <style>
-        /* Fond crème doux */
         body { 
             background-color: #FFF8E1; 
-            color: #2E7D32; /* Vert forêt foncé pour le texte */
+            color: #2E7D32; 
             font-family: "Comic Sans MS", cursive, sans-serif; 
             text-align: center; 
             padding: 20px; 
             margin: 0;
         }
 
-        /* Bouton Retour en vert */
         .bouton-retour { 
             display: inline-block; 
             margin-bottom: 25px; 
-            color: #4CAF50; /* Vert herbe */
+            color: #4CAF50; 
             text-decoration: none; 
             font-weight: bold; 
             border: 2px solid #4CAF50; 
@@ -28,12 +26,8 @@
             background-color: white;
             transition: 0.3s;
         }
-        .bouton-retour:hover {
-            background-color: #4CAF50;
-            color: white;
-        }
+        .bouton-retour:hover { background-color: #4CAF50; color: white; }
 
-        /* Le cadre avec bordure double verte */
         .cadre-contact { 
             background-color: white; 
             border: 4px double #4CAF50; 
@@ -44,86 +38,23 @@
             max-width: 450px; 
             width: 90%; 
             box-shadow: 0 10px 20px rgba(0,0,0,0.05);
-            position: relative;
         }
 
-        h1 { color: #2E7D32; font-size: 28px; margin-top: 0; }
+        h1 { color: #2E7D32; font-size: 26px; margin-top: 0; }
         
-        .fleur { font-size: 24px; vertical-align: middle; }
-
-        label { 
+        /* Style spécial pour l'avertissement */
+        .attention { 
+            background-color: #E8F5E9; 
+            border-left: 5px solid #4CAF50; 
+            padding: 10px; 
             font-weight: bold; 
-            display: block; 
-            margin-top: 15px; 
-            color: #388E3C;
+            margin-bottom: 20px; 
+            font-size: 15px;
+            color: #1B5E20;
         }
+
+        label { font-weight: bold; display: block; margin-top: 15px; color: #388E3C; }
 
         input, textarea { 
-            width: 100%; 
-            padding: 12px; 
-            margin-top: 5px;
-            border: 1px solid #A5D6A7; /* Vert clair */
-            border-radius: 10px; 
-            box-sizing: border-box; 
-            font-family: sans-serif;
-            background-color: #F1F8E9; /* Très léger vert */
-        }
-
-        /* Le bouton d'envoi vert */
-        button { 
-            background-color: #4CAF50; 
-            color: white; 
-            padding: 15px; 
-            border: none; 
-            cursor: pointer; 
-            font-weight: bold; 
-            width: 100%; 
-            margin-top: 25px; 
-            border-radius: 10px; 
-            font-size: 18px;
-            transition: 0.3s;
-            box-shadow: 0 4px 0 #2E7D32;
-        }
-        button:hover { 
-            background-color: #388E3C; 
-            transform: translateY(-2px);
-            box-shadow: 0 6px 0 #1B5E20;
-        }
-
-        .citation { 
-            font-style: italic; 
-            font-size: 14px; 
-            color: #666; 
-            margin-bottom: 20px;
-            line-height: 1.4;
-        }
-    </style>
-</head>
-<body>
-
-    <a href="https://lepetitprincedesjardiniers.github.io/" class="bouton-retour">⬅ Retour au Jardin</a>
-
-    <div class="cadre-contact">
-        <h1><span class="fleur">🌸</span> Me contacter <span class="fleur">🌼</span></h1>
-        <p class="citation">"C'est une folie de haïr toutes les roses parce qu'une épine vous a piqué."</p>
-
-        <form action="https://script.google.com/macros/s/AKfycbxuILkBo4L8JIK6ks1XsLpWMxvcviXSyMekJZI_sz-L_hRJygEDAoSVSzZ526DvsnTN/exec" method="POST">
-            <input type="hidden" name="formType" value="contact">
-
-            <label>Ton petit nom :</label>
-            <input type="text" name="nom" placeholder="Ex: Rose ou Renard" required>
-
-            <label>Ton adresse email :</label>
-            <input type="email" name="email" placeholder="nom@exemple.com" required>
-
-            <label>Ton message pour le jardinier :</label>
-            <textarea name="message" rows="6" placeholder="Quelle graine veux-tu partager ?" required></textarea>
-
-            <button type="submit">ENVOYER MON MESSAGE 🌿</button>
-        </form>
-    </div>
-
-    <p style="margin-top: 20px; font-size: 20px;">🌻 🌷 🌹</p>
-
-</body>
-</html>
+            width: 100%; padding: 12px; margin-top: 5px;
+            border: 1px solid #A5D6A7; border-radius:
