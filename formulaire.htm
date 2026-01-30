@@ -2,133 +2,103 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <title>Offrir - Le Petit Prince des Jardiniers</title>
-    <style>
-        body { 
-            background-color: #FFFFFF; 
-            background-image: url('http://thiaha.free.fr/improFranckcopyrith.bmp'); 
-            background-attachment: fixed; 
-            font-family: "Comic Sans MS", cursive, sans-serif; 
-            color: #000080; 
-            text-align: center; 
-            margin: 0; padding: 0;
-        }
-        .cadre-form {
-            max-width: 700px;
-            margin: 20px auto;
-            padding: 25px;
-            background: rgba(255, 255, 255, 0.96);
-            border: 8px ridge #800080;
-            border-radius: 15px;
-            box-shadow: 0px 0px 20px rgba(0,0,0,0.2);
-        }
-        h1 { color: #FF0000; text-decoration: underline; font-size: 2em; }
-        .section { 
-            text-align: left; 
-            margin-top: 15px; 
-            padding: 15px; 
-            border-bottom: 2px dashed #008080; 
-        }
-        label { font-weight: bold; display: block; margin-top: 10px; color: #800080; }
-        input, select, textarea { 
-            width: 100%; 
-            padding: 10px; 
-            margin-top: 5px; 
-            border: 2px solid #000080; 
-            border-radius: 8px; 
-            box-sizing: border-box;
-            font-family: Arial, sans-serif;
-            font-size: 1em;
-        }
-        .btn-envoyer { 
-            background-color: #FFFF00; 
-            color: #FF0000; 
-            padding: 20px; 
-            border: 4px solid #000080; 
-            font-weight: bold; 
-            font-size: 1.4em; 
-            cursor: pointer; 
-            width: 100%; 
-            margin-top: 25px;
-            border-radius: 50px;
-            text-transform: uppercase;
-        }
-        .btn-envoyer:hover { 
-            background-color: #FF0000; 
-            color: #FFFF00; 
-        }
-        footer { 
-            margin-top: 30px; 
-            font-size: 0.85em; 
-            border-top: 1px solid #000080;
-            padding-top: 15px;
-        }
-        .retour-accueil {
-            display: inline-block;
-            margin-top: 15px;
-            color: #000080;
-            font-weight: bold;
-            text-decoration: none;
-            border: 1px solid #000080;
-            padding: 5px 15px;
-            border-radius: 5px;
-        }
-    </style>
+    <title>Passer une annonce - Le Petit Prince des Jardiniers</title>
 </head>
-<body>
+<body bgcolor="#FFFFFF" background="http://thiaha.free.fr/improFranckcopyrith.bmp" text="#000080" link="#FF0000" vlink="#800080" alink="#FFFF00">
 
-<div class="cadre-form">
-    <h1>Déposer un Cadeau Humain</h1>
-    <p><i>"Ici, on offre une parcelle de son humanité, sans rien attendre en retour."</i></p>
+<center>
+    <font face="Comic Sans MS" size="6" color="#FF0000">
+        <u><b>Passer une annonce : rencontre Echanges/Dons</b></u>
+    </font>
+    <br><br>
+
+    <table border="1" cellpadding="5" cellspacing="0" bordercolor="#000080" bgcolor="#FFFFFF">
+        <tr>
+            <td><font face="Comic Sans MS" size="2"><a href="index.htm">base d'accueil</a></font></td>
+        </tr>
+    </table>
+
+    <br>
+
+    <font face="Comic Sans MS" size="5" color="#008080">
+        <b>Rencontre & Partage</b><br>
+        <font size="3">Savoir, service rendu et objet</font>
+    </font>
+
+    <br><br>
 
     <form action="https://script.google.com/macros/s/AKfycbyn3wHjdoGOl_GbVtGkJDSUEnBKhnviE1RXxDJlNkbLOQ8L4QZ_ms7dKSm3Xas6Oqr_/exec" method="POST">
         
-        <div class="section">
-            <label>Votre Identifiant (Prénom ou Pseudo) :</label>
-            <input type="text" name="identifiant" placeholder="Comment voulez-vous être appelé ?" required>
+        <table border="5" cellpadding="15" cellspacing="0" width="90%" bordercolor="#800080" bgcolor="#F4F4F4">
+            <tr>
+                <td>
+                    <font face="Comic Sans MS" color="#FF0000" size="4"><b>Quelques renseignements personnels :</b></font>
+                    <br><br>
+                    <font face="Comic Sans MS" size="3">
+                        Identifiant / Prénom : <br>
+                        <input type="text" name="identifiant" size="40" required style="border: 1px solid #000080;"><br><br>
+                        
+                        Votre Code Secret (Signature) : <br>
+                        <input type="password" name="code_secret" size="20" required style="border: 1px solid #000080;"><br><br>
+                        
+                        Votre Pays : <br>
+                        <input type="text" name="pays" value="France" size="40" required style="border: 1px solid #000080;">
+                    </font>
+                </td>
+            </tr>
             
-            <label>Votre Code Secret (Signature pour vos futures modifs) :</label>
-            <input type="password" name="code_secret" placeholder="Un mot ou un nombre secret" required>
-        </div>
+            <tr>
+                <td bgcolor="#E0E0E0">
+                    <font face="Comic Sans MS" color="#FF0000" size="4"><b>Détails du cadeau :</b></font>
+                    <br><br>
+                    <font face="Comic Sans MS" size="3">
+                        <b>Description du cadeau :</b><br>
+                        <textarea name="description" cols="50" rows="6" required style="border: 1px solid #000080;"></textarea><br><br>
+                        
+                        <b>Localité (Ville et Code Postal) :</b><br>
+                        <input type="text" name="ville" size="40" placeholder="Ex: Pessac 33600" required style="border: 1px solid #000080;"><br><br>
+                        
+                        <b>Zone de recherche / Rayon (en km) :</b><br>
+                        <input type="number" name="km" size="5" style="border: 1px solid #000080;"> km<br><br>
+                        
+                        <b>Durée du cadeau :</b><br>
+                        <select name="duree" style="font-family: Comic Sans MS;">
+                            <option value="12 mois">Permanent (12 mois)</option>
+                            <option value="Quelques heures">Ponctuel (Quelques heures)</option>
+                            <option value="Quelques jours">Ponctuel (Quelques jours)</option>
+                            <option value="Autre">Autre durée</option>
+                        </select>
+                    </font>
+                </td>
+            </tr>
 
-        <div class="section">
-            <label>Pays :</label>
-            <input type="text" name="pays" value="France" required>
-            
-            <label>Ville et Code Postal :</label>
-            <input type="text" name="ville" placeholder="Ex: Pessac 33600" required>
-            
-            <label>Zone de recherche ou d'action (en km) :</label>
-            <input type="number" name="km" placeholder="Ex: 10 (Mettre 0 pour un don à distance)">
-        </div>
+            <tr>
+                <td>
+                    <font face="Comic Sans MS" color="#FF0000" size="4"><b>Ce que j'espère en retour :</b></font>
+                    <br><br>
+                    <font face="Comic Sans MS" size="3">
+                        Valeur espérée (plumes, temps, sourire...) :<br>
+                        <input type="text" name="retour_souhaite" size="50" style="border: 1px solid #000080;">
+                    </font>
+                </td>
+            </tr>
 
-        <div class="section">
-            <label>Description du Cadeau (Objet, Savoir, Temps, Chant, Vie...) :</label>
-            <textarea name="description" rows="5" placeholder="Décrivez ce que vous souhaitez offrir..." required></textarea>
-            
-            <label>Durée de validité du cadeau :</label>
-            <select name="duree">
-                <option value="12 mois">Permanent (12 mois)</option>
-                <option value="Quelques heures">Ponctuel (Quelques heures)</option>
-                <option value="Quelques jours">Ponctuel (Quelques jours)</option>
-                <option value="Autre">Autre (préciser dans la description)</option>
-            </select>
-        </div>
-
-        <div class="section">
-            <label>Valeur espérée en retour (Facultatif - Gratitude, sourire...) :</label>
-            <input type="text" name="retour_souhaite" placeholder="Le don est pur, mais l'échange de cœur est possible">
-        </div>
-
-        <button type="submit" class="btn-envoyer">🌻 SEMER CE CADEAU</button>
+            <tr>
+                <td align="center" bgcolor="#FFFF00">
+                    <input type="submit" value=" VALIDER ET SEMER CE CADEAU " style="font-family: Comic Sans MS; font-weight: bold; font-size: 14pt; cursor: pointer; color: #FF0000; border: 3px double #000080; padding: 10px;">
+                    <br>
+                    <font face="Comic Sans MS" size="2" color="#000080">En validant, l'annonce sera envoyée dans le jardin du Petit Prince.</font>
+                </td>
+            </tr>
+        </table>
     </form>
 
-    <footer>
-        <strong>© 2000 | Copyrith Le Petit Prince des Jardiniers</strong><br>
-        Franck José Baptiste Pinon de Pessac<br>
-        <a href="index.htm" class="retour-accueil">Retour à l'accueil</a>
-    </footer>
-</div>
+    <br>
+    <font face="Comic Sans MS" size="2" color="#000080">
+        copyright © 2000 | Copyrith Le Petit Prince des Jardiniers<br>
+        Franck José Baptiste Pinon de Pessac
+    </font>
+</center>
 
 </body>
 </html>
