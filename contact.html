@@ -2,102 +2,24 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Contact - Le Petit Prince des Jardiniers</title>
+    <title>Contact - Le Petit Prince</title>
     <style>
-        body { 
-            background-color: #FFF8E1; 
-            color: #2E7D32; 
-            font-family: "Comic Sans MS", cursive, sans-serif; 
-            text-align: center; 
-            padding: 20px; 
-            margin: 0;
-        }
-
-        .bouton-retour { 
-            display: inline-block; 
-            margin-bottom: 25px; 
-            color: #4CAF50; 
-            text-decoration: none; 
-            font-weight: bold; 
-            border: 2px solid #4CAF50; 
-            padding: 10px 20px; 
-            border-radius: 20px;
-            background-color: white;
-            transition: 0.3s;
-        }
-        .bouton-retour:hover { background-color: #4CAF50; color: white; }
-
-        .cadre-contact { 
-            background-color: white; 
-            border: 4px double #4CAF50; 
-            padding: 30px; 
-            border-radius: 20px; 
-            display: inline-block; 
-            text-align: left; 
-            max-width: 450px; 
-            width: 90%; 
-            box-shadow: 0 10px 20px rgba(0,0,0,0.05);
-        }
-
-        h1 { color: #2E7D32; font-size: 26px; margin-top: 0; }
-        
-        /* Style spécial pour l'avertissement */
-        .attention { 
-            background-color: #E8F5E9; 
-            border-left: 5px solid #4CAF50; 
-            padding: 10px; 
-            font-weight: bold; 
-            margin-bottom: 20px; 
-            font-size: 15px;
-            color: #1B5E20;
-        }
-
+        body { background-color: #FFF8E1; color: #2E7D32; font-family: "Comic Sans MS", cursive, sans-serif; text-align: center; padding: 20px; }
+        .bouton-retour { display: inline-block; margin-bottom: 20px; color: #4CAF50; text-decoration: none; font-weight: bold; border: 2px solid #4CAF50; padding: 10px; border-radius: 20px; background: white; }
+        .cadre { background: white; border: 4px double #4CAF50; padding: 25px; border-radius: 20px; display: inline-block; text-align: left; max-width: 450px; width: 90%; box-shadow: 0 4px 15px rgba(0,0,0,0.05); }
+        .attention { background: #E8F5E9; border-left: 5px solid #4CAF50; padding: 10px; font-weight: bold; margin: 15px 0; color: #1B5E20; font-size: 0.9em; }
         label { font-weight: bold; display: block; margin-top: 15px; color: #388E3C; }
-
-        input, textarea { 
-            width: 100%; padding: 12px; margin-top: 5px;
-            border: 1px solid #A5D6A7; border-radius: 10px; 
-            box-sizing: border-box; font-family: sans-serif;
-            background-color: #F1F8E9;
-        }
-
-        button { 
-            background-color: #4CAF50; color: white; padding: 15px; 
-            border: none; cursor: pointer; font-weight: bold; 
-            width: 100%; margin-top: 25px; border-radius: 10px; 
-            font-size: 18px; transition: 0.3s;
-            box-shadow: 0 4px 0 #2E7D32;
-        }
-        button:hover { background-color: #388E3C; transform: translateY(-2px); }
+        input, textarea { width: 100%; padding: 10px; margin-top: 5px; border: 1px solid #A5D6A7; border-radius: 10px; box-sizing: border-box; background: #F9FFF9; }
+        button { background: #4CAF50; color: white; padding: 15px; border: none; width: 100%; margin-top: 20px; border-radius: 10px; font-weight: bold; cursor: pointer; font-size: 1.1em; }
+        button:hover { background: #388E3C; }
     </style>
 </head>
 <body>
 
-    <a href="https://lepetitprincedesjardiniers.github.io/" class="bouton-retour">⬅ Retour au Jardin</a>
+    <a href="https://lepetitprincedesjardiniers.github.io/" class="bouton-retour">⬅ Retour à l'accueil</a>
 
-    <div class="cadre-contact">
-        <h1>🌿 Écrire au Jardinier 🌿</h1>
+    <div class="cadre">
+        <h1>🌿 Écrire au Jardinier</h1>
         
         <div class="attention">
             ⚠️ Attention : Si tu me contactes, attends-toi à un retour...
-        </div>
-
-        <form action="https://script.google.com/macros/s/AKfycbxuILkBo4L8JIK6ks1XsLpWMxvcviXSyMekJZI_sz-L_hRJygEDAoSVSzZ526DvsnTN/exec" method="POST">
-            <input type="hidden" name="formType" value="contact">
-
-            <label>Ton petit nom :</label>
-            <input type="text" name="nom" required>
-
-            <label>Ton email :</label>
-            <input type="email" name="email" required>
-
-            <label>Ton message :</label>
-            <textarea name="message" rows="5" required></textarea>
-
-            <button type="submit">ENVOYER MON MESSAGE 🌼</button>
-        </form>
-    </div>
-
-</body>
-</html>
