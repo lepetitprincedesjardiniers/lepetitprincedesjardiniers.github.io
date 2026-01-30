@@ -2,90 +2,101 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <title>Le Petit Prince des Jardiniers - Accueil</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Le Petit Prince des Jardiniers - Semer une annonce</title>
+    <style>
+        body {
+            background-color: #FFF8E1; /* Fond crème */
+            font-family: "Comic Sans MS", cursive, sans-serif;
+            color: #000080; /* Bleu marine */
+            text-align: center;
+            padding: 20px;
+            margin: 0;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        form {
+            background-color: white;
+            border: 3px double #000080;
+            padding: 25px;
+            text-align: left;
+            border-radius: 15px;
+            box-shadow: 5px 5px 15px rgba(0,0,0,0.1);
+        }
+        h1 { color: #FF0000; text-decoration: underline; margin-bottom: 30px; }
+        label { font-weight: bold; display: block; margin-top: 15px; }
+        input, textarea, select {
+            width: 100%;
+            margin-top: 5px;
+            padding: 12px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            box-sizing: border-box;
+            font-size: 14px;
+        }
+        textarea { resize: vertical; }
+        button {
+            background-color: #FF0000;
+            color: white;
+            padding: 15px;
+            border: 2px solid #000080;
+            cursor: pointer;
+            font-weight: bold;
+            width: 100%;
+            margin-top: 25px;
+            font-size: 18px;
+            border-radius: 8px;
+        }
+        button:hover { background-color: #cc0000; }
+        .note-discrete {
+            font-size: 12px;
+            color: #555;
+            margin-top: 20px;
+            text-align: center;
+            font-style: italic;
+            line-height: 1.4;
+        }
+    </style>
 </head>
-<body bgcolor="#FFFFFF" background="http://thiaha.free.fr/improFranckcopyrith.bmp" text="#000080" link="#FF0000" vlink="#800080" alink="#FFFF00">
+<body>
 
-<center>
-    <font face="Comic Sans MS" size="7" color="#FF0000">
-        <u><b>Le Petit Prince des Jardiniers</b></u>
-    </font>
-    <br>
-    <font face="Comic Sans MS" size="4" color="#000080">
-        <b>Franck José Baptiste Pinon de Pessac</b><br>
-        <i>Jardinier Humaniste - Éducateur - Philosophe</i>
-    </font>
-
-    <br><br>
-
-    <table border="10" cellpadding="20" cellspacing="0" width="85%" bordercolor="#800080" bgcolor="#FFFFFF">
-        <tr>
-            <td align="center">
-                
-                <img src="http://thiaha.free.fr/Franckp.jpg" border="2" alt="Franck Pinon" width="200"><br><br>
-
-                <font face="Comic Sans MS" size="4" color="#008080">
-                    <b>"S'il vous plaît... dessine-moi un partage."</b>
-                </font>
-                
-                <br><br>
-                
-                <table border="1" cellpadding="15" cellspacing="0" bgcolor="#F4F4F4" width="90%">
-                    <tr>
-                        <td align="justify">
-                            <font face="Comic Sans MS" size="3">
-                                <b>Ma Thèse :</b> Analyse éthique des comportements, de la misère à la richesse du cœur. 
-                                Ce site est un espace de <b>Don Pur</b>. Nous cultivons ici la fraternité, la dignité humaine 
-                                et l'entraide gratuite, loin des logiques marchandes. 
-                                <br><br>
-                                Que vous ayez un savoir à transmettre, un objet à offrir ou simplement du temps à partager, 
-                                vous êtes ici chez vous.
-                            </font>
-                        </td>
-                    </tr>
-                </table>
-
-                <br><br>
-
-                <table border="4" cellpadding="10" cellspacing="0" bgcolor="#FFFF00" bordercolor="#000080">
-                    <tr>
-                        <td align="center">
-                            <a href="formulaire.htm" style="text-decoration:none;">
-                                <font face="Comic Sans MS" size="5" color="#FF0000">
-                                    <b>🌻 ENTRER DANS L'ESPACE DE DON 🌻</b>
-                                </font>
-                            </a>
-                        </td>
-                    </tr>
-                </table>
-
-                <br>
-
-                <table border="1" cellpadding="5" cellspacing="0" bgcolor="#000080">
-                    <tr>
-                        <td>
-                            <a href="https://www.youtube.com/channel/UCjsudx7f1sl7XQM8ylcBRdQ" target="_blank" style="text-decoration:none;">
-                                <font face="Comic Sans MS" size="2" color="#FFFF00">
-                                    Voir ma chaîne YouTube : Le Petit Prince des Jardiniers
-                                </font>
-                            </a>
-                        </td>
-                    </tr>
-                </table>
-
-            </td>
-        </tr>
-    </table>
-
-    <br>
-
-    <font face="Comic Sans MS" size="2" color="#000080">
-        #Liberté #Amour #Gratuité #Fraternité<br><br>
-        <b>© 2000 | Copyrith Le Petit Prince des Jardiniers</b><br>
-        Franck José Baptiste Pinon de Pessac
-    </font>
+<div class="container">
+    <h1>Semer une proposition</h1>
     
-</center>
+    <form action="https://script.google.com/macros/s/AKfycbxuILkBo4L8JIK6ks1XsLpWMxvcviXSyMekJZI_sz-L_hRJygEDAoSVSzZ526DvsnTN/exec" method="POST">
+        
+        <label>Ton Identifiant (Pseudo) :</label>
+        <input type="text" name="identifiant" required placeholder="Ex: Petit Prince">
+
+        <label>Pays / Région :</label>
+        <input type="text" name="pays" value="France">
+
+        <label>Ville :</label>
+        <input type="text" name="ville" required placeholder="Ex: Lyon, 6ème">
+
+        <label>Description de ton partage (Graines, aide, outils...) :</label>
+        <textarea name="description" rows="4" required placeholder="Décris ce que tu souhaites offrir ou partager..."></textarea>
+
+        <label>Moyen de contact & Lieu de rendez-vous :</label>
+        <textarea name="contact" rows="3" required placeholder="Ex: Tél: 06.., Email: .., ou RDV tous les samedis à la place de l'église..."></textarea>
+
+        <label>Durée de l'annonce :</label>
+        <select name="duree">
+            <option value="30">30 jours (Le temps d'une fleur)</option>
+            <option value="90">90 jours (Une saison)</option>
+            <option value="365" selected>365 jours (Une année entière)</option>
+        </select>
+
+        <button type="submit">SEMER DANS LE JARDIN</button>
+
+        <p class="note-discrete">
+            L'annonce s'effacera seule à la fin de la durée choisie.<br>
+            Pour la retirer avant, contactez-moi discrètement.
+        </p>
+    </form>
+</div>
 
 </body>
 </html>
