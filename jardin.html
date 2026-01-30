@@ -2,13 +2,28 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <title>Le Mur des Annonces - Le Petit Prince</title>
+    <title>Le Jardin des Annonces - Le Petit Prince</title>
     <style>
         body { background-color: #FFF8E1; color: #000080; font-family: "Comic Sans MS", cursive, sans-serif; text-align: center; padding: 20px; }
         h1 { color: #FF0000; text-decoration: underline; }
-        .bouton-retour { display: inline-block; margin-bottom: 30px; color: #FF0000; text-decoration: none; font-weight: bold; border: 1px solid #FF0000; padding: 10px; border-radius: 8px; }
         
-        /* Style des cartes d'annonces */
+        /* STYLE DU BOUTON RETOUR */
+        .bouton-retour { 
+            display: inline-block; 
+            margin-bottom: 30px; 
+            color: #FF0000; 
+            text-decoration: none; 
+            font-weight: bold; 
+            border: 2px solid #FF0000; 
+            padding: 10px 20px; 
+            border-radius: 8px;
+            transition: 0.3s;
+        }
+        .bouton-retour:hover {
+            background-color: #FF0000;
+            color: white;
+        }
+        
         #listeAnnonces { display: flex; flex-direction: column; align-items: center; gap: 20px; }
         .annonce { 
             background-color: white; 
@@ -21,60 +36,51 @@
             box-shadow: 4px 4px 10px rgba(0,0,0,0.05);
         }
         .annonce h2 { color: #FF0000; font-size: 18px; margin-top: 0; border-bottom: 1px solid #EEE; padding-bottom: 10px; }
-        .info { margin: 10px 0; }
         .label { font-weight: bold; color: #000080; text-decoration: underline; }
         .chargement { font-style: italic; color: #555; margin-top: 50px; }
     </style>
 </head>
 <body>
 
-    <a href="index.html" class="bouton-retour">⬅ Retour à l'accueil</a>
+    <a href="index.html" class="bouton-retour">⬅ RETOUR À L'ACCUEIL</a>
     
     <h1>Le Jardin des Annonces</h1>
-    <p><i>"Voici mon secret. Il est très simple : on ne voit bien qu'avec le cœur."</i></p>
+    <p><i>"On ne voit bien qu'avec le cœur."</i></p>
 
     <div id="chargement" class="chargement">Le jardin est en train de fleurir... patientez...</div>
-    
     <div id="listeAnnonces"></div>
 
     <script>
-        // Ton lien Google Script (le moteur de ton site)
         const urlScript = "https://script.google.com/macros/s/AKfycbxuILkBo4L8JIK6ks1XsLpWMxvcviXSyMekJZI_sz-L_hRJygEDAoSVSzZ526DvsnTN/exec";
 
         async function afficherAnnonces() {
             try {
-                // On demande les données au script
                 const response = await fetch(urlScript);
                 const data = await response.json();
                 
-                // On cache le message de chargement
                 document.getElementById('chargement').style.display = 'none';
                 const conteneur = document.getElementById('listeAnnonces');
 
                 if (data.length === 0) {
-                    conteneur.innerHTML = "<p>Le jardin est vide pour l'instant. Soyez le premier à semer une graine !</p>";
+                    conteneur.innerHTML = "<p>Le jardin est vide pour l'instant.</p>";
                     return;
                 }
 
-                // On affiche les annonces (de la plus récente à la plus ancienne)
                 data.reverse().forEach(annonce => {
                     const div = document.createElement('div');
                     div.className = 'annonce';
                     div.innerHTML = `
                         <h2>🌻 Graine de : ${annonce.identifiant || 'Anonyme'}</h2>
-                        <div class="info"><span class="label">Où :</span> ${annonce.ville}</div>
-                        <div class="info"><span class="label">Offre :</span> ${annonce.description}</div>
-                        <div class="info"><span class="label">Contact :</span> ${annonce.contact}</div>
+                        <p><span class="label">Où :</span> ${annonce.ville}</p>
+                        <p><span class="label">Offre :</span> ${annonce.description}</p>
+                        <p><span class="label">Contact :</span> ${annonce.contact}</p>
                     `;
                     conteneur.appendChild(div);
                 });
             } catch (error) {
-                console.error("Erreur :", error);
-                document.getElementById('chargement').innerHTML = "Le jardin est timide aujourd'hui... <br>Vérifie que tu as bien activé la fonction doGet dans ton script Google.";
+                document.getElementById('chargement').innerHTML = "Erreur de connexion au jardin.";
             }
         }
-
-        // Lancement de la lecture au chargement de la page
         afficherAnnonces();
     </script>
 </body>
