@@ -1,102 +1,82 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html>
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Le Petit Prince des Jardiniers - Semer une annonce</title>
+    <title>Le Petit Prince des Jardiniers - Accueil</title>
     <style>
         body {
             background-color: #FFF8E1; /* Fond crème */
-            font-family: "Comic Sans MS", cursive, sans-serif;
             color: #000080; /* Bleu marine */
+            font-family: "Comic Sans MS", cursive, sans-serif;
             text-align: center;
-            padding: 20px;
             margin: 0;
+            padding: 50px 20px;
         }
-        .container {
-            max-width: 600px;
-            margin: 0 auto;
+        
+        .bienvenue {
+            border: 4px double #000080;
+            background-color: #FFFFFF;
+            display: inline-block;
+            padding: 40px;
+            max-width: 700px;
+            border-radius: 20px;
         }
-        form {
-            background-color: white;
-            border: 3px double #000080;
-            padding: 25px;
-            text-align: left;
-            border-radius: 15px;
-            box-shadow: 5px 5px 15px rgba(0,0,0,0.1);
+
+        h1 {
+            color: #FF0000; /* Rouge */
+            text-decoration: underline;
+            font-size: 32px;
         }
-        h1 { color: #FF0000; text-decoration: underline; margin-bottom: 30px; }
-        label { font-weight: bold; display: block; margin-top: 15px; }
-        input, textarea, select {
-            width: 100%;
-            margin-top: 5px;
-            padding: 12px;
-            border: 1px solid #ccc;
-            border-radius: 8px;
-            box-sizing: border-box;
-            font-size: 14px;
-        }
-        textarea { resize: vertical; }
-        button {
-            background-color: #FF0000;
-            color: white;
-            padding: 15px;
-            border: 2px solid #000080;
-            cursor: pointer;
-            font-weight: bold;
-            width: 100%;
-            margin-top: 25px;
+
+        p {
             font-size: 18px;
-            border-radius: 8px;
+            line-height: 1.6;
         }
-        button:hover { background-color: #cc0000; }
-        .note-discrete {
+
+        .bouton-semis {
+            display: inline-block;
+            background-color: #FF0000;
+            color: #FFFFFF !important;
+            padding: 20px 40px;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 22px;
+            border: 2px solid #000080;
+            margin-top: 30px;
+            border-radius: 10px;
+            transition: transform 0.2s;
+        }
+
+        .bouton-semis:hover {
+            transform: scale(1.05);
+            background-color: #D30000;
+        }
+
+        .footer {
+            margin-top: 60px;
             font-size: 12px;
-            color: #555;
-            margin-top: 20px;
-            text-align: center;
-            font-style: italic;
-            line-height: 1.4;
+            color: #666;
         }
     </style>
 </head>
 <body>
 
-<div class="container">
-    <h1>Semer une proposition</h1>
-    
-    <form action="https://script.google.com/macros/s/AKfycbxuILkBo4L8JIK6ks1XsLpWMxvcviXSyMekJZI_sz-L_hRJygEDAoSVSzZ526DvsnTN/exec" method="POST">
+    <div class="bienvenue">
+        <h1>Le Petit Prince des Jardiniers</h1>
         
-        <label>Ton Identifiant (Pseudo) :</label>
-        <input type="text" name="identifiant" required placeholder="Ex: Petit Prince">
+        <p><i>"C'est le temps que tu as perdu pour ta rose qui fait ta rose si importante."</i></p>
+        
+        <p>Bienvenue dans notre jardin partagé. Ici, nous semons des propositions de partage, 
+        des graines d'entraide et des outils pour faire fleurir la solidarité.</p>
 
-        <label>Pays / Région :</label>
-        <input type="text" name="pays" value="France">
+        <a href="formulaire.html" class="bouton-semis">
+            🌻 SEMER UNE PROPOSITION 🌻
+        </a>
+    </div>
 
-        <label>Ville :</label>
-        <input type="text" name="ville" required placeholder="Ex: Lyon, 6ème">
-
-        <label>Description de ton partage (Graines, aide, outils...) :</label>
-        <textarea name="description" rows="4" required placeholder="Décris ce que tu souhaites offrir ou partager..."></textarea>
-
-        <label>Moyen de contact & Lieu de rendez-vous :</label>
-        <textarea name="contact" rows="3" required placeholder="Ex: Tél: 06.., Email: .., ou RDV tous les samedis à la place de l'église..."></textarea>
-
-        <label>Durée de l'annonce :</label>
-        <select name="duree">
-            <option value="30">30 jours (Le temps d'une fleur)</option>
-            <option value="90">90 jours (Une saison)</option>
-            <option value="365" selected>365 jours (Une année entière)</option>
-        </select>
-
-        <button type="submit">SEMER DANS LE JARDIN</button>
-
-        <p class="note-discrete">
-            L'annonce s'effacera seule à la fin de la durée choisie.<br>
-            Pour la retirer avant, contactez-moi discrètement.
-        </p>
-    </form>
-</div>
+    <div class="footer">
+        © 2000 | Franck José Baptiste Pinon
+    </div>
 
 </body>
 </html>
