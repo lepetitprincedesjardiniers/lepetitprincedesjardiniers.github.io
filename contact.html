@@ -2,36 +2,22 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <title>Contact - Le Petit Prince des Jardiniers</title>
+    <title>Contact</title>
     <style>
         body { background-color: #FFF8E1; color: #000080; font-family: "Comic Sans MS", cursive, sans-serif; text-align: center; padding: 20px; }
-        form { background-color: white; border: 3px double #000080; padding: 25px; text-align: left; border-radius: 15px; display: inline-block; max-width: 500px; width: 90%; }
-        h1 { color: #FF0000; text-decoration: underline; }
-        label { font-weight: bold; display: block; margin-top: 15px; }
-        input, textarea { width: 100%; padding: 10px; border: 1px solid #000080; border-radius: 8px; box-sizing: border-box; }
-        button { background-color: #FF0000; color: white; padding: 15px; border: 2px solid #000080; cursor: pointer; font-weight: bold; width: 100%; margin-top: 25px; font-size: 18px; border-radius: 8px; }
-        .bouton-retour { display: inline-block; margin-bottom: 20px; color: #FF0000; text-decoration: none; font-weight: bold; }
+        form { background: white; border: 2px solid #000080; padding: 20px; display: inline-block; border-radius: 10px; text-align: left; }
+        input, textarea { width: 100%; margin-bottom: 10px; border: 1px solid #000080; border-radius: 5px; padding: 5px; }
+        button { background: #FF0000; color: white; border: none; padding: 10px 20px; cursor: pointer; border-radius: 5px; width: 100%; font-weight: bold; }
     </style>
 </head>
 <body>
-
-    <a href="index.html" class="bouton-retour">⬅ Retour à l'accueil</a>
-    
-    <h1>Écrire au Jardinier</h1>
-    <p>"On ne voit bien qu'avec le cœur..."</p>
-
+    <a href="index.html" style="color: #FF0000; font-weight: bold; text-decoration: none;">⬅ Retour</a>
+    <h1>Me Contacter</h1>
     <form action="https://formspree.io/f/TON_EMAIL" method="POST">
-        <label>Ton Prénom :</label>
-        <input type="text" name="name" required>
-
-        <label>Ton Email :</label>
-        <input type="email" name="email" required>
-
-        <label>Ton Message :</label>
-        <textarea name="message" rows="5" required placeholder="Une question, une demande de suppression d'annonce..."></textarea>
-
-        <button type="submit">ENVOYER LE MESSAGE</button>
+        <label>Ton Nom :</label><input type="text" name="name" required>
+        <label>Ton Email :</label><input type="email" name="email" required>
+        <label>Message :</label><textarea name="message" rows="4" required></textarea>
+        <button type="submit">Envoyer</button>
     </form>
-
 </body>
 </html>
