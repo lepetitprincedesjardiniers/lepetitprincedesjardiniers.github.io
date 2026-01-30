@@ -3,53 +3,23 @@
 <head>
     <meta charset="UTF-8">
     <title>Merci - Le Petit Prince des Jardiniers</title>
-    <meta http-equiv="refresh" content="4;url=jardin.html">
     <style>
-        body { 
-            background-color: #FFF8E1; 
-            color: #000080; 
-            font-family: "Comic Sans MS", cursive, sans-serif; 
-            text-align: center; 
-            padding-top: 100px; 
-        }
-        .cadre { 
-            border: 4px double #000080; 
-            background-color: #FFFFFF; 
-            display: inline-block; 
-            padding: 40px; 
-            border-radius: 15px;
-            box-shadow: 5px 5px 15px rgba(0,0,0,0.1);
-        }
+        body { background-color: #FFF8E1; color: #000080; font-family: "Comic Sans MS", cursive, sans-serif; text-align: center; padding-top: 100px; }
+        .cadre { border: 4px double #000080; background-color: #FFFFFF; display: inline-block; padding: 40px; border-radius: 15px; }
         h1 { color: #FF0000; text-decoration: underline; }
-        p { font-size: 18px; margin: 20px 0; }
-        .bouton {
-            display: inline-block;
-            margin-top: 20px;
-            padding: 10px 20px;
-            color: #FF0000;
-            text-decoration: none;
-            border: 1px solid #FF0000;
-            font-weight: bold;
-        }
-        .bouton:hover {
-            background-color: #FF0000;
-            color: white;
+        .bouton-retour { 
+            display: inline-block; margin-top: 30px; padding: 15px 30px; 
+            background-color: #FF0000; color: white; text-decoration: none; 
+            font-weight: bold; border-radius: 8px; border: 2px solid #000080;
         }
     </style>
 </head>
 <body>
-
     <div class="cadre">
         <h1>🌻 Graine semée !</h1>
-        <p>Merci ! Ton annonce vient d'être plantée dans le jardin.</p>
-        <p>Elle sera visible par tous les autres jardiniers d'ici quelques instants.</p>
-        
-        <div style="font-size: 40px; margin: 20px;">⏳</div>
-        
-        <p><i>Redirection vers le jardin en cours...</i></p>
-        
-        <a href="jardin.html" class="bouton">Aller au jardin tout de suite</a>
+        <p>Merci, ton annonce a bien été enregistrée.</p>
+        <p>Tu peux maintenant retourner à l'accueil pour voir le jardin.</p>
+        <a href="index.html" class="bouton-retour">RETOUR À L'ACCUEIL</a>
     </div>
-
 </body>
 </html>
