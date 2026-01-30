@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Offrir - Le Petit Prince des Jardiniers</title>
+    <style>
+        body { 
+            background-color: #FFFFFF; 
+            background-image: url('http://thiaha.free.fr/improFranckcopyrith.bmp'); 
+            background-attachment: fixed; 
+            font-family: "Comic Sans MS", cursive, sans-serif; 
+            color: #000080; 
+            text-align: center; 
+            margin: 0; padding: 0;
+        }
+        .cadre-form {
+            max-width: 700px;
+            margin: 20px auto;
+            padding: 25px;
+            background: rgba(255, 255, 255, 0.96);
+            border: 8px ridge #800080;
+            border-radius: 15px;
+        }
+        h1 { color: #FF0000; text-decoration: underline; }
+        .section { text-align: left; margin-top: 15px; padding: 15px; border-bottom: 2px dashed #008080; }
+        label { font-weight: bold; display: block; margin-top: 10px; color: #800080; }
+        input, select, textarea { width: 100%; padding: 10px; margin-top: 5px; border: 2px solid #000080; border-radius: 8px; box-sizing: border-box; }
+        .btn-envoyer { 
+            background-color: #FFFF00; color: #FF0000; padding: 20px; border: 4px solid #000080; 
+            font-weight: bold; font-size: 1.4em; cursor: pointer; width: 100%; margin-top: 25px; border-radius: 50px;
+        }
+        footer { margin-top: 30px; font-size: 0.85em; }
+    </style>
+</head>
+<body>
+<div class="cadre-form">
+    <h1>Déposer un Cadeau Humain</h1>
+    <form action="https://script.google.com/macros/s/AKfycbyn3wHjdoGOl_GbVtGkJDSUEnBKhnviE1RXxDJlNkbLOQ8L4QZ_ms7dKSm3Xas6Oqr_/exec" method="POST">
+        <div class="section">
+            <label>Votre Identifiant (Prénom ou Pseudo) :</label>
+            <input type="text" name="identifiant" required>
+            <label>Votre Code Secret (Signature) :</label>
+            <input type="password" name="code_secret" required>
+        </div>
+        <div class="section">
+            <label>Pays :</label>
+            <input type="text" name="pays" value="France" required>
+            <label>Ville et Code Postal :</label>
+            <input type="text" name="ville" placeholder="Ex: Pessac 33600" required>
+            <label>Zone d'action (KM) :</label>
+            <input type="number" name="km" placeholder="Ex: 20">
+        </div>
+        <div class="section">
+            <label>Description du Cadeau :</label>
+            <textarea name="description" rows="5" required></textarea>
+            <label>Durée :</label>
+            <select name="duree">
+                <option value="12 mois">Permanent (12 mois)</option>
+                <option value="Ponctuel">Ponctuel (Heures/Jours)</option>
+            </select>
+        </div>
+        <div class="section">
+            <label>Attente en retour (Facultatif) :</label>
+            <input type="text" name="retour_souhaite">
+        </div>
+        <button type="submit" class="btn-envoyer">🌻 SEMER CE CADEAU</button>
+    </form>
+    <footer>
+        <strong>© 2000 | Copyrith Le Petit Prince des Jardiniers</strong><br>
+        Franck José Baptiste Pinon de Pessac
+        <p><a href="index.htm" style="color: #800080; font-weight: bold;">Retour à l'accueil</a></p>
+    </footer>
+</div>
+</body>
+</html>
