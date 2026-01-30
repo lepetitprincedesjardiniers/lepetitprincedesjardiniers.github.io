@@ -2,87 +2,46 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <title>Passer une annonce - Le Petit Prince des Jardiniers</title>
+    <title>Semer une annonce - Le Petit Prince</title>
+    <style>
+        body { background-color: #FFF8E1; font-family: "Comic Sans MS", cursive, sans-serif; color: #000080; text-align: center; padding: 20px; }
+        form { background-color: white; border: 3px double #000080; padding: 25px; text-align: left; border-radius: 15px; display: inline-block; max-width: 500px; }
+        h1 { color: #FF0000; text-decoration: underline; }
+        label { font-weight: bold; display: block; margin-top: 15px; }
+        input, textarea, select { width: 100%; margin-top: 5px; padding: 10px; border-radius: 8px; border: 1px solid #ccc; box-sizing: border-box; }
+        button { background-color: #FF0000; color: white; padding: 15px; border: 2px solid #000080; cursor: pointer; font-weight: bold; width: 100%; margin-top: 20px; font-size: 18px; border-radius: 8px; }
+        .note { font-size: 12px; color: #555; margin-top: 15px; font-style: italic; }
+    </style>
 </head>
-<body bgcolor="#FFFFFF" background="http://thiaha.free.fr/improFranckcopyrith.bmp" text="#000080">
+<body>
 
-<center>
-    <br>
-    <font face="Comic Sans MS" size="6" color="#FF0000">
-        <u><b>Passer une annonce : Don et Partage</b></u>
-    </font>
-    <br><br>
-
+    <h1>Semer une proposition</h1>
+    
     <form action="https://script.google.com/macros/s/AKfycbxuILkBo4L8JIK6ks1XsLpWMxvcviXSyMekJZI_sz-L_hRJygEDAoSVSzZ526DvsnTN/exec" method="POST">
         
-        <table border="2" cellpadding="10" cellspacing="0" width="85%" bordercolor="#000080" bgcolor="#F9F9F9">
-            
-            <tr>
-                <td bgcolor="#E0E0E0"><b><font face="Comic Sans MS" color="#FF0000">Renseignements personnels</font></b></td>
-            </tr>
-            <tr>
-                <td>
-                    <font face="Comic Sans MS">
-                        Prénom / Identifiant : <input type="text" name="identifiant" size="30" required> <br>
-                        Code Secret (Signature) : <input type="password" name="code_secret" size="15" required>
-                    </font>
-                </td>
-            </tr>
+        <label>Ton Identifiant (Pseudo) :</label>
+        <input type="text" name="identifiant" required>
 
-            <tr>
-                <td bgcolor="#E0E0E0"><b><font face="Comic Sans MS" color="#FF0000">Localisation</font></b></td>
-            </tr>
-            <tr>
-                <td>
-                    <font face="Comic Sans MS">
-                        Pays : <input type="text" name="pays" value="France" size="20"> 
-                        Ville/CP : <input type="text" name="ville" size="25" required> <br>
-                        Rayon d'action (km) : <input type="number" name="km" size="5" value="0">
-                    </font>
-                </td>
-            </tr>
+        <label>Pays / Ville :</label>
+        <input type="text" name="ville" required placeholder="Ex: France, Lyon">
 
-            <tr>
-                <td bgcolor="#E0E0E0"><b><font face="Comic Sans MS" color="#FF0000">Description du cadeau</font></b></td>
-            </tr>
-            <tr>
-                <td>
-                    <font face="Comic Sans MS">
-                        <i>Décrivez ici votre proposition :</i><br>
-                        <textarea name="description" cols="60" rows="8" required></textarea>
-                        <br><br>
-                        <b>Durée de l'annonce :</b> 
-                        <select name="duree">
-                            <option value="1">1 jour</option>
-                            <option value="7">7 jours</option>
-                            <option value="30">1 mois</option>
-                            <option value="365">1 an (Renouvelable)</option>
-                        </select>
-                    </font>
-                </td>
-            </tr>
+        <label>Description (Graines, outils, aide...) :</label>
+        <textarea name="description" rows="4" required></textarea>
 
-            <tr>
-                <td bgcolor="#FFFF00">
-                    <font face="Comic Sans MS">
-                        <b>Ce que j'espère en retour :</b><br>
-                        <input type="text" name="retour_souhaite" size="70" value="Un don ne demande pas de retour , si c'est vraiment une générosité altruiste !">
-                    </font>
-                </td>
-            </tr>
+        <label>Contact & Lieu de rendez-vous :</label>
+        <textarea name="contact" rows="3" required placeholder="Tél, Email ou lieu dit..."></textarea>
 
-            <tr>
-                <td align="center">
-                    <br>
-                    <input type="submit" value=" VALIDER ET SEMER MON ANNONCE " style="font-family:Comic Sans MS; font-weight:bold; color:#FF0000; cursor:pointer; padding:10px;">
-                    <br><br>
-                </td>
-            </tr>
-        </table>
+        <label>Durée de l'annonce :</label>
+        <select name="duree">
+            <option value="30">30 jours</option>
+            <option value="90">90 jours</option>
+            <option value="365" selected>1 an</option>
+        </select>
+
+        <button type="submit">SEMER DANS LE JARDIN</button>
+
+        <p class="note">Pour retirer une annonce avant la fin, contactez-moi discrètement.</p>
     </form>
-    <br>
-    <font face="Comic Sans MS" size="2">© 2000 | Le Petit Prince des Jardiniers</font>
-</center>
 
 </body>
 </html>
