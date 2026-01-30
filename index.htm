@@ -2,95 +2,101 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <title>Accueil - Le Petit Prince des Jardiniers</title>
+    <title>Le Petit Prince des Jardiniers</title>
     <style>
-        /* Style fidèle à l'univers du Petit Prince */
         body {
-            background-color: #FFF8E1; /* Fond crème */
+            background-color: #FFF8E1; /* Fond crème identique */
             color: #000080; /* Bleu marine */
             font-family: "Comic Sans MS", cursive, sans-serif;
-            text-align: center;
             margin: 0;
-            padding: 40px 20px;
+            padding: 0;
         }
 
-        .cadre-accueil {
-            background-color: #FFFFFF;
-            border: 5px double #000080;
-            max-width: 700px;
+        /* Conteneur principal pour centrer comme sur Free */
+        .main-table {
+            width: 100%;
+            max-width: 800px;
             margin: 0 auto;
-            padding: 40px;
-            border-radius: 20px;
-            box-shadow: 10px 10px 0px rgba(0, 0, 128, 0.05);
+            text-align: center;
         }
 
         h1 {
-            color: #FF0000; /* Rouge */
+            color: #FF0000; /* Rouge vif */
             text-decoration: underline;
-            font-size: 32px;
-            margin-top: 0;
+            font-size: 28px;
+            margin-top: 30px;
         }
 
-        .citation {
-            font-style: italic;
-            color: #555;
-            margin: 20px 0;
-            font-size: 18px;
-        }
-
-        .presentation {
-            font-size: 19px;
-            line-height: 1.6;
-            margin-bottom: 30px;
-        }
-
-        /* Le bouton pour aller vers le formulaire */
-        .bouton-action {
+        .cadre-central {
+            border: 4px double #000080; /* Double bordure bleue */
+            background-color: #FFFFFF;
+            padding: 25px;
+            margin: 20px;
             display: inline-block;
-            background-color: #FF0000;
-            color: #FFFFFF !important;
-            padding: 20px 40px;
-            text-decoration: none;
-            font-weight: bold;
-            font-size: 20px;
-            border: 2px solid #000080;
-            border-radius: 10px;
-            cursor: pointer;
+            width: 90%;
         }
 
-        .bouton-action:hover {
-            background-color: #D30000;
-            transform: scale(1.02);
+        .paragraphe {
+            font-size: 18px;
+            line-height: 1.5;
+            margin: 15px 0;
+        }
+
+        .bouton-lien {
+            color: #FF0000; /* Rouge */
+            font-weight: bold;
+            font-size: 22px;
+            text-decoration: none;
+            display: inline-block;
+            margin: 20px 0;
+            padding: 10px 20px;
+            border: 2px solid #FF0000;
+        }
+
+        .bouton-lien:hover {
+            background-color: #FF0000;
+            color: #FFFFFF;
         }
 
         footer {
-            margin-top: 50px;
+            margin-top: 40px;
             font-size: 12px;
-            color: #000080;
+            padding-bottom: 20px;
         }
     </style>
 </head>
 <body>
 
-    <div class="cadre-accueil">
+    <div class="main-table">
+        <br>
         <h1>Le Petit Prince des Jardiniers</h1>
-        
-        <p class="citation">"S'il vous plaît... dessine-moi un jardin !"</p>
-        
-        <div class="presentation">
-            Bienvenue dans ce jardin d'échange et de partage.<br>
-            Ici, chaque graine semée est une proposition généreuse : 
-            un don, un prêt d'outil ou un coup de main entre passionnés.
+
+        <div class="cadre-central">
+            <p class="paragraphe">
+                <b>"S'il vous plaît... dessine-moi un jardin !"</b>
+            </p>
+            
+            <p class="paragraphe">
+                Bienvenue dans cet espace de partage.<br>
+                Ici, nous cultivons la solidarité et le don.
+            </p>
+
+            <p class="paragraphe">
+                Chaque annonce est une graine que vous semez<br>
+                pour aider un autre jardinier.
+            </p>
+
+            <a href="formulaire.htm" class="bouton-lien">
+                🌻 CLIQUE ICI POUR SEMER TON ANNONCE 🌻
+            </a>
         </div>
 
-        <a href="formulaire.html" class="bouton-action">
-            🌻 SEMER UNE PROPOSITION 🌻
-        </a>
+        <footer>
+            <hr width="50%" color="#000080">
+            © 2000-2026 | Franck José Baptiste Pinon<br>
+            Le Petit Prince des Jardiniers
+        </footer>
     </div>
-
-    <footer>
-        © 2000-2026 | Franck José Baptiste Pinon
-    </footer>
 
 </body>
 </html>
