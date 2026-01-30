@@ -1,82 +1,24 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html>
 <head>
     <meta charset="UTF-8">
-    <title>Le Petit Prince des Jardiniers - Semer une annonce</title>
+    <title>Merci ! - Le Petit Prince des Jardiniers</title>
+    <meta http-equiv="refresh" content="5;url=index.html">
     <style>
-        /* Style simple pour correspondre à ton univers */
-        body {
-            background-color: #FFF8E1;
-            font-family: "Comic Sans MS", cursive, sans-serif;
-            color: #000080;
-            text-align: center;
-            padding: 20px;
-        }
-        form {
-            background-color: white;
-            border: 2px solid #000080;
-            padding: 20px;
-            display: inline-block;
-            text-align: left;
-            max-width: 500px;
-            border-radius: 10px;
-        }
-        input, textarea, select {
-            width: 100%;
-            margin-bottom: 15px;
-            padding: 8px;
-            border: 1px solid #ccc;
-        }
-        button {
-            background-color: #FF0000;
-            color: white;
-            padding: 10px 20px;
-            border: none;
-            cursor: pointer;
-            font-weight: bold;
-            width: 100%;
-        }
-        button:hover {
-            background-color: #cc0000;
-        }
+        body { background-color: #FFF8E1; color: #000080; font-family: "Comic Sans MS", cursive, sans-serif; text-align: center; padding-top: 100px; }
+        .cadre { border: 4px double #000080; background-color: #FFFFFF; display: inline-block; padding: 40px; border-radius: 15px; }
+        h1 { color: #FF0000; }
+        p { font-size: 18px; }
+        .sablier { font-size: 30px; margin-top: 20px; }
     </style>
 </head>
 <body>
-
-    <h1>Semer une proposition dans le jardin</h1>
-    
-    <form action="https://script.google.com/macros/s/AKfycbxuILkBo4L8JIK6ks1XsLpWMxvcviXSyMekJZI_sz-L_hRJygEDAoSVSzZ526DvsnTN/exec" method="POST">
-        
-        <label>Identifiant / Pseudo :</label>
-        <input type="text" name="identifiant" required placeholder="Ex: Petit Prince">
-
-        <label>Code secret (pour modifier plus tard) :</label>
-        <input type="password" name="code_secret" required>
-
-        <label>Pays :</label>
-        <input type="text" name="pays" value="France">
-
-        <label>Ville :</label>
-        <input type="text" name="ville" required>
-
-        <label>Distance max (KM) :</label>
-        <input type="number" name="km" value="0">
-
-        <label>Description de ton partage :</label>
-        <textarea name="description" rows="4" required placeholder="Que souhaites-tu partager ?"></textarea>
-
-        <label>Durée de l'annonce (en jours) :</label>
-        <select name="duree">
-            <option value="30">30 jours</option>
-            <option value="90">90 jours</option>
-            <option value="365" selected>1 an</option>
-        </select>
-
-        <label>Type de retour souhaité :</label>
-        <input type="text" name="retour_souhaite" placeholder="Ex: Don pur, échange...">
-
-        <button type="submit">SEMER L'ANNONCE</button>
-    </form>
-
+    <div class="cadre">
+        <h1>Graine semée avec succès !</h1>
+        <p>Merci, ton annonce a bien été ajoutée au jardin.</p>
+        <p>Tu vas être redirigé vers l'accueil dans quelques secondes...</p>
+        <div class="sablier">⏳</div>
+        <p><a href="index.html" style="color: #FF0000;">Clique ici si tu ne veux pas attendre.</a></p>
+    </div>
 </body>
 </html>
