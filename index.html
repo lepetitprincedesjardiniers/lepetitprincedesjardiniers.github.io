@@ -5,77 +5,66 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Le Petit Prince des Jardiniers</title>
     <style>
-        /* Style inspiré du Petit Prince : Doux et coloré */
+        /* Fond crème et ambiance végétale */
         body { 
             background-color: #FFF8E1; 
-            color: #000080; 
+            color: #2E7D32; 
             font-family: "Comic Sans MS", cursive, sans-serif; 
             text-align: center; 
-            padding: 50px 20px;
+            padding: 50px 20px; 
             margin: 0;
         }
-        h1 { 
-            color: #FF0000; 
-            text-shadow: 2px 2px #FFD700; 
-            font-size: 35px;
-            text-decoration: underline;
+
+        .conteneur-accueil {
+            background-color: white;
+            border: 4px double #4CAF50;
+            padding: 40px;
+            border-radius: 30px;
+            display: inline-block;
+            max-width: 600px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
         }
-        .citation { 
-            font-style: italic; 
-            margin-bottom: 40px; 
-            color: #555; 
+
+        h1 { font-size: 2.5em; margin-bottom: 10px; color: #1B5E20; }
+        .citation { font-style: italic; color: #666; margin-bottom: 30px; }
+
+        .menu-boutons {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            align-items: center;
         }
-        .menu { 
-            display: flex; 
-            flex-direction: column; 
-            gap: 20px; 
-            align-items: center; 
-            margin-top: 30px;
-        }
-        /* Style des boutons de navigation */
-        .bouton { 
-            width: 280px; 
-            padding: 20px; 
-            font-size: 18px; 
+
+        /* Style des boutons verts */
+        .bouton {
+            display: block;
+            width: 80%;
+            padding: 15px 25px;
+            text-decoration: none;
+            color: white;
+            background-color: #4CAF50;
+            border-radius: 50px;
             font-weight: bold;
-            color: white; 
-            background-color: #FF0000; 
-            border: 2px solid #000080;
-            border-radius: 15px; 
-            text-decoration: none; 
-            transition: transform 0.2s, background-color 0.2s;
-            box-shadow: 4px 4px 0px #000080;
+            font-size: 1.1em;
+            transition: 0.3s;
+            box-shadow: 0 4px 0 #2E7D32;
         }
-        .bouton:hover { 
-            background-color: #000080; 
-            transform: scale(1.05); 
+
+        .bouton:hover {
+            background-color: #388E3C;
+            transform: translateY(-3px);
+            box-shadow: 0 7px 0 #1B5E20;
         }
-        .footer {
-            margin-top: 60px;
-            font-size: 14px;
-            opacity: 0.8;
-        }
+
+        .fleur-deco { font-size: 40px; margin: 20px 0; }
     </style>
 </head>
 <body>
 
-    <h1>Le Petit Prince des Jardiniers</h1>
-    <p class="citation">"S'il vous plaît... dessine-moi un jardin."</p>
+    <div class="conteneur-accueil">
+        <div class="fleur-deco">🌻</div>
+        <h1>Bienvenue, Jardinier</h1>
+        <p class="citation">"C'est le temps que tu as perdu pour ta rose qui fait ta rose si importante."</p>
 
-    <div class="menu">
-        <a href="formulaire.htm" class="bouton">🌻 SEMER (Annoncer)</a>
-        
-        <a href="jardin.html" class="bouton">👀 VOIR LE JARDIN</a>
-        
-        <a href="contact.html" class="bouton">📧 ME CONTACTER</a>
-    </div>
-
-   <div class="menu-boutons">
-    <a href="jardin.html" class="bouton-vert">🌻 Voir le Jardin</a>
-    <a href="formulaire.html" class="bouton-vert">🌱 Semer une Graine</a>
-    <a href="contact.html" class="bouton-vert">✉️ Me contacter</a>
-        <p>Échangeons nos graines, nos outils et nos sourires.</p>
-    </div>
-
-</body>
-</html>
+        <div class="menu-boutons">
+            <a href="jardin.html" class="bouton">🌻 VOIR LE JARDIN (An
