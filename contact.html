@@ -1,16 +1,82 @@
-<div class="cadre-contact">
-    <form action="https://script.google.com/macros/s/AKfycbxuILkBo4L8JIK6ks1XsLpWMxvcviXSyMekJZI_sz-L_hRJygEDAoSVSzZ526DvsnTN/exec" method="POST">
-        <input type="hidden" name="formType" value="contact">
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact - Le Petit Prince des Jardiniers</title>
+    <style>
+        /* Fond crème et police douce */
+        body { 
+            background-color: #FFF8E1; 
+            color: #000080; 
+            font-family: "Comic Sans MS", cursive, sans-serif; 
+            text-align: center; 
+            padding: 20px; 
+            margin: 0;
+        }
 
-        <label>Ton Nom :</label>
-        <input type="text" name="nom" required>
+        /* Bouton Retour identique au Jardin */
+        .bouton-retour { 
+            display: inline-block; 
+            margin-bottom: 20px; 
+            color: #FF0000; 
+            text-decoration: none; 
+            font-weight: bold; 
+            border: 2px solid #FF0000; 
+            padding: 10px 20px; 
+            border-radius: 8px;
+            background-color: white;
+            transition: 0.3s;
+        }
+        .bouton-retour:hover {
+            background-color: #FF0000;
+            color: white;
+        }
 
-        <label>Ton Email :</label>
-        <input type="email" name="email" required>
+        /* Le cadre du formulaire */
+        .cadre-contact { 
+            background-color: white; 
+            border: 4px double #000080; 
+            padding: 30px; 
+            border-radius: 15px; 
+            display: inline-block; 
+            text-align: left; 
+            max-width: 450px; 
+            width: 90%; 
+            box-shadow: 5px 5px 15px rgba(0,0,0,0.1);
+        }
 
-        <label>Ton Message :</label>
-        <textarea name="message" rows="6" required></textarea>
+        h1 { color: #FF0000; text-decoration: underline; margin-top: 0; }
+        
+        label { 
+            font-weight: bold; 
+            display: block; 
+            margin-top: 15px; 
+            text-decoration: underline;
+        }
 
-        <button type="submit">ENVOYER AU JARDINIER</button>
-    </form>
-</div>
+        input, textarea { 
+            width: 100%; 
+            padding: 12px; 
+            margin-top: 5px;
+            border: 1px solid #000080; 
+            border-radius: 8px; 
+            box-sizing: border-box; 
+            font-family: sans-serif;
+        }
+
+        /* Le gros bouton rouge pour envoyer */
+        button { 
+            background-color: #FF0000; 
+            color: white; 
+            padding: 15px; 
+            border: 2px solid #000080; 
+            cursor: pointer; 
+            font-weight: bold; 
+            width: 100%; 
+            margin-top: 25px; 
+            border-radius: 8px; 
+            font-size: 18px;
+            transition: 0.3s;
+        }
+        button:hover
