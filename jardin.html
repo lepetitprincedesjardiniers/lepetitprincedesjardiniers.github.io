@@ -2,13 +2,13 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <title>Le Jardin des Partages</title>
+    <title>Le Mur des Annonces - Le Petit Prince</title>
     <style>
         body { background-color: #FFF8E1; color: #000080; font-family: "Comic Sans MS", cursive, sans-serif; text-align: center; padding: 20px; }
         h1 { color: #FF0000; text-decoration: underline; }
         .bouton-retour { display: inline-block; margin-bottom: 30px; color: #FF0000; text-decoration: none; font-weight: bold; border: 1px solid #FF0000; padding: 10px; border-radius: 8px; }
         
-        /* Style des petites annonces */
+        /* Style des cartes d'annonces */
         #listeAnnonces { display: flex; flex-direction: column; align-items: center; gap: 20px; }
         .annonce { 
             background-color: white; 
@@ -21,50 +21,61 @@
             box-shadow: 4px 4px 10px rgba(0,0,0,0.05);
         }
         .annonce h2 { color: #FF0000; font-size: 18px; margin-top: 0; border-bottom: 1px solid #EEE; padding-bottom: 10px; }
+        .info { margin: 10px 0; }
         .label { font-weight: bold; color: #000080; text-decoration: underline; }
         .chargement { font-style: italic; color: #555; margin-top: 50px; }
     </style>
 </head>
 <body>
 
-    <a href="https://lepetitprincedesjardiniers.github.io/" class="bouton-retour">⬅ Retour à l'accueil</a>
+    <a href="index.html" class="bouton-retour">⬅ Retour à l'accueil</a>
     
     <h1>Le Jardin des Annonces</h1>
-    <p><i>"Toutes les grandes personnes ont d'abord été des enfants."</i></p>
+    <p><i>"Voici mon secret. Il est très simple : on ne voit bien qu'avec le cœur."</i></p>
 
     <div id="chargement" class="chargement">Le jardin est en train de fleurir... patientez...</div>
+    
     <div id="listeAnnonces"></div>
 
     <script>
-        const url = "https://script.google.com/macros/s/AKfycbxuILkBo4L8JIK6ks1XsLpWMxvcviXSyMekJZI_sz-L_hRJygEDAoSVSzZ526DvsnTN/exec";
+        // Ton lien Google Script (le moteur de ton site)
+        const urlScript = "https://script.google.com/macros/s/AKfycbxuILkBo4L8JIK6ks1XsLpWMxvcviXSyMekJZI_sz-L_hRJygEDAoSVSzZ526DvsnTN/exec";
 
-        async function lireJardin() {
+        async function afficherAnnonces() {
             try {
-                // On appelle le script Google
-                const response = await fetch(url);
+                // On demande les données au script
+                const response = await fetch(urlScript);
                 const data = await response.json();
                 
+                // On cache le message de chargement
                 document.getElementById('chargement').style.display = 'none';
-                const container = document.getElementById('listeAnnonces');
+                const conteneur = document.getElementById('listeAnnonces');
 
-                // On affiche de la plus récente à la plus ancienne
+                if (data.length === 0) {
+                    conteneur.innerHTML = "<p>Le jardin est vide pour l'instant. Soyez le premier à semer une graine !</p>";
+                    return;
+                }
+
+                // On affiche les annonces (de la plus récente à la plus ancienne)
                 data.reverse().forEach(annonce => {
                     const div = document.createElement('div');
                     div.className = 'annonce';
                     div.innerHTML = `
-                        <h2>🌻 Graine de : ${annonce.identifiant}</h2>
-                        <p><span class="label">Où :</span> ${annonce.ville}</p>
-                        <p><span class="label">Offre :</span> ${annonce.description}</p>
-                        <p><span class="label">Contact :</span> ${annonce.contact}</p>
+                        <h2>🌻 Graine de : ${annonce.identifiant || 'Anonyme'}</h2>
+                        <div class="info"><span class="label">Où :</span> ${annonce.ville}</div>
+                        <div class="info"><span class="label">Offre :</span> ${annonce.description}</div>
+                        <div class="info"><span class="label">Contact :</span> ${annonce.contact}</div>
                     `;
-                    container.appendChild(div);
+                    conteneur.appendChild(div);
                 });
             } catch (error) {
+                console.error("Erreur :", error);
                 document.getElementById('chargement').innerHTML = "Le jardin est timide aujourd'hui... <br>Vérifie que tu as bien activé la fonction doGet dans ton script Google.";
             }
         }
 
-        lireJardin();
+        // Lancement de la lecture au chargement de la page
+        afficherAnnonces();
     </script>
 </body>
 </html>
