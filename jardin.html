@@ -7,7 +7,7 @@
         body { background-color: #FFF8E1; color: #000080; font-family: "Comic Sans MS", cursive, sans-serif; text-align: center; padding: 20px; }
         h1 { color: #FF0000; text-decoration: underline; }
         
-        /* STYLE DU BOUTON RETOUR */
+        /* STYLE DU BOUTON RETOUR FORCE VERS L'ACCUEIL */
         .bouton-retour { 
             display: inline-block; 
             margin-bottom: 30px; 
@@ -17,7 +17,7 @@
             border: 2px solid #FF0000; 
             padding: 10px 20px; 
             border-radius: 8px;
-            transition: 0.3s;
+            background-color: white;
         }
         .bouton-retour:hover {
             background-color: #FF0000;
@@ -42,7 +42,7 @@
 </head>
 <body>
 
-    <a href="index.html" class="bouton-retour">⬅ RETOUR À L'ACCUEIL</a>
+    <a href="https://lepetitprincedesjardiniers.github.io/" class="bouton-retour">⬅ RETOUR À L'ACCUEIL</a>
     
     <h1>Le Jardin des Annonces</h1>
     <p><i>"On ne voit bien qu'avec le cœur."</i></p>
@@ -61,7 +61,7 @@
                 document.getElementById('chargement').style.display = 'none';
                 const conteneur = document.getElementById('listeAnnonces');
 
-                if (data.length === 0) {
+                if (!data || data.length === 0) {
                     conteneur.innerHTML = "<p>Le jardin est vide pour l'instant.</p>";
                     return;
                 }
