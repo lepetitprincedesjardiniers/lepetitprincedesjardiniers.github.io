@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html>
 <head>
     <meta charset="UTF-8">
@@ -13,38 +14,25 @@
     </style>
 </head>
 <body>
-
     <h1>Semer une proposition</h1>
-    
     <form action="https://script.google.com/macros/s/AKfycbxuILkBo4L8JIK6ks1XsLpWMxvcviXSyMekJZI_sz-L_hRJygEDAoSVSzZ526DvsnTN/exec" method="POST">
-        
         <label>Ton Identifiant (Pseudo) :</label>
         <input type="text" name="identifiant" required>
-
         <label>Pays / Ville :</label>
         <input type="text" name="ville" required placeholder="Ex: France, Lyon">
-
         <label>Description de ton partage :</label>
         <textarea name="description" rows="4" required placeholder="Graines, aide, outils..."></textarea>
-
         <label>Moyen de contact ou lieu de rendez-vous :</label>
         <textarea name="contact" rows="3" required>Email ou téléphone ou moyen de contact ou lieu de rendez-vous...</textarea>
-
-        <label>Durée de visibilité de l'annonce :</label>
+        <label>Durée de visibilité :</label>
         <select name="duree">
             <option value="1">1 jour</option>
             <option value="7">1 semaine</option>
             <option value="30">1 mois</option>
             <option value="365" selected>1 an</option>
         </select>
-
         <button type="submit">SEMER DANS LE JARDIN</button>
-
-        <p class="note">
-            L'annonce s'effacera seule à la fin de la durée choisie.<br>
-            Me contacter discrètement pour effacer l'annonce avant.
-        </p>
+        <p class="note">L'annonce s'effacera seule à la fin de la durée choisie.<br>Me contacter discrètement pour effacer l'annonce avant.</p>
     </form>
-
 </body>
 </html>
