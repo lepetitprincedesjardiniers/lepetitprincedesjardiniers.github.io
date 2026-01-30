@@ -1,60 +1,16 @@
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-    <meta charset="UTF-8">
-    <title>Contact - Le Petit Prince des Jardiniers</title>
-    <style>
-        body { background-color: #FFF8E1; color: #000080; font-family: "Comic Sans MS", cursive, sans-serif; text-align: center; padding: 20px; }
-        .cadre-contact { 
-            background-color: white; 
-            border: 4px double #000080; 
-            padding: 30px; 
-            border-radius: 15px; 
-            display: inline-block; 
-            text-align: left; 
-            max-width: 450px; 
-            width: 90%; 
-            margin-top: 20px;
-            box-shadow: 5px 5px 15px rgba(0,0,0,0.1);
-        }
-        h1 { color: #FF0000; text-decoration: underline; margin-bottom: 5px; }
-        .citation { font-style: italic; font-size: 14px; margin-bottom: 20px; color: #555; }
-        label { font-weight: bold; display: block; margin-top: 15px; }
-        input, textarea { 
-            width: 100%; padding: 12px; border: 1px solid #000080; 
-            border-radius: 8px; box-sizing: border-box; font-family: sans-serif;
-        }
-        button { 
-            background-color: #FF0000; color: white; padding: 15px; 
-            border: 2px solid #000080; cursor: pointer; font-weight: bold; 
-            width: 100%; margin-top: 25px; border-radius: 8px; font-size: 18px;
-            transition: 0.3s;
-        }
-        button:hover { background-color: #000080; }
-        .retour { display: inline-block; margin-bottom: 20px; color: #FF0000; text-decoration: none; font-weight: bold; border: 1px solid #FF0000; padding: 5px 10px; border-radius: 5px; }
-    </style>
-</head>
-<body>
+<div class="cadre-contact">
+    <form action="https://script.google.com/macros/s/AKfycbxuILkBo4L8JIK6ks1XsLpWMxvcviXSyMekJZI_sz-L_hRJygEDAoSVSzZ526DvsnTN/exec" method="POST">
+        <input type="hidden" name="formType" value="contact">
 
-    <a href="index.html" class="retour">⬅ Retour au menu</a>
+        <label>Ton Nom :</label>
+        <input type="text" name="nom" required>
 
-    <h1>Écrire au Jardinier</h1>
-    <p class="citation">"C'est le temps que tu as perdu pour ta rose qui fait ta rose si importante."</p>
-    
-    <div class="cadre-contact">
-        <form action="https://formspree.io/f/TON_EMAIL" method="POST">
-            <label>Ton Nom :</label>
-            <input type="text" name="nom" placeholder="Ex: Antoine" required>
+        <label>Ton Email :</label>
+        <input type="email" name="email" required>
 
-            <label>Ton Email :</label>
-            <input type="email" name="_replyto" placeholder="thiaha@free.fr" required>
+        <label>Ton Message :</label>
+        <textarea name="message" rows="6" required></textarea>
 
-            <label>Ton Message :</label>
-            <textarea name="message" rows="6" placeholder="Une question ? Une remarque ?" required></textarea>
-
-            <button type="submit">ENVOYER AU PETIT PRINCE</button>
-        </form>
-    </div>
-
-</body>
-</html>
+        <button type="submit">ENVOYER AU JARDINIER</button>
+    </form>
+</div>
