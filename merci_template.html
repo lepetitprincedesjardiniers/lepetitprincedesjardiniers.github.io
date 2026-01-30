@@ -1,24 +1,55 @@
 <!DOCTYPE html>
-<html>
+<html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <title>Merci ! - Le Petit Prince des Jardiniers</title>
-    <meta http-equiv="refresh" content="5;url=index.html">
+    <title>Merci - Le Petit Prince des Jardiniers</title>
+    <meta http-equiv="refresh" content="4;url=jardin.html">
     <style>
-        body { background-color: #FFF8E1; color: #000080; font-family: "Comic Sans MS", cursive, sans-serif; text-align: center; padding-top: 100px; }
-        .cadre { border: 4px double #000080; background-color: #FFFFFF; display: inline-block; padding: 40px; border-radius: 15px; }
-        h1 { color: #FF0000; }
-        p { font-size: 18px; }
-        .sablier { font-size: 30px; margin-top: 20px; }
+        body { 
+            background-color: #FFF8E1; 
+            color: #000080; 
+            font-family: "Comic Sans MS", cursive, sans-serif; 
+            text-align: center; 
+            padding-top: 100px; 
+        }
+        .cadre { 
+            border: 4px double #000080; 
+            background-color: #FFFFFF; 
+            display: inline-block; 
+            padding: 40px; 
+            border-radius: 15px;
+            box-shadow: 5px 5px 15px rgba(0,0,0,0.1);
+        }
+        h1 { color: #FF0000; text-decoration: underline; }
+        p { font-size: 18px; margin: 20px 0; }
+        .bouton {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 10px 20px;
+            color: #FF0000;
+            text-decoration: none;
+            border: 1px solid #FF0000;
+            font-weight: bold;
+        }
+        .bouton:hover {
+            background-color: #FF0000;
+            color: white;
+        }
     </style>
 </head>
 <body>
+
     <div class="cadre">
-        <h1>Graine semée avec succès !</h1>
-        <p>Merci, ton annonce a bien été ajoutée au jardin.</p>
-        <p>Tu vas être redirigé vers l'accueil dans quelques secondes...</p>
-        <div class="sablier">⏳</div>
-        <p><a href="index.html" style="color: #FF0000;">Clique ici si tu ne veux pas attendre.</a></p>
+        <h1>🌻 Graine semée !</h1>
+        <p>Merci ! Ton annonce vient d'être plantée dans le jardin.</p>
+        <p>Elle sera visible par tous les autres jardiniers d'ici quelques instants.</p>
+        
+        <div style="font-size: 40px; margin: 20px;">⏳</div>
+        
+        <p><i>Redirection vers le jardin en cours...</i></p>
+        
+        <a href="jardin.html" class="bouton">Aller au jardin tout de suite</a>
     </div>
+
 </body>
 </html>
