@@ -1,51 +1,49 @@
-!DOCTYPE html>
-<html>
+<!DOCTYPE html>
+<html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <title>Le Petit Prince des Jardiniers - Semer</title>
+    <title>Semer une annonce - Le Petit Prince</title>
     <style>
         body { background-color: #FFF8E1; color: #000080; font-family: "Comic Sans MS", cursive, sans-serif; text-align: center; padding: 20px; }
-        form { background-color: white; border: 3px double #000080; padding: 25px; text-align: left; border-radius: 15px; display: inline-block; max-width: 500px; width: 90%; }
+        .cadre { background-color: white; border: 4px double #000080; padding: 25px; border-radius: 15px; display: inline-block; text-align: left; max-width: 500px; width: 95%; }
         h1 { color: #FF0000; text-decoration: underline; }
         label { font-weight: bold; display: block; margin-top: 15px; }
         input, textarea, select { width: 100%; padding: 10px; border: 1px solid #000080; border-radius: 8px; box-sizing: border-box; }
-        button { background-color: #FF0000; color: white; padding: 15px; border: 2px solid #000080; cursor: pointer; font-weight: bold; width: 100%; margin-top: 25px; font-size: 18px; border-radius: 8px; }
-        .note { font-size: 11px; color: #555; margin-top: 20px; text-align: center; font-style: italic; }
+        button { background-color: #FF0000; color: white; padding: 15px; border: 2px solid #000080; cursor: pointer; font-weight: bold; width: 100%; margin-top: 25px; border-radius: 8px; font-size: 18px; }
     </style>
 </head>
 <body>
 
-    <h1>Semer une proposition</h1>
-    
-   <form action="https://script.google.com/macros/s/AKfycbxuILkBo4L8JIK6ks1XsLpWMxvcviXSyMekJZI_sz-L_hRJygEDAoSVSzZ526DvsnTN/exec" method="POST">
-        
-        <label>Ton Prénom (ou Pseudo) :</label>
-        <input type="text" name="identifiant" required placeholder="Ex: Antoine">
+    <a href="index.html" style="display: inline-block; margin-bottom: 20px; color: #FF0000; text-decoration: none; font-weight: bold;">⬅ Retour au menu</a>
 
-        <label>Pays / Ville :</label>
-        <input type="text" name="ville" required placeholder="Ex: France, Lyon">
+    <div class="cadre">
+        <h1>🌻 Semer une graine</h1>
+        <p><i>"C'est une folie de haïr toutes les roses parce qu'une épine vous a piqué."</i></p>
 
-        <label>Description de ton partage :</label>
-        <textarea name="description" rows="4" required placeholder="Graines, aide, outils..."></textarea>
+        <form action="https://script.google.com/macros/s/AKfycbxuILkBo4L8JIK6ks1XsLpWMxvcviXSyMekJZI_sz-L_hRJygEDAoSVSzZ526DvsnTN/exec" method="POST">
+            
+            <label>Ton Prénom (ou Identifiant) :</label>
+            <input type="text" name="identifiant" required>
 
-        <label>Moyen de contact ou lieu de rendez-vous :</label>
-        <textarea name="contact" rows="3" required>Email ou téléphone ou moyen de contact ou lieu de rendez-vous...</textarea>
+            <label>Ta Ville :</label>
+            <input type="text" name="ville" required>
 
-        <label>Durée de visibilité :</label>
-        <select name="duree">
-            <option value="1">1 jour</option>
-            <option value="7">1 semaine</option>
-            <option value="30">1 mois</option>
-            <option value="365" selected>1 an</option>
-        </select>
+            <label>Que proposes-tu ? (Graines, outils, aide...)</label>
+            <textarea name="description" rows="4" required></textarea>
 
-        <button type="submit">SEMER DANS LE JARDIN</button>
+            <label>Comment te contacter ? (Email ou Tél) :</label>
+            <input type="text" name="contact" required>
 
-        <p class="note">
-            L'annonce s'effacera seule à la fin de la durée choisie.<br>
-            Me contacter discrètement pour effacer l'annonce avant.
-        </p>
-    </form>
+            <label>Durée de l'annonce :</label>
+            <select name="duree">
+                <option>1 mois</option>
+                <option>3 mois</option>
+                <option>Indéfinie</option>
+            </select>
+
+            <button type="submit">SEMER DANS LE JARDIN</button>
+        </form>
+    </div>
 
 </body>
 </html>
