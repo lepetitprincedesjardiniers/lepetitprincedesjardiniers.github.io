@@ -2,54 +2,88 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Le Petit Prince des Jardiniers - Espace de Don</title>
+    <title>Le Petit Prince des Jardiniers - Accueil</title>
     <style>
-        body { font-family: 'Segoe UI', Arial, sans-serif; background-color: #fdfdfd; color: #1a1a1a; margin: 0; text-align: center; line-height: 1.6; }
-        header { background-color: #ffffff; padding: 40px 20px; border-bottom: 4px solid #008080; }
-        .titre-royal { font-size: 2.5em; color: #FF0000; font-family: "Comic Sans MS", cursive; margin: 0; }
-        .identite { color: #008080; font-weight: bold; font-size: 1.2em; margin-top: 10px; }
-        .container { max-width: 800px; margin: 30px auto; padding: 25px; background: white; border-radius: 15px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); border: 2px solid #800080; }
-        .philosophie { text-align: justify; background: #fffcf0; padding: 20px; border-left: 5px solid #FF0000; margin: 25px 0; font-style: italic; }
-        .btn-don { display: inline-block; background-color: #FF0000; color: white; padding: 18px 35px; text-decoration: none; font-weight: bold; font-size: 1.3em; border-radius: 50px; border: 2px solid #000; transition: 0.3s; }
-        .btn-don:hover { background-color: #FFFF00; color: #FF0000; transform: scale(1.05); }
-        .yt-section { background: #000080; color: white; padding: 30px; margin-top: 40px; }
-        .yt-link { color: #FF0000; background: white; padding: 10px 20px; text-decoration: none; font-weight: bold; border-radius: 5px; display: inline-block; margin-top: 10px; }
+        body { 
+            background-color: #FFFFFF; 
+            background-image: url('http://thiaha.free.fr/improFranckcopyrith.bmp'); 
+            background-attachment: fixed; 
+            font-family: "Comic Sans MS", cursive, sans-serif; 
+            color: #000080; 
+            text-align: center; 
+            margin: 0; padding: 0;
+        }
+        .cadre-principal {
+            max-width: 800px;
+            margin: 30px auto;
+            padding: 30px;
+            background: rgba(255, 255, 255, 0.95);
+            border: 10px ridge #800080;
+            border-radius: 20px;
+        }
+        h1 { color: #FF0000; text-decoration: underline; font-size: 2.5em; }
+        .identite { font-size: 1.3em; font-weight: bold; margin-bottom: 20px; }
+        .philosophie { 
+            text-align: justify; 
+            background-color: #f9f9f9; 
+            padding: 20px; 
+            border-left: 5px solid #FF0000; 
+            margin: 20px 0;
+        }
+        .btn-action {
+            display: inline-block;
+            background-color: #FFFF00;
+            color: #FF0000;
+            padding: 20px 40px;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 1.5em;
+            border: 3px solid #000080;
+            border-radius: 50px;
+            margin: 20px 0;
+        }
+        .btn-action:hover { background-color: #FF0000; color: #FFFF00; }
+        .yt-box { 
+            background-color: #000080; 
+            color: white; 
+            padding: 20px; 
+            border-radius: 10px;
+            margin-top: 30px;
+        }
+        .yt-link { color: #FFFF00; font-weight: bold; text-decoration: none; }
+        footer { margin-top: 40px; font-size: 0.9em; padding-bottom: 20px; }
     </style>
 </head>
 <body>
 
-<header>
-    <h1 class="titre-royal">Le Petit Prince des Jardiniers</h1>
+<div class="cadre-principal">
+    <h1>Le Petit Prince des Jardiniers</h1>
     <div class="identite">Franck José Baptiste Pinon de Pessac</div>
-    <p><i>Jardinier Humaniste • Philosophie • Fraternité</i></p>
-</header>
-
-<div class="container">
-    <h2>L'Espace du Don Pur</h2>
-    <p>Bienvenue sur cet autel numérique dédié au cadeau humain. Ici, rien n'est à vendre, rien n'est à troquer. Tout est offert avec le cœur.</p>
+    <p><i>Jardinier Humaniste - Éducateur - Philosophe</i></p>
 
     <div class="philosophie">
-        "De la misère à la richesse du cœur. Éducation, liberté, et analyse éthique des comportements. S'il vous plaît... dessine-moi un jardin d'entraide."
+        <strong>Ma Thèse :</strong> Analyse éthique des comportements, de la misère à la richesse du cœur. 
+        Ici, nous cultivons la fraternité et la dignité humaine à travers le don pur.
+        S'il vous plaît... dessine-moi une main tendue.
     </div>
 
-    <p>Vous souhaitez offrir un savoir, un objet, ou une parcelle de votre humanité ?</p>
+    <p>Partagez votre savoir, votre temps ou vos cadeaux :</p>
     
-    <a href="formulaire.htm" class="btn-don">🌻 OFFRIR UN CADEAU</a>
-</div>
+    <a href="formulaire.htm" class="btn-action">🌻 ENTRER DANS L'ESPACE DE DON</a>
 
-<div class="yt-section">
-    <h3>Ma Pensée en Images</h3>
-    <p>Analyse éthique, théorisation et solutions pour la dignité humaine.</p>
-    <a href="https://www.youtube.com/channel/UCjsudx7f1sl7XQM8ylcBRdQ" target="_blank" class="yt-link">▶ Voir la Chaîne YouTube</a>
-</div>
+    <div class="yt-box">
+        <strong>Retrouvez ma pensée en vidéo :</strong><br>
+        <a href="https://www.youtube.com/channel/UCjsudx7f1sl7XQM8ylcBRdQ" target="_blank" class="yt-link">
+            ▶ Chaîne YouTube : Le Petit Prince des Jardiniers
+        </a>
+    </div>
 
-<footer>
-    <p style="font-size: 0.8em; color: #666; padding: 20px;">
-        #Gratuité #Amour #Liberté #EgalitéSociale<br>
-        © 2026 - Le Petit Prince des Jardiniers
-    </p>
-</footer>
+    <footer>
+        <p>#Liberté #Amour #Gratuité #Fraternité</p>
+        <strong>© 2000 | Copyrith Le Petit Prince des Jardiniers</strong><br>
+        Franck José Baptiste Pinon de Pessac
+    </footer>
+</div>
 
 </body>
 </html>
