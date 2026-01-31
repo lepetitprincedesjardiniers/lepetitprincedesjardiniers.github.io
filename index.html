@@ -34,7 +34,10 @@
         }
         .soleil-don:hover { transform: scale(1.1) rotate(5deg); }
 
-        .bulles-grid { display: flex; justify-content: center; align-items: center; gap: 25px; flex-wrap: wrap; padding: 20px; max-width: 1200px; margin: auto; }
+        .bulles-grid { 
+            display: flex; justify-content: center; align-items: center; 
+            gap: 25px; flex-wrap: wrap; padding: 20px; max-width: 1200px; margin: auto; 
+        }
         
         .nuage { 
             background: #e0f7fa; border: 3px solid #008080; border-radius: 50px; padding: 20px; 
@@ -54,7 +57,6 @@
         
         .exemples { font-size: 0.85em; color: #2E7D32; font-style: italic; margin-top: 10px; font-weight: bold; }
 
-        /* Messagers et Coffre */
         .animal-container { position: fixed; z-index: 900; pointer-events: none; display: flex; align-items: center; }
         .bulle-texte { background: white; border: 2px solid #2E7D32; border-radius: 15px; padding: 8px 15px; font-weight: bold; opacity: 0; max-width: 250px; }
         #coffre-magique { position: fixed; font-size: 60px; z-index: 800; pointer-events: none; transition: transform 0.2s; }
@@ -76,7 +78,7 @@
             <td><a href="transition.html?page=index.html">Accueil</a></td>
             <td><a href="transition.html?page=formulaire.html">Semer</a></td>
             <td><a href="transition.html?page=jardin.html">Le Jardin</a></td>
-            <td><a href="transition.html?page=contact.html">Contact</a></td>
+            <td><a href="transition.html?page=regulation.html">Régulation</a></td>
         </tr>
     </table>
 
@@ -88,7 +90,7 @@
     </a>
 
     <div class="bulles-grid">
-        <a href="transition.html?page=règlement.html" class="nuage">
+        <a href="transition.html?page=regulation.html" class="nuage">
             <h3 style="color:#008080; margin:0; text-transform:uppercase;">📜 Impôt Public</h3>
             <p>Travaux publics en libre participation.</p>
             <div class="exemples">Ex : Nettoyage bois communal, tâches administratives...</div>
@@ -97,7 +99,7 @@
         <a href="transition.html?page=regulation.html" class="etoile-justice">
             <div style="width:70%;">
                 <h3>⚖️ Régulation Citoyenne</h3>
-                <p style="margin:10px 0; font-size:0.9em;">Justice avec délicatesse : soutien, pénitence ou pardon.</p>
+                <p>Justice avec délicatesse : soutien, pénitence ou pardon.</p>
             </div>
         </a>
 
@@ -112,7 +114,6 @@
     <footer><p>© 2000 <a href="https://www.youtube.com/channel/UCjsudx7f1sl7XQM8ylcBRdQ" target="_blank">Le petit prince des jardiniers</a></p></footer>
 
     <script>
-        // Gestion des messagers (Max 3 passages)
         const basePhrases = ["L'Impôt Public est un geste de cœur", "Besoin d'aide administrative ?", "Graines de générosité", "Le pardon est justice", "Besoin d'un câlin"];
         let disponibles = [...basePhrases];
         const typesAnimaux = ['🕊️', '🦋', '🐝', '🐞'];
