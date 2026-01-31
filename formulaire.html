@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -36,7 +37,7 @@
             box-sizing: border-box;
         }
 
-        #coffre-magique { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); font-size: 60px; z-index: 800; transition: transform 0.3s; }
+        #coffre-magique { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); font-size: 60px; z-index: 800; }
         #animal-container { position: fixed; z-index: 900; white-space: nowrap; display: flex; align-items: center; pointer-events: none; }
         #corps-animal { font-size: 50px; }
         #bulle-texte { background: rgba(255, 255, 255, 0.9); border-radius: 15px; padding: 8px 15px; font-style: italic; color: #2E7D32; margin-right: 10px; font-weight: bold; border: 2px solid #2E7D32; opacity: 0; transition: opacity 0.3s; }
@@ -118,7 +119,8 @@
                     <option value="1_jour">1 Journée</option>
                     <option value="1_semaine">1 Semaine</option>
                     <option value="1_mois">1 Mois</option>
-                    <option value="Toujours">Pour Toujours</option>
+                    <option value="annuel">Annuel (Une année de don)</option>
+                    <option value="Eternel">Éternel (Un don pour l'éternité)</option>
                 </select>
             </div>
             
@@ -148,7 +150,7 @@
     <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
 
     <script>
-        const mesPhrases = ["Le cadeau existentiel produit un don collectif", "Une paix rayonnante pour le monde", "La confiance cordiale du Don sincère"];
+        const mesPhrases = ["Le cadeau existentiel produit un don collectif", "Une paix rayonnante pour le monde", "Engendrer de la fraternité..."];
         const animaux = ['🕊️', '🦋', '🐝', '🐞', '🦜', '🐰', '🐿️', '🐬', '🦄'];
         const fleurs = ['🌸', '🌼', '🌻', '🌺'];
 
@@ -182,22 +184,4 @@
 
         function loop() {
             if (state === "APPROACHING") {
-                aniX += (targetX - aniX) * 0.015; aniY += (targetY - aniY) * 0.015;
-                bulle.style.opacity = "1";
-                if (Math.sqrt(Math.pow(targetX-aniX,2)+Math.pow(targetY-aniY,2)) < 60) {
-                    state = "DEPOSITING"; coffre.classList.add('pop'); createConfetti();
-                    setTimeout(() => { bulle.style.opacity = "0"; coffre.classList.remove('pop'); state = "LEAVING";
-                    targetX = window.innerWidth + 500; targetY = 200; }, 2500);
-                }
-            } else if (state === "LEAVING") {
-                aniX += (targetX - aniX) * 0.02; aniY += (targetY - aniY) * 0.02;
-                if (Math.abs(aniX - targetX) < 100) startNewMessenger();
-            }
-            animalCont.style.left = aniX + "px"; animalCont.style.top = aniY + "px";
-            corps.style.transform = (aniX < targetX) ? "scaleX(-1)" : "scaleX(1)";
-            requestAnimationFrame(loop);
-        }
-        startNewMessenger(); loop();
-    </script>
-</body>
-</html>
+                aniX += (targetX - aniX) * 0.015; aniY += (
