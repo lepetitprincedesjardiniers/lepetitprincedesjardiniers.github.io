@@ -10,11 +10,9 @@
             background-color: #FFFF00; color: #000080; overflow-x: hidden; min-height: 100vh; 
         }
         
-        /* Traduction Google */
         #google_translate_element { padding: 10px; background: rgba(255,255,255,0.5); border-bottom: 1px solid #008080; }
         
-        /* Menu Table */
-        .menu-table { margin: 20px auto; border-radius: 10px; background-color: #008080; border-collapse: collapse; margin-left: auto; margin-right: auto; }
+        .menu-table { margin: 20px auto; border-radius: 10px; background-color: #008080; border-collapse: collapse; margin: auto; }
         .menu-table td { padding: 10px 15px; border: 1px solid #FFFFFF; }
         .menu-table a { text-decoration: none; color: #FFFFFF; font-weight: bold; }
         
@@ -27,33 +25,37 @@
         }
         .soleil-don:hover { transform: scale(1.1) rotate(5deg); }
 
-        .bulles-grid { display: flex; justify-content: center; gap: 20px; flex-wrap: wrap; padding: 20px; max-width: 1200px; margin: auto; }
+        .bulles-grid { display: flex; justify-content: center; align-items: center; gap: 25px; flex-wrap: wrap; padding: 20px; max-width: 1200px; margin: auto; }
         
         .nuage { 
             background: #e0f7fa; border: 3px solid #008080; border-radius: 50px; padding: 20px; 
-            width: 280px; min-height: 150px; text-decoration: none; color: inherit; 
+            width: 300px; min-height: 200px; text-decoration: none; color: inherit; 
             display: flex; flex-direction: column; justify-content: center; transition: 0.3s; 
         }
         .nuage-rose { background: #ffebee; border-color: #e91e63; }
         .nuage:hover { transform: translateY(-10px); }
         
+        /* ÉTOILE QUI DEVIENT CERCLE */
         .etoile-justice { 
-            background: #E6E6FA; border: 3px solid #9370DB; width: 300px; height: 300px; 
+            background: #E6E6FA; border: 3px solid #9370DB; width: 350px; height: 350px; 
             clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%); 
-            transition: 0.5s; cursor: pointer; text-decoration: none; color: inherit; 
+            transition: 0.6s ease-in-out; cursor: pointer; text-decoration: none; color: inherit; 
             display: flex; align-items: center; justify-content: center; 
         }
-        .etoile-justice:hover { transform: scale(1.1); }
-
-        /* Animation Messagers */
-        .animal-container { position: fixed; z-index: 900; pointer-events: none; display: flex; align-items: center; }
-        .bulle-texte { 
-            background: white; border: 2px solid #2E7D32; border-radius: 15px; padding: 8px 15px; 
-            font-weight: bold; white-space: nowrap; overflow: hidden; opacity: 0; 
+        .etoile-justice:hover { 
+            clip-path: polygon(50% 0%, 100% 0%, 100% 100%, 100% 100%, 100% 100%, 50% 100%, 0% 100%, 0% 100%, 0% 0%, 0% 0%);
+            border-radius: 50%;
+            transform: scale(1.05);
         }
+        
+        .exemples { font-size: 0.85em; color: #2E7D32; font-style: italic; margin-top: 10px; font-weight: bold; }
+
+        .animal-container { position: fixed; z-index: 900; pointer-events: none; display: flex; align-items: center; }
+        .bulle-texte { background: white; border: 2px solid #2E7D32; border-radius: 15px; padding: 8px 15px; font-weight: bold; opacity: 0; white-space: nowrap; overflow: hidden; }
+        
         #coffre-magique { position: fixed; font-size: 60px; z-index: 800; pointer-events: none; }
 
-        footer { margin: 50px 0 20px; font-size: 0.9em; }
+        footer { margin: 60px 0 20px; font-size: 0.9em; }
     </style>
 </head>
 <body>
@@ -77,67 +79,68 @@
     <p><strong>Le Petit Prince des Jardiniers</strong></p>
 
     <a href="transition.html?page=formulaire.html" class="soleil-don">
-        <div>☀️<br>ESPACE DU<br>DON ENTIER</div>
+        <div>☀️<br>ESPACE DU DON ENTIER<br><span style="font-weight:normal; font-size:0.8em;">Cadeau sans retour attendu</span></div>
     </a>
 
     <div class="bulles-grid">
         <a href="transition.html?page=regulation.html" class="nuage">
-            <h3 style="color:#008080; margin:0;">📜 Impôt Public</h3>
-            <p>Participation libre.</p>
+            <h3 style="color:#008080; margin:0; text-transform:uppercase;">📜 Impôt Public</h3>
+            <p>Travaux publics en libre participation.</p>
+            <div class="exemples">Ex : Nettoyage bois communal, tâches administratives...</div>
         </a>
 
         <a href="transition.html?page=regulation.html" class="etoile-justice">
-            <div><h3 style="margin:0;">⚖️ Régulation</h3><p>Sagesse & Pardon</p></div>
+            <div style="width:75%;">
+                <h3>⚖️ Régulation Citoyenne</h3>
+                <p>Justice avec délicatesse : soutien, pénitence ou pardon.</p>
+            </div>
         </a>
 
         <a href="transition.html?page=urgence.html" class="nuage nuage-rose">
-            <h3 style="color:#e91e63; margin:0;">❤️ Urgence</h3>
-            <p>Aide & Écoute</p>
+            <h3 style="color:#e91e63; margin:0;">❤️ Urgence & Écoute</h3>
+            <p>Besoins vitaux et aide aux projets.</p>
+            <div class="exemples" style="color:#c2185b;">Soutien moral et solutions rapides.</div>
         </a>
     </div>
 
     <div id="coffre-magique">🎁</div>
 
-    <footer>© 2000 <a href="https://www.youtube.com/channel/UCjsudx7f1sl7XQM8ylcBRdQ" target="_blank">Le petit prince des jardiniers</a></footer>
+    <footer>© 2000 <a href="https://www.youtube.com/channel/UCjsudx7f1sl7XQM8ylcBRdQ" target="_blank" style="color: inherit;">Le petit prince des jardiniers</a></footer>
 
     <script>
-        const basePhrases = ["L'Impôt est un geste de cœur", "Besoin d'aide ?", "Graines de générosité", "Le pardon est justice", "Besoin d'un câlin"];
+        const basePhrases = ["L'Impôt Public est un geste de cœur", "Besoin d'aide administrative ?", "Graines de générosité", "Le pardon est justice", "Besoin d'un câlin"];
         let disponibles = [...basePhrases];
         const typesAnimaux = ['🕊️', '🦋', '🐝', '🐞'];
         const messagers = [];
         const coffre = document.getElementById('coffre-magique');
         let count = 0, coffreX = window.innerWidth/2, coffreY = window.innerHeight+100;
 
-        // Activation Son
         document.addEventListener('click', () => { 
             const a = document.getElementById('chantOiseaux');
             if(a.paused) { a.volume = 0.05; a.play(); } 
         });
 
         function exploserEtEnvoler() {
-            // Particules
-            for (let i = 0; i < 15; i++) {
+            for (let i = 0; i < 20; i++) {
                 const p = document.createElement('div');
-                p.innerHTML = ['❤️', '✨', '🌸'][Math.floor(Math.random()*3)];
-                p.style.position = 'fixed'; p.style.left = coffreX+'px'; p.style.top = coffreY+'px';
-                p.style.zIndex = '1000'; document.body.appendChild(p);
-                const ang = Math.random()*Math.PI*2; const dist = Math.random()*150;
-                p.animate([{transform:'translate(0,0)', opacity:1},{transform:`translate(${Math.cos(ang)*dist}px,${Math.sin(ang)*dist}px)`, opacity:0}], 1000);
+                p.innerHTML = ['❤️', '✨', '🌸', '🌟'][Math.floor(Math.random() * 4)];
+                p.style.position = 'fixed'; p.style.left = coffreX + 'px'; p.style.top = coffreY + 'px';
+                p.style.fontSize = '25px'; p.style.zIndex = '1000'; document.body.appendChild(p);
+                const angle = Math.random() * Math.PI * 2; const dist = Math.random() * 180;
+                p.animate([{ transform: 'translate(0, 0) scale(1)', opacity: 1 }, { transform: `translate(${Math.cos(angle)*dist}px, ${Math.sin(angle)*dist}px) scale(0)`, opacity: 0 }], 1000);
                 setTimeout(() => p.remove(), 1000);
             }
-            // Envol du coffre vers le haut
-            coffre.animate([{transform:'translateY(0) scale(1.2)', opacity:1},{transform:'translateY(-1000px) scale(0)', opacity:0}], {duration:1200, easing:'ease-in'});
+            coffre.animate([{ transform: 'scale(1.5) translateY(0)', opacity: 1 }, { transform: 'scale(0.5) translateY(-1200px)', opacity: 0 }], { duration: 1500, easing: 'ease-in' });
         }
 
         function createMessenger() {
-            if (count >= 3 || messagers.length > 0) return; // Limite 3 animaux max
+            if (count >= 3 || messagers.length > 0) return;
             const txt = disponibles.splice(Math.floor(Math.random()*disponibles.length), 1)[0];
             const div = document.createElement('div');
             div.className = "animal-container";
             div.innerHTML = `<div class="bulle-texte" style="width:0px">${txt}</div><div style="font-size:50px">${typesAnimaux[Math.floor(Math.random()*4)]}</div>`;
             document.body.appendChild(div);
-            // Positionnement initial
-            messagers.push({ el: div, bulle: div.firstChild, x: -300, y: 400, tx: 450, ty: 500, state: "IN" });
+            messagers.push({ el: div, bulle: div.firstChild, x: -300, y: 350, tx: 450, ty: 450, state: "IN" });
         }
 
         function loop() {
@@ -145,29 +148,22 @@
             for (let i = messagers.length-1; i>=0; i--) {
                 let m = messagers[i];
                 if(m.state === "IN") {
-                    target = m; m.x += (m.tx - m.x)*0.02; m.y += (m.ty - m.y)*0.02;
-                    m.bulle.style.opacity = 1; if(parseInt(m.bulle.style.width)<200) m.bulle.style.width = (parseInt(m.bulle.style.width)+5)+"px";
-                    
+                    target = m; m.x += (m.tx - m.x) * 0.02; m.y += (m.ty - m.y) * 0.02;
+                    m.bulle.style.opacity = 1; if(parseInt(m.bulle.style.width)<220) m.bulle.style.width = (parseInt(m.bulle.style.width)+4)+"px";
                     if(Math.abs(m.tx - m.x) < 60) {
-                        m.state = "SHOOT"; // Animation Flèche/Propulsion
-                        m.bulle.animate([{transform:'translateX(0)', opacity:1},{transform:'translateX(150px) scale(0)', opacity:0}], 500);
-                        setTimeout(() => { 
-                            exploserEtEnvoler(); 
-                            m.state="OUT"; 
-                            m.tx = window.innerWidth+400; 
-                            count++; 
-                        }, 500);
+                        m.state = "SHOOT";
+                        m.bulle.animate([{ transform: 'translateX(0) scale(1)', opacity: 1 }, { transform: 'translateX(180px) scale(0)', opacity: 0 }], 500);
+                        setTimeout(() => { exploserEtEnvoler(); m.state = "OUT"; m.tx = window.innerWidth + 400; count++; }, 500);
                     }
-                } else if(m.state === "OUT") {
-                    m.x += (m.tx - m.x)*0.03; if(m.x > window.innerWidth+300) { m.el.remove(); messagers.splice(i,1); }
+                } else if (m.state === "OUT") {
+                    m.x += (m.tx - m.x) * 0.03; if(m.x > window.innerWidth + 350) { m.el.remove(); messagers.splice(i, 1); }
                 }
-                m.el.style.left = m.x+"px"; m.el.style.top = (m.y + Math.sin(Date.now()*0.005)*15)+"px";
+                m.el.style.left = m.x + "px"; m.el.style.top = (m.y + Math.sin(Date.now()*0.005)*15) + "px";
             }
-            // Le coffre suit l'animal actif
             if(target && target.state === "IN") {
-                coffreX += (target.x + 180 - coffreX)*0.05; coffreY += (target.y + 30 - coffreY)*0.05;
+                coffreX += (target.x + 180 - coffreX) * 0.05; coffreY += (target.y + 40 - coffreY) * 0.05;
             }
-            coffre.style.left = coffreX+"px"; coffre.style.top = coffreY+"px";
+            coffre.style.left = coffreX + "px"; coffre.style.top = coffreY + "px";
             requestAnimationFrame(loop);
         }
         setInterval(createMessenger, 5000); loop();
