@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Le Petit Prince des Jardiniers</title>
     <style>
-        /* Fond crème très doux pour faire ressortir le vert */
+        /* Fond crème très doux */
         body { 
             background-color: #FFFDF0; 
             color: #1B5E20; 
@@ -20,18 +20,17 @@
 
         .conteneur-accueil {
             background-color: #ffffff;
-            border: 3px solid #C8E6C9; /* Bordure vert menthe */
-            padding: 50px 30px;
+            border: 3px solid #C8E6C9;
+            padding: 40px 20px;
             border-radius: 40px;
             text-align: center;
             max-width: 480px;
             width: 100%;
             box-shadow: 0 15px 35px rgba(46, 125, 50, 0.1);
-            position: relative;
         }
 
         h1 { 
-            font-size: 2.2em; 
+            font-size: 2em; 
             color: #2E7D32; 
             margin-bottom: 5px;
             font-weight: bold;
@@ -40,7 +39,7 @@
         .citation { 
             font-style: italic; 
             color: #558B2F; 
-            margin-bottom: 40px;
+            margin-bottom: 30px;
             line-height: 1.5;
             font-size: 0.95em;
         }
@@ -48,18 +47,52 @@
         .menu-boutons {
             display: flex;
             flex-direction: column;
-            gap: 20px; /* Bel espacement entre les boutons */
-            margin-bottom: 40px;
+            gap: 15px;
+            margin-bottom: 30px;
         }
 
-        /* Boutons Vert Nature */
         .bouton {
             display: block;
             padding: 16px;
             text-decoration: none;
             color: white;
             background-color: #43A047; 
-            border-radius: 30px; /* Forme plus arrondie */
+            border-radius: 30px;
             font-weight: bold;
             font-size: 1.05em;
-            transition: all 0
+            transition: transform 0.2s, background-color 0.2s;
+        }
+
+        .bouton:hover {
+            background-color: #2E7D32;
+            transform: scale(1.02);
+        }
+
+        .contact-footer {
+            font-size: 0.9em;
+            color: #666;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="conteneur-accueil">
+        <h1>Le Petit Prince des Jardiniers</h1>
+        <p class="citation">"On ne voit bien qu'avec le cœur. L'essentiel est invisible pour les yeux... sauf dans un beau jardin."</p>
+        
+        <div class="menu-boutons">
+            <a href="services.html" class="bouton">Nos Services & Tarifs</a>
+            <a href="galerie.html" class="bouton">Réalisations</a>
+            <a href="contact.html" class="bouton">Demander un Devis</a>
+        </div>
+
+        <div class="contact-footer">
+            <p><strong>Franck - Jardin Pro Discount</strong><br>
+            📞 06 64 36 11 74<br>
+            ✉️ jardinprodiscount@orange.fr</p>
+        </div>
+    </div>
+
+</body>
+</html>
