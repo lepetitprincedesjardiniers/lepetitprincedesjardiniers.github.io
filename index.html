@@ -48,12 +48,12 @@
         
         .exemples { font-size: 0.85em; color: #2E7D32; font-style: italic; margin-top: 10px; font-weight: bold; }
 
-        /* Animation Messagers fixes à gauche */
+        /* Animation Messagers */
         .animal-container { position: fixed; z-index: 900; pointer-events: none; display: flex; align-items: center; }
         .bulle-texte { 
             background: white; border: 2px solid #2E7D32; border-radius: 15px; padding: 8px 15px; 
             font-weight: bold; opacity: 0; white-space: nowrap; overflow: hidden;
-            position: relative; left: 10px;
+            position: absolute; left: 60px; /* Positionnée devant l'animal */
         }
         
         #coffre-magique { position: fixed; font-size: 60px; z-index: 800; pointer-events: none; left: 50%; transform: translateX(-50%); }
@@ -90,19 +90,12 @@
         <a href="transition.html?page=impot.html" class="nuage">
             <h3 style="color:#008080; margin:0; text-transform:uppercase;">📜 Impôt Public</h3>
             <p>Travaux publics en libre participation.</p>
-            <div class="exemples">Ex : Nettoyage bois communal...</div>
         </a>
-
         <a href="transition.html?page=regulation.html" class="etoile-justice">
-            <div style="width:75%;">
-                <h3>⚖️ Régulation Citoyenne</h3>
-                <p>Justice avec délicatesse.</p>
-            </div>
+            <div style="width:75%;"><h3>⚖️ Régulation</h3><p>Justice avec délicatesse.</p></div>
         </a>
-
         <a href="transition.html?page=urgence.html" class="nuage nuage-rose">
-            <h3 style="color:#e91e63; margin:0;">❤️ Urgence & Écoute</h3>
-            <p>Besoins vitaux.</p>
+            <h3 style="color:#e91e63; margin:0;">❤️ Urgence</h3><p>Aide & Écoute.</p>
         </a>
     </div>
 
@@ -111,7 +104,7 @@
     <footer>© 2000 <a href="https://www.youtube.com/channel/UCjsudx7f1sl7XQM8ylcBRdQ" target="_blank" style="color: inherit;">Le petit prince des jardiniers</a></footer>
 
     <script>
-        const basePhrases = ["L'Impôt Public est un geste de cœur", "Besoin d'aide administrative ?", "Graines de générosité", "Le pardon est justice", "Besoin d'un câlin"];
+        const basePhrases = ["L'Impôt Public est un geste de cœur", "Graines de générosité", "Le pardon est justice", "Besoin d'un câlin"];
         let disponibles = [...basePhrases];
         const typesAnimaux = ['🕊️', '🦋', '🐝', '🐞'];
         let messagerActif = null;
@@ -141,11 +134,7 @@
                 { transform: 'translateY(-1200px) scale(0.5)', opacity: 0 }
             ], { duration: 1500, easing: 'ease-in', fill: 'forwards' });
             
-            // Réinitialiser le coffre après l'envol
-            setTimeout(() => {
-                coffreY = window.innerHeight - 150;
-                coffre.style.opacity = "1";
-            }, 3000);
+            setTimeout(() => { coffreY = window.innerHeight - 150; coffre.style.opacity = "1"; }, 3000);
         }
 
         function createMessenger() {
@@ -153,10 +142,11 @@
             const txt = disponibles.splice(Math.floor(Math.random()*disponibles.length), 1)[0];
             const div = document.createElement('div');
             div.className = "animal-container";
-            div.innerHTML = `<div class="bulle-texte" style="width:0px">${txt}</div><div style="font-size:60px">${typesAnimaux[Math.floor(Math.random()*4)]}</div>`;
+            // La bulle est vide au début
+            div.innerHTML = `<div class="bulle-texte" style="width:0px">${txt}</div><div class="emoji" style="font-size:60px">${typesAnimaux[Math.floor(Math.random()*4)]}</div>`;
             document.body.appendChild(div);
             
-            messagerActif = { el: div, bulle: div.firstChild, x: -200, y: window.innerHeight / 2, tx: 100, state: "ENTRÉE" };
+            messagerActif = { el: div, bulle: div.firstChild, emoji: div.lastChild, x: -200, y: window.innerHeight / 2, tx: 150, state: "ENTRÉE" };
         }
 
         function loop() {
@@ -165,44 +155,33 @@
                 if (m.state === "ENTRÉE") {
                     m.x += (m.tx - m.x) * 0.05;
                     if (Math.abs(m.tx - m.x) < 5) {
-                        m.state = "LECTURE";
+                        m.state = "SORTIR_MESSAGE";
                         m.bulle.style.opacity = 1;
-                        m.bulle.animate([{width: "0px"}, {width: "250px"}], {duration: 500, fill: 'forwards'});
-                        
-                        // Temps de lecture avant de lancer
-                        setTimeout(() => {
-                            if(m.state === "LECTURE") m.state = "LANCER";
-                        }, 2500);
+                        m.bulle.animate([{width: "0px", transform: "scale(0)"}, {width: "250px", transform: "scale(1)"}], {duration: 600, fill: 'forwards'});
+                        setTimeout(() => { m.state = "POUSSER"; }, 2000);
                     }
-                } else if (m.state === "LANCER") {
-                    m.state = "PROJECTILE";
-                    // Calcul de la trajectoire vers le cadeau
+                } else if (m.state === "POUSSER") {
+                    m.state = "PROJECTION";
+                    // Animation de l'animal qui "pousse" (petit coup d'épaule)
+                    m.emoji.animate([{transform: "translateX(0)"}, {transform: "translateX(30px)"}, {transform: "translateX(0)"}], {duration: 200});
+                    
+                    // Projection du message
                     const targetX = coffreX - m.x;
                     const targetY = coffreY - m.y;
-                    
                     m.bulle.animate([
                         { transform: 'translate(0, 0) scale(1)', opacity: 1 },
-                        { transform: `translate(${targetX}px, ${targetY}px) scale(0.2)`, opacity: 0 }
-                    ], { duration: 600, easing: 'ease-in', fill: 'forwards' });
+                        { transform: `translate(${targetX}px, ${targetY}px) rotate(20deg) scale(0.1)`, opacity: 0 }
+                    ], { duration: 500, easing: 'ease-in', fill: 'forwards' });
 
-                    setTimeout(() => {
-                        exploserEtEnvoler();
-                        m.state = "SORTIE";
-                    }, 600);
+                    setTimeout(() => { exploserEtEnvoler(); m.state = "SORTIE"; }, 500);
                 } else if (m.state === "SORTIE") {
                     m.x -= 10;
-                    if (m.x < -300) {
-                        m.el.remove();
-                        messagerActif = null;
-                        count++;
-                    }
+                    if (m.x < -300) { m.el.remove(); messagerActif = null; count++; }
                 }
                 m.el.style.left = m.x + "px";
                 m.el.style.top = (m.y + Math.sin(Date.now()*0.005)*20) + "px";
             }
-            
-            coffre.style.left = coffreX + "px";
-            coffre.style.top = coffreY + "px";
+            coffre.style.left = coffreX + "px"; coffre.style.top = coffreY + "px";
             requestAnimationFrame(loop);
         }
 
