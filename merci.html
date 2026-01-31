@@ -2,42 +2,53 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <title>Merci ! - Le Petit Prince</title>
+    <title>Contact - Le Petit Prince</title>
 </head>
-<body bgcolor="#FFFF00" text="#000080" style="font-family:'Comic Sans MS', cursive; text-align:center;">
+<body bgcolor="#FFFF00" text="#000080" style="font-family:'Comic Sans MS', cursive; text-align:center; margin:0;">
 
-    <br><br><br>
-    <div style="font-size: 80px;">✨ 🌵 ✨</div>
-    
-    <font size="7" color="#FF0000"><b>MERCI !</b></font>
-    <br><br>
+    <center>
+        <div id="google_translate_element"></div>
+        <table border="1" cellpadding="10" bgcolor="#008080" style="margin-top:10px; border-radius:10px;">
+            <tr>
+                <td><a href="index.html"><font color="#FFFFFF"><b>Accueil</b></font></a></td>
+                <td><a href="formulaire.html"><font color="#FFFFFF"><b>Semer</b></font></a></td>
+                <td><a href="jardin.html"><font color="#FFFFFF"><b>Le Jardin</b></font></a></td>
+                <td><a href="contact.html"><font color="#FFFFFF"><b>Contact</b></font></a></td>
+            </tr>
+        </table>
 
-    <table border="3" cellpadding="30" bgcolor="#FFFFFF" align="center" style="border-color:#E67E22; border-radius:30px; max-width:500px;">
-        <tr>
-            <td>
-                <font size="5">
-                    "Ton message a bien été semé dans notre jardin."
-                </font>
-                <br><br>
-                <font size="6" color="#E67E22">
-                    <b>"Tu as osé me contacter...<br>Attends-toi à une réponse !"</b>
-                </font>
-                <br><br>
-                <font size="4">
-                    <i>Le Petit Prince prépare son avion pour te rejoindre.</i>
-                </font>
-            </td>
-        </tr>
-    </table>
+        <br>
+        <div style="font-size: 40px;">🌸 🌻 🌺 🌼 🌻 🌸</div>
+        
+        <font size="6" color="#E67E22">📩 <u><b>CONTACTER LE JARDINIER</b></u></font>
+        <br><br>
 
-    <br><br>
-    <div style="font-size: 40px;">🌸 🌼 🌻 🌺</div>
-    <br>
-    <a href="index.html" style="text-decoration:none;">
-        <button style="padding:15px 30px; font-weight:bold; background-color:#008080; color:white; border-radius:10px; cursor:pointer;">
-            Retourner à l'Accueil
-        </button>
-    </a>
+        <form action="https://script.google.com/macros/s/AKfycbwe3bMzbJMUQSEdeyprffw-FQpqLg9-fGcHJi2_1_Ix5kWmrisBoSo2Kzne-CMwe3s/exec" method="POST">
+            <input type="hidden" name="formType" value="contact">
+            <input type="hidden" name="redirectURL" value="https://ton-pseudo.github.io/merci.html">
 
-</body>
-</html>
+            <table border="2" cellpadding="20" bgcolor="#FFFFFF" width="85%" style="border-radius:20px; border-color:#2E7D32; max-width:600px;">
+                <tr>
+                    <td align="left">
+                        <center><b>✨ Un petit mot pour le jardinier ? ✨</b></center><br>
+                        <b>Nom :</b><br>
+                        <input type="text" name="nom" style="width:95%; padding:10px;" required><br><br>
+                        <b>Email :</b><br>
+                        <input type="email" name="email" style="width:95%; padding:10px;" required><br><br>
+                        <b>Message :</b><br>
+                        <textarea name="message" rows="6" style="width:95%; padding:10px;" required></textarea><br><br>
+                        <center>
+                            <input type="submit" value="📩 ENVOYER LE MESSAGE" style="background-color:#E67E22; color:white; padding:15px; font-weight:bold; border-radius:10px; cursor:pointer; border:none;">
+                        </center>
+                    </td>
+                </tr>
+            </table>
+        </form>
+        <br>
+        <div style="font-size: 40px;">🌺 🌼 🌻 🌸 🌻 🌺</div>
+    </center>
+
+    <script type="text/javascript">
+        function googleTranslateElementInit() { new google.translate.TranslateElement({pageLanguage: 'fr'}, 'google_translate_element'); }
+    </script>
+    <script type="text/
