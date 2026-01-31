@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <title>Le Petit Prince des Jardiniers</title>
     <style>
-        /* Menu propre et traduisible */
+        /* Menu traduisible */
         .menu-table {
             margin-top: 10px;
             border-radius: 10px;
@@ -14,7 +14,7 @@
         .menu-table td { padding: 10px 15px; border: 1px solid #FFFFFF; }
         .menu-table a { text-decoration: none; color: #FFFFFF; font-weight: bold; display: inline-block; }
 
-        /* Style du messager : ANIMAL à GAUCHE | TEXTE à DROITE */
+        /* Style du messager : TEXTE à GAUCHE | ANIMAL à DROITE */
         #animal-container {
             position: fixed;
             z-index: 900;
@@ -28,8 +28,7 @@
 
         #corps-animal { 
             font-size: 50px; 
-            /* Retourne l'oiseau pour qu'il regarde vers la DROITE */
-            transform: scaleX(-1); 
+            /* L'animal regarde vers la gauche (sens du vol) */
             display: inline-block;
         }
 
@@ -40,14 +39,15 @@
             padding: 8px 15px;
             font-style: italic;
             color: #2E7D32;
-            margin-left: 10px;
+            margin-right: 10px; /* Espace entre le texte et l'animal */
             min-height: 20px;
             box-shadow: 3px 3px 8px rgba(0,0,0,0.1);
             font-weight: bold;
             font-size: 1.1em;
+            /* On commence avec une bulle vide pour ne pas voir les bordures si pas de texte */
+            border: none; 
         }
 
-        /* Animation des récompenses */
         .recompense {
             position: fixed;
             font-size: 50px;
@@ -96,8 +96,8 @@
     </center>
 
     <div id="animal-container">
-        <div id="corps-animal">🕊️</div>
         <div id="bulle-texte"></div>
+        <div id="corps-animal">🕊️</div>
     </div>
 
     <script type="text/javascript">
@@ -112,38 +112,41 @@
         const audio = document.getElementById('chantOiseaux');
         const messageComplet = "Ici, on sème des graines de générosité pour récolter de l'altruisme";
         
-        let posX = -800;
+        let posX = window.innerWidth + 200; 
         let posY = 250;
         let indexLettre = 0;
         const animaux = ['🕊️', '🦋', '🐝', '🐞', '🦜'];
 
-        // Activation du son au premier clic (Volume très bas)
+        // Activation du son au clic
         document.addEventListener('click', function() {
             if (audio.paused) {
-                audio.volume = 0.1; // 10% du volume seulement
-                audio.play().catch(e => console.log("Attente clic"));
+                audio.volume = 0.02; 
+                audio.play();
             }
         }, { once: false });
 
         function animer() {
-            posX += 2.0; 
+            posX -= 1.8; // L'oiseau recule vers la gauche
 
-            // Déroulement poétique et lent
+            // Déroulement du message DEVANT l'oiseau
             if (indexLettre < messageComplet.length) {
-                let progression = Math.floor((posX + 500) / 32); 
+                // On calcule la progression basée sur la distance parcourue depuis la droite
+                let progression = Math.floor((window.innerWidth - posX) / 25); 
                 if (progression > indexLettre && progression >= 0) {
                     indexLettre = progression;
                     bulle.innerText = messageComplet.substring(0, indexLettre);
+                    bulle.style.border = "2px solid #2E7D32"; // Apparaît avec la première lettre
                 }
             }
 
-            // Réinitialisation
-            if (posX > window.innerWidth + 700) {
-                posX = -900;
+            // Réinitialisation après la sortie complète
+            if (posX < -1500) { 
+                posX = window.innerWidth + 500;
                 indexLettre = 0;
                 bulle.innerText = "";
+                bulle.style.border = "none";
                 corps.innerText = animaux[Math.floor(Math.random() * animaux.length)];
-                posY = 150 + Math.random() * (window.innerHeight - 350);
+                posY = 100 + Math.random() * (window.innerHeight - 350);
             }
 
             let vague = Math.sin(posX / 100) * 40;
