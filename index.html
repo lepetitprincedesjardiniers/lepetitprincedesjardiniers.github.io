@@ -14,6 +14,24 @@
             text-align: center; 
             margin: 0; padding: 0;
         }
+
+        /* Barre de navigation d'hier réintégrée */
+        nav {
+            background-color: rgba(0, 128, 128, 0.9);
+            padding: 15px;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        nav a {
+            color: #FFFF00;
+            text-decoration: none;
+            margin: 0 15px;
+            font-weight: bold;
+            font-size: 1.1em;
+        }
+        nav a:hover { text-decoration: underline; }
+
         .cadre-principal {
             max-width: 850px;
             margin: 30px auto;
@@ -23,7 +41,8 @@
             border-radius: 20px;
             box-shadow: 0px 10px 30px rgba(0,0,0,0.3);
         }
-        h1 { color: #FF0000; text-decoration: underline; font-size: 2.8em; margin-top: 0; }
+
+        h1 { color: #FF0000; text-decoration: underline; font-size: 2.8em; margin-top: 10px; }
         .identite { font-size: 1.5em; font-weight: bold; color: #000080; }
         .titres { font-style: italic; color: #000080; margin-bottom: 30px; }
         
@@ -49,7 +68,6 @@
             border: 5px solid #000080;
             border-radius: 60px;
             margin: 30px 0;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
         }
         .btn-action:hover { background-color: #FF0000; color: #FFFF00; }
 
@@ -57,24 +75,43 @@
             border: 4px solid #800080;
             border-radius: 15px;
             width: 200px;
-            margin-bottom: 10px;
-        }
-
-        .citation-douce {
-            font-size: 1.3em;
-            color: #008080;
-            font-weight: bold;
-            margin: 15px 0;
         }
         
         footer { margin-top: 50px; font-size: 1em; border-top: 2px solid #800080; padding-top: 20px; }
-        .hashtags { color: #FF0000; font-weight: bold; word-spacing: 15px; }
+        .hashtags { color: #FF0000; font-weight: bold; }
     </style>
 </head>
 <body>
+
+<nav>
+    <a href="index.html">Accueil</a>
+    <a href="services.html">Services & Tarifs</a>
+    <a href="galerie.html">Réalisations</a>
+    <a href="contact.html">Contact</a>
+</nav>
 
 <div class="cadre-principal">
     <h1>Le Petit Prince des Jardiniers</h1>
     
     <div class="identite">Franck José Baptiste Pinon de Pessac</div>
-    <div class="titres">Jardinier Humaniste - Éducateur - Philosophe
+    <div class="titres">Jardinier Humaniste - Éducateur - Philosophe</div>
+
+    <img src="http://thiaha.free.fr/Franckp.jpg" class="photo-franck" alt="Franck Pinon">
+
+    <div class="philosophie-box">
+        <strong>Ma Thèse :</strong> Analyse éthique des comportements, de la misère à la richesse du cœur. 
+        <br><br>
+        Ce site est un espace de <b>Don Pur</b>. Nous cultivons ici la fraternité, la dignité humaine 
+        et l'entraide gratuite. Ici, les gens s'offrent comme des cadeaux.
+    </div>
+
+    <a href="contact.html" class="btn-action">🌻 ENTRER DANS L'ESPACE DE DON 🌻</a>
+
+    <footer>
+        <p class="hashtags">#Liberté #Amour #Gratuité #Fraternité</p>
+        <p><strong>© Copyrith 2000 Le Petit Prince des Jardiniers</strong></p>
+    </footer>
+</div>
+
+</body>
+</html>
