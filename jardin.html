@@ -19,11 +19,11 @@
         </table>
 
         <br>
-        <font size="6" color="#2E7D32">🌻 <u><b>LE JARDIN DES DONS</b></u> 🌻</font>
+        <font size="6" color="#2E7D32">🌻 <u><b>LE JARDIN DES GRAINES SEMÉES</b></u> 🌻</font>
         <br><br>
-        
-        <div id="annonces">
-            <i>Chargement du jardin en cours...</i>
+
+        <div id="annonces-container" style="width:90%; max-width:900px;">
+            <p><i>Chargement des graines en cours...</i></p>
         </div>
 
     </center>
@@ -32,5 +32,44 @@
         function googleTranslateElementInit() { new google.translate.TranslateElement({pageLanguage: 'fr'}, 'google_translate_element'); }
     </script>
     <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+
+    <script>
+        // On utilise l'URL de ton script Google avec "?action=read" (à configurer si besoin)
+        const scriptURL = 'https://script.google.com/macros/s/AKfycbwe3bMzbJMUQSEdeyprffw-FQpqLg9-fGcHJi2_1_Ix5kWmrisBoSo2Kzne-CMwe3s/exec';
+
+        async function chargerJardin() {
+            try {
+                const response = await fetch(scriptURL);
+                const data = await response.json();
+                const container = document.getElementById('annonces-container');
+                container.innerHTML = ""; // On vide le message de chargement
+
+                if (data.length === 0) {
+                    container.innerHTML = "<p>Le jardin est vide pour l'instant. Soyez le premier à semer !</p>";
+                    return;
+                }
+
+                // Affichage des annonces sous forme de jolies cartes
+                data.forEach(annonce => {
+                    const card = document.createElement('div');
+                    card.style = "background:white; border:3px solid #2E7D32; border-radius:15px; padding:15px; margin-bottom:20px; text-align:left; box-shadow: 5px 5px 0px #008080;";
+                    
+                    card.innerHTML = `
+                        <font size="4" color="#E67E22"><b>📍 ${annonce.ville} (${annonce.pays})</b></font><br>
+                        <font size="3"><b>Par :</b> ${annonce.prenom}</font><br>
+                        <hr color="#eeeeee">
+                        <font size="4">"${annonce.description}"</font><br>
+                        <hr color="#eeeeee">
+                        <font size="2" color="#666">📅 Valable : ${annonce.duree} | Semée le : ${new Date(annonce.date).toLocaleDateString()}</font>
+                    `;
+                    container.appendChild(card);
+                });
+            } catch (error) {
+                document.getElementById('annonces-container').innerHTML = "<p>Le jardin est en pause. Revenez plus tard !</p>";
+            }
+        }
+
+        window.onload = chargerJardin;
+    </script>
 </body>
 </html>
