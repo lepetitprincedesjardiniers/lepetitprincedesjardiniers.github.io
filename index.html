@@ -6,60 +6,69 @@
     <style>
         body { font-family: 'Comic Sans MS', cursive; text-align: center; margin: 0; padding: 0; background-color: #FFFF00; color: #000080; overflow-x: hidden; min-height: 100vh; }
         
+        /* Menu de navigation */
         .menu-table { margin: 20px auto; border-radius: 10px; background-color: #008080; border-collapse: collapse; margin-left: auto; margin-right: auto; }
         .menu-table td { padding: 10px 15px; border: 1px solid #FFFFFF; }
         .menu-table a { text-decoration: none; color: #FFFFFF; font-weight: bold; }
 
-        /* Soleil du haut */
+        /* Soleil : Cadeaux sans détour */
         .soleil-don {
             background: #FFD700; width: 220px; height: 220px; border-radius: 50%;
             display: flex; align-items: center; justify-content: center;
             box-shadow: 0 0 40px #FFA500; border: 5px dashed #FF4500;
             margin: 20px auto; cursor: pointer; transition: 0.4s;
-            text-decoration: none; color: #000080; font-weight: bold;
+            text-decoration: none; color: #000080; font-weight: bold; line-height: 1.2;
         }
+        .soleil-don:hover { transform: scale(1.1) rotate(5deg); }
 
+        /* Moteur de Recherche */
         .moteur-recherche {
             background: rgba(255, 255, 255, 0.8); border: 3px solid #008080;
-            border-radius: 20px; padding: 15px; margin: 20px auto; width: 90%; max-width: 800px;
+            border-radius: 20px; padding: 20px; margin: 20px auto; width: 90%; max-width: 850px;
         }
+        .moteur-recherche input, .moteur-recherche select { padding: 10px; border-radius: 10px; border: 2px solid #008080; margin: 5px; font-family: 'Comic Sans MS'; }
 
-        /* Grille équilibrée */
+        /* Grille des Bulles */
         .bulles-grid { 
             display: flex; justify-content: center; align-items: center; 
-            gap: 15px; flex-wrap: wrap; padding: 20px; max-width: 1200px; margin: auto; 
+            gap: 20px; flex-wrap: wrap; padding: 30px; max-width: 1300px; margin: auto; 
         }
         
-        .bulle-lien { text-decoration: none; color: inherit; }
+        .bulle-lien { text-decoration: none; color: inherit; z-index: 10; }
 
         .nuage {
-            background: white; border-radius: 50px; padding: 15px; width: 230px; min-height: 140px;
-            border: 3px solid #87CEEB; box-shadow: 5px 5px 0px #87CEEB;
+            background: white; border-radius: 50px; padding: 25px; width: 280px; min-height: 180px;
+            border: 3px solid #87CEEB; box-shadow: 6px 6px 0px #87CEEB;
             transition: 0.3s; display: flex; flex-direction: column; justify-content: center;
         }
+        .nuage:hover { transform: translateY(-10px); background: #f0faff; }
 
-        /* ÉTOILE : Plus large de base, zoom modéré */
+        /* Étoile Centrale de Régulation */
         .etoile-justice {
             background: #E6E6FA; border: 3px solid #9370DB;
             clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
-            width: 380px; height: 380px; /* Plus grande pour laisser le texte respirer */
-            display: flex; align-items: center; justify-content: center;
-            transition: transform 0.4s ease-out, background 0.3s;
-            cursor: pointer;
+            width: 380px; height: 380px; display: flex; align-items: center; justify-content: center;
+            transition: transform 0.4s ease-out;
+            cursor: pointer; padding: 30px;
         }
-        
         .etoile-justice:hover { 
-            transform: scale(1.2); /* Zoom léger et élégant */
+            transform: scale(1.2); /* Zoom modéré pour ne pas masquer tout l'écran */
             background: #f3f0ff;
-            z-index: 50;
         }
+        .etoile-contenu { width: 70%; font-size: 0.95em; }
 
-        .etoile-contenu { width: 65%; font-size: 0.9em; }
+        .exemples { font-size: 0.8em; color: #2E7D32; font-style: italic; margin-top: 8px; font-weight: bold; }
 
-        .exemples { font-size: 0.8em; color: #2E7D32; font-style: italic; margin-top: 5px; }
+        /* Éléments de décoration et animations */
+        #coffre-magique { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); font-size: 60px; z-index: 800; }
+        #animal-container { position: fixed; z-index: 900; white-space: nowrap; display: flex; align-items: center; pointer-events: none; }
+        #corps-animal { font-size: 50px; }
+        #bulle-texte { background: rgba(255, 255, 255, 0.9); border: 2px solid #2E7D32; border-radius: 15px; padding: 8px 15px; font-weight: bold; opacity: 0; transition: 0.3s; }
     </style>
 </head>
 <body>
+
+    <audio id="chantOiseaux" loop><source src="oiseaux.mp3" type="audio/mpeg"></audio>
 
     <table class="menu-table">
         <tr>
@@ -82,16 +91,24 @@
 
     <div class="moteur-recherche">
         <h3>🔍 Ratisser Large</h3>
-        <input type="text" placeholder="Pays, Ville, Requête..." style="width: 80%; padding: 10px; border-radius: 10px; border: 2px solid #008080;">
+        <select><option>Pays...</option><option>France</option><option>Groland</option><option>Belle Brousse</option></select>
+        <input type="text" placeholder="Ville">
+        <select><option>Zone...</option><option>10 km</option><option>100 km</option><option>Infini</option></select>
+        <br>
+        <input type="text" placeholder="Ta quête citoyenne..." style="width: 60%; margin-top: 10px;">
+        <button style="background:#E67E22; color:white; border:none; padding:10px 20px; border-radius:10px; cursor:pointer; font-weight:bold;">Quérir</button>
     </div>
 
     <div class="bulles-grid">
         
         <a href="urgence.html" class="bulle-lien">
-            <div class="nuage">
-                <h3>🕒 Temps Public</h3>
-                <p>Travaux collectifs.</p>
-                <div class="exemples">Routes, bois, entraide...</div>
+            <div class="nuage" style="background: #e0f7fa; border-color: #008080;">
+                <h3 style="color: #008080; text-transform: uppercase; margin-bottom: 5px;">📜 Impôt Volontaire</h3>
+                <p style="margin: 5px 0; font-weight: bold;">Temps Public & Travaux Collectifs</p>
+                <p style="font-size: 0.85em; margin: 5px 0;">
+                    Travaux publics de libre participation, nécessaires au fonctionnement de la structure publique.
+                </p>
+                <div class="exemples">Ex: Bois communal, réfection de route, urgences locales...</div>
             </div>
         </a>
 
@@ -99,24 +116,71 @@
             <div class="etoile-justice">
                 <div class="etoile-contenu">
                     <h3 style="margin: 0;">⚖️ Régulation Citoyenne</h3>
-                    <p style="margin: 5px 0;">Expose ton conflit à la communauté.</p>
-                    <div class="exemples">Soutien, sentence ou pardon. C'est notre ensemble qui régule sa justice.</div>
+                    <p style="margin: 10px 0;">Expose ton conflit à la communauté.</p>
+                    <div class="exemples">Soutien, sentence ou pardon.<br>C'est notre ensemble qui régule sa justice avec délicatesse.</div>
                 </div>
             </div>
         </a>
 
         <a href="urgence.html" class="bulle-lien">
             <div class="nuage">
-                <h3>❤️ Urgence & Écoute</h3>
-                <p>Besoins vitaux.</p>
-                <div class="exemples">Câlin, farine, charpente...</div>
+                <h3 style="color: #E67E22;">❤️ Urgence & Écoute</h3>
+                <p>Besoins vitaux et aide aux projets personnels.</p>
+                <div class="exemples">Ex: Mon cœur a besoin d'un câlin, recherche farine, aide charpente...</div>
             </div>
         </a>
 
     </div>
 
+    <div id="coffre-magique">🎁</div>
+    <div id="animal-container">
+        <div id="bulle-texte"></div>
+        <div id="corps-animal">🕊️</div>
+    </div>
+
     <script>
-        // ... (tes scripts d'animation habituels)
+        // Scripts d'animation des animaux messagers
+        const mesPhrases = ["Bienvenue au Trésor Public", "L'impôt ici est un geste de cœur", "L'étoile veille sur notre justice"];
+        const animaux = ['🕊️', '🦋', '🐝', '🐞'];
+        const animalCont = document.getElementById('animal-container');
+        const bulle = document.getElementById('bulle-texte');
+        const corps = document.getElementById('corps-animal');
+        const audio = document.getElementById('chantOiseaux');
+
+        let aniX = -200, aniY = 200, targetX, targetY, state = "WAITING";
+        
+        // Jouer le chant des oiseaux au premier clic
+        document.addEventListener('click', () => { 
+            if(audio.paused) { audio.volume = 0.05; audio.play(); } 
+        });
+
+        function startNewMessenger() {
+            bulle.innerText = mesPhrases[Math.floor(Math.random() * mesPhrases.length)];
+            corps.innerText = animaux[Math.floor(Math.random() * animaux.length)];
+            aniX = -200; aniY = 250;
+            targetX = window.innerWidth / 2; targetY = window.innerHeight - 110;
+            state = "APPROACHING";
+        }
+
+        function loop() {
+            if (state === "APPROACHING") {
+                aniX += (targetX - aniX) * 0.015; aniY += (targetY - aniY) * 0.015;
+                bulle.style.opacity = "1";
+                if (Math.abs(targetX - aniX) < 60) {
+                    setTimeout(() => { 
+                        bulle.style.opacity = "0"; 
+                        state = "LEAVING"; 
+                        targetX = window.innerWidth + 200; 
+                    }, 2500);
+                }
+            } else if (state === "LEAVING") {
+                aniX += (targetX - aniX) * 0.02;
+                if (aniX > window.innerWidth + 100) startNewMessenger();
+            }
+            animalCont.style.left = aniX + "px"; animalCont.style.top = aniY + "px";
+            requestAnimationFrame(loop);
+        }
+        startNewMessenger(); loop();
     </script>
 </body>
 </html>
