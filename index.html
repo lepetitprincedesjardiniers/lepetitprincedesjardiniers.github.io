@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <title>Le Petit Prince des Jardiniers</title>
     <style>
-        /* Style du menu stable et traduisible */
+        /* Menu propre et traduisible */
         .menu-table {
             margin-top: 10px;
             border-radius: 10px;
@@ -14,8 +14,8 @@
         .menu-table td { padding: 10px 15px; border: 1px solid #FFFFFF; }
         .menu-table a { text-decoration: none; color: #FFFFFF; font-weight: bold; display: inline-block; }
 
-        /* L'oiseau et son message */
-        #oiseau-container {
+        /* Style de l'animal messager (L'oiseau/insecte) */
+        #animal-container {
             position: fixed;
             z-index: 900;
             cursor: pointer;
@@ -27,19 +27,20 @@
 
         #bulle-texte {
             background: rgba(255, 255, 255, 0.9);
-            border: 1px dashed #2E7D32;
+            border: 2px solid #2E7D32;
             border-radius: 15px;
-            padding: 8px 15px;
+            padding: 10px 18px;
             font-style: italic;
             color: #2E7D32;
-            margin-right: 5px;
+            margin-right: 8px;
             min-height: 20px;
-            box-shadow: 2px 2px 5px rgba(0,0,0,0.1);
+            box-shadow: 3px 3px 8px rgba(0,0,0,0.1);
+            font-weight: bold;
         }
 
-        #corps-oiseau { font-size: 40px; }
+        #corps-animal { font-size: 45px; }
 
-        /* Animation des cadeaux */
+        /* Animation des récompenses au clic */
         .recompense {
             position: fixed;
             font-size: 50px;
@@ -56,7 +57,7 @@
 <body bgcolor="#FFFF00" text="#000080" style="font-family:'Comic Sans MS', cursive; text-align:center; margin:0; padding:0; overflow-x: hidden;">
 
     <audio id="chantOiseaux" loop>
-        <source src="https://www.soundjay.com/nature/sounds/birds-chirping-05.mp3" type="audio/mpeg">
+        <source src="oiseaux.mp3" type="audio/mpeg">
     </audio>
 
     <center>
@@ -87,9 +88,9 @@
         <font size="2">copyright 2026... Le petit prince des jardiniers</font>
     </center>
 
-    <div id="oiseau-container">
+    <div id="animal-container">
         <div id="bulle-texte"></div>
-        <div id="corps-oiseau">🕊️</div>
+        <div id="corps-animal">🕊️</div>
     </div>
 
     <script type="text/javascript">
@@ -98,45 +99,56 @@
     <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
 
     <script>
-        const container = document.getElementById('oiseau-container');
+        const container = document.getElementById('animal-container');
         const bulle = document.getElementById('bulle-texte');
+        const corps = document.getElementById('corps-animal');
         const audio = document.getElementById('chantOiseaux');
         const messageComplet = "Ici, on sème des graines de générosité pour récolter de l'altruisme";
         
-        let posX = -500;
+        let posX = -600;
         let posY = 200;
         let indexLettre = 0;
+        let tempsDerniereLettre = 0;
+        const animaux = ['🕊️', '🦋', '🐝', '🐞', '🦜'];
 
-        // Démarrer le son au premier clic (règle des navigateurs)
-        document.body.onclick = () => { audio.play(); };
+        // Joue le son au premier clic n'importe où sur la page
+        document.body.onclick = function() { 
+            if(audio.paused) {
+                audio.volume = 0.4; // Volume doux
+                audio.play(); 
+            }
+        };
 
-        function volerEtEcrire() {
-            posX += 2; // Vitesse de déplacement
+        function volerEtEcrire(timestamp) {
+            posX += 2.2; // Vitesse de vol
             
-            // On ajoute une lettre toutes les 10 frames environ
-            if (Math.floor(posX) % 10 === 0 && indexLettre <= messageComplet.length) {
+            // Écriture lettre par lettre
+            if (timestamp - tempsDerniereLettre > 110 && indexLettre <= messageComplet.length) {
                 bulle.innerText = messageComplet.substring(0, indexLettre);
                 indexLettre++;
+                tempsDerniereLettre = timestamp;
             }
 
-            // Si l'oiseau sort, il repart à zéro
+            // Réinitialisation après la sortie de l'écran
             if (posX > window.innerWidth) {
-                posX = -500;
+                posX = -700;
                 indexLettre = 0;
                 bulle.innerText = "";
-                posY = 100 + Math.random() * 300;
+                corps.innerText = animaux[Math.floor(Math.random() * animaux.length)];
+                posY = 100 + Math.random() * (window.innerHeight - 300);
             }
 
-            let oscillation = Math.sin(posX / 50) * 20;
+            // Mouvement de vague
+            let oscillation = Math.sin(posX / 70) * 35;
             container.style.left = posX + 'px';
             container.style.top = (posY + oscillation) + 'px';
 
             requestAnimationFrame(volerEtEcrire);
         }
 
-        // Clic sur l'oiseau = Récompense
+        // Système de récompenses au clic sur l'animal
         container.onclick = function(e) {
-            const list = ['🎁', '😘', '🌸', '🌻', '⭐', '🍀'];
+            const list = ['🎁', '😘', '🌸', '🌻', '⭐', '🍀', '💎'];
             const item = list[Math.floor(Math.random() * list.length)];
             const cadeau = document.createElement('div');
             cadeau.className = 'recompense';
@@ -147,7 +159,7 @@
             setTimeout(() => cadeau.remove(), 2000);
         };
 
-        volerEtEcrire();
+        requestAnimationFrame(volerEtEcrire);
     </script>
 </body>
 </html>
