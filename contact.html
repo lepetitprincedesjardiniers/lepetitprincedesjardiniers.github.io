@@ -2,33 +2,38 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Contact - Le Petit Prince des Jardiniers</title>
-    <style>
-        body { background: linear-gradient(135deg, #fdfcfb 0%, #e2d1c3 100%); background-attachment: fixed; font-family: "Comic Sans MS", cursive, sans-serif; color: #000080; text-align: center; margin: 0; padding: 0; }
-        nav { background-color: rgba(0, 100, 80, 0.9); padding: 15px; position: sticky; top: 0; z-index: 1000; }
-        nav a { color: #FFFF00; text-decoration: none; margin: 0 15px; font-weight: bold; }
-        .cadre-principal { max-width: 800px; margin: 30px auto; padding: 30px; background: rgba(255, 255, 255, 0.97); border: 10px ridge #800080; border-radius: 20px; }
-        h2 { color: #FF0000; text-decoration: underline; }
-        footer { margin-top: 30px; font-size: 0.85em; border-top: 1px dashed #ccc; padding-top: 20px; }
-    </style>
+    <title>Contact - Le Petit Prince</title>
 </head>
-<body>
-<nav>
-    <a href="index.html">Accueil</a>
-    <a href="services.html">Liste des cadeaux</a>
-    <a href="galerie.html">Réalisations</a>
-    <a href="formulaire.html">Espace Don</a>
-    <a href="contact.html">Contact</a>
-</nav>
-<div class="cadre-principal">
-    <h2>Contactez-nous</h2>
-    <p>Pour toute question ou échange humain :</p>
-    <p>📧 <b>Votre Email ici</b></p>
-    <footer>
-        <p style="color: #FF0000; font-weight: bold;">#Liberté #Amour #Gratuité #Fraternité</p>
-        <strong>copyrith 2000... Le petit prince des jardiniers</strong>
-    </footer>
-</div>
+<body bgcolor="#FFFF00" text="#000080" style="font-family:'Comic Sans MS', cursive;">
+<center>
+    <table border="1" cellpadding="10" bgcolor="#008080">
+        <tr>
+            <td><a href="index.html"><font color="#FFFFFF"><b>Accueil</b></font></a></td>
+            <td><a href="formulaire.html"><font color="#FFFFFF"><b>Espace Don</b></font></a></td>
+            <td><a href="jardin.html"><font color="#FFFFFF"><b>Le Jardin</b></font></a></td>
+            <td><a href="contact.html"><font color="#FFFFFF"><b>Contact</b></font></a></td>
+        </tr>
+    </table>
+
+    <br>
+    <font size="6" color="#FF0000"><u><b>CONTACTER LE PETIT PRINCE</b></u></font><br><br>
+
+    <form action="https://script.google.com/macros/s/AKfycbwe3bMzbJMUQSEdeyprffw-FQpqLg9-fGcHJi2_1_Ix5kWmrisBoSo2Kzne-CMwe3s/exec" method="POST">
+        <input type="hidden" name="formType" value="contact">
+        <table border="2" cellpadding="20" bgcolor="#FFFFFF" width="80%" style="border-radius:15px;">
+            <tr>
+                <td align="left">
+                    <b>Votre Nom :</b><br>
+                    <input type="text" name="nom" size="45" required><br><br>
+                    <b>Votre Email :</b><br>
+                    <input type="email" name="email" size="45" required><br><br>
+                    <b>Message :</b><br>
+                    <textarea name="message" rows="8" cols="55" required></textarea><br><br>
+                    <center><input type="submit" value="📩 ENVOYER" style="padding:10px 30px; cursor:pointer; font-weight:bold;"></center>
+                </td>
+            </tr>
+        </table>
+    </form>
+</center>
 </body>
 </html>
