@@ -4,39 +4,42 @@
     <meta charset="UTF-8">
     <title>Le Petit Prince des Jardiniers</title>
     <style>
-        /* Style du menu pour qu'il soit propre même traduit */
+        /* Style du menu stable et traduisible */
         .menu-table {
             margin-top: 10px;
             border-radius: 10px;
             background-color: #008080;
             border-collapse: collapse;
         }
-        .menu-table td {
-            padding: 10px 15px;
-            border: 1px solid #FFFFFF;
-        }
-        .menu-table a {
-            text-decoration: none;
-            color: #FFFFFF;
-            font-weight: bold;
-            display: inline-block; /* Aide Google à garder le lien intact */
-        }
+        .menu-table td { padding: 10px 15px; border: 1px solid #FFFFFF; }
+        .menu-table a { text-decoration: none; color: #FFFFFF; font-weight: bold; display: inline-block; }
 
-        /* Style de l'avion volant */
-        #avion-phrase {
+        /* L'oiseau et son message */
+        #oiseau-container {
             position: fixed;
-            z-index: 900; /* Un peu moins que le traducteur pour ne pas gêner */
+            z-index: 900;
             cursor: pointer;
-            background: white;
-            border: 2px dashed #008080;
-            border-radius: 20px;
-            padding: 10px 20px;
-            box-shadow: 4px 4px 15px rgba(0,0,0,0.2);
             white-space: nowrap;
+            display: flex;
+            align-items: center;
             user-select: none;
         }
 
-        /* Récompenses */
+        #bulle-texte {
+            background: rgba(255, 255, 255, 0.9);
+            border: 1px dashed #2E7D32;
+            border-radius: 15px;
+            padding: 8px 15px;
+            font-style: italic;
+            color: #2E7D32;
+            margin-right: 5px;
+            min-height: 20px;
+            box-shadow: 2px 2px 5px rgba(0,0,0,0.1);
+        }
+
+        #corps-oiseau { font-size: 40px; }
+
+        /* Animation des cadeaux */
         .recompense {
             position: fixed;
             font-size: 50px;
@@ -51,6 +54,10 @@
     </style>
 </head>
 <body bgcolor="#FFFF00" text="#000080" style="font-family:'Comic Sans MS', cursive; text-align:center; margin:0; padding:0; overflow-x: hidden;">
+
+    <audio id="chantOiseaux" loop>
+        <source src="https://www.soundjay.com/nature/sounds/birds-chirping-05.mp3" type="audio/mpeg">
+    </audio>
 
     <center>
         <div id="google_translate_element" style="padding:10px;"></div>
@@ -67,7 +74,7 @@
         <br><br>
         <font size="6" color="#E67E22">🌟 <b>LE PETIT PRINCE DES JARDINIERS</b> 🌟</font>
         <br><br>
-        <div style="font-size: 30px;">🌸 🌼 🌻 🌺</div>
+        <div style="font-size: 35px;">🌸 🌼 🌻 🌺</div>
         <br><br>
 
         <a href="formulaire.html" style="text-decoration:none;">
@@ -80,8 +87,9 @@
         <font size="2">copyright 2026... Le petit prince des jardiniers</font>
     </center>
 
-    <div id="avion-phrase">
-        <font color="#2E7D32"><i>"Ici, on sème des graines de générosité pour récolter de l'altruisme"</i></font>
+    <div id="oiseau-container">
+        <div id="bulle-texte"></div>
+        <div id="corps-oiseau">🕊️</div>
     </div>
 
     <script type="text/javascript">
@@ -90,43 +98,56 @@
     <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
 
     <script>
-        const avion = document.getElementById('avion-phrase');
-        let posX = -300;
-        let posY = 250; 
-        let vitesseX = 2;
+        const container = document.getElementById('oiseau-container');
+        const bulle = document.getElementById('bulle-texte');
+        const audio = document.getElementById('chantOiseaux');
+        const messageComplet = "Ici, on sème des graines de générosité pour récolter de l'altruisme";
+        
+        let posX = -500;
+        let posY = 200;
+        let indexLettre = 0;
 
-        function voler() {
-            posX += vitesseX;
-            // On ajoute une ondulation pour l'effet "avion"
-            let oscillation = Math.sin(posX / 100) * 30; 
+        // Démarrer le son au premier clic (règle des navigateurs)
+        document.body.onclick = () => { audio.play(); };
+
+        function volerEtEcrire() {
+            posX += 2; // Vitesse de déplacement
             
-            if (posX > window.innerWidth) { 
-                posX = -400; 
-                // Change la hauteur aléatoirement à chaque nouveau passage
-                posY = 150 + Math.random() * 300; 
+            // On ajoute une lettre toutes les 10 frames environ
+            if (Math.floor(posX) % 10 === 0 && indexLettre <= messageComplet.length) {
+                bulle.innerText = messageComplet.substring(0, indexLettre);
+                indexLettre++;
             }
-            
-            avion.style.left = posX + 'px';
-            avion.style.top = (posY + oscillation) + 'px';
-            
-            requestAnimationFrame(voler);
+
+            // Si l'oiseau sort, il repart à zéro
+            if (posX > window.innerWidth) {
+                posX = -500;
+                indexLettre = 0;
+                bulle.innerText = "";
+                posY = 100 + Math.random() * 300;
+            }
+
+            let oscillation = Math.sin(posX / 50) * 20;
+            container.style.left = posX + 'px';
+            container.style.top = (posY + oscillation) + 'px';
+
+            requestAnimationFrame(volerEtEcrire);
         }
 
-        avion.onclick = function(e) {
-            const recompenses = ['🎁', '😘', '🌸', '🌻', '⭐', '🍀'];
-            const choix = recompenses[Math.floor(Math.random() * recompenses.length)];
-            
-            const div = document.createElement('div');
-            div.className = 'recompense';
-            div.innerText = choix;
-            div.style.left = e.clientX + 'px';
-            div.style.top = e.clientY + 'px';
-            
-            document.body.appendChild(div);
-            setTimeout(() => { div.remove(); }, 2000);
+        // Clic sur l'oiseau = Récompense
+        container.onclick = function(e) {
+            const list = ['🎁', '😘', '🌸', '🌻', '⭐', '🍀'];
+            const item = list[Math.floor(Math.random() * list.length)];
+            const cadeau = document.createElement('div');
+            cadeau.className = 'recompense';
+            cadeau.innerText = item;
+            cadeau.style.left = e.clientX + 'px';
+            cadeau.style.top = e.clientY + 'px';
+            document.body.appendChild(cadeau);
+            setTimeout(() => cadeau.remove(), 2000);
         };
 
-        voler();
+        volerEtEcrire();
     </script>
 </body>
 </html>
