@@ -35,7 +35,6 @@
         .nuage-rose { background: #ffebee; border-color: #e91e63; }
         .nuage:hover { transform: translateY(-10px); }
         
-        /* ÉTOILE QUI DEVIENT CERCLE */
         .etoile-justice { 
             background: #E6E6FA; border: 3px solid #9370DB; width: 350px; height: 350px; 
             clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%); 
@@ -44,16 +43,20 @@
         }
         .etoile-justice:hover { 
             clip-path: polygon(50% 0%, 100% 0%, 100% 100%, 100% 100%, 100% 100%, 50% 100%, 0% 100%, 0% 100%, 0% 0%, 0% 0%);
-            border-radius: 50%;
-            transform: scale(1.05);
+            border-radius: 50%; transform: scale(1.05);
         }
         
         .exemples { font-size: 0.85em; color: #2E7D32; font-style: italic; margin-top: 10px; font-weight: bold; }
 
+        /* Animation Messagers fixes à gauche */
         .animal-container { position: fixed; z-index: 900; pointer-events: none; display: flex; align-items: center; }
-        .bulle-texte { background: white; border: 2px solid #2E7D32; border-radius: 15px; padding: 8px 15px; font-weight: bold; opacity: 0; white-space: nowrap; overflow: hidden; }
+        .bulle-texte { 
+            background: white; border: 2px solid #2E7D32; border-radius: 15px; padding: 8px 15px; 
+            font-weight: bold; opacity: 0; white-space: nowrap; overflow: hidden;
+            position: relative; left: 10px;
+        }
         
-        #coffre-magique { position: fixed; font-size: 60px; z-index: 800; pointer-events: none; }
+        #coffre-magique { position: fixed; font-size: 60px; z-index: 800; pointer-events: none; left: 50%; transform: translateX(-50%); }
 
         footer { margin: 60px 0 20px; font-size: 0.9em; }
     </style>
@@ -71,6 +74,7 @@
             <td><a href="transition.html?page=index.html">Accueil</a></td>
             <td><a href="transition.html?page=formulaire.html">Semer</a></td>
             <td><a href="transition.html?page=jardin.html">Le Jardin</a></td>
+            <td><a href="transition.html?page=impot.html">Impôt Public</a></td>
             <td><a href="transition.html?page=regulation.html">Régulation</a></td>
         </tr>
     </table>
@@ -79,27 +83,26 @@
     <p><strong>Le Petit Prince des Jardiniers</strong></p>
 
     <a href="transition.html?page=formulaire.html" class="soleil-don">
-        <div>☀️<br>ESPACE DU DON ENTIER<br><span style="font-weight:normal; font-size:0.8em;">Cadeau sans retour attendu</span></div>
+        <div>☀️<br>ESPACE DU DON ENTIER</div>
     </a>
 
     <div class="bulles-grid">
-        <a href="transition.html?page=regulation.html" class="nuage">
+        <a href="transition.html?page=impot.html" class="nuage">
             <h3 style="color:#008080; margin:0; text-transform:uppercase;">📜 Impôt Public</h3>
             <p>Travaux publics en libre participation.</p>
-            <div class="exemples">Ex : Nettoyage bois communal, tâches administratives...</div>
+            <div class="exemples">Ex : Nettoyage bois communal...</div>
         </a>
 
         <a href="transition.html?page=regulation.html" class="etoile-justice">
             <div style="width:75%;">
                 <h3>⚖️ Régulation Citoyenne</h3>
-                <p>Justice avec délicatesse : soutien, pénitence ou pardon.</p>
+                <p>Justice avec délicatesse.</p>
             </div>
         </a>
 
         <a href="transition.html?page=urgence.html" class="nuage nuage-rose">
             <h3 style="color:#e91e63; margin:0;">❤️ Urgence & Écoute</h3>
-            <p>Besoins vitaux et aide aux projets.</p>
-            <div class="exemples" style="color:#c2185b;">Soutien moral et solutions rapides.</div>
+            <p>Besoins vitaux.</p>
         </a>
     </div>
 
@@ -111,9 +114,12 @@
         const basePhrases = ["L'Impôt Public est un geste de cœur", "Besoin d'aide administrative ?", "Graines de générosité", "Le pardon est justice", "Besoin d'un câlin"];
         let disponibles = [...basePhrases];
         const typesAnimaux = ['🕊️', '🦋', '🐝', '🐞'];
-        const messagers = [];
+        let messagerActif = null;
+        let count = 0;
+        
         const coffre = document.getElementById('coffre-magique');
-        let count = 0, coffreX = window.innerWidth/2, coffreY = window.innerHeight+100;
+        let coffreX = window.innerWidth / 2 - 30;
+        let coffreY = window.innerHeight - 150;
 
         document.addEventListener('click', () => { 
             const a = document.getElementById('chantOiseaux');
@@ -124,49 +130,84 @@
             for (let i = 0; i < 20; i++) {
                 const p = document.createElement('div');
                 p.innerHTML = ['❤️', '✨', '🌸', '🌟'][Math.floor(Math.random() * 4)];
-                p.style.position = 'fixed'; p.style.left = coffreX + 'px'; p.style.top = coffreY + 'px';
+                p.style.position = 'fixed'; p.style.left = (coffreX + 30) + 'px'; p.style.top = (coffreY + 30) + 'px';
                 p.style.fontSize = '25px'; p.style.zIndex = '1000'; document.body.appendChild(p);
                 const angle = Math.random() * Math.PI * 2; const dist = Math.random() * 180;
                 p.animate([{ transform: 'translate(0, 0) scale(1)', opacity: 1 }, { transform: `translate(${Math.cos(angle)*dist}px, ${Math.sin(angle)*dist}px) scale(0)`, opacity: 0 }], 1000);
                 setTimeout(() => p.remove(), 1000);
             }
-            coffre.animate([{ transform: 'scale(1.5) translateY(0)', opacity: 1 }, { transform: 'scale(0.5) translateY(-1200px)', opacity: 0 }], { duration: 1500, easing: 'ease-in' });
+            coffre.animate([
+                { transform: 'translateY(0) scale(1.5)', opacity: 1 },
+                { transform: 'translateY(-1200px) scale(0.5)', opacity: 0 }
+            ], { duration: 1500, easing: 'ease-in', fill: 'forwards' });
+            
+            // Réinitialiser le coffre après l'envol
+            setTimeout(() => {
+                coffreY = window.innerHeight - 150;
+                coffre.style.opacity = "1";
+            }, 3000);
         }
 
         function createMessenger() {
-            if (count >= 3 || messagers.length > 0) return;
+            if (count >= 3 || messagerActif) return;
             const txt = disponibles.splice(Math.floor(Math.random()*disponibles.length), 1)[0];
             const div = document.createElement('div');
             div.className = "animal-container";
-            div.innerHTML = `<div class="bulle-texte" style="width:0px">${txt}</div><div style="font-size:50px">${typesAnimaux[Math.floor(Math.random()*4)]}</div>`;
+            div.innerHTML = `<div class="bulle-texte" style="width:0px">${txt}</div><div style="font-size:60px">${typesAnimaux[Math.floor(Math.random()*4)]}</div>`;
             document.body.appendChild(div);
-            messagers.push({ el: div, bulle: div.firstChild, x: -300, y: 350, tx: 450, ty: 450, state: "IN" });
+            
+            messagerActif = { el: div, bulle: div.firstChild, x: -200, y: window.innerHeight / 2, tx: 100, state: "ENTRÉE" };
         }
 
         function loop() {
-            let target = null;
-            for (let i = messagers.length-1; i>=0; i--) {
-                let m = messagers[i];
-                if(m.state === "IN") {
-                    target = m; m.x += (m.tx - m.x) * 0.02; m.y += (m.ty - m.y) * 0.02;
-                    m.bulle.style.opacity = 1; if(parseInt(m.bulle.style.width)<220) m.bulle.style.width = (parseInt(m.bulle.style.width)+4)+"px";
-                    if(Math.abs(m.tx - m.x) < 60) {
-                        m.state = "SHOOT";
-                        m.bulle.animate([{ transform: 'translateX(0) scale(1)', opacity: 1 }, { transform: 'translateX(180px) scale(0)', opacity: 0 }], 500);
-                        setTimeout(() => { exploserEtEnvoler(); m.state = "OUT"; m.tx = window.innerWidth + 400; count++; }, 500);
+            if (messagerActif) {
+                let m = messagerActif;
+                if (m.state === "ENTRÉE") {
+                    m.x += (m.tx - m.x) * 0.05;
+                    if (Math.abs(m.tx - m.x) < 5) {
+                        m.state = "LECTURE";
+                        m.bulle.style.opacity = 1;
+                        m.bulle.animate([{width: "0px"}, {width: "250px"}], {duration: 500, fill: 'forwards'});
+                        
+                        // Temps de lecture avant de lancer
+                        setTimeout(() => {
+                            if(m.state === "LECTURE") m.state = "LANCER";
+                        }, 2500);
                     }
-                } else if (m.state === "OUT") {
-                    m.x += (m.tx - m.x) * 0.03; if(m.x > window.innerWidth + 350) { m.el.remove(); messagers.splice(i, 1); }
+                } else if (m.state === "LANCER") {
+                    m.state = "PROJECTILE";
+                    // Calcul de la trajectoire vers le cadeau
+                    const targetX = coffreX - m.x;
+                    const targetY = coffreY - m.y;
+                    
+                    m.bulle.animate([
+                        { transform: 'translate(0, 0) scale(1)', opacity: 1 },
+                        { transform: `translate(${targetX}px, ${targetY}px) scale(0.2)`, opacity: 0 }
+                    ], { duration: 600, easing: 'ease-in', fill: 'forwards' });
+
+                    setTimeout(() => {
+                        exploserEtEnvoler();
+                        m.state = "SORTIE";
+                    }, 600);
+                } else if (m.state === "SORTIE") {
+                    m.x -= 10;
+                    if (m.x < -300) {
+                        m.el.remove();
+                        messagerActif = null;
+                        count++;
+                    }
                 }
-                m.el.style.left = m.x + "px"; m.el.style.top = (m.y + Math.sin(Date.now()*0.005)*15) + "px";
+                m.el.style.left = m.x + "px";
+                m.el.style.top = (m.y + Math.sin(Date.now()*0.005)*20) + "px";
             }
-            if(target && target.state === "IN") {
-                coffreX += (target.x + 180 - coffreX) * 0.05; coffreY += (target.y + 40 - coffreY) * 0.05;
-            }
-            coffre.style.left = coffreX + "px"; coffre.style.top = coffreY + "px";
+            
+            coffre.style.left = coffreX + "px";
+            coffre.style.top = coffreY + "px";
             requestAnimationFrame(loop);
         }
-        setInterval(createMessenger, 5000); loop();
+
+        setInterval(createMessenger, 4000);
+        loop();
     </script>
 </body>
 </html>
