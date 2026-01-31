@@ -41,6 +41,10 @@
             box-shadow: 0px 10px 25px rgba(0,0,0,0.1);
         }
 
+        .titre-haut {
+            margin-bottom: 25px;
+        }
+
         .philosophie { 
             text-align: justify; 
             background-color: #fcfcfc; 
@@ -51,20 +55,21 @@
             font-style: italic;
         }
 
+        /* Bouton centré avec texte vert */
         .btn-action {
             display: inline-block;
             background-color: #FFFF00;
-            color: #FF0000;
+            color: #008000; /* Texte Vert */
             padding: 20px 40px;
             text-decoration: none;
             font-weight: bold;
             font-size: 1.5em;
             border: 4px solid #000080;
             border-radius: 50px;
-            margin: 20px 0;
+            margin: 30px auto;
             transition: transform 0.2s;
         }
-        .btn-action:hover { transform: scale(1.05); background-color: #FF0000; color: #FFFF00; }
+        .btn-action:hover { transform: scale(1.05); background-color: #008000; color: #FFFF00; }
 
         .cadre-interieur-don {
             border: 5px double #800080;
@@ -102,21 +107,25 @@
 
 <div class="cadre-principal">
 
+    <div class="titre-haut">
+        <h1 style="color: #FF0000; text-decoration: underline; margin-top: 0;">Le Petit Prince des Jardiniers</h1>
+        <p style="font-style: italic; font-weight: bold; font-size: 1.2em;">Jardinier Humaniste - Éducateur - Philosophe</p>
+    </div>
+
     <div class="philosophie">
         <strong>Ma Thèse :</strong> Analyse éthique des comportements, de la misère à la richesse du cœur. 
         Ici, nous cultivons la fraternité et la dignité humaine à travers le don pur.
         S'il vous plaît... dessine-moi une main tendue.
     </div>
 
-    <p style="font-weight: bold;">Partagez votre savoir, votre temps ou vos cadeaux :</p>
+    <p style="font-weight: bold; margin-top: 25px;">Donner votre savoir, votre temps ou votre cadeau existentiel :</p>
     
-    <a href="formulaire.html" class="btn-action">🌻 ENTRER DANS L'ESPACE DE DON</a>
+    <div>
+        <a href="formulaire.html" class="btn-action">🌻 ENTRER DANS L'ESPACE DE DON</a>
+    </div>
 
     <div class="cadre-interieur-don">
-        <h2 style="color: #FF0000; text-decoration: underline;">Le Petit Prince des Jardiniers</h2>
-        <p style="font-style: italic; font-weight: bold; margin-bottom: 20px;">Jardinier Humaniste - Éducateur - Philosophe</p>
-        
-        <p style="color: #008080; font-weight: bold; font-size: 1.3em;">"S'il vous plaît... dessine-moi un partage."</p>
+        <p style="color: #008080; font-weight: bold; font-size: 1.3em; margin-top: 0;">"S'il vous plaît... dessine-moi un partage."</p>
 
         <div style="background-color: #f4f4f4; padding: 15px; border: 1px solid #ccc; text-align: justify;">
             Ce site est un espace de <b>Don Pur</b>. Nous cultivons ici la fraternité, la dignité humaine 
