@@ -3,52 +3,52 @@
 <head>
     <meta charset="UTF-8">
     <title>Semer un Don - Le Petit Prince</title>
+    <title>Semer un Don - Le Petit Prince des Jardiniers</title>
     <style>
         body { font-family: 'Comic Sans MS', cursive; text-align: center; margin: 0; padding: 0; background-color: #FFFF00; color: #000080; overflow-x: hidden; min-height: 100vh; }
-
+        
+        /* Menu */
         .menu-table { margin: 20px auto; border-radius: 10px; background-color: #008080; border-collapse: collapse; }
         .menu-table td { padding: 10px 15px; border: 1px solid #FFFFFF; }
         .menu-table a { text-decoration: none; color: #FFFFFF; font-weight: bold; }
 
+        /* Conteneur Formulaire */
         .form-container { 
             background: white; 
             padding: 30px; 
             border-radius: 20px; 
             display: inline-block; 
             margin-top: 10px; 
+            background: white; padding: 30px; border-radius: 20px; 
+            display: inline-block; margin-top: 10px; 
             box-shadow: 0px 10px 20px rgba(0,0,0,0.1); 
-            width: 85%; 
-            max-width: 550px; /* Légèrement plus large pour le long bouton */
             width: 90%; 
             max-width: 550px;
-            margin-bottom: 150px; 
+            margin-bottom: 180px; 
+            width: 90%; max-width: 550px; margin-bottom: 180px; 
         }
 
         .form-group { text-align: left; margin: 10px 20px; }
         label { font-weight: bold; color: #008080; display: block; margin-bottom: 5px; }
 
         input, textarea, select { 
-            width: 95%; 
             width: 100%; 
             padding: 12px; 
-            margin: 10px 0; 
             margin-bottom: 15px;
             border: 2px solid #008080; 
             border-radius: 10px; 
             font-family: 'Comic Sans MS';
             font-size: 1em;
-            background: white;
             box-sizing: border-box;
+            background-color: #f9f9f9;
+            width: 100%; padding: 12px; margin-bottom: 15px;
+            border: 2px solid #008080; border-radius: 10px; 
+            font-family: 'Comic Sans MS'; font-size: 1em; box-sizing: border-box;
+            background-color: #fcfcfc;
         }
 
-        #coffre-magique { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); font-size: 60px; z-index: 800; transition: transform 0.3s; }
-        #animal-container { position: fixed; z-index: 900; white-space: nowrap; display: flex; align-items: center; pointer-events: none; }
-        #corps-animal { font-size: 50px; }
-        #bulle-texte { background: rgba(255, 255, 255, 0.9); border-radius: 15px; padding: 8px 15px; font-style: italic; color: #2E7D32; margin-right: 10px; box-shadow: 2px 2px 5px rgba(0,0,0,0.1); font-weight: bold; border: 2px solid #2E7D32; opacity: 0; transition: opacity 0.3s; }
-        #bulle-texte { background: rgba(255, 255, 255, 0.9); border-radius: 15px; padding: 8px 15px; font-style: italic; color: #2E7D32; margin-right: 10px; font-weight: bold; border: 2px solid #2E7D32; opacity: 0; transition: opacity 0.3s; }
-
+        /* Bouton */
         .btn-envoyer { 
-            padding: 15px 25px; 
             width: 100%;
             padding: 20px; 
             background: #E67E22; 
@@ -57,17 +57,28 @@
             border-radius: 20px; 
             cursor: pointer; 
             font-weight: bold; 
-            font-size: 1.1em; /* Taille ajustée pour tenir sur une ligne */
-            font-size: 1.2em;
+            font-size: 1.1em;
             box-shadow: 0px 4px 0px #b35900;
             transition: transform 0.1s;
+            width: 100%; padding: 20px; background: #E67E22; color: white; 
+            border: none; border-radius: 20px; cursor: pointer; 
+            font-weight: bold; font-size: 1.1em; box-shadow: 0px 4px 0px #b35900;
+            transition: 0.1s;
         }
         .btn-envoyer:active { transform: translateY(4px); box-shadow: 0px 0px 0px #b35900; }
+
+        /* Animations Animaux et Coffre */
+        #coffre-magique { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); font-size: 60px; z-index: 800; transition: transform 0.3s; }
+        #animal-container { position: fixed; z-index: 900; white-space: nowrap; display: flex; align-items: center; pointer-events: none; }
+        #corps-animal { font-size: 50px; }
+        #bulle-texte { background: rgba(255, 255, 255, 0.9); border-radius: 15px; padding: 8px 15px; font-style: italic; color: #2E7D32; margin-right: 10px; font-weight: bold; border: 2px solid #2E7D32; opacity: 0; transition: opacity 0.3s; }
 
         .pop { transform: translateX(-50%) scale(1.4) !important; }
         .confetti { position: fixed; z-index: 799; pointer-events: none; animation: fly 2s ease-out forwards; }
         @keyframes fly { 0% { transform: translate(0, 0) rotate(0deg); opacity: 1; } 100% { transform: translate(var(--dx), var(--dy)) rotate(360deg); opacity: 0; } }
+        
         .copyright-link { color: #000080; text-decoration: none; font-weight: bold; }
+        .copyright-link:hover { text-decoration: underline; }
     </style>
 </head>
 <body>
@@ -87,58 +98,17 @@
 
     <h2 style="color:#E67E22;">🌟 Semer un Don entier</h2>
     <p style="font-weight:bold;">Un vrai cadeau existentiel pour une paix rayonnante...</p>
+    <h2 style="color:#E67E22;">🌟 Semer un Don - Le Petit Prince des Jardiniers</h2>
+    <p style="font-weight:bold; color:#008080;">Chaque graine est un acte de fraternité...</p>
 
     <div class="form-container">
         <form action="https://formspree.io/f/TON_ID" method="POST">
-            <input type="text" name="nom" placeholder="Ton Prénom" required>
 
-            <select name="pays" required>
-                <option value="" disabled selected>Choisis ton pays sans frontière ! 🌍</option>
-                <option value="Afghanistan">Afghanistan</option>
-                <option value="Afrique du Sud">Afrique du Sud</option>
-                <option value="Algérie">Algérie</option>
-                <option value="Allemagne">Allemagne</option>
-                <option value="Argentine">Argentine</option>
-                <option value="Australie">Australie</option>
-                <option value="Belgique">Belgique</option>
-                <option value="Bénin">Bénin</option>
-                <option value="Brésil">Brésil</option>
-                <option value="Burkina Faso">Burkina Faso</option>
-                <option value="Cameroun">Cameroun</option>
-                <option value="Canada">Canada</option>
-                <option value="Chili">Chili</option>
-                <option value="Chine">Chine</option>
-                <option value="Colombie">Colombie</option>
-                <option value="Congo">Congo</option>
-                <option value="Côte d'Ivoire">Côte d'Ivoire</option>
-                <option value="Égypte">Égypte</option>
-                <option value="Espagne">Espagne</option>
-                <option value="États-Unis">États-Unis</option>
-                <option value="France">France</option>
-                <option value="Gabon">Gabon</option>
-                <option value="Grèce">Grèce</option>
-                <option value="Inde">Inde</option>
-                <option value="Italie">Italie</option>
-                <option value="Japon">Japon</option>
-                <option value="Luxembourg">Luxembourg</option>
-                <option value="Madagascar">Madagascar</option>
-                <option value="Mali">Mali</option>
-                <option value="Maroc">Maroc</option>
-                <option value="Maurice">Maurice</option>
-                <option value="Mexique">Mexique</option>
-                <option value="Monaco">Monaco</option>
-                <option value="Portugal">Portugal</option>
-                <option value="Sénégal">Sénégal</option>
-                <option value="Suisse">Suisse</option>
-                <option value="Tunisie">Tunisie</option>
-                <option value="Viêt Nam">Viêt Nam</option>
-                <option value="Autre">Partout ailleurs dans le monde...</option>
-            </select>
-
-            <input type="text" name="ville" placeholder="Ta Ville" required>
             <div class="form-group">
                 <label>Identité du Jardinier</label>
                 <input type="text" name="nom" placeholder="Ton Prénom" required>
+                <label>Identité amoureuse</label>
+                <input type="text" name="nom" placeholder="Ton Prénom de coeur" required>
             </div>
 
             <div class="form-group">
@@ -149,8 +119,32 @@
                     <option value="Belgique">Belgique</option>
                     <option value="Suisse">Suisse</option>
                     <option value="Canada">Canada</option>
-                    <option value="Afrique">Afrique (Continent)</option>
-                    <option value="International">International / Partout ailleurs</option>
+                    <option value="Algérie">Algérie</option>
+                    <option value="Maroc">Maroc</option>
+                    <option value="Tunisie">Tunisie</option>
+                    <option value="Sénégal">Sénégal</option>
+                    <option value="Côte d'Ivoire">Côte d'Ivoire</option>
+                    <option value="Luxembourg">Luxembourg</option>
+                    <option value="International">Partout ailleurs dans le monde...</option>
+                    <optgroup label="🌍 Pays du Monde">
+                        <option value="Algérie">Algérie</option>
+                        <option value="Belgique">Belgique</option>
+                        <option value="Canada">Canada</option>
+                        <option value="Côte d'Ivoire">Côte d'Ivoire</option>
+                        <option value="France">France</option>
+                        <option value="Maroc">Maroc</option>
+                        <option value="Sénégal">Sénégal</option>
+                        <option value="Suisse">Suisse</option>
+                    </optgroup>
+                    <optgroup label="✨ Territoires de l'Âme">
+                        <option value="Groland">Groland</option>
+                        <option value="Belle Brousse">La Belle Brousse</option>
+                        <option value="Forêt Merveilleuse">La Forêt Merveilleuse</option>
+                        <option value="Pays des Schtroumpfs">Pays des Schtroumpfs</option>
+                        <option value="Déconnade Internationale">Déconnade Internationale</option>
+                        <option value="Fidèle Indétrônable">La Fidèle Indétrônable</option>
+                    </optgroup>
+                    <option value="Autre Pays">Autre pays non référencé...</option>
                 </select>
                 <input type="text" name="ville" placeholder="Ta Ville" required>
             </div>
@@ -158,10 +152,10 @@
             <div class="form-group">
                 <label>Zone d'offrande (Rayon d'action)</label>
                 <select name="rayon" required>
-                    <option value="5">5 km / 3.1 miles</option>
-                    <option value="10">10 km / 6.2 miles</option>
-                    <option value="50">50 km / 31 miles</option>
-                    <option value="100">100 km / 62 miles</option>
+                    <option value="5km">5 km / 3.1 miles</option>
+                    <option value="10km">10 km / 6.2 miles</option>
+                    <option value="50km">50 km / 31 miles</option>
+                    <option value="100km">100 km / 62 miles</option>
                     <option value="Infini">Rayon Infini (Fraternité Universelle)</option>
                 </select>
             </div>
@@ -172,14 +166,17 @@
                     <option value="1_jour">1 Journée</option>
                     <option value="1_semaine">1 Semaine</option>
                     <option value="1_mois">1 Mois</option>
-                    <option value="Toujours">Pour Toujours</option>
+                    <option value="annuel">Annuel (Une année de don)</option>
+                    <option value="Eternel">Éternel (Un don pour l'éternité)</option>
+                    <option value="annuel">Annuel</option>
+                    <option value="Eternel">Éternel</option>
                 </select>
             </div>
 
-            <textarea name="message" rows="4" placeholder="Décris ici ton don, ton cadeau existentiel pour le monde..." required></textarea>
             <div class="form-group">
                 <label>Description du Don</label>
                 <textarea name="message" rows="4" placeholder="Décris ici ton don, ton cadeau pour le monde..." required></textarea>
+                <textarea name="message" rows="4" placeholder="Ton cadeau amoureux pour le monde..." required></textarea>
             </div>
 
             <button type="submit" class="btn-envoyer">ENGENDRER DE LA FRATERNITÉ UNIVERSELLE</button>
@@ -203,10 +200,15 @@
     <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
 
     <script>
-        // Logique d'animation conservée pour la cohérence visuelle
-        const mesPhrases = ["Le cadeau existentiel produit un don collectif", "Engendrer de la fraternité...", "La confiance cordiale du Don sincère"];
-        const mesPhrases = ["Le cadeau existentiel produit un don collectif", "Une paix rayonnante pour le monde", "La confiance cordiale du Don sincère"];
+        const mesPhrases = [
+            "Le cadeau existentiel produit un don collectif",
+            "Une paix rayonnante pour le monde",
+            "Engendrer de la fraternité...",
+            "La confiance cordiale du Don sincère"
+        ];
         const animaux = ['🕊️', '🦋', '🐝', '🐞', '🦜', '🐰', '🐿️', '🐬', '🦄'];
+        const mesPhrases = ["Semer un don avec le Petit Prince...", "Engendrer de la fraternité...", "L'amour est la seule graine qui ne fane jamais"];
+        const animaux = ['🕊️', '🦋', '🐝', '🐞', '🦜', '🐰'];
         const fleurs = ['🌸', '🌼', '🌻', '🌺'];
 
         const animalCont = document.getElementById('animal-container');
@@ -215,7 +217,6 @@
         const coffre = document.getElementById('coffre-magique');
         const audio = document.getElementById('chantOiseaux');
 
-        
         let aniX, aniY, targetX, targetY, state = "WAITING";
 
         document.addEventListener('click', () => { if(audio.paused) { audio.volume = 0.02; audio.play(); } });
@@ -236,10 +237,6 @@
         function startNewMessenger() {
             bulle.innerText = mesPhrases[Math.floor(Math.random() * mesPhrases.length)];
             corps.innerText = animaux[Math.floor(Math.random() * animaux.length)];
-            const side = Math.floor(Math.random() * 3);
-            if(side === 0) { aniX = -200; aniY = 150; } 
-            else if(side === 1) { aniX = window.innerWidth + 200; aniY = 150; } 
-            else { aniX = 300; aniY = -200; }
             aniX = -200; aniY = 200;
             targetX = window.innerWidth / 2; targetY = window.innerHeight - 110;
             state = "APPROACHING";
@@ -251,9 +248,10 @@
                 bulle.style.opacity = "1";
                 if (Math.sqrt(Math.pow(targetX-aniX,2)+Math.pow(targetY-aniY,2)) < 60) {
                     state = "DEPOSITING"; coffre.classList.add('pop'); createConfetti();
-                    setTimeout(() => { bulle.style.opacity = "0"; coffre.classList.remove('pop'); state = "LEAVING";
-                    targetX = (Math.random() > 0.5) ? window.innerWidth + 600 : -600; targetY = 150; }, 2500);
-                    targetX = window.innerWidth + 500; targetY = 200; }, 2500);
+                    setTimeout(() => { 
+                        bulle.style.opacity = "0"; coffre.classList.remove('pop'); state = "LEAVING";
+                        targetX = window.innerWidth + 500; targetY = 200; 
+                    }, 2500);
                 }
             } else if (state === "LEAVING") {
                 aniX += (targetX - aniX) * 0.02; aniY += (targetY - aniY) * 0.02;
@@ -266,4 +264,3 @@
         startNewMessenger(); loop();
     </script>
 </body>
-</html>
