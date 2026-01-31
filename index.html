@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+     <!DOCTYPE html>
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
@@ -31,6 +31,8 @@
             border-radius: 10px; 
             background-color: #008080; 
             border-collapse: collapse; 
+            margin-left: auto;
+            margin-right: auto;
         }
         .menu-table td { padding: 10px 15px; border: 1px solid #FFFFFF; }
         .menu-table a { text-decoration: none; color: #FFFFFF; font-weight: bold; }
@@ -114,7 +116,7 @@
             font-weight: bold; 
         }
 
-        /* Système des Messagers Animés */
+        /* Éléments Mobiles (Messagers et Cadeau) */
         .animal-container { 
             position: fixed; 
             z-index: 900; 
@@ -132,23 +134,22 @@
             overflow: hidden; 
             max-width: 250px; 
             white-space: normal;
+            transition: opacity 0.5s;
         }
         
         #coffre-magique { 
             position: fixed; 
-            bottom: 20px; 
-            left: 50%; 
-            transform: translateX(-50%); 
             font-size: 60px; 
             z-index: 800; 
-            transition: 0.3s;
+            pointer-events: none; 
+            transition: transform 0.3s;
         }
-        .pop { transform: translateX(-50%) scale(1.4) !important; }
+        .pop { transform: scale(1.5) !important; }
 
-        /* Confettis de fleurs */
+        /* Étincelles de fleurs */
         .confetti { 
             position: fixed; 
-            z-index: 799; 
+            z-index: 999; 
             pointer-events: none; 
             animation: fly 2s ease-out forwards; 
         }
@@ -195,8 +196,9 @@
 
     <div class="bulles-grid">
         <a href="temps-public.html" class="nuage">
-            <h3 style="color: #008080; margin: 0;">📜 Espace Temps Public</h3>
-            <p style="margin: 10px 0;">Travaux publics de libre participation.</p>
+            <h3 style="color: #008080; margin: 0; text-transform: uppercase;">📜 Impôt Public</h3>
+            <p style="margin: 10px 0; font-weight: bold;">Travaux publics en libre participation.</p>
+            <p style="font-size: 0.9em; margin: 0;">Tâches nécessaires au fonctionnement de la collectivité.</p>
             <div class="exemples">
                 Nettoyage du bois communal, réfection de la route, volontariat d'urgence...
             </div>
@@ -212,7 +214,7 @@
 
         <a href="urgence.html" class="nuage nuage-rose">
             <h3 style="color: #e91e63; margin: 0;">❤️ Urgence & Écoute</h3>
-            <p style="margin: 10px 0;">Besoins vitaux et aide aux projets.</p>
+            <p style="margin: 10px 0; font-weight: bold;">Besoins vitaux et aide aux projets.</p>
             <div class="exemples">
                 Aide charpente, besoin d'un câlin, recherche farine pour le pain...
             </div>
@@ -229,8 +231,8 @@
         // --- CONFIGURATION ---
         const basePhrases = [
             "Bienvenue au Trésor Public", 
-            "L'impôt est un geste de cœur", 
-            "L'étoile éclot pour vous écouter",
+            "L'Impôt Public est un geste de cœur", 
+            "Tâches nécessaires au fonctionnement de la collectivité",
             "Ici, on sème des graines de générosité pour récolter de l'altruisme",
             "Attention : zone de gratuité absolue pour cadeau réellement efficace",
             "La meilleure justice est encore le pardon",
@@ -245,20 +247,22 @@
         const coffre = document.getElementById('coffre-magique');
         const audio = document.getElementById('chantOiseaux');
 
-        // Activer l'audio au premier clic
+        let coffreX = window.innerWidth / 2;
+        let coffreY = window.innerHeight + 100;
+
         document.addEventListener('click', () => { 
             if(audio.paused) { audio.volume = 0.05; audio.play(); } 
         });
 
         // --- FONCTIONS ---
-        function createConfetti() {
-            for(let i=0; i<15; i++) {
+        function createConfetti(x, y) {
+            for(let i=0; i<20; i++) {
                 const c = document.createElement('div');
                 c.className = 'confetti';
                 c.innerText = fleurs[Math.floor(Math.random()*fleurs.length)];
-                c.style.left = "50%"; c.style.bottom = "60px";
+                c.style.left = x + "px"; c.style.top = y + "px";
                 c.style.setProperty('--dx', (Math.random()*400 - 200) + "px");
-                c.style.setProperty('--dy', (Math.random()*-400 - 100) + "px");
+                c.style.setProperty('--dy', (Math.random()*400 - 200) + "px");
                 document.body.appendChild(c);
                 setTimeout(() => c.remove(), 2000);
             }
@@ -273,8 +277,7 @@
         }
 
         function createMessenger() {
-            if (disponibles.length === 0) return; // Ne pas créer si pas de texte unique dispo
-            
+            if (disponibles.length === 0) return;
             const start = getRandomEdge();
             const phraseIdx = Math.floor(Math.random() * disponibles.length);
             const texte = disponibles.splice(phraseIdx, 1)[0];
@@ -285,65 +288,73 @@
                                    <div style="font-size:50px">${typesAnimaux[Math.floor(Math.random()*4)]}</div>`;
             document.body.appendChild(container);
 
+            // Point de rencontre aléatoire dans la page
+            const meetX = 200 + Math.random() * (window.innerWidth - 400);
+            const meetY = 150 + Math.random() * (window.innerHeight - 300);
+
             messagers.push({
                 el: container,
                 bulle: container.firstChild,
                 texte: texte,
                 x: start.x, y: start.y,
-                tx: window.innerWidth / 2, ty: window.innerHeight - 110,
+                tx: meetX, ty: meetY,
                 state: "IN",
                 seed: Math.random() * 1000
             });
         }
 
         function loop() {
+            let targetForGift = null;
+
             for (let i = messagers.length - 1; i >= 0; i--) {
                 let m = messagers[i];
-
                 if (m.state === "IN") {
-                    // Aller vers le coffre
-                    m.x += (m.tx - m.x) * 0.012;
-                    m.y += (m.ty - m.y) * 0.012;
+                    targetForGift = m; // Le cadeau cible cet animal
+                    m.x += (m.tx - m.x) * 0.015; m.y += (m.ty - m.y) * 0.015;
                     m.bulle.style.opacity = "1";
-                    
-                    // Ouverture progressive de la bulle
-                    let currentW = parseInt(m.bulle.style.width) || 0;
-                    if (currentW < 220) m.bulle.style.width = (currentW + 2) + "px";
+                    let w = parseInt(m.bulle.style.width) || 0;
+                    if (w < 220) m.bulle.style.width = (w + 2) + "px";
 
-                    if (Math.abs(m.tx - m.x) < 20 && Math.abs(m.ty - m.y) < 20) {
+                    if (Math.abs(m.tx - m.x) < 30 && Math.abs(m.ty - m.y) < 30) {
                         m.state = "WAIT";
                         coffre.classList.add('pop');
-                        createConfetti();
+                        createConfetti(m.x, m.y);
                         setTimeout(() => {
                             m.state = "OUT";
                             coffre.classList.remove('pop');
-                            const exit = getRandomEdge();
-                            m.tx = exit.x; m.ty = exit.y;
+                            const ex = getRandomEdge(); m.tx = ex.x; m.ty = ex.y;
                             m.bulle.style.opacity = "0";
-                        }, 4000); // Temps de lecture
+                        }, 4000);
                     }
                 } else if (m.state === "OUT") {
-                    // Sortir de l'écran
-                    m.x += (m.tx - m.x) * 0.02;
-                    m.y += (m.ty - m.y) * 0.02;
+                    m.x += (m.tx - m.x) * 0.02; m.y += (m.ty - m.y) * 0.02;
                     if (m.x < -300 || m.x > window.innerWidth + 300 || m.y < -300 || m.y > window.innerHeight + 300) {
-                        disponibles.push(m.texte); // Libérer le texte
+                        disponibles.push(m.texte);
                         m.el.remove();
                         messagers.splice(i, 1);
                     }
                 }
-
-                // Animation de flottement
-                const float = Math.sin(Date.now() * 0.005 + m.seed) * 15;
                 m.el.style.left = m.x + "px";
-                m.el.style.top = (m.y + float) + "px";
+                m.el.style.top = (m.y + Math.sin(Date.now() * 0.005 + m.seed) * 15) + "px";
             }
+
+            // Mouvement du Cadeau volant
+            if (targetForGift) {
+                coffreX += (targetForGift.x - coffreX) * 0.06;
+                coffreY += (targetForGift.y + 40 - coffreY) * 0.06;
+            } else {
+                // Retour au repos sous l'écran
+                coffreX += (window.innerWidth / 2 - coffreX) * 0.02;
+                coffreY += (window.innerHeight + 100 - coffreY) * 0.02;
+            }
+            coffre.style.left = coffreX + "px";
+            coffre.style.top = coffreY + "px";
+
             requestAnimationFrame(loop);
         }
 
-        // Lancement
-        setInterval(createMessenger, 5000); 
-        createMessenger(); // Premier oiseau immédiat
+        setInterval(createMessenger, 6000);
+        createMessenger();
         loop();
     </script>
 </body>
