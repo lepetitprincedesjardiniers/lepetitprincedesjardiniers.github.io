@@ -6,6 +6,9 @@
     <style>
         body { font-family: 'Comic Sans MS', cursive; text-align: center; margin: 0; padding: 0; background-color: #FFFF00; color: #000080; overflow-x: hidden; min-height: 100vh; }
         
+        /* Traducteur Google */
+        #google_translate_element { padding: 10px; background: rgba(255,255,255,0.5); border-bottom: 1px solid #008080; }
+
         /* Menu */
         .menu-table { margin: 20px auto; border-radius: 10px; background-color: #008080; border-collapse: collapse; margin-left: auto; margin-right: auto; }
         .menu-table td { padding: 10px 15px; border: 1px solid #FFFFFF; }
@@ -19,64 +22,63 @@
             margin: 20px auto; cursor: pointer; transition: 0.4s;
             text-decoration: none; color: #000080; font-weight: bold; line-height: 1.2;
         }
-        .soleil-don:hover { transform: scale(1.1); }
+        .soleil-don:hover { transform: scale(1.1) rotate(5deg); }
 
         .moteur-recherche {
             background: rgba(255, 255, 255, 0.8); border: 3px solid #008080;
             border-radius: 20px; padding: 20px; margin: 20px auto; width: 90%; max-width: 850px;
         }
-        .moteur-recherche input { padding: 10px; border-radius: 10px; border: 2px solid #008080; width: 80%; font-family: 'Comic Sans MS'; }
+        .moteur-recherche input, .moteur-recherche select { padding: 10px; border-radius: 10px; border: 2px solid #008080; margin: 5px; font-family: 'Comic Sans MS'; }
 
         /* Grille des Bulles */
         .bulles-grid { display: flex; justify-content: center; align-items: center; gap: 20px; flex-wrap: wrap; padding: 30px; max-width: 1300px; margin: auto; }
         
-        .bulle-lien { text-decoration: none; color: inherit; }
+        .bulle-lien { text-decoration: none; color: inherit; z-index: 10; }
 
         .nuage {
             background: white; border-radius: 50px; padding: 25px; width: 280px; min-height: 180px;
             border: 3px solid #87CEEB; box-shadow: 6px 6px 0px #87CEEB;
             transition: 0.3s; display: flex; flex-direction: column; justify-content: center;
         }
+        .nuage:hover { transform: translateY(-10px); background: #f0faff; }
 
-        /* L'ÉTOILE MAGIQUE (Régulation) */
+        /* Étoile de Régulation - Effet Eclosion */
         .etoile-justice {
             background: #E6E6FA; border: 3px solid #9370DB;
-            /* Forme étoile par défaut */
             clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
             width: 380px; height: 380px; display: flex; align-items: center; justify-content: center;
             transition: all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             cursor: pointer; position: relative;
         }
 
-        .etoile-contenu {
-            width: 75%; height: 75%;
-            display: flex; flex-direction: column; justify-content: center;
-            transition: 0.5s; overflow: hidden;
-        }
+        .etoile-contenu { width: 75%; transition: 0.5s; }
 
-        /* AU SURVOL : Elle devient un cercle spacieux */
         .etoile-justice:hover { 
             transform: scale(1.2);
             background: #f3f0ff;
-            /* La forme devient un cercle au survol pour libérer le bas */
-            clip-path: circle(50% at 50% 50%);
-            box-shadow: 0 0 50px rgba(147, 112, 219, 0.5);
+            clip-path: circle(50% at 50% 50%); /* Devient un cercle pour tout lire */
             z-index: 100;
-        }
-
-        .etoile-justice:hover .etoile-contenu {
-            width: 85%; height: 85%;
         }
 
         .exemples { font-size: 0.8em; color: #2E7D32; font-style: italic; margin-top: 8px; font-weight: bold; }
 
-        /* Animations */
+        /* Animations Magiques */
+        #coffre-magique { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); font-size: 60px; z-index: 800; transition: transform 0.3s; }
         #animal-container { position: fixed; z-index: 900; white-space: nowrap; display: flex; align-items: center; pointer-events: none; }
         #corps-animal { font-size: 50px; }
         #bulle-texte { background: rgba(255, 255, 255, 0.9); border: 2px solid #2E7D32; border-radius: 15px; padding: 8px 15px; font-weight: bold; opacity: 0; transition: 0.3s; }
+        .pop { transform: translateX(-50%) scale(1.4) !important; }
+        .confetti { position: fixed; z-index: 799; pointer-events: none; animation: fly 2s ease-out forwards; }
+        @keyframes fly { 0% { transform: translate(0, 0) rotate(0deg); opacity: 1; } 100% { transform: translate(var(--dx), var(--dy)) rotate(360deg); opacity: 0; } }
     </style>
 </head>
 <body>
+
+    <div id="google_translate_element"></div>
+    <script type="text/javascript">
+        function googleTranslateElementInit() { new google.translate.TranslateElement({pageLanguage: 'fr'}, 'google_translate_element'); }
+    </script>
+    <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
 
     <audio id="chantOiseaux" loop><source src="oiseaux.mp3" type="audio/mpeg"></audio>
 
@@ -98,7 +100,12 @@
 
     <div class="moteur-recherche">
         <h3>🔍 Ratisser Large</h3>
-        <input type="text" placeholder="Ta quête citoyenne (Pays, Ville, Objet...)">
+        <select><option>Pays...</option><option>France</option><option>Groland</option><option>Belle Brousse</option></select>
+        <input type="text" placeholder="Ville">
+        <select><option>Zone...</option><option>10 km</option><option>100 km</option><option>Infini</option></select>
+        <br>
+        <input type="text" placeholder="Ta quête citoyenne..." style="width: 60%; margin-top: 10px;">
+        <button style="background:#E67E22; color:white; border:none; padding:10px 20px; border-radius:10px; cursor:pointer; font-weight:bold;">Quérir</button>
     </div>
 
     <div class="bulles-grid">
@@ -132,6 +139,7 @@
 
     </div>
 
+    <div id="coffre-magique">🎁</div>
     <div id="animal-container">
         <div id="bulle-texte"></div>
         <div id="corps-animal">🕊️</div>
@@ -140,13 +148,28 @@
     <script>
         const mesPhrases = ["Bienvenue au Trésor Public", "L'impôt est un geste de cœur", "L'étoile éclot pour vous écouter"];
         const animaux = ['🕊️', '🦋', '🐝', '🐞'];
+        const fleurs = ['🌸', '🌼', '🌻', '🌺'];
         const animalCont = document.getElementById('animal-container');
         const bulle = document.getElementById('bulle-texte');
         const corps = document.getElementById('corps-animal');
+        const coffre = document.getElementById('coffre-magique');
         const audio = document.getElementById('chantOiseaux');
 
         let aniX = -200, aniY = 250, targetX, targetY, state = "WAITING";
         document.addEventListener('click', () => { if(audio.paused) { audio.volume = 0.05; audio.play(); } });
+
+        function createConfetti() {
+            for(let i=0; i<15; i++) {
+                const c = document.createElement('div');
+                c.className = 'confetti';
+                c.innerText = fleurs[Math.floor(Math.random()*fleurs.length)];
+                c.style.left = "50%"; c.style.bottom = "60px";
+                c.style.setProperty('--dx', (Math.random()*400 - 200) + "px");
+                c.style.setProperty('--dy', (Math.random()*-400 - 100) + "px");
+                document.body.appendChild(c);
+                setTimeout(() => c.remove(), 2000);
+            }
+        }
 
         function startNewMessenger() {
             bulle.innerText = mesPhrases[Math.floor(Math.random() * mesPhrases.length)];
@@ -160,7 +183,8 @@
                 aniX += (targetX - aniX) * 0.015; aniY += (targetY - aniY) * 0.015;
                 bulle.style.opacity = "1";
                 if (Math.abs(targetX - aniX) < 60) {
-                    setTimeout(() => { bulle.style.opacity = "0"; state = "LEAVING"; targetX = window.innerWidth + 200; }, 2500);
+                    state = "DEPOSITING"; coffre.classList.add('pop'); createConfetti();
+                    setTimeout(() => { bulle.style.opacity = "0"; coffre.classList.remove('pop'); state = "LEAVING"; targetX = window.innerWidth + 200; }, 2500);
                 }
             } else if (state === "LEAVING") {
                 aniX += (targetX - aniX) * 0.02;
