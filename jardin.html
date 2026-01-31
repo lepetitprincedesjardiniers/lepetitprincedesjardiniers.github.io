@@ -2,30 +2,29 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <title>Le Jardin des Annonces - Le Petit Prince</title>
+    <title>Le Jardin - Le Petit Prince</title>
     <style>
-        body { background-color: #FFFF00; color: #000080; font-family: "Comic Sans MS", cursive; text-align: center; margin: 0; }
-        nav { background-color: #008080; padding: 10px; margin-bottom: 20px; }
-        nav a { color: white; text-decoration: none; margin: 0 15px; font-weight: bold; }
-        #barreRecherche { width: 80%; max-width: 400px; padding: 12px; margin: 20px 0; border: 3px solid #008080; border-radius: 10px; }
-        .annonce { background: white; border: 2px solid #000080; margin: 15px auto; padding: 15px; width: 85%; max-width: 600px; text-align: left; border-radius: 15px; }
-        .titre { color: #FF0000; font-weight: bold; font-size: 1.2em; }
-        .ville { color: #008080; font-weight: bold; }
+        body { background-color: #FFFF00; color: #000080; font-family: "Comic Sans MS", cursive; text-align: center; }
+        .carte { background: white; border: 2px solid #008080; margin: 15px auto; padding: 15px; width: 85%; max-width: 600px; border-radius: 15px; text-align: left; box-shadow: 4px 4px 0px #008080; }
+        .titre { color: #FF0000; font-weight: bold; font-size: 1.2em; border-bottom: 1px dashed #ccc; }
+        #moteur { width: 80%; padding: 15px; font-size: 1.1em; border: 3px solid #008080; border-radius: 10px; margin: 20px 0; }
     </style>
 </head>
 <body onload="charger()">
-    <nav>
-        <a href="index.html">Accueil</a>
-        <a href="formulaire.html">Espace Don</a>
-        <a href="jardin.html">Le Jardin</a>
-        <a href="contact.html">Contact</a>
-    </nav>
 
-    <font size="6" color="#FF0000"><u><b>LE JARDIN DES CADEAUX</b></u></font><br>
-    
-    <input type="text" id="barreRecherche" placeholder="🔍 Chercher une ville, un don, un nom..." onkeyup="filtrer()">
+    <table border="1" cellpadding="10" bgcolor="#008080" align="center">
+        <tr>
+            <td><a href="index.html"><font color="#FFFFFF"><b>Accueil</b></font></a></td>
+            <td><a href="formulaire.html"><font color="#FFFFFF"><b>Semer</b></font></a></td>
+            <td><a href="jardin.html"><font color="#FFFFFF"><b>Le Jardin</b></font></a></td>
+            <td><a href="contact.html"><font color="#FFFFFF"><b>Contact</b></font></a></td>
+        </tr>
+    </table>
 
-    <div id="status">Chargement des graines...</div>
+    <h1>🔎 RECHERCHER DANS LE JARDIN</h1>
+    <input type="text" id="moteur" onkeyup="filtrer()" placeholder="Tapez une ville ou un mot (ex: tomates)...">
+
+    <div id="status"><b>Fleurissement en cours... 🌻</b></div>
     <div id="liste"></div>
 
     <script>
@@ -38,30 +37,31 @@
                 annonces = await res.json();
                 document.getElementById('status').style.display = 'none';
                 afficher(annonces);
-            } catch (e) { document.getElementById('status').innerText = "Erreur de connexion au jardin."; }
+            } catch(e) { document.getElementById('status').innerText = "Le jardin est fermé pour le moment."; }
         }
 
         function afficher(data) {
-            const div = document.getElementById('liste');
-            div.innerHTML = "";
-            data.reverse().forEach(a => {
-                div.innerHTML += `<div class="annonce">
+            const conteneur = document.getElementById('liste');
+            conteneur.innerHTML = "";
+            [...data].reverse().forEach(a => {
+                conteneur.innerHTML += `
+                <div class="carte">
                     <span class="titre">🌿 Graine de ${a.prenom}</span><br>
-                    <span class="ville">📍 ${a.ville} (${a.km} km)</span>
-                    <p>${a.description}</p>
+                    <b>📍 Ville :</b> ${a.ville} (${a.km} km autour)<br>
+                    <b>💬 Message :</b> ${a.description}<br><br>
                     <small>Posté le : ${new Date(a.date).toLocaleDateString()} | Durée : ${a.duree}</small>
                 </div>`;
             });
         }
 
         function filtrer() {
-            const mot = document.getElementById('barreRecherche').value.toLowerCase();
-            const res = annonces.filter(a => 
+            const mot = document.getElementById('moteur').value.toLowerCase();
+            const resultat = annonces.filter(a => 
                 a.ville.toLowerCase().includes(mot) || 
-                a.description.toLowerCase().includes(mot) || 
+                a.description.toLowerCase().includes(mot) ||
                 a.prenom.toLowerCase().includes(mot)
             );
-            afficher(res);
+            afficher(resultat);
         }
     </script>
 </body>
