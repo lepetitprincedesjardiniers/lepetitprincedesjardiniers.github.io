@@ -4,22 +4,22 @@
     <meta charset="UTF-8">
     <title>Le Petit Prince des Jardiniers</title>
     <style>
-        body { font-family: 'Comic Sans MS', cursive; text-align: center; margin: 0; padding: 0; background-color: #FFFF00; color: #000080; overflow-x: hidden; }
+        body { font-family: 'Comic Sans MS', cursive; text-align: center; margin: 0; padding: 0; background-color: #FFFF00; color: #000080; overflow-x: hidden; min-height: 100vh; }
         
         .menu-table { margin: 20px auto; border-radius: 10px; background-color: #008080; border-collapse: collapse; }
         .menu-table td { padding: 10px 15px; border: 1px solid #FFFFFF; }
         .menu-table a { text-decoration: none; color: #FFFFFF; font-weight: bold; }
 
-        /* Le Petit Cadeau Mobile */
         #coffre-magique {
             position: fixed;
-            font-size: 40px; /* Plus petit */
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 60px;
             z-index: 800;
-            pointer-events: none;
-            transition: transform 0.2s;
+            transition: transform 0.3s;
         }
 
-        /* L'Animal Messager */
         #animal-container {
             position: fixed;
             z-index: 900;
@@ -28,6 +28,7 @@
             flex-direction: row; 
             align-items: center;
             user-select: none;
+            pointer-events: none;
         }
 
         #corps-animal { font-size: 50px; }
@@ -44,12 +45,28 @@
             font-size: 1.1em;
             opacity: 0;
             border: 2px solid #2E7D32;
+            transition: opacity 0.3s;
         }
 
         .btn-semer {
-            padding: 20px 40px; font-size: 1.5em; background-color: #E67E22; 
+            display: inline-block; padding: 20px 40px; font-size: 1.5em; background-color: #E67E22; 
             color: white; border-radius: 20px; cursor: pointer; border: none; 
             font-weight: bold; box-shadow: 0px 4px 0px #b35900; text-decoration: none;
+            margin-top: 20px;
+        }
+
+        .pop { transform: translateX(-50%) scale(1.4) !important; }
+
+        /* Animation des confettis fleurs */
+        .confetti {
+            position: fixed;
+            z-index: 799;
+            pointer-events: none;
+            animation: fly 2s ease-out forwards;
+        }
+        @keyframes fly {
+            0% { transform: translate(0, 0) rotate(0deg); opacity: 1; }
+            100% { transform: translate(var(--dx), var(--dy)) rotate(360deg); opacity: 0; }
         }
     </style>
 </head>
@@ -77,10 +94,10 @@
     <a href="formulaire.html" class="btn-semer">🌱 SEMER UNE GRAINE</a>
 
     <br><br><br>
-    <a href="https://youtube.com" target="_blank" style="color: #008080; font-weight: bold;">📺 Voir notre chaîne YouTube</a>
+    <a href="https://youtube.com" target="_blank" style="color: #008080; font-weight: bold; font-size: 1.2em;">📺 VOIR NOS VIDÉOS</a>
 
-    <br><br>
-    <font size="2">copyright 2026... Le petit prince des jardiniers</font>
+    <br><br><br>
+    <font size="2">copyrith 2000 Le pteit prince des jardiniers</font>
 
     <div id="coffre-magique">🎁</div>
     <div id="animal-container">
@@ -107,6 +124,7 @@
         ];
 
         const animaux = ['🕊️', '🦋', '🐝', '🐞', '🦜', '🐰', '🐣', '🐿️', '🐼', '🦊', '🐠', '🐬', '🐳', '🦄'];
+        const fleurs = ['🌸', '🌼', '🌻', '🌺', '🍃', '✨'];
 
         const animalCont = document.getElementById('animal-container');
         const bulle = document.getElementById('bulle-texte');
@@ -114,64 +132,77 @@
         const coffre = document.getElementById('coffre-magique');
         const audio = document.getElementById('chantOiseaux');
 
-        let aniX, aniY, giftX = window.innerWidth/2, giftY = window.innerHeight/2;
-        let phraseIdx = 0;
-        let state = "FLYING"; 
+        let aniX, aniY, targetX, targetY;
+        let state = "WAITING"; 
 
-        // Activation du son au premier clic
         document.addEventListener('click', () => {
-            if(audio.paused) { audio.volume = 0.05; audio.play(); }
+            if(audio.paused) { audio.volume = 0.02; audio.play(); }
         }, { once: false });
 
-        function startNewCycle() {
-            // Choix aléatoire
+        function createConfetti() {
+            for(let i=0; i<15; i++) {
+                const c = document.createElement('div');
+                c.className = 'confetti';
+                c.innerText = fleurs[Math.floor(Math.random()*fleurs.length)];
+                c.style.left = "50%";
+                c.style.bottom = "60px";
+                c.style.setProperty('--dx', (Math.random()*400 - 200) + "px");
+                c.style.setProperty('--dy', (Math.random()*-400 - 100) + "px");
+                c.style.fontSize = (Math.random()*20 + 20) + "px";
+                document.body.appendChild(c);
+                setTimeout(() => c.remove(), 2000);
+            }
+        }
+
+        function startNewMessenger() {
             const msg = mesPhrases[Math.floor(Math.random() * mesPhrases.length)];
-            const ani = animaux[Math.floor(Math.random() * animaux.length)];
-            
-            corps.innerText = ani;
+            corps.innerText = animaux[Math.floor(Math.random() * animaux.length)];
             bulle.innerText = msg;
-            bulle.style.opacity = "1";
+            bulle.style.opacity = "0";
             
-            // Départ animal aléatoire
-            const side = Math.floor(Math.random() * 4);
-            if(side === 0) { aniX = -200; aniY = Math.random() * window.innerHeight; }
-            else if(side === 1) { aniX = window.innerWidth + 200; aniY = Math.random() * window.innerHeight; }
-            else if(side === 2) { aniX = Math.random() * window.innerWidth; aniY = -200; }
-            else { aniX = Math.random() * window.innerWidth; aniY = window.innerHeight + 200; }
+            const side = Math.floor(Math.random() * 3);
+            if(side === 0) { aniX = -200; aniY = Math.random() * 400; }
+            else if(side === 1) { aniX = window.innerWidth + 200; aniY = Math.random() * 400; }
+            else { aniX = Math.random() * window.innerWidth; aniY = -200; }
             
-            state = "FLYING";
+            targetX = window.innerWidth / 2;
+            targetY = window.innerHeight - 110;
+            state = "APPROACHING";
         }
 
         function loop() {
-            // L'animal bouge lentement vers une zone aléatoire
-            if (state === "FLYING") {
-                // Le cadeau suit l'animal !
-                giftX += (aniX - giftX) * 0.05;
-                giftY += (aniY - giftY) * 0.05;
+            if (state === "APPROACHING") {
+                aniX += (targetX - aniX) * 0.015;
+                aniY += (targetY - aniY) * 0.015;
+                bulle.style.opacity = "1";
 
-                // On fait bouger l'animal vers l'autre côté
-                const speed = 2;
-                if (aniX < window.innerWidth / 2) aniX += speed; else aniX -= speed;
-                aniY += Math.sin(aniX/50);
-
-                if (aniX > window.innerWidth + 300 || aniX < -300) {
-                    startNewCycle();
+                const dist = Math.sqrt(Math.pow(targetX - aniX, 2) + Math.pow(targetY - aniY, 2));
+                if (dist < 60) {
+                    state = "DEPOSITING";
+                    coffre.classList.add('pop');
+                    createConfetti();
+                    setTimeout(() => {
+                        bulle.style.opacity = "0";
+                        coffre.classList.remove('pop');
+                        state = "LEAVING";
+                        targetX = (Math.random() > 0.5) ? window.innerWidth + 600 : -600;
+                        targetY = Math.random() * 400;
+                    }, 2500);
                 }
+            } else if (state === "LEAVING") {
+                aniX += (targetX - aniX) * 0.02;
+                aniY += (targetY - aniY) * 0.02;
+                if (Math.abs(aniX - targetX) < 100) startNewMessenger();
             }
 
-            // Mise à jour positions
             animalCont.style.left = aniX + "px";
             animalCont.style.top = aniY + "px";
-            coffre.style.left = (giftX + 60) + "px"; // Le cadeau flotte à côté
-            coffre.style.top = (giftY - 30) + "px";
-
-            // Miroir animal selon direction
-            corps.style.transform = (aniX < giftX) ? "scaleX(-1)" : "scaleX(1)";
+            corps.style.transform = (aniX < targetX) ? "scaleX(-1)" : "scaleX(1)";
 
             requestAnimationFrame(loop);
         }
 
-        startNewCycle();
+        startNewMessenger();
         loop();
     </script>
 </body>
