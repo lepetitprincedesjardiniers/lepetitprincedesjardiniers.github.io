@@ -2,9 +2,8 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <title>Régulation Citoyenne - Le Petit Prince</title>
+    <title>Régulation Citoyenne - Justice Délicate</title>
     <style>
-        /* STYLE AUTHENTIQUE DU JARDIN */
         body { 
             font-family: 'Comic Sans MS', cursive; 
             text-align: center; 
@@ -14,20 +13,18 @@
             color: #000080; 
         }
 
-        /* MENU DE NAVIGATION */
+        /* MENU */
         .menu-table { 
             margin: 20px auto; 
             background-color: #008080; 
             border-collapse: collapse; 
             border-radius: 10px; 
             overflow: hidden;
-            margin-left: auto;
-            margin-right: auto;
         }
         .menu-table td { padding: 10px 15px; border: 1px solid #FFFFFF; }
         .menu-table a { text-decoration: none; color: #FFFFFF; font-weight: bold; }
 
-        /* L'ÉTOILE DE JUSTICE (FORMULAIRE VIOLET) */
+        /* FORMULAIRE VIOLET */
         .etoile-form { 
             background: #E6E6FA; 
             border: 3px solid #9370DB; 
@@ -39,33 +36,152 @@
             box-shadow: 8px 8px 0px #9370DB;
         }
         
-        h2 { color: #9370DB; }
-        
         textarea, input { 
-            width: 100%; 
-            padding: 12px; 
-            margin: 10px 0; 
-            border-radius: 10px; 
-            border: 2px solid #9370DB; 
-            box-sizing: border-box; 
-            font-family: inherit; 
+            width: 100%; padding: 12px; margin: 10px 0; 
+            border-radius: 10px; border: 2px solid #9370DB; 
+            box-sizing: border-box; font-family: inherit; 
         }
 
         .btn-justice { 
-            background: #9370DB; 
-            color: white; 
-            padding: 15px; 
-            border: none; 
-            border-radius: 15px; 
-            font-weight: bold; 
-            cursor: pointer; 
-            width: 100%; 
-            font-size: 1.1em;
-            transition: 0.3s;
+            background: #9370DB; color: white; padding: 15px; border: none; 
+            border-radius: 15px; font-weight: bold; cursor: pointer; 
+            width: 100%; font-size: 1.1em;
         }
-        .btn-justice:hover { background: #6A5ACD; }
 
-        /* AFFICHAGE DES CONFLITS */
-        .liste-conflits { 
-            max-width: 700px; 
-            margin: 4
+        /* CARTES DE CONFLITS ET AVIS */
+        .liste-conflits { max-width: 700px; margin: 40px auto; padding: 20px; }
+        
+        .carte-conflit { 
+            background: white; border-left: 10px solid #9370DB; 
+            border-radius: 15px; padding: 20px; margin-bottom: 25px; 
+            text-align: left; box-shadow: 4px 4px 10px rgba(0,0,0,0.1);
+        }
+
+        .avis-bulle {
+            margin-left: 30px;
+            margin-top: 10px;
+            padding: 10px;
+            background: #f9f4ff;
+            border-left: 3px solid #008080;
+            border-radius: 0 10px 10px 0;
+            font-size: 0.9em;
+        }
+
+        .nom-citoyen { font-weight: bold; color: #9370DB; }
+        .nom-sage { font-weight: bold; color: #008080; }
+        #chargement { font-style: italic; color: #008080; }
+    </style>
+</head>
+<body>
+
+    <table class="menu-table">
+        <tr>
+            <td><a href="index.html">Accueil</a></td>
+            <td><a href="formulaire.html">Semer</a></td>
+            <td><a href="jardin.html">Le Jardin</a></td>
+            <td><a href="regulation.html">Régulation</a></td>
+        </tr>
+    </table>
+
+    <h2 style="color:#9370DB;">⚖️ Zone de Régulation Citoyenne</h2>
+
+    <div class="etoile-form">
+        <form id="regForm">
+            <input type="text" id="nom" placeholder="Ton identité amoureuse" required>
+            <textarea id="message" rows="4" placeholder="Expose ton conflit ici..." required></textarea>
+            <button type="submit" id="btnEnvoi" class="btn-justice">SOUMETTRE À L'ENSEMBLE 🕊️</button>
+        </form>
+    </div>
+
+    <div class="liste-conflits">
+        <h3 style="color:#9370DB;">📜 Dossiers et Avis de Sagesse</h3>
+        <div id="chargement">Appel de la sagesse citoyenne...</div>
+        <div id="flux-conflits"></div>
+    </div>
+
+    <script>
+        const URL_SERVEUR = "https://script.google.com/macros/s/AKfycbz4ncs9qw_AfmKSER5QST-P0OeKQggQaq86QC6liS53uZ9sx4Lo_-4-h1knXKWqgQMc/exec";
+
+        // 1. ENVOYER UN CONFLIT
+        document.getElementById('regForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const btn = document.getElementById('btnEnvoi');
+            btn.innerText = "Transmission...";
+            btn.disabled = true;
+
+            const donnees = {
+                date: new Date().toLocaleDateString('fr-FR'),
+                type: "conflit",
+                nom: document.getElementById('nom').value,
+                localisation: "Zone de Paix",
+                message: document.getElementById('message').value
+            };
+
+            fetch(URL_SERVEUR, { method: 'POST', mode: 'no-cors', body: JSON.stringify(donnees) })
+            .then(() => { alert("Dossier déposé !"); location.reload(); });
+        });
+
+        // 2. FONCTION POUR RÉPONDRE (AVIS DÉLICAT)
+        function apporterAvis(nomOriginal) {
+            const avis = prompt("Quel est ton avis délicat pour résoudre ce conflit ?");
+            if (avis) {
+                const nomSage = prompt("Ton identité de sage :");
+                const donneesAvis = {
+                    date: new Date().toLocaleDateString('fr-FR'),
+                    type: "avis",
+                    nom: nomSage || "Un Sage Anonyme",
+                    localisation: nomOriginal, // On utilise le nom de l'auteur du conflit comme lien
+                    message: avis
+                };
+
+                fetch(URL_SERVEUR, { method: 'POST', mode: 'no-cors', body: JSON.stringify(donneesAvis) })
+                .then(() => { alert("Ton avis a été ajouté."); location.reload(); });
+            }
+        }
+
+        // 3. CHARGEMENT ET AFFICHAGE IMBRIQUÉ
+        fetch(URL_SERVEUR)
+            .then(res => res.json())
+            .then(data => {
+                const chargement = document.getElementById('chargement');
+                const flux = document.getElementById('flux-conflits');
+                if (data.length === 0) { chargement.innerText = "Le registre est vierge."; return; }
+                chargement.style.display = 'none';
+
+                // On sépare les données
+                const conflits = data.filter(d => d.type === "conflit").reverse();
+                const avis = data.filter(d => d.type === "avis");
+
+                conflits.forEach(c => {
+                    const div = document.createElement('div');
+                    div.className = 'carte-conflit';
+                    
+                    // Construction des avis pour ce conflit précis
+                    let reponsesHTML = "";
+                    avis.forEach(a => {
+                        if(a.localisation === c.nom) {
+                            reponsesHTML += `
+                                <div class="avis-bulle">
+                                    <span class="nom-sage">🌿 ${a.nom} :</span> ${a.message}
+                                </div>`;
+                        }
+                    });
+
+                    div.innerHTML = `
+                        <small>${c.date}</small><br>
+                        <span class="nom-citoyen">👤 ${c.nom}</span>
+                        <p style="font-size: 1.1em; font-style: italic;">"${c.message}"</p>
+                        <div class="zone-reponses">${reponsesHTML}</div>
+                        <hr style="border:0; border-top: 1px dotted #9370DB; margin-top:15px;">
+                        <span style="color:#9370DB; cursor:pointer; font-weight:bold; font-size:0.9em;" 
+                              onclick="apporterAvis('${c.nom}')">
+                              ⚖️ Apporter un avis délicat
+                        </span>
+                    `;
+                    flux.appendChild(div);
+                });
+            })
+            .catch(err => { console.error(err); chargement.innerText = "Erreur de chargement."; });
+    </script>
+</body>
+</html>
