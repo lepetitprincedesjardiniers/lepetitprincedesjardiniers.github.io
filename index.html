@@ -4,85 +4,115 @@
     <meta charset="UTF-8">
     <title>Le Petit Prince des Jardiniers</title>
     <style>
-        /* --- STYLE DE L'INTRO (PAPILLONS) --- */
-        #intro-layer {
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
+        :root {
+            --primary-pink: #ff4d6d;
+            --soft-pink: #ffb3c1;
+            --menu-teal: #008080;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
             background: radial-gradient(circle at center, #2d0a1a 0%, #050505 100%);
             display: flex;
             flex-direction: column;
-            justify-content: center;
             align-items: center;
-            z-index: 9999;
-            transition: opacity 1s ease-out;
-            overflow: hidden;
+            min-height: 100vh;
+            font-family: 'Comic Sans MS', cursive;
+            color: white;
+            overflow-x: hidden;
         }
-        .heart-intro {
-            width: 100px; height: 90px;
-            background-color: #ff4d6d;
-            transform: rotate(-45deg);
-            animation: pulse 1.2s infinite;
+
+        /* --- LE COEUR CENTRAL --- */
+        .heart-container {
+            margin-top: 60px;
             position: relative;
+            z-index: 10;
         }
-        .heart-intro::before, .heart-intro::after {
+
+        .heart {
+            width: 100px; height: 100px;
+            background-color: var(--primary-pink);
+            transform: rotate(-45deg);
+            box-shadow: 0 0 50px rgba(255, 77, 109, 0.6);
+            animation: pulse 1.2s ease-in-out infinite;
+        }
+
+        .heart::before, .heart::after {
             content: ""; position: absolute;
             width: 100px; height: 100px;
-            background-color: #ff4d6d; border-radius: 50%;
+            background-color: var(--primary-pink);
+            border-radius: 50%;
         }
-        .heart-intro::before { top: -50px; left: 0; }
-        .heart-intro::after { left: 50px; top: 0; }
+
+        .heart::before { top: -50px; left: 0; }
+        .heart::after { left: 50px; top: 0; }
+
         @keyframes pulse {
             0% { transform: rotate(-45deg) scale(1); }
-            50% { transform: rotate(-45deg) scale(1.1); }
+            15% { transform: rotate(-45deg) scale(1.15); }
+            30% { transform: rotate(-45deg) scale(1); }
+            45% { transform: rotate(-45deg) scale(1.1); }
             100% { transform: rotate(-45deg) scale(1); }
         }
 
-        /* --- STYLE DE LA PAGE PRINCIPALE --- */
-        body { 
-            font-family: 'Comic Sans MS', cursive; 
-            text-align: center; margin: 0; padding: 0; 
-            background-color: #FFFF00; color: #000080; 
-            overflow-x: hidden; 
+        /* --- TITRE ET MENU --- */
+        .gift-text {
+            margin-top: 80px;
+            color: #E67E22;
+            font-size: 2.5rem;
+            text-shadow: 0 0 15px rgba(230, 126, 34, 0.5);
+            z-index: 10;
         }
-        .menu-table { margin: 20px auto; border-radius: 10px; background-color: #008080; border-collapse: collapse; }
-        .menu-table td { padding: 10px 15px; border: 1px solid #FFFFFF; }
-        .menu-table a { text-decoration: none; color: #FFFFFF; font-weight: bold; }
-        
-        #coffre-magique {
-            position: fixed; font-size: 50px; z-index: 800;
-            filter: drop-shadow(0 0 15px rgba(230, 126, 34, 0.5));
+
+        .menu-table {
+            margin: 20px auto;
+            background-color: var(--menu-teal);
+            border-collapse: collapse;
+            border-radius: 10px;
+            z-index: 20;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.4);
+        }
+        .menu-table td { padding: 12px 25px; border: 1px solid #ffffff44; }
+        .menu-table a { text-decoration: none; color: white; font-weight: bold; }
+
+        /* --- BOUTON SEMER --- */
+        .btn-semer {
+            margin-top: 30px;
+            padding: 18px 40px;
+            font-size: 1.4rem;
+            background-color: #E67E22;
+            color: white;
+            border-radius: 25px;
+            text-decoration: none;
+            font-weight: bold;
+            box-shadow: 0px 5px 0px #b35900;
+            z-index: 20;
+            transition: 0.2s;
+        }
+        .btn-semer:active { transform: translateY(3px); box-shadow: none; }
+
+        /* --- PAPILLONS SVG --- */
+        .butterfly {
+            position: absolute;
+            width: 40px; height: 40px;
+            z-index: 5;
             pointer-events: none;
         }
+        .butterfly svg { width: 100%; height: 100%; filter: drop-shadow(0 0 5px var(--primary-pink)); }
+        .wing { fill: var(--soft-pink); animation: flap 0.3s infinite ease-in-out; transform-origin: center; }
+        @keyframes flap { 0%, 100% { transform: scaleX(1); } 50% { transform: scaleX(0.2); } }
 
-        #animal-container {
-            position: fixed; display: flex; align-items: center; 
-            user-select: none; z-index: 900;
-        }
-        #corps-animal { font-size: 55px; }
-        #bulle-texte {
-            background: rgba(255, 255, 255, 0.9); border-radius: 15px;
-            padding: 8px 15px; color: #2E7D32; font-weight: bold;
-            border: 2px solid #2E7D32; box-shadow: 2px 2px 5px rgba(0,0,0,0.1);
-        }
-
-        .btn-semer {
-            display: inline-block; padding: 20px 40px; font-size: 1.5em; 
-            background-color: #E67E22; color: white; border-radius: 20px; 
-            text-decoration: none; font-weight: bold; box-shadow: 0px 4px 0px #b35900;
-        }
     </style>
 </head>
 <body>
 
-    <div id="intro-layer">
-        <div class="heart-intro"></div>
-        <h1 style="color:white; margin-top:60px; letter-spacing:5px;">LES CADEAUX</h1>
+    <div class="heart-container">
+        <div class="heart"></div>
     </div>
 
-    <audio id="chantOiseaux" loop><source src="oiseaux.mp3" type="audio/mpeg"></audio>
-    
-    <div id="google_translate_element" style="padding:10px;"></div>
-    
+    <h1 class="gift-text">🌟 LE PETIT PRINCE DES JARDINIERS 🌟</h1>
+
     <table class="menu-table">
         <tr>
             <td><a href="index.html">Accueil</a></td>
@@ -92,81 +122,47 @@
         </tr>
     </table>
 
-    <font size="6" color="#E67E22">🌟 <b>LE PETIT PRINCE DES JARDINIERS</b> 🌟</font>
-    
-    <br><br>
-    <div style="font-size: 35px;">🌸 🌼 🌻 🌺</div>
-    <br><br>
+    <div style="font-size: 35px; margin: 15px;">🌸 🌼 🌻 🌺</div>
 
     <a href="formulaire.html" class="btn-semer">🌱 SEMER UNE GRAINE</a>
-    
-    <br><br><br>
-    <a href="https://youtube.com" target="_blank" style="color: #008080; font-weight: bold;">📺 Voir notre chaîne YouTube</a>
-    <br><br>
-    <font size="2">copyright 2026... Le petit prince des jardiniers</font>
-
-    <div id="coffre-magique">🎁</div>
-    <div id="animal-container">
-        <div id="bulle-texte"></div>
-        <div id="corps-animal">🕊️</div>
-    </div>
 
     <script>
-        // --- LOGIQUE DE TRANSITION ---
-        setTimeout(() => {
-            const intro = document.getElementById('intro-layer');
-            intro.style.opacity = '0';
-            setTimeout(() => { intro.style.display = 'none'; }, 1000);
-        }, 2000); // 2 secondes d'attente
+        const colors = ['#ff4d6d', '#ffb3c1', '#fae1dd', '#ff8fa3'];
 
-        // --- LOGIQUE ANIMAL & CADEAU ---
-        const mesPhrases = ["Un cadeau pour toi !", "Vive le jardin !", "Coucou !", "Cultivons le bonheur"];
-        const animaux = ['🕊️', '🦋', '🐝', '🐞', '🦜', '🐰', '🐿️'];
-        
-        const animalCont = document.getElementById('animal-container');
-        const bulle = document.getElementById('bulle-texte');
-        const corps = document.getElementById('corps-animal');
-        const coffre = document.getElementById('coffre-magique');
-        const audio = document.getElementById('chantOiseaux');
-
-        let aniX = -100, aniY = 200;
-        let giftX = 0, giftY = 0;
-        let state = "FLYING";
-
-        document.addEventListener('click', () => { 
-            if(audio.paused) { audio.volume = 0.05; audio.play(); } 
-        }, { once: true });
-
-        function startNewCycle() {
-            bulle.innerText = mesPhrases[Math.floor(Math.random() * mesPhrases.length)];
-            corps.innerText = animaux[Math.floor(Math.random() * animaux.length)];
-            aniX = -200;
-            aniY = Math.random() * window.innerHeight;
-            giftX = aniX; giftY = aniY;
+        function createButterfly() {
+            const b = document.createElement('div');
+            b.className = 'butterfly';
+            b.innerHTML = `
+                <svg viewBox="0 0 50 50">
+                    <path class="wing" d="M25,25 Q10,0 5,20 Q5,40 25,25 Q45,40 45,20 Q40,0 25,25" />
+                </svg>`;
+            
+            const size = Math.random() * 20 + 25;
+            b.style.width = size + 'px';
+            b.querySelector('path').style.fill = colors[Math.floor(Math.random() * colors.length)];
+            
+            b.style.left = Math.random() * window.innerWidth + 'px';
+            b.style.top = Math.random() * window.innerHeight + 'px';
+            document.body.appendChild(b);
+            animateButterfly(b);
         }
 
-        function loop() {
-            // L'animal avance
-            aniX += 3;
-            aniY += Math.sin(aniX / 50) * 2;
+        function animateButterfly(el) {
+            const destX = Math.random() * window.innerWidth;
+            const destY = Math.random() * window.innerHeight;
+            const duration = 5000 + Math.random() * 7000;
 
-            // Le cadeau suit avec un petit retard fluide
-            giftX += (aniX - giftX) * 0.1;
-            giftY += (aniY - giftY) * 0.1;
-
-            animalCont.style.left = aniX + "px";
-            animalCont.style.top = aniY + "px";
-            coffre.style.left = (giftX + 60) + "px";
-            coffre.style.top = (giftY - 30) + "px";
-
-            if (aniX > window.innerWidth + 200) {
-                startNewCycle();
-            }
-            requestAnimationFrame(loop);
+            el.animate([
+                { transform: `translate(0, 0) rotate(0deg)` },
+                { transform: `translate(${destX - parseFloat(el.style.left)}px, ${destY - parseFloat(el.style.top)}px) rotate(${Math.random() * 360}deg)` }
+            ], { duration: duration, easing: 'linear' }).onfinish = () => {
+                el.style.left = destX + 'px';
+                el.style.top = destY + 'px';
+                animateButterfly(el);
+            };
         }
 
-        startNewCycle();
-        loop();
+        for(let i=0; i<18; i++) createButterfly();
     </script>
 </body>
 </html>
