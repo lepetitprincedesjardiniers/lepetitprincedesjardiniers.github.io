@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bienvenue au Trésor Public !</title>
+    <style>
+        body {
+            margin: 0;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background: linear-gradient(135deg, #FFDAB9, #FFC0CB, #E6E6FA); /* Dégradé doux */
+            font-family: 'Comic Sans MS', cursive;
+            color: #8B008B;
+            position: relative;
+        }
+
+        h1 {
+            font-size: 3em;
+            margin-bottom: 50px;
+            text-shadow: 2px 2px 5px rgba(0,0,0,0.1);
+        }
+
+        /* Conteneur du gros coeur */
+        .heart-container {
+            position: relative;
+            width: 300px;
+            height: 300px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* Gros Coeur */
+        .big-heart {
+            position: absolute;
+            font-size: 15em; /* Très grand coeur */
+            color: #FF1493; /* Rose vif */
+            animation: 
+                heartbeat 1.5s infinite alternate, /* Battement */
+                multicolor 4s linear infinite;    /* Changement de couleur */
+            text-shadow: 0 0 20px rgba(255, 20, 147, 0.7);
+            z-index: 10;
+        }
+
+        /* Animation de battement */
+        @keyframes heartbeat {
+            0% { transform: scale(1); }
+            100% { transform: scale(1.1); }
+        }
+
+        /* Animation de couleur multicolore */
+        @keyframes multicolor {
+            0%   { color: #FF1493; } /* DeepPink */
+            25%  { color: #9400D3; } /* DarkViolet */
+            50%  { color: #00BFFF; } /* DeepSkyBlue */
+            75%  { color: #32CD32; } /* LimeGreen */
+            100% { color: #FF1493; }
+        }
+
+        /* Petits coeurs volants */
+        .flying-heart {
+            position: absolute;
+            font-size: 2em;
+            color: #FF69B4; /* HotPink */
+            animation: flyToHeart 4s ease-out forwards;
+            opacity: 0;
+            z-index: 5;
+        }
+
+        /* Animaux volants */
+        .flying-animal {
+            position: absolute;
+            font-size: 2.5em;
+            opacity: 0;
+            animation: flyToHeart 4s ease-out forwards;
+            z-index: 6;
+        }
+
+        /* Animation des coeurs qui volent vers le grand coeur */
+        @keyframes flyToHeart {
+            0% {
+                transform: translate(var(--startX), var(--startY)) scale(0);
+                opacity: 0;
+            }
+            10% {
+                transform: translate(var(--startX), var(--startY)) scale(1);
+                opacity: 1;
+            }
+            80% {
+                transform: translate(0, 0) scale(1.2);
+                opacity: 1;
+            }
+            100% {
+                transform: translate(0, 0) scale(0);
+                opacity: 0;
+            }
+        }
+
+        /* Animation explosion du gros coeur */
+        @keyframes explodeHeart {
+            0% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.5); opacity: 0.5; }
+            100% { transform: scale(0); opacity: 0; }
+        }
+
+        /* Petits coeurs de l'explosion */
+        .explosion-heart {
+            position: absolute;
+            font-size: 1.5em;
+            color: #FF69B4; /* HotPink */
+            opacity: 0;
+            animation: explodeOut 1s ease-out forwards;
+            z-index: 15;
+        }
+
+        /* Animation de l'explosion des petits coeurs */
+        @keyframes explodeOut {
+            0% { transform: translate(0,0) scale(0); opacity: 1; }
+            20% { transform: scale(1); }
+            100% { transform: translate(var(--dx), var(--dy)) scale(0); opacity: 0; }
+        }
+
+    </style>
+</head>
+<body>
+
+    <h1>Bienvenue au Trésor Public !</h1>
+
+    <div class="heart-container">
+        <div class="big-heart">❤️</div>
+    </div>
+
+    <script>
+        const bigHeart = document.querySelector('.big-heart');
+        const heartContainer = document.querySelector('.heart-container');
+        const animals = ['🕊️', '🦋', '🐝', '🐞']; // Vos animaux préférés
+
+        function createFlyingElement(isAnimal = false) {
+            const element = document.createElement('div');
+            element.className = isAnimal ? 'flying-animal' : 'flying-heart';
+            element.innerText = isAnimal ? animals[Math.floor(Math.random() * animals.length)] : '❤️';
+            heartContainer.appendChild(element);
+
+            // Positions de départ aléatoires autour du conteneur
+            const angle = Math.random() * 2 * Math.PI;
+            const radius = Math.max(window.innerWidth, window.innerHeight) / 2 * 0.7; // Plus grand rayon
+            const startX = radius * Math.cos(angle);
+            const startY = radius * Math.sin(angle);
+
+            element.style.setProperty('--startX', startX + 'px');
+            element.style.setProperty('--startY', startY + 'px');
+
+            // Retirer l'élément après l'animation
+            element.addEventListener('animationend', () => {
+                element.remove();
+            });
+        }
+
+        function explodeBigHeart() {
+            bigHeart.style.animation = 'explodeHeart 0.5s ease-out forwards'; // Animer le gros coeur
+            for (let i = 0; i < 30; i++) { // Crée 30 petits coeurs
+                const heart = document.createElement('div');
+                heart.className = 'explosion-heart';
+                heart.innerText = '❤️';
+                heartContainer.appendChild(heart);
+
+                // Direction aléatoire pour l'explosion
+                const dx = (Math.random() - 0.5) * 600; // Déplacement horizontal
+                const dy = (Math.random() - 0.5) * 600; // Déplacement vertical
+
+                heart.style.setProperty('--dx', dx + 'px');
+                heart.style.setProperty('--dy', dy + 'px');
+
+                heart.addEventListener('animationend', () => {
+                    heart.remove();
+                });
+            }
+        }
+
+        // Créer les éléments volants toutes les 300ms pendant 3 secondes
+        let flyingInterval = setInterval(() => {
+            if (Math.random() < 0.5) { // 50% de chance d'être un animal
+                createFlyingElement(true);
+            } else {
+                createFlyingElement(false);
+            }
+        }, 300);
+
+        // Durée de la transition (3 à 5 secondes)
+        const transitionDuration = Math.random() * (5000 - 3000) + 3000; // Entre 3000ms et 5000ms
+
+        setTimeout(() => {
+            clearInterval(flyingInterval); // Arrêter la création d'éléments volants
+            explodeBigHeart(); // Faire exploser le gros coeur
+
+            // Rediriger vers la page d'accueil après l'explosion
+            setTimeout(() => {
+                window.location.href = "index.html"; // Redirige vers votre page d'accueil
+            }, 1000); // Laisse 1 seconde pour voir l'explosion
+        }, transitionDuration);
+
+    </script>
+</body>
+</html>
