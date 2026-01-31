@@ -21,25 +21,26 @@
             cursor: pointer;
             white-space: nowrap;
             display: flex; 
-            flex-direction: row; /* Force l'ordre horizontal standard */
+            flex-direction: row; 
             align-items: center;
             user-select: none;
         }
 
         #corps-animal { 
             font-size: 50px; 
-            order: 1; /* Force l'animal en première position */
+            /* Retourne l'oiseau pour qu'il regarde vers la DROITE */
+            transform: scaleX(-1); 
+            display: inline-block;
         }
 
         #bulle-texte {
-            order: 2; /* Force le texte en deuxième position */
             background: rgba(255, 255, 255, 0.9);
             border: 2px solid #2E7D32;
             border-radius: 15px;
             padding: 8px 15px;
             font-style: italic;
             color: #2E7D32;
-            margin-left: 10px; /* Espace après l'animal */
+            margin-left: 10px;
             min-height: 20px;
             box-shadow: 3px 3px 8px rgba(0,0,0,0.1);
             font-weight: bold;
@@ -116,34 +117,33 @@
         let indexLettre = 0;
         const animaux = ['🕊️', '🦋', '🐝', '🐞', '🦜'];
 
-        // Activation du son au premier clic
+        // Activation du son au premier clic (Volume très bas)
         document.addEventListener('click', function() {
             if (audio.paused) {
-                audio.volume = 0.4;
-                audio.play().catch(e => console.log("Audio en attente"));
+                audio.volume = 0.1; // 10% du volume seulement
+                audio.play().catch(e => console.log("Attente clic"));
             }
         }, { once: false });
 
         function animer() {
-            posX += 2.0; // Vitesse de vol calme
+            posX += 2.0; 
 
-            // Déroulement lent du message
+            // Déroulement poétique et lent
             if (indexLettre < messageComplet.length) {
-                // On divise par 30 pour que le texte s'ouvre très progressivement
-                let progression = Math.floor((posX + 450) / 30); 
+                let progression = Math.floor((posX + 500) / 32); 
                 if (progression > indexLettre && progression >= 0) {
                     indexLettre = progression;
                     bulle.innerText = messageComplet.substring(0, indexLettre);
                 }
             }
 
-            // Réinitialisation et métamorphose
-            if (posX > window.innerWidth + 600) {
+            // Réinitialisation
+            if (posX > window.innerWidth + 700) {
                 posX = -900;
                 indexLettre = 0;
                 bulle.innerText = "";
                 corps.innerText = animaux[Math.floor(Math.random() * animaux.length)];
-                posY = 100 + Math.random() * (window.innerHeight - 300);
+                posY = 150 + Math.random() * (window.innerHeight - 350);
             }
 
             let vague = Math.sin(posX / 100) * 40;
@@ -153,7 +153,7 @@
             requestAnimationFrame(animer);
         }
 
-        // Cadeau au clic
+        // Récompense aléatoire au clic
         container.onclick = function(e) {
             const items = ['🎁', '😘', '🌸', '🌻', '⭐', '🍀', '💎'];
             const r = document.createElement('div');
