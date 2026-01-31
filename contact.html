@@ -2,38 +2,66 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <title>Contact - Le Petit Prince</title>
+    <title>Contact - Le Petit Prince International</title>
 </head>
-<body bgcolor="#FFFF00" text="#000080" style="font-family:'Comic Sans MS', cursive;">
-<center>
-    <table border="1" cellpadding="10" bgcolor="#008080">
-        <tr>
-            <td><a href="index.html"><font color="#FFFFFF"><b>Accueil</b></font></a></td>
-            <td><a href="formulaire.html"><font color="#FFFFFF"><b>Espace Don</b></font></a></td>
-            <td><a href="jardin.html"><font color="#FFFFFF"><b>Le Jardin</b></font></a></td>
-            <td><a href="contact.html"><font color="#FFFFFF"><b>Contact</b></font></a></td>
-        </tr>
-    </table>
+<body bgcolor="#FFFF00" text="#000080" style="font-family:'Comic Sans MS', cursive; text-align:center; margin:0; padding:0;">
 
-    <br>
-    <font size="6" color="#FF0000"><u><b>CONTACTER LE PETIT PRINCE</b></u></font><br><br>
+    <center>
+        <div id="google_translate_element" style="padding:10px;"></div>
 
-    <form action="https://script.google.com/macros/s/AKfycbwe3bMzbJMUQSEdeyprffw-FQpqLg9-fGcHJi2_1_Ix5kWmrisBoSo2Kzne-CMwe3s/exec" method="POST">
-        <input type="hidden" name="formType" value="contact">
-        <table border="2" cellpadding="20" bgcolor="#FFFFFF" width="80%" style="border-radius:15px;">
+        <table border="1" cellpadding="10" bgcolor="#008080" style="margin-top:10px; border-radius:10px;">
             <tr>
-                <td align="left">
-                    <b>Votre Nom :</b><br>
-                    <input type="text" name="nom" size="45" required><br><br>
-                    <b>Votre Email :</b><br>
-                    <input type="email" name="email" size="45" required><br><br>
-                    <b>Message :</b><br>
-                    <textarea name="message" rows="8" cols="55" required></textarea><br><br>
-                    <center><input type="submit" value="📩 ENVOYER" style="padding:10px 30px; cursor:pointer; font-weight:bold;"></center>
-                </td>
+                <td><a href="index.html"><font color="#FFFFFF"><b>Accueil</b></font></a></td>
+                <td><a href="formulaire.html"><font color="#FFFFFF"><b>Semer un Don</b></font></a></td>
+                <td><a href="jardin.html"><font color="#FFFFFF"><b>Consulter le Jardin</b></font></a></td>
+                <td><a href="contact.html"><font color="#FFFFFF"><b>Contact</b></font></a></td>
             </tr>
         </table>
-    </form>
-</center>
+
+        <br><br>
+        <font size="6" color="#E67E22">📩 <u><b>CONTACTER LE JARDINIER</b></u></font>
+        <br><br>
+
+        <font size="4">
+            Une question ? Une idée ? Un message de fraternité ?<br>
+            <b>Écrivez-nous depuis n'importe quel point du globe.</b>
+        </font>
+        <br><br>
+
+        <form action="https://script.google.com/macros/s/AKfycbwe3bMzbJMUQSEdeyprffw-FQpqLg9-fGcHJi2_1_Ix5kWmrisBoSo2Kzne-CMwe3s/exec" method="POST">
+            <input type="hidden" name="formType" value="contact">
+
+            <table border="2" cellpadding="20" bgcolor="#FFFFFF" width="85%" style="border-radius:20px; border-color:#2E7D32; max-width:600px;">
+                <tr>
+                    <td align="left">
+                        <b>Votre Nom / Your Name :</b><br>
+                        <input type="text" name="nom" style="width:95%; padding:10px; border:1px solid #ccc; border-radius:5px;" required><br><br>
+
+                        <b>Votre Email :</b><br>
+                        <input type="email" name="email" style="width:95%; padding:10px; border:1px solid #ccc; border-radius:5px;" required><br><br>
+
+                        <b>Message :</b><br>
+                        <textarea name="message" rows="8" style="width:95%; padding:10px; border:1px solid #ccc; border-radius:5px;" required placeholder="Bonjour petit prince..."></textarea><br><br>
+
+                        <center>
+                            <input type="submit" value="📩 ENVOYER MON MESSAGE" style="background-color:#E67E22; color:white; padding:15px 30px; font-weight:bold; border:none; border-radius:10px; cursor:pointer; font-size:1.1em;">
+                        </center>
+                    </td>
+                </tr>
+            </table>
+        </form>
+
+        <br><br>
+        <font color="#2E7D32"><b>#Liberté #Amour #Gratuité #Fraternité</b></font><br>
+        <font size="2">copyrith 2026... Le petit prince des jardiniers</font>
+    </center>
+
+    <script type="text/javascript">
+        function googleTranslateElementInit() {
+            new google.translate.TranslateElement({pageLanguage: 'fr'}, 'google_translate_element');
+        }
+    </script>
+    <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+
 </body>
 </html>
