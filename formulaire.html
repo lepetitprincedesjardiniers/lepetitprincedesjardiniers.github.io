@@ -10,7 +10,6 @@
         .menu-table td { padding: 10px 15px; border: 1px solid #FFFFFF; }
         .menu-table a { text-decoration: none; color: #FFFFFF; font-weight: bold; }
 
-        /* Style du Formulaire */
         .form-container { 
             background: white; 
             padding: 30px; 
@@ -18,12 +17,21 @@
             display: inline-block; 
             margin-top: 10px; 
             box-shadow: 0px 10px 20px rgba(0,0,0,0.1); 
-            width: 80%; 
-            max-width: 400px;
-            margin-bottom: 150px; /* Espace pour les animaux en bas */
+            width: 85%; 
+            max-width: 450px;
+            margin-bottom: 150px; 
         }
-        input, textarea { width: 90%; padding: 10px; margin: 10px 0; border: 2px solid #008080; border-radius: 10px; font-family: 'Comic Sans MS'; }
-        
+
+        input, textarea, select { 
+            width: 95%; 
+            padding: 12px; 
+            margin: 10px 0; 
+            border: 2px solid #008080; 
+            border-radius: 10px; 
+            font-family: 'Comic Sans MS';
+            font-size: 1em;
+        }
+
         #coffre-magique { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); font-size: 60px; z-index: 800; transition: transform 0.3s; }
         #animal-container { position: fixed; z-index: 900; white-space: nowrap; display: flex; align-items: center; pointer-events: none; }
         #corps-animal { font-size: 50px; }
@@ -51,17 +59,36 @@
         </tr>
     </table>
 
-    <h2>🌱 Semer une pensée</h2>
+    <h2>🌱 Semer une pensée dans le monde</h2>
     
     <div class="form-container">
         <form action="https://formspree.io/f/TON_ID" method="POST">
             <input type="text" name="nom" placeholder="Ton Prénom" required>
-            <input type="text" name="ville" placeholder="Ta Ville" required> <textarea name="message" rows="4" placeholder="Ton message de générosité..." required></textarea>
+            
+            <select name="pays" required>
+                <option value="" disabled selected>Choisis ton pays 🌍</option>
+                <option value="France">France</option>
+                <option value="Belgique">Belgique</option>
+                <option value="Suisse">Suisse</option>
+                <option value="Canada">Canada</option>
+                <option value="Luxembourg">Luxembourg</option>
+                <option value="Afrique">Afrique (Continent)</option>
+                <option value="Europe">Europe (Autre)</option>
+                <option value="Amerique">Amérique (Autre)</option>
+                <option value="Asie">Asie</option>
+                <option value="Oceanie">Océanie</option>
+                <option value="International">Autre / International</option>
+            </select>
+
+            <input type="text" name="ville" placeholder="Ta Ville" required>
+            
+            <textarea name="message" rows="4" placeholder="Ton message de générosité..." required></textarea>
+            
             <button type="submit" class="btn-envoyer">ENVOYER MA GRAINE</button>
         </form>
     </div>
 
-    <br><br>
+    <br>
     <font size="2">
         Copyright 2000 <a href="https://youtube.com" class="copyright-link">Le Petit Prince des Jardiniers</a>
     </font>
@@ -78,9 +105,9 @@
     <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
 
     <script>
-        // Scripts d'animation (identiques à l'accueil pour la cohérence)
-        const mesPhrases = ["Ici, on sème des graines de générosité...", "Le cadeau existentiel produit un cadeau collectif", "Une harmonie de Paix...", "La confiance cordiale du Don sincère", "Du gratos ? Du bonheur paisible !", "Fais la fête, sois pas bête en faisant ta tête !"];
-        const animaux = ['🕊️', '🦋', '🐝', '🐞', '🦜', '🐰', '🐿️', '🦊', '🐬'];
+        // Scripts d'animation des messagers
+        const mesPhrases = ["Ici, on sème la générosité...", "Le cadeau existentiel produit un don collectif", "Une harmonie de Paix...", "La banque des trésors publics est ouverte !", "Du gratos ? Du bonheur paisible !"];
+        const animaux = ['🕊️', '🦋', '🐝', '🐞', '🦜', '🐰', '🐿️', '🦊', '🐠', '🐬', '🐳', '🦄'];
         const fleurs = ['🌸', '🌼', '🌻', '🌺'];
 
         const animalCont = document.getElementById('animal-container');
@@ -94,13 +121,13 @@
         document.addEventListener('click', () => { if(audio.paused) { audio.volume = 0.02; audio.play(); } });
 
         function createConfetti() {
-            for(let i=0; i<12; i++) {
+            for(let i=0; i<15; i++) {
                 const c = document.createElement('div');
                 c.className = 'confetti';
                 c.innerText = fleurs[Math.floor(Math.random()*fleurs.length)];
                 c.style.left = "50%"; c.style.bottom = "60px";
-                c.style.setProperty('--dx', (Math.random()*300 - 150) + "px");
-                c.style.setProperty('--dy', (Math.random()*-300 - 50) + "px");
+                c.style.setProperty('--dx', (Math.random()*400 - 200) + "px");
+                c.style.setProperty('--dy', (Math.random()*-400 - 100) + "px");
                 document.body.appendChild(c);
                 setTimeout(() => c.remove(), 2000);
             }
@@ -124,7 +151,7 @@
                 if (Math.sqrt(Math.pow(targetX-aniX,2)+Math.pow(targetY-aniY,2)) < 60) {
                     state = "DEPOSITING"; coffre.classList.add('pop'); createConfetti();
                     setTimeout(() => { bulle.style.opacity = "0"; coffre.classList.remove('pop'); state = "LEAVING";
-                    targetX = (Math.random() > 0.5) ? window.innerWidth + 500 : -500; targetY = 200; }, 2500);
+                    targetX = (Math.random() > 0.5) ? window.innerWidth + 600 : -600; targetY = 200; }, 2500);
                 }
             } else if (state === "LEAVING") {
                 aniX += (targetX - aniX) * 0.02; aniY += (targetY - aniY) * 0.02;
