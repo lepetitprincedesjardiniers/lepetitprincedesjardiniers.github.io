@@ -29,10 +29,16 @@
             <table border="2" cellpadding="20" bgcolor="#FFFFFF" width="85%" style="border-radius:20px; border-color:#2E7D32; max-width:600px;">
                 <tr>
                     <td align="left">
-                        <b>Prénom :</b><br><input type="text" name="prenom" style="width:95%; padding:10px;" required><br><br>
+                        <b>Ton Prénom :</b><br><input type="text" name="prenom" style="width:95%; padding:10px;" required><br><br>
                         <b>Pays :</b><br><input type="text" name="pays" style="width:95%; padding:10px;" required><br><br>
                         <b>Ville :</b><br><input type="text" name="ville" style="width:95%; padding:10px;" required><br><br>
-                        <b>Description :</b><br><textarea name="description" rows="6" style="width:95%; padding:10px;" required></textarea><br><br>
+                        
+                        <b>Rayon d'action (KM ou Miles) :</b><br>
+                        <input type="text" name="km" style="width:95%; padding:10px;" placeholder="Ex: 10 km, 5 miles ou 'Sur place'" required><br><br>
+
+                        <b>Description du don :</b><br>
+                        <textarea name="description" rows="5" style="width:95%; padding:10px;" required></textarea><br><br>
+
                         <b>Durée de validité :</b><br>
                         <select name="duree" style="width:100%; padding:10px;">
                             <option value="1 jour">1 jour</option>
@@ -41,7 +47,8 @@
                             <option value="6 mois">6 mois</option>
                             <option value="1 an">1 an</option>
                         </select><br><br>
-                        <center><input type="submit" value="🌻 PUBLIER" style="background-color:#2E7D32; color:white; padding:15px 30px; font-weight:bold; border-radius:10px; cursor:pointer; border:none;"></center>
+
+                        <center><input type="submit" value="🌻 PUBLIER DANS LE JARDIN" style="background-color:#2E7D32; color:white; padding:15px 30px; font-weight:bold; border-radius:10px; cursor:pointer; border:none;"></center>
                     </td>
                 </tr>
             </table>
