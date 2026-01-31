@@ -3,46 +3,32 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Contact - Le Petit Prince</title>
+    <title>Contact - Le Petit Prince des Jardiniers</title>
     <style>
-        body { background-color: #FFF8E1; color: #2E7D32; font-family: "Comic Sans MS", cursive, sans-serif; text-align: center; padding: 20px; margin: 0; }
-        .bouton-retour { display: inline-block; margin-bottom: 25px; color: #4CAF50; text-decoration: none; font-weight: bold; border: 2px solid #4CAF50; padding: 10px 20px; border-radius: 20px; background-color: white; transition: 0.3s; }
-        .bouton-retour:hover { background-color: #4CAF50; color: white; }
-        .cadre { background-color: white; border: 4px double #4CAF50; padding: 30px; border-radius: 20px; display: inline-block; text-align: left; max-width: 450px; width: 90%; box-shadow: 0 10px 20px rgba(0,0,0,0.05); }
-        h1 { color: #2E7D32; font-size: 26px; margin-top: 0; }
-        .attention { background-color: #E8F5E9; border-left: 5px solid #4CAF50; padding: 10px; font-weight: bold; margin-bottom: 20px; font-size: 15px; color: #1B5E20; }
-        label { font-weight: bold; display: block; margin-top: 15px; color: #388E3C; }
-        input, textarea { width: 100%; padding: 12px; margin-top: 5px; border: 1px solid #A5D6A7; border-radius: 10px; box-sizing: border-box; font-family: sans-serif; background-color: #F1F8E9; }
-        button { background-color: #4CAF50; color: white; padding: 15px; border: none; cursor: pointer; font-weight: bold; width: 100%; margin-top: 25px; border-radius: 10px; font-size: 18px; transition: 0.3s; box-shadow: 0 4px 0 #2E7D32; }
-        button:hover { background-color: #388E3C; transform: translateY(-2px); }
+        body { background: linear-gradient(135deg, #fdfcfb 0%, #e2d1c3 100%); background-attachment: fixed; font-family: "Comic Sans MS", cursive, sans-serif; color: #000080; text-align: center; margin: 0; padding: 0; }
+        nav { background-color: rgba(0, 100, 80, 0.9); padding: 15px; position: sticky; top: 0; z-index: 1000; }
+        nav a { color: #FFFF00; text-decoration: none; margin: 0 15px; font-weight: bold; }
+        .cadre-principal { max-width: 800px; margin: 30px auto; padding: 30px; background: rgba(255, 255, 255, 0.97); border: 10px ridge #800080; border-radius: 20px; }
+        h2 { color: #FF0000; text-decoration: underline; }
+        footer { margin-top: 30px; font-size: 0.85em; border-top: 1px dashed #ccc; padding-top: 20px; }
     </style>
 </head>
 <body>
-
-    <a href="https://lepetitprincedesjardiniers.github.io/" class="bouton-retour">⬅ Retour au Jardin</a>
-
-    <div class="cadre">
-        <h1>🌿 Écrire au Jardinier 🌿</h1>
-        
-        <div class="attention">
-            ⚠️ Attention : Si tu me contactes, attends-toi à un retour...
-        </div>
-
-        <form action="https://script.google.com/macros/s/AKfycbxuILkBo4L8JIK6ks1XsLpWMxvcviXSyMekJZI_sz-L_hRJygEDAoSVSzZ526DvsnTN/exec" method="POST">
-            <input type="hidden" name="formType" value="contact">
-
-            <label>Ton petit prénom charmant :</label>
-            <input type="text" name="nom" placeholder="Ex: Antoine" required>
-
-            <label>Ton email :</label>
-            <input type="email" name="email" placeholder="nom@exemple.com" required>
-
-            <label>Ton message :</label>
-            <textarea name="message" rows="5" placeholder="Quelle graine veux-tu partager ?" required></textarea>
-
-            <button type="submit">ENVOYER MON MESSAGE 🌼</button>
-        </form>
-    </div>
-
+<nav>
+    <a href="index.html">Accueil</a>
+    <a href="services.html">Liste des cadeaux</a>
+    <a href="galerie.html">Réalisations</a>
+    <a href="formulaire.html">Espace Don</a>
+    <a href="contact.html">Contact</a>
+</nav>
+<div class="cadre-principal">
+    <h2>Contactez-nous</h2>
+    <p>Pour toute question ou échange humain :</p>
+    <p>📧 <b>Votre Email ici</b></p>
+    <footer>
+        <p style="color: #FF0000; font-weight: bold;">#Liberté #Amour #Gratuité #Fraternité</p>
+        <strong>copyrith 2000... Le petit prince des jardiniers</strong>
+    </footer>
+</div>
 </body>
 </html>
