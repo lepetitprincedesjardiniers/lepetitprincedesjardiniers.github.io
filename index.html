@@ -2,131 +2,134 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <title>Le Trésor Public - Horizon Infini</title>
+    <title>Le Trésor Public - Version Chef-d'œuvre</title>
     <style>
-        body, html { 
-            margin: 0; height: 100%; width: 100%; 
-            font-family: 'Comic Sans MS', cursive; 
-            background: linear-gradient(to bottom, #87CEEB 0%, #FFFF00 100%);
-            overflow: hidden; perspective: 1000px;
+        body { 
+            font-family: 'Comic Sans MS', cursive; background-color: #FFFF00; 
+            color: #000080; margin: 0; text-align: center; overflow-x: hidden; min-height: 100vh;
         }
 
-        /* --- LE SOL DU JARDIN (ESPACE 3D) --- */
-        #scene-3d {
-            position: relative; width: 100%; height: 100%;
-            transform-style: preserve-3d;
-            transition: transform 0.5s ease-out;
-        }
-
-        /* --- LES ENTITÉS (FLEURS-MESSAGES) --- */
-        .entite {
-            position: absolute; background: white;
-            padding: 20px; border-radius: 20px;
-            border: 4px solid #008080;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-            transition: 0.5s; cursor: pointer;
-            width: 200px; text-align: center;
-        }
-        .entite:hover { filter: brightness(1.2); z-index: 1000 !important; }
-        
-        /* Styles Profondeur */
-        .loin { transform: translateZ(-500px) translateY(100px); opacity: 0.6; }
-        .moyen { transform: translateZ(-200px) translateY(150px); opacity: 0.9; }
-        .proche { transform: translateZ(100px) translateY(200px); border-color: #e91e63; }
-
-        /* --- L'INTERFACE DE PILOTAGE --- */
-        .interface {
+        /* --- INTRO COEUR --- */
+        #intro-layer {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            pointer-events: none; z-index: 5000;
+            background: #000; z-index: 10000; display: flex; 
+            flex-direction: column; justify-content: center; align-items: center;
+            transition: transform 1.2s cubic-bezier(0.8, 0, 0.2, 1);
         }
-        .btn-unite {
-            position: absolute; bottom: 40px; right: 40px;
-            width: 100px; height: 100px; background: gold;
-            border-radius: 50%; border: none; font-size: 40px;
-            cursor: pointer; pointer-events: auto;
-            box-shadow: 0 0 30px rgba(255,215,0,0.6);
-            animation: pulse 2s infinite;
+        .heart {
+            width: 100px; height: 90px; background: #ff4d6d; position: relative;
+            transform: rotate(-45deg); animation: pulse 1s infinite;
+            box-shadow: 0 0 50px #ff4d6d;
         }
-        @keyframes pulse { 0% { scale: 1; } 50% { scale: 1.1; } 100% { scale: 1; } }
+        .heart::before, .heart::after {
+            content: ""; position: absolute; width: 100px; height: 100px;
+            background: #ff4d6d; border-radius: 50%;
+        }
+        .heart::before { top: -50px; left: 0; }
+        .heart::after { left: 50px; top: 0; }
+        @keyframes pulse { 0%, 100% { scale: 1; } 50% { scale: 1.1; } }
 
-        /* --- FIL DE CONNEXION --- */
-        .lien-lumiere {
-            position: absolute; background: gold; height: 2px;
-            transform-origin: left center; opacity: 0; transition: 1s;
+        /* --- NAVIGATION --- */
+        .menu-table { margin: 20px auto; background: #008080; border-radius: 15px; border-collapse: collapse; box-shadow: 0 5px 15px rgba(0,0,0,0.1); }
+        .menu-table td { padding: 12px 20px; border: 1px solid white; }
+        .menu-table a { color: white; text-decoration: none; font-weight: bold; }
+
+        /* --- ÉLÉMENTS FIXES --- */
+        #coffre-magique { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); font-size: 60px; z-index: 800; cursor: pointer; filter: drop-shadow(0 0 10px gold); }
+
+        /* --- GRILLE STELLAIRE --- */
+        .bulles-grid {
+            display: flex; justify-content: center; align-items: center;
+            gap: 25px; padding: 40px; flex-wrap: wrap;
         }
 
-        /* --- MENU DOCK --- */
-        .dock {
-            position: absolute; bottom: 30px; left: 50%; transform: translateX(-50%);
-            background: rgba(0,0,0,0.8); padding: 10px 40px; border-radius: 50px;
-            display: flex; gap: 30px; pointer-events: auto;
+        .nuage {
+            background: white; border-radius: 50px; padding: 25px; width: 250px; min-height: 150px;
+            border: 3px solid #87CEEB; box-shadow: 8px 8px 0px #87CEEB; transition: 0.3s;
         }
-        .dock a { text-decoration: none; font-size: 30px; }
+        .nuage:hover { transform: translateY(-10px); background: #f0faff; }
+
+        .etoile-justice {
+            background: #E6E6FA; border: 3px solid #9370DB;
+            clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
+            width: 350px; height: 350px; display: flex; align-items: center; justify-content: center;
+            transition: 0.5s ease-in-out; cursor: pointer; z-index: 10;
+        }
+        .etoile-justice:hover { transform: scale(1.25); background: #f3f0ff; z-index: 50; }
+
+        /* --- DONNÉES DYNAMIQUES --- */
+        .carte { 
+            background: white; margin: 15px auto; max-width: 700px; padding: 20px; 
+            text-align: left; border-radius: 20px; border-left: 15px solid #008080;
+            box-shadow: 5px 10px 25px rgba(0,0,0,0.08); transition: 0.3s;
+        }
+        .carte:hover { transform: scale(1.02); }
     </style>
 </head>
 <body>
 
-    <div id="scene-3d">
+    <div id="intro-layer">
+        <div class="heart"></div>
+        <h1 style="color:white; margin-top:60px; letter-spacing:3px;">LE TRÉSOR S'OUVRE</h1>
+    </div>
+
+    <table class="menu-table">
+        <tr>
+            <td><a href="index.html">Accueil</a></td>
+            <td><a href="formulaire.html">Semer 🌱</a></td>
+            <td><a href="jardin.html">Jardin 🌻</a></td>
+            <td><a href="urgence.html">Aider 🚨</a></td>
+        </tr>
+    </table>
+
+    <div class="bulles-grid">
+        <div class="nuage">
+            <h3 style="color: #008080;">📜 GESTION</h3>
+            <p style="font-size: 0.9em;">Travaux collectifs & Bois communal.</p>
         </div>
 
-    <div class="interface">
-        <h1 style="color: #000080; margin-top: 20px; pointer-events: auto;">🌌 HORIZON DU TRÉSOR</h1>
-        
-        <button class="btn-unite" onmousedown="allumerFils()" onmouseup="eteindreFils()" title="Maintenir pour relier les cœurs">🤝</button>
+        <div class="etoile-justice">
+            <div style="width: 60%; pointer-events: none;">
+                <h3 style="margin:0;">⚖️ JUSTICE</h3>
+                <p style="font-size: 0.8em;">Régulation citoyenne.<br>Le pardon est notre force.</p>
+            </div>
+        </div>
 
-        <div class="dock">
-            <a href="formulaire.html">🌱</a>
-            <a href="jardin.html">🌻</a>
-            <a href="regulation.html">⚖️</a>
-            <a href="index.html">🏠</a>
+        <div class="nuage" style="border-color: #e91e63; box-shadow: 8px 8px 0px #e91e63;">
+            <h3 style="color: #e91e63;">❤️ URGENCES</h3>
+            <p style="font-size: 0.9em;">Besoins vitaux & Soutien moral.</p>
         </div>
     </div>
 
+    <div id="conteneur-vie">
+        <p>Chargement des ondes du jardin...</p>
+    </div>
+
+    <div id="coffre-magique" onclick="alert('Merci de cultiver ce jardin !')">🎁</div>
+
     <script>
-        const URL_GAS = "https://script.google.com/macros/s/AKfycbz4ncs9qw_AfmKSER5QST-P0OeKQggQaq86QC6liS53uZ9sx4Lo_-4-h1knXKWqgQMc/exec";
-        
-        // 1. GÉNÉRER LE JARDIN EN 3D
-        fetch(URL_GAS).then(r => r.json()).then(data => {
-            const scene = document.getElementById('scene-3d');
-            data.reverse().forEach((item, index) => {
-                const div = document.createElement('div');
-                
-                // On distribue selon le type (Urgence = Proche, Info = Loin)
-                let profondeur = "moyen";
-                if(item.type.toLowerCase().includes("urgence")) profondeur = "proche";
-                if(item.type.toLowerCase().includes("paix") || index > 5) profondeur = "loin";
-                
-                div.className = `entite ${profondeur}`;
-                div.style.left = (Math.random() * 60 + 20) + "%";
-                div.style.top = (Math.random() * 20 + 10) + "%";
-                
-                div.innerHTML = `
-                    <small>${item.type}</small>
-                    <h4 style="margin:5px 0">${item.nom}</h4>
-                    <p style="font-size:0.7em">${item.message.substring(0, 50)}...</p>
-                `;
-                scene.appendChild(div);
+        // Intro
+        setTimeout(() => {
+            document.getElementById('intro-layer').style.transform = 'translateY(100%)';
+        }, 2000);
+
+        // Fetch des données réelles
+        const URL_SERVEUR = "https://script.google.com/macros/s/AKfycbz4ncs9qw_AfmKSER5QST-P0OeKQggQaq86QC6liS53uZ9sx4Lo_-4-h1knXKWqgQMc/exec";
+
+        fetch(URL_SERVEUR)
+            .then(res => res.json())
+            .then(data => {
+                const zone = document.getElementById('conteneur-vie');
+                zone.innerHTML = "";
+                data.reverse().forEach(item => {
+                    const div = document.createElement('div');
+                    div.className = 'carte';
+                    let col = item.type.toLowerCase().includes("urgence") ? "#e91e63" : "#008080";
+                    div.style.borderLeftColor = col;
+                    div.innerHTML = `<b style="color:${col}">${item.type.toUpperCase()}</b> - ${item.nom}<br><small>${item.localisation}</small><p>${item.message}</p>`;
+                    zone.appendChild(div);
+                });
             });
-        });
-
-        // 2. PARALLAXE SOURIS (Bascule la scène)
-        document.addEventListener('mousemove', (e) => {
-            const rx = (window.innerHeight / 2 - e.clientY) / 30;
-            const ry = (e.clientX - window.innerWidth / 2) / 30;
-            document.getElementById('scene-3d').style.transform = `rotateX(${rx}deg) rotateY(${ry}deg)`;
-        });
-
-        // 3. FONCTION D'UNITÉ (LES FILS D'OR)
-        function allumerFils() {
-            const entites = document.querySelectorAll('.entite');
-            entites.forEach(e => e.style.boxShadow = "0 0 50px gold");
-            // Ici, on pourrait tracer des lignes SVG entre les blocs !
-            alert("Les fils d'or se tissent... Vous reliez les citoyens.");
-        }
-        function eteindreFils() {
-            const entites = document.querySelectorAll('.entite');
-            entites.forEach(e => e.style.boxShadow = "0 10px 30px rgba(0,0,0,0.2)");
-        }
     </script>
 </body>
 </html>
