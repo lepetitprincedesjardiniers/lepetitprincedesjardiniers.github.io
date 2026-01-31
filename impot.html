@@ -12,17 +12,23 @@
         .menu-table td { padding: 12px 20px; border: 1px solid #FFFFFF; }
         .menu-table a { text-decoration: none; color: #FFFFFF; font-weight: bold; }
         
-        .form-container { background: white; border: 5px solid #008080; border-radius: 30px; width: 90%; max-width: 650px; margin: 20px auto; padding: 25px; box-shadow: 10px 10px 0px #008080; }
-        label { display: block; margin-top: 15px; font-weight: bold; text-align: left; }
-        input, textarea, select { width: 100%; padding: 12px; margin: 8px 0; border-radius: 12px; border: 2px solid #008080; box-sizing: border-box; font-family: inherit; }
+        .form-container { background: white; border: 5px solid #008080; border-radius: 30px; width: 90%; max-width: 700px; margin: 20px auto; padding: 25px; box-shadow: 10px 10px 0px #008080; }
+        .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; text-align: left; }
+        @media (max-width: 600px) { .form-grid { grid-template-columns: 1fr; } }
+
+        label { display: block; margin-top: 10px; font-weight: bold; color: #00695c; }
+        input, textarea, select { width: 100%; padding: 12px; margin: 5px 0; border-radius: 12px; border: 2px solid #008080; box-sizing: border-box; font-family: inherit; font-size: 14px; }
         
-        .btn-envoi { background: #008080; color: white; border: none; padding: 18px 40px; border-radius: 25px; font-weight: bold; cursor: pointer; font-size: 1.2em; transition: 0.3s; }
-        .btn-envoi:hover { transform: scale(1.05); background: #006666; }
+        .full-width { grid-column: 1 / -1; }
         
-        .carte-action { background: white; border-left: 10px solid #008080; border-radius: 15px; padding: 20px; margin: 20px auto; max-width: 650px; text-align: left; box-shadow: 4px 4px 10px rgba(0,0,0,0.1); }
+        .btn-envoi { background: #008080; color: white; border: none; padding: 18px 40px; border-radius: 25px; font-weight: bold; cursor: pointer; font-size: 1.2em; transition: 0.3s; margin-top: 20px; }
+        .btn-envoi:hover { transform: scale(1.05); background: #2e7d32; }
+        
+        .carte-action { background: white; border-left: 10px solid #008080; border-radius: 15px; padding: 20px; margin: 20px auto; max-width: 700px; text-align: left; box-shadow: 4px 4px 10px rgba(0,0,0,0.1); }
+        .badge { background: #008080; color: white; padding: 3px 10px; border-radius: 10px; font-size: 0.8em; margin-right: 5px; }
         .reponse-sage { margin-left: 30px; margin-top: 10px; padding: 10px; background: #DCEDC8; border-left: 4px solid #008080; border-radius: 8px; font-size: 0.9em; }
         
-        #searchBox { width: 90%; max-width: 650px; padding: 12px; margin: 20px auto; border-radius: 25px; border: 2px solid #008080; }
+        #searchBox { width: 90%; max-width: 700px; padding: 12px; margin: 20px auto; border-radius: 25px; border: 2px solid #008080; }
     </style>
 </head>
 <body>
@@ -41,13 +47,133 @@
         </tr>
     </table>
 
-    <h1>📜 Travaux d'Impôt Public</h1>
-    <p>Partagez vos actions pour la communauté ou proposez votre aide.</p>
+    <h1>📜 Registre de l'Impôt Public</h1>
+    <p>Déclarez ici vos travaux citoyens ou vos offres de service pour la communauté.</p>
 
     <div class="form-container">
         <form id="impotForm">
-            <label>Ton Identité :</label>
-            <input type="text" id="nom" placeholder="Ton nom ou pseudo" required>
+            <div class="form-grid">
+                <div>
+                    <label>Identité / Pseudo :</label>
+                    <input type="text" id="nom" placeholder="Qui es-tu ?" required>
+                </div>
+                <div>
+                    <label>Localisation (Ville/Pays) :</label>
+                    <input type="text" id="ville" placeholder="Où s'est passé l'action ?" required>
+                </div>
+                <div>
+                    <label>Catégorie de l'Action :</label>
+                    <select id="categorie">
+                        <option value="Environnement">🌿 Environnement / Nature</option>
+                        <option value="Social">🤝 Aide Sociale / Entraide</option>
+                        <option value="Administratif">📑 Aide Administrative</option>
+                        <option value="Technique">🛠️ Bricolage / Technique</option>
+                        <option value="Savoir">📚 Transmission de Savoir</option>
+                    </select>
+                </div>
+                <div>
+                    <label>Temps consacré :</label>
+                    <input type="text" id="temps" placeholder="Ex: 2 heures, 1 matinée...">
+                </div>
+                <div class="full-width">
+                    <label>Description détaillée de l'Impôt Citoyen :</label>
+                    <textarea id="message" rows="4" placeholder="Qu'as-tu accompli pour le bien commun ?" required></textarea>
+                </div>
+                <div class="full-width">
+                    <label>Besoins pour continuer (facultatif) :</label>
+                    <input type="text" id="besoin" placeholder="Matériel, aide, outils...">
+                </div>
+            </div>
+            <button type="submit" id="btnEnvoi" class="btn-envoi">DÉPOSER MA GRAINE AU REGISTRE 🌿</button>
+        </form>
+    </div>
 
-            <label>Lieu de l'action (Ville / Pays) :</label>
-            <input type="text"
+    <input type="text" id="searchBox" onkeyup="filtrer()" placeholder="🔍 Rechercher une ville, un nom ou un type de travail...">
+    
+    <div id="flux-impots">
+        <p>Lecture du Grand Livre de l'Impôt...</p>
+    </div>
+
+    <script>
+        const URL_SERVEUR = "https://script.google.com/macros/s/AKfycbz4ncs9qw_AfmKSER5QST-P0OeKQggQaq86QC6liS53uZ9sx4Lo_-4-h1knXKWqgQMc/exec";
+
+        document.getElementById('impotForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const btn = document.getElementById('btnEnvoi');
+            btn.innerText = "Inscription..."; btn.disabled = true;
+
+            const locComplet = `${document.getElementById('ville').value} | Cat: ${document.getElementById('categorie').value} | Temps: ${document.getElementById('temps').value}`;
+            const msgComplet = `${document.getElementById('message').value} (Besoin: ${document.getElementById('besoin').value || 'Aucun'})`;
+
+            fetch(URL_SERVEUR, { 
+                method: 'POST', mode: 'no-cors', 
+                body: JSON.stringify({
+                    date: new Date().toLocaleDateString('fr-FR'),
+                    type: "impot",
+                    nom: document.getElementById('nom').value,
+                    localisation: locComplet,
+                    message: msgComplet
+                })
+            }).then(() => { 
+                alert("Action inscrite au Trésor Public ! Merci."); 
+                location.reload(); 
+            });
+        });
+
+        function apporterAvis(dest) {
+            const m = prompt("Ton message d'encouragement ou ton avis de Sage :");
+            if (m) {
+                const monNom = prompt("Ton nom :") || "Citoyen Sage";
+                fetch(URL_SERVEUR, { 
+                    method: 'POST', mode: 'no-cors', 
+                    body: JSON.stringify({
+                        date: new Date().toLocaleDateString('fr-FR'), 
+                        type: "avis_impot", 
+                        nom: monNom, 
+                        localisation: dest, 
+                        message: m
+                    })
+                }).then(() => { alert("Commentaire ajouté !"); location.reload(); });
+            }
+        }
+
+        fetch(URL_SERVEUR)
+            .then(r => r.json())
+            .then(data => {
+                const flux = document.getElementById('flux-impots');
+                flux.innerHTML = "";
+                
+                const actions = data.filter(d => d.type === "impot").reverse();
+                const avis = data.filter(d => d.type === "avis_impot");
+                
+                actions.forEach(c => {
+                    let rHTML = ""; 
+                    avis.filter(a => a.localisation === c.nom).forEach(a => {
+                        rHTML += `<div class="reponse-sage"><b>🌿 Sage ${a.nom} :</b> ${a.message}</div>`;
+                    });
+                    
+                    const div = document.createElement('div');
+                    div.className = 'carte-action';
+                    div.innerHTML = `
+                        <small>Le ${c.date}</small><br>
+                        <b>👤 ${c.nom}</b><br>
+                        <span class="badge">📍 ${c.localisation}</span>
+                        <p style="margin-top:10px;">"${c.message}"</p>
+                        ${rHTML}
+                        <hr style="border:0; border-top: 1px dotted #008080; margin: 15px 0;">
+                        <span style="color:#008080; cursor:pointer; font-weight:bold; font-size:0.85em;" onclick="apporterAvis('${c.nom}')">⚖️ DONNER UN AVIS DE SAGE</span>
+                    `;
+                    flux.appendChild(div);
+                });
+            });
+
+        function filtrer() {
+            let val = document.getElementById('searchBox').value.toLowerCase();
+            let cards = document.getElementsByClassName('carte-action');
+            for (let c of cards) { 
+                c.style.display = c.innerText.toLowerCase().includes(val) ? "" : "none"; 
+            }
+        }
+    </script>
+</body>
+</html>
