@@ -4,98 +4,65 @@
     <meta charset="UTF-8">
     <title>Le Jardin des Annonces - Le Petit Prince</title>
     <style>
-        /* On garde votre structure mais on remet les couleurs du site */
-        body { background-color: #FFFF00; color: #000080; font-family: "Comic Sans MS", cursive, sans-serif; text-align: center; padding: 0; margin: 0; }
-        
-        /* Menu identique aux autres pages */
+        body { background-color: #FFFF00; color: #000080; font-family: "Comic Sans MS", cursive; text-align: center; margin: 0; }
         nav { background-color: #008080; padding: 10px; margin-bottom: 20px; }
         nav a { color: white; text-decoration: none; margin: 0 15px; font-weight: bold; }
-
-        h1 { color: #FF0000; text-decoration: underline; }
-        
-        #barreRecherche { 
-            width: 80%; max-width: 400px; padding: 12px; margin-bottom: 30px; 
-            border: 3px solid #800080; border-radius: 10px; font-size: 16px;
-        }
-
-        #listeAnnonces { display: flex; flex-direction: column; align-items: center; gap: 15px; padding-bottom: 50px; }
-        
-        .annonce { 
-            background-color: white; border: 2px solid #000080; padding: 15px; 
-            width: 90%; max-width: 600px; border-radius: 15px; text-align: left;
-            box-shadow: 5px 5px 0px #800080;
-        }
-        
-        .titre-annonce { color: #FF0000; font-weight: bold; font-size: 1.2em; display: block; border-bottom: 1px dotted #000080; margin-bottom: 5px; }
-        .ville-annonce { color: #008080; font-size: 1em; font-weight: bold; }
-        .description { color: #000; margin-top: 10px; font-family: sans-serif; line-height: 1.4; }
-        .infos-brutes { font-size: 0.8em; color: #666; margin-top: 10px; border-top: 1px solid #eee; padding-top: 5px; }
+        #barreRecherche { width: 80%; max-width: 400px; padding: 12px; margin: 20px 0; border: 3px solid #008080; border-radius: 10px; }
+        .annonce { background: white; border: 2px solid #000080; margin: 15px auto; padding: 15px; width: 85%; max-width: 600px; text-align: left; border-radius: 15px; }
+        .titre { color: #FF0000; font-weight: bold; font-size: 1.2em; }
+        .ville { color: #008080; font-weight: bold; }
     </style>
 </head>
-<body>
-
+<body onload="charger()">
     <nav>
         <a href="index.html">Accueil</a>
         <a href="formulaire.html">Espace Don</a>
         <a href="jardin.html">Le Jardin</a>
         <a href="contact.html">Contact</a>
     </nav>
-    
-    <h1>🌻 Le Jardin des Annonces</h1>
-    
-    <input type="text" id="barreRecherche" placeholder="🔍 Rechercher une ville, une graine, un ami..." onkeyup="filtrerAnnonces()">
 
-    <div id="chargement"><b>Le jardin fleurit... (Chargement des graines)</b></div>
-    <div id="listeAnnonces"></div>
+    <font size="6" color="#FF0000"><u><b>LE JARDIN DES CADEAUX</b></u></font><br>
+    
+    <input type="text" id="barreRecherche" placeholder="🔍 Chercher une ville, un don, un nom..." onkeyup="filtrer()">
+
+    <div id="status">Chargement des graines...</div>
+    <div id="liste"></div>
 
     <script>
-        // ON UTILISE VOTRE DERNIÈRE URL DE SCRIPT VALIDE
-        const urlScript = "https://script.google.com/macros/s/AKfycbwe3bMzbJMUQSEdeyprffw-FQpqLg9-fGcHJi2_1_Ix5kWmrisBoSo2Kzne-CMwe3s/exec";
-        let toutesLesAnnonces = [];
+        const url = "https://script.google.com/macros/s/AKfycbwe3bMzbJMUQSEdeyprffw-FQpqLg9-fGcHJi2_1_Ix5kWmrisBoSo2Kzne-CMwe3s/exec";
+        let annonces = [];
 
-        async function chargerAnnonces() {
+        async function charger() {
             try {
-                const response = await fetch(urlScript);
-                toutesLesAnnonces = await response.json();
-                document.getElementById('chargement').style.display = 'none';
-                afficher(toutesLesAnnonces);
-            } catch (e) { 
-                document.getElementById('chargement').innerText = "Le jardin est en dormance (Erreur de chargement)."; 
-            }
+                const res = await fetch(url);
+                annonces = await res.json();
+                document.getElementById('status').style.display = 'none';
+                afficher(annonces);
+            } catch (e) { document.getElementById('status').innerText = "Erreur de connexion au jardin."; }
         }
 
-        function afficher(liste) {
-            const conteneur = document.getElementById('listeAnnonces');
-            conteneur.innerHTML = "";
-            
-            // On inverse pour voir les plus récents en haut
-            [...liste].reverse().forEach(a => {
-                const div = document.createElement('div');
-                div.className = 'annonce';
-                div.innerHTML = `
-                    <span class="titre-annonce">🌿 Graine de ${a.prenom || a.identifiant}</span>
-                    <span class="ville-annonce">📍 ${a.ville} (${a.pays}) - Rayon : ${a.km} km</span>
-                    <p class="description">${a.description}</p>
-                    <div class="infos-brutes">
-                        ⏳ Durée : ${a.duree} | 📅 Posté le : ${new Date(a.date).toLocaleDateString()}
-                    </div>
-                `;
-                conteneur.appendChild(div);
+        function afficher(data) {
+            const div = document.getElementById('liste');
+            div.innerHTML = "";
+            data.reverse().forEach(a => {
+                div.innerHTML += `<div class="annonce">
+                    <span class="titre">🌿 Graine de ${a.prenom}</span><br>
+                    <span class="ville">📍 ${a.ville} (${a.km} km)</span>
+                    <p>${a.description}</p>
+                    <small>Posté le : ${new Date(a.date).toLocaleDateString()} | Durée : ${a.duree}</small>
+                </div>`;
             });
         }
 
-        function filtrerAnnonces() {
+        function filtrer() {
             const mot = document.getElementById('barreRecherche').value.toLowerCase();
-            const filtre = toutesLesAnnonces.filter(a => 
-                (a.ville && a.ville.toLowerCase().includes(mot)) || 
-                (a.description && a.description.toLowerCase().includes(mot)) ||
-                (a.prenom && a.prenom.toLowerCase().includes(mot)) ||
-                (a.identifiant && a.identifiant.toLowerCase().includes(mot))
+            const res = annonces.filter(a => 
+                a.ville.toLowerCase().includes(mot) || 
+                a.description.toLowerCase().includes(mot) || 
+                a.prenom.toLowerCase().includes(mot)
             );
-            afficher(filtre);
+            afficher(res);
         }
-
-        chargerAnnonces();
     </script>
 </body>
 </html>
