@@ -57,7 +57,6 @@
 
         .pop { transform: translateX(-50%) scale(1.4) !important; }
 
-        /* Animation des confettis fleurs */
         .confetti {
             position: fixed;
             z-index: 799;
@@ -68,6 +67,14 @@
             0% { transform: translate(0, 0) rotate(0deg); opacity: 1; }
             100% { transform: translate(var(--dx), var(--dy)) rotate(360deg); opacity: 0; }
         }
+
+        .copyright-link {
+            color: #000080;
+            text-decoration: none;
+            font-size: 0.9em;
+            font-weight: bold;
+        }
+        .copyright-link:hover { text-decoration: underline; }
     </style>
 </head>
 <body>
@@ -93,11 +100,10 @@
 
     <a href="formulaire.html" class="btn-semer">🌱 SEMER UNE GRAINE</a>
 
-    <br><br><br>
-    <a href="https://youtube.com" target="_blank" style="color: #008080; font-weight: bold; font-size: 1.2em;">📺 VOIR NOS VIDÉOS</a>
-
-    <br><br><br>
-    <font size="2">copyrith 2000 Le pteit prince des jardiniers</font>
+    <br><br><br><br>
+    <font size="2">
+        Copyright 2000 <a href="https://youtube.com" class="copyright-link">Le Petit Prince des Jardiniers</a>
+    </font>
 
     <div id="coffre-magique">🎁</div>
     <div id="animal-container">
@@ -117,7 +123,7 @@
             "Une harmonie de Paix pour une respectable fraternité",
             "La confiance cordiale du Don sincère",
             "La banque des trésors publics est ouverte 24h/24",
-            "Du gratos ? Du bonheur Paisible !",
+            "Du gratos ? Du bonheur paisible !",
             "Solidaire sourire collectif !",
             "Fais la fête, sois pas bête en faisant ta tête !",
             "Ici on se respecte..."
