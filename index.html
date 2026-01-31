@@ -2,24 +2,27 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Le Petit Prince des Jardiniers - Accueil</title>
     <style>
+        /* Fond en dégradé doux (remplace l'image thiaha) */
         body { 
-            background-color: #FFFFFF; 
-            background-image: url('http://thiaha.free.fr/improFranckcopyrith.bmp'); 
+            background: linear-gradient(135deg, #fdfcfb 0%, #e2d1c3 100%);
             background-attachment: fixed; 
             font-family: "Comic Sans MS", cursive, sans-serif; 
             color: #000080; 
             text-align: center; 
             margin: 0; padding: 0;
         }
+
         /* Barre de navigation */
         nav {
-            background-color: rgba(0, 128, 128, 0.9);
+            background-color: rgba(0, 100, 80, 0.9);
             padding: 15px;
             position: sticky;
             top: 0;
             z-index: 1000;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
         }
         nav a {
             color: #FFFF00;
@@ -28,25 +31,28 @@
             font-weight: bold;
             font-size: 1.1em;
         }
-        nav a:hover { text-decoration: underline; }
+        nav a:hover { text-decoration: underline; color: #ffffff; }
 
         .cadre-principal {
             max-width: 800px;
             margin: 30px auto;
             padding: 30px;
-            background: rgba(255, 255, 255, 0.95);
-            border: 10px ridge #800080;
+            background: rgba(255, 255, 255, 0.97);
+            border: 10px ridge #800080; /* Le cadre violet historique */
             border-radius: 20px;
+            box-shadow: 0px 10px 25px rgba(0,0,0,0.1);
         }
-        h1 { color: #FF0000; text-decoration: underline; font-size: 2.5em; }
-        .identite { font-size: 1.3em; font-weight: bold; margin-bottom: 20px; }
+
         .philosophie { 
             text-align: justify; 
-            background-color: #f9f9f9; 
+            background-color: #fcfcfc; 
             padding: 20px; 
-            border-left: 5px solid #FF0000; 
-            margin: 20px 0;
+            border-left: 8px solid #FF0000; 
+            margin: 20px auto;
+            width: 90%;
+            font-style: italic;
         }
+
         .btn-action {
             display: inline-block;
             background-color: #FFFF00;
@@ -55,84 +61,3 @@
             text-decoration: none;
             font-weight: bold;
             font-size: 1.5em;
-            border: 3px solid #000080;
-            border-radius: 50px;
-            margin: 20px 0;
-        }
-        .btn-action:hover { background-color: #FF0000; color: #FFFF00; }
-        .yt-box { 
-            background-color: #000080; 
-            color: white; 
-            padding: 20px; 
-            border-radius: 10px;
-            margin-top: 30px;
-        }
-        .yt-link { color: #FFFF00; font-weight: bold; text-decoration: none; }
-        footer { margin-top: 40px; font-size: 0.9em; padding-bottom: 20px; }
-        table { margin: 0 auto; }
-    </style>
-</head>
-<body>
-
-<nav>
-    <a href="index.html">Accueil</a>
-    <a href="services.html">Services & Tarifs</a>
-    <a href="galerie.html">Réalisations</a>
-    <a href="contact.html">Contact</a>
-</nav>
-
-<div class="cadre-principal">
-    <h1>Le Petit Prince des Jardiniers</h1>
-    <div class="identite">Franck José Baptiste Pinon de Pessac</div>
-    <p><i>Jardinier Humaniste - Éducateur - Philosophe</i></p>
-
-    <div class="philosophie">
-        <strong>Ma Thèse :</strong> Analyse éthique des comportements, de la misère à la richesse du cœur. 
-        Ici, nous cultivons la fraternité et la dignité humaine à travers le don pur.
-        S'il vous plaît... dessine-moi une main tendue.
-    </div>
-
-    <p>Partagez votre savoir, votre temps ou vos cadeaux :</p>
-    
-    <a href="contact.html" class="btn-action">🌻 ENTRER DANS L'ESPACE DE DON</a>
-
-    <table border="10" cellpadding="20" cellspacing="0" width="90%" bordercolor="#800080" bgcolor="#FFFFFF">
-        <tr>
-            <td align="center">
-                <img src="http://thiaha.free.fr/Franckp.jpg" border="2" alt="Franck Pinon" width="200"><br><br>
-                <font size="4" color="#008080"><b>"S'il vous plaît... dessine-moi un partage."</b></font>
-                <br><br>
-                <table border="1" cellpadding="15" cellspacing="0" bgcolor="#F4F4F4" width="95%">
-                    <tr>
-                        <td align="justify">
-                            <font size="3">
-                                <b>Ma Thèse :</b> Analyse éthique des comportements, de la misère à la richesse du cœur. 
-                                Ce site est un espace de <b>Don Pur</b>. Nous cultivons ici la fraternité, la dignité humaine 
-                                et l'entraide gratuite, loin des logiques marchandes. 
-                                <br><br>
-                                Que vous ayez un savoir à transmettre, un objet à offrir ou simplement du temps à partager, 
-                                vous êtes ici chez vous.
-                            </font>
-                        </td>
-                    </tr>
-                </table>
-            </td>
-        </tr>
-    </table>
-
-    <div class="yt-box">
-        <strong>Retrouvez ma pensée en vidéo :</strong><br><br>
-        <a href="https://www.youtube.com/channel/UCjsudx7f1sl7XQM8ylcBRdQ" target="_blank" class="yt-link">
-            ▶ Chaîne YouTube : Le Petit Prince des Jardiniers
-        </a>
-    </div>
-
-    <footer>
-        <p>#Liberté #Amour #Gratuité #Fraternité</p>
-        <strong>© 2000 - 2024 | Copyrith Le Petit Prince des Jardiniers</strong><br>
-        Franck José Baptiste Pinon de Pessac
-    </footer>
-</div>
-
-</body>
-</html>
