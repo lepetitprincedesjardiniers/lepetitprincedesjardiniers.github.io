@@ -2,59 +2,162 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Le Trésor Public - Le Petit Prince des Jardiniers</title>
     <style>
-        body { font-family: 'Comic Sans MS', cursive; text-align: center; margin: 0; padding: 0; background-color: #FFFF00; color: #000080; overflow-x: hidden; min-height: 100vh; }
-        
-        /* Traducteur Google */
-        #google_translate_element { padding: 10px; background: rgba(255,255,255,0.5); border-bottom: 1px solid #008080; min-height: 40px; }
+        /* Design Global */
+        body { 
+            font-family: 'Comic Sans MS', cursive; 
+            text-align: center; 
+            margin: 0; 
+            padding: 0; 
+            background-color: #FFFF00; 
+            color: #000080; 
+            overflow-x: hidden; 
+            min-height: 100vh; 
+        }
 
-        /* Menu */
-        .menu-table { margin: 20px auto; border-radius: 10px; background-color: #008080; border-collapse: collapse; margin-left: auto; margin-right: auto; }
+        /* Traducteur Google */
+        #google_translate_element { 
+            padding: 10px; 
+            background: rgba(255,255,255,0.5); 
+            border-bottom: 1px solid #008080; 
+            min-height: 40px; 
+        }
+
+        /* Menu de Navigation */
+        .menu-table { 
+            margin: 20px auto; 
+            border-radius: 10px; 
+            background-color: #008080; 
+            border-collapse: collapse; 
+        }
         .menu-table td { padding: 10px 15px; border: 1px solid #FFFFFF; }
         .menu-table a { text-decoration: none; color: #FFFFFF; font-weight: bold; }
 
         /* Soleil Central - Don Entier */
         .soleil-don {
-            background: #FFD700; width: 250px; height: 250px; border-radius: 50%;
-            display: flex; align-items: center; justify-content: center;
-            box-shadow: 0 0 50px #FFA500; border: 5px dashed #FF4500;
-            margin: 40px auto; cursor: pointer; transition: 0.4s;
-            text-decoration: none; color: #000080; font-weight: bold;
+            background: #FFD700; 
+            width: 250px; 
+            height: 250px; 
+            border-radius: 50%;
+            display: flex; 
+            align-items: center; 
+            justify-content: center;
+            box-shadow: 0 0 50px #FFA500; 
+            border: 5px dashed #FF4500;
+            margin: 40px auto; 
+            cursor: pointer; 
+            transition: 0.4s;
+            text-decoration: none; 
+            color: #000080; 
+            font-weight: bold;
         }
         .soleil-don:hover { transform: scale(1.1) rotate(5deg); }
 
         /* Grilles et Bulles Intermédiaires */
-        .bulles-grid { display: flex; justify-content: center; align-items: center; gap: 30px; flex-wrap: wrap; padding: 20px; max-width: 1200px; margin: auto; }
+        .bulles-grid { 
+            display: flex; 
+            justify-content: center; 
+            align-items: center; 
+            gap: 30px; 
+            flex-wrap: wrap; 
+            padding: 20px; 
+            max-width: 1200px; 
+            margin: auto; 
+        }
         
         .nuage {
-            background: #e0f7fa; border: 3px solid #008080; border-radius: 50px; 
-            padding: 25px; width: 320px; min-height: 220px; transition: 0.3s;
-            text-decoration: none; color: inherit; display: flex; flex-direction: column; justify-content: center;
+            background: #e0f7fa; 
+            border: 3px solid #008080; 
+            border-radius: 50px; 
+            padding: 25px; 
+            width: 320px; 
+            min-height: 220px; 
+            transition: 0.3s;
+            text-decoration: none; 
+            color: inherit; 
+            display: flex; 
+            flex-direction: column; 
+            justify-content: center;
         }
         .nuage-rose { background: #ffebee; border-color: #e91e63; }
         .nuage:hover { transform: translateY(-10px); box-shadow: 0 10px 20px rgba(0,0,0,0.1); }
 
-        /* Étoile de Régulation */
+        /* Étoile de Régulation Citoyenne */
         .etoile-justice {
-            background: #E6E6FA; border: 3px solid #9370DB; width: 350px; height: 350px;
+            background: #E6E6FA; 
+            border: 3px solid #9370DB; 
+            width: 350px; 
+            height: 350px;
             clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
-            transition: 0.5s; cursor: pointer; text-decoration: none; color: inherit;
-            display: flex; align-items: center; justify-content: center;
+            transition: 0.5s; 
+            cursor: pointer; 
+            text-decoration: none; 
+            color: inherit;
+            display: flex; 
+            align-items: center; 
+            justify-content: center;
         }
-        .etoile-justice:hover { transform: scale(1.1); background: #f3f0ff; clip-path: circle(50% at 50% 50%); }
+        .etoile-justice:hover { 
+            transform: scale(1.1); 
+            background: #f3f0ff; 
+            clip-path: circle(50% at 50% 50%); 
+        }
         .etoile-contenu { width: 70%; }
 
-        .exemples { font-size: 0.85em; color: #2E7D32; font-style: italic; margin-top: 10px; font-weight: bold; }
+        .exemples { 
+            font-size: 0.85em; 
+            color: #2E7D32; 
+            font-style: italic; 
+            margin-top: 10px; 
+            font-weight: bold; 
+        }
 
-        /* Système des Messagers */
-        #animal-container { position: fixed; z-index: 900; pointer-events: none; display: flex; align-items: center; }
-        #bulle-texte { background: white; border: 2px solid #2E7D32; border-radius: 15px; padding: 8px 15px; font-weight: bold; opacity: 0; overflow: hidden; max-width: 250px; }
-        #coffre-magique { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); font-size: 60px; z-index: 800; }
-        .pop { transform: translateX(-50%) scale(1.4) !important; transition: 0.3s; }
-        .confetti { position: fixed; z-index: 799; pointer-events: none; animation: fly 2s ease-out forwards; }
-        @keyframes fly { 0% { transform: translate(0, 0) rotate(0deg); opacity: 1; } 100% { transform: translate(var(--dx), var(--dy)) rotate(360deg); opacity: 0; } }
+        /* Système des Messagers Animés */
+        .animal-container { 
+            position: fixed; 
+            z-index: 900; 
+            pointer-events: none; 
+            display: flex; 
+            align-items: center; 
+        }
+        .bulle-texte { 
+            background: white; 
+            border: 2px solid #2E7D32; 
+            border-radius: 15px; 
+            padding: 8px 15px; 
+            font-weight: bold; 
+            opacity: 0; 
+            overflow: hidden; 
+            max-width: 250px; 
+            white-space: normal;
+        }
+        
+        #coffre-magique { 
+            position: fixed; 
+            bottom: 20px; 
+            left: 50%; 
+            transform: translateX(-50%); 
+            font-size: 60px; 
+            z-index: 800; 
+            transition: 0.3s;
+        }
+        .pop { transform: translateX(-50%) scale(1.4) !important; }
 
+        /* Confettis de fleurs */
+        .confetti { 
+            position: fixed; 
+            z-index: 799; 
+            pointer-events: none; 
+            animation: fly 2s ease-out forwards; 
+        }
+        @keyframes fly { 
+            0% { transform: translate(0, 0) rotate(0deg); opacity: 1; } 
+            100% { transform: translate(var(--dx), var(--dy)) rotate(360deg); opacity: 0; } 
+        }
+
+        /* Pied de page */
         footer { margin: 80px 0 30px; font-size: 0.9em; opacity: 0.8; }
         footer a { color: inherit; text-decoration: none; border-bottom: 1px dashed #008080; }
     </style>
@@ -63,7 +166,9 @@
 
     <div id="google_translate_element"></div>
     <script type="text/javascript">
-        function googleTranslateElementInit() { new google.translate.TranslateElement({pageLanguage: 'fr'}, 'google_translate_element'); }
+        function googleTranslateElementInit() { 
+            new google.translate.TranslateElement({pageLanguage: 'fr'}, 'google_translate_element'); 
+        }
     </script>
     <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
 
@@ -121,6 +226,7 @@
     </footer>
 
     <script>
+        // --- CONFIGURATION ---
         const basePhrases = [
             "Bienvenue au Trésor Public", 
             "L'impôt est un geste de cœur", 
@@ -139,8 +245,12 @@
         const coffre = document.getElementById('coffre-magique');
         const audio = document.getElementById('chantOiseaux');
 
-        document.addEventListener('click', () => { if(audio.paused) { audio.volume = 0.05; audio.play(); } });
+        // Activer l'audio au premier clic
+        document.addEventListener('click', () => { 
+            if(audio.paused) { audio.volume = 0.05; audio.play(); } 
+        });
 
+        // --- FONCTIONS ---
         function createConfetti() {
             for(let i=0; i<15; i++) {
                 const c = document.createElement('div');
@@ -156,4 +266,85 @@
 
         function getRandomEdge() {
             const side = Math.floor(Math.random() * 4);
-            if(side === 0) return {x: -250, y: Math.random() * window.
+            if(side === 0) return {x: -250, y: Math.random() * window.innerHeight};
+            if(side === 1) return {x: window.innerWidth + 250, y: Math.random() * window.innerHeight};
+            if(side === 2) return {x: Math.random() * window.innerWidth, y: -250};
+            return {x: Math.random() * window.innerWidth, y: window.innerHeight + 250};
+        }
+
+        function createMessenger() {
+            if (disponibles.length === 0) return; // Ne pas créer si pas de texte unique dispo
+            
+            const start = getRandomEdge();
+            const phraseIdx = Math.floor(Math.random() * disponibles.length);
+            const texte = disponibles.splice(phraseIdx, 1)[0];
+
+            const container = document.createElement('div');
+            container.className = "animal-container";
+            container.innerHTML = `<div class="bulle-texte" style="width:0px; opacity:0;">${texte}</div>
+                                   <div style="font-size:50px">${typesAnimaux[Math.floor(Math.random()*4)]}</div>`;
+            document.body.appendChild(container);
+
+            messagers.push({
+                el: container,
+                bulle: container.firstChild,
+                texte: texte,
+                x: start.x, y: start.y,
+                tx: window.innerWidth / 2, ty: window.innerHeight - 110,
+                state: "IN",
+                seed: Math.random() * 1000
+            });
+        }
+
+        function loop() {
+            for (let i = messagers.length - 1; i >= 0; i--) {
+                let m = messagers[i];
+
+                if (m.state === "IN") {
+                    // Aller vers le coffre
+                    m.x += (m.tx - m.x) * 0.012;
+                    m.y += (m.ty - m.y) * 0.012;
+                    m.bulle.style.opacity = "1";
+                    
+                    // Ouverture progressive de la bulle
+                    let currentW = parseInt(m.bulle.style.width) || 0;
+                    if (currentW < 220) m.bulle.style.width = (currentW + 2) + "px";
+
+                    if (Math.abs(m.tx - m.x) < 20 && Math.abs(m.ty - m.y) < 20) {
+                        m.state = "WAIT";
+                        coffre.classList.add('pop');
+                        createConfetti();
+                        setTimeout(() => {
+                            m.state = "OUT";
+                            coffre.classList.remove('pop');
+                            const exit = getRandomEdge();
+                            m.tx = exit.x; m.ty = exit.y;
+                            m.bulle.style.opacity = "0";
+                        }, 4000); // Temps de lecture
+                    }
+                } else if (m.state === "OUT") {
+                    // Sortir de l'écran
+                    m.x += (m.tx - m.x) * 0.02;
+                    m.y += (m.ty - m.y) * 0.02;
+                    if (m.x < -300 || m.x > window.innerWidth + 300 || m.y < -300 || m.y > window.innerHeight + 300) {
+                        disponibles.push(m.texte); // Libérer le texte
+                        m.el.remove();
+                        messagers.splice(i, 1);
+                    }
+                }
+
+                // Animation de flottement
+                const float = Math.sin(Date.now() * 0.005 + m.seed) * 15;
+                m.el.style.left = m.x + "px";
+                m.el.style.top = (m.y + float) + "px";
+            }
+            requestAnimationFrame(loop);
+        }
+
+        // Lancement
+        setInterval(createMessenger, 5000); 
+        createMessenger(); // Premier oiseau immédiat
+        loop();
+    </script>
+</body>
+</html>
