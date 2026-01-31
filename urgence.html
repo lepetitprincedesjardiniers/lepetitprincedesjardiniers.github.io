@@ -2,79 +2,163 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <title>Urgence & Écoute - Le Petit Prince des Jardiniers</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Urgences & Impôt Volontaire - Le Trésor Public</title>
     <style>
-        body { font-family: 'Comic Sans MS', cursive; text-align: center; margin: 0; padding: 0; background-color: #FFFF00; color: #000080; }
-        .menu-table { margin: 20px auto; border-radius: 10px; background-color: #008080; border-collapse: collapse; margin-left: auto; margin-right: auto; }
-        .menu-table td { padding: 10px 15px; border: 1px solid #FFFFFF; }
-        .menu-table a { text-decoration: none; color: #FFFFFF; font-weight: bold; }
-
-        /* Moteur de Recherche Interne */
-        .search-box { background: white; padding: 20px; border-radius: 20px; width: 90%; max-width: 800px; margin: 20px auto; border: 3px solid #E67E22; }
-        .search-box select, .search-box input { padding: 8px; border-radius: 10px; border: 1px solid #008080; margin: 5px; }
-
-        /* Listing des Annonces */
-        .annonce-card { 
-            background: white; border-radius: 15px; padding: 20px; margin: 15px auto; 
-            width: 90%; max-width: 700px; text-align: left; border-left: 10px solid #E67E22;
-            box-shadow: 5px 5px 15px rgba(0,0,0,0.1);
+        /* TON IDENTITÉ VISUELLE HISTORIQUE */
+        body { 
+            font-family: 'Comic Sans MS', cursive, sans-serif; 
+            background-color: #FFFF00; 
+            color: #000080; 
+            margin: 0; 
+            padding: 0; 
+            text-align: center; 
         }
-        .annonce-header { display: flex; justify-content: space-between; font-weight: bold; color: #008080; border-bottom: 1px solid #eee; padding-bottom: 5px; }
-        .tag-urgence { background: #FF4500; color: white; padding: 2px 8px; border-radius: 5px; font-size: 0.8em; }
-        .btn-repondre { background: #008080; color: white; border: none; padding: 8px 15px; border-radius: 10px; cursor: pointer; float: right; margin-top: -10px; }
+
+        /* LE TRADUCTEUR GOOGLE */
+        #google_translate_element { 
+            padding: 10px; 
+            background: rgba(255,255,255,0.5); 
+            border-bottom: 2px solid #008080; 
+        }
+
+        /* LE MENU DE NAVIGATION */
+        .menu-table { 
+            margin: 20px auto; 
+            background-color: #008080; 
+            border-collapse: collapse; 
+            border-radius: 10px;
+            overflow: hidden;
+        }
+        .menu-table td { padding: 12px 20px; border: 1px solid #FFFFFF; }
+        .menu-table a { text-decoration: none; color: #FFFFFF; font-weight: bold; }
+        .menu-table a:hover { color: #FFFF00; }
+
+        /* LE CONTENEUR DU FORMULAIRE D'URGENCE */
+        .form-container { 
+            background: white; 
+            border: 5px solid #e91e63; /* Rose/Rouge pour l'urgence */
+            border-radius: 30px; 
+            width: 90%; 
+            max-width: 650px; 
+            margin: 30px auto; 
+            padding: 25px;
+            box-shadow: 10px 10px 0px #e91e63;
+        }
+
+        h1 { color: #e91e63; text-shadow: 1px 1px 2px #000; }
+        
+        label { display: block; margin-top: 15px; font-weight: bold; text-align: left; }
+        
+        input, textarea, select { 
+            width: 100%; 
+            padding: 12px; 
+            margin: 8px 0; 
+            border-radius: 12px; 
+            border: 2px solid #e91e63; 
+            box-sizing: border-box; 
+            font-family: inherit;
+            font-size: 1em;
+        }
+
+        .btn-envoi { 
+            background: #e91e63; 
+            color: white; 
+            border: none; 
+            padding: 18px 40px; 
+            border-radius: 25px; 
+            font-weight: bold; 
+            cursor: pointer; 
+            font-size: 1.3em; 
+            margin-top: 20px;
+            transition: transform 0.2s;
+        }
+        .btn-envoi:hover { transform: scale(1.05); background: #c2185b; }
+        .btn-envoi:disabled { background: #ccc; cursor: not-allowed; }
+
+        .quote { font-style: italic; margin: 20px; color: #008080; }
     </style>
 </head>
 <body>
+
+    <div id="google_translate_element"></div>
+    <script type="text/javascript">
+        function googleTranslateElementInit() { 
+            new google.translate.TranslateElement({pageLanguage: 'fr'}, 'google_translate_element'); 
+        }
+    </script>
+    <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
 
     <table class="menu-table">
         <tr>
             <td><a href="index.html">Accueil</a></td>
             <td><a href="formulaire.html">Semer</a></td>
             <td><a href="jardin.html">Le Jardin</a></td>
-            <td><a href="contact.html">Contact</a></td>
+            <td><a href="urgence.html">Urgences</a></td>
         </tr>
     </table>
 
-    <h2 style="color:#E67E22;">❤️ Espace Urgence, Détresse & Écoute</h2>
-    <p><i>"Ici, on ne laisse personne seul face à sa montagne."</i></p>
+    <h1>📢 Appels du Cœur & Urgences</h1>
+    <p class="quote">"On ne voit bien qu'avec le cœur. L'essentiel est invisible pour les yeux."</p>
 
-    <div class="search-box">
-        <strong>Filtrer les appels :</strong>
-        <select><option>Tous les Pays</option><option>France</option><option>Groland</option></select>
-        <input type="text" placeholder="Ville...">
-        <input type="text" placeholder="Mot-clé (charpente, câlin...)">
-        <button style="background:#008080; color:white; border:none; padding:8px 15px; border-radius:10px;">Chercher</button>
+    <div class="form-container">
+        <form id="urgencyForm">
+            <label>Quelle est la nature de ton message ?</label>
+            <select id="type">
+                <option value="Urgence">❤️ URGENCE VITALE (Besoin d'aide)</option>
+                <option value="Impôt">📜 IMPÔT VOLONTAIRE (Offre de temps/travail)</option>
+            </select>
+
+            <label>Ton Identité (Nom ou Pseudo) :</label>
+            <input type="text" id="nom" placeholder="Ex: Le Petit Prince" required>
+
+            <label>Où te trouves-tu ? (Ville/Région) :</label>
+            <input type="text" id="ville" placeholder="Ex: Planète B612 ou Lyon, France" required>
+
+            <label>Ton Message pour la Communauté :</label>
+            <textarea id="message" rows="6" placeholder="Décris ici ton besoin urgent ou ce que tu souhaites offrir au trésor public..." required></textarea>
+
+            <button type="submit" id="btnEnvoi" class="btn-envoi">LANCER L'APPEL 🚀</button>
+        </form>
     </div>
 
-    <div style="margin-bottom:30px;">
-        <select style="width:90%; max-width:700px; padding:10px; border-radius:10px; font-family:inherit;">
-            <option>--- Voir tous les titres d'annonces en cours ---</option>
-            <option>[Urgence] Toiture envolée à Belle Brousse</option>
-            <option>[Écoute] Mon cœur a besoin d'un câlin (Paris)</option>
-            <option>[Projet] Recherche farine pour pain solidaire</option>
-        </select>
-    </div>
+    <p><a href="index.html" style="color: #000080; font-weight: bold; text-decoration: none;">← Retourner à la source (Accueil)</a></p>
 
-    <div id="listing-annonces">
-        <div class="annonce-card">
-            <div class="annonce-header">
-                <span>🏠 Toiture à refaire</span>
-                <span class="tag-urgence">Urgent</span>
-            </div>
-            <p>Suite à la tempête, ma charpente est à nu. Je cherche des bras et des conseils pour mettre ma famille à l'abri.</p>
-            <small>📍 Belle Brousse | Par: Jean-Coeur-Vaillant</small>
-            <button class="btn-repondre">Apporter mon aide</button>
-        </div>
+    <script>
+        // Ton URL de script Google Apps Script
+        const URL_SERVEUR = "https://script.google.com/macros/s/AKfycbz4ncs9qw_AfmKSER5QST-P0OeKQggQaq86QC6liS53uZ9sx4Lo_-4-h1knXKWqgQMc/exec";
 
-        <div class="annonce-card">
-            <div class="annonce-header">
-                <span>🫂 Besoin de réconfort</span>
-            </div>
-            <p>Une journée difficile, mon moral est en berne. Juste quelques mots ou une présence silencieuse seraient les bienvenus.</p>
-            <small>📍 Paris | Par: Petite-Étoile</small>
-            <button class="btn-repondre">Écouter</button>
-        </div>
-    </div>
+        document.getElementById('urgencyForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const btn = document.getElementById('btnEnvoi');
+            btn.innerText = "Transmission vers le Jardin...";
+            btn.disabled = true;
 
+            // On prépare la donnée pour ton Google Sheet
+            const donnees = {
+                date: new Date().toLocaleDateString('fr-FR'),
+                type: document.getElementById('type').value,
+                nom: document.getElementById('nom').value,
+                localisation: document.getElementById('ville').value,
+                message: document.getElementById('message').value
+            };
+
+            // Envoi des données (Chemin B)
+            fetch(URL_SERVEUR, {
+                method: 'POST',
+                mode: 'no-cors', // Spécifique à Google Apps Script
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(donnees)
+            }).then(() => {
+                alert("Ton message a bien été transmis au Jardin Collectif.");
+                window.location.href = "jardin.html"; // Redirection automatique
+            }).catch(err => {
+                alert("Une erreur est survenue lors de l'envoi.");
+                btn.disabled = false;
+                btn.innerText = "LANCER L'APPEL 🚀";
+            });
+        });
+    </script>
 </body>
 </html>
