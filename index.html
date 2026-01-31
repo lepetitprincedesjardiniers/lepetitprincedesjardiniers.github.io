@@ -14,14 +14,14 @@
         .menu-table td { padding: 10px 15px; border: 1px solid #FFFFFF; }
         .menu-table a { text-decoration: none; color: #FFFFFF; font-weight: bold; display: inline-block; }
 
-        /* Style du messager volant */
+        /* Style du messager (Animal à GAUCHE, Texte à DROITE) */
         #animal-container {
             position: fixed;
             z-index: 900;
             cursor: pointer;
             white-space: nowrap;
             display: flex;
-            flex-direction: row-reverse; /* L'animal est devant, le texte derrière */
+            flex-direction: row; /* L'animal est maintenant à gauche du texte */
             align-items: center;
             user-select: none;
         }
@@ -33,7 +33,7 @@
             padding: 8px 15px;
             font-style: italic;
             color: #2E7D32;
-            margin-right: 10px;
+            margin-left: 10px; /* Espace entre l'animal et le texte */
             min-height: 20px;
             box-shadow: 3px 3px 8px rgba(0,0,0,0.1);
             font-weight: bold;
@@ -111,40 +111,38 @@
         let posX = -800;
         let posY = 250;
         let indexLettre = 0;
-        let tempsDernierDebloquage = 0;
         const animaux = ['🕊️', '🦋', '🐝', '🐞', '🦜'];
 
-        // Force le son à démarrer au premier clic utilisateur
+        // Son au premier clic
         document.addEventListener('click', function() {
             if (audio.paused) {
-                audio.volume = 0.5;
-                audio.play().catch(e => console.log("Lecture bloquée :", e));
+                audio.volume = 0.4;
+                audio.play().catch(e => console.log("Audio bloqué"));
             }
         }, { once: false });
 
-        function animer(timestamp) {
-            posX += 2.8; // Vitesse de l'animal
+        function animer() {
+            posX += 2.2; // Vitesse de déplacement (légèrement ralentie)
 
-            // On révèle une lettre tous les 8 pixels parcourus pour l'effet "déroulement"
+            // Ouverture du message moins rapide (divisé par 25 au lieu de 15)
             if (indexLettre < messageComplet.length) {
-                // Calcule combien de lettres devraient être affichées par rapport à la position
-                let progression = Math.floor((posX + 400) / 15); 
+                let progression = Math.floor((posX + 400) / 25); 
                 if (progression > indexLettre && progression >= 0) {
                     indexLettre = progression;
                     bulle.innerText = messageComplet.substring(0, indexLettre);
                 }
             }
 
-            // Quand il sort, on réinitialise tout et on change l'animal
-            if (posX > window.innerWidth + 200) {
-                posX = -800;
+            // Réinitialisation et changement d'animal
+            if (posX > window.innerWidth + 500) {
+                posX = -900;
                 indexLettre = 0;
                 bulle.innerText = "";
                 corps.innerText = animaux[Math.floor(Math.random() * animaux.length)];
                 posY = 100 + Math.random() * (window.innerHeight - 300);
             }
 
-            let vague = Math.sin(posX / 80) * 40;
+            let vague = Math.sin(posX / 100) * 40;
             container.style.left = posX + 'px';
             container.style.top = (posY + vague) + 'px';
 
