@@ -4,13 +4,13 @@
     <meta charset="UTF-8">
     <title>Le Jardin de la Fraternité</title>
     <style>
+        /* ON GARDE TON STYLE ORIGINAL */
         body { font-family: 'Comic Sans MS', cursive; text-align: center; margin: 0; padding: 0; background-color: #FFFF00; color: #000080; overflow-x: hidden; min-height: 100vh; }
         
-        .menu-table { margin: 20px auto; border-radius: 10px; background-color: #008080; border-collapse: collapse; }
+        .menu-table { margin: 20px auto; border-radius: 10px; background-color: #008080; border-collapse: collapse; margin-left: auto; margin-right: auto;}
         .menu-table td { padding: 10px 15px; border: 1px solid #FFFFFF; }
         .menu-table a { text-decoration: none; color: #FFFFFF; font-weight: bold; }
 
-        /* Espace du Jardin Sacré */
         #jardin-sacre {
             position: relative;
             height: 300px;
@@ -33,6 +33,26 @@
             100% { transform: scale(1) rotate(0deg); opacity: 1; }
         }
 
+        /* STYLE POUR LES NOUVEAUX MESSAGES DU TABLEAU */
+        .mur-reel {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 20px;
+            padding: 40px;
+            max-width: 1200px;
+            margin: auto;
+        }
+        .carte-message {
+            background: rgba(255, 255, 255, 0.9);
+            border: 3px solid #008080;
+            border-radius: 15px;
+            padding: 15px;
+            box-shadow: 5px 5px 0px #008080;
+            transition: 0.3s;
+        }
+        .carte-message:hover { transform: scale(1.02); }
+        .type-tag { font-size: 0.7em; background: #E67E22; color: white; padding: 2px 8px; border-radius: 5px; text-transform: uppercase; }
+
         #coffre-magique { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); font-size: 60px; z-index: 800; }
         #animal-container { position: fixed; z-index: 900; white-space: nowrap; display: flex; align-items: center; pointer-events: none; }
         #corps-animal { font-size: 50px; }
@@ -52,19 +72,21 @@
             <td><a href="index.html">Accueil</a></td>
             <td><a href="formulaire.html">Semer</a></td>
             <td><a href="jardin.html">Le Jardin</a></td>
-            <td><a href="contact.html">Contact</a></td>
+            <td><a href="urgence.html">Urgences</a></td>
         </tr>
     </table>
 
     <h2 style="color:#2E7D32;">🍃 Le Jardin des Cadeaux Existentiels 🍃</h2>
-    <p>Regardez la fraternité s'épanouir au gré des dons du monde entier...</p>
-
-    <div id="jardin-sacre">
-        </div>
+    
+    <div id="jardin-sacre"></div>
 
     <div style="padding: 20px; font-weight: bold; font-size: 1.2em;">
         "Chaque don est une fleur qui ne fane jamais."
     </div>
+
+    <h3 style="color:#008080;">📖 Registre de la Fraternité</h3>
+    <div id="chargement">Récolte des messages en cours...</div>
+    <div class="mur-reel" id="mur-messages"></div>
 
     <br><br>
     <font size="2">
@@ -75,79 +97,3 @@
     <div id="animal-container">
         <div id="bulle-texte"></div>
         <div id="corps-animal">🕊️</div>
-    </div>
-
-    <script type="text/javascript">
-        function googleTranslateElementInit() { new google.translate.TranslateElement({pageLanguage: 'fr'}, 'google_translate_element'); }
-    </script>
-    <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
-
-    <script>
-        const mesPhrases = [
-            "Une fleur vient d'éclore grâce à un don de paix",
-            "La fraternité grandit ici...",
-            "Regardez cette paix rayonnante s'installer",
-            "Un cadeau existentiel a été déposé"
-        ];
-        const animaux = ['🕊️', '🦋', '🐝', '🐞', '🦜', '🐰', '🐿️', '🦄'];
-        const fleurs = ['🌸', '🌼', '🌻', '🌺', '🌷', '🌹'];
-
-        const jardin = document.getElementById('jardin-sacre');
-        const animalCont = document.getElementById('animal-container');
-        const bulle = document.getElementById('bulle-texte');
-        const corps = document.getElementById('corps-animal');
-        const audio = document.getElementById('chantOiseaux');
-
-        let aniX, aniY, targetX, targetY, state = "WAITING";
-
-        document.addEventListener('click', () => { if(audio.paused) { audio.volume = 0.02; audio.play(); } });
-
-        function plantFlower() {
-            const f = document.createElement('div');
-            f.className = 'fleur-clonée';
-            f.innerText = fleurs[Math.floor(Math.random()*fleurs.length)];
-            f.style.left = Math.random() * 90 + "%";
-            f.style.top = Math.random() * 70 + 20 + "%";
-            jardin.appendChild(f);
-        }
-
-        function startNewMessenger() {
-            bulle.innerText = mesPhrases[Math.floor(Math.random() * mesPhrases.length)];
-            corps.innerText = animaux[Math.floor(Math.random() * animaux.length)];
-            
-            aniX = -200; 
-            aniY = Math.random() * 300 + 100;
-            targetX = window.innerWidth + 200;
-            targetY = aniY + (Math.random() * 100 - 50);
-            
-            bulle.style.opacity = "1";
-            state = "CROSSING";
-        }
-
-        function loop() {
-            if (state === "CROSSING") {
-                aniX += 3; // L'animal traverse le jardin
-                aniY += Math.sin(aniX/50) * 2;
-
-                // Chance de planter une fleur en passant
-                if(Math.random() < 0.01) plantFlower();
-
-                if (aniX > window.innerWidth + 100) {
-                    bulle.style.opacity = "0";
-                    setTimeout(startNewMessenger, 2000);
-                    state = "WAITING";
-                }
-            }
-
-            animalCont.style.left = aniX + "px";
-            animalCont.style.top = aniY + "px";
-            corps.style.transform = "scaleX(-1)"; // Toujours vers la droite
-
-            requestAnimationFrame(loop);
-        }
-
-        startNewMessenger();
-        loop();
-    </script>
-</body>
-</html>
