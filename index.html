@@ -5,60 +5,48 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Le Trésor Public - Accueil</title>
     <style>
-        body { 
-            font-family: 'Comic Sans MS', cursive, sans-serif; 
-            background-color: #FFFF00; 
-            color: #000080; 
-            margin: 0; padding: 0; text-align: center; 
-        }
-
-        #google_translate_element { padding: 10px; background: rgba(255,255,255,0.5); border-bottom: 2px solid #008080; }
-
-        .menu-table { 
-            margin: 20px auto; background-color: #008080; border-collapse: collapse; 
-            border-radius: 15px; overflow: hidden; box-shadow: 0px 4px 10px rgba(0,0,0,0.2);
-        }
-        .menu-table td { padding: 15px 25px; border: 1px solid #FFFFFF; }
-        .menu-table a { text-decoration: none; color: #FFFFFF; font-weight: bold; }
-        .menu-table td:hover { background-color: #006666; }
-
-        .hero-section { padding: 40px 20px; }
-        h1 { font-size: 3.5em; color: #008080; text-shadow: 2px 2px #FFFFFF; margin-bottom: 5px; }
+        body { font-family: 'Comic Sans MS', cursive; background-color: #FFFF00; color: #000080; margin: 0; text-align: center; }
         
+        /* Menu */
+        .menu-table { margin: 20px auto; background-color: #008080; border-radius: 15px; overflow: hidden; border-collapse: collapse; }
+        .menu-table td { padding: 15px 20px; border: 1px solid white; }
+        .menu-table a { text-decoration: none; color: white; font-weight: bold; }
+
+        /* Présentation */
+        .hero { padding: 30px; }
         .philosophie { 
-            font-style: italic; font-size: 1.5em; color: #008080; 
-            margin: 20px auto; max-width: 850px; line-height: 1.4;
-            background: white; padding: 25px; border-radius: 50px;
-            box-shadow: 8px 8px 0px #008080;
+            background: white; border: 4px solid #008080; border-radius: 40px; 
+            padding: 25px; margin: 20px auto; max-width: 800px; font-style: italic; font-size: 1.3em;
+            box-shadow: 10px 10px 0px #008080;
         }
 
-        .presentation-box {
-            max-width: 800px; margin: 40px auto; background: white; 
-            padding: 30px; border-radius: 20px; text-align: left;
-            border: 3px solid #008080; line-height: 1.6;
+        /* Formulaire Intégré avec Pays */
+        .form-box { 
+            background: white; border: 4px solid #e91e63; border-radius: 20px; 
+            padding: 20px; max-width: 600px; margin: 30px auto; text-align: left;
+        }
+        select, input, textarea { 
+            width: 100%; padding: 10px; margin: 10px 0; border-radius: 10px; 
+            border: 2px solid #ccc; font-family: inherit; 
         }
 
-        #searchBox {
-            width: 80%; max-width: 600px; padding: 15px; margin: 30px auto;
-            border-radius: 30px; border: 4px solid #008080; 
-            font-family: inherit; font-size: 1.1em; outline: none;
+        /* Moteur de Recherche */
+        #searchBox { 
+            width: 80%; max-width: 500px; padding: 15px; border: 4px solid #008080; 
+            border-radius: 30px; font-size: 1.1em; margin: 20px 0;
         }
 
-        .flux-container { max-width: 800px; margin: 40px auto; text-align: left; padding: 20px; }
-        .carte-activite { 
-            background: white; border-radius: 15px; padding: 20px; margin-bottom: 20px;
-            border-left: 10px solid #008080; box-shadow: 4px 4px 10px rgba(0,0,0,0.1);
+        /* Cartes d'activité */
+        .carte { 
+            background: white; margin: 15px auto; max-width: 700px; padding: 20px; 
+            text-align: left; border-radius: 15px; border-left: 12px solid #008080;
+            box-shadow: 5px 5px 15px rgba(0,0,0,0.1);
         }
-        .tag { font-weight: bold; padding: 4px 10px; border-radius: 5px; color: white; font-size: 0.8em; }
     </style>
 </head>
 <body>
 
-    <div id="google_translate_element"></div>
-    <script>function googleTranslateElementInit() { new google.translate.TranslateElement({pageLanguage: 'fr'}, 'google_translate_element'); }</script>
-    <script src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
-
-    <table class="menu-table">
+    <table class="menu-table" align="center">
         <tr>
             <td><a href="index.html">Accueil</a></td>
             <td><a href="formulaire.html">Semer 🌱</a></td>
@@ -68,76 +56,59 @@
         </tr>
     </table>
 
-    <div class="hero-section">
+    <div class="hero">
         <h1>Le Trésor Public</h1>
         <div class="philosophie">
             "Ici, on sème tout ce qui est BON, on ne demande rien de précis, et on cultive la paix sans condamner."
         </div>
     </div>
 
-    <div class="presentation-box">
-        <h2 style="color:#008080; margin-top:0;">Bienvenue dans notre Bien Commun</h2>
-        <p>Le <b>Trésor Public</b> n'est pas une banque, c'est un écosystème de fraternité. C'est un espace où chaque geste, chaque don et chaque mot participe à la floraison d'un jardin partagé.</p>
-        <ul>
-            <li><b>Semer :</b> Déposez une graine (un don, une aide, un service).</li>
-            <li><b>Le Jardin :</b> Admirez la forêt de générosité qui grandit.</li>
-            <li><b>Régulation :</b> Équilibrez les relations par la sagesse et l'écoute.</li>
-            <li><b>Urgences :</b> Répondez aux appels du cœur quand la situation l'exige.</li>
-        </ul>
-        <p align="center"><i>Rien n'est obligatoire, tout est volontaire.</i></p>
-    </div>
+    <input type="text" id="searchBox" oninput="ratisserLarge()" placeholder="🔍 RATISSER LARGE : ville, pays, nom, message...">
 
-    <input type="text" id="searchBox" onkeyup="filtrerTout()" placeholder="🔍 Ratisser large : Cherchez une ville, un pays, un nom ou un besoin...">
-
-    <div class="flux-container">
-        <h2 style="text-align: center; color: #008080;">🌱 Vie du Jardin en Temps Réel</h2>
-        <div id="chargement" style="text-align: center;">Connexion aux racines du jardin...</div>
-        <div id="flux-global"></div>
+    <div id="conteneur-vie">
+        <p id="chargement">Récupération des ondes positives du jardin...</p>
     </div>
 
     <script>
         const URL_SERVEUR = "https://script.google.com/macros/s/AKfycbz4ncs9qw_AfmKSER5QST-P0OeKQggQaq86QC6liS53uZ9sx4Lo_-4-h1knXKWqgQMc/exec";
 
-        // RÉCUPÉRATION DES DONNÉES DEPUIS GOOGLE SHEETS
+        // 1. CHARGEMENT DES DONNÉES
         fetch(URL_SERVEUR)
             .then(res => res.json())
             .then(data => {
-                const flux = document.getElementById('flux-global');
+                const zone = document.getElementById('conteneur-vie');
                 document.getElementById('chargement').style.display = 'none';
 
                 data.reverse().forEach(item => {
-                    if (item.type === "avis") return; 
+                    if(item.type === "avis") return;
 
-                    let col = "#008080"; let ico = "✨";
-                    if(item.type === "Urgence") { col = "#e91e63"; ico = "🚨"; }
-                    if(item.type === "conflit") { col = "#9370DB"; ico = "⚖️"; }
-                    if(item.type === "Graine" || item.type === "Don") { col = "#4CAF50"; ico = "🌱"; }
+                    let couleur = "#008080";
+                    if(item.type === "Urgence") couleur = "#e91e63";
+                    if(item.type === "conflit") couleur = "#9370DB";
 
                     const div = document.createElement('div');
-                    div.className = 'carte-activite';
-                    div.style.borderLeftColor = col;
+                    div.className = 'carte';
+                    div.style.borderLeftColor = couleur;
                     div.innerHTML = `
-                        <span class="tag" style="background:${col}">${ico} ${item.type}</span>
-                        <small style="float:right; color:#666;">${item.date}</small>
-                        <div style="margin-top:15px;">
-                            <b style="font-size:1.1em;">${item.nom}</b> à <b style="color:#008080;">${item.localisation}</b>
-                            <p style="margin-top:10px; font-style:italic; color:#333; background:#f9f9f9; padding:10px; border-radius:8px;">
-                                "${item.message}"
-                            </p>
-                        </div>
+                        <b style="color:${couleur}">${item.type.toUpperCase()}</b> - ${item.date}<br>
+                        <b>${item.nom}</b> (${item.localisation})<br>
+                        <p style="background:#f9f9f9; padding:10px; border-radius:10px; border:1px solid #eee;">
+                            ${item.message}
+                        </p>
                     `;
-                    flux.appendChild(div);
+                    zone.appendChild(div);
                 });
-            })
-            .catch(() => { document.getElementById('chargement').innerText = "Le jardin se repose..."; });
+            });
 
-        // LE MOTEUR DE RECHERCHE QUI RATISSE LARGE
-        function filtrerTout() {
-            let filter = document.getElementById('searchBox').value.toLowerCase();
-            let cartes = document.getElementsByClassName('carte-activite');
+        // 2. MOTEUR DE RECHERCHE "RATISSER LARGE"
+        function ratisserLarge() {
+            const filtre = document.getElementById('searchBox').value.toLowerCase();
+            const cartes = document.getElementsByClassName('carte');
+
             for (let i = 0; i < cartes.length; i++) {
-                let contenu = cartes[i].textContent || cartes[i].innerText;
-                cartes[i].style.display = contenu.toLowerCase().includes(filter) ? "" : "none";
+                const contenu = cartes[i].innerText.toLowerCase();
+                // Si le texte de la carte contient la recherche, on affiche, sinon on cache
+                cartes[i].style.display = contenu.includes(filtre) ? "block" : "none";
             }
         }
     </script>
