@@ -2,203 +2,190 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <title>Le Trésor Public - Le Petit Prince</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Le Trésor Public - Dashboard Magique</title>
     <style>
-        /* --- STYLE DE L'INTRO (PAPILLONS & COEUR) --- */
+        :root {
+            --primary-pink: #ff4d6d;
+            --menu-teal: #008080;
+        }
+
+        body { 
+            font-family: 'Comic Sans MS', cursive; 
+            background: radial-gradient(circle at center, #2d0a1a 0%, #050505 100%);
+            color: white; 
+            margin: 0; 
+            text-align: center; 
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+        
+        /* --- INTRO COEUR --- */
         #intro-layer {
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
-            background: radial-gradient(circle at center, #2d0a1a 0%, #050505 100%);
+            background: black;
             display: flex; flex-direction: column; justify-content: center; align-items: center;
-            z-index: 10000; transition: opacity 1s ease-out; overflow: hidden;
+            z-index: 10000; transition: opacity 1s ease-out;
         }
-        .heart-intro {
-            width: 100px; height: 90px; background-color: #ff4d6d;
+        .heart-main {
+            width: 80px; height: 80px; background-color: var(--primary-pink);
             transform: rotate(-45deg); animation: pulse 1.2s infinite; position: relative;
-            box-shadow: 0 0 40px #ff4d6d;
+            box-shadow: 0 0 40px var(--primary-pink);
         }
-        .heart-intro::before, .heart-intro::after {
-            content: ""; position: absolute; width: 100px; height: 100px;
-            background-color: #ff4d6d; border-radius: 50%;
+        .heart-main::before, .heart-main::after {
+            content: ""; position: absolute; width: 80px; height: 80px;
+            background-color: var(--primary-pink); border-radius: 50%;
         }
-        .heart-intro::before { top: -50px; left: 0; }
-        .heart-intro::after { left: 50px; top: 0; }
-        @keyframes pulse {
-            0%, 100% { transform: rotate(-45deg) scale(1); }
-            50% { transform: rotate(-45deg) scale(1.1); }
+        .heart-main::before { top: -40px; left: 0; }
+        .heart-main::after { left: 40px; top: 0; }
+        @keyframes pulse { 0%, 100% { scale: 1; } 50% { scale: 1.15; } }
+
+        /* --- MENU & NAVIGATION --- */
+        .menu-table { 
+            margin: 20px auto; background-color: var(--menu-teal); 
+            border-radius: 15px; overflow: hidden; border-collapse: collapse; 
+            position: relative; z-index: 100;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.5);
+        }
+        .menu-table td { padding: 12px 20px; border: 1px solid rgba(255,255,255,0.3); }
+        .menu-table a { text-decoration: none; color: white; font-weight: bold; }
+
+        /* --- CONTENU --- */
+        .philosophie { 
+            background: rgba(255, 255, 255, 0.1); border: 2px solid var(--menu-teal); border-radius: 30px; 
+            padding: 20px; margin: 20px auto; max-width: 800px; font-style: italic;
+            backdrop-filter: blur(5px); box-shadow: 0 0 20px rgba(0, 128, 128, 0.2);
         }
 
-        /* --- TON STYLE "TRÉSOR PUBLIC" --- */
-        body { 
-            font-family: 'Comic Sans MS', cursive; text-align: center; margin: 0; padding: 0; 
-            background-color: #FFFF00; color: #000080; overflow-x: hidden; min-height: 100vh; 
+        #searchBox { 
+            width: 80%; max-width: 500px; padding: 15px; border: 3px solid var(--menu-teal); 
+            border-radius: 30px; font-size: 1.1em; margin: 20px 0; background: white;
+            position: relative; z-index: 100;
         }
 
-        .menu-table { margin: 20px auto; border-radius: 10px; background-color: #008080; border-collapse: collapse; }
-        .menu-table td { padding: 10px 15px; border: 1px solid #FFFFFF; }
-        .menu-table a { text-decoration: none; color: #FFFFFF; font-weight: bold; }
-
-        .soleil-don {
-            background: #FFD700; width: 220px; height: 220px; border-radius: 50%;
-            display: flex; align-items: center; justify-content: center;
-            box-shadow: 0 0 40px #FFA500; border: 5px dashed #FF4500;
-            margin: 20px auto; cursor: pointer; transition: 0.4s;
-            text-decoration: none; color: #000080; font-weight: bold; line-height: 1.2;
-        }
-        .soleil-don:hover { transform: scale(1.1) rotate(5deg); }
-
-        .moteur-recherche {
-            background: rgba(255, 255, 255, 0.8); border: 3px solid #008080;
-            border-radius: 20px; padding: 20px; margin: 20px auto; width: 90%; max-width: 850px;
-        }
-        .moteur-recherche input, .moteur-recherche select { 
-            padding: 10px; border-radius: 10px; border: 2px solid #008080; margin: 5px; font-family: 'Comic Sans MS'; 
+        /* --- CARTES DE DONNÉES --- */
+        .carte { 
+            background: rgba(255, 255, 255, 0.95); margin: 15px auto; max-width: 700px; padding: 20px; 
+            text-align: left; border-radius: 15px; border-left: 12px solid var(--menu-teal);
+            box-shadow: 5px 5px 15px rgba(0,0,0,0.3); color: #000080;
+            position: relative; z-index: 50;
         }
 
-        .bulles-grid {
-            display: flex; justify-content: center; align-items: center;
-            gap: 20px; flex-wrap: wrap; padding: 30px; max-width: 1300px; margin: auto;
-        }
-        .bulle-lien { text-decoration: none; color: inherit; z-index: 10; }
-        
-        .nuage {
-            background: white; border-radius: 50px; padding: 25px; width: 280px; min-height: 180px;
-            border: 3px solid #87CEEB; box-shadow: 6px 6px 0px #87CEEB;
-            transition: 0.3s; display: flex; flex-direction: column; justify-content: center;
-        }
-        .nuage:hover { transform: translateY(-10px); background: #f0faff; }
-
-        .etoile-justice {
-            background: #E6E6FA; border: 3px solid #9370DB;
-            clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
-            width: 380px; height: 380px; display: flex; align-items: center; justify-content: center;
-            transition: transform 0.4s ease-out; cursor: pointer; padding: 30px;
-        }
-        .etoile-justice:hover { transform: scale(1.2); background: #f3f0ff; z-index: 50; }
-        .etoile-contenu { width: 65%; font-size: 0.9em; }
-        .exemples { font-size: 0.8em; color: #2E7D32; font-style: italic; margin-top: 5px; }
-
-        #coffre-magique { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); font-size: 60px; z-index: 800; }
-        #animal-container { position: fixed; z-index: 900; display: flex; align-items: center; pointer-events: none; }
-        #bulle-texte { background: rgba(255, 255, 255, 0.9); border: 2px solid #2E7D32; border-radius: 15px; padding: 8px 15px; font-weight: bold; opacity: 0; transition: 0.3s; margin-right: 10px;}
+        /* --- PAPILLONS --- */
+        .butterfly { position: absolute; width: 30px; height: 30px; z-index: 10; pointer-events: none; }
+        .wing { fill: #ffb3c1; animation: flap 0.2s infinite; transform-origin: center; }
+        @keyframes flap { 50% { transform: scaleX(0.2); } }
     </style>
 </head>
 <body>
 
     <div id="intro-layer">
-        <div class="heart-intro"></div>
-        <h1 style="color:white; margin-top:60px; letter-spacing:5px;">LES CADEAUX</h1>
+        <div class="heart-main"></div>
+        <h1 style="color:white; margin-top:50px; letter-spacing:5px;">TRÉSOR PUBLIC</h1>
     </div>
 
     <audio id="chantOiseaux" loop><source src="oiseaux.mp3" type="audio/mpeg"></audio>
 
-    <table class="menu-table">
+    <table class="menu-table" align="center">
         <tr>
             <td><a href="index.html">Accueil</a></td>
-            <td><a href="formulaire.html">Semer</a></td>
-            <td><a href="jardin.html">Le Jardin</a></td>
-            <td><a href="contact.html">Contact</a></td>
+            <td><a href="formulaire.html">Semer 🌱</a></td>
+            <td><a href="jardin.html">Le Jardin 🌻</a></td>
+            <td><a href="regulation.html">Régulation ⚖️</a></td>
+            <td><a href="urgence.html">Urgences 🚨</a></td>
         </tr>
     </table>
 
-    <h1>💰 Le Trésor Public</h1>
-
-    <a href="cadeaux.html" class="soleil-don">
-        <div>
-            <span style="font-size: 50px;">☀️</span><br>
-            CADEAUX<br>SANS DÉTOUR
+    <div class="hero">
+        <h1 style="color: #E67E22; text-shadow: 0 0 10px rgba(230,126,34,0.5);">🌟 Le Trésor Public 🌟</h1>
+        <div class="philosophie">
+            "Ici, on sème tout ce qui est BON, on ne demande rien de précis, et on cultive la paix sans condamner."
         </div>
-    </a>
-
-    <div class="moteur-recherche">
-        <h3>🔍 Ratisser Large</h3>
-        <input type="text" placeholder="Pays, Ville, Requête..." style="width: 80%;">
-        <br>
-        <select><option>Pays...</option><option>France</option></select>
-        <input type="text" placeholder="Ville">
-        <select><option>Zone...</option><option>10 km</option><option>Infini</option></select>
-        <br>
-        <button style="background:#E67E22; color:white; border:none; padding:10px 20px; border-radius:10px; cursor:pointer; font-weight:bold; margin-top:10px;">Quérir</button>
     </div>
 
-    <div class="bulles-grid">
-        <a href="urgence.html" class="bulle-lien">
-            <div class="nuage" style="background: #e0f7fa; border-color: #008080;">
-                <h3 style="color: #008080; text-transform: uppercase;">📜 Impôt Volontaire</h3>
-                <p><b>Temps Public & Travaux Collectifs</b></p>
-                <div class="exemples">Ex: Bois communal, réfection de route...</div>
-            </div>
-        </a>
+    <input type="text" id="searchBox" oninput="ratisserLarge()" placeholder="🔍 RATISSER LARGE : ville, pays, nom, message...">
 
-        <a href="regulation.html" class="bulle-lien">
-            <div class="etoile-justice">
-                <div class="etoile-contenu">
-                    <h3>⚖️ Régulation Citoyenne</h3>
-                    <p>Expose ton conflit à la communauté.</p>
-                    <div class="exemples">Soutien, sentence ou pardon. C'est notre ensemble qui régule.</div>
-                </div>
-            </div>
-        </a>
-
-        <a href="urgence.html" class="bulle-lien">
-            <div class="nuage">
-                <h3 style="color: #E67E22;">❤️ Urgence & Écoute</h3>
-                <p>Besoins vitaux et aide aux projets.</p>
-                <div class="exemples">Ex: Câlin, farine, aide charpente...</div>
-            </div>
-        </a>
-    </div>
-
-    <div id="coffre-magique">🎁</div>
-    <div id="animal-container">
-        <div id="bulle-texte"></div>
-        <div id="corps-animal" style="font-size: 50px;">🕊️</div>
+    <div id="conteneur-vie">
+        <p id="chargement">Récupération des ondes positives du jardin... 🌱</p>
     </div>
 
     <script>
-        // Masquer l'intro après 2 secondes
+        // 1. GESTION DE L'INTRO (2s)
         setTimeout(() => {
             const intro = document.getElementById('intro-layer');
             intro.style.opacity = '0';
-            setTimeout(() => { intro.style.display = 'none'; }, 1000);
+            setTimeout(() => intro.style.display = 'none', 1000);
         }, 2000);
 
-        // Sons et Animations des messagers
-        const audio = document.getElementById('chantOiseaux');
-        document.addEventListener('click', () => { if(audio.paused) { audio.volume = 0.05; audio.play(); } });
+        // 2. FETCH GOOGLE SHEETS (Ton URL)
+        const URL_SERVEUR = "https://script.google.com/macros/s/AKfycbz4ncs9qw_AfmKSER5QST-P0OeKQggQaq86QC6liS53uZ9sx4Lo_-4-h1knXKWqgQMc/exec";
 
-        const mesPhrases = ["Bienvenue au Trésor Public", "L'impôt est un geste de cœur", "L'étoile veille sur nous"];
-        const animaux = ['🕊️', '🦋', '🐝', '🐞'];
-        const animalCont = document.getElementById('animal-container');
-        const bulle = document.getElementById('bulle-texte');
-        const corps = document.getElementById('corps-animal');
+        fetch(URL_SERVEUR)
+            .then(res => res.json())
+            .then(data => {
+                const zone = document.getElementById('conteneur-vie');
+                document.getElementById('chargement').style.display = 'none';
 
-        let aniX = -200, aniY = 250, targetX, targetY, state = "WAITING";
+                data.reverse().forEach(item => {
+                    if(item.type === "avis") return;
 
-        function startNewMessenger() {
-            bulle.innerText = mesPhrases[Math.floor(Math.random() * mesPhrases.length)];
-            corps.innerText = animaux[Math.floor(Math.random() * animaux.length)];
-            aniX = -200; aniY = 200 + Math.random() * 200;
-            targetX = window.innerWidth / 2; targetY = window.innerHeight - 150;
-            state = "APPROACHING";
-        }
+                    let couleur = "#008080";
+                    if(item.type.toLowerCase().includes("urgence")) couleur = "#e91e63";
+                    if(item.type.toLowerCase().includes("conflit")) couleur = "#9370DB";
 
-        function loop() {
-            if (state === "APPROACHING") {
-                aniX += (targetX - aniX) * 0.015; aniY += (targetY - aniY) * 0.015;
-                bulle.style.opacity = "1";
-                if (Math.abs(targetX - aniX) < 60) {
-                    state = "PAUSE";
-                    setTimeout(() => { bulle.style.opacity = "0"; state = "LEAVING"; targetX = window.innerWidth + 200; }, 2500);
-                }
-            } else if (state === "LEAVING") {
-                aniX += (targetX - aniX) * 0.02;
-                if (aniX > window.innerWidth + 100) startNewMessenger();
+                    const div = document.createElement('div');
+                    div.className = 'carte';
+                    div.style.borderLeftColor = couleur;
+                    div.innerHTML = `
+                        <b style="color:${couleur}">${item.type.toUpperCase()}</b> - ${item.date}<br>
+                        <b>${item.nom}</b> (${item.localisation})<br>
+                        <p style="background:#f0f0f0; padding:10px; border-radius:10px; margin-top:10px;">
+                            ${item.message}
+                        </p>
+                    `;
+                    zone.appendChild(div);
+                });
+            });
+
+        // 3. MOTEUR DE RECHERCHE
+        function ratisserLarge() {
+            const filtre = document.getElementById('searchBox').value.toLowerCase();
+            const cartes = document.getElementsByClassName('carte');
+            for (let i = 0; i < cartes.length; i++) {
+                const contenu = cartes[i].innerText.toLowerCase();
+                cartes[i].style.display = contenu.includes(filtre) ? "block" : "none";
             }
-            animalCont.style.left = aniX + "px"; animalCont.style.top = aniY + "px";
-            requestAnimationFrame(loop);
         }
-        startNewMessenger(); loop();
+
+        // 4. LES PAPILLONS SVG
+        function createB() {
+            const b = document.createElement('div');
+            b.className = 'butterfly';
+            b.innerHTML = `<svg viewBox="0 0 50 50"><path class="wing" d="M25,25 Q10,0 5,20 Q5,40 25,25 Q45,40 45,20 Q40,0 25,25" /></svg>`;
+            b.style.left = Math.random() * window.innerWidth + 'px';
+            b.style.top = Math.random() * window.innerHeight + 'px';
+            document.body.appendChild(b);
+            animateB(b);
+        }
+
+        function animateB(el) {
+            let x = Math.random() * window.innerWidth;
+            let y = Math.random() * window.innerHeight;
+            el.animate([
+                { transform: `translate(0,0) rotate(0deg)` },
+                { transform: `translate(${x - parseFloat(el.style.left)}px, ${y - parseFloat(el.style.top)}px) rotate(${Math.random()*360}deg)` }
+            ], { duration: 6000 + Math.random()*4000 }).onfinish = () => {
+                el.style.left = x + 'px'; el.style.top = y + 'px'; animateB(el);
+            };
+        }
+        for(let i=0; i<15; i++) createB();
+
+        // Son
+        document.addEventListener('click', () => {
+            const audio = document.getElementById('chantOiseaux');
+            if(audio.paused) { audio.volume = 0.1; audio.play(); }
+        }, {once: true});
     </script>
 </body>
 </html>
