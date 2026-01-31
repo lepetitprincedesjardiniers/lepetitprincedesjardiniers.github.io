@@ -2,27 +2,86 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
+    <title>Régulation Citoyenne - Justice Délicate</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Régulation - Le Trésor Public</title>
     <style>
+        body { 
+            font-family: 'Comic Sans MS', cursive; 
+            text-align: center; 
+            margin: 0; 
+            padding: 0; 
+            background-color: #FFFF00; 
+            color: #000080; 
+        }
+
+        /* MENU */
+        .menu-table { 
+            margin: 20px auto; 
+            background-color: #008080; 
+            border-collapse: collapse; 
+            border-radius: 10px; 
+            overflow: hidden;
+        }
+        .menu-table td { padding: 10px 15px; border: 1px solid #FFFFFF; }
         body { font-family: 'Comic Sans MS', cursive; background-color: #FFF9C4; color: #000080; margin: 0; text-align: center; }
         #google_translate_element { padding: 10px; background: rgba(255,255,255,0.5); border-bottom: 2px solid #9370DB; }
-        
-        .menu-table { margin: 20px auto; background-color: #008080; border-collapse: collapse; border-radius: 10px; overflow: hidden; margin-left: auto; margin-right: auto; }
+        .menu-table { margin: 20px auto; background-color: #008080; border-collapse: collapse; border-radius: 10px; overflow: hidden; }
         .menu-table td { padding: 12px 20px; border: 1px solid #FFFFFF; }
         .menu-table a { text-decoration: none; color: #FFFFFF; font-weight: bold; }
+
+        /* FORMULAIRE VIOLET */
+        .etoile-form { 
+            background: #E6E6FA; 
+            border: 3px solid #9370DB; 
+            width: 90%; 
+            max-width: 600px; 
+            margin: 30px auto; 
+            padding: 30px; 
+            border-radius: 20px;
+            box-shadow: 8px 8px 0px #9370DB;
+        }
         
+        textarea, input { 
+            width: 100%; padding: 12px; margin: 10px 0; 
+            border-radius: 10px; border: 2px solid #9370DB; 
+            box-sizing: border-box; font-family: inherit; 
+        }
+
+        .btn-justice { 
+            background: #9370DB; color: white; padding: 15px; border: none; 
+            border-radius: 15px; font-weight: bold; cursor: pointer; 
+            width: 100%; font-size: 1.1em;
+        }
+
+        /* CARTES DE CONFLITS ET AVIS */
+        .liste-conflits { max-width: 700px; margin: 40px auto; padding: 20px; }
+        
+        .carte-conflit { 
+            background: white; border-left: 10px solid #9370DB; 
+            border-radius: 15px; padding: 20px; margin-bottom: 25px; 
+            text-align: left; box-shadow: 4px 4px 10px rgba(0,0,0,0.1);
+        }
+
+        .avis-bulle {
+            margin-left: 30px;
+            margin-top: 10px;
+            padding: 10px;
+            background: #f9f4ff;
+            border-left: 3px solid #008080;
+            border-radius: 0 10px 10px 0;
+            font-size: 0.9em;
+        }
+
+        .nom-citoyen { font-weight: bold; color: #9370DB; }
+        .nom-sage { font-weight: bold; color: #008080; }
+        #chargement { font-style: italic; color: #008080; }
         .form-container { background: white; border: 5px solid #9370DB; border-radius: 30px; width: 90%; max-width: 650px; margin: 20px auto; padding: 25px; box-shadow: 10px 10px 0px #9370DB; }
         label { display: block; margin-top: 15px; font-weight: bold; text-align: left; }
         input, textarea, select { width: 100%; padding: 12px; margin: 8px 0; border-radius: 12px; border: 2px solid #9370DB; box-sizing: border-box; font-family: inherit; }
-        
-        .btn-envoi { background: #9370DB; color: white; border: none; padding: 18px 40px; border-radius: 25px; font-weight: bold; cursor: pointer; font-size: 1.2em; transition: 0.3s; }
-        .btn-envoi:hover { transform: scale(1.05); }
-        
+        .btn-envoi { background: #9370DB; color: white; border: none; padding: 18px 40px; border-radius: 25px; font-weight: bold; cursor: pointer; font-size: 1.2em; }
         .carte-conflit { background: white; border-left: 10px solid #9370DB; border-radius: 15px; padding: 20px; margin: 20px auto; max-width: 650px; text-align: left; box-shadow: 4px 4px 10px rgba(0,0,0,0.1); }
         .reponse-sage { margin-left: 30px; margin-top: 10px; padding: 10px; background: #F3E5F5; border-left: 4px solid #9370DB; border-radius: 8px; font-size: 0.9em; }
-        
-        #searchBox { width: 90%; max-width: 650px; padding: 12px; margin: 20px auto; border-radius: 25px; border: 2px solid #9370DB; }
     </style>
 </head>
 <body>
@@ -33,17 +92,23 @@
 
     <table class="menu-table">
         <tr>
-            <td><a href="transition.html?page=index.html">Accueil</a></td>
-            <td><a href="transition.html?page=formulaire.html">Semer</a></td>
-            <td><a href="transition.html?page=jardin.html">Le Jardin</a></td>
-            <td><a href="transition.html?page=regulation.html">Régulation</a></td>
+            <td><a href="index.html">Accueil</a></td>
+            <td><a href="formulaire.html">Semer</a></td>
+            <td><a href="jardin.html">Le Jardin</a></td>
+            <td><a href="regulation.html">Régulation</a></td>
+            <td><a href="urgence.html">Urgences</a></td>
         </tr>
     </table>
 
+    <h2 style="color:#9370DB;">⚖️ Zone de Régulation Citoyenne</h2>
     <h1>⚖️ Régulation Citoyenne</h1>
 
+    <div class="etoile-form">
     <div class="form-container">
         <form id="regForm">
+            <input type="text" id="nom" placeholder="Ton identité amoureuse" required>
+            <textarea id="message" rows="4" placeholder="Expose ton conflit ici..." required></textarea>
+            <button type="submit" id="btnEnvoi" class="btn-justice">SOUMETTRE À L'ENSEMBLE 🕊️</button>
             <label>Ton Identité :</label>
             <input type="text" id="nom" placeholder="Ton nom ou pseudo" required>
 
@@ -57,101 +122,139 @@
                 <option value="A vie">A vie</option>
             </select>
 
-            <label>Expose ton conflit ou ton message :</label>
+            <label>Expose ton conflit :</label>
             <textarea id="message" rows="5" placeholder="Décris la situation avec sincérité..." required></textarea>
 
             <button type="submit" id="btnEnvoi" class="btn-envoi">SOUMETTRE À LA SAGESSE 🕊️</button>
         </form>
     </div>
 
-    <input type="text" id="searchBox" onkeyup="filtrer()" placeholder="🔍 Chercher une ville, un pays ou un nom...">
-    
-    <div id="flux-conflits">
-        <p>Chargement des graines de sagesse...</p>
+    <div class="liste-conflits">
+        <h3 style="color:#9370DB;">📜 Dossiers et Avis de Sagesse</h3>
+        <div id="chargement">Appel de la sagesse citoyenne...</div>
+    <div style="max-width: 650px; margin: auto; padding: 10px;">
+        <input type="text" id="searchBox" onkeyup="filtrer()" placeholder="🔍 Chercher une ville, un pays ou un nom..." style="border-color: #9370DB;">
+        <div id="flux-conflits"></div>
     </div>
 
     <script>
-        // Ton URL de script Google Sheets
         const URL_SERVEUR = "https://script.google.com/macros/s/AKfycbz4ncs9qw_AfmKSER5QST-P0OeKQggQaq86QC6liS53uZ9sx4Lo_-4-h1knXKWqgQMc/exec";
 
-        // Envoi du formulaire
+        // 1. ENVOYER UN CONFLIT
         document.getElementById('regForm').addEventListener('submit', function(e) {
             e.preventDefault();
             const btn = document.getElementById('btnEnvoi');
+            btn.innerText = "Transmission...";
+            btn.disabled = true;
+
+            const donnees = {
+                date: new Date().toLocaleDateString('fr-FR'),
+                type: "conflit",
+                nom: document.getElementById('nom').value,
+                localisation: "Zone de Paix",
+                message: document.getElementById('message').value
+            };
+
+            fetch(URL_SERVEUR, { method: 'POST', mode: 'no-cors', body: JSON.stringify(donnees) })
+            .then(() => { alert("Dossier déposé !"); location.reload(); });
+        });
             btn.innerText = "Transmission..."; btn.disabled = true;
 
+        // 2. FONCTION POUR RÉPONDRE (AVIS DÉLICAT)
+        function apporterAvis(nomOriginal) {
+            const avis = prompt("Quel est ton avis délicat pour résoudre ce conflit ?");
+            if (avis) {
+                const nomSage = prompt("Ton identité de sage :");
+                const donneesAvis = {
             fetch(URL_SERVEUR, { 
                 method: 'POST', mode: 'no-cors', 
                 body: JSON.stringify({
                     date: new Date().toLocaleDateString('fr-FR'),
+                    type: "avis",
+                    nom: nomSage || "Un Sage Anonyme",
+                    localisation: nomOriginal, // On utilise le nom de l'auteur du conflit comme lien
+                    message: avis
+                };
                     type: "conflit",
                     nom: document.getElementById('nom').value,
                     localisation: document.getElementById('ville').value + " (" + document.getElementById('duree').value + ")",
                     message: document.getElementById('message').value
                 })
-            }).then(() => { 
-                alert("Dossier déposé avec succès !"); 
-                location.reload(); 
-            });
+            }).then(() => { alert("Dossier déposé !"); location.reload(); });
         });
 
-        // Fonction pour ajouter un avis de sage
+                fetch(URL_SERVEUR, { method: 'POST', mode: 'no-cors', body: JSON.stringify(donneesAvis) })
+                .then(() => { alert("Ton avis a été ajouté."); location.reload(); });
         function apporterAvis(dest) {
             const m = prompt("Quel est ton avis de sage ?");
             if (m) {
-                const monNom = prompt("Ton nom de sage :") || "Anonyme";
-                fetch(URL_SERVEUR, { 
-                    method: 'POST', mode: 'no-cors', 
-                    body: JSON.stringify({
-                        date: new Date().toLocaleDateString('fr-FR'), 
-                        type: "avis", 
-                        nom: monNom, 
-                        localisation: dest, 
-                        message: m
-                    })
-                }).then(() => { 
-                    alert("Avis ajouté !"); 
-                    location.reload(); 
-                });
+                fetch(URL_SERVEUR, { method: 'POST', mode: 'no-cors', body: JSON.stringify({
+                    date: new Date().toLocaleDateString('fr-FR'), type: "avis", nom: prompt("Ton nom de sage :") || "Anonyme", localisation: dest, message: m
+                })}).then(() => { alert("Avis ajouté !"); location.reload(); });
             }
         }
 
-        // Chargement et affichage des données
+        // 3. CHARGEMENT ET AFFICHAGE IMBRIQUÉ
         fetch(URL_SERVEUR)
-            .then(r => r.json())
+            .then(res => res.json())
             .then(data => {
+                const chargement = document.getElementById('chargement');
                 const flux = document.getElementById('flux-conflits');
-                flux.innerHTML = ""; // On vide le message de chargement
-                
+                if (data.length === 0) { chargement.innerText = "Le registre est vierge."; return; }
+                chargement.style.display = 'none';
+
+                // On sépare les données
                 const conflits = data.filter(d => d.type === "conflit").reverse();
                 const avis = data.filter(d => d.type === "avis");
-                
+
                 conflits.forEach(c => {
-                    let rHTML = ""; 
-                    avis.filter(a => a.localisation === c.nom).forEach(a => {
-                        rHTML += `<div class="reponse-sage"><b>🌿 ${a.nom} :</b> ${a.message}</div>`;
-                    });
-                    
                     const div = document.createElement('div');
                     div.className = 'carte-conflit';
+                    
+                    // Construction des avis pour ce conflit précis
+                    let reponsesHTML = "";
+                    avis.forEach(a => {
+                        if(a.localisation === c.nom) {
+                            reponsesHTML += `
+                                <div class="avis-bulle">
+                                    <span class="nom-sage">🌿 ${a.nom} :</span> ${a.message}
+                                </div>`;
+                        }
+                    });
+
                     div.innerHTML = `
-                        <small>${c.date}</small> - <b>${c.nom}</b> à ${c.localisation}
-                        <p><i>"${c.message}"</i></p>
-                        ${rHTML}
-                        <hr style="border:0; border-top: 1px dotted #9370DB;">
-                        <span style="color:#9370DB; cursor:pointer; font-weight:bold; font-size:0.8em;" onclick="apporterAvis('${c.nom}')">⚖️ APPORTER UN AVIS</span>
+                        <small>${c.date}</small><br>
+                        <span class="nom-citoyen">👤 ${c.nom}</span>
+                        <p style="font-size: 1.1em; font-style: italic;">"${c.message}"</p>
+                        <div class="zone-reponses">${reponsesHTML}</div>
+                        <hr style="border:0; border-top: 1px dotted #9370DB; margin-top:15px;">
+                        <span style="color:#9370DB; cursor:pointer; font-weight:bold; font-size:0.9em;" 
+                              onclick="apporterAvis('${c.nom}')">
+                              ⚖️ Apporter un avis délicat
+                        </span>
                     `;
                     flux.appendChild(div);
+        fetch(URL_SERVEUR).then(r => r.json()).then(data => {
+            const flux = document.getElementById('flux-conflits');
+            const conflits = data.filter(d => d.type === "conflit").reverse();
+            const avis = data.filter(d => d.type === "avis");
+            conflits.forEach(c => {
+                let rHTML = ""; avis.filter(a => a.localisation === c.nom).forEach(a => {
+                    rHTML += `<div class="reponse-sage"><b>🌿 ${a.nom} :</b> ${a.message}</div>`;
                 });
+            })
+            .catch(err => { console.error(err); chargement.innerText = "Erreur de chargement."; });
+                const div = document.createElement('div');
+                div.className = 'carte-conflit';
+                div.innerHTML = `<small>${c.date}</small> - <b>${c.nom}</b> à ${c.localisation}<p><i>"${c.message}"</i></p>${rHTML}<hr style="border:0; border-top: 1px dotted #9370DB;"><span style="color:#9370DB; cursor:pointer; font-weight:bold; font-size:0.8em;" onclick="apporterAvis('${c.nom}')">⚖️ APPORTER UN AVIS</span>`;
+                flux.appendChild(div);
             });
+        });
 
-        // Fonction de recherche
         function filtrer() {
             let val = document.getElementById('searchBox').value.toLowerCase();
             let cards = document.getElementsByClassName('carte-conflit');
-            for (let c of cards) { 
-                c.style.display = c.innerText.toLowerCase().includes(val) ? "" : "none"; 
-            }
+            for (let c of cards) { c.style.display = c.innerText.toLowerCase().includes(val) ? "" : "none"; }
         }
     </script>
 </body>
