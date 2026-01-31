@@ -2,44 +2,46 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <title>Régulation Citoyenne - Le Trésor Public</title>
+    <title>Régulation Citoyenne - Le Petit Prince</title>
     <style>
+        /* STYLE AUTHENTIQUE DU JARDIN */
         body { 
             font-family: 'Comic Sans MS', cursive; 
-            background-color: #FFFF00; 
-            color: #000080; 
             text-align: center; 
             margin: 0; 
             padding: 0; 
+            background-color: #FFFF00; 
+            color: #000080; 
         }
 
-        /* MENU */
+        /* MENU DE NAVIGATION */
         .menu-table { 
             margin: 20px auto; 
             background-color: #008080; 
             border-collapse: collapse; 
             border-radius: 10px; 
             overflow: hidden;
+            margin-left: auto;
+            margin-right: auto;
         }
         .menu-table td { padding: 10px 15px; border: 1px solid #FFFFFF; }
         .menu-table a { text-decoration: none; color: #FFFFFF; font-weight: bold; }
 
-        /* FORMULAIRE VIOLET (L'ÉTOILE) */
+        /* L'ÉTOILE DE JUSTICE (FORMULAIRE VIOLET) */
         .etoile-form { 
             background: #E6E6FA; 
-            border: 4px solid #9370DB; 
+            border: 3px solid #9370DB; 
             width: 90%; 
             max-width: 600px; 
             margin: 30px auto; 
             padding: 30px; 
-            border-radius: 20px; 
+            border-radius: 20px;
             box-shadow: 8px 8px 0px #9370DB;
         }
         
-        h2 { color: #9370DB; margin-top: 10px; }
-        label { display: block; text-align: left; font-weight: bold; margin-top: 10px; }
+        h2 { color: #9370DB; }
         
-        input, textarea { 
+        textarea, input { 
             width: 100%; 
             padding: 12px; 
             margin: 10px 0; 
@@ -52,144 +54,18 @@
         .btn-justice { 
             background: #9370DB; 
             color: white; 
-            padding: 18px; 
+            padding: 15px; 
             border: none; 
             border-radius: 15px; 
             font-weight: bold; 
             cursor: pointer; 
             width: 100%; 
-            font-size: 1.2em; 
+            font-size: 1.1em;
             transition: 0.3s;
         }
-        .btn-justice:hover { background: #6A5ACD; transform: scale(1.02); }
+        .btn-justice:hover { background: #6A5ACD; }
 
-        /* AFFICHAGE DES DOSSIERS */
+        /* AFFICHAGE DES CONFLITS */
         .liste-conflits { 
             max-width: 700px; 
-            margin: 40px auto; 
-            padding: 20px; 
-        }
-        
-        .carte-conflit { 
-            background: white; 
-            border-left: 10px solid #9370DB; 
-            border-radius: 15px; 
-            padding: 20px; 
-            margin-bottom: 25px; 
-            text-align: left; 
-            box-shadow: 4px 4px 15px rgba(0,0,0,0.1);
-        }
-
-        .date-badge { font-size: 0.8em; color: #666; }
-        .nom-citoyen { font-weight: bold; color: #9370DB; font-size: 1.1em; }
-        
-        #chargement { font-style: italic; color: #008080; padding: 20px; }
-    </style>
-</head>
-<body>
-
-    <table class="menu-table">
-        <tr>
-            <td><a href="index.html">Accueil</a></td>
-            <td><a href="formulaire.html">Semer</a></td>
-            <td><a href="jardin.html">Le Jardin</a></td>
-            <td><a href="regulation.html">Régulation</a></td>
-        </tr>
-    </table>
-
-    <h2>⚖️ Zone de Régulation Citoyenne</h2>
-    <p><i>Expose ton conflit avec sincérité. La communauté répondra avec délicatesse.</i></p>
-
-    <div class="etoile-form">
-        <form id="regForm">
-            <label>Ton identité amoureuse :</label>
-            <input type="text" id="nom" placeholder="Ton nom ou pseudo" required>
-            
-            <label>Nature du conflit ou de la peine :</label>
-            <textarea id="message" rows="6" placeholder="Explique ici la situation qui attend une résolution..." required></textarea>
-            
-            <p><small>En soumettant, tu acceptes le regard bienveillant et la sentence symbolique de tes pairs.</small></p>
-            <button type="submit" id="btnEnvoi" class="btn-justice">SOUMETTRE À L'ENSEMBLE 🕊️</button>
-        </form>
-    </div>
-
-    <hr style="width: 80%; border: 1px solid #9370DB; opacity: 0.3;">
-
-    <div class="liste-conflits">
-        <h3 style="color:#9370DB;">📜 Dossiers déposés au Trésor Public</h3>
-        <div id="chargement">Appel de la sagesse citoyenne en cours...</div>
-        <div id="flux-conflits"></div>
-    </div>
-
-    <p><a href="index.html" style="color:#000080; font-weight:bold; text-decoration:none;">← Retour au Trésor Public</a></p>
-
-    <script>
-        // TON URL DE SCRIPT (Vérifie qu'elle finit bien par /exec)
-        const URL_SERVEUR = "https://script.google.com/macros/s/AKfycbz4ncs9qw_AfmKSER5QST-P0OeKQggQaq86QC6liS53uZ9sx4Lo_-4-h1knXKWqgQMc/exec";
-
-        // 1. FONCTION D'ENVOI
-        document.getElementById('regForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            const btn = document.getElementById('btnEnvoi');
-            btn.innerText = "Dépôt en cours...";
-            btn.disabled = true;
-
-            const donnees = {
-                date: new Date().toLocaleDateString('fr-FR'),
-                type: "Conflit",
-                nom: document.getElementById('nom').value,
-                localisation: "Zone de Paix",
-                message: document.getElementById('message').value
-            };
-
-            fetch(URL_SERVEUR, {
-                method: 'POST',
-                mode: 'no-cors',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(donnees)
-            }).then(() => {
-                alert("Ton dossier a bien été déposé !");
-                location.reload(); // Recharge la page pour voir le message apparaître
-            }).catch(err => {
-                alert("Erreur lors de l'envoi.");
-                btn.disabled = false;
-                btn.innerText = "SOUMETTRE À L'ENSEMBLE 🕊️";
-            });
-        });
-
-        // 2. FONCTION DE LECTURE (AFFICHE TOUT CE QU'IL Y A DANS LE SHEET)
-        fetch(URL_SERVEUR)
-            .then(res => res.json())
-            .then(data => {
-                const chargement = document.getElementById('chargement');
-                const flux = document.getElementById('flux-conflits');
-
-                if (data.length === 0) {
-                    chargement.innerText = "Le registre est vierge pour le moment.";
-                } else {
-                    chargement.style.display = 'none';
-                    // On affiche du plus récent au plus ancien
-                    data.reverse().forEach(item => {
-                        // On vérifie que le message n'est pas vide
-                        if (item.message) {
-                            const carte = document.createElement('div');
-                            carte.className = 'carte-conflit';
-                            carte.innerHTML = `
-                                <div class="date-badge">${item.date || 'Date inconnue'}</div>
-                                <div class="nom-citoyen">${item.nom || 'Anonyme'}</div>
-                                <p>"${item.message}"</p>
-                                <hr style="border:0; border-top:1px dashed #9370DB;">
-                                <small style="color:#9370DB; cursor:pointer;" onclick="alert('Bientôt : Possibilité de répondre.')">⚖️ Apporter un avis délicat</small>
-                            `;
-                            flux.appendChild(carte);
-                        }
-                    });
-                }
-            })
-            .catch(error => {
-                console.error(error);
-                document.getElementById('chargement').innerText = "Erreur de connexion au registre.";
-            });
-    </script>
-</body>
-</html>
+            margin: 4
