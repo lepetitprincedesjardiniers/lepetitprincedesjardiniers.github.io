@@ -14,34 +14,37 @@
         .menu-table td { padding: 10px 15px; border: 1px solid #FFFFFF; }
         .menu-table a { text-decoration: none; color: #FFFFFF; font-weight: bold; display: inline-block; }
 
-        /* Style du messager (Animal à GAUCHE, Texte à DROITE) */
+        /* Style du messager : ANIMAL à GAUCHE | TEXTE à DROITE */
         #animal-container {
             position: fixed;
             z-index: 900;
             cursor: pointer;
             white-space: nowrap;
-            display: flex;
-            flex-direction: row; /* L'animal est maintenant à gauche du texte */
+            display: flex; 
+            flex-direction: row; /* Force l'ordre horizontal standard */
             align-items: center;
             user-select: none;
         }
 
+        #corps-animal { 
+            font-size: 50px; 
+            order: 1; /* Force l'animal en première position */
+        }
+
         #bulle-texte {
+            order: 2; /* Force le texte en deuxième position */
             background: rgba(255, 255, 255, 0.9);
             border: 2px solid #2E7D32;
             border-radius: 15px;
             padding: 8px 15px;
             font-style: italic;
             color: #2E7D32;
-            margin-left: 10px; /* Espace entre l'animal et le texte */
+            margin-left: 10px; /* Espace après l'animal */
             min-height: 20px;
             box-shadow: 3px 3px 8px rgba(0,0,0,0.1);
             font-weight: bold;
             font-size: 1.1em;
-            display: inline-block;
         }
-
-        #corps-animal { font-size: 50px; }
 
         /* Animation des récompenses */
         .recompense {
@@ -113,28 +116,29 @@
         let indexLettre = 0;
         const animaux = ['🕊️', '🦋', '🐝', '🐞', '🦜'];
 
-        // Son au premier clic
+        // Activation du son au premier clic
         document.addEventListener('click', function() {
             if (audio.paused) {
                 audio.volume = 0.4;
-                audio.play().catch(e => console.log("Audio bloqué"));
+                audio.play().catch(e => console.log("Audio en attente"));
             }
         }, { once: false });
 
         function animer() {
-            posX += 2.2; // Vitesse de déplacement (légèrement ralentie)
+            posX += 2.0; // Vitesse de vol calme
 
-            // Ouverture du message moins rapide (divisé par 25 au lieu de 15)
+            // Déroulement lent du message
             if (indexLettre < messageComplet.length) {
-                let progression = Math.floor((posX + 400) / 25); 
+                // On divise par 30 pour que le texte s'ouvre très progressivement
+                let progression = Math.floor((posX + 450) / 30); 
                 if (progression > indexLettre && progression >= 0) {
                     indexLettre = progression;
                     bulle.innerText = messageComplet.substring(0, indexLettre);
                 }
             }
 
-            // Réinitialisation et changement d'animal
-            if (posX > window.innerWidth + 500) {
+            // Réinitialisation et métamorphose
+            if (posX > window.innerWidth + 600) {
                 posX = -900;
                 indexLettre = 0;
                 bulle.innerText = "";
@@ -149,7 +153,7 @@
             requestAnimationFrame(animer);
         }
 
-        // Récompense aléatoire au clic
+        // Cadeau au clic
         container.onclick = function(e) {
             const items = ['🎁', '😘', '🌸', '🌻', '⭐', '🍀', '💎'];
             const r = document.createElement('div');
