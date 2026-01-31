@@ -6,6 +6,9 @@
     <style>
         body { font-family: 'Comic Sans MS', cursive; text-align: center; margin: 0; padding: 0; background-color: #FFFF00; color: #000080; overflow-x: hidden; min-height: 100vh; }
         
+        /* Traducteur Google */
+        #google_translate_element { padding: 10px; background: rgba(255,255,255,0.5); border-bottom: 1px solid #008080; min-height: 40px; }
+
         /* Menu */
         .menu-table { margin: 20px auto; border-radius: 10px; background-color: #008080; border-collapse: collapse; margin-left: auto; margin-right: auto; }
         .menu-table td { padding: 10px 15px; border: 1px solid #FFFFFF; }
@@ -49,12 +52,22 @@
         #bulle-texte { background: white; border: 2px solid #2E7D32; border-radius: 15px; padding: 8px 15px; font-weight: bold; opacity: 0; overflow: hidden; max-width: 250px; }
         #coffre-magique { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); font-size: 60px; z-index: 800; }
         .pop { transform: translateX(-50%) scale(1.4) !important; transition: 0.3s; }
+        .confetti { position: fixed; z-index: 799; pointer-events: none; animation: fly 2s ease-out forwards; }
+        @keyframes fly { 0% { transform: translate(0, 0) rotate(0deg); opacity: 1; } 100% { transform: translate(var(--dx), var(--dy)) rotate(360deg); opacity: 0; } }
 
         footer { margin: 80px 0 30px; font-size: 0.9em; opacity: 0.8; }
         footer a { color: inherit; text-decoration: none; border-bottom: 1px dashed #008080; }
     </style>
 </head>
 <body>
+
+    <div id="google_translate_element"></div>
+    <script type="text/javascript">
+        function googleTranslateElementInit() { new google.translate.TranslateElement({pageLanguage: 'fr'}, 'google_translate_element'); }
+    </script>
+    <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+
+    <audio id="chantOiseaux" loop><source src="oiseaux.mp3" type="audio/mpeg"></audio>
 
     <table class="menu-table">
         <tr>
@@ -121,74 +134,26 @@
 
         let disponibles = [...basePhrases];
         const typesAnimaux = ['🕊️', '🦋', '🐝', '🐞'];
+        const fleurs = ['🌸', '🌼', '🌻', '🌺'];
         const messagers = [];
         const coffre = document.getElementById('coffre-magique');
+        const audio = document.getElementById('chantOiseaux');
+
+        document.addEventListener('click', () => { if(audio.paused) { audio.volume = 0.05; audio.play(); } });
+
+        function createConfetti() {
+            for(let i=0; i<15; i++) {
+                const c = document.createElement('div');
+                c.className = 'confetti';
+                c.innerText = fleurs[Math.floor(Math.random()*fleurs.length)];
+                c.style.left = "50%"; c.style.bottom = "60px";
+                c.style.setProperty('--dx', (Math.random()*400 - 200) + "px");
+                c.style.setProperty('--dy', (Math.random()*-400 - 100) + "px");
+                document.body.appendChild(c);
+                setTimeout(() => c.remove(), 2000);
+            }
+        }
 
         function getRandomEdge() {
             const side = Math.floor(Math.random() * 4);
-            if(side === 0) return {x: -250, y: Math.random() * window.innerHeight};
-            if(side === 1) return {x: window.innerWidth + 250, y: Math.random() * window.innerHeight};
-            if(side === 2) return {x: Math.random() * window.innerWidth, y: -250};
-            return {x: Math.random() * window.innerWidth, y: window.innerHeight + 250};
-        }
-
-        function createMessenger() {
-            if (disponibles.length === 0) return;
-            const start = getRandomEdge();
-            const phraseIdx = Math.floor(Math.random() * disponibles.length);
-            const texte = disponibles.splice(phraseIdx, 1)[0];
-
-            const container = document.createElement('div');
-            container.id = "animal-container";
-            container.innerHTML = `<div id="bulle-texte" style="width:0px; opacity:0;">${texte}</div><div style="font-size:50px">${typesAnimaux[Math.floor(Math.random()*4)]}</div>`;
-            document.body.appendChild(container);
-
-            messagers.push({
-                el: container,
-                bulle: container.firstChild,
-                texte: texte,
-                x: start.x, y: start.y,
-                tx: window.innerWidth / 2, ty: window.innerHeight - 110,
-                state: "IN",
-                seed: Math.random() * 1000
-            });
-        }
-
-        function loop() {
-            for (let i = messagers.length - 1; i >= 0; i--) {
-                let m = messagers[i];
-                if (m.state === "IN") {
-                    m.x += (m.tx - m.x) * 0.015; m.y += (m.ty - m.y) * 0.015;
-                    m.bulle.style.opacity = "1";
-                    let w = parseInt(m.bulle.style.width) || 0;
-                    if (w < 200) m.bulle.style.width = (w + 2) + "px";
-
-                    if (Math.abs(m.tx - m.x) < 20 && Math.abs(m.ty - m.y) < 20) {
-                        m.state = "WAIT";
-                        coffre.classList.add('pop');
-                        setTimeout(() => {
-                            m.state = "OUT";
-                            coffre.classList.remove('pop');
-                            const ex = getRandomEdge(); m.tx = ex.x; m.ty = ex.y;
-                            m.bulle.style.opacity = "0";
-                        }, 4000);
-                    }
-                } else if (m.state === "OUT") {
-                    m.x += (m.tx - m.x) * 0.02; m.y += (m.ty - m.y) * 0.02;
-                    if (m.x < -300 || m.x > window.innerWidth + 300 || m.y < -300 || m.y > window.innerHeight + 300) {
-                        disponibles.push(m.texte);
-                        m.el.remove();
-                        messagers.splice(i, 1);
-                    }
-                }
-                m.el.style.left = m.x + "px";
-                m.el.style.top = (m.y + Math.sin(Date.now() * 0.005 + m.seed) * 15) + "px";
-            }
-            requestAnimationFrame(loop);
-        }
-
-        setInterval(createMessenger, 5000);
-        loop();
-    </script>
-</body>
-</html>
+            if(side === 0) return {x: -250, y: Math.random() * window.
