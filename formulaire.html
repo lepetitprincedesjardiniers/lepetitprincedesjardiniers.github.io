@@ -2,7 +2,7 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <title>Contact - Le Petit Prince des Jardiniers</title>
+    <title>Semer une annonce - Le Petit Prince des Jardiniers</title>
 </head>
 <body bgcolor="#FFFF00" text="#000080">
 
@@ -16,41 +16,48 @@
     </table>
 
     <br>
-    <font size="6" color="#FF0000"><u><b>CONTACTER LE PETIT PRINCE</b></u></font>
-    <br><br>
-
-    <font size="4"><i>Une question ou un message pour la communauté ?</i></font>
+    <font size="6" color="#FF0000"><u><b>SEMER UNE ANNONCE</b></u></font>
     <br><br>
 
     <form action="https://script.google.com/macros/s/AKfycbwe3bMzbJMUQSEdeyprffw-FQpqLg9-fGcHJi2_1_Ix5kWmrisBoSo2Kzne-CMwe3s/exec" method="POST">
         
-        <input type="hidden" name="formType" value="contact">
-
-        <table border="2" cellpadding="20" bgcolor="#FFFFFF" width="80%">
+        <table border="2" cellpadding="15" bgcolor="#FFFFFF" width="85%">
             <tr>
                 <td align="left">
                     <font size="4">
-                    <b>Votre Nom ou Identifiant :</b><br>
-                    <input type="text" name="nom" size="45" required><br><br>
+                    <b>Prénom ou Identifiant :</b><br>
+                    <input type="text" name="prenom" size="40" required><br><br>
 
-                    <b>Votre Email :</b><br>
-                    <input type="email" name="email" size="45" required><br><br>
+                    <b>Pays :</b><br>
+                    <input type="text" name="pays" value="France" size="40"><br><br>
 
-                    <b>Votre Message :</b><br>
-                    <textarea name="message" rows="8" cols="55" required placeholder="Écrivez votre message ici..."></textarea>
+                    <b>Ville :</b><br>
+                    <input type="text" name="ville" size="40" required><br><br>
+
+                    <b>KM (Rayon d'action) :</b><br>
+                    <input type="number" name="km" size="10"> km<br><br>
+
+                    <b>Description de votre cadeau :</b><br>
+                    <textarea name="description" rows="6" cols="50" required placeholder="Que proposez-vous de partager ?"></textarea><br><br>
+
+                    <b>Durée de l'annonce :</b><br>
+                    <select name="duree" style="padding:5px; font-weight:bold;">
+                        <option value="1 jour">1 jour</option>
+                        <option value="1 semaine">1 semaine</option>
+                        <option value="1 mois" selected>1 mois</option>
+                        <option value="1 an">1 an</option>
+                    </select>
                     </font>
-
                     <br><br>
+                    
                     <center>
-                        <input type="submit" value="📩 ENVOYER MON MESSAGE" style="font-weight:bold; font-size:1.2em; padding:12px; cursor:pointer; background-color:#FFFF00; border:2px solid #000080;">
+                        <input type="submit" value="🌻 SEMER CETTE GRAINE" style="font-weight:bold; font-size:1.3em; padding:15px; cursor:pointer; background-color:#FFFF00; border:2px solid #000080;">
                     </center>
                 </td>
             </tr>
         </table>
-    </form>
-
-    <br><br>
-    <font color="#FF0000"><b>#Fraternité #Dignité #Partage</b></font><br>
+    </form> <br><br>
+    <font color="#FF0000"><b>#Liberté #Amour #Gratuité #Fraternité</b></font><br>
     <font size="2"><b>copyrith 2000... Le petit prince des jardiniers</b></font>
 </center>
 
