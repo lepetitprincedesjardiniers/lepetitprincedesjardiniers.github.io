@@ -2,85 +2,66 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <title>Le Petit Prince des Jardiniers</title>
+    <title>Le Trésor Public - Le Petit Prince des Jardiniers</title>
     <style>
         body { font-family: 'Comic Sans MS', cursive; text-align: center; margin: 0; padding: 0; background-color: #FFFF00; color: #000080; overflow-x: hidden; min-height: 100vh; }
         
+        /* Menu Table */
         .menu-table { margin: 20px auto; border-radius: 10px; background-color: #008080; border-collapse: collapse; }
         .menu-table td { padding: 10px 15px; border: 1px solid #FFFFFF; }
         .menu-table a { text-decoration: none; color: #FFFFFF; font-weight: bold; }
 
-        #coffre-magique {
-            position: fixed;
-            bottom: 20px;
-            left: 50%;
-            transform: translateX(-50%);
-            font-size: 60px;
-            z-index: 800;
-            transition: transform 0.3s;
+        /* Le Soleil du Don Entier */
+        .soleil-container { margin: 40px auto; width: 250px; position: relative; }
+        .soleil-don {
+            background: #FFD700; width: 220px; height: 220px; border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            box-shadow: 0 0 60px #FFA500; border: 5px dashed #FF4500;
+            cursor: pointer; transition: transform 0.4s;
+            text-decoration: none; color: #000080; font-weight: bold;
+        }
+        .soleil-don:hover { transform: scale(1.1) rotate(15deg); }
+
+        /* Moteur de Recherche Avancé */
+        .moteur-recherche {
+            background: rgba(255, 255, 255, 0.8); border: 3px solid #008080;
+            border-radius: 20px; padding: 20px; margin: 30px auto; width: 90%; max-width: 800px;
+        }
+        .moteur-recherche select, .moteur-recherche input {
+            padding: 10px; border-radius: 10px; border: 2px solid #008080; margin: 5px; font-family: 'Comic Sans MS';
         }
 
-        #animal-container {
-            position: fixed;
-            z-index: 900;
-            white-space: nowrap;
-            display: flex; 
-            flex-direction: row; 
-            align-items: center;
-            user-select: none;
-            pointer-events: none;
+        /* Les Bulles (Nuages et Étoile) */
+        .bulles-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 25px; padding: 20px; max-width: 1000px; margin: auto; }
+        
+        .nuage {
+            background: white; border-radius: 50px; padding: 25px; min-height: 180px;
+            border: 3px solid #87CEEB; box-shadow: 8px 8px 0px #87CEEB;
+            transition: 0.3s; cursor: pointer; display: flex; flex-direction: column; justify-content: center;
+        }
+        .nuage:hover { transform: translateY(-10px); }
+
+        .etoile-justice {
+            background: #E6E6FA; border: 3px solid #9370DB;
+            clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
+            min-height: 250px; display: flex; align-items: center; justify-content: center; padding: 40px;
         }
 
+        .exemples { font-size: 0.85em; color: #2E7D32; font-style: italic; margin-top: 10px; }
+
+        /* Animations déjà présentes */
+        #coffre-magique { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); font-size: 60px; z-index: 800; transition: transform 0.3s; }
+        #animal-container { position: fixed; z-index: 900; white-space: nowrap; display: flex; align-items: center; pointer-events: none; }
         #corps-animal { font-size: 50px; }
-
-        #bulle-texte {
-            background: rgba(255, 255, 255, 0.9);
-            border-radius: 15px;
-            padding: 8px 15px;
-            font-style: italic;
-            color: #2E7D32;
-            margin-right: 10px;
-            box-shadow: 2px 2px 5px rgba(0,0,0,0.1);
-            font-weight: bold;
-            font-size: 1.1em;
-            opacity: 0;
-            border: 2px solid #2E7D32;
-            transition: opacity 0.3s;
-        }
-
-        .btn-semer {
-            display: inline-block; padding: 20px 40px; font-size: 1.5em; background-color: #E67E22; 
-            color: white; border-radius: 20px; cursor: pointer; border: none; 
-            font-weight: bold; box-shadow: 0px 4px 0px #b35900; text-decoration: none;
-            margin-top: 20px;
-        }
-
+        #bulle-texte { background: rgba(255, 255, 255, 0.9); border-radius: 15px; padding: 8px 15px; font-style: italic; color: #2E7D32; margin-right: 10px; font-weight: bold; border: 2px solid #2E7D32; opacity: 0; transition: opacity 0.3s; }
         .pop { transform: translateX(-50%) scale(1.4) !important; }
-
-        .confetti {
-            position: fixed;
-            z-index: 799;
-            pointer-events: none;
-            animation: fly 2s ease-out forwards;
-        }
-        @keyframes fly {
-            0% { transform: translate(0, 0) rotate(0deg); opacity: 1; }
-            100% { transform: translate(var(--dx), var(--dy)) rotate(360deg); opacity: 0; }
-        }
-
-        .copyright-link {
-            color: #000080;
-            text-decoration: none;
-            font-size: 0.9em;
-            font-weight: bold;
-        }
-        .copyright-link:hover { text-decoration: underline; }
+        .confetti { position: fixed; z-index: 799; pointer-events: none; animation: fly 2s ease-out forwards; }
+        @keyframes fly { 0% { transform: translate(0, 0) rotate(0deg); opacity: 1; } 100% { transform: translate(var(--dx), var(--dy)) rotate(360deg); opacity: 0; } }
     </style>
 </head>
 <body>
 
     <audio id="chantOiseaux" loop><source src="oiseaux.mp3" type="audio/mpeg"></audio>
-
     <div id="google_translate_element" style="padding:10px;"></div>
 
     <table class="menu-table">
@@ -92,18 +73,66 @@
         </tr>
     </table>
 
-    <br>
-    <font size="6" color="#E67E22">🌟 <b>LE PETIT PRINCE DES JARDINIERS</b> 🌟</font>
-    <br><br>
-    <div style="font-size: 35px;">🌸 🌼 🌻 🌺</div>
-    <br><br>
+    <h1>💰 Le Trésor Public du Jardin Collectif</h1>
+    <p><strong>Bienvenue dans l'économie de la Fraternité Universelle</strong></p>
 
-    <a href="formulaire.html" class="btn-semer">🌱 SEMER UNE GRAINE</a>
+    <div class="soleil-container">
+        <a href="formulaire.html" class="soleil-don">
+            <div>
+                ☀️<br>ESPACE DU DON ENTIER<br>
+                <small>Cadeau existentiel<br>sans retour attendu</small>
+            </div>
+        </a>
+    </div>
 
-    <br><br><br><br>
-    <font size="2">
-        Copyright 2000 <a href="https://youtube.com" class="copyright-link">Le Petit Prince des Jardiniers</a>
-    </font>
+    <div class="moteur-recherche">
+        <h3>🔍 Ratisser Large (Moteur de Recherche Citoyen)</h3>
+        <select>
+            <option>Choisir Pays...</option>
+            <option>France</option><option>Belgique</option><option>Suisse</option><option>Québec</option>
+            <option>Groland</option><option>Belle Brousse</option><option>Pays des Schtroumpfs</option>
+        </select>
+        <input type="text" placeholder="Ville ou Village Secret">
+        <select>
+            <option>Rayon d'action...</option>
+            <option value="10">10 km / 6 miles</option>
+            <option value="50">50 km / 31 miles</option>
+            <option value="999">Infini (Universel)</option>
+        </select>
+        <br>
+        <input type="text" placeholder="Ta requête (ex: farine, aide, calin...)" style="width: 60%;">
+        <button style="background:#E67E22; color:white; border:none; padding:10px 20px; border-radius:10px; cursor:pointer; font-weight:bold;">Lancer la Quête</button>
+    </div>
+
+    <div class="bulles-grid">
+        
+        <div class="nuage">
+            <h3>🕒 Espace Temps Public</h3>
+            <p>Travaux de libre participation nécessaires au fonctionnement collectif.</p>
+            <div class="exemples">
+                Ex: Nettoyage du bois communal, réfection de route, volontaires urgence pays...
+            </div>
+        </div>
+
+        <div class="nuage">
+            <h3>❤️ Urgence, Détresse & Écoute</h3>
+            <p>Recherche d'aide pour projets personnels ou besoins vitaux.</p>
+            <div class="exemples">
+                Ex: Refaire ma charpente, besoin d'un câlin, recherche farine pour mon pain quotidien...
+            </div>
+        </div>
+
+        <div class="nuage etoile-justice">
+            <div>
+                <h3>⚖️ Régulation Citoyenne</h3>
+                <p>Expose ton conflit à la communauté. Justice et délicatesse.</p>
+                <div class="exemples">
+                    Soutien, sentence ou pardon : notre ensemble régule sa justice.
+                </div>
+            </div>
+        </div>
+
+    </div>
 
     <div id="coffre-magique">🎁</div>
     <div id="animal-container">
@@ -117,20 +146,10 @@
     <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
 
     <script>
-        const mesPhrases = [
-            "Ici, on sème des graines de générosité pour récolter de l'altruisme",
-            "Le cadeau existentiel produit un cadeau collectif",
-            "Une harmonie de Paix pour une respectable fraternité",
-            "La confiance cordiale du Don sincère",
-            "La banque des trésors publics est ouverte 24h/24",
-            "Du gratos ? Du bonheur paisible !",
-            "Solidaire sourire collectif !",
-            "Fais la fête, sois pas bête en faisant ta tête !",
-            "Ici on se respecte..."
-        ];
-
-        const animaux = ['🕊️', '🦋', '🐝', '🐞', '🦜', '🐰', '🐣', '🐿️', '🐼', '🦊', '🐠', '🐬', '🐳', '🦄'];
-        const fleurs = ['🌸', '🌼', '🌻', '🌺', '🍃', '✨'];
+        // Logique des animaux et confettis (toujours active)
+        const mesPhrases = ["Le Trésor Public est rempli de vos cœurs", "Engendrer de la fraternité...", "La justice délicate de notre ensemble"];
+        const animaux = ['🕊️', '🦋', '🐝', '🐞', '🦜', '🐰'];
+        const fleurs = ['🌸', '🌼', '🌻', '🌺'];
 
         const animalCont = document.getElementById('animal-container');
         const bulle = document.getElementById('bulle-texte');
@@ -138,78 +157,50 @@
         const coffre = document.getElementById('coffre-magique');
         const audio = document.getElementById('chantOiseaux');
 
-        let aniX, aniY, targetX, targetY;
-        let state = "WAITING"; 
-
-        document.addEventListener('click', () => {
-            if(audio.paused) { audio.volume = 0.02; audio.play(); }
-        }, { once: false });
+        let aniX, aniY, targetX, targetY, state = "WAITING";
+        document.addEventListener('click', () => { if(audio.paused) { audio.volume = 0.05; audio.play(); } });
 
         function createConfetti() {
             for(let i=0; i<15; i++) {
                 const c = document.createElement('div');
                 c.className = 'confetti';
                 c.innerText = fleurs[Math.floor(Math.random()*fleurs.length)];
-                c.style.left = "50%";
-                c.style.bottom = "60px";
+                c.style.left = "50%"; c.style.bottom = "60px";
                 c.style.setProperty('--dx', (Math.random()*400 - 200) + "px");
                 c.style.setProperty('--dy', (Math.random()*-400 - 100) + "px");
-                c.style.fontSize = (Math.random()*20 + 20) + "px";
                 document.body.appendChild(c);
                 setTimeout(() => c.remove(), 2000);
             }
         }
 
         function startNewMessenger() {
-            const msg = mesPhrases[Math.floor(Math.random() * mesPhrases.length)];
+            bulle.innerText = mesPhrases[Math.floor(Math.random() * mesPhrases.length)];
             corps.innerText = animaux[Math.floor(Math.random() * animaux.length)];
-            bulle.innerText = msg;
-            bulle.style.opacity = "0";
-            
-            const side = Math.floor(Math.random() * 3);
-            if(side === 0) { aniX = -200; aniY = Math.random() * 400; }
-            else if(side === 1) { aniX = window.innerWidth + 200; aniY = Math.random() * 400; }
-            else { aniX = Math.random() * window.innerWidth; aniY = -200; }
-            
-            targetX = window.innerWidth / 2;
-            targetY = window.innerHeight - 110;
+            aniX = -200; aniY = 200;
+            targetX = window.innerWidth / 2; targetY = window.innerHeight - 110;
             state = "APPROACHING";
         }
 
         function loop() {
             if (state === "APPROACHING") {
-                aniX += (targetX - aniX) * 0.015;
-                aniY += (targetY - aniY) * 0.015;
+                aniX += (targetX - aniX) * 0.015; aniY += (targetY - aniY) * 0.015;
                 bulle.style.opacity = "1";
-
-                const dist = Math.sqrt(Math.pow(targetX - aniX, 2) + Math.pow(targetY - aniY, 2));
-                if (dist < 60) {
-                    state = "DEPOSITING";
-                    coffre.classList.add('pop');
-                    createConfetti();
-                    setTimeout(() => {
-                        bulle.style.opacity = "0";
-                        coffre.classList.remove('pop');
-                        state = "LEAVING";
-                        targetX = (Math.random() > 0.5) ? window.innerWidth + 600 : -600;
-                        targetY = Math.random() * 400;
+                if (Math.sqrt(Math.pow(targetX-aniX,2)+Math.pow(targetY-aniY,2)) < 60) {
+                    state = "DEPOSITING"; coffre.classList.add('pop'); createConfetti();
+                    setTimeout(() => { 
+                        bulle.style.opacity = "0"; coffre.classList.remove('pop'); state = "LEAVING";
+                        targetX = window.innerWidth + 500; targetY = 200; 
                     }, 2500);
                 }
             } else if (state === "LEAVING") {
-                aniX += (targetX - aniX) * 0.02;
-                aniY += (targetY - aniY) * 0.02;
+                aniX += (targetX - aniX) * 0.02; aniY += (targetY - aniY) * 0.02;
                 if (Math.abs(aniX - targetX) < 100) startNewMessenger();
             }
-
-            animalCont.style.left = aniX + "px";
-            animalCont.style.top = aniY + "px";
+            animalCont.style.left = aniX + "px"; animalCont.style.top = aniY + "px";
             corps.style.transform = (aniX < targetX) ? "scaleX(-1)" : "scaleX(1)";
-
             requestAnimationFrame(loop);
         }
-
-        startNewMessenger();
-        loop();
+        startNewMessenger(); loop();
     </script>
 </body>
 </html>
