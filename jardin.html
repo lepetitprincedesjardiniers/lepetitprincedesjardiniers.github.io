@@ -2,13 +2,12 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
+    <title>Le Jardin - Le Petit Prince</title>
     <title>Le Jardin de la Fraternité</title>
     <style>
-        /* ON GARDE TON STYLE ORIGINAL */
         body { font-family: 'Comic Sans MS', cursive; text-align: center; margin: 0; padding: 0; background-color: #FFFF00; color: #000080; overflow-x: hidden; min-height: 100vh; }
-
+        
         .menu-table { margin: 20px auto; border-radius: 10px; background-color: #008080; border-collapse: collapse; }
-        .menu-table { margin: 20px auto; border-radius: 10px; background-color: #008080; border-collapse: collapse; margin-left: auto; margin-right: auto;}
         .menu-table td { padding: 10px 15px; border: 1px solid #FFFFFF; }
         .menu-table a { text-decoration: none; color: #FFFFFF; font-weight: bold; }
 
@@ -35,34 +34,34 @@
             100% { transform: scale(1) rotate(0deg); opacity: 1; }
         }
 
-        /* STYLE POUR LES NOUVEAUX MESSAGES DU TABLEAU */
-        .mur-reel {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-            gap: 20px;
-            padding: 40px;
-            max-width: 1200px;
-            margin: auto;
-        }
-        .carte-message {
-            background: rgba(255, 255, 255, 0.9);
-            border: 3px solid #008080;
-            border-radius: 15px;
-            padding: 15px;
-            box-shadow: 5px 5px 0px #008080;
-            transition: 0.3s;
-        }
-        .carte-message:hover { transform: scale(1.02); }
-        .type-tag { font-size: 0.7em; background: #E67E22; color: white; padding: 2px 8px; border-radius: 5px; text-transform: uppercase; }
-
         #coffre-magique { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); font-size: 60px; z-index: 800; }
         #animal-container { position: fixed; z-index: 900; white-space: nowrap; display: flex; align-items: center; pointer-events: none; }
         #corps-animal { font-size: 50px; }
         #bulle-texte { background: rgba(255, 255, 255, 0.9); border-radius: 15px; padding: 8px 15px; font-style: italic; color: #2E7D32; margin-right: 10px; font-weight: bold; border: 2px solid #2E7D32; opacity: 0; transition: opacity 0.3s; }
-
+        
         .copyright-link { color: #000080; text-decoration: none; font-weight: bold; }
     </style>
 </head>
+<body bgcolor="#FFFF00" text="#000080" style="font-family:'Comic Sans MS', cursive; text-align:center; margin:0; padding:0;">
+
+    <center>
+        <div id="google_translate_element" style="padding:10px;"></div>
+
+        <table class="notranslate" border="1" cellpadding="10" bgcolor="#008080" style="margin-top:10px; border-radius:10px;">
+            <tr>
+                <td><a href="index.html" style="text-decoration:none;"><font color="#FFFFFF"><b>Accueil</b></font></a></td>
+                <td><a href="formulaire.html" style="text-decoration:none;"><font color="#FFFFFF"><b>Semer</b></font></a></td>
+                <td><a href="jardin.html" style="text-decoration:none;"><font color="#FFFFFF"><b>Le Jardin</b></font></a></td>
+                <td><a href="contact.html" style="text-decoration:none;"><font color="#FFFFFF"><b>Contact</b></font></a></td>
+            </tr>
+        </table>
+
+        <br>
+        <font size="6" color="#2E7D32">🌻 <u><b>LE JARDIN DES GRAINES</b></u> 🌻</font>
+        <br><br>
+
+        <div id="annonces-container" style="width:90%; max-width:900px;">
+            <p><i>Chargement du jardin en cours...</i></p>
 <body>
 
     <audio id="chantOiseaux" loop><source src="oiseaux.mp3" type="audio/mpeg"></audio>
@@ -75,7 +74,6 @@
             <td><a href="formulaire.html">Semer</a></td>
             <td><a href="jardin.html">Le Jardin</a></td>
             <td><a href="contact.html">Contact</a></td>
-            <td><a href="urgence.html">Urgences</a></td>
         </tr>
     </table>
 
@@ -84,16 +82,11 @@
 
     <div id="jardin-sacre">
         </div>
-    
-    <div id="jardin-sacre"></div>
+    </center>
 
     <div style="padding: 20px; font-weight: bold; font-size: 1.2em;">
         "Chaque don est une fleur qui ne fane jamais."
     </div>
-
-    <h3 style="color:#008080;">📖 Registre de la Fraternité</h3>
-    <div id="chargement">Récolte des messages en cours...</div>
-    <div class="mur-reel" id="mur-messages"></div>
 
     <br><br>
     <font size="2">
@@ -112,6 +105,34 @@
     <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
 
     <script>
+        const scriptURL = 'https://script.google.com/macros/s/AKfycbwe3bMzbJMUQSEdeyprffw-FQpqLg9-fGcHJi2_1_Ix5kWmrisBoSo2Kzne-CMwe3s/exec';
+
+        async function chargerJardin() {
+            try {
+                const response = await fetch(scriptURL);
+                const data = await response.json();
+                const container = document.getElementById('annonces-container');
+                container.innerHTML = "";
+
+                data.forEach(annonce => {
+                    const card = document.createElement('div');
+                    card.style = "background:white; border:3px solid #2E7D32; border-radius:15px; padding:20px; margin-bottom:25px; text-align:left; box-shadow: 6px 6px 0px #008080;";
+                    
+                    card.innerHTML = `
+                        <font size="5" color="#E67E22"><b>📍 ${annonce.ville} (${annonce.pays})</b></font><br>
+                        <div style="background:#F0F9FF; padding:8px; border-radius:8px; margin:10px 0; border-left: 5px solid #008080;">
+                            <font size="3" color="#008080"><b>🚀 Zone d'action :</b> ${annonce.km}</font>
+                        </div>
+                        <font size="3"><b>Semé par :</b> ${annonce.prenom}</font><br>
+                        <hr color="#eeeeee">
+                        <font size="4">"${annonce.description}"</font><br>
+                        <hr color="#eeeeee">
+                        <font size="2" color="#666">📅 Expire dans : ${annonce.duree} | Le : ${new Date(annonce.date).toLocaleDateString()}</font>
+                    `;
+                    container.appendChild(card);
+                });
+            } catch (e) {
+                document.getElementById('annonces-container').innerHTML = "<p>Erreur de floraison du jardin.</p>";
         const mesPhrases = [
             "Une fleur vient d'éclore grâce à un don de paix",
             "La fraternité grandit ici...",
@@ -174,9 +195,10 @@
 
             requestAnimationFrame(loop);
         }
+        window.onload = chargerJardin;
 
         startNewMessenger();
         loop();
     </script>
 </body>
-</html>
+</html
