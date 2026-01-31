@@ -1,3 +1,5 @@
+<!DOCTYPE html>
+<html lang="fr">
 <head>
     <meta charset="UTF-8">
     <title>Le Petit Prince des Jardiniers - Accueil</title>
@@ -11,6 +13,23 @@
             text-align: center; 
             margin: 0; padding: 0;
         }
+        /* Barre de navigation */
+        nav {
+            background-color: rgba(0, 128, 128, 0.9);
+            padding: 15px;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        nav a {
+            color: #FFFF00;
+            text-decoration: none;
+            margin: 0 15px;
+            font-weight: bold;
+            font-size: 1.1em;
+        }
+        nav a:hover { text-decoration: underline; }
+
         .cadre-principal {
             max-width: 800px;
             margin: 30px auto;
@@ -50,51 +69,43 @@
         }
         .yt-link { color: #FFFF00; font-weight: bold; text-decoration: none; }
         footer { margin-top: 40px; font-size: 0.9em; padding-bottom: 20px; }
+        table { margin: 0 auto; }
     </style>
 </head>
 <body>
-<body bgcolor="#FFFFFF" background="http://thiaha.free.fr/improFranckcopyrith.bmp" text="#000080" link="#FF0000" vlink="#800080" alink="#FFFF00">
+
+<nav>
+    <a href="index.html">Accueil</a>
+    <a href="services.html">Services & Tarifs</a>
+    <a href="galerie.html">Réalisations</a>
+    <a href="contact.html">Contact</a>
+</nav>
 
 <div class="cadre-principal">
     <h1>Le Petit Prince des Jardiniers</h1>
     <div class="identite">Franck José Baptiste Pinon de Pessac</div>
     <p><i>Jardinier Humaniste - Éducateur - Philosophe</i></p>
-<center>
-    <font face="Comic Sans MS" size="7" color="#FF0000">
-        <u><b>Le Petit Prince des Jardiniers</b></u>
-    </font>
-    <br>
-    <font face="Comic Sans MS" size="4" color="#000080">
-        <b>Franck José Baptiste Pinon de Pessac</b><br>
-        <i>Jardinier Humaniste - Éducateur - Philosophe</i>
-    </font>
 
     <div class="philosophie">
         <strong>Ma Thèse :</strong> Analyse éthique des comportements, de la misère à la richesse du cœur. 
         Ici, nous cultivons la fraternité et la dignité humaine à travers le don pur.
         S'il vous plaît... dessine-moi une main tendue.
     </div>
-    <br><br>
 
     <p>Partagez votre savoir, votre temps ou vos cadeaux :</p>
     
-    <a href="formulaire.htm" class="btn-action">🌻 ENTRER DANS L'ESPACE DE DON</a>
-    <table border="10" cellpadding="20" cellspacing="0" width="85%" bordercolor="#800080" bgcolor="#FFFFFF">
+    <a href="contact.html" class="btn-action">🌻 ENTRER DANS L'ESPACE DE DON</a>
+
+    <table border="10" cellpadding="20" cellspacing="0" width="90%" bordercolor="#800080" bgcolor="#FFFFFF">
         <tr>
             <td align="center">
-                
                 <img src="http://thiaha.free.fr/Franckp.jpg" border="2" alt="Franck Pinon" width="200"><br><br>
-
-                <font face="Comic Sans MS" size="4" color="#008080">
-                    <b>"S'il vous plaît... dessine-moi un partage."</b>
-                </font>
-                
+                <font size="4" color="#008080"><b>"S'il vous plaît... dessine-moi un partage."</b></font>
                 <br><br>
-                
-                <table border="1" cellpadding="15" cellspacing="0" bgcolor="#F4F4F4" width="90%">
+                <table border="1" cellpadding="15" cellspacing="0" bgcolor="#F4F4F4" width="95%">
                     <tr>
                         <td align="justify">
-                            <font face="Comic Sans MS" size="3">
+                            <font size="3">
                                 <b>Ma Thèse :</b> Analyse éthique des comportements, de la misère à la richesse du cœur. 
                                 Ce site est un espace de <b>Don Pur</b>. Nous cultivons ici la fraternité, la dignité humaine 
                                 et l'entraide gratuite, loin des logiques marchandes. 
@@ -105,59 +116,23 @@
                         </td>
                     </tr>
                 </table>
-
-                <br><br>
-
-                <table border="4" cellpadding="10" cellspacing="0" bgcolor="#FFFF00" bordercolor="#000080">
-                    <tr>
-                        <td align="center">
-                            <a href="formulaire.htm" style="text-decoration:none;">
-                                <font face="Comic Sans MS" size="5" color="#FF0000">
-                                    <b>🌻 ENTRER DANS L'ESPACE DE DON 🌻</b>
-                                </font>
-                            </a>
-                        </td>
-                    </tr>
-                </table>
-
-    <div class="yt-box">
-        <strong>Retrouvez ma pensée en vidéo :</strong><br>
-        <a href="https://www.youtube.com/channel/UCjsudx7f1sl7XQM8ylcBRdQ" target="_blank" class="yt-link">
-            ▶ Chaîne YouTube : Le Petit Prince des Jardiniers
-        </a>
-    </div>
-                <br>
-
-    <footer>
-        <p>#Liberté #Amour #Gratuité #Fraternité</p>
-        <strong>© 2000 | Copyrith Le Petit Prince des Jardiniers</strong><br>
-                <table border="1" cellpadding="5" cellspacing="0" bgcolor="#000080">
-                    <tr>
-                        <td>
-                            <a href="https://www.youtube.com/channel/UCjsudx7f1sl7XQM8ylcBRdQ" target="_blank" style="text-decoration:none;">
-                                <font face="Comic Sans MS" size="2" color="#FFFF00">
-                                    Voir ma chaîne YouTube : Le Petit Prince des Jardiniers
-                                </font>
-                            </a>
-                        </td>
-                    </tr>
-                </table>
-
             </td>
         </tr>
     </table>
 
-    <br>
+    <div class="yt-box">
+        <strong>Retrouvez ma pensée en vidéo :</strong><br><br>
+        <a href="https://www.youtube.com/channel/UCjsudx7f1sl7XQM8ylcBRdQ" target="_blank" class="yt-link">
+            ▶ Chaîne YouTube : Le Petit Prince des Jardiniers
+        </a>
+    </div>
 
-    <font face="Comic Sans MS" size="2" color="#000080">
-        #Liberté #Amour #Gratuité #Fraternité<br><br>
-        <b>© 2000 | Copyrith Le Petit Prince des Jardiniers</b><br>
+    <footer>
+        <p>#Liberté #Amour #Gratuité #Fraternité</p>
+        <strong>© 2000 - 2024 | Copyrith Le Petit Prince des Jardiniers</strong><br>
         Franck José Baptiste Pinon de Pessac
     </footer>
 </div>
-    </font>
-    
-</center>
 
 </body>
 </html>
