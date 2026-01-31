@@ -2,24 +2,63 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <title>Semer un Cadeau</title>
+    <title>Semer un Cadeau - Le Petit Prince des Jardiniers</title>
     <style>
-        body { font-family: 'Comic Sans MS', cursive; background-color: #FFFF00; text-align: center; padding: 20px; }
-        .form-container { background: white; padding: 30px; border-radius: 20px; max-width: 500px; margin: auto; border: 4px solid #E67E22; }
-        input, textarea { width: 100%; margin: 10px 0; padding: 10px; border-radius: 10px; border: 1px solid #ccc; box-sizing: border-box; }
-        button { background: #E67E22; color: white; border: none; padding: 15px 30px; border-radius: 20px; cursor: pointer; font-weight: bold; }
+        /* On garde ton style original */
+        body { font-family: 'Comic Sans MS', cursive; text-align: center; margin: 0; padding: 0; background-color: #FFFF00; color: #000080; }
+        
+        #google_translate_element { padding: 10px; background: rgba(255,255,255,0.5); border-bottom: 1px solid #008080; min-height: 40px; }
+
+        .menu-table { margin: 20px auto; border-radius: 10px; background-color: #008080; border-collapse: collapse; margin-left: auto; margin-right: auto; }
+        .menu-table td { padding: 10px 15px; border: 1px solid #FFFFFF; }
+        .menu-table a { text-decoration: none; color: #FFFFFF; font-weight: bold; }
+
+        .form-container { 
+            background: white; border: 4px solid #E67E22; border-radius: 30px; 
+            width: 90%; max-width: 600px; margin: 30px auto; padding: 30px;
+            box-shadow: 10px 10px 0px #E67E22;
+        }
+        input, textarea { width: 100%; padding: 12px; margin: 10px 0; border-radius: 15px; border: 2px solid #008080; box-sizing: border-box; font-family: inherit; }
+        .btn-envoyer { background: #E67E22; color: white; border: none; padding: 15px 30px; border-radius: 20px; font-weight: bold; cursor: pointer; font-size: 1.2em; }
+        .btn-envoyer:disabled { background: #ccc; cursor: not-allowed; }
     </style>
 </head>
 <body>
-    <h1>🌱 Semer une Graine</h1>
+
+    <div id="google_translate_element"></div>
+    <script type="text/javascript">
+        function googleTranslateElementInit() { new google.translate.TranslateElement({pageLanguage: 'fr'}, 'google_translate_element'); }
+    </script>
+    <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+
+    <table class="menu-table">
+        <tr>
+            <td><a href="index.html">Accueil</a></td>
+            <td><a href="formulaire.html">Semer</a></td>
+            <td><a href="jardin.html">Le Jardin</a></td>
+            <td><a href="contact.html">Contact</a></td>
+        </tr>
+    </table>
+
+    <h2 style="color: #E67E22;">🌱 Semer une Graine de Générosité</h2>
+    <p><i>"Cadeaux sans détour, cadeaux sans demande de retour."</i></p>
+
     <div class="form-container">
         <form id="seedForm">
-            <input type="text" id="nom" placeholder="Ton Nom / Pseudo" required>
-            <input type="text" id="ville" placeholder="Ta Ville" required>
-            <textarea id="offre" rows="4" placeholder="Que veux-tu offrir sans détour ?" required></textarea>
-            <button type="submit" id="btnEnvoi">LÂCHER LA GRAINE 🌻</button>
+            <label>Ton Identité (Pseudo ou Nom) :</label>
+            <input type="text" id="nom" placeholder="Ex: Le Jardinier du Dimanche" required>
+
+            <label>Ta Localisation :</label>
+            <input type="text" id="ville" placeholder="Ville, Pays..." required>
+
+            <label>Ce que tu offres au monde :</label>
+            <textarea id="offre" rows="5" placeholder="Décris ton cadeau sans détour (objet, service, temps...)" required></textarea>
+
+            <button type="submit" id="btnEnvoi" class="btn-envoyer">LÂCHER LA GRAINE 🌻</button>
         </form>
     </div>
+
+    <p><a href="index.html" style="color: #000080; font-weight: bold;">← Retourner au Trésor Public</a></p>
 
     <script>
         const URL_SERVEUR = "https://script.google.com/macros/s/AKfycbz4ncs9qw_AfmKSER5QST-P0OeKQggQaq86QC6liS53uZ9sx4Lo_-4-h1knXKWqgQMc/exec";
@@ -27,7 +66,7 @@
         document.getElementById('seedForm').addEventListener('submit', function(e) {
             e.preventDefault();
             const btn = document.getElementById('btnEnvoi');
-            btn.innerText = "Envoi en cours...";
+            btn.innerText = "Semailles en cours...";
             btn.disabled = true;
 
             const donnees = {
@@ -40,14 +79,14 @@
 
             fetch(URL_SERVEUR, {
                 method: 'POST',
-                mode: 'no-cors', // Important pour Google Apps Script
+                mode: 'no-cors', 
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(donnees)
             }).then(() => {
-                alert("Bravo ! Ta graine est enregistrée.");
+                alert("Bravo ! Ta graine a bien rejoint le jardin.");
                 window.location.href = "jardin.html";
             }).catch(err => {
-                alert("Erreur d'envoi. Réessaie !");
+                alert("Le vent a emporté la graine... Réessaie !");
                 btn.disabled = false;
                 btn.innerText = "LÂCHER LA GRAINE 🌻";
             });
