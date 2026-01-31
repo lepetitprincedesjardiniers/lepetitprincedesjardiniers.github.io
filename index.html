@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Le Trésor Public - Accueil Validé</title>
     <style>
+        /* Design Global */
         body { 
             font-family: 'Comic Sans MS', cursive; 
             text-align: center; 
@@ -16,6 +17,7 @@
             min-height: 100vh; 
         }
 
+        /* Traducteur Google */
         #google_translate_element { 
             padding: 10px; 
             background: rgba(255,255,255,0.5); 
@@ -23,6 +25,7 @@
             min-height: 40px; 
         }
 
+        /* Menu de Navigation */
         .menu-table { 
             margin: 20px auto; 
             border-radius: 10px; 
@@ -34,6 +37,7 @@
         .menu-table td { padding: 10px 15px; border: 1px solid #FFFFFF; }
         .menu-table a { text-decoration: none; color: #FFFFFF; font-weight: bold; }
 
+        /* Soleil Central */
         .soleil-don {
             background: #FFD700; 
             width: 250px; height: 250px; 
@@ -45,6 +49,7 @@
         }
         .soleil-don:hover { transform: scale(1.1) rotate(5deg); }
 
+        /* Grille des Bulles */
         .bulles-grid { 
             display: flex; justify-content: center; align-items: center; 
             gap: 25px; flex-wrap: wrap; padding: 20px; max-width: 1200px; margin: auto; 
@@ -58,6 +63,7 @@
         .nuage-rose { background: #ffebee; border-color: #e91e63; }
         .nuage:hover { transform: translateY(-10px); }
 
+        /* Étoile */
         .etoile-justice {
             background: #E6E6FA; border: 3px solid #9370DB; 
             width: 350px; height: 350px;
@@ -69,6 +75,7 @@
 
         .exemples { font-size: 0.85em; color: #2E7D32; font-style: italic; margin-top: 10px; font-weight: bold; }
 
+        /* Cadeau et Messager */
         .animal-container { position: fixed; z-index: 900; pointer-events: none; display: flex; align-items: center; }
         .bulle-texte { 
             background: white; border: 2px solid #2E7D32; border-radius: 15px; 
@@ -116,7 +123,9 @@
             <h3 style="color:#008080; margin:0; text-transform:uppercase;">📜 Impôt Public</h3>
             <p style="margin:10px 0; font-weight:bold;">Travaux publics en libre participation.</p>
             <p style="font-size:0.9em; margin:0;">Tâches nécessaires au fonctionnement de la collectivité.</p>
-            <div class="exemples">Ex: Nettoyage bois communal, réfection route...</div>
+            <div class="exemples">
+                Ex : Nettoyage bois communal, réfection route, tâches administratives...
+            </div>
         </a>
 
         <a href="regulation.html" class="etoile-justice">
@@ -129,7 +138,7 @@
         <a href="urgence.html" class="nuage nuage-rose">
             <h3 style="color:#e91e63; margin:0;">❤️ Urgence & Écoute</h3>
             <p style="margin:10px 0; font-weight:bold;">Besoins vitaux et aide aux projets.</p>
-            <div class="exemples">Ex: Aide charpente, besoin d'un câlin, recherche farine...</div>
+            <div class="exemples">Ex : Aide charpente, besoin d'un câlin, recherche farine...</div>
         </a>
     </div>
 
@@ -143,6 +152,7 @@
         const basePhrases = [
             "L'Impôt Public est un geste de cœur", 
             "Tâches nécessaires au fonctionnement de la collectivité",
+            "Besoin d'aide pour des tâches administratives ?",
             "Ici, on sème des graines de générosité",
             "La meilleure justice est encore le pardon",
             "Mon cœur a besoin d'un câlin",
@@ -175,9 +185,7 @@
         }
 
         function createMessenger() {
-            // CONDITION : S'il y a déjà un messager, on n'en crée pas d'autre
             if (messagers.length > 0 || disponibles.length === 0) return;
-
             const side = Math.floor(Math.random()*3);
             let start = {x:-200, y:Math.random()*window.innerHeight};
             if(side===1) start.x = window.innerWidth+200;
@@ -210,18 +218,13 @@
                         m.state="WAIT"; createConfetti(m.x, m.y); coffre.classList.add('pop');
                         setTimeout(() => { 
                             m.state="OUT"; coffre.classList.remove('pop');
-                            m.bulle.style.opacity=0; 
-                            // Choisir une sortie loin
-                            m.tx = (m.x < window.innerWidth/2) ? -400 : window.innerWidth+400;
+                            m.bulle.style.opacity=0; m.tx = (m.x < window.innerWidth/2) ? -400 : window.innerWidth+400;
                         }, 4000);
                     }
                 } else if(m.state === "OUT") {
                     m.x += (m.tx-m.x)*0.02; m.y += (m.ty-m.y)*0.02;
-                    // On supprime quand il est vraiment sorti
                     if(m.x<-350 || m.x>window.innerWidth+350 || m.y<-350 || m.y>window.innerHeight+350) { 
-                        disponibles.push(m.texte); 
-                        m.el.remove(); 
-                        messagers.splice(i,1); 
+                        disponibles.push(m.texte); m.el.remove(); messagers.splice(i,1); 
                     }
                 }
                 m.el.style.left = m.x+"px"; m.el.style.top = (m.y + Math.sin(Date.now()*0.005+m.seed)*15)+"px";
@@ -231,11 +234,7 @@
             coffre.style.left = coffreX+"px"; coffre.style.top = coffreY+"px";
             requestAnimationFrame(loop);
         }
-        
-        // On tente d'en créer un toutes les 3 secondes, mais la sécurité bloquera si un oiseau est déjà là
-        setInterval(createMessenger, 3000); 
-        createMessenger(); 
-        loop();
+        setInterval(createMessenger, 3000); createMessenger(); loop();
     </script>
 </body>
 </html>
