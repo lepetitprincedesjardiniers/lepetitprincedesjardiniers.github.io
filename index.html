@@ -6,13 +6,13 @@
     <style>
         body { font-family: 'Comic Sans MS', cursive; text-align: center; margin: 0; padding: 0; background-color: #FFFF00; color: #000080; overflow-x: hidden; min-height: 100vh; }
         
-        /* Menu Table */
-        .menu-table { margin: 20px auto; border-radius: 10px; background-color: #008080; border-collapse: collapse; }
+        /* Menu */
+        .menu-table { margin: 20px auto; border-radius: 10px; background-color: #008080; border-collapse: collapse; margin-left: auto; margin-right: auto; }
         .menu-table td { padding: 10px 15px; border: 1px solid #FFFFFF; }
         .menu-table a { text-decoration: none; color: #FFFFFF; font-weight: bold; }
 
-        /* Le Soleil du Don Entier */
-        .soleil-container { margin: 40px auto; width: 250px; position: relative; }
+        /* Soleil du Don Entier */
+        .soleil-container { margin: 40px auto; width: 250px; position: relative; display: inline-block; }
         .soleil-don {
             background: #FFD700; width: 220px; height: 220px; border-radius: 50%;
             display: flex; align-items: center; justify-content: center;
@@ -22,7 +22,7 @@
         }
         .soleil-don:hover { transform: scale(1.1) rotate(15deg); }
 
-        /* Moteur de Recherche Avancé */
+        /* Moteur de Recherche */
         .moteur-recherche {
             background: rgba(255, 255, 255, 0.8); border: 3px solid #008080;
             border-radius: 20px; padding: 20px; margin: 30px auto; width: 90%; max-width: 800px;
@@ -31,25 +31,29 @@
             padding: 10px; border-radius: 10px; border: 2px solid #008080; margin: 5px; font-family: 'Comic Sans MS';
         }
 
-        /* Les Bulles (Nuages et Étoile) */
+        /* Les Liens Bulles (Nuages et Étoile) */
         .bulles-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 25px; padding: 20px; max-width: 1000px; margin: auto; }
         
+        .bulle-lien { text-decoration: none; color: inherit; display: flex; }
+
         .nuage {
-            background: white; border-radius: 50px; padding: 25px; min-height: 180px;
+            background: white; border-radius: 50px; padding: 25px; min-height: 180px; width: 100%;
             border: 3px solid #87CEEB; box-shadow: 8px 8px 0px #87CEEB;
             transition: 0.3s; cursor: pointer; display: flex; flex-direction: column; justify-content: center;
         }
-        .nuage:hover { transform: translateY(-10px); }
+        .nuage:hover { transform: translateY(-10px); background: #f0faff; }
 
         .etoile-justice {
-            background: #E6E6FA; border: 3px solid #9370DB;
+            background: #E6E6FA; border: 3px solid #9370DB; width: 100%;
             clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
             min-height: 250px; display: flex; align-items: center; justify-content: center; padding: 40px;
+            transition: 0.3s;
         }
+        .etoile-justice:hover { transform: scale(1.05); background: #f3f0ff; }
 
         .exemples { font-size: 0.85em; color: #2E7D32; font-style: italic; margin-top: 10px; }
 
-        /* Animations déjà présentes */
+        /* Animations */
         #coffre-magique { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); font-size: 60px; z-index: 800; transition: transform 0.3s; }
         #animal-container { position: fixed; z-index: 900; white-space: nowrap; display: flex; align-items: center; pointer-events: none; }
         #corps-animal { font-size: 50px; }
@@ -62,7 +66,6 @@
 <body>
 
     <audio id="chantOiseaux" loop><source src="oiseaux.mp3" type="audio/mpeg"></audio>
-    <div id="google_translate_element" style="padding:10px;"></div>
 
     <table class="menu-table">
         <tr>
@@ -74,13 +77,13 @@
     </table>
 
     <h1>💰 Le Trésor Public du Jardin Collectif</h1>
-    <p><strong>Bienvenue dans l'économie de la Fraternité Universelle</strong></p>
+    <p><strong>Identité : Le Petit Prince des Jardiniers</strong></p>
 
     <div class="soleil-container">
         <a href="formulaire.html" class="soleil-don">
             <div>
                 ☀️<br>ESPACE DU DON ENTIER<br>
-                <small>Cadeau existentiel<br>sans retour attendu</small>
+                <small>Cadeau sans retour</small>
             </div>
         </a>
     </div>
@@ -89,48 +92,45 @@
         <h3>🔍 Ratisser Large (Moteur de Recherche Citoyen)</h3>
         <select>
             <option>Choisir Pays...</option>
-            <option>France</option><option>Belgique</option><option>Suisse</option><option>Québec</option>
-            <option>Groland</option><option>Belle Brousse</option><option>Pays des Schtroumpfs</option>
+            <option>France</option><option>Groland</option><option>Belle Brousse</option>
         </select>
-        <input type="text" placeholder="Ville ou Village Secret">
+        <input type="text" placeholder="Ta Ville">
         <select>
-            <option>Rayon d'action...</option>
-            <option value="10">10 km / 6 miles</option>
-            <option value="50">50 km / 31 miles</option>
-            <option value="999">Infini (Universel)</option>
+            <option>Zone (km)...</option>
+            <option>10 km</option><option>100 km</option><option>Infini</option>
         </select>
         <br>
-        <input type="text" placeholder="Ta requête (ex: farine, aide, calin...)" style="width: 60%;">
-        <button style="background:#E67E22; color:white; border:none; padding:10px 20px; border-radius:10px; cursor:pointer; font-weight:bold;">Lancer la Quête</button>
+        <input type="text" placeholder="Que cherches-tu ?" style="width: 60%;">
+        <button style="background:#E67E22; color:white; border:none; padding:10px; border-radius:10px; cursor:pointer;">Lancer la Quête</button>
     </div>
 
     <div class="bulles-grid">
         
-        <div class="nuage">
-            <h3>🕒 Espace Temps Public</h3>
-            <p>Travaux de libre participation nécessaires au fonctionnement collectif.</p>
-            <div class="exemples">
-                Ex: Nettoyage du bois communal, réfection de route, volontaires urgence pays...
+        <a href="urgence.html" class="bulle-lien">
+            <div class="nuage">
+                <h3>🕒 Espace Temps Public</h3>
+                <p>Participation aux travaux collectifs.</p>
+                <div class="exemples">Ex: Routes, bois communal, volontariat...</div>
             </div>
-        </div>
+        </a>
 
-        <div class="nuage">
-            <h3>❤️ Urgence, Détresse & Écoute</h3>
-            <p>Recherche d'aide pour projets personnels ou besoins vitaux.</p>
-            <div class="exemples">
-                Ex: Refaire ma charpente, besoin d'un câlin, recherche farine pour mon pain quotidien...
+        <a href="urgence.html" class="bulle-lien">
+            <div class="nuage">
+                <h3>❤️ Urgence & Écoute</h3>
+                <p>Besoins vitaux et projets personnels.</p>
+                <div class="exemples">Ex: Câlin, farine, aide charpente...</div>
             </div>
-        </div>
+        </a>
 
-        <div class="nuage etoile-justice">
-            <div>
-                <h3>⚖️ Régulation Citoyenne</h3>
-                <p>Expose ton conflit à la communauté. Justice et délicatesse.</p>
-                <div class="exemples">
-                    Soutien, sentence ou pardon : notre ensemble régule sa justice.
+        <a href="regulation.html" class="bulle-lien">
+            <div class="nuage etoile-justice">
+                <div>
+                    <h3>⚖️ Régulation Citoyenne</h3>
+                    <p>Conflits et Justice Délicate.</p>
+                    <div class="exemples">Soutien, sentence ou pardon.</div>
                 </div>
             </div>
-        </div>
+        </a>
 
     </div>
 
@@ -140,17 +140,11 @@
         <div id="corps-animal">🕊️</div>
     </div>
 
-    <script type="text/javascript">
-        function googleTranslateElementInit() { new google.translate.TranslateElement({pageLanguage: 'fr'}, 'google_translate_element'); }
-    </script>
-    <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
-
     <script>
-        // Logique des animaux et confettis (toujours active)
-        const mesPhrases = ["Le Trésor Public est rempli de vos cœurs", "Engendrer de la fraternité...", "La justice délicate de notre ensemble"];
+        // Scripts animaux, oiseaux et confettis identiques aux pages précédentes
+        const mesPhrases = ["Le Trésor Public grandit !", "Engendrer de la fraternité...", "Justice et délicatesse"];
         const animaux = ['🕊️', '🦋', '🐝', '🐞', '🦜', '🐰'];
         const fleurs = ['🌸', '🌼', '🌻', '🌺'];
-
         const animalCont = document.getElementById('animal-container');
         const bulle = document.getElementById('bulle-texte');
         const corps = document.getElementById('corps-animal');
