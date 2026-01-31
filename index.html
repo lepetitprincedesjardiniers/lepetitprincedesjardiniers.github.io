@@ -12,68 +12,51 @@
             margin: 0; padding: 0; text-align: center; 
         }
 
-        /* TRADUCTEUR */
-        #google_translate_element { 
-            padding: 10px; 
-            background: rgba(255,255,255,0.5); 
-            border-bottom: 2px solid #008080; 
-        }
+        #google_translate_element { padding: 10px; background: rgba(255,255,255,0.5); border-bottom: 2px solid #008080; }
 
-        /* MENU DE NAVIGATION */
         .menu-table { 
-            margin: 20px auto; 
-            background-color: #008080; 
-            border-collapse: collapse; 
-            border-radius: 15px; 
-            overflow: hidden;
-            box-shadow: 0px 4px 10px rgba(0,0,0,0.2);
+            margin: 20px auto; background-color: #008080; border-collapse: collapse; 
+            border-radius: 15px; overflow: hidden; box-shadow: 0px 4px 10px rgba(0,0,0,0.2);
         }
         .menu-table td { padding: 15px 25px; border: 1px solid #FFFFFF; }
-        .menu-table a { text-decoration: none; color: #FFFFFF; font-weight: bold; font-size: 1.1em; }
+        .menu-table a { text-decoration: none; color: #FFFFFF; font-weight: bold; }
         .menu-table td:hover { background-color: #006666; }
 
-        /* CONTENU PRINCIPAL */
-        .hero-section { padding: 50px 20px; }
+        .hero-section { padding: 40px 20px; }
+        h1 { font-size: 3.5em; color: #008080; text-shadow: 2px 2px #FFFFFF; margin-bottom: 5px; }
         
-        h1 { font-size: 3em; color: #008080; text-shadow: 2px 2px #FFFFFF; margin-bottom: 10px; }
-
         .philosophie { 
-            font-style: italic; 
-            font-size: 1.4em; 
-            color: #008080; 
-            margin: 30px auto; 
-            max-width: 800px; 
-            line-height: 1.6;
-            background: rgba(255,255,255,0.3);
-            padding: 20px;
-            border-radius: 50px;
+            font-style: italic; font-size: 1.5em; color: #008080; 
+            margin: 20px auto; max-width: 850px; line-height: 1.4;
+            background: white; padding: 25px; border-radius: 50px;
+            box-shadow: 8px 8px 0px #008080;
         }
 
-        /* RECHERCHE RAPIDE */
+        .presentation-box {
+            max-width: 800px; margin: 40px auto; background: white; 
+            padding: 30px; border-radius: 20px; text-align: left;
+            border: 3px solid #008080; line-height: 1.6;
+        }
+
         #searchBox {
-            width: 80%; max-width: 500px; 
-            padding: 15px; margin: 20px auto;
-            border-radius: 30px; border: 3px solid #008080; 
-            font-family: inherit; font-size: 1em;
-            outline: none;
+            width: 80%; max-width: 600px; padding: 15px; margin: 30px auto;
+            border-radius: 30px; border: 4px solid #008080; 
+            font-family: inherit; font-size: 1.1em; outline: none;
         }
 
-        /* FLUX D'ACTIVITÉ */
-        .flux-container { max-width: 800px; margin: 40px auto; text-align: left; padding: 0 20px; }
+        .flux-container { max-width: 800px; margin: 40px auto; text-align: left; padding: 20px; }
         .carte-activite { 
-            background: white; border-radius: 15px; padding: 15px; margin-bottom: 15px;
-            border-left: 8px solid #008080; box-shadow: 4px 4px 10px rgba(0,0,0,0.1);
+            background: white; border-radius: 15px; padding: 20px; margin-bottom: 20px;
+            border-left: 10px solid #008080; box-shadow: 4px 4px 10px rgba(0,0,0,0.1);
         }
-        .type-tag { font-weight: bold; text-transform: uppercase; font-size: 0.8em; padding: 3px 8px; border-radius: 5px; color: white; }
+        .tag { font-weight: bold; padding: 4px 10px; border-radius: 5px; color: white; font-size: 0.8em; }
     </style>
 </head>
 <body>
 
     <div id="google_translate_element"></div>
-    <script type="text/javascript">
-        function googleTranslateElementInit() { new google.translate.TranslateElement({pageLanguage: 'fr'}, 'google_translate_element'); }
-    </script>
-    <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+    <script>function googleTranslateElementInit() { new google.translate.TranslateElement({pageLanguage: 'fr'}, 'google_translate_element'); }</script>
+    <script src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
 
     <table class="menu-table">
         <tr>
@@ -87,65 +70,74 @@
 
     <div class="hero-section">
         <h1>Le Trésor Public</h1>
-        
         <div class="philosophie">
             "Ici, on sème tout ce qui est BON, on ne demande rien de précis, et on cultive la paix sans condamner."
         </div>
-
-        <input type="text" id="searchBox" onkeyup="filtrerTout()" placeholder="🔍 Rechercher un lieu, un don ou un appel dans le Jardin...">
     </div>
 
+    <div class="presentation-box">
+        <h2 style="color:#008080; margin-top:0;">Bienvenue dans notre Bien Commun</h2>
+        <p>Le <b>Trésor Public</b> n'est pas une banque, c'est un écosystème de fraternité. C'est un espace où chaque geste, chaque don et chaque mot participe à la floraison d'un jardin partagé.</p>
+        <ul>
+            <li><b>Semer :</b> Déposez une graine (un don, une aide, un service).</li>
+            <li><b>Le Jardin :</b> Admirez la forêt de générosité qui grandit.</li>
+            <li><b>Régulation :</b> Équilibrez les relations par la sagesse et l'écoute.</li>
+            <li><b>Urgences :</b> Répondez aux appels du cœur quand la situation l'exige.</li>
+        </ul>
+        <p align="center"><i>Rien n'est obligatoire, tout est volontaire.</i></p>
+    </div>
+
+    <input type="text" id="searchBox" onkeyup="filtrerTout()" placeholder="🔍 Ratisser large : Cherchez une ville, un pays, un nom ou un besoin...">
+
     <div class="flux-container">
-        <h2 style="text-align: center; color: #008080;">Dernières activités du Jardin</h2>
-        <div id="chargement" style="text-align: center;">Ouverture des portes du jardin...</div>
+        <h2 style="text-align: center; color: #008080;">🌱 Vie du Jardin en Temps Réel</h2>
+        <div id="chargement" style="text-align: center;">Connexion aux racines du jardin...</div>
         <div id="flux-global"></div>
     </div>
 
     <script>
         const URL_SERVEUR = "https://script.google.com/macros/s/AKfycbz4ncs9qw_AfmKSER5QST-P0OeKQggQaq86QC6liS53uZ9sx4Lo_-4-h1knXKWqgQMc/exec";
 
-        // RÉCUPÉRATION DES DONNÉES
+        // RÉCUPÉRATION DES DONNÉES DEPUIS GOOGLE SHEETS
         fetch(URL_SERVEUR)
             .then(res => res.json())
             .then(data => {
                 const flux = document.getElementById('flux-global');
                 document.getElementById('chargement').style.display = 'none';
 
-                // On affiche tout (Dons, Urgences, Conflits) trié par le plus récent
                 data.reverse().forEach(item => {
-                    if (item.type === "avis") return; // On ne montre pas les réponses ici
+                    if (item.type === "avis") return; 
 
-                    let couleur = "#008080";
-                    let icone = "✨";
-                    
-                    if(item.type === "Urgence") { couleur = "#e91e63"; icone = "🚨"; }
-                    if(item.type === "conflit") { couleur = "#9370DB"; icone = "⚖️"; }
-                    if(item.type === "Graine" || item.type === "Don") { couleur = "#4CAF50"; icone = "🌱"; }
+                    let col = "#008080"; let ico = "✨";
+                    if(item.type === "Urgence") { col = "#e91e63"; ico = "🚨"; }
+                    if(item.type === "conflit") { col = "#9370DB"; ico = "⚖️"; }
+                    if(item.type === "Graine" || item.type === "Don") { col = "#4CAF50"; ico = "🌱"; }
 
                     const div = document.createElement('div');
                     div.className = 'carte-activite';
-                    div.style.borderLeftColor = couleur;
+                    div.style.borderLeftColor = col;
                     div.innerHTML = `
-                        <span class="type-tag" style="background:${couleur}">${icone} ${item.type}</span>
-                        <small style="float:right;">${item.date}</small>
-                        <div style="margin-top:10px;">
-                            <b>${item.nom}</b> à ${item.localisation}<br>
-                            <p style="margin-top:5px; font-style:italic;">"${item.message}"</p>
+                        <span class="tag" style="background:${col}">${ico} ${item.type}</span>
+                        <small style="float:right; color:#666;">${item.date}</small>
+                        <div style="margin-top:15px;">
+                            <b style="font-size:1.1em;">${item.nom}</b> à <b style="color:#008080;">${item.localisation}</b>
+                            <p style="margin-top:10px; font-style:italic; color:#333; background:#f9f9f9; padding:10px; border-radius:8px;">
+                                "${item.message}"
+                            </p>
                         </div>
                     `;
                     flux.appendChild(div);
                 });
             })
-            .catch(err => {
-                document.getElementById('chargement').innerText = "Le jardin est paisible et silencieux.";
-            });
+            .catch(() => { document.getElementById('chargement').innerText = "Le jardin se repose..."; });
 
-        // FONCTION DE RECHERCHE
+        // LE MOTEUR DE RECHERCHE QUI RATISSE LARGE
         function filtrerTout() {
-            let val = document.getElementById('searchBox').value.toLowerCase();
+            let filter = document.getElementById('searchBox').value.toLowerCase();
             let cartes = document.getElementsByClassName('carte-activite');
-            for (let c of cartes) {
-                c.style.display = c.innerText.toLowerCase().includes(val) ? "" : "none";
+            for (let i = 0; i < cartes.length; i++) {
+                let contenu = cartes[i].textContent || cartes[i].innerText;
+                cartes[i].style.display = contenu.toLowerCase().includes(filter) ? "" : "none";
             }
         }
     </script>
