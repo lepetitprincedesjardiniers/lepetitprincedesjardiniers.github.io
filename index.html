@@ -17,9 +17,12 @@
             min-height: 100vh; 
         }
 
-        /* Styles des éléments existants */
         #google_translate_element { padding: 10px; background: rgba(255,255,255,0.5); border-bottom: 1px solid #008080; }
-        .menu-table { margin: 20px auto; border-radius: 10px; background-color: #008080; border-collapse: collapse; margin-left: auto; margin-right: auto; }
+        
+        .menu-table { 
+            margin: 20px auto; border-radius: 10px; background-color: #008080; 
+            border-collapse: collapse; margin-left: auto; margin-right: auto; 
+        }
         .menu-table td { padding: 10px 15px; border: 1px solid #FFFFFF; }
         .menu-table a { text-decoration: none; color: #FFFFFF; font-weight: bold; }
         
@@ -32,9 +35,21 @@
         }
 
         .bulles-grid { display: flex; justify-content: center; align-items: center; gap: 25px; flex-wrap: wrap; padding: 20px; }
-        .nuage { background: #e0f7fa; border: 3px solid #008080; border-radius: 50px; padding: 20px; width: 300px; min-height: 200px; text-decoration: none; color: inherit; display: flex; flex-direction: column; justify-content: center; transition: 0.3s; }
+        
+        .nuage { 
+            background: #e0f7fa; border: 3px solid #008080; border-radius: 50px; padding: 20px; 
+            width: 300px; min-height: 200px; text-decoration: none; color: inherit; 
+            display: flex; flex-direction: column; justify-content: center; transition: 0.3s; 
+        }
         .nuage-rose { background: #ffebee; border-color: #e91e63; }
-        .etoile-justice { background: #E6E6FA; border: 3px solid #9370DB; width: 350px; height: 350px; clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%); transition: 0.5s; cursor: pointer; text-decoration: none; color: inherit; display: flex; align-items: center; justify-content: center; }
+        
+        .etoile-justice { 
+            background: #E6E6FA; border: 3px solid #9370DB; width: 350px; height: 350px; 
+            clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%); 
+            transition: 0.5s; cursor: pointer; text-decoration: none; color: inherit; 
+            display: flex; align-items: center; justify-content: center; 
+        }
+        
         .exemples { font-size: 0.85em; color: #2E7D32; font-style: italic; margin-top: 10px; font-weight: bold; }
 
         /* ANIMAUX ET CADEAU */
@@ -45,26 +60,21 @@
         .confetti { position: fixed; z-index: 999; pointer-events: none; animation: fly 2s forwards; }
         @keyframes fly { 0% { transform: translate(0,0); opacity: 1; } 100% { transform: translate(var(--dx), var(--dy)); opacity: 0; } }
 
-        /* --- SYSTÈME DE TRANSITION COEUR --- */
+        /* TRANSITION COEUR */
         #overlay-coeur {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: rgba(255, 255, 255, 0.9);
-            display: none; /* Caché par défaut */
-            flex-direction: column; justify-content: center; align-items: center;
+            display: none; flex-direction: column; justify-content: center; align-items: center;
             z-index: 2000;
         }
-
         .big-heart {
             font-size: 15em; color: #FF1493;
             animation: heartbeat 1.2s infinite alternate, multicolor 3s linear infinite;
         }
-
         @keyframes heartbeat { from { transform: scale(1); } to { transform: scale(1.15); } }
         @keyframes multicolor {
             0% { color: #FF1493; } 25% { color: #9400D3; } 50% { color: #00BFFF; } 75% { color: #32CD32; } 100% { color: #FF1493; }
         }
-
-        /* Coeurs et animaux de transition */
         .trans-element { position: absolute; font-size: 3em; animation: flyToCenter 2.5s ease-out forwards; }
         @keyframes flyToCenter {
             0% { transform: translate(var(--sx), var(--sy)) scale(0); opacity: 0; }
@@ -112,7 +122,10 @@
         </a>
 
         <a href="regulation.html" class="etoile-justice">
-            <div style="width:70%;"><h3>⚖️ Régulation Citoyenne</h3><p>Justice avec délicatesse.</p></div>
+            <div style="width:70%;">
+                <h3>⚖️ Régulation Citoyenne</h3>
+                <p style="margin:10px 0; font-size:0.9em;">Justice avec délicatesse : soutien, pénitence ou pardon.</p>
+            </div>
         </a>
 
         <a href="urgence.html" class="nuage nuage-rose">
@@ -126,42 +139,34 @@
     <footer><p>© 2000 <a href="https://www.youtube.com/channel/UCjsudx7f1sl7XQM8ylcBRdQ" target="_blank">Le petit prince des jardiniers</a></p></footer>
 
     <script>
-        // --- LOGIQUE DE LA TRANSITION ---
+        // TRANSITION
         const overlay = document.getElementById('overlay-coeur');
-        const animalsEmoji = ['🕊️', '🦋', '🐝', '🐞', '❤️', '💖'];
+        const animalsEmoji = ['🕊️', '🦋', '🐝', '🐞', '❤️'];
 
         document.querySelectorAll('a').forEach(link => {
             link.addEventListener('click', function(e) {
                 const targetUrl = this.href;
-                
-                // Si c'est un lien interne, on lance l'animation
                 if (targetUrl.includes('.html') && !targetUrl.includes('index.html#')) {
                     e.preventDefault(); 
                     overlay.style.display = 'flex';
-                    
-                    // Créer des animaux/coeurs qui convergent
-                    for(let i=0; i<15; i++) {
+                    for(let i=0; i<12; i++) {
                         setTimeout(() => {
                             const el = document.createElement('div');
                             el.className = 'trans-element';
                             el.innerText = animalsEmoji[Math.floor(Math.random()*animalsEmoji.length)];
                             const angle = Math.random() * Math.PI * 2;
-                            const dist = 400;
-                            el.style.setProperty('--sx', Math.cos(angle)*dist + 'px');
-                            el.style.setProperty('--sy', Math.sin(angle)*dist + 'px');
+                            el.style.setProperty('--sx', Math.cos(angle)*400 + 'px');
+                            el.style.setProperty('--sy', Math.sin(angle)*400 + 'px');
                             overlay.appendChild(el);
-                            setTimeout(() => el.remove(), 2500);
                         }, i * 150);
                     }
-
-                    // Redirection après 3 secondes
-                    setTimeout(() => { window.location.href = targetUrl; }, 3500);
+                    setTimeout(() => { window.location.href = targetUrl; }, 3200);
                 }
             });
         });
 
-        // --- LOGIQUE DES MESSAGERS (Limitée à 3 passages) ---
-        const basePhrases = ["L'Impôt Public est un geste de cœur", "Tâches nécessaires", "Besoin d'aide administrative ?", "Graines de générosité", "Le pardon est justice", "Besoin d'un câlin", "Farine pour le pain"];
+        // MESSAGERS (Limite 3)
+        const basePhrases = ["L'Impôt Public est un geste de cœur", "Besoin d'aide administrative ?", "Graines de générosité", "Le pardon est justice", "Besoin d'un câlin"];
         let disponibles = [...basePhrases];
         const typesAnimaux = ['🕊️', '🦋', '🐝', '🐞'];
         const fleurs = ['🌸', '🌼', '🌻', '🌺'];
@@ -176,7 +181,7 @@
         });
 
         function createConfetti(x, y) {
-            for(let i=0; i<20; i++) {
+            for(let i=0; i<15; i++) {
                 const c = document.createElement('div');
                 c.className = 'confetti';
                 c.innerText = fleurs[Math.floor(Math.random()*4)];
@@ -189,19 +194,13 @@
         }
 
         function createMessenger() {
-            if (passages >= 3 || messagers.length > 0 || disponibles.length === 0) return;
-            let start = {x:-200, y:Math.random()*window.innerHeight};
+            if (passages >= 3 || messagers.length > 0) return;
             const txt = disponibles.splice(Math.floor(Math.random()*disponibles.length), 1)[0];
             const div = document.createElement('div');
             div.className = "animal-container";
             div.innerHTML = `<div class="bulle-texte" style="width:0px">${txt}</div><div style="font-size:50px">${typesAnimaux[Math.floor(Math.random()*4)]}</div>`;
             document.body.appendChild(div);
-
-            messagers.push({
-                el: div, bulle: div.firstChild, texte: txt,
-                x: start.x, y: start.y, tx: 200+Math.random()*(window.innerWidth-400), ty: 200+Math.random()*(window.innerHeight-400),
-                state: "IN", seed: Math.random()*1000
-            });
+            messagers.push({ el: div, bulle: div.firstChild, x: -200, y: 300, tx: 500, ty: 400, state: "IN", seed: Math.random() });
         }
 
         function loop() {
@@ -212,30 +211,23 @@
                     target = m;
                     m.x += (m.tx-m.x)*0.015; m.y += (m.ty-m.y)*0.015;
                     m.bulle.style.opacity = 1;
-                    let w = parseInt(m.bulle.style.width)||0;
-                    if(w<220) m.bulle.style.width = (w+2)+"px";
+                    if(parseInt(m.bulle.style.width)<200) m.bulle.style.width = (parseInt(m.bulle.style.width)+2)+"px";
                     if(Math.abs(m.tx-m.x)<30) {
                         m.state="WAIT"; createConfetti(m.x, m.y); coffre.classList.add('pop');
-                        setTimeout(() => { 
-                            m.state="OUT"; coffre.classList.remove('pop');
-                            m.bulle.style.opacity=0; m.tx = window.innerWidth+300;
-                            passages++;
-                        }, 4000);
+                        setTimeout(() => { m.state="OUT"; coffre.classList.remove('pop'); m.bulle.style.opacity=0; m.tx = window.innerWidth+300; passages++; }, 4000);
                     }
-                } else if(m.state === "OUT") {
-                    m.x += (m.tx-m.x)*0.02; m.y += (m.ty-m.y)*0.02;
+                } else {
+                    m.x += (m.tx-m.x)*0.02;
                     if(m.x>window.innerWidth+250) { m.el.remove(); messagers.splice(i,1); }
                 }
-                m.el.style.left = m.x+"px"; m.el.style.top = (m.y + Math.sin(Date.now()*0.005+m.seed)*15)+"px";
+                m.el.style.left = m.x+"px"; m.el.style.top = (m.y + Math.sin(Date.now()*0.005)*15)+"px";
             }
-            if(target) { coffreX+=(target.x-coffreX)*0.06; coffreY+=(target.y+40-coffreY)*0.06; }
-            else { coffreX+=(window.innerWidth/2-coffreX)*0.02; coffreY+=(window.innerHeight+100-coffreY)*0.02; }
+            coffreX+=( (target?target.x:window.innerWidth/2)-coffreX)*0.05;
+            coffreY+=( (target?target.y+40:window.innerHeight+100)-coffreY)*0.05;
             coffre.style.left = coffreX+"px"; coffre.style.top = coffreY+"px";
             requestAnimationFrame(loop);
         }
-        setInterval(createMessenger, 3000); 
-        createMessenger(); 
-        loop();
+        setInterval(createMessenger, 4000); loop();
     </script>
 </body>
 </html>
