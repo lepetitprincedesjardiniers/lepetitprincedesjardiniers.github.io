@@ -2,30 +2,80 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <title>Le Jardin - Le Petit Prince</title>
+    <title>Le Jardin de la Fraternité</title>
+    <style>
+        body { font-family: 'Comic Sans MS', cursive; text-align: center; margin: 0; padding: 0; background-color: #FFFF00; color: #000080; overflow-x: hidden; min-height: 100vh; }
+        
+        .menu-table { margin: 20px auto; border-radius: 10px; background-color: #008080; border-collapse: collapse; }
+        .menu-table td { padding: 10px 15px; border: 1px solid #FFFFFF; }
+        .menu-table a { text-decoration: none; color: #FFFFFF; font-weight: bold; }
+
+        /* Espace du Jardin Sacré */
+        #jardin-sacre {
+            position: relative;
+            height: 300px;
+            background: linear-gradient(to bottom, #FFFF00, #98FB98);
+            margin: 20px auto;
+            width: 90%;
+            border-radius: 50% 50% 0 0;
+            border-bottom: 5px solid #2E7D32;
+            overflow: hidden;
+        }
+
+        .fleur-clonée {
+            position: absolute;
+            font-size: 25px;
+            animation: grow 1s ease-out forwards;
+        }
+
+        @keyframes grow {
+            0% { transform: scale(0) rotate(-20deg); opacity: 0; }
+            100% { transform: scale(1) rotate(0deg); opacity: 1; }
+        }
+
+        #coffre-magique { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); font-size: 60px; z-index: 800; }
+        #animal-container { position: fixed; z-index: 900; white-space: nowrap; display: flex; align-items: center; pointer-events: none; }
+        #corps-animal { font-size: 50px; }
+        #bulle-texte { background: rgba(255, 255, 255, 0.9); border-radius: 15px; padding: 8px 15px; font-style: italic; color: #2E7D32; margin-right: 10px; font-weight: bold; border: 2px solid #2E7D32; opacity: 0; transition: opacity 0.3s; }
+        
+        .copyright-link { color: #000080; text-decoration: none; font-weight: bold; }
+    </style>
 </head>
-<body bgcolor="#FFFF00" text="#000080" style="font-family:'Comic Sans MS', cursive; text-align:center; margin:0; padding:0;">
+<body>
 
-    <center>
-        <div id="google_translate_element" style="padding:10px;"></div>
+    <audio id="chantOiseaux" loop><source src="oiseaux.mp3" type="audio/mpeg"></audio>
 
-        <table class="notranslate" border="1" cellpadding="10" bgcolor="#008080" style="margin-top:10px; border-radius:10px;">
-            <tr>
-                <td><a href="index.html" style="text-decoration:none;"><font color="#FFFFFF"><b>Accueil</b></font></a></td>
-                <td><a href="formulaire.html" style="text-decoration:none;"><font color="#FFFFFF"><b>Semer</b></font></a></td>
-                <td><a href="jardin.html" style="text-decoration:none;"><font color="#FFFFFF"><b>Le Jardin</b></font></a></td>
-                <td><a href="contact.html" style="text-decoration:none;"><font color="#FFFFFF"><b>Contact</b></font></a></td>
-            </tr>
-        </table>
+    <div id="google_translate_element" style="padding:10px;"></div>
 
-        <br>
-        <font size="6" color="#2E7D32">🌻 <u><b>LE JARDIN DES GRAINES</b></u> 🌻</font>
-        <br><br>
+    <table class="menu-table">
+        <tr>
+            <td><a href="index.html">Accueil</a></td>
+            <td><a href="formulaire.html">Semer</a></td>
+            <td><a href="jardin.html">Le Jardin</a></td>
+            <td><a href="contact.html">Contact</a></td>
+        </tr>
+    </table>
 
-        <div id="annonces-container" style="width:90%; max-width:900px;">
-            <p><i>Chargement du jardin en cours...</i></p>
+    <h2 style="color:#2E7D32;">🍃 Le Jardin des Cadeaux Existentiels 🍃</h2>
+    <p>Regardez la fraternité s'épanouir au gré des dons du monde entier...</p>
+
+    <div id="jardin-sacre">
         </div>
-    </center>
+
+    <div style="padding: 20px; font-weight: bold; font-size: 1.2em;">
+        "Chaque don est une fleur qui ne fane jamais."
+    </div>
+
+    <br><br>
+    <font size="2">
+        Copyright 2000 <a href="https://youtube.com" class="copyright-link">Le Petit Prince des Jardiniers</a>
+    </font>
+
+    <div id="coffre-magique">🎁</div>
+    <div id="animal-container">
+        <div id="bulle-texte"></div>
+        <div id="corps-animal">🕊️</div>
+    </div>
 
     <script type="text/javascript">
         function googleTranslateElementInit() { new google.translate.TranslateElement({pageLanguage: 'fr'}, 'google_translate_element'); }
@@ -33,37 +83,71 @@
     <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
 
     <script>
-        const scriptURL = 'https://script.google.com/macros/s/AKfycbwe3bMzbJMUQSEdeyprffw-FQpqLg9-fGcHJi2_1_Ix5kWmrisBoSo2Kzne-CMwe3s/exec';
+        const mesPhrases = [
+            "Une fleur vient d'éclore grâce à un don de paix",
+            "La fraternité grandit ici...",
+            "Regardez cette paix rayonnante s'installer",
+            "Un cadeau existentiel a été déposé"
+        ];
+        const animaux = ['🕊️', '🦋', '🐝', '🐞', '🦜', '🐰', '🐿️', '🦄'];
+        const fleurs = ['🌸', '🌼', '🌻', '🌺', '🌷', '🌹'];
 
-        async function chargerJardin() {
-            try {
-                const response = await fetch(scriptURL);
-                const data = await response.json();
-                const container = document.getElementById('annonces-container');
-                container.innerHTML = "";
+        const jardin = document.getElementById('jardin-sacre');
+        const animalCont = document.getElementById('animal-container');
+        const bulle = document.getElementById('bulle-texte');
+        const corps = document.getElementById('corps-animal');
+        const audio = document.getElementById('chantOiseaux');
 
-                data.forEach(annonce => {
-                    const card = document.createElement('div');
-                    card.style = "background:white; border:3px solid #2E7D32; border-radius:15px; padding:20px; margin-bottom:25px; text-align:left; box-shadow: 6px 6px 0px #008080;";
-                    
-                    card.innerHTML = `
-                        <font size="5" color="#E67E22"><b>📍 ${annonce.ville} (${annonce.pays})</b></font><br>
-                        <div style="background:#F0F9FF; padding:8px; border-radius:8px; margin:10px 0; border-left: 5px solid #008080;">
-                            <font size="3" color="#008080"><b>🚀 Zone d'action :</b> ${annonce.km}</font>
-                        </div>
-                        <font size="3"><b>Semé par :</b> ${annonce.prenom}</font><br>
-                        <hr color="#eeeeee">
-                        <font size="4">"${annonce.description}"</font><br>
-                        <hr color="#eeeeee">
-                        <font size="2" color="#666">📅 Expire dans : ${annonce.duree} | Le : ${new Date(annonce.date).toLocaleDateString()}</font>
-                    `;
-                    container.appendChild(card);
-                });
-            } catch (e) {
-                document.getElementById('annonces-container').innerHTML = "<p>Erreur de floraison du jardin.</p>";
-            }
+        let aniX, aniY, targetX, targetY, state = "WAITING";
+
+        document.addEventListener('click', () => { if(audio.paused) { audio.volume = 0.02; audio.play(); } });
+
+        function plantFlower() {
+            const f = document.createElement('div');
+            f.className = 'fleur-clonée';
+            f.innerText = fleurs[Math.floor(Math.random()*fleurs.length)];
+            f.style.left = Math.random() * 90 + "%";
+            f.style.top = Math.random() * 70 + 20 + "%";
+            jardin.appendChild(f);
         }
-        window.onload = chargerJardin;
+
+        function startNewMessenger() {
+            bulle.innerText = mesPhrases[Math.floor(Math.random() * mesPhrases.length)];
+            corps.innerText = animaux[Math.floor(Math.random() * animaux.length)];
+            
+            aniX = -200; 
+            aniY = Math.random() * 300 + 100;
+            targetX = window.innerWidth + 200;
+            targetY = aniY + (Math.random() * 100 - 50);
+            
+            bulle.style.opacity = "1";
+            state = "CROSSING";
+        }
+
+        function loop() {
+            if (state === "CROSSING") {
+                aniX += 3; // L'animal traverse le jardin
+                aniY += Math.sin(aniX/50) * 2;
+
+                // Chance de planter une fleur en passant
+                if(Math.random() < 0.01) plantFlower();
+
+                if (aniX > window.innerWidth + 100) {
+                    bulle.style.opacity = "0";
+                    setTimeout(startNewMessenger, 2000);
+                    state = "WAITING";
+                }
+            }
+
+            animalCont.style.left = aniX + "px";
+            animalCont.style.top = aniY + "px";
+            corps.style.transform = "scaleX(-1)"; // Toujours vers la droite
+
+            requestAnimationFrame(loop);
+        }
+
+        startNewMessenger();
+        loop();
     </script>
 </body>
 </html>
