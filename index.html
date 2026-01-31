@@ -3,132 +3,65 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Le Trésor Public - Accueil Validé</title>
+    <title>Le Trésor Public - Accueil</title>
     <style>
-        /* Design Global */
-        body { 
-            font-family: 'Comic Sans MS', cursive; 
-            text-align: center; 
-            margin: 0; 
-            padding: 0; 
-            background-color: #FFFF00; 
-            color: #000080; 
-            overflow-x: hidden; 
-            min-height: 100vh; 
-        }
-
+        body { font-family: 'Comic Sans MS', cursive; text-align: center; margin: 0; background-color: #FFFF00; color: #000080; overflow-x: hidden; min-height: 100vh; }
         #google_translate_element { padding: 10px; background: rgba(255,255,255,0.5); border-bottom: 1px solid #008080; }
-        
-        .menu-table { 
-            margin: 20px auto; border-radius: 10px; background-color: #008080; 
-            border-collapse: collapse; margin-left: auto; margin-right: auto; 
-        }
+        .menu-table { margin: 20px auto; border-radius: 10px; background-color: #008080; border-collapse: collapse; margin-left: auto; margin-right: auto; }
         .menu-table td { padding: 10px 15px; border: 1px solid #FFFFFF; }
         .menu-table a { text-decoration: none; color: #FFFFFF; font-weight: bold; }
-        
-        .soleil-don {
-            background: #FFD700; width: 250px; height: 250px; border-radius: 50%;
-            display: flex; align-items: center; justify-content: center;
-            box-shadow: 0 0 50px #FFA500; border: 5px dashed #FF4500;
-            margin: 30px auto; cursor: pointer; transition: 0.4s;
-            text-decoration: none; color: #000080; font-weight: bold;
-        }
-
+        .soleil-don { background: #FFD700; width: 250px; height: 250px; border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 0 50px #FFA500; border: 5px dashed #FF4500; margin: 30px auto; cursor: pointer; transition: 0.4s; text-decoration: none; color: #000080; font-weight: bold; }
         .bulles-grid { display: flex; justify-content: center; align-items: center; gap: 25px; flex-wrap: wrap; padding: 20px; }
-        
-        .nuage { 
-            background: #e0f7fa; border: 3px solid #008080; border-radius: 50px; padding: 20px; 
-            width: 300px; min-height: 200px; text-decoration: none; color: inherit; 
-            display: flex; flex-direction: column; justify-content: center; transition: 0.3s; 
-        }
+        .nuage { background: #e0f7fa; border: 3px solid #008080; border-radius: 50px; padding: 20px; width: 300px; min-height: 200px; text-decoration: none; color: inherit; display: flex; flex-direction: column; justify-content: center; transition: 0.3s; }
         .nuage-rose { background: #ffebee; border-color: #e91e63; }
-        
-        .etoile-justice { 
-            background: #E6E6FA; border: 3px solid #9370DB; width: 350px; height: 350px; 
-            clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%); 
-            transition: 0.5s; cursor: pointer; text-decoration: none; color: inherit; 
-            display: flex; align-items: center; justify-content: center; 
-        }
-        
+        .etoile-justice { background: #E6E6FA; border: 3px solid #9370DB; width: 350px; height: 350px; clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%); transition: 0.5s; cursor: pointer; text-decoration: none; color: inherit; display: flex; align-items: center; justify-content: center; }
         .exemples { font-size: 0.85em; color: #2E7D32; font-style: italic; margin-top: 10px; font-weight: bold; }
-
-        /* ANIMAUX ET CADEAU */
         .animal-container { position: fixed; z-index: 900; pointer-events: none; display: flex; align-items: center; }
         .bulle-texte { background: white; border: 2px solid #2E7D32; border-radius: 15px; padding: 8px 15px; font-weight: bold; opacity: 0; max-width: 250px; }
         #coffre-magique { position: fixed; font-size: 60px; z-index: 800; pointer-events: none; transition: transform 0.2s; }
         .pop { transform: scale(1.6) !important; }
         .confetti { position: fixed; z-index: 999; pointer-events: none; animation: fly 2s forwards; }
         @keyframes fly { 0% { transform: translate(0,0); opacity: 1; } 100% { transform: translate(var(--dx), var(--dy)); opacity: 0; } }
-
-        /* TRANSITION COEUR */
-        #overlay-coeur {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(255, 255, 255, 0.9);
-            display: none; flex-direction: column; justify-content: center; align-items: center;
-            z-index: 2000;
-        }
-        .big-heart {
-            font-size: 15em; color: #FF1493;
-            animation: heartbeat 1.2s infinite alternate, multicolor 3s linear infinite;
-        }
-        @keyframes heartbeat { from { transform: scale(1); } to { transform: scale(1.15); } }
-        @keyframes multicolor {
-            0% { color: #FF1493; } 25% { color: #9400D3; } 50% { color: #00BFFF; } 75% { color: #32CD32; } 100% { color: #FF1493; }
-        }
-        .trans-element { position: absolute; font-size: 3em; animation: flyToCenter 2.5s ease-out forwards; }
-        @keyframes flyToCenter {
-            0% { transform: translate(var(--sx), var(--sy)) scale(0); opacity: 0; }
-            20% { opacity: 1; scale(1); }
-            100% { transform: translate(0, 0) scale(0); opacity: 0; }
-        }
-
         footer { margin: 60px 0 20px; font-size: 0.9em; }
     </style>
 </head>
 <body>
-
     <div id="google_translate_element"></div>
     <script>function googleTranslateElementInit() { new google.translate.TranslateElement({pageLanguage: 'fr'}, 'google_translate_element'); }</script>
     <script src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
-
     <audio id="chantOiseaux" loop><source src="oiseaux.mp3" type="audio/mpeg"></audio>
-
-    <div id="overlay-coeur">
-        <div class="big-heart">❤️</div>
-        <h2 style="color: #FF1493;">Vibration en cours...</h2>
-    </div>
 
     <table class="menu-table">
         <tr>
-            <td><a href="index.html">Accueil</a></td>
-            <td><a href="formulaire.html">Semer</a></td>
-            <td><a href="jardin.html">Le Jardin</a></td>
-            <td><a href="contact.html">Contact</a></td>
+            <td><a href="transition.html?page=index.html">Accueil</a></td>
+            <td><a href="transition.html?page=formulaire.html">Semer</a></td>
+            <td><a href="transition.html?page=jardin.html">Le Jardin</a></td>
+            <td><a href="transition.html?page=contact.html">Contact</a></td>
         </tr>
     </table>
 
     <h1>💐 Le Trésor Public</h1>
     <p><strong>Le Petit Prince des Jardiniers</strong></p>
 
-    <a href="formulaire.html" class="soleil-don">
+    <a href="transition.html?page=formulaire.html" class="soleil-don">
         <div>☀️<br>ESPACE DU DON ENTIER<br><span style="font-weight:normal; font-size:0.8em;">Cadeau sans retour attendu</span></div>
     </a>
 
     <div class="bulles-grid">
-        <a href="impot.html" class="nuage">
+        <a href="transition.html?page=impot.html" class="nuage">
             <h3 style="color:#008080; margin:0; text-transform:uppercase;">📜 Impôt Public</h3>
             <p>Travaux publics en libre participation.</p>
             <div class="exemples">Ex : Nettoyage bois communal, tâches administratives...</div>
         </a>
 
-        <a href="regulation.html" class="etoile-justice">
+        <a href="transition.html?page=regulation.html" class="etoile-justice">
             <div style="width:70%;">
                 <h3>⚖️ Régulation Citoyenne</h3>
-                <p style="margin:10px 0; font-size:0.9em;">Justice avec délicatesse : soutien, pénitence ou pardon.</p>
+                <p>Justice avec délicatesse : soutien, pénitence ou pardon.</p>
             </div>
         </a>
 
-        <a href="urgence.html" class="nuage nuage-rose">
+        <a href="transition.html?page=urgence.html" class="nuage nuage-rose">
             <h3 style="color:#e91e63; margin:0;">❤️ Urgence & Écoute</h3>
             <p>Besoins vitaux et aide aux projets.</p>
         </a>
@@ -136,71 +69,28 @@
 
     <div id="coffre-magique">🎁</div>
 
-    <footer><p>© 2000 <a href="https://www.youtube.com/channel/UCjsudx7f1sl7XQM8ylcBRdQ" target="_blank">Le petit prince des jardiniers</a></p></footer>
-
     <script>
-        // TRANSITION
-        const overlay = document.getElementById('overlay-coeur');
-        const animalsEmoji = ['🕊️', '🦋', '🐝', '🐞', '❤️'];
-
-        document.querySelectorAll('a').forEach(link => {
-            link.addEventListener('click', function(e) {
-                const targetUrl = this.href;
-                if (targetUrl.includes('.html') && !targetUrl.includes('index.html#')) {
-                    e.preventDefault(); 
-                    overlay.style.display = 'flex';
-                    for(let i=0; i<12; i++) {
-                        setTimeout(() => {
-                            const el = document.createElement('div');
-                            el.className = 'trans-element';
-                            el.innerText = animalsEmoji[Math.floor(Math.random()*animalsEmoji.length)];
-                            const angle = Math.random() * Math.PI * 2;
-                            el.style.setProperty('--sx', Math.cos(angle)*400 + 'px');
-                            el.style.setProperty('--sy', Math.sin(angle)*400 + 'px');
-                            overlay.appendChild(el);
-                        }, i * 150);
-                    }
-                    setTimeout(() => { window.location.href = targetUrl; }, 3200);
-                }
-            });
-        });
-
-        // MESSAGERS (Limite 3)
         const basePhrases = ["L'Impôt Public est un geste de cœur", "Besoin d'aide administrative ?", "Graines de générosité", "Le pardon est justice", "Besoin d'un câlin"];
         let disponibles = [...basePhrases];
         const typesAnimaux = ['🕊️', '🦋', '🐝', '🐞'];
         const fleurs = ['🌸', '🌼', '🌻', '🌺'];
         const messagers = [];
         const coffre = document.getElementById('coffre-magique');
-        let coffreX = window.innerWidth / 2, coffreY = window.innerHeight + 100;
-        let passages = 0;
+        let count = 0, coffreX = window.innerWidth/2, coffreY = window.innerHeight+100;
 
         document.addEventListener('click', () => { 
             const a = document.getElementById('chantOiseaux');
             if(a.paused) { a.volume = 0.05; a.play(); } 
         });
 
-        function createConfetti(x, y) {
-            for(let i=0; i<15; i++) {
-                const c = document.createElement('div');
-                c.className = 'confetti';
-                c.innerText = fleurs[Math.floor(Math.random()*4)];
-                c.style.left = x+"px"; c.style.top = y+"px";
-                c.style.setProperty('--dx', (Math.random()*400-200)+"px");
-                c.style.setProperty('--dy', (Math.random()*400-200)+"px");
-                document.body.appendChild(c);
-                setTimeout(() => c.remove(), 2000);
-            }
-        }
-
         function createMessenger() {
-            if (passages >= 3 || messagers.length > 0) return;
+            if (count >= 3 || messagers.length > 0) return;
             const txt = disponibles.splice(Math.floor(Math.random()*disponibles.length), 1)[0];
             const div = document.createElement('div');
             div.className = "animal-container";
             div.innerHTML = `<div class="bulle-texte" style="width:0px">${txt}</div><div style="font-size:50px">${typesAnimaux[Math.floor(Math.random()*4)]}</div>`;
             document.body.appendChild(div);
-            messagers.push({ el: div, bulle: div.firstChild, x: -200, y: 300, tx: 500, ty: 400, state: "IN", seed: Math.random() });
+            messagers.push({ el: div, bulle: div.firstChild, x: -250, y: 300, tx: 500, ty: 400, state: "IN" });
         }
 
         function loop() {
@@ -208,22 +98,17 @@
             for (let i = messagers.length-1; i>=0; i--) {
                 let m = messagers[i];
                 if(m.state === "IN") {
-                    target = m;
-                    m.x += (m.tx-m.x)*0.015; m.y += (m.ty-m.y)*0.015;
-                    m.bulle.style.opacity = 1;
-                    if(parseInt(m.bulle.style.width)<200) m.bulle.style.width = (parseInt(m.bulle.style.width)+2)+"px";
+                    target = m; m.x += (m.tx-m.x)*0.015; m.y += (m.ty-m.y)*0.015;
+                    m.bulle.style.opacity = 1; if(parseInt(m.bulle.style.width)<200) m.bulle.style.width = (parseInt(m.bulle.style.width)+2)+"px";
                     if(Math.abs(m.tx-m.x)<30) {
-                        m.state="WAIT"; createConfetti(m.x, m.y); coffre.classList.add('pop');
-                        setTimeout(() => { m.state="OUT"; coffre.classList.remove('pop'); m.bulle.style.opacity=0; m.tx = window.innerWidth+300; passages++; }, 4000);
+                        m.state="WAIT"; coffre.classList.add('pop');
+                        setTimeout(() => { m.state="OUT"; coffre.classList.remove('pop'); m.bulle.style.opacity=0; m.tx = window.innerWidth+300; count++; }, 4000);
                     }
-                } else {
-                    m.x += (m.tx-m.x)*0.02;
-                    if(m.x>window.innerWidth+250) { m.el.remove(); messagers.splice(i,1); }
-                }
+                } else { m.x += (m.tx-m.x)*0.02; if(m.x>window.innerWidth+250) { m.el.remove(); messagers.splice(i,1); } }
                 m.el.style.left = m.x+"px"; m.el.style.top = (m.y + Math.sin(Date.now()*0.005)*15)+"px";
             }
-            coffreX+=( (target?target.x:window.innerWidth/2)-coffreX)*0.05;
-            coffreY+=( (target?target.y+40:window.innerHeight+100)-coffreY)*0.05;
+            coffreX += ((target?target.x:window.innerWidth/2)-coffreX)*0.05;
+            coffreY += ((target?target.y+50:window.innerHeight+100)-coffreY)*0.05;
             coffre.style.left = coffreX+"px"; coffre.style.top = coffreY+"px";
             requestAnimationFrame(loop);
         }
