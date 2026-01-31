@@ -29,6 +29,7 @@
             flex-direction: row; 
             align-items: center;
             user-select: none;
+            transition: opacity 0.5s;
         }
 
         #corps-animal { font-size: 55px; }
@@ -43,15 +44,14 @@
             box-shadow: 3px 3px 10px rgba(0,0,0,0.15);
             font-weight: bold;
             font-size: 1.1em;
-            opacity: 0; /* Caché au début */
-            transition: opacity 0.5s;
+            opacity: 0;
+            border: 2px solid #2E7D32;
         }
 
-        /* Animation quand le cadeau reçoit un message */
         .pop { transform: translate(-50%, -50%) scale(1.3) rotate(10deg) !important; }
     </style>
 </head>
-<body bgcolor="#FFFF00" text="#000080" style="font-family:'Comic Sans MS', cursive; text-align:center; margin:0; padding:0; overflow-x: hidden;">
+<body bgcolor="#FFFF00" text="#000080" style="font-family:'Comic Sans MS', cursive; text-align:center; margin:0; padding:0; overflow: hidden;">
 
     <audio id="chantOiseaux" loop><source src="oiseaux.mp3" type="audio/mpeg"></audio>
 
@@ -65,7 +65,7 @@
                 <td><a href="contact.html">Contact</a></td>
             </tr>
         </table>
-        <br><br>
+        <br>
         <font size="6" color="#E67E22">🌟 <b>LE PETIT PRINCE DES JARDINIERS</b> 🌟</font>
     </center>
 
@@ -94,7 +94,7 @@
             "Ici on se respecte..."
         ];
 
-        const animaux = ['🕊️', '🦋', '🐝', '🐞', '🦜', '🐰', '🐣', '🐿️', '🐼', '🦊', '🐠', '🐬'];
+        const animaux = ['🕊️', '🦋', '🐝', '🐞', '🦜', '🐰', '🐣', '🐿️', '🐼', '🦊', '🐠', '🐬', '🐳', '🦄'];
 
         const container = document.getElementById('animal-container');
         const bulle = document.getElementById('bulle-texte');
@@ -102,77 +102,86 @@
         const coffre = document.getElementById('coffre-magique');
         const audio = document.getElementById('chantOiseaux');
 
+        let curX, curY, targetX, targetY;
+        let angle = 0;
+        let state = "APPROACH"; // APPROACH, DEPOSIT, LEAVE
         let messageActuel = "";
-        let posX = window.innerWidth + 200;
-        let posY = 150;
         let indexLettre = 0;
-        let enPause = false;
 
-        document.addEventListener('click', () => { if(audio.paused) { audio.volume = 0.02; audio.play(); } });
+        document.addEventListener('click', () => { if(audio.paused) { audio.volume = 0.03; audio.play(); } });
 
-        function choisirNouveauMessager() {
+        function resetAnimal() {
             messageActuel = mesPhrases[Math.floor(Math.random() * mesPhrases.length)];
             corps.innerText = animaux[Math.floor(Math.random() * animaux.length)];
             indexLettre = 0;
             bulle.innerText = "";
             bulle.style.opacity = "0";
-            bulle.style.border = "none";
-            posX = window.innerWidth + 200;
-            posY = 100 + Math.random() * (window.innerHeight - 300);
-            enPause = false;
+            
+            // Départ aléatoire depuis les bords
+            const side = Math.floor(Math.random() * 4);
+            if(side === 0) { curX = -200; curY = Math.random() * window.innerHeight; } // Gauche
+            else if(side === 1) { curX = window.innerWidth + 200; curY = Math.random() * window.innerHeight; } // Droite
+            else if(side === 2) { curX = Math.random() * window.innerWidth; curY = -200; } // Haut
+            else { curX = Math.random() * window.innerWidth; curY = window.innerHeight + 200; } // Bas
+
+            // Cible : Le centre (le cadeau)
+            targetX = window.innerWidth / 2;
+            targetY = window.innerHeight / 2;
+            state = "APPROACH";
         }
 
         function animer() {
-            if (!enPause) {
-                posX -= 2.5; // L'animal avance vers le centre
+            const dx = targetX - curX;
+            const dy = targetY - curY;
+            const dist = Math.sqrt(dx*dx + dy*dy);
 
-                // Déroulement du texte devant lui
+            if (state === "APPROACH") {
+                // Avancer vers le cadeau
+                curX += dx * 0.02;
+                curY += dy * 0.02;
+
+                // Affichage progressif du texte
                 if (indexLettre < messageActuel.length) {
-                    let progression = Math.floor((window.innerWidth - posX) / 20);
-                    if (progression > indexLettre) {
-                        indexLettre = progression;
-                        bulle.innerText = messageActuel.substring(0, indexLettre);
-                        bulle.style.opacity = "1";
-                        bulle.style.border = "2px solid #2E7D32";
-                    }
+                    indexLettre += 0.3; 
+                    bulle.innerText = messageActuel.substring(0, Math.floor(indexLettre));
+                    bulle.style.opacity = "1";
                 }
 
-                // Arrivée au niveau du cadeau (centre de l'écran)
-                if (posX <= (window.innerWidth / 2) - 50) {
-                    enPause = true;
-                    coffre.classList.add('pop'); // Le cadeau réagit
-                    
+                if (dist < 80) {
+                    state = "DEPOSIT";
+                    coffre.classList.add('pop');
                     setTimeout(() => {
-                        bulle.style.opacity = "0"; // Le message "entre" dans le cadeau
+                        bulle.style.opacity = "0";
                         coffre.classList.remove('pop');
-                        
-                        setTimeout(() => {
-                            // L'animal repart vers la gauche après avoir déposé
-                            poursuivreVol();
-                        }, 800);
-                    }, 1500);
+                        // Choisir une sortie aléatoire
+                        const exitSide = Math.floor(Math.random() * 4);
+                        if(exitSide === 0) { targetX = -500; targetY = Math.random() * window.innerHeight; }
+                        else if(exitSide === 1) { targetX = window.innerWidth + 500; targetY = Math.random() * window.innerHeight; }
+                        else if(exitSide === 2) { targetX = Math.random() * window.innerWidth; targetY = -500; }
+                        else { targetX = Math.random() * window.innerWidth; targetY = window.innerHeight + 500; }
+                        state = "LEAVE";
+                    }, 2000);
                 }
-            } else {
-                // Si on a fini la pause, l'animal continue sa route vers la gauche
-                if (posX > -1000) {
-                    posX -= 4; 
-                } else {
-                    choisirNouveauMessager();
-                }
+            } else if (state === "LEAVE") {
+                curX += (targetX - curX) * 0.03;
+                curY += (targetY - curY) * 0.03;
+                if (Math.abs(targetX - curX) < 10) resetAnimal();
             }
 
-            container.style.left = posX + 'px';
-            container.style.top = (posY + Math.sin(posX / 100) * 30) + 'px';
+            // Petit balancement
+            angle += 0.05;
+            const wave = Math.sin(angle) * 20;
+
+            container.style.left = (curX - (state === "APPROACH" ? 100 : 0)) + 'px';
+            container.style.top = (curY + wave - 50) + 'px';
+
+            // Retournement automatique de l'animal selon la direction
+            corps.style.transform = dx > 0 ? "scaleX(-1)" : "scaleX(1)";
+
             requestAnimationFrame(animer);
         }
 
-        function poursuivreVol() {
-            enPause = false;
-            // On triche un peu pour qu'il ne s'arrête plus au milieu en repartant
-            posX = (window.innerWidth / 2) - 51; 
-        }
-
-        choisirNouveauMessager();
+        resetAnimal();
         animer();
     </script>
 </body>
