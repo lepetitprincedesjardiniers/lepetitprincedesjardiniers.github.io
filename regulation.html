@@ -1,64 +1,4 @@
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-    <meta charset="UTF-8">
-    <title>Régulation Citoyenne - Le Petit Prince</title>
-    <style>
-        /* ON GARDE TON STYLE EXACT */
-        body { font-family: 'Comic Sans MS', cursive; text-align: center; margin: 0; padding: 0; background-color: #FFFF00; color: #000080; }
-        
-        /* Ajout du menu pour la navigation */
-        .menu-table { margin: 20px auto; background-color: #008080; border-collapse: collapse; border-radius: 10px; margin-left: auto; margin-right: auto; }
-        .menu-table td { padding: 10px 15px; border: 1px solid #FFFFFF; }
-        .menu-table a { text-decoration: none; color: #FFFFFF; font-weight: bold; }
-
-        .etoile-form { 
-            background: #E6E6FA; border: 3px solid #9370DB; width: 90%; max-width: 600px; 
-            margin: 30px auto; padding: 30px; border-radius: 20px;
-            box-shadow: 0px 10px 20px rgba(147, 112, 219, 0.3);
-        }
-        textarea, input { width: 100%; padding: 12px; margin: 10px 0; border-radius: 10px; border: 2px solid #9370DB; box-sizing: border-box; font-family: inherit; }
-        .btn-justice { background: #9370DB; color: white; padding: 15px; border: none; border-radius: 15px; font-weight: bold; cursor: pointer; width: 100%; font-size: 1.1em; }
-        .btn-justice:disabled { background: #ccc; }
-
-        /* Style pour la zone d'affichage des conflits */
-        .liste-conflits { max-width: 700px; margin: 40px auto; padding: 20px; }
-        .carte-conflit { 
-            background: white; border-left: 8px solid #9370DB; border-radius: 15px; 
-            padding: 20px; margin-bottom: 20px; text-align: left; 
-            box-shadow: 4px 4px 10px rgba(0,0,0,0.05);
-        }
-        .reponse-sage { font-size: 0.8em; color: #9370DB; font-weight: bold; cursor: pointer; }
-    </style>
-</head>
-<body>
-
-    <table class="menu-table">
-        <tr>
-            <td><a href="index.html">Accueil</a></td>
-            <td><a href="formulaire.html">Semer</a></td>
-            <td><a href="jardin.html">Le Jardin</a></td>
-            <td><a href="regulation.html">Régulation</a></td>
-        </tr>
-    </table>
-
-    <h2 style="color:#9370DB;">⚖️ Zone de Régulation Citoyenne</h2>
-    <p><i>Expose ton conflit avec sincérité. La communauté répondra avec délicatesse.</i></p>
-
-    <div class="etoile-form">
-        <form id="regForm">
-            <label>Ton identité amoureuse :</label>
-            <input type="text" id="nom" placeholder="Ton nom ou pseudo" required>
-            
-            <label>Nature du conflit ou de la peine :</label>
-            <textarea id="message" rows="6" placeholder="Explique ici la situation..." required></textarea>
-            
-            <p><small>En soumettant, tu acceptes le regard bienveillant, le pardon ou la sentence symbolique de tes pairs.</small></p>
-            <button type="submit" id="btnEnvoi" class="btn-justice">SOUMETTRE À L'ENSEMBLE</button>
-        </form>
-    </div>
-
-    <div class="liste-conflits">
+<div class="liste-conflits">
         <h3 style="color:#9370DB;">🕊️ Dossiers en cours de résolution</h3>
         <div id="chargement">Appel de la sagesse citoyenne...</div>
         <div id="flux-conflits"></div>
@@ -69,7 +9,7 @@
     <script>
         const URL_SERVEUR = "https://script.google.com/macros/s/AKfycbz4ncs9qw_AfmKSER5QST-P0OeKQggQaq86QC6liS53uZ9sx4Lo_-4-h1knXKWqgQMc/exec";
 
-        // 1. ENVOI DU CONFLIT AU GOOGLE SHEET
+        // 1. ENVOI DU CONFLIT INITIAL
         document.getElementById('regForm').addEventListener('submit', function(e) {
             e.preventDefault();
             const btn = document.getElementById('btnEnvoi');
@@ -95,28 +35,65 @@
             });
         });
 
-        // 2. RÉCUPÉRATION DES CONFLITS POUR LES AFFICHER
+        // 2. FONCTION POUR APPORTER UN AVIS (RÉPONSE)
+        function apporterAvis(nomConflit) {
+            const avis = prompt("En tant que tiers ou juge citoyen, quel est ton avis délicat pour aider à résoudre ce conflit ?");
+            if (avis) {
+                const nomSage = prompt("Ton nom de sage :");
+                const donneesAvis = {
+                    date: new Date().toLocaleDateString('fr-FR'),
+                    type: "Avis",
+                    nom: nomSage || "Un Sage Anonyme",
+                    localisation: "Réponse à : " + nomConflit,
+                    message: avis
+                };
+
+                fetch(URL_SERVEUR, {
+                    method: 'POST',
+                    mode: 'no-cors',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(donneesAvis)
+                }).then(() => {
+                    alert("Ton avis a été ajouté au registre de justice.");
+                    location.reload();
+                });
+            }
+        }
+
+        // 3. RÉCUPÉRATION ET AFFICHAGE
         fetch(URL_SERVEUR)
             .then(res => res.json())
             .then(data => {
                 document.getElementById('chargement').style.display = 'none';
                 const flux = document.getElementById('flux-conflits');
-                // On ne garde que les messages de type "Conflit"
-                data.reverse().forEach(item => {
+                
+                // On inverse pour avoir le plus récent en haut
+                const documents = data.reverse();
+
+                documents.forEach(item => {
                     if(item.type === "Conflit") {
                         const div = document.createElement('div');
                         div.className = 'carte-conflit';
                         div.innerHTML = `
                             <small>${item.date} - Par : ${item.nom}</small>
-                            <p style="margin: 10px 0;">"${item.message}"</p>
-                            <span class="reponse-sage" onclick="alert('Fonctionnalité de réponse à venir pour les sages...')">⚖️ Apporter un avis délicat</span>
+                            <p style="margin: 10px 0; font-weight:bold;">"${item.message}"</p>
+                            <div id="reponses-${item.nom}" style="margin-left: 20px; border-left: 2px dotted #9370DB; padding-left: 10px; font-size: 0.9em;">
+                                </div>
+                            <span class="reponse-sage" onclick="apporterAvis('${item.nom}')">⚖️ Apporter un avis délicat</span>
                         `;
                         flux.appendChild(div);
+
+                        // On cherche les avis liés à ce conflit spécifique
+                        documents.forEach(avis => {
+                            if(avis.type === "Avis" && avis.localisation.includes(item.nom)) {
+                                const repDiv = document.getElementById(`reponses-${item.nom}`);
+                                const pAvis = document.createElement('p');
+                                pAvis.innerHTML = `💬 <strong>${avis.nom} :</strong> ${avis.message}`;
+                                repDiv.appendChild(pAvis);
+                            }
+                        });
                     }
                 });
-            })
-            .catch(() => {
-                document.getElementById('chargement').innerText = "La justice est en repos...";
             });
     </script>
 </body>
