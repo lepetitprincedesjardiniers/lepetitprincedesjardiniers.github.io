@@ -2,128 +2,152 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <title>Le Trésor Public - Version Évoluée</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Le Trésor Public - Accueil</title>
     <style>
         body { 
-            font-family: 'Comic Sans MS', cursive; 
+            font-family: 'Comic Sans MS', cursive, sans-serif; 
             background-color: #FFFF00; 
             color: #000080; 
-            margin: 0; padding: 0; 
-            text-align: center; 
-            overflow-x: hidden;
+            margin: 0; padding: 0; text-align: center; 
         }
 
-        /* --- SOLEIL ET TITRE --- */
-        .soleil-don {
-            background: #FFD700; width: 200px; height: 200px; border-radius: 50%;
-            display: flex; align-items: center; justify-content: center;
-            box-shadow: 0 0 40px #FFA500; border: 5px dashed #FF4500;
-            margin: 20px auto; cursor: pointer; transition: 0.4s;
-            text-decoration: none; color: #000080; font-weight: bold;
+        /* TRADUCTEUR */
+        #google_translate_element { 
+            padding: 10px; 
+            background: rgba(255,255,255,0.5); 
+            border-bottom: 2px solid #008080; 
         }
-        .soleil-don:hover { transform: scale(1.1) rotate(5deg); }
 
-        /* --- MENU TURQUOISE --- */
+        /* MENU DE NAVIGATION */
         .menu-table { 
-            margin: 20px auto; background-color: #008080; 
-            border-radius: 10px; border-collapse: collapse; 
-        }
-        .menu-table td { padding: 10px 20px; border: 1px solid white; }
-        .menu-table a { text-decoration: none; color: white; font-weight: bold; }
-
-        /* --- MOTEUR DE RECHERCHE (RATISSER LARGE) --- */
-        .moteur-recherche {
-            background: rgba(255, 255, 255, 0.8); 
-            border: 3px solid #008080;
-            border-radius: 20px; 
-            padding: 20px; 
             margin: 20px auto; 
-            width: 85%; max-width: 800px;
+            background-color: #008080; 
+            border-collapse: collapse; 
+            border-radius: 15px; 
+            overflow: hidden;
+            box-shadow: 0px 4px 10px rgba(0,0,0,0.2);
         }
-        .moteur-recherche input { 
-            padding: 10px; width: 70%; border-radius: 10px; 
-            border: 2px solid #008080; font-family: inherit;
-        }
+        .menu-table td { padding: 15px 25px; border: 1px solid #FFFFFF; }
+        .menu-table a { text-decoration: none; color: #FFFFFF; font-weight: bold; font-size: 1.1em; }
+        .menu-table td:hover { background-color: #006666; }
 
-        /* --- LES DEUX BLOCS (NUAGES) --- */
-        .bulles-grid {
-            display: flex; justify-content: center; gap: 30px; 
-            flex-wrap: wrap; padding: 30px;
-        }
+        /* CONTENU PRINCIPAL */
+        .hero-section { padding: 50px 20px; }
+        
+        h1 { font-size: 3em; color: #008080; text-shadow: 2px 2px #FFFFFF; margin-bottom: 10px; }
 
-        .nuage {
-            background: white; 
-            border-radius: 50px; 
-            padding: 25px; 
-            width: 300px; 
-            min-height: 180px;
-            border: 3px solid #87CEEB; 
-            box-shadow: 6px 6px 0px #87CEEB;
-            transition: 0.3s;
-            display: flex; flex-direction: column; justify-content: center;
-            text-decoration: none; color: inherit;
-        }
-        .nuage:hover { transform: translateY(-10px); background: #f0faff; }
-
-        .nuage-rose {
-            border-color: #e91e63;
-            box-shadow: 6px 6px 0px #e91e63;
+        .philosophie { 
+            font-style: italic; 
+            font-size: 1.4em; 
+            color: #008080; 
+            margin: 30px auto; 
+            max-width: 800px; 
+            line-height: 1.6;
+            background: rgba(255,255,255,0.3);
+            padding: 20px;
+            border-radius: 50px;
         }
 
-        .exemples { font-size: 0.8em; color: #2E7D32; font-style: italic; margin-top: 10px; }
+        /* RECHERCHE RAPIDE */
+        #searchBox {
+            width: 80%; max-width: 500px; 
+            padding: 15px; margin: 20px auto;
+            border-radius: 30px; border: 3px solid #008080; 
+            font-family: inherit; font-size: 1em;
+            outline: none;
+        }
 
-        #animal { position: fixed; font-size: 50px; z-index: 500; }
+        /* FLUX D'ACTIVITÉ */
+        .flux-container { max-width: 800px; margin: 40px auto; text-align: left; padding: 0 20px; }
+        .carte-activite { 
+            background: white; border-radius: 15px; padding: 15px; margin-bottom: 15px;
+            border-left: 8px solid #008080; box-shadow: 4px 4px 10px rgba(0,0,0,0.1);
+        }
+        .type-tag { font-weight: bold; text-transform: uppercase; font-size: 0.8em; padding: 3px 8px; border-radius: 5px; color: white; }
     </style>
 </head>
 <body>
 
-    <a href="cadeaux.html" class="soleil-don">
-        <div>☀️<br>CADEAUX<br>SANS DÉTOUR</div>
-    </a>
+    <div id="google_translate_element"></div>
+    <script type="text/javascript">
+        function googleTranslateElementInit() { new google.translate.TranslateElement({pageLanguage: 'fr'}, 'google_translate_element'); }
+    </script>
+    <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
 
-    <table class="menu-table" align="center">
+    <table class="menu-table">
         <tr>
             <td><a href="index.html">Accueil</a></td>
             <td><a href="formulaire.html">Semer 🌱</a></td>
             <td><a href="jardin.html">Le Jardin 🌻</a></td>
-            <td><a href="contact.html">Contact</a></td>
+            <td><a href="regulation.html">Régulation ⚖️</a></td>
+            <td><a href="urgence.html">Urgences 🚨</a></td>
         </tr>
     </table>
 
-    <div class="moteur-recherche">
-        <h3>🔍 Ratisser Large</h3>
-        <input type="text" placeholder="Pays, Ville, Nom, Besoin...">
-        <button style="background:#E67E22; color:white; border:none; padding:10px 20px; border-radius:10px; cursor:pointer; font-weight:bold;">Chercher</button>
+    <div class="hero-section">
+        <h1>Le Trésor Public</h1>
+        
+        <div class="philosophie">
+            "Ici, on sème tout ce qui est BON, on ne demande rien de précis, et on cultive la paix sans condamner."
+        </div>
+
+        <input type="text" id="searchBox" onkeyup="filtrerTout()" placeholder="🔍 Rechercher un lieu, un don ou un appel dans le Jardin...">
     </div>
 
-    <div class="bulles-grid">
-        <a href="jardin.html" class="nuage">
-            <h3>📜 GESTION CITOYENNE</h3>
-            <p>Travaux publics et libre participation.</p>
-            <div class="exemples">Ex: Bois communal, route, entraide...</div>
-        </a>
-
-        <a href="urgence.html" class="nuage nuage-rose">
-            <h3 style="color:#e91e63;">❤️ IMPÔT DU COEUR</h3>
-            <p>Urgences vitales et aides aux projets.</p>
-            <div class="exemples">Ex: Besoin de farine, aide charpente, câlin...</div>
-        </a>
+    <div class="flux-container">
+        <h2 style="text-align: center; color: #008080;">Dernières activités du Jardin</h2>
+        <div id="chargement" style="text-align: center;">Ouverture des portes du jardin...</div>
+        <div id="flux-global"></div>
     </div>
-
-    <div id="animal">🦋</div>
 
     <script>
-        let pos = -100;
-        const animal = document.getElementById('animal');
-        function move() {
-            pos += 2;
-            animal.style.left = pos + "px";
-            animal.style.top = (250 + Math.sin(pos/40) * 60) + "px";
-            if(pos > window.innerWidth + 100) pos = -100;
-            requestAnimationFrame(move);
-        }
-        move();
-    </script>
+        const URL_SERVEUR = "https://script.google.com/macros/s/AKfycbz4ncs9qw_AfmKSER5QST-P0OeKQggQaq86QC6liS53uZ9sx4Lo_-4-h1knXKWqgQMc/exec";
 
+        // RÉCUPÉRATION DES DONNÉES
+        fetch(URL_SERVEUR)
+            .then(res => res.json())
+            .then(data => {
+                const flux = document.getElementById('flux-global');
+                document.getElementById('chargement').style.display = 'none';
+
+                // On affiche tout (Dons, Urgences, Conflits) trié par le plus récent
+                data.reverse().forEach(item => {
+                    if (item.type === "avis") return; // On ne montre pas les réponses ici
+
+                    let couleur = "#008080";
+                    let icone = "✨";
+                    
+                    if(item.type === "Urgence") { couleur = "#e91e63"; icone = "🚨"; }
+                    if(item.type === "conflit") { couleur = "#9370DB"; icone = "⚖️"; }
+                    if(item.type === "Graine" || item.type === "Don") { couleur = "#4CAF50"; icone = "🌱"; }
+
+                    const div = document.createElement('div');
+                    div.className = 'carte-activite';
+                    div.style.borderLeftColor = couleur;
+                    div.innerHTML = `
+                        <span class="type-tag" style="background:${couleur}">${icone} ${item.type}</span>
+                        <small style="float:right;">${item.date}</small>
+                        <div style="margin-top:10px;">
+                            <b>${item.nom}</b> à ${item.localisation}<br>
+                            <p style="margin-top:5px; font-style:italic;">"${item.message}"</p>
+                        </div>
+                    `;
+                    flux.appendChild(div);
+                });
+            })
+            .catch(err => {
+                document.getElementById('chargement').innerText = "Le jardin est paisible et silencieux.";
+            });
+
+        // FONCTION DE RECHERCHE
+        function filtrerTout() {
+            let val = document.getElementById('searchBox').value.toLowerCase();
+            let cartes = document.getElementsByClassName('carte-activite');
+            for (let c of cartes) {
+                c.style.display = c.innerText.toLowerCase().includes(val) ? "" : "none";
+            }
+        }
+    </script>
 </body>
 </html>
