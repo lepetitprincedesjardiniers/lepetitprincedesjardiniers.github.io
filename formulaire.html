@@ -2,48 +2,63 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <title>Semer une annonce - Le Petit Prince</title>
-    <style>
-        body { background-color: #FFF8E1; color: #000080; font-family: "Comic Sans MS", cursive, sans-serif; text-align: center; padding: 20px; }
-        .cadre { background-color: white; border: 4px double #000080; padding: 25px; border-radius: 15px; display: inline-block; text-align: left; max-width: 500px; width: 95%; }
-        h1 { color: #FF0000; text-decoration: underline; }
-        label { font-weight: bold; display: block; margin-top: 15px; }
-        input, textarea, select { width: 100%; padding: 10px; border: 1px solid #000080; border-radius: 8px; box-sizing: border-box; }
-        button { background-color: #FF0000; color: white; padding: 15px; border: 2px solid #000080; cursor: pointer; font-weight: bold; width: 100%; margin-top: 25px; border-radius: 8px; font-size: 18px; }
-    </style>
+    <title>Espace de Don - Le Petit Prince des Jardiniers</title>
 </head>
-<body>
+<body bgcolor="#FFFF00" text="#000080">
 
-    <a href="index.html" style="display: inline-block; margin-bottom: 20px; color: #FF0000; text-decoration: none; font-weight: bold;">⬅ Retour au menu</a>
+    <center>
+        <table border="1" cellpadding="10" bgcolor="#008080">
+            <tr>
+                <td><a href="index.html"><font color="#FFFFFF"><b>Accueil</b></font></a></td>
+                <td><a href="formulaire.html"><font color="#FFFFFF"><b>Espace Don</b></font></a></td>
+                <td><a href="contact.html"><font color="#FFFFFF"><b>Contact</b></font></a></td>
+            </tr>
+        </table>
 
-    <div class="cadre">
-        <h1>🌻 Semer une graine</h1>
-        <p><i>"C'est une folie de haïr toutes les roses parce qu'une épine vous a piqué."</i></p>
+        <br>
+        <font size="6" color="#FF0000"><u><b>PROPOSER UN CADEAU EXISTENTIEL</b></u></font>
+        <br><br>
 
-        <form action="https://script.google.com/macros/s/AKfycbxuILkBo4L8JIK6ks1XsLpWMxvcviXSyMekJZI_sz-L_hRJygEDAoSVSzZ526DvsnTN/exec" method="POST">
+        <form action="REMPLACER_PAR_VOTRE_URL_SCRIPT" method="POST">
             
-            <label>Ton Prénom (ou Identifiant) :</label>
-            <input type="text" name="identifiant" required>
+            <table border="2" cellpadding="15" bgcolor="#FFFFFF" width="85%">
+                <tr>
+                    <td>
+                        <font size="4">
+                        <b>Identifiant :</b><br>
+                        <input type="text" name="identifiant" size="40" required><br><br>
 
-            <label>Ta Ville :</label>
-            <input type="text" name="ville" required>
+                        <b>Ville :</b><br>
+                        <input type="text" name="ville" size="40" required><br><br>
 
-            <label>Que proposes-tu ? (Graines, outils, aide...)</label>
-            <textarea name="description" rows="4" required></textarea>
+                        <b>Description de votre cadeau :</b><br>
+                        <textarea name="description" rows="5" cols="50" required placeholder="Votre savoir, votre temps..."></textarea><br><br>
 
-            <label>Comment te contacter ? (Email ou Tél) :</label>
-            <input type="text" name="contact" required>
+                        <b>Moyen de vous contacter (Email ou Tel) :</b><br>
+                        <input type="text" name="contact" size="40" required><br><br>
 
-            <label>Durée de l'annonce :</label>
-            <select name="duree">
-                <option>1 mois</option>
-                <option>3 mois</option>
-                <option>Indéfinie</option>
-            </select>
+                        <b>Pays :</b><br>
+                        <input type="text" name="pays" size="40" value="France"><br><br>
 
-            <button type="submit">SEMER DANS LE JARDIN</button>
+                        <b>KM :</b><br>
+                        <input type="number" name="km" size="5"> km<br><br>
+
+                        <b>Code Secret :</b><br>
+                        <input type="password" name="code_secret" size="10">
+                        </font>
+
+                        <br><br>
+                        <center>
+                            <input type="submit" value="🌻 SEMER CETTE GRAINE" style="font-weight:bold; font-size:1.3em; padding:15px; cursor:pointer; background-color:#FFFF00; border:2px solid #000080;">
+                        </center>
+                    </td>
+                </tr>
+            </table>
         </form>
-    </div>
+
+        <br>
+        <font size="2"><b>copyrith 2000... Le petit prince des jardiniers</b></font>
+    </center>
 
 </body>
 </html>
