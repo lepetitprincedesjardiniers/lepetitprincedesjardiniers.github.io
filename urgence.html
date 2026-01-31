@@ -5,38 +5,24 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Urgences - Le Trésor Public</title>
     <style>
-        body { 
-            font-family: 'Comic Sans MS', cursive, sans-serif; 
-            background-color: #FFFF00; color: #000080; 
-            margin: 0; padding: 0; text-align: center; 
-        }
+        body { font-family: 'Comic Sans MS', cursive; background-color: #FFFF00; color: #000080; margin: 0; text-align: center; }
+        #google_translate_element { padding: 10px; background: rgba(255,255,255,0.5); border-bottom: 2px solid #e91e63; }
         .menu-table { margin: 20px auto; background-color: #008080; border-collapse: collapse; border-radius: 10px; overflow: hidden; }
         .menu-table td { padding: 12px 20px; border: 1px solid #FFFFFF; }
         .menu-table a { text-decoration: none; color: #FFFFFF; font-weight: bold; }
-        
-        .form-container { 
-            background: white; border: 5px solid #e91e63; border-radius: 30px; 
-            width: 90%; max-width: 650px; margin: 30px auto; padding: 25px;
-            box-shadow: 10px 10px 0px #e91e63;
-        }
-        h1 { color: #e91e63; }
+        .form-container { background: white; border: 5px solid #e91e63; border-radius: 30px; width: 90%; max-width: 650px; margin: 20px auto; padding: 25px; box-shadow: 10px 10px 0px #e91e63; }
         label { display: block; margin-top: 15px; font-weight: bold; text-align: left; }
-        input, textarea { 
-            width: 100%; padding: 12px; margin: 8px 0; border-radius: 12px; 
-            border: 2px solid #e91e63; box-sizing: border-box; font-family: inherit;
-        }
-        .btn-envoi { 
-            background: #e91e63; color: white; border: none; padding: 18px 40px; 
-            border-radius: 25px; font-weight: bold; cursor: pointer; font-size: 1.3em; margin-top: 20px; 
-        }
-        .carte-alerte { 
-            background: white; border-left: 10px solid #e91e63; border-radius: 15px; 
-            padding: 20px; margin: 20px auto; max-width: 650px; text-align: left; 
-            box-shadow: 4px 4px 10px rgba(0,0,0,0.1); 
-        }
+        input, textarea, select { width: 100%; padding: 12px; margin: 8px 0; border-radius: 12px; border: 2px solid #e91e63; box-sizing: border-box; font-family: inherit; }
+        .btn-envoi { background: #e91e63; color: white; border: none; padding: 18px 40px; border-radius: 25px; font-weight: bold; cursor: pointer; font-size: 1.2em; }
+        .carte-alerte { background: white; border-left: 10px solid #e91e63; border-radius: 15px; padding: 20px; margin: 20px auto; max-width: 650px; text-align: left; box-shadow: 4px 4px 10px rgba(0,0,0,0.1); }
+        .reponse-aide { margin-left: 30px; margin-top: 10px; padding: 10px; background: #FFF9C4; border-left: 4px solid #008080; border-radius: 8px; font-size: 0.9em; }
     </style>
 </head>
 <body>
+
+    <div id="google_translate_element"></div>
+    <script>function googleTranslateElementInit() { new google.translate.TranslateElement({pageLanguage: 'fr'}, 'google_translate_element'); }</script>
+    <script src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
 
     <table class="menu-table">
         <tr>
@@ -52,26 +38,31 @@
 
     <div class="form-container">
         <form id="urgencyForm">
-            <input type="hidden" id="type" value="Urgence">
-
             <label>Ton Identité :</label>
             <input type="text" id="nom" placeholder="Ton nom ou pseudo" required>
 
-            <label>Ta Localisation :</label>
-            <input type="text" id="ville" placeholder="Ex: Près du grand chêne" required>
+            <label>Zone Géographique (Pays, Ville) :</label>
+            <input type="text" id="ville" placeholder="Ex: France, Pessac" required>
+
+            <label>Durée de l'annonce :</label>
+            <select id="duree">
+                <option value="1 mois">1 mois</option>
+                <option value="6 mois">6 mois</option>
+                <option value="A vie">A vie (Jusqu'à résolution)</option>
+            </select>
 
             <label>Besoin de :</label>
-            <textarea id="message" rows="6" 
-                placeholder="Ex : J'ai faim ! J'ai ma toiture à refaire, j'ai besoin de 3.5 bras voir 4 si possible ou j'ai besoin de farine pour le pain du..." 
-                required></textarea>
+            <textarea id="message" rows="5" placeholder="Ex: J'ai faim ! J'ai ma toiture à refaire, j'ai besoin de 3.5 bras..."></textarea>
 
             <button type="submit" id="btnEnvoi" class="btn-envoi">LANCER L'APPEL 🚀</button>
         </form>
     </div>
 
-    <div id="flux-urgences">
-        <h2 style="color: #e91e63;">🔥 Alertes Actives</h2>
-        <div id="chargement">Écoute des signaux du jardin...</div>
+    <hr style="width: 80%; border: 1px solid #e91e63; opacity: 0.2;">
+
+    <div style="max-width: 650px; margin: auto; padding: 10px;">
+        <input type="text" id="searchBox" onkeyup="filtrer()" placeholder="🔍 Chercher une ville, un pays ou un besoin..." style="border-color: #008080;">
+        <div id="flux-urgences"></div>
     </div>
 
     <script>
@@ -80,45 +71,49 @@
         document.getElementById('urgencyForm').addEventListener('submit', function(e) {
             e.preventDefault();
             const btn = document.getElementById('btnEnvoi');
-            btn.innerText = "Envoi du SOS...";
-            btn.disabled = true;
+            btn.innerText = "Envoi du SOS..."; btn.disabled = true;
 
             fetch(URL_SERVEUR, { 
-                method: 'POST', 
-                mode: 'no-cors', 
+                method: 'POST', mode: 'no-cors', 
                 body: JSON.stringify({
                     date: new Date().toLocaleDateString('fr-FR'),
                     type: "Urgence",
                     nom: document.getElementById('nom').value,
-                    localisation: document.getElementById('ville').value,
+                    localisation: document.getElementById('ville').value + " (" + document.getElementById('duree').value + ")",
                     message: document.getElementById('message').value
                 })
-            }).then(() => {
-                alert("Signal envoyé ! Garde espoir, la fraternité arrive.");
-                location.reload();
-            });
+            }).then(() => { alert("Signal envoyé !"); location.reload(); });
         });
+
+        function apporterAide(dest) {
+            const m = prompt("Comment peux-tu aider ?");
+            if (m) {
+                fetch(URL_SERVEUR, { method: 'POST', mode: 'no-cors', body: JSON.stringify({
+                    date: new Date().toLocaleDateString('fr-FR'), type: "avis", nom: prompt("Ton nom :") || "Anonyme", localisation: dest, message: m
+                })}).then(() => { alert("Merci !"); location.reload(); });
+            }
+        }
 
         fetch(URL_SERVEUR).then(r => r.json()).then(data => {
             const flux = document.getElementById('flux-urgences');
-            document.getElementById('chargement').style.display = 'none';
             const alertes = data.filter(d => d.type === "Urgence").reverse();
-            if (alertes.length === 0) {
-                flux.innerHTML += "<p>Aucune urgence. Le jardin est en paix.</p>";
-            } else {
-                alertes.forEach(u => {
-                    const div = document.createElement('div');
-                    div.className = 'carte-alerte';
-                    div.innerHTML = `
-                        <small>${u.date}</small> - <b style="color:#e91e63">🚨 SOS</b><br>
-                        <b>${u.nom}</b> à ${u.localisation}<br>
-                        <p style="margin-top:10px; border-top: 1px dotted #ccc; padding-top:10px;">
-                            <b>Besoin de :</b> ${u.message}
-                        </p>`;
-                    flux.appendChild(div);
+            const aides = data.filter(d => d.type === "avis");
+            alertes.forEach(u => {
+                let rHTML = ""; aides.filter(a => a.localisation === u.nom).forEach(a => {
+                    rHTML += `<div class="reponse-aide"><b>🤝 ${a.nom} :</b> ${a.message}</div>`;
                 });
-            }
+                const div = document.createElement('div');
+                div.className = 'carte-alerte';
+                div.innerHTML = `<small>${u.date}</small> - <b style="color:#e91e63">🚨 SOS</b><br><b>${u.nom}</b> à ${u.localisation}<p><b>Besoin de :</b> ${u.message}</p>${rHTML}<hr style="border:0; border-top: 1px dotted #e91e63;"><span style="color:#008080; cursor:pointer; font-weight:bold; font-size:0.8em;" onclick="apporterAide('${u.nom}')">🤝 RÉPONDRE</span>`;
+                flux.appendChild(div);
+            });
         });
+
+        function filtrer() {
+            let val = document.getElementById('searchBox').value.toLowerCase();
+            let cards = document.getElementsByClassName('carte-alerte');
+            for (let c of cards) { c.style.display = c.innerText.toLowerCase().includes(val) ? "" : "none"; }
+        }
     </script>
 </body>
 </html>
