@@ -4,43 +4,53 @@
     <meta charset="UTF-8">
     <title>Le Jardin des Annonces - Le Petit Prince</title>
     <style>
-        body { background-color: #FFF8E1; color: #2E7D32; font-family: "Comic Sans MS", cursive, sans-serif; text-align: center; padding: 20px; }
-        .bouton-retour { display: inline-block; margin-bottom: 25px; color: #4CAF50; text-decoration: none; font-weight: bold; border: 2px solid #4CAF50; padding: 10px 20px; border-radius: 20px; background-color: white; }
-        h1 { color: #2E7D32; text-decoration: underline; }
+        /* On garde votre structure mais on remet les couleurs du site */
+        body { background-color: #FFFF00; color: #000080; font-family: "Comic Sans MS", cursive, sans-serif; text-align: center; padding: 0; margin: 0; }
         
-        /* Barre de recherche */
+        /* Menu identique aux autres pages */
+        nav { background-color: #008080; padding: 10px; margin-bottom: 20px; }
+        nav a { color: white; text-decoration: none; margin: 0 15px; font-weight: bold; }
+
+        h1 { color: #FF0000; text-decoration: underline; }
+        
         #barreRecherche { 
             width: 80%; max-width: 400px; padding: 12px; margin-bottom: 30px; 
-            border: 2px solid #4CAF50; border-radius: 10px; font-size: 16px;
+            border: 3px solid #800080; border-radius: 10px; font-size: 16px;
         }
 
-        #listeAnnonces { display: flex; flex-direction: column; align-items: center; gap: 15px; }
+        #listeAnnonces { display: flex; flex-direction: column; align-items: center; gap: 15px; padding-bottom: 50px; }
         
         .annonce { 
-            background-color: white; border: 2px solid #A5D6A7; padding: 15px; 
-            width: 90%; max-width: 500px; border-radius: 15px; text-align: left;
-            transition: 0.3s;
+            background-color: white; border: 2px solid #000080; padding: 15px; 
+            width: 90%; max-width: 600px; border-radius: 15px; text-align: left;
+            box-shadow: 5px 5px 0px #800080;
         }
-        .annonce:hover { transform: scale(1.02); border-color: #4CAF50; }
         
-        .titre-annonce { color: #2E7D32; font-weight: bold; font-size: 1.1em; display: block; border-bottom: 1px dotted #A5D6A7; margin-bottom: 5px; }
-        .ville-annonce { color: #E91E63; font-size: 0.9em; font-weight: bold; }
-        .description { color: #555; margin-top: 5px; font-family: sans-serif; }
+        .titre-annonce { color: #FF0000; font-weight: bold; font-size: 1.2em; display: block; border-bottom: 1px dotted #000080; margin-bottom: 5px; }
+        .ville-annonce { color: #008080; font-size: 1em; font-weight: bold; }
+        .description { color: #000; margin-top: 10px; font-family: sans-serif; line-height: 1.4; }
+        .infos-brutes { font-size: 0.8em; color: #666; margin-top: 10px; border-top: 1px solid #eee; padding-top: 5px; }
     </style>
 </head>
 <body>
 
-    <a href="https://lepetitprincedesjardiniers.github.io/" class="bouton-retour">⬅ Retour à l'accueil</a>
+    <nav>
+        <a href="index.html">Accueil</a>
+        <a href="formulaire.html">Espace Don</a>
+        <a href="jardin.html">Le Jardin</a>
+        <a href="contact.html">Contact</a>
+    </nav>
     
     <h1>🌻 Le Jardin des Annonces</h1>
     
-    <input type="text" id="barreRecherche" placeholder="Rechercher une ville ou une graine..." onkeyup="filtrerAnnonces()">
+    <input type="text" id="barreRecherche" placeholder="🔍 Rechercher une ville, une graine, un ami..." onkeyup="filtrerAnnonces()">
 
-    <div id="chargement">Le jardin fleurit...</div>
+    <div id="chargement"><b>Le jardin fleurit... (Chargement des graines)</b></div>
     <div id="listeAnnonces"></div>
 
     <script>
-        const urlScript = "https://script.google.com/macros/s/AKfycbxuILkBo4L8JIK6ks1XsLpWMxvcviXSyMekJZI_sz-L_hRJygEDAoSVSzZ526DvsnTN/exec";
+        // ON UTILISE VOTRE DERNIÈRE URL DE SCRIPT VALIDE
+        const urlScript = "https://script.google.com/macros/s/AKfycbwe3bMzbJMUQSEdeyprffw-FQpqLg9-fGcHJi2_1_Ix5kWmrisBoSo2Kzne-CMwe3s/exec";
         let toutesLesAnnonces = [];
 
         async function chargerAnnonces() {
@@ -49,20 +59,26 @@
                 toutesLesAnnonces = await response.json();
                 document.getElementById('chargement').style.display = 'none';
                 afficher(toutesLesAnnonces);
-            } catch (e) { document.getElementById('chargement').innerText = "Erreur de chargement."; }
+            } catch (e) { 
+                document.getElementById('chargement').innerText = "Le jardin est en dormance (Erreur de chargement)."; 
+            }
         }
 
         function afficher(liste) {
             const conteneur = document.getElementById('listeAnnonces');
             conteneur.innerHTML = "";
-            liste.reverse().forEach(a => {
+            
+            // On inverse pour voir les plus récents en haut
+            [...liste].reverse().forEach(a => {
                 const div = document.createElement('div');
                 div.className = 'annonce';
                 div.innerHTML = `
-                    <span class="titre-annonce">🌿 Graine de ${a.identifiant}</span>
-                    <span class="ville-annonce">📍 ${a.ville}</span>
+                    <span class="titre-annonce">🌿 Graine de ${a.prenom || a.identifiant}</span>
+                    <span class="ville-annonce">📍 ${a.ville} (${a.pays}) - Rayon : ${a.km} km</span>
                     <p class="description">${a.description}</p>
-                    <small>💬 Contact : ${a.contact}</small>
+                    <div class="infos-brutes">
+                        ⏳ Durée : ${a.duree} | 📅 Posté le : ${new Date(a.date).toLocaleDateString()}
+                    </div>
                 `;
                 conteneur.appendChild(div);
             });
@@ -71,9 +87,10 @@
         function filtrerAnnonces() {
             const mot = document.getElementById('barreRecherche').value.toLowerCase();
             const filtre = toutesLesAnnonces.filter(a => 
-                a.ville.toLowerCase().includes(mot) || 
-                a.description.toLowerCase().includes(mot) ||
-                a.identifiant.toLowerCase().includes(mot)
+                (a.ville && a.ville.toLowerCase().includes(mot)) || 
+                (a.description && a.description.toLowerCase().includes(mot)) ||
+                (a.prenom && a.prenom.toLowerCase().includes(mot)) ||
+                (a.identifiant && a.identifiant.toLowerCase().includes(mot))
             );
             afficher(filtre);
         }
