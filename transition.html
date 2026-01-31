@@ -2,78 +2,221 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <title>Transition Poétique...</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🌟 Vibration Magique 💐</title>
     <style>
-        body { margin: 0; overflow: hidden; display: flex; flex-direction: column; justify-content: center; align-items: center; min-height: 100vh; background: #fff; font-family: 'Comic Sans MS', cursive; }
-        
-        .big-heart { font-size: 15em; color: #FF1493; animation: heartbeat 1.2s infinite alternate, multicolor 3s linear infinite; position: relative; z-index: 10; }
-        
-        @keyframes heartbeat { from { transform: scale(1); } to { transform: scale(1.15); } }
-        
-        @keyframes multicolor { 
-            0% { color: #FF1493; } 25% { color: #9400D3; } 50% { color: #00BFFF; } 75% { color: #32CD32; } 100% { color: #FF1493; } 
+        body {
+            margin: 0;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background: linear-gradient(135deg, #FFDAB9, #FFC0CB, #E6E6FA); /* Fond plus doux */
+            font-family: 'Comic Sans MS', cursive;
+            color: #8B008B;
+            position: relative;
         }
 
-        .trans-element { position: absolute; font-size: 3em; animation: flyToCenter 2.5s ease-out forwards; z-index: 5; }
-        
-        @keyframes flyToCenter {
-            0% { transform: translate(var(--sx), var(--sy)) scale(0); opacity: 0; }
-            20% { opacity: 1; scale(1.2); }
+        /* --- Éléments du Ciel Étoilé --- */
+        .star {
+            position: absolute;
+            color: #FFD700; /* Or */
+            font-size: var(--size);
+            animation: twinkle var(--duration) infinite alternate, float var(--duration) infinite ease-in-out;
+            opacity: 0;
+            text-shadow: 0 0 10px rgba(255, 215, 0, 0.7);
+            z-index: 1;
+        }
+
+        @keyframes twinkle {
+            0%, 100% { opacity: 0.5; transform: scale(0.8); }
+            50% { opacity: 1; transform: scale(1.2); }
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(var(--float-y)); }
+        }
+        /* --- FIN Ciel Étoilé --- */
+
+        .big-heart-container {
+            position: relative;
+            width: 300px;
+            height: 300px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 10; /* Pour s'assurer qu'il est au-dessus des étoiles */
+        }
+
+        .big-heart {
+            font-size: 15em;
+            color: #FF1493; /* Rose vif */
+            animation: heartbeat 1s infinite alternate, multicolor 2s linear infinite;
+            text-shadow: 0 0 30px rgba(255, 20, 147, 0.9);
+            position: relative;
+            z-index: 1; /* Pour être au-dessus des petites étoiles qui l'entourent */
+        }
+
+        /* Aura d'étoiles autour du cœur */
+        .heart-aura-star {
+            position: absolute;
+            font-size: 1.5em;
+            color: #FFD700; /* Or */
+            animation: orbit var(--orbit-duration) linear infinite, twinkle 1.5s infinite alternate;
+            transform: rotate(var(--initial-angle)) translateX(150px);
+            opacity: 0; /* Caché initiallement */
+            z-index: 2;
+        }
+        @keyframes orbit {
+            0% { transform: rotate(var(--initial-angle)) translateX(150px) scale(0.8); opacity: 0.7; }
+            50% { transform: rotate(calc(var(--initial-angle) + 180deg)) translateX(150px) scale(1.1); opacity: 1; }
+            100% { transform: rotate(calc(var(--initial-angle) + 360deg)) translateX(150px) scale(0.8); opacity: 0.7; }
+        }
+
+
+        @keyframes heartbeat { 0% { transform: scale(1); } 100% { transform: scale(1.1); } }
+        @keyframes multicolor {
+            0% { color: #FF1493; } 33% { color: #9400D3; } 66% { color: #00BFFF; } 100% { color: #FF1493; }
+        }
+
+        /* Animaux qui apportent des fleurs */
+        .animal-flower {
+            position: absolute;
+            font-size: 3em;
+            display: flex;
+            align-items: center;
+            white-space: nowrap;
+            animation: flyToHeart 2s ease-out forwards; /* Animation plus rapide */
+            opacity: 0;
+            z-index: 11;
+        }
+        .animal-flower span { margin-left: 5px; font-size: 0.8em; }
+
+        @keyframes flyToHeart {
+            0% { transform: translate(var(--sx), var(--sy)) scale(0.5); opacity: 0; }
+            30% { opacity: 1; transform: translate(var(--midX), var(--midY)) scale(1.2); } /* Point culminant */
+            80% { transform: translate(0, 0) scale(0.8); opacity: 1; }
             100% { transform: translate(0, 0) scale(0); opacity: 0; }
         }
 
-        .sparkle { position: absolute; font-size: 1.5em; animation: explodeOut 1s ease-out forwards; z-index: 15; }
-        
+        /* Explosion finale */
+        .explosion-item {
+            position: absolute;
+            font-size: 2em;
+            animation: explodeOut 0.8s ease-out forwards; /* Explosion très rapide */
+            opacity: 0;
+            z-index: 20;
+        }
+
         @keyframes explodeOut {
             0% { transform: translate(0,0) scale(1); opacity: 1; }
             100% { transform: translate(var(--dx), var(--dy)) scale(0); opacity: 0; }
         }
+
+        h2 { color: #FF1493; margin-top: 50px; text-shadow: 1px 1px 3px rgba(0,0,0,0.1); }
     </style>
 </head>
 <body>
-    <h2 id="msg" style="color: #FF1493; margin-bottom: 20px;">Ouverture du cœur...</h2>
-    <div class="big-heart" id="mainHeart">❤️</div>
+    <h2 id="msg">🌟 Vibration Magique 💐</h2>
+    <div class="big-heart-container">
+        <div class="big-heart" id="mainHeart">❤️</div>
+    </div>
 
     <script>
-        // On récupère la destination dans l'URL (ex: transition.html?page=impot.html)
         const urlParams = new URLSearchParams(window.location.search);
         const destination = urlParams.get('page') || 'index.html';
-        const heart = document.getElementById('mainHeart');
+        const heartContainer = document.querySelector('.big-heart-container');
+        const mainHeart = document.getElementById('mainHeart');
 
-        // 1. Apport de coeurs et animaux
-        const emojis = ['🕊️', '🦋', '🐝', '🐞', '❤️', '💖'];
-        for(let i=0; i<25; i++) {
-            setTimeout(() => {
-                const el = document.createElement('div');
-                el.className = 'trans-element';
-                el.innerText = emojis[Math.floor(Math.random()*emojis.length)];
-                const angle = Math.random() * Math.PI * 2;
-                const dist = 600;
-                el.style.setProperty('--sx', Math.cos(angle)*dist + 'px');
-                el.style.setProperty('--sy', Math.sin(angle)*dist + 'px');
-                el.style.left = "50%"; el.style.top = "50%";
-                document.body.appendChild(el);
-            }, i * 120);
+        const animals = ['🕊️', '🦋', '🐝', '🐞'];
+        const flowers = ['🌸', '🌼', '🌻', '🌺'];
+        const explosionEmojis = ['❤️', '💖', '✨', '💫', '🌟'];
+        const auraStars = ['⭐', '💫', '✨'];
+
+        // --- Ciel Étoilé de Fond ---
+        for (let i = 0; i < 50; i++) { // Plus d'étoiles de fond
+            const star = document.createElement('div');
+            star.className = 'star';
+            star.innerText = '✨'; // Ou '⭐'
+            star.style.setProperty('--size', (Math.random() * 0.8 + 0.5) + 'em');
+            star.style.setProperty('--duration', (Math.random() * 3 + 2) + 's');
+            star.style.setProperty('--float-y', (Math.random() * 30 - 15) + 'px');
+            star.style.top = Math.random() * 100 + '%';
+            star.style.left = Math.random() * 100 + '%';
+            star.style.animationDelay = (Math.random() * -5) + 's'; // Décalage pour l'animation
+            document.body.appendChild(star);
         }
 
-        // 2. Explosion et Redirection
+        // --- Aura d'étoiles autour du coeur (ajoutées de manière dynamique) ---
+        for (let i = 0; i < 8; i++) { // 8 étoiles en orbite
+            const auraStar = document.createElement('div');
+            auraStar.className = 'heart-aura-star';
+            auraStar.innerText = auraStars[Math.floor(Math.random() * auraStars.length)];
+            auraStar.style.setProperty('--orbit-duration', (Math.random() * 4 + 3) + 's');
+            auraStar.style.setProperty('--initial-angle', (i * 45) + 'deg'); // Répartir les étoiles
+            heartContainer.appendChild(auraStar);
+            // Faire apparaître progressivement
+            auraStar.style.animationDelay = (Math.random() * -2) + 's';
+            auraStar.style.opacity = 0.5 + Math.random() * 0.5;
+        }
+
+
+        // --- Animaux qui apportent des fleurs ---
+        for(let i=0; i<8; i++) { // Plus d'animaux
+            setTimeout(() => {
+                const animal = animals[Math.floor(Math.random() * animals.length)];
+                const flower = flowers[Math.floor(Math.random() * flowers.length)];
+
+                const el = document.createElement('div');
+                el.className = 'animal-flower';
+                el.innerHTML = `${animal}<span>${flower}</span>`; // L'animal porte la fleur
+                
+                // Point de départ aléatoire
+                const angle = Math.random() * 2 * Math.PI;
+                const radius = Math.max(window.innerWidth, window.innerHeight) / 2 * 0.9;
+                const startX = radius * Math.cos(angle);
+                const startY = radius * Math.sin(angle);
+                
+                // Point intermédiaire (pour un mouvement plus courbe)
+                const midX = startX * 0.5 + (Math.random() * 200 - 100);
+                const midY = startY * 0.5 + (Math.random() * 200 - 100);
+
+                el.style.setProperty('--sx', startX + 'px');
+                el.style.setProperty('--sy', startY + 'px');
+                el.style.setProperty('--midX', midX + 'px');
+                el.style.setProperty('--midY', midY + 'px');
+                el.style.animationDelay = (i * 0.1) + 's'; // Décaler l'arrivée des animaux
+                heartContainer.appendChild(el);
+            }, i * 150);
+        }
+
+        // --- Explosion Finale et Redirection ---
+        const transitionDuration = 2500; // Durée totale de l'animation en ms
+
         setTimeout(() => {
-            heart.style.display = 'none';
-            document.getElementById('msg').innerText = "Vibration transmise !";
-            
-            for(let i=0; i<50; i++) {
-                const s = document.createElement('div');
-                s.className = 'sparkle'; s.innerText = '❤️';
-                s.style.left = "50%"; s.style.top = "50%";
-                s.style.setProperty('--dx', (Math.random()-0.5)*1000 + 'px');
-                s.style.setProperty('--dy', (Math.random()-0.5)*1000 + 'px');
-                document.body.appendChild(s);
+            mainHeart.style.display = 'none'; // Le gros cœur disparaît
+            document.getElementById('msg').innerText = "✨ Énergie déployée ! ❤️"; // Message de fin
+
+            // Explosion
+            for(let i=0; i<80; i++) { // Plus de particules d'explosion
+                const item = document.createElement('div');
+                item.className = 'explosion-item';
+                item.innerText = explosionEmojis[Math.floor(Math.random() * explosionEmojis.length)];
+                item.style.left = "50%"; item.style.top = "50%";
+                item.style.setProperty('--dx', (Math.random()-0.5)*1200 + 'px'); // Plus grande portée
+                item.style.setProperty('--dy', (Math.random()-0.5)*1200 + 'px');
+                item.style.animationDelay = (Math.random() * 0.3) + 's'; // Légèrement décalé
+                heartContainer.appendChild(item);
             }
 
-            setTimeout(() => { 
-                window.location.href = destination; 
-            }, 900);
-        }, 3800); // Durée totale entre 3 et 5 secondes
+            // Redirection après l'explosion
+            setTimeout(() => {
+                window.location.href = destination;
+            }, 600); // Laisse un court instant pour voir l'explosion
+        }, transitionDuration); // Lance l'explosion après la durée définie
     </script>
 </body>
 </html>
