@@ -2,81 +2,69 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <title>Le Trésor Public - Le Petit Prince des Jardiniers</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Le Trésor Public - Accueil</title>
     <style>
-        body { font-family: 'Comic Sans MS', cursive; text-align: center; margin: 0; padding: 0; background-color: #FFFF00; color: #000080; overflow-x: hidden; min-height: 100vh; }
+        body { 
+            font-family: 'Comic Sans MS', cursive, sans-serif; 
+            background-color: #FFFF00; 
+            color: #000080; 
+            margin: 0; padding: 0; text-align: center; 
+        }
+
+        /* TRADUCTEUR */
+        #google_translate_element { 
+            padding: 10px; 
+            background: rgba(255,255,255,0.5); 
+            border-bottom: 2px solid #008080; 
+        }
+
+        /* MENU DE NAVIGATION */
+        .menu-table { 
+            margin: 20px auto; 
+            background-color: #008080; 
+            border-collapse: collapse; 
+            border-radius: 15px; 
+            overflow: hidden;
+            box-shadow: 0px 4px 10px rgba(0,0,0,0.2);
+        }
+        .menu-table td { padding: 15px 25px; border: 1px solid #FFFFFF; }
+        .menu-table a { text-decoration: none; color: #FFFFFF; font-weight: bold; font-size: 1.1em; }
+        .menu-table td:hover { background-color: #006666; }
+
+        /* CONTENU PRINCIPAL */
+        .hero-section { padding: 50px 20px; }
         
-        /* Traducteur Google */
-        #google_translate_element { padding: 10px; background: rgba(255,255,255,0.5); border-bottom: 1px solid #008080; min-height: 40px; }
+        h1 { font-size: 3em; color: #008080; text-shadow: 2px 2px #FFFFFF; margin-bottom: 10px; }
 
-        /* Menu */
-        .menu-table { margin: 20px auto; border-radius: 10px; background-color: #008080; border-collapse: collapse; margin-left: auto; margin-right: auto; }
-        .menu-table td { padding: 10px 15px; border: 1px solid #FFFFFF; }
-        .menu-table a { text-decoration: none; color: #FFFFFF; font-weight: bold; }
-
-        /* Soleil */
-        .soleil-don {
-            background: #FFD700; width: 220px; height: 220px; border-radius: 50%;
-            display: flex; align-items: center; justify-content: center;
-            box-shadow: 0 0 40px #FFA500; border: 5px dashed #FF4500;
-            margin: 20px auto; cursor: pointer; transition: 0.4s;
-            text-decoration: none; color: #000080; font-weight: bold; line-height: 1.2;
+        .philosophie { 
+            font-style: italic; 
+            font-size: 1.4em; 
+            color: #008080; 
+            margin: 30px auto; 
+            max-width: 800px; 
+            line-height: 1.6;
+            background: rgba(255,255,255,0.3);
+            padding: 20px;
+            border-radius: 50px;
         }
-        .soleil-don:hover { transform: scale(1.1) rotate(5deg); }
 
-        /* Moteur de Recherche */
-        .moteur-recherche {
-            background: rgba(255, 255, 255, 0.8); border: 3px solid #008080;
-            border-radius: 20px; padding: 20px; margin: 20px auto; width: 90%; max-width: 850px;
+        /* RECHERCHE RAPIDE */
+        #searchBox {
+            width: 80%; max-width: 500px; 
+            padding: 15px; margin: 20px auto;
+            border-radius: 30px; border: 3px solid #008080; 
+            font-family: inherit; font-size: 1em;
+            outline: none;
         }
-        .moteur-recherche input { padding: 10px; border-radius: 10px; border: 2px solid #008080; width: 80%; font-family: 'Comic Sans MS'; }
 
-        /* Grille des Bulles */
-        .bulles-grid { display: flex; justify-content: center; align-items: center; gap: 25px; flex-wrap: wrap; padding: 30px; max-width: 1400px; margin: auto; }
-        
-        .bulle-lien { text-decoration: none; color: inherit; z-index: 10; }
-
-        /* Style commun pour les Nuages (Impôt et Urgence) */
-        .nuage {
-            border-radius: 50px; padding: 30px; 
-            width: 320px; height: 220px; /* Taille identique pour les deux */
-            box-shadow: 6px 6px 0px rgba(0,0,0,0.1);
-            transition: 0.3s; display: flex; flex-direction: column; justify-content: center;
-            border: 3px solid;
+        /* FLUX D'ACTIVITÉ */
+        .flux-container { max-width: 800px; margin: 40px auto; text-align: left; padding: 0 20px; }
+        .carte-activite { 
+            background: white; border-radius: 15px; padding: 15px; margin-bottom: 15px;
+            border-left: 8px solid #008080; box-shadow: 4px 4px 10px rgba(0,0,0,0.1);
         }
-        .nuage:hover { transform: translateY(-10px); filter: brightness(1.05); }
-
-        /* Spécificités Impôt (Bleu) */
-        .nuage-impot { background: #e0f7fa; border-color: #008080; }
-        
-        /* Spécificités Urgence (Rose) */
-        .nuage-urgence { background: #ffebee; border-color: #e91e63; }
-
-        /* Étoile Centrale - Régulation */
-        .etoile-justice {
-            background: #E6E6FA; border: 3px solid #9370DB;
-            clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
-            width: 400px; height: 400px; display: flex; align-items: center; justify-content: center;
-            transition: all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            cursor: pointer;
-        }
-        .etoile-justice:hover { 
-            transform: scale(1.2); 
-            background: #f3f0ff; 
-            clip-path: circle(50% at 50% 50%); /* Devient ronde pour tout lire */
-        }
-        .etoile-contenu { width: 75%; }
-
-        .exemples { font-size: 0.8em; color: #2E7D32; font-style: italic; margin-top: 8px; font-weight: bold; }
-
-        /* Animations Magiques */
-        #coffre-magique { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); font-size: 60px; z-index: 800; transition: transform 0.3s; }
-        #animal-container { position: fixed; z-index: 900; white-space: nowrap; display: flex; align-items: center; pointer-events: none; }
-        #corps-animal { font-size: 50px; }
-        #bulle-texte { background: rgba(255, 255, 255, 0.9); border: 2px solid #2E7D32; border-radius: 15px; padding: 8px 15px; font-weight: bold; opacity: 0; transition: 0.3s; }
-        .pop { transform: translateX(-50%) scale(1.4) !important; }
-        .confetti { position: fixed; z-index: 799; pointer-events: none; animation: fly 2s ease-out forwards; }
-        @keyframes fly { 0% { transform: translate(0, 0) rotate(0deg); opacity: 1; } 100% { transform: translate(var(--dx), var(--dy)) rotate(360deg); opacity: 0; } }
+        .type-tag { font-weight: bold; text-transform: uppercase; font-size: 0.8em; padding: 3px 8px; border-radius: 5px; color: white; }
     </style>
 </head>
 <body>
@@ -87,116 +75,79 @@
     </script>
     <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
 
-    <audio id="chantOiseaux" loop><source src="oiseaux.mp3" type="audio/mpeg"></audio>
-
     <table class="menu-table">
         <tr>
             <td><a href="index.html">Accueil</a></td>
-            <td><a href="formulaire.html">Semer</a></td>
-            <td><a href="jardin.html">Le Jardin</a></td>
-            <td><a href="contact.html">Contact</a></td>
+            <td><a href="formulaire.html">Semer 🌱</a></td>
+            <td><a href="jardin.html">Le Jardin 🌻</a></td>
+            <td><a href="regulation.html">Régulation ⚖️</a></td>
+            <td><a href="urgence.html">Urgences 🚨</a></td>
         </tr>
     </table>
 
-    <h1>💰 Le Trésor Public</h1>
-    <p><strong>Le Petit Prince des Jardiniers</strong></p>
-
-    <a href="formulaire.html" class="soleil-don">
-        <div>☀️<br>CADEAUX SANS DÉTOUR<br><span style="font-size: 0.8em; font-weight: normal;">Cadeaux sans demande de retour</span></div>
-    </a>
-
-    <div class="moteur-recherche">
-        <h3>🔍 Ratisser Large</h3>
-        <input type="text" placeholder="Ta quête citoyenne (Pays, Ville, Objet...)">
-    </div>
-
-    <div class="bulles-grid">
+    <div class="hero-section">
+        <h1>Le Trésor Public</h1>
         
-        <a href="urgence.html" class="bulle-lien">
-            <div class="nuage nuage-impot">
-                <h3 style="color: #008080; text-transform: uppercase; margin: 0;">📜 Impôt Volontaire</h3>
-                <p style="margin: 5px 0; font-weight: bold;">Temps Public & Travaux Collectifs</p>
-                <p style="font-size: 0.85em; margin: 5px 0;">Travaux publics de libre participation, nécessaires au fonctionnement de la structure publique.</p>
-                <div class="exemples">Ex: Bois communal, route...</div>
-            </div>
-        </a>
+        <div class="philosophie">
+            "Ici, on sème tout ce qui est BON, on ne demande rien de précis, et on cultive la paix sans condamner."
+        </div>
 
-        <a href="regulation.html" class="bulle-lien">
-            <div class="etoile-justice">
-                <div class="etoile-contenu">
-                    <h3 style="margin: 0;">⚖️ Régulation Citoyenne</h3>
-                    <p style="margin: 10px 0;">Expose ton conflit à la communauté.</p>
-                    <div class="exemples">Soutien, sentence ou pardon. C'est notre ensemble qui régule sa justice avec délicatesse.</div>
-                </div>
-            </div>
-        </a>
-
-        <a href="urgence.html" class="bulle-lien">
-            <div class="nuage nuage-urgence">
-                <h3 style="color: #e91e63; margin: 0;">❤️ Urgence & Écoute</h3>
-                <p style="margin: 10px 0; font-weight: bold;">Besoins vitaux et aide aux projets.</p>
-                <div class="exemples">Ex: Mon cœur a besoin d'un câlin, recherche farine, aide charpente...</div>
-            </div>
-        </a>
-
+        <input type="text" id="searchBox" onkeyup="filtrerTout()" placeholder="🔍 Rechercher un lieu, un don ou un appel dans le Jardin...">
     </div>
 
-    <div id="coffre-magique">🎁</div>
-    <div id="animal-container">
-        <div id="bulle-texte"></div>
-        <div id="corps-animal">🕊️</div>
+    <div class="flux-container">
+        <h2 style="text-align: center; color: #008080;">Dernières activités du Jardin</h2>
+        <div id="chargement" style="text-align: center;">Ouverture des portes du jardin...</div>
+        <div id="flux-global"></div>
     </div>
 
     <script>
-        // Scripts d'animation
-        const mesPhrases = ["Bienvenue au Trésor Public", "L'impôt est un geste de cœur", "L'étoile éclot pour vous écouter"];
-        const animaux = ['🕊️', '🦋', '🐝', '🐞'];
-        const fleurs = ['🌸', '🌼', '🌻', '🌺'];
-        const animalCont = document.getElementById('animal-container');
-        const bulle = document.getElementById('bulle-texte');
-        const corps = document.getElementById('corps-animal');
-        const coffre = document.getElementById('coffre-magique');
-        const audio = document.getElementById('chantOiseaux');
+        const URL_SERVEUR = "https://script.google.com/macros/s/AKfycbz4ncs9qw_AfmKSER5QST-P0OeKQggQaq86QC6liS53uZ9sx4Lo_-4-h1knXKWqgQMc/exec";
 
-        let aniX = -200, aniY = 250, targetX, targetY, state = "WAITING";
-        document.addEventListener('click', () => { if(audio.paused) { audio.volume = 0.05; audio.play(); } });
+        // RÉCUPÉRATION DES DONNÉES
+        fetch(URL_SERVEUR)
+            .then(res => res.json())
+            .then(data => {
+                const flux = document.getElementById('flux-global');
+                document.getElementById('chargement').style.display = 'none';
 
-        function createConfetti() {
-            for(let i=0; i<15; i++) {
-                const c = document.createElement('div');
-                c.className = 'confetti';
-                c.innerText = fleurs[Math.floor(Math.random()*fleurs.length)];
-                c.style.left = "50%"; c.style.bottom = "60px";
-                c.style.setProperty('--dx', (Math.random()*400 - 200) + "px");
-                c.style.setProperty('--dy', (Math.random()*-400 - 100) + "px");
-                document.body.appendChild(c);
-                setTimeout(() => c.remove(), 2000);
+                // On affiche tout (Dons, Urgences, Conflits) trié par le plus récent
+                data.reverse().forEach(item => {
+                    if (item.type === "avis") return; // On ne montre pas les réponses ici
+
+                    let couleur = "#008080";
+                    let icone = "✨";
+                    
+                    if(item.type === "Urgence") { couleur = "#e91e63"; icone = "🚨"; }
+                    if(item.type === "conflit") { couleur = "#9370DB"; icone = "⚖️"; }
+                    if(item.type === "Graine" || item.type === "Don") { couleur = "#4CAF50"; icone = "🌱"; }
+
+                    const div = document.createElement('div');
+                    div.className = 'carte-activite';
+                    div.style.borderLeftColor = couleur;
+                    div.innerHTML = `
+                        <span class="type-tag" style="background:${couleur}">${icone} ${item.type}</span>
+                        <small style="float:right;">${item.date}</small>
+                        <div style="margin-top:10px;">
+                            <b>${item.nom}</b> à ${item.localisation}<br>
+                            <p style="margin-top:5px; font-style:italic;">"${item.message}"</p>
+                        </div>
+                    `;
+                    flux.appendChild(div);
+                });
+            })
+            .catch(err => {
+                document.getElementById('chargement').innerText = "Le jardin est paisible et silencieux.";
+            });
+
+        // FONCTION DE RECHERCHE
+        function filtrerTout() {
+            let val = document.getElementById('searchBox').value.toLowerCase();
+            let cartes = document.getElementsByClassName('carte-activite');
+            for (let c of cartes) {
+                c.style.display = c.innerText.toLowerCase().includes(val) ? "" : "none";
             }
         }
-
-        function startNewMessenger() {
-            bulle.innerText = mesPhrases[Math.floor(Math.random() * mesPhrases.length)];
-            corps.innerText = animaux[Math.floor(Math.random() * animaux.length)];
-            aniX = -200; targetX = window.innerWidth / 2; targetY = window.innerHeight - 110;
-            state = "APPROACHING";
-        }
-
-        function loop() {
-            if (state === "APPROACHING") {
-                aniX += (targetX - aniX) * 0.015; aniY += (targetY - aniY) * 0.015;
-                bulle.style.opacity = "1";
-                if (Math.abs(targetX - aniX) < 60) {
-                    state = "DEPOSITING"; coffre.classList.add('pop'); createConfetti();
-                    setTimeout(() => { bulle.style.opacity = "0"; coffre.classList.remove('pop'); state = "LEAVING"; targetX = window.innerWidth + 200; }, 2500);
-                }
-            } else if (state === "LEAVING") {
-                aniX += (targetX - aniX) * 0.02;
-                if (aniX > window.innerWidth + 100) startNewMessenger();
-            }
-            animalCont.style.left = aniX + "px"; animalCont.style.top = aniY + "px";
-            requestAnimationFrame(loop);
-        }
-        startNewMessenger(); loop();
     </script>
 </body>
 </html>
