@@ -2,134 +2,128 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <title>Le Trésor Public - Version Chef-d'œuvre</title>
+    <title>Le Trésor Public - Version Évoluée</title>
     <style>
         body { 
-            font-family: 'Comic Sans MS', cursive; background-color: #FFFF00; 
-            color: #000080; margin: 0; text-align: center; overflow-x: hidden; min-height: 100vh;
+            font-family: 'Comic Sans MS', cursive; 
+            background-color: #FFFF00; 
+            color: #000080; 
+            margin: 0; padding: 0; 
+            text-align: center; 
+            overflow-x: hidden;
         }
 
-        /* --- INTRO COEUR --- */
-        #intro-layer {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: #000; z-index: 10000; display: flex; 
-            flex-direction: column; justify-content: center; align-items: center;
-            transition: transform 1.2s cubic-bezier(0.8, 0, 0.2, 1);
+        /* --- SOLEIL ET TITRE --- */
+        .soleil-don {
+            background: #FFD700; width: 200px; height: 200px; border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            box-shadow: 0 0 40px #FFA500; border: 5px dashed #FF4500;
+            margin: 20px auto; cursor: pointer; transition: 0.4s;
+            text-decoration: none; color: #000080; font-weight: bold;
         }
-        .heart {
-            width: 100px; height: 90px; background: #ff4d6d; position: relative;
-            transform: rotate(-45deg); animation: pulse 1s infinite;
-            box-shadow: 0 0 50px #ff4d6d;
+        .soleil-don:hover { transform: scale(1.1) rotate(5deg); }
+
+        /* --- MENU TURQUOISE --- */
+        .menu-table { 
+            margin: 20px auto; background-color: #008080; 
+            border-radius: 10px; border-collapse: collapse; 
         }
-        .heart::before, .heart::after {
-            content: ""; position: absolute; width: 100px; height: 100px;
-            background: #ff4d6d; border-radius: 50%;
+        .menu-table td { padding: 10px 20px; border: 1px solid white; }
+        .menu-table a { text-decoration: none; color: white; font-weight: bold; }
+
+        /* --- MOTEUR DE RECHERCHE (RATISSER LARGE) --- */
+        .moteur-recherche {
+            background: rgba(255, 255, 255, 0.8); 
+            border: 3px solid #008080;
+            border-radius: 20px; 
+            padding: 20px; 
+            margin: 20px auto; 
+            width: 85%; max-width: 800px;
         }
-        .heart::before { top: -50px; left: 0; }
-        .heart::after { left: 50px; top: 0; }
-        @keyframes pulse { 0%, 100% { scale: 1; } 50% { scale: 1.1; } }
+        .moteur-recherche input { 
+            padding: 10px; width: 70%; border-radius: 10px; 
+            border: 2px solid #008080; font-family: inherit;
+        }
 
-        /* --- NAVIGATION --- */
-        .menu-table { margin: 20px auto; background: #008080; border-radius: 15px; border-collapse: collapse; box-shadow: 0 5px 15px rgba(0,0,0,0.1); }
-        .menu-table td { padding: 12px 20px; border: 1px solid white; }
-        .menu-table a { color: white; text-decoration: none; font-weight: bold; }
-
-        /* --- ÉLÉMENTS FIXES --- */
-        #coffre-magique { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); font-size: 60px; z-index: 800; cursor: pointer; filter: drop-shadow(0 0 10px gold); }
-
-        /* --- GRILLE STELLAIRE --- */
+        /* --- LES DEUX BLOCS (NUAGES) --- */
         .bulles-grid {
-            display: flex; justify-content: center; align-items: center;
-            gap: 25px; padding: 40px; flex-wrap: wrap;
+            display: flex; justify-content: center; gap: 30px; 
+            flex-wrap: wrap; padding: 30px;
         }
 
         .nuage {
-            background: white; border-radius: 50px; padding: 25px; width: 250px; min-height: 150px;
-            border: 3px solid #87CEEB; box-shadow: 8px 8px 0px #87CEEB; transition: 0.3s;
+            background: white; 
+            border-radius: 50px; 
+            padding: 25px; 
+            width: 300px; 
+            min-height: 180px;
+            border: 3px solid #87CEEB; 
+            box-shadow: 6px 6px 0px #87CEEB;
+            transition: 0.3s;
+            display: flex; flex-direction: column; justify-content: center;
+            text-decoration: none; color: inherit;
         }
         .nuage:hover { transform: translateY(-10px); background: #f0faff; }
 
-        .etoile-justice {
-            background: #E6E6FA; border: 3px solid #9370DB;
-            clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
-            width: 350px; height: 350px; display: flex; align-items: center; justify-content: center;
-            transition: 0.5s ease-in-out; cursor: pointer; z-index: 10;
+        .nuage-rose {
+            border-color: #e91e63;
+            box-shadow: 6px 6px 0px #e91e63;
         }
-        .etoile-justice:hover { transform: scale(1.25); background: #f3f0ff; z-index: 50; }
 
-        /* --- DONNÉES DYNAMIQUES --- */
-        .carte { 
-            background: white; margin: 15px auto; max-width: 700px; padding: 20px; 
-            text-align: left; border-radius: 20px; border-left: 15px solid #008080;
-            box-shadow: 5px 10px 25px rgba(0,0,0,0.08); transition: 0.3s;
-        }
-        .carte:hover { transform: scale(1.02); }
+        .exemples { font-size: 0.8em; color: #2E7D32; font-style: italic; margin-top: 10px; }
+
+        #animal { position: fixed; font-size: 50px; z-index: 500; }
     </style>
 </head>
 <body>
 
-    <div id="intro-layer">
-        <div class="heart"></div>
-        <h1 style="color:white; margin-top:60px; letter-spacing:3px;">LE TRÉSOR S'OUVRE</h1>
-    </div>
+    <a href="cadeaux.html" class="soleil-don">
+        <div>☀️<br>CADEAUX<br>SANS DÉTOUR</div>
+    </a>
 
-    <table class="menu-table">
+    <table class="menu-table" align="center">
         <tr>
             <td><a href="index.html">Accueil</a></td>
             <td><a href="formulaire.html">Semer 🌱</a></td>
-            <td><a href="jardin.html">Jardin 🌻</a></td>
-            <td><a href="urgence.html">Aider 🚨</a></td>
+            <td><a href="jardin.html">Le Jardin 🌻</a></td>
+            <td><a href="contact.html">Contact</a></td>
         </tr>
     </table>
 
+    <div class="moteur-recherche">
+        <h3>🔍 Ratisser Large</h3>
+        <input type="text" placeholder="Pays, Ville, Nom, Besoin...">
+        <button style="background:#E67E22; color:white; border:none; padding:10px 20px; border-radius:10px; cursor:pointer; font-weight:bold;">Chercher</button>
+    </div>
+
     <div class="bulles-grid">
-        <div class="nuage">
-            <h3 style="color: #008080;">📜 GESTION</h3>
-            <p style="font-size: 0.9em;">Travaux collectifs & Bois communal.</p>
-        </div>
+        <a href="jardin.html" class="nuage">
+            <h3>📜 GESTION CITOYENNE</h3>
+            <p>Travaux publics et libre participation.</p>
+            <div class="exemples">Ex: Bois communal, route, entraide...</div>
+        </a>
 
-        <div class="etoile-justice">
-            <div style="width: 60%; pointer-events: none;">
-                <h3 style="margin:0;">⚖️ JUSTICE</h3>
-                <p style="font-size: 0.8em;">Régulation citoyenne.<br>Le pardon est notre force.</p>
-            </div>
-        </div>
-
-        <div class="nuage" style="border-color: #e91e63; box-shadow: 8px 8px 0px #e91e63;">
-            <h3 style="color: #e91e63;">❤️ URGENCES</h3>
-            <p style="font-size: 0.9em;">Besoins vitaux & Soutien moral.</p>
-        </div>
+        <a href="urgence.html" class="nuage nuage-rose">
+            <h3 style="color:#e91e63;">❤️ IMPÔT DU COEUR</h3>
+            <p>Urgences vitales et aides aux projets.</p>
+            <div class="exemples">Ex: Besoin de farine, aide charpente, câlin...</div>
+        </a>
     </div>
 
-    <div id="conteneur-vie">
-        <p>Chargement des ondes du jardin...</p>
-    </div>
-
-    <div id="coffre-magique" onclick="alert('Merci de cultiver ce jardin !')">🎁</div>
+    <div id="animal">🦋</div>
 
     <script>
-        // Intro
-        setTimeout(() => {
-            document.getElementById('intro-layer').style.transform = 'translateY(100%)';
-        }, 2000);
-
-        // Fetch des données réelles
-        const URL_SERVEUR = "https://script.google.com/macros/s/AKfycbz4ncs9qw_AfmKSER5QST-P0OeKQggQaq86QC6liS53uZ9sx4Lo_-4-h1knXKWqgQMc/exec";
-
-        fetch(URL_SERVEUR)
-            .then(res => res.json())
-            .then(data => {
-                const zone = document.getElementById('conteneur-vie');
-                zone.innerHTML = "";
-                data.reverse().forEach(item => {
-                    const div = document.createElement('div');
-                    div.className = 'carte';
-                    let col = item.type.toLowerCase().includes("urgence") ? "#e91e63" : "#008080";
-                    div.style.borderLeftColor = col;
-                    div.innerHTML = `<b style="color:${col}">${item.type.toUpperCase()}</b> - ${item.nom}<br><small>${item.localisation}</small><p>${item.message}</p>`;
-                    zone.appendChild(div);
-                });
-            });
+        let pos = -100;
+        const animal = document.getElementById('animal');
+        function move() {
+            pos += 2;
+            animal.style.left = pos + "px";
+            animal.style.top = (250 + Math.sin(pos/40) * 60) + "px";
+            if(pos > window.innerWidth + 100) pos = -100;
+            requestAnimationFrame(move);
+        }
+        move();
     </script>
+
 </body>
 </html>
