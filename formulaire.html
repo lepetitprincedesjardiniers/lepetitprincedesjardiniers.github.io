@@ -9,70 +9,48 @@
     <center>
         <div id="google_translate_element" style="padding:10px;"></div>
 
-        <table border="1" cellpadding="10" bgcolor="#008080" style="margin-top:10px; border-radius:10px;">
+        <table class="notranslate" border="1" cellpadding="10" bgcolor="#008080" style="margin-top:10px; border-radius:10px;">
             <tr>
-                <td><a href="index.html"><font color="#FFFFFF"><b>Accueil</b></font></a></td>
-                <td><a href="formulaire.html"><font color="#FFFFFF"><b>Semer</b></font></a></td>
-                <td><a href="jardin.html"><font color="#FFFFFF"><b>Le Jardin</b></font></a></td>
-                <td><a href="contact.html"><font color="#FFFFFF"><b>Contact</b></font></a></td>
+                <td><a href="index.html" style="text-decoration:none;"><font color="#FFFFFF"><b>Accueil</b></font></a></td>
+                <td><a href="formulaire.html" style="text-decoration:none;"><font color="#FFFFFF"><b>Semer</b></font></a></td>
+                <td><a href="jardin.html" style="text-decoration:none;"><font color="#FFFFFF"><b>Le Jardin</b></font></a></td>
+                <td><a href="contact.html" style="text-decoration:none;"><font color="#FFFFFF"><b>Contact</b></font></a></td>
             </tr>
         </table>
 
         <br>
-        <font size="6" color="#2E7D32">🌱 <u><b>SEMER UNE GRAINE DANS LE MONDE</b></u></font>
+        <font size="6" color="#2E7D32">🌱 <u><b>SEMER UNE GRAINE</b></u></font>
         <br><br>
 
         <form action="https://script.google.com/macros/s/AKfycbwe3bMzbJMUQSEdeyprffw-FQpqLg9-fGcHJi2_1_Ix5kWmrisBoSo2Kzne-CMwe3s/exec" method="POST">
-            
             <input type="hidden" name="formType" value="annonce">
             <input type="hidden" name="redirectURL" value="https://lepetitprincedesjardiniers.github.io/merci_annonce.html">
 
-            <table border="2" cellpadding="20" bgcolor="#FFFFFF" width="85%" style="border-radius:20px; border-color:#2E7D32; max-width:600px; box-shadow: 5px 5px 15px rgba(0,0,0,0.1);">
+            <table border="2" cellpadding="20" bgcolor="#FFFFFF" width="85%" style="border-radius:20px; border-color:#2E7D32; max-width:600px;">
                 <tr>
                     <td align="left">
-                        <b>Ton Prénom / Pseudo :</b><br>
-                        <input type="text" name="prenom" style="width:95%; padding:10px;" required><br><br>
-
-                        <b>Ton Pays :</b><br>
-                        <input type="text" name="pays" style="width:95%; padding:10px;" required><br><br>
-
-                        <b>Ta Ville :</b><br>
-                        <input type="text" name="ville" style="width:95%; padding:10px;" required><br><br>
-
-                        <b>Que souhaites-tu offrir ou partager ?</b><br>
-                        <textarea name="description" rows="6" style="width:95%; padding:10px;" required placeholder="Décris ton don..."></textarea><br><br>
-
-                        <b>Durée de validité de l'offre :</b><br>
-                        <select name="duree" style="width:100%; padding:10px; cursor:pointer; font-family:'Comic Sans MS';">
+                        <b>Prénom :</b><br><input type="text" name="prenom" style="width:95%; padding:10px;" required><br><br>
+                        <b>Pays :</b><br><input type="text" name="pays" style="width:95%; padding:10px;" required><br><br>
+                        <b>Ville :</b><br><input type="text" name="ville" style="width:95%; padding:10px;" required><br><br>
+                        <b>Description :</b><br><textarea name="description" rows="6" style="width:95%; padding:10px;" required></textarea><br><br>
+                        <b>Durée de validité :</b><br>
+                        <select name="duree" style="width:100%; padding:10px;">
                             <option value="1 jour">1 jour</option>
                             <option value="1 semaine">1 semaine</option>
                             <option value="1 mois" selected>1 mois</option>
                             <option value="6 mois">6 mois</option>
                             <option value="1 an">1 an</option>
-                        </select>
-                        <br><br>
-
-                        <center>
-                            <input type="submit" value="🌻 PUBLIER MA GRAINE" style="background-color:#2E7D32; color:white; padding:15px 30px; font-weight:bold; border:none; border-radius:10px; cursor:pointer; font-size:1.1em;">
-                        </center>
+                        </select><br><br>
+                        <center><input type="submit" value="🌻 PUBLIER" style="background-color:#2E7D32; color:white; padding:15px 30px; font-weight:bold; border-radius:10px; cursor:pointer; border:none;"></center>
                     </td>
                 </tr>
             </table>
         </form>
-
-        <br>
-        <div style="font-size: 40px;">🌸 🌼 🌻 🌺</div>
-        <br>
-        <font size="2">copyrith 2026... Le petit prince des jardiniers</font>
-        <br><br>
     </center>
 
     <script type="text/javascript">
-        function googleTranslateElementInit() {
-            new google.translate.TranslateElement({pageLanguage: 'fr'}, 'google_translate_element');
-        }
+        function googleTranslateElementInit() { new google.translate.TranslateElement({pageLanguage: 'fr'}, 'google_translate_element'); }
     </script>
     <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
-
 </body>
 </html>
