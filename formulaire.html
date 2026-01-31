@@ -2,62 +2,139 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <title>Semer - Le Petit Prince</title>
+    <title>Semer une Graine - Le Petit Prince</title>
+    <style>
+        body { font-family: 'Comic Sans MS', cursive; text-align: center; margin: 0; padding: 0; background-color: #FFFF00; color: #000080; overflow-x: hidden; min-height: 100vh; }
+        
+        .menu-table { margin: 20px auto; border-radius: 10px; background-color: #008080; border-collapse: collapse; }
+        .menu-table td { padding: 10px 15px; border: 1px solid #FFFFFF; }
+        .menu-table a { text-decoration: none; color: #FFFFFF; font-weight: bold; }
+
+        /* Style du Formulaire */
+        .form-container { 
+            background: white; 
+            padding: 30px; 
+            border-radius: 20px; 
+            display: inline-block; 
+            margin-top: 10px; 
+            box-shadow: 0px 10px 20px rgba(0,0,0,0.1); 
+            width: 80%; 
+            max-width: 400px;
+            margin-bottom: 150px; /* Espace pour les animaux en bas */
+        }
+        input, textarea { width: 90%; padding: 10px; margin: 10px 0; border: 2px solid #008080; border-radius: 10px; font-family: 'Comic Sans MS'; }
+        
+        #coffre-magique { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); font-size: 60px; z-index: 800; transition: transform 0.3s; }
+        #animal-container { position: fixed; z-index: 900; white-space: nowrap; display: flex; align-items: center; pointer-events: none; }
+        #corps-animal { font-size: 50px; }
+        #bulle-texte { background: rgba(255, 255, 255, 0.9); border-radius: 15px; padding: 8px 15px; font-style: italic; color: #2E7D32; margin-right: 10px; box-shadow: 2px 2px 5px rgba(0,0,0,0.1); font-weight: bold; border: 2px solid #2E7D32; opacity: 0; transition: opacity 0.3s; }
+        
+        .btn-envoyer { padding: 15px 30px; background: #E67E22; color: white; border: none; border-radius: 20px; cursor: pointer; font-weight: bold; font-size: 1.2em; box-shadow: 0px 4px 0px #b35900; }
+        .pop { transform: translateX(-50%) scale(1.4) !important; }
+        .confetti { position: fixed; z-index: 799; pointer-events: none; animation: fly 2s ease-out forwards; }
+        @keyframes fly { 0% { transform: translate(0, 0) rotate(0deg); opacity: 1; } 100% { transform: translate(var(--dx), var(--dy)) rotate(360deg); opacity: 0; } }
+        .copyright-link { color: #000080; text-decoration: none; font-weight: bold; }
+    </style>
 </head>
-<body bgcolor="#FFFF00" text="#000080" style="font-family:'Comic Sans MS', cursive; text-align:center; margin:0; padding:0;">
+<body>
 
-    <center>
-        <div id="google_translate_element" style="padding:10px;"></div>
+    <audio id="chantOiseaux" loop><source src="oiseaux.mp3" type="audio/mpeg"></audio>
 
-        <table class="notranslate" border="1" cellpadding="10" bgcolor="#008080" style="margin-top:10px; border-radius:10px;">
-            <tr>
-                <td><a href="index.html" style="text-decoration:none;"><font color="#FFFFFF"><b>Accueil</b></font></a></td>
-                <td><a href="formulaire.html" style="text-decoration:none;"><font color="#FFFFFF"><b>Semer</b></font></a></td>
-                <td><a href="jardin.html" style="text-decoration:none;"><font color="#FFFFFF"><b>Le Jardin</b></font></a></td>
-                <td><a href="contact.html" style="text-decoration:none;"><font color="#FFFFFF"><b>Contact</b></font></a></td>
-            </tr>
-        </table>
+    <div id="google_translate_element" style="padding:10px;"></div>
 
-        <br>
-        <font size="6" color="#2E7D32">🌱 <u><b>SEMER UNE GRAINE</b></u></font>
-        <br><br>
+    <table class="menu-table">
+        <tr>
+            <td><a href="index.html">Accueil</a></td>
+            <td><a href="formulaire.html">Semer</a></td>
+            <td><a href="jardin.html">Le Jardin</a></td>
+            <td><a href="contact.html">Contact</a></td>
+        </tr>
+    </table>
 
-        <form action="https://script.google.com/macros/s/AKfycbwe3bMzbJMUQSEdeyprffw-FQpqLg9-fGcHJi2_1_Ix5kWmrisBoSo2Kzne-CMwe3s/exec" method="POST">
-            <input type="hidden" name="formType" value="annonce">
-            <input type="hidden" name="redirectURL" value="https://lepetitprincedesjardiniers.github.io/merci_annonce.html">
-
-            <table border="2" cellpadding="20" bgcolor="#FFFFFF" width="85%" style="border-radius:20px; border-color:#2E7D32; max-width:600px;">
-                <tr>
-                    <td align="left">
-                        <b>Ton Prénom :</b><br><input type="text" name="prenom" style="width:95%; padding:10px;" required><br><br>
-                        <b>Pays :</b><br><input type="text" name="pays" style="width:95%; padding:10px;" required><br><br>
-                        <b>Ville :</b><br><input type="text" name="ville" style="width:95%; padding:10px;" required><br><br>
-                        
-                        <b>Rayon d'action (KM ou Miles) :</b><br>
-                        <input type="text" name="km" style="width:95%; padding:10px;" placeholder="Ex: 10 km, 5 miles ou 'Sur place'" required><br><br>
-
-                        <b>Description du don :</b><br>
-                        <textarea name="description" rows="5" style="width:95%; padding:10px;" required></textarea><br><br>
-
-                        <b>Durée de validité :</b><br>
-                        <select name="duree" style="width:100%; padding:10px;">
-                            <option value="1 jour">1 jour</option>
-                            <option value="1 semaine">1 semaine</option>
-                            <option value="1 mois" selected>1 mois</option>
-                            <option value="6 mois">6 mois</option>
-                            <option value="1 an">1 an</option>
-                        </select><br><br>
-
-                        <center><input type="submit" value="🌻 PUBLIER DANS LE JARDIN" style="background-color:#2E7D32; color:white; padding:15px 30px; font-weight:bold; border-radius:10px; cursor:pointer; border:none;"></center>
-                    </td>
-                </tr>
-            </table>
+    <h2>🌱 Semer une pensée</h2>
+    
+    <div class="form-container">
+        <form action="https://formspree.io/f/TON_ID" method="POST">
+            <input type="text" name="nom" placeholder="Ton Prénom" required>
+            <input type="text" name="ville" placeholder="Ta Ville" required> <textarea name="message" rows="4" placeholder="Ton message de générosité..." required></textarea>
+            <button type="submit" class="btn-envoyer">ENVOYER MA GRAINE</button>
         </form>
-    </center>
+    </div>
+
+    <br><br>
+    <font size="2">
+        Copyright 2000 <a href="https://youtube.com" class="copyright-link">Le Petit Prince des Jardiniers</a>
+    </font>
+
+    <div id="coffre-magique">🎁</div>
+    <div id="animal-container">
+        <div id="bulle-texte"></div>
+        <div id="corps-animal">🕊️</div>
+    </div>
 
     <script type="text/javascript">
         function googleTranslateElementInit() { new google.translate.TranslateElement({pageLanguage: 'fr'}, 'google_translate_element'); }
     </script>
     <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+
+    <script>
+        // Scripts d'animation (identiques à l'accueil pour la cohérence)
+        const mesPhrases = ["Ici, on sème des graines de générosité...", "Le cadeau existentiel produit un cadeau collectif", "Une harmonie de Paix...", "La confiance cordiale du Don sincère", "Du gratos ? Du bonheur paisible !", "Fais la fête, sois pas bête en faisant ta tête !"];
+        const animaux = ['🕊️', '🦋', '🐝', '🐞', '🦜', '🐰', '🐿️', '🦊', '🐬'];
+        const fleurs = ['🌸', '🌼', '🌻', '🌺'];
+
+        const animalCont = document.getElementById('animal-container');
+        const bulle = document.getElementById('bulle-texte');
+        const corps = document.getElementById('corps-animal');
+        const coffre = document.getElementById('coffre-magique');
+        const audio = document.getElementById('chantOiseaux');
+
+        let aniX, aniY, targetX, targetY, state = "WAITING";
+
+        document.addEventListener('click', () => { if(audio.paused) { audio.volume = 0.02; audio.play(); } });
+
+        function createConfetti() {
+            for(let i=0; i<12; i++) {
+                const c = document.createElement('div');
+                c.className = 'confetti';
+                c.innerText = fleurs[Math.floor(Math.random()*fleurs.length)];
+                c.style.left = "50%"; c.style.bottom = "60px";
+                c.style.setProperty('--dx', (Math.random()*300 - 150) + "px");
+                c.style.setProperty('--dy', (Math.random()*-300 - 50) + "px");
+                document.body.appendChild(c);
+                setTimeout(() => c.remove(), 2000);
+            }
+        }
+
+        function startNewMessenger() {
+            bulle.innerText = mesPhrases[Math.floor(Math.random() * mesPhrases.length)];
+            corps.innerText = animaux[Math.floor(Math.random() * animaux.length)];
+            const side = Math.floor(Math.random() * 3);
+            if(side === 0) { aniX = -200; aniY = 200; } 
+            else if(side === 1) { aniX = window.innerWidth + 200; aniY = 200; } 
+            else { aniX = 300; aniY = -200; }
+            targetX = window.innerWidth / 2; targetY = window.innerHeight - 110;
+            state = "APPROACHING";
+        }
+
+        function loop() {
+            if (state === "APPROACHING") {
+                aniX += (targetX - aniX) * 0.015; aniY += (targetY - aniY) * 0.015;
+                bulle.style.opacity = "1";
+                if (Math.sqrt(Math.pow(targetX-aniX,2)+Math.pow(targetY-aniY,2)) < 60) {
+                    state = "DEPOSITING"; coffre.classList.add('pop'); createConfetti();
+                    setTimeout(() => { bulle.style.opacity = "0"; coffre.classList.remove('pop'); state = "LEAVING";
+                    targetX = (Math.random() > 0.5) ? window.innerWidth + 500 : -500; targetY = 200; }, 2500);
+                }
+            } else if (state === "LEAVING") {
+                aniX += (targetX - aniX) * 0.02; aniY += (targetY - aniY) * 0.02;
+                if (Math.abs(aniX - targetX) < 100) startNewMessenger();
+            }
+            animalCont.style.left = aniX + "px"; animalCont.style.top = aniY + "px";
+            corps.style.transform = (aniX < targetX) ? "scaleX(-1)" : "scaleX(1)";
+            requestAnimationFrame(loop);
+        }
+        startNewMessenger(); loop();
+    </script>
 </body>
 </html>
