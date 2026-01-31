@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Impôt Public - Le Trésor Public</title>
+    <style>
+        body { font-family: 'Comic Sans MS', cursive; background-color: #E8F5E9; color: #004d40; margin: 0; text-align: center; }
+        #google_translate_element { padding: 10px; background: rgba(255,255,255,0.5); border-bottom: 2px solid #008080; }
+        
+        .menu-table { margin: 20px auto; background-color: #008080; border-collapse: collapse; border-radius: 10px; overflow: hidden; margin-left: auto; margin-right: auto; }
+        .menu-table td { padding: 12px 20px; border: 1px solid #FFFFFF; }
+        .menu-table a { text-decoration: none; color: #FFFFFF; font-weight: bold; }
+        
+        .form-container { background: white; border: 5px solid #008080; border-radius: 30px; width: 90%; max-width: 650px; margin: 20px auto; padding: 25px; box-shadow: 10px 10px 0px #008080; }
+        label { display: block; margin-top: 15px; font-weight: bold; text-align: left; }
+        input, textarea, select { width: 100%; padding: 12px; margin: 8px 0; border-radius: 12px; border: 2px solid #008080; box-sizing: border-box; font-family: inherit; }
+        
+        .btn-envoi { background: #008080; color: white; border: none; padding: 18px 40px; border-radius: 25px; font-weight: bold; cursor: pointer; font-size: 1.2em; transition: 0.3s; }
+        .btn-envoi:hover { transform: scale(1.05); background: #006666; }
+        
+        .carte-action { background: white; border-left: 10px solid #008080; border-radius: 15px; padding: 20px; margin: 20px auto; max-width: 650px; text-align: left; box-shadow: 4px 4px 10px rgba(0,0,0,0.1); }
+        .reponse-sage { margin-left: 30px; margin-top: 10px; padding: 10px; background: #DCEDC8; border-left: 4px solid #008080; border-radius: 8px; font-size: 0.9em; }
+        
+        #searchBox { width: 90%; max-width: 650px; padding: 12px; margin: 20px auto; border-radius: 25px; border: 2px solid #008080; }
+    </style>
+</head>
+<body>
+
+    <div id="google_translate_element"></div>
+    <script>function googleTranslateElementInit() { new google.translate.TranslateElement({pageLanguage: 'fr'}, 'google_translate_element'); }</script>
+    <script src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+
+    <table class="menu-table">
+        <tr>
+            <td><a href="transition.html?page=index.html">Accueil</a></td>
+            <td><a href="transition.html?page=formulaire.html">Semer</a></td>
+            <td><a href="transition.html?page=jardin.html">Le Jardin</a></td>
+            <td><a href="transition.html?page=impot.html">Impôt Public</a></td>
+            <td><a href="transition.html?page=regulation.html">Régulation</a></td>
+        </tr>
+    </table>
+
+    <h1>📜 Travaux d'Impôt Public</h1>
+    <p>Partagez vos actions pour la communauté ou proposez votre aide.</p>
+
+    <div class="form-container">
+        <form id="impotForm">
+            <label>Ton Identité :</label>
+            <input type="text" id="nom" placeholder="Ton nom ou pseudo" required>
+
+            <label>Lieu de l'action (Ville / Pays) :</label>
+            <input type="text"
