@@ -4,161 +4,129 @@
     <meta charset="UTF-8">
     <title>Le Petit Prince des Jardiniers</title>
     <style>
-        /* Styles pour la phrase magique et ses animations */
-        #magic-phrase-container {
-            position: absolute;
-            cursor: pointer;
-            z-index: 1000; /* Pour qu'elle soit au-dessus de tout */
-            text-align: center;
-            opacity: 0; /* Cachée au début */
-            transition: opacity 1s ease-in-out; /* Effet de fondu */
+        /* Style du menu pour qu'il soit propre même traduit */
+        .menu-table {
+            margin-top: 10px;
+            border-radius: 10px;
+            background-color: #008080;
+            border-collapse: collapse;
         }
-        #magic-phrase-text {
-            background-color: #FFF; /* Fond blanc */
-            border: 2px solid #E67E22; /* Bordure orange */
-            border-radius: 15px;
-            padding: 10px 20px;
-            font-size: 1.1em;
-            color: #E67E22; /* Texte orange */
+        .menu-table td {
+            padding: 10px 15px;
+            border: 1px solid #FFFFFF;
+        }
+        .menu-table a {
+            text-decoration: none;
+            color: #FFFFFF;
             font-weight: bold;
-            box-shadow: 3px 3px 10px rgba(0,0,0,0.2);
-            display: inline-block; /* Pour que le padding fonctionne bien */
+            display: inline-block; /* Aide Google à garder le lien intact */
         }
-        .gift-kiss-animation {
-            font-size: 3em; /* Grande taille pour les emojis */
-            position: absolute;
-            opacity: 0;
-            transition: opacity 0.5s ease-out;
-            pointer-events: none; /* Pour ne pas bloquer les clics */
+
+        /* Style de l'avion volant */
+        #avion-phrase {
+            position: fixed;
+            z-index: 900; /* Un peu moins que le traducteur pour ne pas gêner */
+            cursor: pointer;
+            background: white;
+            border: 2px dashed #008080;
+            border-radius: 20px;
+            padding: 10px 20px;
+            box-shadow: 4px 4px 15px rgba(0,0,0,0.2);
+            white-space: nowrap;
+            user-select: none;
+        }
+
+        /* Récompenses */
+        .recompense {
+            position: fixed;
+            font-size: 50px;
             z-index: 1001;
+            pointer-events: none;
+            animation: envoler 2s forwards;
+        }
+        @keyframes envoler {
+            0% { opacity: 1; transform: translateY(0) scale(1); }
+            100% { opacity: 0; transform: translateY(-150px) scale(2); }
         }
     </style>
 </head>
-<body bgcolor="#FFFF00" text="#000080" style="font-family:'Comic Sans MS', cursive; text-align:center; margin:0; padding:0;">
+<body bgcolor="#FFFF00" text="#000080" style="font-family:'Comic Sans MS', cursive; text-align:center; margin:0; padding:0; overflow-x: hidden;">
 
     <center>
         <div id="google_translate_element" style="padding:10px;"></div>
 
-        <table class="notranslate" border="1" cellpadding="10" bgcolor="#008080" style="margin-top:10px; border-radius:10px;">
+        <table class="menu-table">
             <tr>
-                <td><a href="index.html" style="text-decoration:none;"><font color="#FFFFFF"><b>Accueil</b></font></a></td>
-                <td><a href="formulaire.html" style="text-decoration:none;"><font color="#FFFFFF"><b>Semer</b></font></a></td>
-                <td><a href="jardin.html" style="text-decoration:none;"><font color="#FFFFFF"><b>Le Jardin</b></font></a></td>
-                <td><a href="contact.html" style="text-decoration:none;"><font color="#FFFFFF"><b>Contact</b></font></a></td>
+                <td><a href="index.html">Accueil</a></td>
+                <td><a href="formulaire.html">Semer</a></td>
+                <td><a href="jardin.html">Le Jardin</a></td>
+                <td><a href="contact.html">Contact</a></td>
             </tr>
         </table>
 
         <br><br>
-        <font size="5" color="#E67E22">🌟 <b>LE PETIT PRINCE DES JARDINIERS</b> 🌟</font>
+        <font size="6" color="#E67E22">🌟 <b>LE PETIT PRINCE DES JARDINIERS</b> 🌟</font>
         <br><br>
-
         <div style="font-size: 30px;">🌸 🌼 🌻 🌺</div>
-        
-        <br>
-
-        <div style="width: 80%; max-width: 500px; background: white; border: 1px dashed #008080; border-radius: 10px; padding: 10px; overflow: hidden;">
-            <marquee behavior="scroll" direction="left" scrollamount="4">
-                <font size="4" color="#2E7D32">
-                    <i>"Ici, on sème des graines de générosité pour récolter de l'altruisme"</i>
-                </font>
-            </marquee>
-        </div>
-
         <br><br>
-        <div style="font-size: 20px;">✨ 🌱 ✨</div>
-        <br>
 
         <a href="formulaire.html" style="text-decoration:none;">
-            <button style="padding:15px 30px; font-size:1.1em; background-color:#E67E22; color:white; border-radius:15px; cursor:pointer; border:none; font-weight:bold;">
+            <button style="padding:20px 40px; font-size:1.5em; background-color:#E67E22; color:white; border-radius:20px; cursor:pointer; border:none; font-weight:bold; box-shadow: 0px 4px 0px #b35900;">
                 🌱 SEMER UNE GRAINE
             </button>
         </a>
 
-        <br><br><br>
+        <br><br><br><br>
         <font size="2">copyright 2026... Le petit prince des jardiniers</font>
-        <br><br>
     </center>
 
-    <div id="magic-phrase-container">
-        <span id="magic-phrase-text">Trouve le cadeau du Petit Prince ici !</span>
+    <div id="avion-phrase">
+        <font color="#2E7D32"><i>"Ici, on sème des graines de générosité pour récolter de l'altruisme"</i></font>
     </div>
 
     <script type="text/javascript">
-        function googleTranslateElementInit() {
-            new google.translate.TranslateElement({pageLanguage: 'fr'}, 'google_translate_element');
-        }
+        function googleTranslateElementInit() { new google.translate.TranslateElement({pageLanguage: 'fr'}, 'google_translate_element'); }
     </script>
     <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
 
     <script>
-        const magicPhraseContainer = document.getElementById('magic-phrase-container');
-        const phraseText = document.getElementById('magic-phrase-text');
-        let intervalId;
+        const avion = document.getElementById('avion-phrase');
+        let posX = -300;
+        let posY = 250; 
+        let vitesseX = 2;
 
-        // Fonction pour positionner la phrase aléatoirement
-        function setRandomPosition() {
-            const maxX = window.innerWidth - magicPhraseContainer.offsetWidth;
-            const maxY = window.innerHeight - magicPhraseContainer.offsetHeight;
-
-            magicPhraseContainer.style.left = `${Math.random() * maxX}px`;
-            magicPhraseContainer.style.top = `${Math.random() * maxY * 0.7}px`; // Pour éviter le bas de page
-            magicPhraseContainer.style.opacity = 1; // Rendre visible
+        function voler() {
+            posX += vitesseX;
+            // On ajoute une ondulation pour l'effet "avion"
+            let oscillation = Math.sin(posX / 100) * 30; 
+            
+            if (posX > window.innerWidth) { 
+                posX = -400; 
+                // Change la hauteur aléatoirement à chaque nouveau passage
+                posY = 150 + Math.random() * 300; 
+            }
+            
+            avion.style.left = posX + 'px';
+            avion.style.top = (posY + oscillation) + 'px';
+            
+            requestAnimationFrame(voler);
         }
 
-        // Fonction pour faire apparaître les emojis cadeau/baiser
-        function showGiftKiss(event) {
-            magicPhraseContainer.style.opacity = 0; // Cacher la phrase
-            clearInterval(intervalId); // Arrêter le déplacement
+        avion.onclick = function(e) {
+            const recompenses = ['🎁', '😘', '🌸', '🌻', '⭐', '🍀'];
+            const choix = recompenses[Math.floor(Math.random() * recompenses.length)];
+            
+            const div = document.createElement('div');
+            div.className = 'recompense';
+            div.innerText = choix;
+            div.style.left = e.clientX + 'px';
+            div.style.top = e.clientY + 'px';
+            
+            document.body.appendChild(div);
+            setTimeout(() => { div.remove(); }, 2000);
+        };
 
-            // Créer et animer les emojis
-            const emojis = ['🎁', '😘'];
-            const startX = event.clientX;
-            const startY = event.clientY;
-
-            emojis.forEach((emoji, index) => {
-                const emojiDiv = document.createElement('div');
-                emojiDiv.className = 'gift-kiss-animation';
-                emojiDiv.innerText = emoji;
-                document.body.appendChild(emojiDiv);
-
-                // Positionner près du clic
-                emojiDiv.style.left = `${startX + (index * 40 - 20)}px`; // Un peu décalé
-                emojiDiv.style.top = `${startY - 20}px`;
-
-                setTimeout(() => {
-                    emojiDiv.style.opacity = 1; // Apparition en fondu
-                    // Faire remonter doucement les emojis
-                    let currentTop = startY - 20;
-                    const riseInterval = setInterval(() => {
-                        currentTop -= 2; // Vitesse de remontée
-                        emojiDiv.style.top = `${currentTop}px`;
-                        if (currentTop < startY - 100) { // Remontée de 100px
-                            clearInterval(riseInterval);
-                            emojiDiv.style.opacity = 0; // Disparition
-                            setTimeout(() => emojiDiv.remove(), 500); // Supprimer après la disparition
-                        }
-                    }, 50);
-                }, 100 + index * 100); // Décalage pour l'apparition des deux emojis
-            });
-
-            // Relancer la phrase après un délai
-            setTimeout(() => {
-                setRandomPosition();
-                intervalId = setInterval(setRandomPosition, 5000); // Déplace toutes les 5 secondes
-            }, 3000); // Attendre 3 secondes avant de faire réapparaître la phrase
-        }
-
-        // Écouter le clic sur la phrase
-        magicPhraseContainer.addEventListener('click', showGiftKiss);
-
-        // Positionner la phrase au chargement et la faire bouger régulièrement
-        window.addEventListener('load', () => {
-            setRandomPosition();
-            intervalId = setInterval(setRandomPosition, 5000); // Toutes les 5 secondes
-        });
-
-        // Gérer le redimensionnement de la fenêtre pour repositionner correctement
-        window.addEventListener('resize', setRandomPosition);
+        voler();
     </script>
 </body>
 </html>
