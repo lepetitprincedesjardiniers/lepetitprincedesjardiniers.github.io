@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>🌟 Vibration Magique 💐</title>
+    <title>🌟 Vibration Humaniste 💐</title>
     <style>
         body {
             margin: 0;
@@ -13,210 +13,193 @@
             justify-content: center;
             align-items: center;
             min-height: 100vh;
-            background: linear-gradient(135deg, #FFDAB9, #FFC0CB, #E6E6FA); /* Fond plus doux */
+            /* Fond dégradé évoquant un ciel magique */
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
             font-family: 'Comic Sans MS', cursive;
-            color: #8B008B;
-            position: relative;
+            color: #FFFFFF;
         }
 
-        /* --- Éléments du Ciel Étoilé --- */
+        /* Étoiles de fond scintillantes */
         .star {
             position: absolute;
-            color: #FFD700; /* Or */
-            font-size: var(--size);
-            animation: twinkle var(--duration) infinite alternate, float var(--duration) infinite ease-in-out;
+            color: #FFF;
             opacity: 0;
-            text-shadow: 0 0 10px rgba(255, 215, 0, 0.7);
-            z-index: 1;
+            animation: twinkle var(--d) infinite;
         }
-
         @keyframes twinkle {
-            0%, 100% { opacity: 0.5; transform: scale(0.8); }
+            0%, 100% { opacity: 0.3; transform: scale(1); }
             50% { opacity: 1; transform: scale(1.2); }
         }
 
-        @keyframes float {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(var(--float-y)); }
-        }
-        /* --- FIN Ciel Étoilé --- */
-
-        .big-heart-container {
+        .container {
             position: relative;
-            width: 300px;
-            height: 300px;
             display: flex;
             justify-content: center;
             align-items: center;
-            z-index: 10; /* Pour s'assurer qu'il est au-dessus des étoiles */
+            width: 100%;
+            height: 100%;
         }
 
+        /* Le Coeur Central */
         .big-heart {
             font-size: 15em;
-            color: #FF1493; /* Rose vif */
-            animation: heartbeat 1s infinite alternate, multicolor 2s linear infinite;
-            text-shadow: 0 0 30px rgba(255, 20, 147, 0.9);
-            position: relative;
-            z-index: 1; /* Pour être au-dessus des petites étoiles qui l'entourent */
+            z-index: 10;
+            filter: drop-shadow(0 0 30px #FF1493);
+            animation: heartbeat 0.8s infinite alternate, glow 2s infinite linear;
+            cursor: default;
         }
 
-        /* Aura d'étoiles autour du cœur */
-        .heart-aura-star {
+        @keyframes heartbeat {
+            from { transform: scale(1); }
+            to { transform: scale(1.15); }
+        }
+
+        @keyframes glow {
+            0% { filter: drop-shadow(0 0 20px #FF1493); }
+            50% { filter: drop-shadow(0 0 50px #00BFFF); }
+            100% { filter: drop-shadow(0 0 20px #FF1493); }
+        }
+
+        /* Titre */
+        h1 {
             position: absolute;
-            font-size: 1.5em;
-            color: #FFD700; /* Or */
-            animation: orbit var(--orbit-duration) linear infinite, twinkle 1.5s infinite alternate;
-            transform: rotate(var(--initial-angle)) translateX(150px);
-            opacity: 0; /* Caché initiallement */
-            z-index: 2;
-        }
-        @keyframes orbit {
-            0% { transform: rotate(var(--initial-angle)) translateX(150px) scale(0.8); opacity: 0.7; }
-            50% { transform: rotate(calc(var(--initial-angle) + 180deg)) translateX(150px) scale(1.1); opacity: 1; }
-            100% { transform: rotate(calc(var(--initial-angle) + 360deg)) translateX(150px) scale(0.8); opacity: 0.7; }
-        }
-
-
-        @keyframes heartbeat { 0% { transform: scale(1); } 100% { transform: scale(1.1); } }
-        @keyframes multicolor {
-            0% { color: #FF1493; } 33% { color: #9400D3; } 66% { color: #00BFFF; } 100% { color: #FF1493; }
-        }
-
-        /* Animaux qui apportent des fleurs */
-        .animal-flower {
-            position: absolute;
+            top: 15%;
             font-size: 3em;
+            text-shadow: 0 0 15px #FFD700;
+            color: #FFD700;
+            z-index: 20;
+            margin: 0;
+        }
+
+        /* Animaux avec fleurs */
+        .messenger {
+            position: absolute;
+            font-size: 3.5em;
+            z-index: 15;
             display: flex;
             align-items: center;
-            white-space: nowrap;
-            animation: flyToHeart 2s ease-out forwards; /* Animation plus rapide */
-            opacity: 0;
-            z-index: 11;
+            pointer-events: none;
+            animation: deliver 2.2s ease-in-out forwards;
         }
-        .animal-flower span { margin-left: 5px; font-size: 0.8em; }
+        .flower { font-size: 0.7em; margin-left: -10px; }
 
-        @keyframes flyToHeart {
+        @keyframes deliver {
             0% { transform: translate(var(--sx), var(--sy)) scale(0.5); opacity: 0; }
-            30% { opacity: 1; transform: translate(var(--midX), var(--midY)) scale(1.2); } /* Point culminant */
-            80% { transform: translate(0, 0) scale(0.8); opacity: 1; }
+            20% { opacity: 1; }
+            80% { transform: translate(0, 0) scale(1.2); opacity: 1; }
             100% { transform: translate(0, 0) scale(0); opacity: 0; }
         }
 
-        /* Explosion finale */
-        .explosion-item {
+        /* Étoiles en orbite autour du coeur */
+        .orbit-star {
             position: absolute;
-            font-size: 2em;
-            animation: explodeOut 0.8s ease-out forwards; /* Explosion très rapide */
-            opacity: 0;
-            z-index: 20;
+            font-size: 1.5em;
+            color: #FFD700;
+            z-index: 5;
+            animation: rotateOrbit var(--speed) linear infinite;
         }
 
-        @keyframes explodeOut {
-            0% { transform: translate(0,0) scale(1); opacity: 1; }
-            100% { transform: translate(var(--dx), var(--dy)) scale(0); opacity: 0; }
+        @keyframes rotateOrbit {
+            from { transform: rotate(var(--angle)) translateX(180px) rotate(0deg); }
+            to { transform: rotate(calc(var(--angle) + 360deg)) translateX(180px) rotate(-360deg); }
         }
 
-        h2 { color: #FF1493; margin-top: 50px; text-shadow: 1px 1px 3px rgba(0,0,0,0.1); }
+        /* Particules d'explosion */
+        .particle {
+            position: absolute;
+            z-index: 30;
+            animation: explode 0.8s ease-out forwards;
+        }
+
+        @keyframes explode {
+            0% { transform: translate(0, 0) scale(1); opacity: 1; }
+            100% { transform: translate(var(--ex), var(--ey)) scale(0); opacity: 0; }
+        }
     </style>
 </head>
 <body>
-    <h2 id="msg">🌟 Vibration Magique 💐</h2>
-    <div class="big-heart-container">
-        <div class="big-heart" id="mainHeart">❤️</div>
+
+    <h1 id="titre">Vibration Humaniste</h1>
+    
+    <div class="container">
+        <div class="big-heart" id="heart">❤️</div>
     </div>
 
     <script>
         const urlParams = new URLSearchParams(window.location.search);
         const destination = urlParams.get('page') || 'index.html';
-        const heartContainer = document.querySelector('.big-heart-container');
-        const mainHeart = document.getElementById('mainHeart');
+        const container = document.querySelector('.container');
 
-        const animals = ['🕊️', '🦋', '🐝', '🐞'];
-        const flowers = ['🌸', '🌼', '🌻', '🌺'];
-        const explosionEmojis = ['❤️', '💖', '✨', '💫', '🌟'];
-        const auraStars = ['⭐', '💫', '✨'];
-
-        // --- Ciel Étoilé de Fond ---
-        for (let i = 0; i < 50; i++) { // Plus d'étoiles de fond
+        // 1. Création des étoiles de fond
+        for (let i = 0; i < 100; i++) {
             const star = document.createElement('div');
             star.className = 'star';
-            star.innerText = '✨'; // Ou '⭐'
-            star.style.setProperty('--size', (Math.random() * 0.8 + 0.5) + 'em');
-            star.style.setProperty('--duration', (Math.random() * 3 + 2) + 's');
-            star.style.setProperty('--float-y', (Math.random() * 30 - 15) + 'px');
-            star.style.top = Math.random() * 100 + '%';
-            star.style.left = Math.random() * 100 + '%';
-            star.style.animationDelay = (Math.random() * -5) + 's'; // Décalage pour l'animation
+            star.innerHTML = '★';
+            star.style.left = Math.random() * 100 + 'vw';
+            star.style.top = Math.random() * 100 + 'vh';
+            star.style.setProperty('--d', (Math.random() * 2 + 1) + 's');
+            star.style.fontSize = (Math.random() * 10 + 5) + 'px';
             document.body.appendChild(star);
         }
 
-        // --- Aura d'étoiles autour du coeur (ajoutées de manière dynamique) ---
-        for (let i = 0; i < 8; i++) { // 8 étoiles en orbite
-            const auraStar = document.createElement('div');
-            auraStar.className = 'heart-aura-star';
-            auraStar.innerText = auraStars[Math.floor(Math.random() * auraStars.length)];
-            auraStar.style.setProperty('--orbit-duration', (Math.random() * 4 + 3) + 's');
-            auraStar.style.setProperty('--initial-angle', (i * 45) + 'deg'); // Répartir les étoiles
-            heartContainer.appendChild(auraStar);
-            // Faire apparaître progressivement
-            auraStar.style.animationDelay = (Math.random() * -2) + 's';
-            auraStar.style.opacity = 0.5 + Math.random() * 0.5;
+        // 2. Création des étoiles en orbite
+        for (let i = 0; i < 12; i++) {
+            const s = document.createElement('div');
+            s.className = 'orbit-star';
+            s.innerHTML = '✨';
+            s.style.setProperty('--angle', (i * 30) + 'deg');
+            s.style.setProperty('--speed', (Math.random() * 2 + 2) + 's');
+            container.appendChild(s);
         }
 
+        // 3. Animaux apportant des fleurs
+        const animals = ['🕊️', '🦋', '🐝', '🐞'];
+        const fleurs = ['🌸', '🌼', '🌻', '🌺'];
 
-        // --- Animaux qui apportent des fleurs ---
-        for(let i=0; i<8; i++) { // Plus d'animaux
+        for (let i = 0; i < 8; i++) {
             setTimeout(() => {
-                const animal = animals[Math.floor(Math.random() * animals.length)];
-                const flower = flowers[Math.floor(Math.random() * flowers.length)];
-
-                const el = document.createElement('div');
-                el.className = 'animal-flower';
-                el.innerHTML = `${animal}<span>${flower}</span>`; // L'animal porte la fleur
+                const m = document.createElement('div');
+                m.className = 'messenger';
+                const a = animals[Math.floor(Math.random()*animals.length)];
+                const f = fleurs[Math.floor(Math.random()*fleurs.length)];
+                m.innerHTML = `${a}<span class="flower">${f}</span>`;
                 
-                // Point de départ aléatoire
-                const angle = Math.random() * 2 * Math.PI;
-                const radius = Math.max(window.innerWidth, window.innerHeight) / 2 * 0.9;
-                const startX = radius * Math.cos(angle);
-                const startY = radius * Math.sin(angle);
+                const angle = Math.random() * Math.PI * 2;
+                const dist = 800;
+                m.style.setProperty('--sx', Math.cos(angle) * dist + 'px');
+                m.style.setProperty('--sy', Math.sin(angle) * dist + 'px');
                 
-                // Point intermédiaire (pour un mouvement plus courbe)
-                const midX = startX * 0.5 + (Math.random() * 200 - 100);
-                const midY = startY * 0.5 + (Math.random() * 200 - 100);
-
-                el.style.setProperty('--sx', startX + 'px');
-                el.style.setProperty('--sy', startY + 'px');
-                el.style.setProperty('--midX', midX + 'px');
-                el.style.setProperty('--midY', midY + 'px');
-                el.style.animationDelay = (i * 0.1) + 's'; // Décaler l'arrivée des animaux
-                heartContainer.appendChild(el);
-            }, i * 150);
+                container.appendChild(m);
+            }, i * 200);
         }
 
-        // --- Explosion Finale et Redirection ---
-        const transitionDuration = 2500; // Durée totale de l'animation en ms
-
+        // 4. Explosion finale et redirection (2.5 secondes)
         setTimeout(() => {
-            mainHeart.style.display = 'none'; // Le gros cœur disparaît
-            document.getElementById('msg').innerText = "✨ Énergie déployée ! ❤️"; // Message de fin
+            const heart = document.getElementById('heart');
+            const titre = document.getElementById('titre');
+            const rect = heart.getBoundingClientRect();
+            
+            heart.style.display = 'none';
+            titre.style.opacity = '0';
 
-            // Explosion
-            for(let i=0; i<80; i++) { // Plus de particules d'explosion
-                const item = document.createElement('div');
-                item.className = 'explosion-item';
-                item.innerText = explosionEmojis[Math.floor(Math.random() * explosionEmojis.length)];
-                item.style.left = "50%"; item.style.top = "50%";
-                item.style.setProperty('--dx', (Math.random()-0.5)*1200 + 'px'); // Plus grande portée
-                item.style.setProperty('--dy', (Math.random()-0.5)*1200 + 'px');
-                item.style.animationDelay = (Math.random() * 0.3) + 's'; // Légèrement décalé
-                heartContainer.appendChild(item);
+            for (let i = 0; i < 60; i++) {
+                const p = document.createElement('div');
+                p.className = 'particle';
+                p.innerHTML = ['❤️', '✨', '🌸', '🌟'][Math.floor(Math.random()*4)];
+                p.style.left = '50%';
+                p.style.top = '50%';
+                const angle = Math.random() * Math.PI * 2;
+                const velocity = Math.random() * 600 + 200;
+                p.style.setProperty('--ex', Math.cos(angle) * velocity + 'px');
+                p.style.setProperty('--ey', Math.sin(angle) * velocity + 'px');
+                container.appendChild(p);
             }
 
-            // Redirection après l'explosion
             setTimeout(() => {
                 window.location.href = destination;
-            }, 600); // Laisse un court instant pour voir l'explosion
-        }, transitionDuration); // Lance l'explosion après la durée définie
+            }, 700);
+
+        }, 2600);
     </script>
 </body>
 </html>
