@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -7,10 +6,12 @@
     <style>
         body { font-family: 'Comic Sans MS', cursive; text-align: center; margin: 0; padding: 0; background-color: #FFFF00; color: #000080; overflow-x: hidden; min-height: 100vh; }
         
+        /* Menu */
         .menu-table { margin: 20px auto; border-radius: 10px; background-color: #008080; border-collapse: collapse; }
         .menu-table td { padding: 10px 15px; border: 1px solid #FFFFFF; }
         .menu-table a { text-decoration: none; color: #FFFFFF; font-weight: bold; }
 
+        /* Conteneur Formulaire */
         .form-container { 
             background: white; 
             padding: 30px; 
@@ -20,7 +21,7 @@
             box-shadow: 0px 10px 20px rgba(0,0,0,0.1); 
             width: 90%; 
             max-width: 550px;
-            margin-bottom: 150px; 
+            margin-bottom: 180px; 
         }
 
         .form-group { text-align: left; margin: 10px 20px; }
@@ -35,13 +36,10 @@
             font-family: 'Comic Sans MS';
             font-size: 1em;
             box-sizing: border-box;
+            background-color: #f9f9f9;
         }
 
-        #coffre-magique { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); font-size: 60px; z-index: 800; }
-        #animal-container { position: fixed; z-index: 900; white-space: nowrap; display: flex; align-items: center; pointer-events: none; }
-        #corps-animal { font-size: 50px; }
-        #bulle-texte { background: rgba(255, 255, 255, 0.9); border-radius: 15px; padding: 8px 15px; font-style: italic; color: #2E7D32; margin-right: 10px; font-weight: bold; border: 2px solid #2E7D32; opacity: 0; transition: opacity 0.3s; }
-        
+        /* Bouton */
         .btn-envoyer { 
             width: 100%;
             padding: 20px; 
@@ -51,15 +49,24 @@
             border-radius: 20px; 
             cursor: pointer; 
             font-weight: bold; 
-            font-size: 1.2em;
+            font-size: 1.1em;
             box-shadow: 0px 4px 0px #b35900;
+            transition: transform 0.1s;
         }
         .btn-envoyer:active { transform: translateY(4px); box-shadow: 0px 0px 0px #b35900; }
 
+        /* Animations Animaux et Coffre */
+        #coffre-magique { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); font-size: 60px; z-index: 800; transition: transform 0.3s; }
+        #animal-container { position: fixed; z-index: 900; white-space: nowrap; display: flex; align-items: center; pointer-events: none; }
+        #corps-animal { font-size: 50px; }
+        #bulle-texte { background: rgba(255, 255, 255, 0.9); border-radius: 15px; padding: 8px 15px; font-style: italic; color: #2E7D32; margin-right: 10px; font-weight: bold; border: 2px solid #2E7D32; opacity: 0; transition: opacity 0.3s; }
+        
         .pop { transform: translateX(-50%) scale(1.4) !important; }
         .confetti { position: fixed; z-index: 799; pointer-events: none; animation: fly 2s ease-out forwards; }
         @keyframes fly { 0% { transform: translate(0, 0) rotate(0deg); opacity: 1; } 100% { transform: translate(var(--dx), var(--dy)) rotate(360deg); opacity: 0; } }
+        
         .copyright-link { color: #000080; text-decoration: none; font-weight: bold; }
+        .copyright-link:hover { text-decoration: underline; }
     </style>
 </head>
 <body>
@@ -96,8 +103,13 @@
                     <option value="Belgique">Belgique</option>
                     <option value="Suisse">Suisse</option>
                     <option value="Canada">Canada</option>
-                    <option value="Afrique">Afrique (Continent)</option>
-                    <option value="International">International / Partout ailleurs</option>
+                    <option value="Algérie">Algérie</option>
+                    <option value="Maroc">Maroc</option>
+                    <option value="Tunisie">Tunisie</option>
+                    <option value="Sénégal">Sénégal</option>
+                    <option value="Côte d'Ivoire">Côte d'Ivoire</option>
+                    <option value="Luxembourg">Luxembourg</option>
+                    <option value="International">Partout ailleurs dans le monde...</option>
                 </select>
                 <input type="text" name="ville" placeholder="Ta Ville" required>
             </div>
@@ -105,10 +117,10 @@
             <div class="form-group">
                 <label>Zone d'offrande (Rayon d'action)</label>
                 <select name="rayon" required>
-                    <option value="5">5 km / 3.1 miles</option>
-                    <option value="10">10 km / 6.2 miles</option>
-                    <option value="50">50 km / 31 miles</option>
-                    <option value="100">100 km / 62 miles</option>
+                    <option value="5km">5 km / 3.1 miles</option>
+                    <option value="10km">10 km / 6.2 miles</option>
+                    <option value="50km">50 km / 31 miles</option>
+                    <option value="100km">100 km / 62 miles</option>
                     <option value="Infini">Rayon Infini (Fraternité Universelle)</option>
                 </select>
             </div>
@@ -150,7 +162,12 @@
     <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
 
     <script>
-        const mesPhrases = ["Le cadeau existentiel produit un don collectif", "Une paix rayonnante pour le monde", "Engendrer de la fraternité..."];
+        const mesPhrases = [
+            "Le cadeau existentiel produit un don collectif",
+            "Une paix rayonnante pour le monde",
+            "Engendrer de la fraternité...",
+            "La confiance cordiale du Don sincère"
+        ];
         const animaux = ['🕊️', '🦋', '🐝', '🐞', '🦜', '🐰', '🐿️', '🐬', '🦄'];
         const fleurs = ['🌸', '🌼', '🌻', '🌺'];
 
@@ -158,8 +175,11 @@
         const bulle = document.getElementById('bulle-texte');
         const corps = document.getElementById('corps-animal');
         const coffre = document.getElementById('coffre-magique');
-        
+        const audio = document.getElementById('chantOiseaux');
+
         let aniX, aniY, targetX, targetY, state = "WAITING";
+
+        document.addEventListener('click', () => { if(audio.paused) { audio.volume = 0.02; audio.play(); } });
 
         function createConfetti() {
             for(let i=0; i<15; i++) {
@@ -184,4 +204,24 @@
 
         function loop() {
             if (state === "APPROACHING") {
-                aniX += (targetX - aniX) * 0.015; aniY += (
+                aniX += (targetX - aniX) * 0.015; aniY += (targetY - aniY) * 0.015;
+                bulle.style.opacity = "1";
+                if (Math.sqrt(Math.pow(targetX-aniX,2)+Math.pow(targetY-aniY,2)) < 60) {
+                    state = "DEPOSITING"; coffre.classList.add('pop'); createConfetti();
+                    setTimeout(() => { 
+                        bulle.style.opacity = "0"; coffre.classList.remove('pop'); state = "LEAVING";
+                        targetX = window.innerWidth + 500; targetY = 200; 
+                    }, 2500);
+                }
+            } else if (state === "LEAVING") {
+                aniX += (targetX - aniX) * 0.02; aniY += (targetY - aniY) * 0.02;
+                if (Math.abs(aniX - targetX) < 100) startNewMessenger();
+            }
+            animalCont.style.left = aniX + "px"; animalCont.style.top = aniY + "px";
+            corps.style.transform = (aniX < targetX) ? "scaleX(-1)" : "scaleX(1)";
+            requestAnimationFrame(loop);
+        }
+        startNewMessenger(); loop();
+    </script>
+</body>
+</html>
