@@ -58,7 +58,8 @@
         .exemples { font-size: 0.85em; color: #2E7D32; font-style: italic; margin-top: 10px; font-weight: bold; }
 
         .animal-container { position: fixed; z-index: 900; pointer-events: none; display: flex; align-items: center; }
-        .bulle-texte { background: white; border: 2px solid #2E7D32; border-radius: 15px; padding: 8px 15px; font-weight: bold; opacity: 0; max-width: 250px; }
+        .bulle-texte { background: white; border: 2px solid #2E7D32; border-radius: 15px; padding: 8px 15px; font-weight: bold; opacity: 0; max-width: 250px; overflow: hidden; white-space: nowrap; transition: opacity 0.3s; }
+        
         #coffre-magique { position: fixed; font-size: 60px; z-index: 800; pointer-events: none; transition: transform 0.2s; }
         .pop { transform: scale(1.6) !important; }
 
@@ -93,7 +94,7 @@
         <a href="transition.html?page=regulation.html" class="nuage">
             <h3 style="color:#008080; margin:0; text-transform:uppercase;">📜 Impôt Public</h3>
             <p>Travaux publics en libre participation.</p>
-            <div class="exemples">Ex : Nettoyage bois communal, tâches administratives...</div>
+            <div class="exemples">Ex : Nettoyage bois communal...</div>
         </a>
 
         <a href="transition.html?page=regulation.html" class="etoile-justice">
@@ -126,6 +127,32 @@
             if(a.paused) { a.volume = 0.05; a.play(); } 
         });
 
+        function exploserCadeau() {
+            for (let i = 0; i < 15; i++) {
+                const p = document.createElement('div');
+                p.innerHTML = ['❤️', '✨', '🌸', '🌟'][Math.floor(Math.random() * 4)];
+                p.style.position = 'fixed';
+                p.style.left = coffreX + 'px';
+                p.style.top = coffreY + 'px';
+                p.style.fontSize = '25px';
+                p.style.pointerEvents = 'none';
+                p.style.zIndex = '1000';
+                document.body.appendChild(p);
+
+                const angle = Math.random() * Math.PI * 2;
+                const dist = Math.random() * 150 + 50;
+                const tx = Math.cos(angle) * dist;
+                const ty = Math.sin(angle) * dist;
+
+                p.animate([
+                    { transform: 'translate(0, 0) scale(1)', opacity: 1 },
+                    { transform: `translate(${tx}px, ${ty}px) scale(0)`, opacity: 0 }
+                ], { duration: 1000, easing: 'ease-out' });
+
+                setTimeout(() => p.remove(), 1000);
+            }
+        }
+
         function createMessenger() {
             if (count >= 3 || messagers.length > 0) return;
             const txt = disponibles.splice(Math.floor(Math.random()*disponibles.length), 1)[0];
@@ -144,7 +171,9 @@
                     target = m; m.x += (m.tx-m.x)*0.015; m.y += (m.ty-m.y)*0.015;
                     m.bulle.style.opacity = 1; if(parseInt(m.bulle.style.width)<200) m.bulle.style.width = (parseInt(m.bulle.style.width)+2)+"px";
                     if(Math.abs(m.tx-m.x)<30) {
-                        m.state="WAIT"; coffre.classList.add('pop');
+                        m.state="WAIT"; 
+                        coffre.classList.add('pop');
+                        exploserCadeau();
                         setTimeout(() => { m.state="OUT"; coffre.classList.remove('pop'); m.bulle.style.opacity=0; m.tx = window.innerWidth+300; count++; }, 4000);
                     }
                 } else { m.x += (m.tx-m.x)*0.02; if(m.x>window.innerWidth+250) { m.el.remove(); messagers.splice(i,1); } }
@@ -152,7 +181,8 @@
             }
             coffreX += ((target?target.x:window.innerWidth/2)-coffreX)*0.05;
             coffreY += ((target?target.y+50:window.innerHeight+100)-coffreY)*0.05;
-            coffre.style.left = coffreX+"px"; coffre.style.top = coffreY+"px";
+            coffre.style.left = (coffreX - 30) + "px"; 
+            coffre.style.top = (coffreY - 30) + "px";
             requestAnimationFrame(loop);
         }
         setInterval(createMessenger, 4000); loop();
