@@ -4,27 +4,52 @@
     <meta charset="UTF-8">
     <title>Le Jardin - Le Petit Prince</title>
     <style>
-        body { background-color: #FFFF00; color: #000080; font-family: "Comic Sans MS", cursive; text-align: center; }
-        .carte { background: white; border: 2px solid #008080; margin: 15px auto; padding: 15px; width: 85%; max-width: 600px; border-radius: 15px; text-align: left; box-shadow: 4px 4px 0px #008080; }
-        .titre { color: #FF0000; font-weight: bold; font-size: 1.2em; border-bottom: 1px dashed #ccc; }
-        #moteur { width: 80%; padding: 15px; font-size: 1.1em; border: 3px solid #008080; border-radius: 10px; margin: 20px 0; }
+        body { background-color: #FFFF00; color: #000080; font-family: "Comic Sans MS", cursive; text-align: center; margin: 0; }
+        nav { background-color: #008080; padding: 10px; margin-bottom: 20px; }
+        nav a { color: white; text-decoration: none; margin: 0 15px; font-weight: bold; }
+        
+        .recherche-zone { 
+            background: white; border: 3px solid #E67E22; padding: 20px; 
+            width: 85%; max-width: 700px; margin: 20px auto; border-radius: 15px;
+        }
+        select, input { padding: 10px; margin: 5px; border-radius: 8px; border: 1px solid #ccc; font-family: sans-serif; }
+        
+        .carte { 
+            background: white; border: 2px solid #2E7D32; margin: 15px auto; 
+            padding: 15px; width: 85%; max-width: 600px; text-align: left; 
+            border-radius: 15px; box-shadow: 3px 3px 10px rgba(0,0,0,0.1);
+        }
+        .titre { color: #2E7D32; font-weight: bold; font-size: 1.2em; border-bottom: 1px dashed #ccc; }
+        .badge { background: #E67E22; color: white; padding: 2px 8px; border-radius: 5px; font-size: 0.8em; float: right; }
     </style>
 </head>
 <body onload="charger()">
 
-    <table border="1" cellpadding="10" bgcolor="#008080" align="center">
-        <tr>
-            <td><a href="index.html"><font color="#FFFFFF"><b>Accueil</b></font></a></td>
-            <td><a href="formulaire.html"><font color="#FFFFFF"><b>Semer</b></font></a></td>
-            <td><a href="jardin.html"><font color="#FFFFFF"><b>Le Jardin</b></font></a></td>
-            <td><a href="contact.html"><font color="#FFFFFF"><b>Contact</b></font></a></td>
-        </tr>
-    </table>
+    <nav>
+        <a href="index.html">Accueil</a>
+        <a href="formulaire.html">Semer un Don</a>
+        <a href="jardin.html">Consulter le Jardin</a>
+        <a href="contact.html">Contact</a>
+    </nav>
 
-    <h1>🔎 RECHERCHER DANS LE JARDIN</h1>
-    <input type="text" id="moteur" onkeyup="filtrer()" placeholder="Tapez une ville ou un mot (ex: tomates)...">
+    <font size="6" color="#2E7D32"><u><b>LE JARDIN DES CADEAUX</b></u></font><br>
 
-    <div id="status"><b>Fleurissement en cours... 🌻</b></div>
+    <div class="recherche-zone">
+        <b>Filtrer par Pays :</b>
+        <select id="filtrePays" onchange="filtrer()">
+            <option value="">Tous les pays</option>
+            <option value="France">France</option>
+            <option value="Belgique">Belgique</option>
+            <option value="Suisse">Suisse</option>
+            <option value="Luxembourg">Luxembourg</option>
+        </select>
+
+        <br>
+        <b>Puis par Ville ou Mot-clé :</b><br>
+        <input type="text" id="moteur" onkeyup="filtrer()" placeholder="Ex: Paris, Lyon, Tomates..." style="width:80%;">
+    </div>
+
+    <div id="status"><b>Le jardin fleurit... 🌻</b></div>
     <div id="liste"></div>
 
     <script>
@@ -37,7 +62,7 @@
                 annonces = await res.json();
                 document.getElementById('status').style.display = 'none';
                 afficher(annonces);
-            } catch(e) { document.getElementById('status').innerText = "Le jardin est fermé pour le moment."; }
+            } catch(e) { document.getElementById('status').innerText = "Le jardin est en dormance."; }
         }
 
         function afficher(data) {
@@ -46,21 +71,26 @@
             [...data].reverse().forEach(a => {
                 conteneur.innerHTML += `
                 <div class="carte">
+                    <span class="badge">${a.pays}</span>
                     <span class="titre">🌿 Graine de ${a.prenom}</span><br>
                     <b>📍 Ville :</b> ${a.ville} (${a.km} km autour)<br>
-                    <b>💬 Message :</b> ${a.description}<br><br>
+                    <p>${a.description}</p>
                     <small>Posté le : ${new Date(a.date).toLocaleDateString()} | Durée : ${a.duree}</small>
                 </div>`;
             });
         }
 
         function filtrer() {
-            const mot = document.getElementById('moteur').value.toLowerCase();
-            const resultat = annonces.filter(a => 
-                a.ville.toLowerCase().includes(mot) || 
-                a.description.toLowerCase().includes(mot) ||
-                a.prenom.toLowerCase().includes(mot)
-            );
+            const paysChoisi = document.getElementById('filtrePays').value.toLowerCase();
+            const motRecherche = document.getElementById('moteur').value.toLowerCase();
+            
+            const resultat = annonces.filter(a => {
+                const matchPays = paysChoisi === "" || (a.pays && a.pays.toLowerCase() === paysChoisi);
+                const matchMot = (a.ville && a.ville.toLowerCase().includes(motRecherche)) || 
+                                 (a.description && a.description.toLowerCase().includes(motRecherche));
+                return matchPays && matchMot;
+            });
+            
             afficher(resultat);
         }
     </script>
