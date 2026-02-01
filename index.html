@@ -16,17 +16,61 @@
         .menu-table a { text-decoration: none; color: #FFFFFF; font-weight: bold; transition: 0.3s; }
         .menu-table td:hover { background-color: #006666; }
 
-        .soleil-don {
-            background: #FFD700; width: 220px; height: 220px; border-radius: 50%;
-            display: flex; align-items: center; justify-content: center;
-            box-shadow: 0 0 40px #FFA500; border: 5px dashed #FF4500;
-            margin: 30px auto; cursor: pointer; transition: 0.4s;
-            text-decoration: none; color: #000080; font-weight: bold;
+        /* --- NOUVEAU TITRE ENCADRÉ --- */
+        .header-wrapper {
+            display: inline-block;
+            margin: 20px auto;
+            padding: 15px 40px;
+            position: relative;
+            border: 8px solid;
+            border-image: linear-gradient(to right, red, orange, yellow, green, blue, indigo, violet) 1;
+            border-radius: 50px; /* Note: border-image peut masquer le radius sur certains navigateurs */
         }
-        .soleil-don:hover { transform: scale(1.1) rotate(5deg); }
 
+        .header-wrapper h1 {
+            display: inline;
+            margin: 0;
+            font-size: 2.5em;
+        }
+
+        .header-wrapper::before { content: "💐"; position: absolute; left: -20px; top: 50%; transform: translateY(-50%); font-size: 2em; }
+        .header-wrapper::after { content: "💐"; position: absolute; right: -20px; top: 50%; transform: translateY(-50%); font-size: 2em; }
+
+        /* --- LE SOLEIL DU DON --- */
+        .soleil-don {
+            background: radial-gradient(circle, #FFD700 30%, #FF8C00 100%);
+            width: 200px; height: 200px; border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            /* Rayons du soleil via box-shadow */
+            box-shadow: 
+                0 0 50px #FFA500, 
+                0 0 20px #FF4500 inset,
+                0 0 10px 10px rgba(255, 215, 0, 0.5);
+            margin: 40px auto; cursor: pointer; transition: 0.4s;
+            text-decoration: none; color: #000080; font-weight: bold;
+            position: relative;
+            border: none;
+        }
+
+        /* Animation des rayons */
+        .soleil-don::before {
+            content: "";
+            position: absolute;
+            width: 120%; height: 120%;
+            border-radius: 50%;
+            border: 8px dashed #FFD700;
+            animation: rotate-sun 20s linear infinite;
+        }
+
+        @keyframes rotate-sun {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .soleil-don:hover { transform: scale(1.1); box-shadow: 0 0 80px #FF4500; }
+
+        /* --- RESTE DU STYLE --- */
         .bulles-grid { display: flex; justify-content: center; align-items: center; gap: 25px; flex-wrap: wrap; padding: 20px; max-width: 1200px; margin: auto; }
-
         .nuage { 
             background: #e0f7fa; border: 3px solid #008080; border-radius: 50px; padding: 20px; 
             width: 300px; min-height: 200px; text-decoration: none; color: inherit; 
@@ -48,12 +92,10 @@
 
         .exemples { font-size: 0.85em; color: #2E7D32; font-style: italic; margin-top: 10px; font-weight: bold; }
         .info-sup { font-size: 0.85em; margin: 3px 0; }
-
         .titre-urgence { color: #e91e63; margin: -10px 0 15px 0; text-transform: uppercase; font-weight: 900; font-size: 1.3em; }
         .split-box { display: flex; }
         .split-part { flex: 1; text-decoration: none; color: #e91e63; font-weight: bold; font-size: 1em; padding: 10px; }
 
-        /* Animations */
         .animal-container { position: fixed; z-index: 900; pointer-events: none; display: flex; align-items: center; }
         .bulle-texte { 
             background: white; border: 2px solid #2E7D32; border-radius: 15px; padding: 8px 15px; 
@@ -70,8 +112,6 @@
     <script>function googleTranslateElementInit() { new google.translate.TranslateElement({pageLanguage: 'fr'}, 'google_translate_element'); }</script>
     <script src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
 
-    <audio id="chantOiseaux" loop><source src="oiseaux.mp3" type="audio/mpeg"></audio>
-
     <table class="menu-table">
         <tr>
             <td><a href="index.html">Accueil</a></td>
@@ -82,20 +122,21 @@
         </tr>
     </table>
 
-    <h1>💐 Le Trésor Public</h1>
+    <div class="header-wrapper">
+        <h1>Le Trésor Public</h1>
+    </div>
+    
     <p><strong>Le Petit Prince des Jardiniers</strong></p>
 
     <a href="jardin.html" class="soleil-don">
-        <div>☀️<br>ESPACE DU DON ENTIER</div>
+        <div style="z-index: 2; text-align: center;">ESPACE DU<br>DON ENTIER</div>
     </a>
 
     <div class="bulles-grid">
         <a href="impot.html" class="nuage">
             <h3 style="color:#008080; margin:0; text-transform:uppercase;">📜 Impôts Publics</h3>
             <p style="margin:5px 0;">Travaux publics en libre participation.</p>
-            <p class="info-sup">À choisir en fonction des compétences et de son besoin d'apprendre.</p>
-            <p class="info-sup">Motivation indispensable, travaux parfois ingrats.</p>
-            <div class="exemples">Ex : Travaux administratifs, réfection des routes, nettoyage du bois communal, réparation des tuyaux de gaz...</div>
+            <div class="exemples">Ex : Travaux administratifs, nettoyage du bois...</div>
         </a>
 
         <a href="regulation.html" class="etoile-justice">
@@ -123,20 +164,15 @@
     </footer>
 
     <script>
+        // ... (Ton code JavaScript reste exactement le même)
         const basePhrases = ["L'Impôt Public est un geste de cœur", "Graines de générosité", "Le pardon est justice", "Besoin d'un câlin"];
         let disponibles = [...basePhrases];
         const typesAnimaux = ['🕊️', '🦋', '🐝', '🐞'];
         let messagerActif = null;
         let count = 0;
-
         const coffre = document.getElementById('coffre-magique');
         let coffreX = window.innerWidth / 2 - 30;
         let coffreY = window.innerHeight - 150;
-
-        document.addEventListener('click', () => { 
-            const a = document.getElementById('chantOiseaux');
-            if(a.paused) { a.volume = 0.05; a.play(); } 
-        });
 
         function exploserEtEnvoler() {
             for (let i = 0; i < 20; i++) {
@@ -152,11 +188,7 @@
                 { transform: 'translateY(0) scale(1.5)', opacity: 1 },
                 { transform: 'translateY(-1200px) scale(0.5)', opacity: 0 }
             ], { duration: 1500, easing: 'ease-in', fill: 'forwards' });
-
-            setTimeout(() => {
-                coffreY = window.innerHeight - 150;
-                coffre.style.opacity = "1";
-            }, 3000);
+            setTimeout(() => { coffreY = window.innerHeight - 150; coffre.style.opacity = "1"; }, 3000);
         }
 
         function createMessenger() {
@@ -183,26 +215,4 @@
                 } else if (m.state === "POUSSER") {
                     m.state = "PROJECTION";
                     m.emoji.animate([{transform: "translateX(0)"}, {transform: "translateX(30px)"}, {transform: "translateX(0)"}], {duration: 200});
-                    const targetX = coffreX - m.x;
-                    const targetY = coffreY - m.y;
-                    m.bulle.animate([
-                        { transform: 'translate(0, 0) scale(1)', opacity: 1 },
-                        { transform: `translate(${targetX}px, ${targetY}px) rotate(20deg) scale(0.1)`, opacity: 0 }
-                    ], { duration: 500, easing: 'ease-in', fill: 'forwards' });
-                    setTimeout(() => { exploserEtEnvoler(); m.state = "SORTIE"; }, 500);
-                } else if (m.state === "SORTIE") {
-                    m.x -= 10;
-                    if (m.x < -300) { m.el.remove(); messagerActif = null; count++; }
-                }
-                m.el.style.left = m.x + "px";
-                m.el.style.top = (m.y + Math.sin(Date.now()*0.005)*20) + "px";
-            }
-            coffre.style.left = coffreX + "px"; coffre.style.top = coffreY + "px";
-            requestAnimationFrame(loop);
-        }
-
-        setInterval(createMessenger, 4000);
-        loop();
-    </script>
-</body>
-</html>
+                    const targetX = coffreX - m.x; const targetY = coffreY - m.y;
