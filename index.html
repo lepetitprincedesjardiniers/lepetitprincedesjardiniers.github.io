@@ -17,45 +17,48 @@
         .menu-table a { text-decoration: none; color: #FFFFFF; font-weight: bold; transition: 0.3s; }
         .menu-table td:hover { background-color: #006666; }
 
-        /* Titre avec Arc-en-ciel et Bouquet */
-        .container-titre {
-            display: inline-flex;
+        /* Titre avec Arc-en-ciel scintillant et Bouquets */
+        .header-container {
+            display: flex;
             align-items: center;
             justify-content: center;
-            margin: 20px auto;
+            gap: 15px;
+            margin: 30px auto;
         }
-        .bouquet {
-            font-size: 50px;
-            transform: rotate(-30deg);
-            margin-right: 20px;
-        }
+        .petit-bouquet { font-size: 30px; }
+        .bouquet-gauche { transform: rotate(-20deg); }
+        .bouquet-droite { transform: rotate(20deg); }
+
         .arc-en-ciel-box {
-            border: 8px solid;
-            border-image: linear-gradient(to right, red, orange, yellow, green, blue, indigo, violet) 1;
-            padding: 10px 30px;
-            border-radius: 15px;
+            border: 6px solid;
+            border-image: linear-gradient(45deg, red, orange, yellow, green, blue, indigo, violet) 1;
+            padding: 15px 40px;
+            background: white;
+            animation: scintiller 2s infinite alternate;
+        }
+        @keyframes scintiller {
+            from { box-shadow: 0 0 10px #fff, 0 0 20px #fff, 0 0 30px #ff00de; }
+            to { box-shadow: 0 0 5px #fff, 0 0 10px #fff, 0 0 15px #00d2ff; }
         }
 
-        /* Soleil avec rayons qui grandissent */
+        /* Soleil qui tourne sans pointillés */
         .soleil-don {
-            position: relative;
             background: #FFD700; width: 180px; height: 180px; border-radius: 50%;
             display: flex; align-items: center; justify-content: center;
-            box-shadow: 0 0 40px #FFA500;
-            margin: 60px auto; cursor: pointer; transition: 0.4s;
+            box-shadow: 0 0 50px #FFA500;
+            margin: 40px auto; cursor: pointer; transition: 0.4s;
             text-decoration: none; color: #000080; font-weight: bold;
-            z-index: 10;
+            animation: rotation-soleil 10s linear infinite;
         }
-        .soleil-don::before {
-            content: '';
-            position: absolute;
-            width: 240px; height: 240px;
-            border: 8px dotted #FF4500;
-            border-radius: 50%;
-            transition: 0.5s;
+        .soleil-don:hover { 
+            transform: scale(1.2); 
+            animation-play-state: paused; /* S'arrête quand on veut cliquer */
         }
-        .soleil-don:hover { transform: scale(1.2); }
-        .soleil-don:hover::before { transform: scale(1.3) rotate(90deg); border-width: 12px; }
+        @keyframes rotation-soleil {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+        .soleil-texte { transform: rotate(0); } /* Garde le texte droit si besoin, mais ici le cercle entier tourne */
 
         .bulles-grid { display: flex; justify-content: center; align-items: stretch; gap: 25px; flex-wrap: wrap; padding: 20px; max-width: 1200px; margin: auto; }
 
@@ -78,15 +81,15 @@
             border-radius: 50%; transform: scale(1.05);
         }
 
-        .exemples { font-size: 0.85em; color: #2E7D32; font-style: italic; margin-top: 10px; font-weight: bold; }
-        .info-sup { font-size: 0.85em; margin: 3px 0; }
-
-        /* Structure interne Urgence */
-        .titre-urgence-rose { color: #e91e63; font-weight: bold; text-transform: uppercase; font-size: 1.3em; margin-bottom: 15px; }
+        /* Urgence & Écoute Style */
+        .titre-urgence-rose { 
+            color: #e91e63; font-weight: bold; text-transform: uppercase; 
+            font-size: 1.2em; margin-bottom: 15px; 
+        }
         .split-box { display: flex; border-top: 1px solid #e91e63; padding-top: 10px; }
         .split-part { flex: 1; text-decoration: none; color: #e91e63; font-weight: bold; font-size: 1em; padding: 10px; }
 
-        /* Animations */
+        /* Animations Coffre et Animaux */
         .animal-container { position: fixed; z-index: 900; pointer-events: none; display: flex; align-items: center; }
         .bulle-texte { 
             background: white; border: 2px solid #2E7D32; border-radius: 15px; padding: 8px 15px; 
@@ -115,17 +118,18 @@
         </tr>
     </table>
 
-    <div class="container-titre">
-        <div class="bouquet">💐</div>
+    <div class="header-container">
+        <div class="petit-bouquet bouquet-gauche">💐</div>
         <div class="arc-en-ciel-box">
             <h1 style="margin:0;">Le Trésor Public</h1>
         </div>
+        <div class="petit-bouquet bouquet-droite">💐</div>
     </div>
-    
+
     <p><strong>Le Petit Prince des Jardiniers</strong></p>
 
     <a href="jardin.html" class="soleil-don">
-        <div style="text-align:center;">☀️<br>ESPACE DU DON ENTIER</div>
+        <div>☀️<br>ESPACE DU DON ENTIER</div>
     </a>
 
     <div class="bulles-grid">
@@ -138,7 +142,7 @@
         </a>
 
         <a href="regulation.html" class="etoile-justice">
-            <div style="width:75%; text-align:center;">
+            <div style="width:75%;">
                 <h3>⚖️ Régulation Citoyenne</h3>
                 <p>Justice avec délicatesse.</p>
             </div>
@@ -162,7 +166,7 @@
     </footer>
 
     <script>
-        // Scripts d'animation conservés à l'identique
+        // --- TOUT LE CODE JAVASCRIPT DE BASE CONSERVÉ ---
         const basePhrases = ["L'Impôt Public est un geste de cœur", "Graines de générosité", "Le pardon est justice", "Besoin d'un câlin"];
         let disponibles = [...basePhrases];
         const typesAnimaux = ['🕊️', '🦋', '🐝', '🐞'];
@@ -191,4 +195,58 @@
             coffre.animate([
                 { transform: 'translateY(0) scale(1.5)', opacity: 1 },
                 { transform: 'translateY(-1200px) scale(0.5)', opacity: 0 }
-            ], { duration: 1500, easing: 'ease-in', fill
+            ], { duration: 1500, easing: 'ease-in', fill: 'forwards' });
+
+            setTimeout(() => {
+                coffreY = window.innerHeight - 150;
+                coffre.style.opacity = "1";
+            }, 3000);
+        }
+
+        function createMessenger() {
+            if (count >= 3 || messagerActif || disponibles.length === 0) return;
+            const txt = disponibles.splice(Math.floor(Math.random()*disponibles.length), 1)[0];
+            const div = document.createElement('div');
+            div.className = "animal-container";
+            div.innerHTML = `<div class="bulle-texte" style="width:0px">${txt}</div><div class="emoji" style="font-size:60px">${typesAnimaux[Math.floor(Math.random()*4)]}</div>`;
+            document.body.appendChild(div);
+            messagerActif = { el: div, bulle: div.firstChild, emoji: div.lastChild, x: -200, y: window.innerHeight / 2, tx: 150, state: "ENTRÉE" };
+        }
+
+        function loop() {
+            if (messagerActif) {
+                let m = messagerActif;
+                if (m.state === "ENTRÉE") {
+                    m.x += (m.tx - m.x) * 0.05;
+                    if (Math.abs(m.tx - m.x) < 5) {
+                        m.state = "SORTIR_MESSAGE";
+                        m.bulle.style.opacity = 1;
+                        m.bulle.animate([{width: "0px", transform: "scale(0)"}, {width: "250px", transform: "scale(1)"}], {duration: 600, fill: 'forwards'});
+                        setTimeout(() => { m.state = "POUSSER"; }, 2000);
+                    }
+                } else if (m.state === "POUSSER") {
+                    m.state = "PROJECTION";
+                    m.emoji.animate([{transform: "translateX(0)"}, {transform: "translateX(30px)"}, {transform: "translateX(0)"}], {duration: 200});
+                    const targetX = coffreX - m.x;
+                    const targetY = coffreY - m.y;
+                    m.bulle.animate([
+                        { transform: 'translate(0, 0) scale(1)', opacity: 1 },
+                        { transform: `translate(${targetX}px, ${targetY}px) rotate(20deg) scale(0.1)`, opacity: 0 }
+                    ], { duration: 500, easing: 'ease-in', fill: 'forwards' });
+                    setTimeout(() => { exploserEtEnvoler(); m.state = "SORTIE"; }, 500);
+                } else if (m.state === "SORTIE") {
+                    m.x -= 10;
+                    if (m.x < -300) { m.el.remove(); messagerActif = null; count++; }
+                }
+                m.el.style.left = m.x + "px";
+                m.el.style.top = (m.y + Math.sin(Date.now()*0.005)*20) + "px";
+            }
+            coffre.style.left = coffreX + "px"; coffre.style.top = coffreY + "px";
+            requestAnimationFrame(loop);
+        }
+
+        setInterval(createMessenger, 4000);
+        loop();
+    </script>
+</body>
+</html>
