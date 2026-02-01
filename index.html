@@ -1,142 +1,36 @@
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Le Trésor Public - Accueil</title>
-    <style>
-        body { 
-            font-family: 'Comic Sans MS', cursive; text-align: center; margin: 0; padding: 0; 
-            background-color: #FFFF00; color: #000080; overflow-x: hidden; min-height: 100vh; 
-        }
+<table class="menu-table">
+    <tr>
+        <td><a href="transition.html" onclick="localStorage.setItem('nextPage', 'index.html')">Accueil</a></td>
+        <td><a href="transition.html" onclick="localStorage.setItem('nextPage', 'formulaire.html')">Semer</a></td>
+        <td><a href="transition.html" onclick="localStorage.setItem('nextPage', 'jardin.html')">Le Jardin</a></td>
+        <td><a href="transition.html" onclick="localStorage.setItem('nextPage', 'impot.html')">Impôt Public</a></td>
+        <td><a href="transition.html" onclick="localStorage.setItem('nextPage', 'regulation.html')">Régulation</a></td>
+    </tr>
+</table>
 
-        #google_translate_element { padding: 10px; background: rgba(255,255,255,0.5); border-bottom: 1px solid #008080; }
+<h1>💐 Le Trésor Public</h1>
+<p><strong>Le Petit Prince des Jardiniers</strong></p>
 
-        .menu-table { margin: 20px auto; border-radius: 10px; background-color: #008080; border-collapse: collapse; }
-        .menu-table td { padding: 10px 15px; border: 1px solid #FFFFFF; }
-        .menu-table a { text-decoration: none; color: #FFFFFF; font-weight: bold; cursor: pointer; }
+<a href="transition.html" class="soleil-don" onclick="localStorage.setItem('nextPage', 'formulaire.html')">
+    <div>☀️<br>ESPACE DU DON ENTIER</div>
+</a>
 
-        .soleil-don {
-            background: #FFD700; width: 220px; height: 220px; border-radius: 50%;
-            display: flex; align-items: center; justify-content: center;
-            box-shadow: 0 0 40px #FFA500; border: 5px dashed #FF4500;
-            margin: 30px auto; cursor: pointer; transition: 0.4s;
-            text-decoration: none; color: #000080; font-weight: bold;
-        }
-        .soleil-don:hover { transform: scale(1.1) rotate(5deg); }
+<div class="bulles-grid">
+    <a href="transition.html" class="nuage" onclick="localStorage.setItem('nextPage', 'impot.html')">
+        <h3 style="color:#008080; margin:0; text-transform:uppercase;">📜 Impôt Public</h3>
+        <p>Travaux publics en libre participation.</p>
+        <div class="exemples">Ex : Nettoyage bois communal...</div>
+    </a>
 
-        .bulles-grid { display: flex; justify-content: center; align-items: center; gap: 25px; flex-wrap: wrap; padding: 20px; max-width: 1200px; margin: auto; }
-
-        .nuage { 
-            background: #e0f7fa; border: 3px solid #008080; border-radius: 50px; padding: 20px; 
-            width: 300px; min-height: 150px; text-decoration: none; color: inherit; 
-            display: flex; flex-direction: column; justify-content: center; transition: 0.3s; cursor: pointer;
-        }
-        .nuage-rose { background: #ffebee; border-color: #e91e63; }
-        .nuage:hover { transform: translateY(-10px); }
-
-        .etoile-justice { 
-            background: #E6E6FA; border: 3px solid #9370DB; width: 320px; height: 320px; 
-            clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%); 
-            transition: 0.6s ease-in-out; cursor: pointer; text-decoration: none; color: inherit; 
-            display: flex; align-items: center; justify-content: center; 
-        }
-        .etoile-justice:hover { 
-            clip-path: polygon(50% 0%, 100% 0%, 100% 100%, 100% 100%, 100% 100%, 50% 100%, 0% 100%, 0% 100%, 0% 0%, 0% 0%);
-            border-radius: 50%; transform: scale(1.05);
-        }
-
-        .exemples { font-size: 0.85em; color: #2E7D32; font-style: italic; margin-top: 10px; font-weight: bold; }
-
-        /* Animation Messagers */
-        .animal-container { position: fixed; z-index: 900; pointer-events: none; display: flex; align-items: center; }
-        .bulle-texte { 
-            background: white; border: 2px solid #2E7D32; border-radius: 15px; padding: 8px 15px; 
-            font-weight: bold; opacity: 0; white-space: nowrap; overflow: hidden;
-            position: absolute; left: 60px;
-        }
-
-        #coffre-magique { position: fixed; font-size: 60px; z-index: 800; pointer-events: none; left: 50%; transform: translateX(-50%); }
-
-        footer { margin: 60px 0 20px; font-size: 0.9em; }
-    </style>
-</head>
-<body>
-
-    <div id="google_translate_element"></div>
-    <script>function googleTranslateElementInit() { new google.translate.TranslateElement({pageLanguage: 'fr'}, 'google_translate_element'); }</script>
-    <script src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
-
-    <audio id="chantOiseaux" loop><source src="oiseaux.mp3" type="audio/mpeg"></audio>
-
-    <table class="menu-table">
-        <tr>
-            <td><a onclick="go('index.html')">Accueil</a></td>
-            <td><a onclick="go('formulaire.html')">Semer</a></td>
-            <td><a onclick="go('jardin.html')">Le Jardin</a></td>
-            <td><a onclick="go('impot.html')">Impôt Public</a></td>
-            <td><a onclick="go('regulation.html')">Régulation</a></td>
-        </tr>
-    </table>
-
-    <h1>💐 Le Trésor Public</h1>
-    <p><strong>Le Petit Prince des Jardiniers</strong></p>
-
-    <div class="soleil-don" onclick="go('formulaire.html')">
-        <div>☀️<br>ESPACE DU DON ENTIER</div>
-    </div>
-
-    <div class="bulles-grid">
-        <div class="nuage" onclick="go('impot.html')">
-            <h3 style="color:#008080; margin:0; text-transform:uppercase;">📜 Impôt Public</h3>
-            <p>Travaux publics en libre participation.</p>
-            <div class="exemples">Ex : Nettoyage bois communal...</div>
+    <a href="transition.html" class="etoile-justice" onclick="localStorage.setItem('nextPage', 'regulation.html')">
+        <div style="width:75%;">
+            <h3>⚖️ Régulation Citoyenne</h3>
+            <p>Justice avec délicatesse.</p>
         </div>
+    </a>
 
-        <div class="etoile-justice" onclick="go('regulation.html')">
-            <div style="width:75%;">
-                <h3>⚖️ Régulation Citoyenne</h3>
-                <p>Justice avec délicatesse.</p>
-            </div>
-        </div>
-
-        <div class="nuage nuage-rose" onclick="go('urgence.html')">
-            <h3 style="color:#e91e63; margin:0;">❤️ Urgence & Écoute</h3>
-            <p>Aide & Besoins vitaux.</p>
-        </div>
-    </div>
-
-    <div id="coffre-magique">🎁</div>
-
-    <footer>© 2000 <a href="https://www.youtube.com/channel/UCjsudx7f1sl7XQM8ylcBRdQ" target="_blank" style="color: inherit;">Le petit prince des jardiniers</a></footer>
-
-    <script>
-        // --- FONCTION DE NAVIGATION (Vers la transition) ---
-        function go(destination) {
-            localStorage.setItem('nextPage', destination);
-            window.location.href = 'transition.html';
-        }
-
-        // --- ANIMATIONS MESSAGERS ---
-        const basePhrases = ["L'Impôt Public est un geste de cœur", "Graines de générosité", "Le pardon est justice", "Besoin d'un câlin"];
-        let disponibles = [...basePhrases];
-        const typesAnimaux = ['🕊️', '🦋', '🐝', '🐞'];
-        let messagerActif = null;
-        let count = 0;
-
-        const coffre = document.getElementById('coffre-magique');
-        let coffreX = window.innerWidth / 2 - 30;
-        let coffreY = window.innerHeight - 150;
-
-        document.addEventListener('click', () => { 
-            const a = document.getElementById('chantOiseaux');
-            if(a.paused) { a.volume = 0.05; a.play(); } 
-        });
-
-        function exploserEtEnvoler() {
-            for (let i = 0; i < 20; i++) {
-                const p = document.createElement('div');
-                p.innerHTML = ['❤️', '✨', '🌸', '🌟'][Math.floor(Math.random() * 4)];
-                p.style.position = 'fixed'; p.style.left = (coffreX + 30) + 'px'; p.style.top = (coffreY + 30) + 'px';
-                p.style.fontSize = '25px'; p.style.zIndex = '1000'; document.body.appendChild(p);
-                const angle = Math.random() * Math.PI * 2; const dist = Math.
+    <a href="transition.html" class="nuage nuage-rose" onclick="localStorage.setItem('nextPage', 'urgence.html')">
+        <h3 style="color:#e91e63; margin:0;">❤️ Urgence & Écoute</h3>
+        <p>Aide & Besoins vitaux.</p>
+    </a>
+</div>
