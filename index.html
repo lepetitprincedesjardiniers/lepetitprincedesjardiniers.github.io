@@ -29,7 +29,7 @@
             display: flex; align-items: center; justify-content: center; 
             box-shadow: 0 0 25px #FFA500; margin: 15px auto; position: relative; z-index: 20; transition: 0.5s; 
         }
-        .soleil-cadre h1 { font-size: 0.9em; color: #333; margin: 0; padding: 10px; line-height: 1.1; font-weight: bold; }
+        .soleil-cadre h1 { font-size: 1.0em; color: #333; margin: 0; padding: 10px; line-height: 1.1; z-index: 2; }
         .soleil-cadre::before {
             content: ""; position: absolute; top: -5px; left: -5px; right: -5px; bottom: -5px;
             border-radius: 50%; background: conic-gradient(red, orange, yellow, green, blue, indigo, violet, red);
@@ -39,72 +39,68 @@
         @keyframes rotateRainbow { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
 
         /* ÉTOILES ★ */
-        .star { position: fixed; color: #FFFACD; z-index: -1; animation: twinkle var(--duration) infinite ease-in-out, drift var(--drift-duration) linear infinite; }
-        @keyframes twinkle { 0%, 100% { opacity: 0.3; transform: scale(0.8); } 50% { opacity: 1; transform: scale(1.2); } }
-        @keyframes drift { from { transform: translateX(0); } to { transform: translateX(60px); } }
+        .star { position: fixed; color: white; z-index: -1; animation: twinkle var(--duration) infinite ease-in-out, drift var(--drift-duration) linear infinite; text-shadow: 0 0 5px #fff; }
+        @keyframes twinkle { 0%, 100% { opacity: 0.2; transform: scale(0.8); } 50% { opacity: 1; transform: scale(1.2); } }
+        @keyframes drift { from { transform: translateX(0); } to { transform: translateX(80px); } }
 
         /* MENU */
         .menu-table { margin: 10px auto 20px; border-radius: 10px; background-color: #008080; border-collapse: collapse; position: relative; z-index: 10; }
-        .menu-table td { border: 1px solid #FFFFFF; transition: 0.3s; }
+        .menu-table td { border: 1px solid #FFFFFF; }
         .menu-table a { display: block; padding: 12px 20px; text-decoration: none; color: #FFFFFF; font-weight: bold; }
-        .menu-table td:hover { background-color: #00b3b3; transform: scale(1.05); }
+        .menu-table td:hover { background-color: #00b3b3; }
 
-        /* TERRE EFFET */
+        /* TERRE */
         .terre-don { 
-            width: 300px; height: 300px; margin: 20px auto; border-radius: 50%; 
+            width: 350px; height: 350px; margin: 30px auto; border-radius: 50%; 
             background-image: url('https://upload.wikimedia.org/wikipedia/commons/thumb/c/c3/Solarsystemscope_texture_2k_earth_daymap.jpg/1200px-Solarsystemscope_texture_2k_earth_daymap.jpg'); 
             background-size: cover; display: flex; align-items: center; justify-content: center; 
             text-decoration: none; color: white; font-weight: bold; 
-            box-shadow: inset -20px -20px 50px rgba(0,0,0,0.8), 0 0 30px rgba(0,191,255,0.3); 
-            animation: rotationTerre 40s linear infinite; position: relative; z-index: 5; transition: 1s ease-in-out;
+            box-shadow: inset -30px -30px 60px rgba(0,0,0,0.9); 
+            animation: rotationTerre 40s linear infinite; 
+            position: relative; z-index: 5; transition: transform 1.5s;
         }
-        .terre-don:hover { transform: rotate(360deg) scale(1.1); box-shadow: 0 0 50px rgba(0, 191, 255, 0.6); }
+        .terre-don:hover { transform: rotate(360deg) scale(1.05); box-shadow: 0 0 50px rgba(0, 191, 255, 0.8); }
         @keyframes rotationTerre { from { background-position: 0 0; } to { background-position: 1000px 0; } }
 
-        /* RUBRIQUES */
+        /* RUBRIQUES (CONTENU ORIGINAL) */
         .bulles-grid { display: flex; justify-content: center; gap: 20px; flex-wrap: wrap; padding: 20px; position: relative; z-index: 5; }
-        .nuage { background: #e0f7fa; border: 3px solid #008080; border-radius: 40px; padding: 15px; width: 320px; color: #000080; transition: 0.3s; }
-        .nuage:hover { transform: translateY(-5px); box-shadow: 0 5px 15px white; }
-        
+        .nuage, .cadre-aide { transition: transform 0.3s, box-shadow 0.3s; cursor: default; background: #e0f7fa; border: 3px solid #008080; border-radius: 50px; padding: 20px; width: 320px; color: #000080; }
+        .nuage:hover, .cadre-aide:hover { transform: translateY(-5px); box-shadow: 0 10px 20px rgba(255,255,255,0.2); }
+        .exemples-ligne { font-size: 0.7em; color: rgba(0, 102, 102, 0.7); font-style: italic; margin-top: 10px; line-height: 1.4; }
+
         .etoile-justice { 
-            background: #f3e5f5; border: 3px solid #9370DB; width: 280px; min-height: 250px; 
+            background: #E6E6FA; border: 3px solid #9370DB; width: 300px; min-height: 250px; 
             clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%); 
             display: flex; flex-direction: column; align-items: center; justify-content: center; 
-            text-decoration: none; color: #4a148c; transition: 0.8s; padding: 20px;
+            text-decoration: none; color: #333; transition: 0.8s ease-in-out; padding: 20px; 
         }
         .etoile-justice:hover { clip-path: circle(50% at 50% 50%); transform: scale(1.05); }
 
-        .cadre-aide { background: #fff5f5; border: 3px solid #e91e63; border-radius: 40px; padding: 20px; width: 320px; color: #880e4f; }
-        .btn-aide-container { display: flex; margin-top: 10px; gap: 10px; }
-        .btn-aide-container a { flex: 1; background: #e91e63; color: white; padding: 8px; border-radius: 15px; text-decoration: none; font-size: 0.8em; }
+        .cadre-aide { background: #ffebee; border-color: #e91e63; }
+        .btn-aide-container { display: flex; border-top: 1px solid #e91e63; margin-top: 10px; padding-top: 10px; gap: 10px; }
+        .btn-aide-container a { flex: 1; color: #e91e63; font-weight: bold; text-decoration: none; font-size: 0.85em; }
 
-        .exemples-ligne { font-size: 0.75em; line-height: 1.4; margin-top: 8px; color: #006064; text-align: left; background: rgba(255,255,255,0.5); padding: 10px; border-radius: 15px; }
-
-        /* MESSAGERS & MESSAGES (Plus petits) */
+        /* MESSAGERS & MESSAGES PLUS PETITS */
         .messager { position: fixed; font-size: 50px; z-index: 100; pointer-events: none; transition: left 6s linear, top 1.5s ease-in-out; }
         .message-volant { 
             position: fixed; background: #ffffff; color: #2E7D32; padding: 8px 16px; 
-            border-radius: 20px; font-size: 0.9em; font-weight: 800; border: 2px solid #FFD700; 
+            border-radius: 20px; font-size: 0.95em; font-weight: 800; border: 2px solid #FFD700; 
             z-index: 600; box-shadow: 0 4px 10px rgba(0,0,0,0.2); pointer-events: none;
             transition: all 1.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
 
-        #coffre-magique { position: fixed; font-size: 60px; z-index: 500; filter: drop-shadow(0 0 20px gold); }
+        #coffre-magique { position: fixed; font-size: 55px; z-index: 500; filter: drop-shadow(0 0 15px gold); }
         .particule { position: fixed; pointer-events: none; z-index: 1000; font-size: 30px; }
 
-        /* COPYRIGHT EFFET */
         footer { padding: 40px; }
-        .lien-copyright { 
-            color: rgba(255,255,255,0.6); text-decoration: none; font-weight: bold; 
-            transition: 0.5s; display: inline-block; cursor: pointer;
-        }
+        .lien-copyright { color: rgba(255,255,255,0.6); text-decoration: none; font-weight: bold; transition: 0.5s; display: inline-block; }
         .lien-copyright:hover { color: #fff; text-shadow: 0 0 15px #FFD700; transform: scale(1.1); }
     </style>
 </head>
 <body>
 
     <div class="titre-fraternite">La fraternité du palais nature</div>
-    <div class="soleil-cadre"><h1>Le Trésor<br>Public</h1></div>
+    <div class="soleil-cadre"><h1>Le Trésor Public</h1></div>
     
     <div id="google_translate_element"></div>
     <button id="btn-son" style="position:fixed; top:10px; right:10px; z-index:1000; background:none; border:none; font-size:25px; cursor:pointer;" onclick="toggleSon()">🕊️</button>
@@ -120,29 +116,29 @@
     </table>
 
     <a href="jardin.html" class="terre-don">
-        <div style="text-shadow: 2px 2px 8px black; font-size: 1.1em; padding: 20px;">🌍<br>ESPACE DU DON ENTIER</div>
+        <div style="text-shadow: 2px 2px 8px black; font-size: 1.5em;">🌍<br>ESPACE DU DON ENTIER</div>
     </a>
 
     <div class="bulles-grid">
         <div class="nuage">
-            <h3 style="margin:5px;">📜 Impôts Publics</h3>
-            <p style="font-size: 0.8em; margin: 5px;"><strong>Travaux & Services :</strong> Participation libre.</p>
+            <h3 style="margin:0;">📜 Impôts Publics</h3>
+            <p style="font-size: 0.8em; font-weight: bold;">Travaux en participation libre.</p>
             <div class="exemples-ligne">
-                <strong>Actions :</strong> Réfection des routes, aide administrative, entretien des jardins, soutien technique...
+                <strong>exemples :</strong> réfection des routes et sentiers, aide administrative, entretien des espaces verts, soutien technique collectif...
             </div>
         </div>
 
         <a href="regulation.html" class="etoile-justice">
             <h3 style="margin:0;">⚖️ Régulation</h3>
-            <p style="font-size:0.75em;">Médiation et harmonie entre les habitants.</p>
+            <p style="font-size:0.8em;">Médiation et harmonie pour tous.</p>
         </a>
 
         <div class="cadre-aide">
-            <h3 style="margin:5px;">❤️ Aide & Écoute</h3>
-            <p style="font-size:0.8em; margin: 5px;">Soutien mutuel et bien-être.</p>
+            <h3 style="margin:0;">❤️ Aide & Écoute</h3>
+            <p style="font-size:0.8em;">Besoins vitaux ou oreille attentive.</p>
             <div class="btn-aide-container">
-                <a href="urgence.html">Besoin d'aide</a>
-                <a href="ecoute.html">Une oreille</a>
+                <a href="urgence.html">Urgences</a>
+                <a href="ecoute.html">Écoute</a>
             </div>
         </div>
     </div>
@@ -154,11 +150,9 @@
     </footer>
 
     <script>
-        // SON
         let audio = new Audio('oiseaux.mp3'); audio.loop = true;
         function toggleSon() { audio.paused ? audio.play() : audio.pause(); }
 
-        // ÉTOILES
         for(let i=0; i<60; i++) {
             let s = document.createElement('div'); s.className = 'star'; s.innerHTML = '★';
             s.style.left = Math.random()*100+'vw'; s.style.top = Math.random()*100+'vh';
@@ -168,7 +162,6 @@
             document.body.appendChild(s);
         }
 
-        // CADEAU
         const cadeau = document.getElementById('coffre-magique');
         let cX = window.innerWidth/2, cY = window.innerHeight/2;
         let tX = Math.random()*(window.innerWidth-100), tY = Math.random()*(window.innerHeight-200);
@@ -182,11 +175,11 @@
         animCadeau();
 
         function exploser() {
-            const fleurs = ['🌸', '🌺', '✨', '⭐', '🌈', '💫'];
+            const fleurs = ['🌸', '🌺', '✨', '⭐', '🌻', '🌈', '💫'];
             for(let i=0; i<45; i++) {
                 const p = document.createElement('div'); p.className = 'particule';
                 p.innerHTML = fleurs[Math.floor(Math.random()*fleurs.length)];
-                p.style.left = (cX + 30) + 'px'; p.style.top = (cY + 30) + 'px';
+                p.style.left = (cX + 20) + 'px'; p.style.top = (cY + 20) + 'px';
                 document.body.appendChild(p);
                 const angle = Math.random() * Math.PI * 2;
                 const dist = Math.random() * 250 + 50;
@@ -195,10 +188,9 @@
             }
         }
 
-        // MESSAGERS TÊTE EN AVANT
         function lancerMessager() {
             const icons = ['🕊️', '🦋', '🐝', '🐲', '🧚'];
-            const textes = ["Paix ✨", "Cadeau 🎁", "Joie 🌸", "Fraternité 🤝"];
+            const textes = ["Pour toi ! ✨", "Un cadeau ! 🎁", "Douceur... 🌸", "Fraternité ! 🤝"];
             const deGauche = Math.random() > 0.5;
             
             const m = document.createElement('div');
@@ -209,22 +201,22 @@
             m.style.transform = deGauche ? 'scaleX(-1)' : 'scaleX(1)';
             document.body.appendChild(m);
 
-            setTimeout(() => { m.style.left = deGauche ? '25vw' : '75vw'; }, 100);
+            setTimeout(() => { m.style.left = deGauche ? '30vw' : '70vw'; }, 100);
 
             setTimeout(() => {
                 const msg = document.createElement('div');
                 msg.className = 'message-volant';
                 msg.innerHTML = textes[Math.floor(Math.random()*textes.length)];
                 const r = m.getBoundingClientRect();
-                msg.style.left = deGauche ? (r.right + 5) + 'px' : (r.left - 130) + 'px';
+                msg.style.left = deGauche ? (r.right + 5) + 'px' : (r.left - 140) + 'px';
                 msg.style.top = r.top + 'px';
                 document.body.appendChild(msg);
 
                 setTimeout(() => {
                     m.style.transition = "0.3s";
                     m.style.transform += deGauche ? " translateX(40px)" : " translateX(-40px)";
-                    msg.style.left = (cX + 15) + 'px';
-                    msg.style.top = (cY + 15) + 'px';
+                    msg.style.left = (cX + 10) + 'px';
+                    msg.style.top = (cY + 10) + 'px';
                     msg.style.transform = 'scale(0.3) rotate(360deg)';
                 }, 1000);
 
