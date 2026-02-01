@@ -16,7 +16,7 @@
         .menu-table a { text-decoration: none; color: #FFFFFF; font-weight: bold; transition: 0.3s; }
         .menu-table td:hover { background-color: #006666; }
 
-        /* --- NOUVEAU TITRE ENCADRÉ --- */
+        /* --- TITRE ENCADRÉ --- */
         .header-wrapper {
             display: inline-block;
             margin: 20px auto;
@@ -24,93 +24,68 @@
             position: relative;
             border: 8px solid;
             border-image: linear-gradient(to right, red, orange, yellow, green, blue, indigo, violet) 1;
-            border-radius: 50px; /* Note: border-image peut masquer le radius sur certains navigateurs */
         }
+        .header-wrapper h1 { display: inline; margin: 0; font-size: 2.5em; }
+        .header-wrapper::before { content: "💐"; position: absolute; left: -25px; top: 50%; transform: translateY(-50%); font-size: 2em; }
+        .header-wrapper::after { content: "💐"; position: absolute; right: -25px; top: 50%; transform: translateY(-50%); font-size: 2em; }
 
-        .header-wrapper h1 {
-            display: inline;
-            margin: 0;
-            font-size: 2.5em;
-        }
-
-        .header-wrapper::before { content: "💐"; position: absolute; left: -20px; top: 50%; transform: translateY(-50%); font-size: 2em; }
-        .header-wrapper::after { content: "💐"; position: absolute; right: -20px; top: 50%; transform: translateY(-50%); font-size: 2em; }
-
-        /* --- LE SOLEIL DU DON --- */
+        /* --- LE SOLEIL --- */
         .soleil-don {
             background: radial-gradient(circle, #FFD700 30%, #FF8C00 100%);
             width: 200px; height: 200px; border-radius: 50%;
             display: flex; align-items: center; justify-content: center;
-            /* Rayons du soleil via box-shadow */
-            box-shadow: 
-                0 0 50px #FFA500, 
-                0 0 20px #FF4500 inset,
-                0 0 10px 10px rgba(255, 215, 0, 0.5);
+            box-shadow: 0 0 50px #FFA500;
             margin: 40px auto; cursor: pointer; transition: 0.4s;
             text-decoration: none; color: #000080; font-weight: bold;
-            position: relative;
-            border: none;
+            position: relative; border: none;
         }
-
-        /* Animation des rayons */
         .soleil-don::before {
-            content: "";
-            position: absolute;
-            width: 120%; height: 120%;
-            border-radius: 50%;
-            border: 8px dashed #FFD700;
+            content: ""; position: absolute; width: 120%; height: 120%;
+            border-radius: 50%; border: 8px dashed #FFD700;
             animation: rotate-sun 20s linear infinite;
         }
+        @keyframes rotate-sun { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
 
-        @keyframes rotate-sun {
-            from { transform: rotate(0deg); }
-            to { transform: rotate(360deg); }
+        /* --- GRILLE ET NUAGES (DIMENSIONS ÉGALES) --- */
+        .bulles-grid { 
+            display: flex; justify-content: center; align-items: stretch; /* stretch pour égaliser la hauteur */
+            gap: 25px; flex-wrap: wrap; padding: 20px; max-width: 1200px; margin: auto; 
         }
 
-        .soleil-don:hover { transform: scale(1.1); box-shadow: 0 0 80px #FF4500; }
-
-        /* --- RESTE DU STYLE --- */
-        .bulles-grid { display: flex; justify-content: center; align-items: center; gap: 25px; flex-wrap: wrap; padding: 20px; max-width: 1200px; margin: auto; }
         .nuage { 
-            background: #e0f7fa; border: 3px solid #008080; border-radius: 50px; padding: 20px; 
-            width: 300px; min-height: 200px; text-decoration: none; color: inherit; 
-            display: flex; flex-direction: column; justify-content: center; transition: 0.3s; 
+            background: #e0f7fa; border: 3px solid #008080; border-radius: 50px; padding: 25px; 
+            width: 300px; /* Largeur fixe pour les deux */
+            min-height: 220px; /* Hauteur minimum identique */
+            text-decoration: none; color: inherit; 
+            display: flex; flex-direction: column; justify-content: space-between; 
+            transition: 0.3s; box-sizing: border-box;
         }
-        .nuage-rose { background: #ffebee; border-color: #e91e63; }
         .nuage:hover { transform: translateY(-10px); }
+        
+        .nuage-rose { background: #ffebee; border-color: #e91e63; }
 
         .etoile-justice { 
-            background: #E6E6FA; border: 3px solid #9370DB; width: 350px; height: 350px; 
+            background: #E6E6FA; border: 3px solid #9370DB; width: 300px; height: 220px; 
             clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%); 
             transition: 0.6s ease-in-out; cursor: pointer; text-decoration: none; color: inherit; 
             display: flex; align-items: center; justify-content: center; 
         }
-        .etoile-justice:hover { 
-            clip-path: polygon(50% 0%, 100% 0%, 100% 100%, 100% 100%, 100% 100%, 50% 100%, 0% 100%, 0% 100%, 0% 0%, 0% 0%);
-            border-radius: 50%; transform: scale(1.05);
-        }
 
         .exemples { font-size: 0.85em; color: #2E7D32; font-style: italic; margin-top: 10px; font-weight: bold; }
         .info-sup { font-size: 0.85em; margin: 3px 0; }
-        .titre-urgence { color: #e91e63; margin: -10px 0 15px 0; text-transform: uppercase; font-weight: 900; font-size: 1.3em; }
-        .split-box { display: flex; }
-        .split-part { flex: 1; text-decoration: none; color: #e91e63; font-weight: bold; font-size: 1em; padding: 10px; }
+        .titre-urgence { color: #e91e63; margin: 0 0 10px 0; text-transform: uppercase; font-weight: 900; font-size: 1.3em; }
+        
+        .split-box { display: flex; border-top: 1px solid rgba(233, 30, 99, 0.2); padding-top: 10px; }
+        .split-part { flex: 1; text-decoration: none; color: #e91e63; font-weight: bold; font-size: 1em; }
 
+        /* --- ANIMATIONS --- */
         .animal-container { position: fixed; z-index: 900; pointer-events: none; display: flex; align-items: center; }
-        .bulle-texte { 
-            background: white; border: 2px solid #2E7D32; border-radius: 15px; padding: 8px 15px; 
-            font-weight: bold; opacity: 0; white-space: nowrap; overflow: hidden; position: absolute; left: 60px;
-        }
         #coffre-magique { position: fixed; font-size: 60px; z-index: 800; pointer-events: none; left: 50%; transform: translateX(-50%); }
 
         footer { margin: 60px 0 20px; font-size: 0.9em; }
     </style>
 </head>
 <body>
-
-    <div id="google_translate_element"></div>
-    <script>function googleTranslateElementInit() { new google.translate.TranslateElement({pageLanguage: 'fr'}, 'google_translate_element'); }</script>
-    <script src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
 
     <table class="menu-table">
         <tr>
@@ -134,20 +109,26 @@
 
     <div class="bulles-grid">
         <a href="impot.html" class="nuage">
-            <h3 style="color:#008080; margin:0; text-transform:uppercase;">📜 Impôts Publics</h3>
-            <p style="margin:5px 0;">Travaux publics en libre participation.</p>
-            <div class="exemples">Ex : Travaux administratifs, nettoyage du bois...</div>
+            <div>
+                <h3 style="color:#008080; margin:0 0 10px 0; text-transform:uppercase;">📜 Impôts Publics</h3>
+                <p style="margin:5px 0; font-size: 0.9em;">Travaux publics en libre participation.</p>
+                <div class="exemples">Ex : Travaux administratifs, nettoyage du bois communal...</div>
+            </div>
+            <p class="info-sup" style="color: #666;">Motivation indispensable</p>
         </a>
 
         <a href="regulation.html" class="etoile-justice">
-            <div style="width:75%;">
-                <h3>⚖️ Régulation Citoyenne</h3>
-                <p>Justice avec délicatesse.</p>
+            <div style="width:70%; text-align: center; font-size: 0.8em;">
+                <h3>⚖️ Régulation</h3>
+                <p>Justice délicate</p>
             </div>
         </a>
 
         <div class="nuage nuage-rose">
-            <h3 class="titre-urgence">❤️ Urgence & Écoute</h3>
+            <div>
+                <h3 class="titre-urgence">❤️ Urgence & Écoute</h3>
+                <p style="margin:5px 0; font-size: 0.9em;">Une oreille attentive et des soins pour nos jardiniers.</p>
+            </div>
             <div class="split-box">
                 <a href="urgence.html" class="split-part">Besoins Vitaux</a>
                 <a href="urgence.html" class="split-part">Aide & Écoute</a>
@@ -158,61 +139,8 @@
     <div id="coffre-magique">🎁</div>
 
     <footer>
-        <a href="transition-externe.html" style="color: inherit; text-decoration: none;">
-            © 2000 lepetitprince des jardiniers
-        </a>
+        © 2000 lepetitprince des jardiniers
     </footer>
 
-    <script>
-        // ... (Ton code JavaScript reste exactement le même)
-        const basePhrases = ["L'Impôt Public est un geste de cœur", "Graines de générosité", "Le pardon est justice", "Besoin d'un câlin"];
-        let disponibles = [...basePhrases];
-        const typesAnimaux = ['🕊️', '🦋', '🐝', '🐞'];
-        let messagerActif = null;
-        let count = 0;
-        const coffre = document.getElementById('coffre-magique');
-        let coffreX = window.innerWidth / 2 - 30;
-        let coffreY = window.innerHeight - 150;
-
-        function exploserEtEnvoler() {
-            for (let i = 0; i < 20; i++) {
-                const p = document.createElement('div');
-                p.innerHTML = ['❤️', '✨', '🌸', '🌟'][Math.floor(Math.random() * 4)];
-                p.style.position = 'fixed'; p.style.left = (coffreX + 30) + 'px'; p.style.top = (coffreY + 30) + 'px';
-                p.style.fontSize = '25px'; p.style.zIndex = '1000'; document.body.appendChild(p);
-                const angle = Math.random() * Math.PI * 2; const dist = Math.random() * 180;
-                p.animate([{ transform: 'translate(0, 0) scale(1)', opacity: 1 }, { transform: `translate(${Math.cos(angle)*dist}px, ${Math.sin(angle)*dist}px) scale(0)`, opacity: 0 }], 1000);
-                setTimeout(() => p.remove(), 1000);
-            }
-            coffre.animate([
-                { transform: 'translateY(0) scale(1.5)', opacity: 1 },
-                { transform: 'translateY(-1200px) scale(0.5)', opacity: 0 }
-            ], { duration: 1500, easing: 'ease-in', fill: 'forwards' });
-            setTimeout(() => { coffreY = window.innerHeight - 150; coffre.style.opacity = "1"; }, 3000);
-        }
-
-        function createMessenger() {
-            if (count >= 3 || messagerActif || disponibles.length === 0) return;
-            const txt = disponibles.splice(Math.floor(Math.random()*disponibles.length), 1)[0];
-            const div = document.createElement('div');
-            div.className = "animal-container";
-            div.innerHTML = `<div class="bulle-texte" style="width:0px">${txt}</div><div class="emoji" style="font-size:60px">${typesAnimaux[Math.floor(Math.random()*4)]}</div>`;
-            document.body.appendChild(div);
-            messagerActif = { el: div, bulle: div.firstChild, emoji: div.lastChild, x: -200, y: window.innerHeight / 2, tx: 150, state: "ENTRÉE" };
-        }
-
-        function loop() {
-            if (messagerActif) {
-                let m = messagerActif;
-                if (m.state === "ENTRÉE") {
-                    m.x += (m.tx - m.x) * 0.05;
-                    if (Math.abs(m.tx - m.x) < 5) {
-                        m.state = "SORTIR_MESSAGE";
-                        m.bulle.style.opacity = 1;
-                        m.bulle.animate([{width: "0px", transform: "scale(0)"}, {width: "250px", transform: "scale(1)"}], {duration: 600, fill: 'forwards'});
-                        setTimeout(() => { m.state = "POUSSER"; }, 2000);
-                    }
-                } else if (m.state === "POUSSER") {
-                    m.state = "PROJECTION";
-                    m.emoji.animate([{transform: "translateX(0)"}, {transform: "translateX(30px)"}, {transform: "translateX(0)"}], {duration: 200});
-                    const targetX = coffreX - m.x; const targetY = coffreY - m.y;
+    </body>
+</html>
