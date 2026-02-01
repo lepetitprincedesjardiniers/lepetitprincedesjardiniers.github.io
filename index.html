@@ -30,7 +30,7 @@
 
         .nuage { 
             background: #e0f7fa; border: 3px solid #008080; border-radius: 50px; padding: 20px; 
-            width: 300px; min-height: 200px; text-decoration: none; color: inherit; 
+            width: 320px; min-height: 220px; text-decoration: none; color: inherit; 
             display: flex; flex-direction: column; justify-content: center; transition: 0.3s; 
         }
         .nuage-rose { background: #ffebee; border-color: #e91e63; }
@@ -48,6 +48,7 @@
         }
 
         .exemples { font-size: 0.85em; color: #2E7D32; font-style: italic; margin-top: 10px; font-weight: bold; }
+        .info-sup { font-size: 0.9em; margin: 5px 0; }
 
         .animal-container { position: fixed; z-index: 900; pointer-events: none; display: flex; align-items: center; }
         .bulle-texte { 
@@ -75,7 +76,7 @@
             <td><a href="index.html">Accueil</a></td>
             <td><a href="formulaire.html">Semer</a></td>
             <td><a href="jardin.html">Le Jardin</a></td>
-            <td><a href="impot.html">Impôt Public</a></td>
+            <td><a href="impot.html">Impôts Publics</a></td>
             <td><a href="regulation.html">Régulation</a></td>
         </tr>
     </table>
@@ -89,9 +90,11 @@
 
     <div class="bulles-grid">
         <a href="impot.html" class="nuage">
-            <h3 style="color:#008080; margin:0; text-transform:uppercase;">📜 Impôt Public</h3>
-            <p>Travaux publics en libre participation.</p>
-            <div class="exemples">Ex : Nettoyage bois communal...</div>
+            <h3 style="color:#008080; margin:0; text-transform:uppercase;">📜 Impôts Publics</h3>
+            <p style="margin: 5px 0;">Travaux publics en libre participation.</p>
+            <p class="info-sup">À choisir en fonction des compétences et de son besoin d'apprendre.</p>
+            <p class="info-sup"><strong>Motivation indispensable, travaux parfois ingrats.</strong></p>
+            <div class="exemples">Ex : Travaux administratifs, réfection des routes, nettoyage du bois communal, réparation des tuyaux de gaz...</div>
         </a>
 
         <a href="regulation.html" class="etoile-justice">
@@ -117,7 +120,7 @@
     </footer>
 
     <script>
-        // Scripts d'animation (conservés intacts)
+        // Les scripts d'animation restent inchangés
         const basePhrases = ["L'Impôt Public est un geste de cœur", "Graines de générosité", "Le pardon est justice", "Besoin d'un câlin"];
         let disponibles = [...basePhrases];
         const typesAnimaux = ['🕊️', '🦋', '🐝', '🐞'];
