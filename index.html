@@ -19,44 +19,50 @@
         .menu-table td { padding: 10px 15px; border: 1px solid #FFFFFF; }
         .menu-table a { text-decoration: none; color: #FFFFFF; font-weight: bold; }
 
-        /* --- HEADER & BOUQUETS REDRESSÉS --- */
+        /* --- HEADER (Maintenant le Soleil) --- */
         .header-container { display: flex; align-items: center; justify-content: center; gap: 40px; margin: 30px auto; }
         
         .petit-bouquet-gauche { 
             font-size: 35px; 
             display: inline-block;
-            transform: rotate(15deg); /* Compensation pour le dessin de l'émoji */
+            transform: rotate(15deg); 
         } 
         .petit-bouquet-droite { 
             font-size: 35px; 
             display: inline-block;
-            transform: scaleX(-1) rotate(15deg); /* Effet miroir + compensation */
+            transform: scaleX(-1) rotate(15deg); 
         } 
 
-        .terre-cadre {
+        /* Le style "Soleil" appliqué au cadre principal */
+        .soleil-cadre {
             width: 250px; height: 250px;
+            background: #FFD700; border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            box-shadow: 0 0 50px #FFA500;
+            animation: rotation-soleil 10s linear infinite;
+        }
+        .soleil-cadre h1 { font-size: 1.5em; text-shadow: 2px 2px 5px rgba(0,0,0,0.5); margin: 0; color: #000080; }
+
+        @keyframes rotation-soleil { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+
+        /* --- BOUTON DON (Maintenant la Terre) --- */
+        .terre-don {
+            width: 180px; height: 180px; 
             background-image: url('https://upload.wikimedia.org/wikipedia/commons/thumb/2/22/Earth_Western_Hemisphere_transparent_background.png/600px-Earth_Western_Hemisphere_transparent_background.png');
             background-size: cover; border-radius: 50%;
             display: flex; align-items: center; justify-content: center;
+            margin: 40px auto; cursor: pointer; transition: 0.4s;
+            text-decoration: none; color: white; font-weight: bold;
             animation: rainbow-shadow 4s linear infinite;
         }
-        .terre-cadre h1 { font-size: 1.5em; text-shadow: 2px 2px 5px black; margin: 0; color: white; }
-
+        .terre-don:hover { transform: scale(1.1); }
+        
         @keyframes rainbow-shadow {
             0% { box-shadow: 0 0 15px red; }
             33% { box-shadow: 0 0 15px green; }
             66% { box-shadow: 0 0 15px blue; }
             100% { box-shadow: 0 0 15px red; }
         }
-
-        .soleil-don {
-            background: #FFD700; width: 180px; height: 180px; border-radius: 50%;
-            display: flex; align-items: center; justify-content: center;
-            box-shadow: 0 0 50px #FFA500; margin: 40px auto; cursor: pointer; transition: 0.4s;
-            text-decoration: none; color: #000080; font-weight: bold;
-        }
-        .soleil-don:hover { transform: scale(1.1); animation: rotation-soleil 5s linear infinite; }
-        @keyframes rotation-soleil { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
 
         /* --- RUBRIQUES --- */
         .bulles-grid { display: flex; justify-content: center; align-items: stretch; gap: 25px; flex-wrap: wrap; padding: 20px; max-width: 1200px; margin: auto; }
@@ -118,7 +124,7 @@
 
     <div class="header-container">
         <div class="petit-bouquet-gauche">💐</div>
-        <div class="terre-cadre">
+        <div class="soleil-cadre">
             <h1>Le Trésor Public</h1>
         </div>
         <div class="petit-bouquet-droite">💐</div>
@@ -126,8 +132,8 @@
 
     <p><strong>Le Petit Prince des Jardiniers</strong></p>
 
-    <a href="jardin.html" class="soleil-don">
-        <div>☀️<br>ESPACE DU DON ENTIER</div>
+    <a href="jardin.html" class="terre-don">
+        <div style="text-shadow: 2px 2px 4px black;">🌍<br>ESPACE DU DON ENTIER</div>
     </a>
 
     <div class="bulles-grid">
@@ -165,7 +171,7 @@
     </footer>
 
     <script>
-        // --- LOGIQUE JS ORIGINALE ---
+        /* La logique JavaScript reste strictement identique pour préserver les effets */
         const basePhrases = ["L'Impôt Public est un geste de cœur", "Graines de générosité", "Le pardon est justice", "Besoin d'un câlin"];
         let disponibles = [...basePhrases];
         const typesAnimaux = ['🕊️', '🦋', '🐝', '🐞'];
