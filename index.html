@@ -35,8 +35,8 @@
 
         /* --- HEADER : BOUQUETS SYMÉTRIQUES --- */
         .header-container { display: flex; align-items: center; justify-content: center; gap: 40px; margin: 30px auto; }
-        .petit-bouquet-gauche { font-size: 50px; transform: rotate(-15deg); } /* Penché à gauche */
-        .petit-bouquet-droite { font-size: 50px; transform: rotate(15deg); } /* Symétrie inverse : penché à droite */
+        .petit-bouquet-gauche { font-size: 50px; transform: rotate(-15deg); } 
+        .petit-bouquet-droite { font-size: 50px; transform: scaleX(-1) rotate(-15deg); } /* Effet miroir parfait */
         
         .soleil-cadre {
             width: 180px; height: 180px; background: #FFD700; border-radius: 50%;
@@ -54,16 +54,11 @@
             display: flex; align-items: center; justify-content: center;
             text-decoration: none; color: white; font-weight: bold;
             box-shadow: inset -20px -20px 50px rgba(0,0,0,0.8), 0 0 20px rgba(0,191,255,0.5);
-            animation: rotationTerre 30s linear infinite; /* Rotation lente de base */
+            animation: rotationTerre 30s linear infinite;
             transition: animation-duration 0.5s ease;
             position: relative; z-index: 5; overflow: hidden;
         }
-        
-        /* Accélération au survol */
-        .terre-don:hover { 
-            animation-duration: 8s; /* Tourne plus vite quand on approche la souris */
-        }
-        
+        .terre-don:hover { animation-duration: 8s; }
         @keyframes rotationTerre {
             from { background-position: 0 0; }
             to { background-position: 500px 0; }
@@ -71,7 +66,16 @@
 
         /* --- RUBRIQUES --- */
         .bulles-grid { display: flex; justify-content: center; align-items: stretch; gap: 25px; flex-wrap: wrap; padding: 20px; max-width: 1200px; margin: auto; position: relative; z-index: 5; }
-        .nuage { background: #e0f7fa; border: 3px solid #008080; border-radius: 50px; padding: 20px; width: 320px; min-height: 250px; text-decoration: none; color: #000080; display: flex; flex-direction: column; justify-content: center; transition: 0.3s; }
+        
+        /* IMPOTS PUBLICS (NUAGE) */
+        .nuage { 
+            background: #e0f7fa; border: 3px solid #008080; border-radius: 50px; padding: 20px; 
+            width: 320px; min-height: 250px; text-decoration: none; color: #000080; 
+            display: flex; flex-direction: column; justify-content: center; transition: 0.3s; 
+        }
+        .nuage:hover { transform: scale(1.03); background: #f0ffff; }
+
+        /* REGULATION (ETOILE) */
         .etoile-justice { 
             background: #E6E6FA; border: 3px solid #9370DB; width: 300px; min-height: 250px; 
             clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%); 
@@ -80,7 +84,12 @@
         }
         .etoile-justice:hover { clip-path: circle(50% at 50% 50%); border-radius: 50%; transform: scale(1.1); background: #efedff; }
 
+        .nuage-rose { background: #ffebee; border-color: #e91e63; }
+        .split-box { display: flex; border-top: 1px solid #e91e63; padding-top: 10px; margin-top: 10px; }
+        .split-part { flex: 1; text-decoration: none; color: #e91e63; font-weight: bold; padding: 10px; }
+
         footer { padding: 40px; position: relative; z-index: 10; }
+        #coffre-magique { position: fixed; font-size: 55px; z-index: 4; pointer-events: none; filter: drop-shadow(0 0 10px gold); }
     </style>
 </head>
 <body>
@@ -113,13 +122,23 @@
     <div class="bulles-grid">
         <a href="impot.html" class="nuage">
             <h3 style="color:#008080; margin:0; text-transform:uppercase;">📜 Impôts Publics</h3>
-            <p style="margin:5px 0; font-weight: bold;">Travaux publics en libre participation.</p>
+            <p style="margin:8px 0; font-weight: bold;">Travaux publics en libre participation.</p>
+            <p style="font-size: 0.9em; margin: 5px 0;">À choisir selon ses compétences et ses envies.</p>
+            <p style="font-size: 0.9em; color:#d32f2f; font-weight:bold; margin-top: 5px;">Motivation indispensable.<br>Attention : Travaux ingrats.</p>
         </a>
 
         <a href="regulation.html" class="etoile-justice">
             <h3 style="margin:0;">⚖️ Régulation Citoyenne</h3>
-            <p style="font-size:0.85em; padding:10px 30px;">Médiation, équité et harmonie.</p>
+            <p style="font-size:0.85em; padding:10px 30px;">Médiation, équité et harmonie pour tous les jardiniers du monde.</p>
         </a>
+
+        <div class="nuage nuage-rose">
+            <h3 style="color:#e91e63; margin:0;">❤️ Urgence & Écoute</h3>
+            <div class="split-box">
+                <a href="urgence.html" class="split-part">Besoins Vitaux</a>
+                <a href="urgence.html" class="split-part">Aide & Écoute</a>
+            </div>
+        </div>
     </div>
 
     <div id="coffre-magique">🎁</div>
@@ -129,32 +148,21 @@
     </footer>
 
     <script>
-        const audio = document.getElementById('chantOiseaux');
-        function toggleSon() {
-            if (audio.paused) { audio.volume = 0.4; audio.play(); } 
-            else { audio.pause(); }
-        }
-
+        // Scripts d'animation des étoiles et du coffre
         function createStars() {
             for(let i=0; i<85; i++) {
                 let star = document.createElement('div');
                 star.className = 'star';
-                let size = (Math.random() * 3 + 2) + 'px';
-                star.style.width = star.style.height = size;
+                star.style.width = star.style.height = (Math.random() * 3 + 2) + 'px';
                 star.style.left = Math.random() * 100 + 'vw';
                 star.style.top = Math.random() * 100 + 'vh';
                 star.style.setProperty('--duration', (Math.random() * 3 + 2) + 's');
                 star.style.setProperty('--move-duration', (Math.random() * 60 + 120) + 's');
-                star.style.animationDelay = (Math.random() * 10) + 's';
                 document.body.appendChild(star);
             }
         }
         createStars();
 
-        // Le reste de ton script (messenger, loop, etc.) reste identique
-        const phrases = ["L'Impôt Public est un geste de cœur", "Graines de générosité"];
-        const emojis = ['🕊️', '🦋'];
-        let messagerActif = null;
         const coffre = document.getElementById('coffre-magique');
         let cadeauPos = { x: window.innerWidth / 2, y: window.innerHeight / 2 };
         let targetCadeau = { x: Math.random() * (window.innerWidth - 100), y: Math.random() * (window.innerHeight - 300) };
@@ -162,11 +170,17 @@
         function loop() {
             cadeauPos.x += (targetCadeau.x - cadeauPos.x) * 0.008;
             cadeauPos.y += (targetCadeau.y - cadeauPos.y) * 0.008;
+            if(Math.abs(cadeauPos.x - targetCadeau.x) < 40) targetCadeau = { x: Math.random() * (window.innerWidth - 100), y: Math.random() * (window.innerHeight - 300) };
             coffre.style.left = cadeauPos.x + "px";
             coffre.style.top = (cadeauPos.y + Math.sin(Date.now()*0.002)*40) + "px";
             requestAnimationFrame(loop);
         }
         loop();
+
+        function toggleSon() {
+            const audio = document.getElementById('chantOiseaux');
+            if (audio.paused) { audio.volume = 0.4; audio.play(); } else { audio.pause(); }
+        }
     </script>
 </body>
 </html>
