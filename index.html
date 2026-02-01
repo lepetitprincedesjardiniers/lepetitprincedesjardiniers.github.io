@@ -10,63 +10,82 @@
             color: #ffffff; overflow-x: hidden; min-height: 100vh; position: relative;
         }
 
-        /* --- DÉCOR : ÉTOILES FLOTTANTES --- */
+        /* --- ÉTOILES VISIBLES ET MOBILES --- */
         .star { 
-            position: fixed; background: white; border-radius: 50%; opacity: 0.8; z-index: -1; 
+            position: fixed; background: white; border-radius: 50%; 
+            opacity: 0.9; z-index: -1; 
+            box-shadow: 0 0 5px white; /* Les rend plus brillantes */
         }
 
         /* --- TRADUCTEUR & MENU --- */
         #google_translate_element { padding: 10px; background: rgba(255,255,255,0.1); border-bottom: 1px solid #008080; }
         .menu-table { margin: 20px auto; border-radius: 10px; background-color: #008080; border-collapse: collapse; }
-        .menu-table td { padding: 0; border: 1px solid #FFFFFF; }
+        .menu-table td { border: 1px solid #FFFFFF; padding: 0; }
         .menu-table a { 
             display: block; padding: 10px 15px; text-decoration: none; color: #FFFFFF; 
-            font-weight: bold; transition: all 0.3s ease;
+            font-weight: bold; transition: 0.3s;
         }
-        .menu-table a:hover { background-color: #ffffff; color: #008080; transform: scale(1.05); }
+        .menu-table a:hover { background: white; color: #008080; }
 
-        /* --- HEADER (Soleil Scintillant) --- */
+        /* --- HEADER (Soleil réduit et scintillant) --- */
         .header-container { display: flex; align-items: center; justify-content: center; gap: 40px; margin: 30px auto; }
         .soleil-cadre {
-            width: 250px; height: 250px;
+            width: 180px; height: 180px; /* Plus petit */
             background: #FFD700; border-radius: 50%;
             display: flex; align-items: center; justify-content: center;
-            box-shadow: 0 0 40px #FFA500;
-            animation: scintiller 4s ease-in-out infinite; 
+            box-shadow: 0 0 30px #FFA500;
+            animation: scintiller 4s ease-in-out infinite;
         }
-        .soleil-cadre h1 { font-size: 1.5em; text-shadow: 1px 1px 3px rgba(0,0,0,0.3); margin: 0; color: #000080; }
+        .soleil-cadre h1 { font-size: 1.2em; margin: 0; color: #000080; text-shadow: none; }
 
         @keyframes scintiller {
-            0%, 100% { transform: scale(1); box-shadow: 0 0 40px #FFA500; }
-            50% { transform: scale(1.03); box-shadow: 0 0 65px #FFD700; }
+            0%, 100% { transform: scale(1); opacity: 0.9; box-shadow: 0 0 30px #FFA500; }
+            50% { transform: scale(1.05); opacity: 1; box-shadow: 0 0 50px #FFD700; }
         }
 
-        /* --- BOUTON DON (Terre avec Rotation au Survol) --- */
+        /* --- TERRE (Plus grande avec rotation au survol) --- */
         .terre-don {
-            width: 180px; height: 180px; 
+            width: 250px; height: 250px; /* Plus grande */
             background-image: url('https://upload.wikimedia.org/wikipedia/commons/thumb/2/22/Earth_Western_Hemisphere_transparent_background.png/600px-Earth_Western_Hemisphere_transparent_background.png');
             background-size: cover; border-radius: 50%;
             display: flex; align-items: center; justify-content: center;
-            margin: 40px auto; cursor: pointer; transition: transform 1.2s cubic-bezier(0.4, 0, 0.2, 1);
+            margin: 40px auto; cursor: pointer; transition: transform 1.5s ease-in-out;
             text-decoration: none; color: white; font-weight: bold;
             animation: rainbow-shadow 4s linear infinite;
         }
-        .terre-don:hover { transform: rotate(360deg) scale(1.1); }
-        
+        .terre-don:hover { transform: rotate(360deg) scale(1.05); }
+
         @keyframes rainbow-shadow {
-            0% { box-shadow: 0 0 15px red; }
-            33% { box-shadow: 0 0 15px green; }
-            66% { box-shadow: 0 0 15px blue; }
-            100% { box-shadow: 0 0 15px red; }
+            0% { box-shadow: 0 0 20px red; }
+            33% { box-shadow: 0 0 20px green; }
+            66% { box-shadow: 0 0 20px blue; }
+            100% { box-shadow: 0 0 20px red; }
         }
 
-        /* --- RUBRIQUES --- */
+        /* --- RUBRIQUES RESTAURÉES --- */
         .bulles-grid { display: flex; justify-content: center; align-items: stretch; gap: 25px; flex-wrap: wrap; padding: 20px; max-width: 1200px; margin: auto; }
-        .nuage { background: #e0f7fa; border: 3px solid #008080; border-radius: 50px; padding: 20px; width: 320px; min-height: 250px; text-decoration: none; color: #000080; display: flex; flex-direction: column; justify-content: center; transition: 0.3s; }
+        .nuage { 
+            background: #e0f7fa; border: 3px solid #008080; border-radius: 50px; padding: 20px; 
+            width: 320px; min-height: 250px; text-decoration: none; color: #000080; 
+            display: flex; flex-direction: column; justify-content: center; transition: 0.3s; 
+        }
         .nuage:hover { transform: translateY(-10px); }
 
-        .etoile-justice { background: #E6E6FA; border: 3px solid #9370DB; width: 300px; min-height: 250px; clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%); transition: 0.6s ease-in-out; text-decoration: none; color: #333; display: flex; align-items: center; justify-content: center; }
+        .info-sup { font-size: 0.9em; margin: 3px 0; color: #006666; }
+        .alerte-travail { font-size: 0.9em; color: #d32f2f; font-weight: bold; margin: 2px 0; }
+        .exemples { font-size: 0.8em; font-style: italic; margin-top: 8px; color: #004d40; }
+
+        .etoile-justice { 
+            background: #E6E6FA; border: 3px solid #9370DB; width: 300px; min-height: 250px; 
+            clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%); 
+            transition: 0.6s ease-in-out; text-decoration: none; color: #333; display: flex; align-items: center; justify-content: center;
+        }
         .etoile-justice:hover { clip-path: polygon(50% 0%, 100% 0%, 100% 100%, 100% 100%, 100% 100%, 50% 100%, 0% 100%, 0% 100%, 0% 0%, 0% 0%); border-radius: 50%; }
+
+        .nuage-rose { background: #ffebee; border-color: #e91e63; }
+        .titre-urgence-rose { color: #e91e63; font-weight: bold; text-transform: uppercase; margin-bottom: 15px; }
+        .split-box { display: flex; border-top: 1px solid #e91e63; padding-top: 10px; }
+        .split-part { flex: 1; text-decoration: none; color: #e91e63; font-weight: bold; padding: 10px; }
 
         #coffre-magique { position: fixed; font-size: 60px; z-index: 800; pointer-events: none; left: 50%; transform: translateX(-50%); }
         footer { margin: 60px 0 20px; font-size: 0.9em; }
@@ -98,20 +117,33 @@
     <p><strong>Le Petit Prince des Jardiniers</strong></p>
 
     <a href="jardin.html" class="terre-don">
-        <div style="text-shadow: 2px 2px 4px black;">🌍<br>ESPACE DU DON ENTIER</div>
+        <div style="text-shadow: 2px 2px 6px black;">🌍<br>ESPACE DU DON ENTIER</div>
     </a>
 
     <div class="bulles-grid">
         <a href="impot.html" class="nuage">
             <h3 style="color:#008080; margin:0; text-transform:uppercase;">📜 Impôts Publics</h3>
             <p style="margin:5px 0; font-weight: bold;">Travaux publics en libre participation.</p>
+            <p class="info-sup">À choisir selon ses compétences.</p>
+            <p class="alerte-travail">Motivation indispensable.</p>
+            <p class="alerte-travail">Travaux souvent ingrats.</p>
+            <div class="exemples">Ex : Travaux administratifs, routes, nettoyage...</div>
         </a>
+
         <a href="regulation.html" class="etoile-justice">
             <div style="width:75%;">
                 <h3>⚖️ Régulation Citoyenne</h3>
                 <p>Justice avec délicatesse.</p>
             </div>
         </a>
+
+        <div class="nuage nuage-rose">
+            <div class="titre-urgence-rose">❤️ Urgence & Écoute</div>
+            <div class="split-box">
+                <a href="urgence.html" class="split-part">Besoins Vitaux</a>
+                <a href="urgence.html" class="split-part">Aide & Écoute</a>
+            </div>
+        </div>
     </div>
 
     <div id="coffre-magique">🎁</div>
@@ -121,38 +153,28 @@
     </footer>
 
     <script>
-        /* LOGIQUE DES ÉTOILES : MOUVEMENT ALÉATOIRE DOUX */
+        /* ÉTOILES MOBILES ET BIEN VISIBLES */
         function createSpace() {
-            const count = 60;
-            for(let i=0; i<count; i++) {
+            for(let i=0; i<50; i++) {
                 let star = document.createElement('div');
                 star.className = 'star';
-                let s = Math.random() * 2.5 + 'px';
+                let s = (Math.random() * 3 + 1) + 'px';
                 star.style.width = s; star.style.height = s;
-                
-                // Position initiale
-                let startX = Math.random() * 100;
-                let startY = Math.random() * 100;
-                star.style.left = startX + 'vw';
-                star.style.top = startY + 'vh';
+                star.style.left = Math.random() * 100 + 'vw';
+                star.style.top = Math.random() * 100 + 'vh';
 
-                // Animation de déplacement aléatoire
-                const duration = 15000 + Math.random() * 20000; // Entre 15 et 35 secondes
+                const duration = 20000 + Math.random() * 30000;
                 star.animate([
                     { transform: 'translate(0, 0)' },
-                    { transform: `translate(${(Math.random() - 0.5) * 100}px, ${(Math.random() - 0.5) * 100}px)` },
+                    { transform: `translate(${(Math.random() - 0.5) * 150}px, ${(Math.random() - 0.5) * 150}px)` },
                     { transform: 'translate(0, 0)' }
-                ], {
-                    duration: duration,
-                    iterations: Infinity,
-                    easing: 'ease-in-out'
-                });
+                ], { duration: duration, iterations: Infinity, easing: 'ease-in-out' });
 
                 document.body.appendChild(star);
             }
         }
 
-        /* LOGIQUE JS ORIGINALE (Messagers, Coffre, etc.) */
+        /* LOGIQUE JS ORIGINALE PRÉSERVÉE */
         const basePhrases = ["L'Impôt Public est un geste de cœur", "Graines de générosité", "Le pardon est justice", "Besoin d'un câlin"];
         let disponibles = [...basePhrases];
         const typesAnimaux = ['🕊️', '🦋', '🐝', '🐞'];
@@ -161,11 +183,6 @@
         const coffre = document.getElementById('coffre-magique');
         let coffreX = window.innerWidth / 2 - 30;
         let coffreY = window.innerHeight - 150;
-
-        document.addEventListener('click', () => { 
-            const a = document.getElementById('chantOiseaux');
-            if(a.paused) { a.volume = 0.05; a.play().catch(e => {}); } 
-        });
 
         function exploserEtEnvoler() {
             for (let i = 0; i < 20; i++) {
@@ -186,9 +203,10 @@
             const txt = disponibles.splice(Math.floor(Math.random()*disponibles.length), 1)[0];
             const div = document.createElement('div');
             div.className = "animal-container";
-            div.innerHTML = `<div class="bulle-texte" style="width:0px">${txt}</div><div class="emoji" style="font-size:60px">${typesAnimaux[Math.floor(Math.random()*4)]}</div>`;
+            div.style.position = 'fixed';
+            div.innerHTML = `<div class="bulle-texte" style="width:0px; opacity:0; position:absolute; background:white; padding:8px; border-radius:10px; color:black; left:60px;">${txt}</div><div style="font-size:60px">${typesAnimaux[Math.floor(Math.random()*4)]}</div>`;
             document.body.appendChild(div);
-            messagerActif = { el: div, bulle: div.firstChild, emoji: div.lastChild, x: -200, y: window.innerHeight / 2, tx: 150, state: "ENTRÉE" };
+            messagerActif = { el: div, bulle: div.firstChild, x: -200, y: window.innerHeight / 2, tx: 150, state: "ENTRÉE" };
         }
 
         function loop() {
@@ -199,21 +217,20 @@
                     if (Math.abs(m.tx - m.x) < 5) {
                         m.state = "SORTIR_MESSAGE";
                         m.bulle.style.opacity = 1;
-                        m.bulle.animate([{width: "0px", transform: "scale(0)"}, {width: "250px", transform: "scale(1)"}], {duration: 600, fill: 'forwards'});
+                        m.bulle.animate([{width: "0px"}, {width: "200px"}], {duration: 600, fill: 'forwards'});
                         setTimeout(() => { m.state = "POUSSER"; }, 2000);
                     }
                 } else if (m.state === "POUSSER") {
                     m.state = "PROJECTION";
-                    m.emoji.animate([{transform: "translateX(0)"}, {transform: "translateX(30px)"}, {transform: "translateX(0)"}], {duration: 200});
-                    const targetX = coffreX - m.x; const targetY = coffreY - m.y;
-                    m.bulle.animate([{ transform: 'translate(0, 0) scale(1)', opacity: 1 }, { transform: `translate(${targetX}px, ${targetY}px) rotate(20deg) scale(0.1)`, opacity: 0 }], { duration: 500, easing: 'ease-in', fill: 'forwards' });
-                    setTimeout(() => { exploserEtEnvoler(); m.state = "SORTIE"; }, 500);
+                    exploserEtEnvoler();
+                    m.bulle.style.opacity = 0;
+                    setTimeout(() => { m.state = "SORTIE"; }, 500);
                 } else if (m.state === "SORTIE") {
                     m.x -= 10;
                     if (m.x < -300) { m.el.remove(); messagerActif = null; count++; }
                 }
                 m.el.style.left = m.x + "px";
-                m.el.style.top = (m.y + Math.sin(Date.now()*0.005)*20) + "px";
+                m.el.style.top = m.y + "px";
             }
             coffre.style.left = coffreX + "px"; coffre.style.top = coffreY + "px";
             requestAnimationFrame(loop);
