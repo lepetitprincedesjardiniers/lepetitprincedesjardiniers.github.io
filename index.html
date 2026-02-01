@@ -16,76 +16,102 @@
         .menu-table a { text-decoration: none; color: #FFFFFF; font-weight: bold; transition: 0.3s; }
         .menu-table td:hover { background-color: #006666; }
 
-        /* --- TITRE ENCADRÉ --- */
-        .header-wrapper {
+        /* --- TITRE ENCADRÉ ARC-EN-CIEL AVEC BOUQUETS --- */
+        .header-container {
             display: inline-block;
-            margin: 20px auto;
-            padding: 15px 40px;
+            margin: 30px auto;
+            padding: 10px 50px;
             position: relative;
-            border: 8px solid;
-            border-image: linear-gradient(to right, red, orange, yellow, green, blue, indigo, violet) 1;
+            background: rgba(255, 255, 255, 0.3);
+            border: 6px solid;
+            border-image: linear-gradient(45deg, red, orange, yellow, green, blue, indigo, violet) 1;
+            border-radius: 15px;
         }
-        .header-wrapper h1 { display: inline; margin: 0; font-size: 2.5em; }
-        .header-wrapper::before { content: "💐"; position: absolute; left: -25px; top: 50%; transform: translateY(-50%); font-size: 2em; }
-        .header-wrapper::after { content: "💐"; position: absolute; right: -25px; top: 50%; transform: translateY(-50%); font-size: 2em; }
+        .header-container::before { content: "💐"; position: absolute; left: -40px; top: 50%; transform: translateY(-50%) rotate(-15deg); font-size: 2.5em; }
+        .header-container::after { content: "💐"; position: absolute; right: -40px; top: 50%; transform: translateY(-50%) rotate(15deg); font-size: 2.5em; }
 
-        /* --- LE SOLEIL --- */
-        .soleil-don {
-            background: radial-gradient(circle, #FFD700 30%, #FF8C00 100%);
-            width: 200px; height: 200px; border-radius: 50%;
+        /* --- LE SOLEIL ARTISTIQUE ET SES RAYONS --- */
+        .soleil-container {
+            position: relative;
+            width: 350px; height: 350px;
+            margin: 20px auto;
             display: flex; align-items: center; justify-content: center;
-            box-shadow: 0 0 50px #FFA500;
-            margin: 40px auto; cursor: pointer; transition: 0.4s;
-            text-decoration: none; color: #000080; font-weight: bold;
-            position: relative; border: none;
         }
-        .soleil-don::before {
-            content: ""; position: absolute; width: 120%; height: 120%;
-            border-radius: 50%; border: 8px dashed #FFD700;
-            animation: rotate-sun 20s linear infinite;
+
+        .soleil-don {
+            z-index: 10;
+            background: radial-gradient(circle, #ffeb3b 20%, #fbc02d 60%, #f57c00 100%);
+            width: 220px; height: 220px; border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            box-shadow: 0 0 50px #ffa000, inset 0 0 20px white;
+            text-decoration: none; color: #000080; font-weight: 900; font-size: 1.2em;
+            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            border: 4px solid #fff59d;
+            text-align: center; line-height: 1.2;
         }
+
+        /* Les Rayons */
+        .rayons {
+            position: absolute;
+            width: 100%; height: 100%;
+            background: conic-gradient(from 0deg, transparent 0deg, #fff9c4 10deg, transparent 20deg);
+            background-repeat: repeat;
+            mask-image: radial-gradient(circle, transparent 30%, black 70%);
+            animation: rotate-sun 30s linear infinite;
+            transition: transform 0.5s ease;
+        }
+
+        .soleil-container:hover .rayons {
+            transform: scale(1.4);
+            filter: drop-shadow(0 0 10px yellow);
+        }
+        .soleil-container:hover .soleil-don { transform: scale(1.1); }
+
         @keyframes rotate-sun { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
 
-        /* --- GRILLE ET NUAGES (DIMENSIONS ÉGALES) --- */
-        .bulles-grid { 
-            display: flex; justify-content: center; align-items: stretch; /* stretch pour égaliser la hauteur */
-            gap: 25px; flex-wrap: wrap; padding: 20px; max-width: 1200px; margin: auto; 
-        }
+        /* --- GRILLE ET NUAGES --- */
+        .bulles-grid { display: flex; justify-content: center; align-items: stretch; gap: 25px; flex-wrap: wrap; padding: 20px; max-width: 1200px; margin: auto; }
 
         .nuage { 
-            background: #e0f7fa; border: 3px solid #008080; border-radius: 50px; padding: 25px; 
-            width: 300px; /* Largeur fixe pour les deux */
-            min-height: 220px; /* Hauteur minimum identique */
-            text-decoration: none; color: inherit; 
-            display: flex; flex-direction: column; justify-content: space-between; 
-            transition: 0.3s; box-sizing: border-box;
+            background: #e0f7fa; border: 3px solid #008080; border-radius: 50px; padding: 20px; 
+            width: 300px; min-height: 220px; text-decoration: none; color: inherit; 
+            display: flex; flex-direction: column; justify-content: space-between; transition: 0.3s; 
         }
-        .nuage:hover { transform: translateY(-10px); }
-        
         .nuage-rose { background: #ffebee; border-color: #e91e63; }
+        .nuage:hover { transform: translateY(-10px); box-shadow: 0 10px 20px rgba(0,0,0,0.1); }
 
         .etoile-justice { 
-            background: #E6E6FA; border: 3px solid #9370DB; width: 300px; height: 220px; 
+            background: #E6E6FA; border: 3px solid #9370DB; width: 320px; height: 320px; 
             clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%); 
             transition: 0.6s ease-in-out; cursor: pointer; text-decoration: none; color: inherit; 
             display: flex; align-items: center; justify-content: center; 
         }
+        .etoile-justice:hover { 
+            clip-path: polygon(50% 0%, 100% 0%, 100% 100%, 100% 100%, 100% 100%, 50% 100%, 0% 100%, 0% 100%, 0% 0%, 0% 0%);
+            border-radius: 20px; transform: scale(1.05);
+        }
 
         .exemples { font-size: 0.85em; color: #2E7D32; font-style: italic; margin-top: 10px; font-weight: bold; }
         .info-sup { font-size: 0.85em; margin: 3px 0; }
-        .titre-urgence { color: #e91e63; margin: 0 0 10px 0; text-transform: uppercase; font-weight: 900; font-size: 1.3em; }
-        
-        .split-box { display: flex; border-top: 1px solid rgba(233, 30, 99, 0.2); padding-top: 10px; }
-        .split-part { flex: 1; text-decoration: none; color: #e91e63; font-weight: bold; font-size: 1em; }
+        .titre-urgence { color: #e91e63; margin: -10px 0 15px 0; text-transform: uppercase; font-weight: 900; font-size: 1.3em; }
+        .split-box { display: flex; }
+        .split-part { flex: 1; text-decoration: none; color: #e91e63; font-weight: bold; font-size: 1em; padding: 10px; }
 
-        /* --- ANIMATIONS --- */
+        /* Animations Animaux & Coffre */
         .animal-container { position: fixed; z-index: 900; pointer-events: none; display: flex; align-items: center; }
+        .bulle-texte { background: white; border: 2px solid #2E7D32; border-radius: 15px; padding: 8px 15px; font-weight: bold; opacity: 0; white-space: nowrap; overflow: hidden; position: absolute; left: 60px; }
         #coffre-magique { position: fixed; font-size: 60px; z-index: 800; pointer-events: none; left: 50%; transform: translateX(-50%); }
 
         footer { margin: 60px 0 20px; font-size: 0.9em; }
     </style>
 </head>
 <body>
+
+    <div id="google_translate_element"></div>
+    <script>function googleTranslateElementInit() { new google.translate.TranslateElement({pageLanguage: 'fr'}, 'google_translate_element'); }</script>
+    <script src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+
+    <audio id="chantOiseaux" loop><source src="oiseaux.mp3" type="audio/mpeg"></audio>
 
     <table class="menu-table">
         <tr>
@@ -97,50 +123,32 @@
         </tr>
     </table>
 
-    <div class="header-wrapper">
-        <h1>Le Trésor Public</h1>
+    <div class="header-container">
+        <h1 style="margin:0;">le trésor public</h1>
     </div>
     
     <p><strong>Le Petit Prince des Jardiniers</strong></p>
 
-    <a href="jardin.html" class="soleil-don">
-        <div style="z-index: 2; text-align: center;">ESPACE DU<br>DON ENTIER</div>
-    </a>
+    <div class="soleil-container">
+        <div class="rayons"></div>
+        <a href="jardin.html" class="soleil-don">
+            ESPACE DU<br>DON ENTIER
+        </a>
+    </div>
 
     <div class="bulles-grid">
         <a href="impot.html" class="nuage">
             <div>
-                <h3 style="color:#008080; margin:0 0 10px 0; text-transform:uppercase;">📜 Impôts Publics</h3>
-                <p style="margin:5px 0; font-size: 0.9em;">Travaux publics en libre participation.</p>
-                <div class="exemples">Ex : Travaux administratifs, nettoyage du bois communal...</div>
+                <h3 style="color:#008080; margin:0; text-transform:uppercase;">📜 Impôts Publics</h3>
+                <p style="margin:5px 0;">Travaux publics en libre participation.</p>
+                <p class="info-sup">À choisir en fonction des compétences.</p>
+                <div class="exemples">Ex : Travaux administratifs, nettoyage du bois...</div>
             </div>
-            <p class="info-sup" style="color: #666;">Motivation indispensable</p>
+            <p class="info-sup" style="font-weight: bold;">Motivation indispensable</p>
         </a>
 
         <a href="regulation.html" class="etoile-justice">
-            <div style="width:70%; text-align: center; font-size: 0.8em;">
-                <h3>⚖️ Régulation</h3>
-                <p>Justice délicate</p>
-            </div>
-        </a>
-
-        <div class="nuage nuage-rose">
-            <div>
-                <h3 class="titre-urgence">❤️ Urgence & Écoute</h3>
-                <p style="margin:5px 0; font-size: 0.9em;">Une oreille attentive et des soins pour nos jardiniers.</p>
-            </div>
-            <div class="split-box">
-                <a href="urgence.html" class="split-part">Besoins Vitaux</a>
-                <a href="urgence.html" class="split-part">Aide & Écoute</a>
-            </div>
-        </div>
-    </div>
-
-    <div id="coffre-magique">🎁</div>
-
-    <footer>
-        © 2000 lepetitprince des jardiniers
-    </footer>
-
-    </body>
-</html>
+            <div style="width:75%;">
+                <h3>⚖️ Régulation Citoyenne</h3>
+                <p>Justice avec délicates
+                
