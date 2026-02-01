@@ -10,39 +10,27 @@
             color: #ffffff; overflow-x: hidden; min-height: 100vh; position: relative;
         }
 
-        /* --- ÉTOILES ANIMÉES --- */
+        /* --- ÉTOILES --- */
         .star { 
             position: fixed; background: #FFFFFF; border-radius: 50%; z-index: -1; box-shadow: 0 0 8px #FFFFFF;
             animation: twinkle var(--duration) infinite ease-in-out, moveStar var(--move-duration) infinite linear;
         }
-        @keyframes twinkle {
-            0%, 100% { opacity: 0.3; transform: scale(0.8); }
-            50% { opacity: 1; transform: scale(1.2); }
-        }
-        @keyframes moveStar {
-            from { transform: translateY(0); }
-            to { transform: translateY(-100vh); }
-        }
+        @keyframes twinkle { 0%, 100% { opacity: 0.3; transform: scale(0.8); } 50% { opacity: 1; transform: scale(1.2); } }
+        @keyframes moveStar { from { transform: translateY(0); } to { transform: translateY(-100vh); } }
 
-        /* --- MENU AVEC EFFETS --- */
+        /* --- MENU --- */
         .menu-table { margin: 20px auto; border-radius: 10px; background-color: #008080; border-collapse: collapse; position: relative; z-index: 10; overflow: hidden; }
-        .menu-table td { border: 1px solid #FFFFFF; padding: 0; transition: 0.3s; }
-        .menu-table a { display: block; padding: 12px 20px; text-decoration: none; color: #FFFFFF; font-weight: bold; transition: 0.3s; }
+        .menu-table td { border: 1px solid #FFFFFF; transition: 0.3s; }
+        .menu-table a { display: block; padding: 12px 20px; text-decoration: none; color: #FFFFFF; font-weight: bold; }
         .menu-table td:hover { background-color: #00b3b3; box-shadow: inset 0 0 10px white; }
-        .menu-table a:hover { transform: scale(1.1); color: #fff; text-shadow: 0 0 5px white; }
         
-        #btn-son { position: fixed; top: 10px; right: 10px; z-index: 1000; background: rgba(255,255,255,0.2); border: 1px solid white; color: white; border-radius: 50%; cursor: pointer; padding: 8px; font-size: 20px; transition: 0.3s; }
+        #btn-son { position: fixed; top: 10px; right: 10px; z-index: 1000; background: rgba(255,255,255,0.2); border: 1px solid white; color: white; border-radius: 50%; cursor: pointer; padding: 8px; font-size: 20px; }
 
-        /* --- HEADER : BOUQUETS SYMÉTRIQUES --- */
+        /* --- HEADER SYMÉTRIQUE --- */
         .header-container { display: flex; align-items: center; justify-content: center; gap: 40px; margin: 30px auto; }
         .petit-bouquet-gauche { font-size: 50px; transform: rotate(-15deg); } 
-        .petit-bouquet-droite { font-size: 50px; transform: scaleX(-1) rotate(-15deg); } /* Symétrie inverse parfaite */
-        
-        .soleil-cadre {
-            width: 180px; height: 180px; background: #FFD700; border-radius: 50%;
-            display: flex; align-items: center; justify-content: center;
-            box-shadow: 0 0 30px #FFA500; animation: soleilScintille 4s ease-in-out infinite;
-        }
+        .petit-bouquet-droite { font-size: 50px; transform: scaleX(-1) rotate(-15deg); } 
+        .soleil-cadre { width: 180px; height: 180px; background: #FFD700; border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 0 30px #FFA500; animation: soleilScintille 4s ease-in-out infinite; }
         .soleil-cadre h1 { font-size: 1.1em; margin: 0; color: #000080; }
         @keyframes soleilScintille { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.05); } }
 
@@ -50,21 +38,14 @@
         .terre-don {
             width: 250px; height: 250px; margin: 20px auto; border-radius: 50%;
             background-image: url('https://upload.wikimedia.org/wikipedia/commons/thumb/c/c3/Solarsystemscope_texture_2k_earth_daymap.jpg/1200px-Solarsystemscope_texture_2k_earth_daymap.jpg');
-            background-size: cover; background-repeat: repeat-x;
-            display: flex; align-items: center; justify-content: center;
-            text-decoration: none; color: white; font-weight: bold;
-            box-shadow: inset -20px -20px 50px rgba(0,0,0,0.8), 0 0 20px rgba(0,191,255,0.5);
-            animation: rotationTerre 30s linear infinite;
-            transition: animation-duration 0.5s ease;
-            position: relative; z-index: 5; overflow: hidden;
+            background-size: cover; background-repeat: repeat-x; display: flex; align-items: center; justify-content: center;
+            text-decoration: none; color: white; font-weight: bold; box-shadow: inset -20px -20px 50px rgba(0,0,0,0.8), 0 0 20px rgba(0,191,255,0.5);
+            animation: rotationTerre 30s linear infinite; transition: animation-duration 0.5s ease; position: relative; z-index: 5; overflow: hidden;
         }
         .terre-don:hover { animation-duration: 8s; }
-        @keyframes rotationTerre {
-            from { background-position: 0 0; }
-            to { background-position: 500px 0; }
-        }
+        @keyframes rotationTerre { from { background-position: 0 0; } to { background-position: 500px 0; } }
 
-        /* --- RUBRIQUES --- */
+        /* --- GRILLE RUBRIQUES --- */
         .bulles-grid { display: flex; justify-content: center; align-items: stretch; gap: 25px; flex-wrap: wrap; padding: 20px; max-width: 1200px; margin: auto; position: relative; z-index: 5; }
         
         .nuage { background: #e0f7fa; border: 3px solid #008080; border-radius: 50px; padding: 20px; width: 320px; min-height: 250px; text-decoration: none; color: #000080; display: flex; flex-direction: column; justify-content: center; transition: 0.3s; }
@@ -73,18 +54,21 @@
         .etoile-justice { 
             background: #E6E6FA; border: 3px solid #9370DB; width: 300px; min-height: 250px; 
             clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%); 
-            display: flex; flex-direction: column; align-items: center; justify-content: center; 
-            text-decoration: none; color: #333; transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+            display: flex; flex-direction: column; align-items: center; justify-content: center; text-decoration: none; color: #333; transition: all 0.6s ease;
         }
         .etoile-justice:hover { clip-path: circle(50% at 50% 50%); border-radius: 50%; transform: scale(1.1); background: #efedff; }
 
+        /* RUBRIQUE AIDE DIVISÉE */
         .nuage-rose { background: #ffebee; border-color: #e91e63; }
+        .split-box { display: flex; border-top: 1px solid #e91e63; padding-top: 10px; margin-top: 10px; }
+        .split-part { flex: 1; text-decoration: none; color: #e91e63; font-weight: bold; padding: 10px; transition: 0.3s; font-size: 0.85em; }
+        .split-part:hover { background: #fff0f5; border-radius: 15px; transform: scale(1.05); }
 
-        /* --- ANIMATIONS MESSAGER & CADEAU --- */
+        /* --- MESSAGER --- */
         #coffre-magique { position: fixed; font-size: 55px; z-index: 4; pointer-events: none; filter: drop-shadow(0 0 10px gold); transition: opacity 0.5s; }
         .animal-container { position: fixed; z-index: 900; pointer-events: none; }
         .bulle-texte { background: white; border: 2px solid #2E7D32; border-radius: 15px; padding: 10px; font-weight: bold; color: black; opacity: 0; position: absolute; left: 70px; width: 200px; transition: opacity 0.3s; }
-
+        
         footer { padding: 40px; position: relative; z-index: 10; }
     </style>
 </head>
@@ -100,7 +84,6 @@
             <td><a href="jardin.html">Le Jardin</a></td>
             <td><a href="impot.html">Impôts Publics</a></td>
             <td><a href="regulation.html">Régulation</a></td>
-            <td><a href="aide.html">Aide</a></td>
         </tr>
     </table>
 
@@ -110,8 +93,6 @@
         <div class="petit-bouquet-droite">💐</div>
     </div>
 
-    <p><strong>Le Petit Prince des Jardiniers</strong></p>
-
     <a href="jardin.html" class="terre-don">
         <div style="text-shadow: 2px 2px 6px black; background: rgba(0,0,0,0.3); padding: 5px; border-radius: 10px;">🌍<br>ESPACE DU DON ENTIER</div>
     </a>
@@ -120,27 +101,26 @@
         <a href="impot.html" class="nuage">
             <h3 style="color:#008080; margin:0; text-transform:uppercase;">📜 Impôts Publics</h3>
             <p style="margin:8px 0; font-weight: bold;">Travaux publics en libre participation.</p>
-            <p style="font-size: 0.9em; margin: 5px 0;">À choisir selon ses compétences, ses talents et ses envies de partage.</p>
-            <p style="font-size: 0.9em; color:#d32f2f; font-weight:bold; margin-top: 5px;">Motivation indispensable.<br>Attention : Travaux ingrats mais essentiels au bien commun.</p>
+            <p style="font-size: 0.85em; margin: 5px 0;">À choisir selon ses compétences, ses talents et ses envies.</p>
+            <p style="font-size: 0.85em; color:#d32f2f; font-weight:bold; margin-top: 5px;">Motivation indispensable.<br>Attention : Travaux ingrats mais essentiels.</p>
         </a>
 
         <a href="regulation.html" class="etoile-justice">
             <h3 style="margin:0;">⚖️ Régulation Citoyenne</h3>
-            <p style="font-size:0.85em; padding:10px 30px;">Médiation, équité et harmonie pour tous les jardiniers du monde. Un espace de paix et de résolution.</p>
+            <p style="font-size:0.85em; padding:10px 30px;">Médiation, équité et harmonie pour tous les jardiniers du monde.</p>
         </a>
 
-        <a href="aide.html" class="nuage nuage-rose">
+        <div class="nuage nuage-rose">
             <h3 style="color:#e91e63; margin:0;">❤️ Aide & Écoute</h3>
-            <p style="font-size:0.9em; padding-top:10px;">Besoins vitaux, urgences sociales ou simplement une oreille attentive.</p>
-            <p style="font-weight:bold; font-size:0.8em; margin-top:10px;">Personne n'est seul au jardin.</p>
-        </a>
+            <p style="font-size:0.8em; color: #444; margin: 10px 0;">Besoins vitaux, urgences sociales ou simplement une oreille attentive.</p>
+            <div class="split-box">
+                <a href="urgence.html" class="split-part">Besoins Vitaux</a>
+                <a href="ecoute.html" class="split-part">Aide & Écoute</a>
+            </div>
+        </div>
     </div>
 
     <div id="coffre-magique">🎁</div>
-
-    <footer>
-        <a href="transition-externe.html" style="color: white; text-decoration: none;">© 2000 lepetitprince des jardiniers</a>
-    </footer>
 
     <script>
         // --- ÉTOILES ---
@@ -158,37 +138,31 @@
         }
         createStars();
 
-        // --- SON ---
-        const audio = document.getElementById('chantOiseaux');
         function toggleSon() {
-            if (audio.paused) { audio.volume = 0.4; audio.play(); } 
-            else { audio.pause(); }
+            const audio = document.getElementById('chantOiseaux');
+            if (audio.paused) { audio.volume = 0.4; audio.play(); } else { audio.pause(); }
         }
 
-        // --- MESSAGER ET EXPLOSION ---
-        const phrases = ["L'Impôt Public est un geste de cœur", "Graines de générosité", "Le pardon est justice", "Besoin d'un câlin ?", "Le jardin vous aime"];
+        // --- MESSAGER ET CADEAU ---
+        const phrases = ["L'Impôt Public est un geste de cœur", "Graines de générosité", "Le pardon est justice", "Le jardin vous aime"];
         const emojis = ['🕊️', '🦋', '🐝', '🐞'];
         let messagerActif = null;
         const coffre = document.getElementById('coffre-magique');
         let cadeauPos = { x: window.innerWidth / 2, y: window.innerHeight / 2 };
-        let targetCadeau = { x: Math.random() * (window.innerWidth - 100), y: Math.random() * (window.innerHeight - 300) };
+        let targetCadeau = { x: Math.random()*(window.innerWidth-100), y: Math.random()*(window.innerHeight-300) };
 
         function fleurEtincelles(x, y) {
             const colors = ['#FF4500', '#DA70D6', '#00FA9A', '#FFD700', '#FFFFFF'];
             for (let i = 0; i < 45; i++) {
                 const p = document.createElement('div');
-                p.innerHTML = '✨'; p.style.position = 'fixed'; 
-                p.style.left = x + 'px'; p.style.top = y + 'px';
-                p.style.fontSize = (Math.random() * 20 + 10) + 'px';
-                p.style.color = colors[Math.floor(Math.random()*colors.length)];
-                p.style.zIndex = "1000";
-                document.body.appendChild(p);
+                p.innerHTML = '✨'; p.style.position = 'fixed'; p.style.left = x + 'px'; p.style.top = y + 'px';
+                p.style.fontSize = '20px'; p.style.zIndex = "1000"; document.body.appendChild(p);
                 const angle = Math.random() * Math.PI * 2; const dist = Math.random() * 250 + 50;
                 p.animate([{ transform: 'translate(0,0) scale(1)', opacity: 1 }, { transform: `translate(${Math.cos(angle)*dist}px, ${Math.sin(angle)*dist}px) scale(0)`, opacity: 0 }], { duration: 1500 });
                 setTimeout(() => p.remove(), 1500);
             }
             coffre.style.opacity = "0";
-            setTimeout(() => { cadeauPos = { x: Math.random() * (window.innerWidth-100), y: Math.random() * (window.innerHeight-300) }; coffre.style.opacity = "1"; }, 1500);
+            setTimeout(() => { cadeauPos = { x: Math.random()*(window.innerWidth-100), y: Math.random()*(window.innerHeight-300) }; coffre.style.opacity = "1"; }, 1500);
         }
 
         function createMessenger() {
@@ -197,13 +171,13 @@
             div.className = "animal-container";
             div.innerHTML = `<div class="bulle-texte">${phrases[Math.floor(Math.random()*phrases.length)]}</div><div style="font-size:60px">${emojis[Math.floor(Math.random()*4)]}</div>`;
             document.body.appendChild(div);
-            messagerActif = { el: div, bulle: div.firstChild, x: -250, y: Math.random() * 400 + 100, state: "ENTRÉE" };
+            messagerActif = { el: div, bulle: div.firstChild, x: -250, y: Math.random()*400 + 100, state: "ENTRÉE" };
         }
 
         function loop() {
             cadeauPos.x += (targetCadeau.x - cadeauPos.x) * 0.008;
             cadeauPos.y += (targetCadeau.y - cadeauPos.y) * 0.008;
-            if(Math.abs(cadeauPos.x - targetCadeau.x) < 40) targetCadeau = { x: Math.random() * (window.innerWidth - 100), y: Math.random() * (window.innerHeight - 300) };
+            if(Math.abs(cadeauPos.x - targetCadeau.x) < 40) targetCadeau = { x: Math.random()*(window.innerWidth-100), y: Math.random()*(window.innerHeight-300) };
             coffre.style.left = cadeauPos.x + "px";
             coffre.style.top = (cadeauPos.y + Math.sin(Date.now()*0.002)*40) + "px";
 
@@ -215,13 +189,11 @@
                 } else if (m.state === "TIR") {
                     m.state = "PROJECTION";
                     m.bulle.animate([{ opacity: 1 }, { left: (cadeauPos.x - m.x) + 'px', top: (cadeauPos.y - m.y) + 'px', opacity: 0, scale: 0 }], { duration: 900 });
-                    setTimeout(() => { fleurEtincelles(cadeauPos.x + 30, cadeauPos.y + 30); m.state = "SORTIE"; }, 850);
+                    setTimeout(() => { fleurEtincelles(cadeauPos.x+30, cadeauPos.y+30); m.state = "SORTIE"; }, 850);
                 } else if (m.state === "SORTIE") {
-                    m.x -= 10;
-                    if (m.x < -300) { m.el.remove(); messagerActif = null; }
+                    m.x -= 10; if (m.x < -300) { m.el.remove(); messagerActif = null; }
                 }
-                m.el.style.left = m.x + "px";
-                m.el.style.top = (m.y + Math.sin(Date.now()*0.005)*30) + "px";
+                m.el.style.left = m.x + "px"; m.el.style.top = (m.y + Math.sin(Date.now()*0.005)*30) + "px";
             }
             requestAnimationFrame(loop);
         }
