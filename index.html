@@ -46,10 +46,9 @@
         .exemples { font-size: 0.85em; color: #2E7D32; font-style: italic; margin-top: 10px; font-weight: bold; }
         .info-sup { font-size: 0.85em; margin: 3px 0; }
 
-        /* Séparation interne Urgence */
-        .split-box { display: flex; border-top: 1px dashed #e91e63; margin-top: 10px; padding-top: 10px; }
-        .split-part { flex: 1; text-decoration: none; color: #e91e63; font-weight: bold; font-size: 0.9em; padding: 5px; }
-        .split-part:first-child { border-right: 1px dashed #e91e63; }
+        /* Structure interne Urgence sans pointillés */
+        .split-box { display: flex; margin-top: 15px; }
+        .split-part { flex: 1; text-decoration: none; color: #e91e63; font-weight: bold; font-size: 0.95em; padding: 10px 5px; }
 
         #coffre-magique { position: fixed; font-size: 60px; z-index: 800; pointer-events: none; left: 50%; transform: translateX(-50%); }
 
@@ -114,11 +113,6 @@
 
     <script>
         // Scripts d'animation conservés
-        const basePhrases = ["L'Impôt Public est un geste de cœur", "Graines de générosité", "Le pardon est justice", "Besoin d'un câlin"];
-        let disponibles = [...basePhrases];
-        const typesAnimaux = ['🕊️', '🦋', '🐝', '🐞'];
-        let messagerActif = null;
-        let count = 0;
         const coffre = document.getElementById('coffre-magique');
         let coffreX = window.innerWidth / 2 - 30;
         let coffreY = window.innerHeight - 150;
