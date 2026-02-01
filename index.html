@@ -1,226 +1,236 @@
+<!DOCTYPE html>
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <title>Le Jardin - Le Petit Prince</title>
-<meta charset="UTF-8">
-    <title>Le Jardin de la Fraternité</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Le Trésor Public - Accueil</title>
     <style>
-        /* ON GARDE TON STYLE ORIGINAL */
-        body { font-family: 'Comic Sans MS', cursive; text-align: center; margin: 0; padding: 0; background-color: #FFFF00; color: #000080; overflow-x: hidden; min-height: 100vh; }
+        body { 
+            font-family: 'Comic Sans MS', cursive; text-align: center; margin: 0; padding: 0; 
+            background-color: #FFFF00; color: #000080; overflow-x: hidden; min-height: 100vh; 
+        }
 
-        
-        .menu-table { margin: 20px auto; border-radius: 10px; background-color: #008080; border-collapse: collapse; }
-        .menu-table { margin: 20px auto; border-radius: 10px; background-color: #008080; border-collapse: collapse; margin-left: auto; margin-right: auto;}
+        #google_translate_element { padding: 10px; background: rgba(255,255,255,0.5); border-bottom: 1px solid #008080; }
+
+        .menu-table { margin: 20px auto; border-radius: 10px; background-color: #008080; border-collapse: collapse; margin: auto; }
         .menu-table td { padding: 10px 15px; border: 1px solid #FFFFFF; }
         .menu-table a { text-decoration: none; color: #FFFFFF; font-weight: bold; }
 
-@@ -35,34 +34,34 @@
-        /* Espace du Jardin Sacré */
-        #jardin-sacre {
-            position: relative;
-            height: 300px;
-@@ -33,121 +33,67 @@
-            100% { transform: scale(1) rotate(0deg); opacity: 1; }
+        .soleil-don {
+            background: #FFD700; width: 220px; height: 220px; border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            box-shadow: 0 0 40px #FFA500; border: 5px dashed #FF4500;
+            margin: 30px auto; cursor: pointer; transition: 0.4s;
+            text-decoration: none; color: #000080; font-weight: bold;
+        }
+        .soleil-don:hover { transform: scale(1.1) rotate(5deg); }
+
+        .bulles-grid { display: flex; justify-content: center; align-items: center; gap: 25px; flex-wrap: wrap; padding: 20px; max-width: 1200px; margin: auto; }
+
+        .nuage { 
+            background: #e0f7fa; border: 3px solid #008080; border-radius: 50px; padding: 20px; 
+            width: 300px; min-height: 200px; text-decoration: none; color: inherit; 
+            display: flex; flex-direction: column; justify-content: center; transition: 0.3s; 
+        }
+        .nuage-rose { background: #ffebee; border-color: #e91e63; }
+        .nuage:hover { transform: translateY(-10px); }
+
+        .etoile-justice { 
+            background: #E6E6FA; border: 3px solid #9370DB; width: 350px; height: 350px; 
+            clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%); 
+            transition: 0.6s ease-in-out; cursor: pointer; text-decoration: none; color: inherit; 
+            display: flex; align-items: center; justify-content: center; 
+        }
+        .etoile-justice:hover { 
+            clip-path: polygon(50% 0%, 100% 0%, 100% 100%, 100% 100%, 100% 100%, 50% 100%, 0% 100%, 0% 100%, 0% 0%, 0% 0%);
+            border-radius: 50%; transform: scale(1.05);
         }
 
-        /* STYLE POUR LES NOUVEAUX MESSAGES DU TABLEAU */
-        .mur-reel {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-            gap: 20px;
-            padding: 40px;
-            max-width: 1200px;
-            margin: auto;
-        }
-        .carte-message {
-            background: rgba(255, 255, 255, 0.9);
-            border: 3px solid #008080;
-            border-radius: 15px;
-            padding: 15px;
-            box-shadow: 5px 5px 0px #008080;
-            transition: 0.3s;
-        }
-        .carte-message:hover { transform: scale(1.02); }
-        .type-tag { font-size: 0.7em; background: #E67E22; color: white; padding: 2px 8px; border-radius: 5px; text-transform: uppercase; }
+        .exemples { font-size: 0.85em; color: #2E7D32; font-style: italic; margin-top: 10px; font-weight: bold; }
 
-        #coffre-magique { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); font-size: 60px; z-index: 800; }
-        #animal-container { position: fixed; z-index: 900; white-space: nowrap; display: flex; align-items: center; pointer-events: none; }
-        #corps-animal { font-size: 50px; }
-        #bulle-texte { background: rgba(255, 255, 255, 0.9); border-radius: 15px; padding: 8px 15px; font-style: italic; color: #2E7D32; margin-right: 10px; font-weight: bold; border: 2px solid #2E7D32; opacity: 0; transition: opacity 0.3s; }
+        /* Animation Messagers fixes à gauche */
+        /* Animation Messagers */
+        .animal-container { position: fixed; z-index: 900; pointer-events: none; display: flex; align-items: center; }
+        .bulle-texte { 
+            background: white; border: 2px solid #2E7D32; border-radius: 15px; padding: 8px 15px; 
+            font-weight: bold; opacity: 0; white-space: nowrap; overflow: hidden;
+            position: relative; left: 10px;
+            position: absolute; left: 60px; /* Positionnée devant l'animal */
+        }
 
-        
-        .copyright-link { color: #000080; text-decoration: none; font-weight: bold; }
+        #coffre-magique { position: fixed; font-size: 60px; z-index: 800; pointer-events: none; left: 50%; transform: translateX(-50%); }
+
+        footer { margin: 60px 0 20px; font-size: 0.9em; }
     </style>
 </head>
-<body bgcolor="#FFFF00" text="#000080" style="font-family:'Comic Sans MS', cursive; text-align:center; margin:0; padding:0;">
-
-    <center>
-        <div id="google_translate_element" style="padding:10px;"></div>
-
-        <table class="notranslate" border="1" cellpadding="10" bgcolor="#008080" style="margin-top:10px; border-radius:10px;">
-            <tr>
-                <td><a href="index.html" style="text-decoration:none;"><font color="#FFFFFF"><b>Accueil</b></font></a></td>
-                <td><a href="formulaire.html" style="text-decoration:none;"><font color="#FFFFFF"><b>Semer</b></font></a></td>
-                <td><a href="jardin.html" style="text-decoration:none;"><font color="#FFFFFF"><b>Le Jardin</b></font></a></td>
-                <td><a href="contact.html" style="text-decoration:none;"><font color="#FFFFFF"><b>Contact</b></font></a></td>
-            </tr>
-        </table>
-
-        <br>
-        <font size="6" color="#2E7D32">🌻 <u><b>LE JARDIN DES GRAINES</b></u> 🌻</font>
-        <br><br>
-
-        <div id="annonces-container" style="width:90%; max-width:900px;">
-            <p><i>Chargement du jardin en cours...</i></p>
 <body>
 
-    <audio id="chantOiseaux" loop><source src="oiseaux.mp3" type="audio/mpeg"></audio>
-@@ -75,7 +74,6 @@
+    <div id="google_translate_element"></div>
+    <script>function googleTranslateElementInit() { new google.translate.TranslateElement({pageLanguage: 'fr'}, 'google_translate_element'); }</script>
+    <script src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
 
-    <div id="google_translate_element" style="padding:10px;"></div>
+    <audio id="chantOiseaux" loop><source src="oiseaux.mp3" type="audio/mpeg"></audio>
 
     <table class="menu-table">
         <tr>
-            <td><a href="index.html">Accueil</a></td>
-            <td><a href="formulaire.html">Semer</a></td>
-            <td><a href="jardin.html">Le Jardin</a></td>
-            <td><a href="contact.html">Contact</a></td>
-            <td><a href="urgence.html">Urgences</a></td>
+            <td><a href="transition.html?page=index.html">Accueil</a></td>
+            <td><a href="transition.html?page=formulaire.html">Semer</a></td>
+            <td><a href="transition.html?page=jardin.html">Le Jardin</a></td>
+            <td><a href="transition.html?page=impot.html">Impôt Public</a></td>
+            <td><a href="transition.html?page=regulation.html">Régulation</a></td>
         </tr>
     </table>
 
-@@ -84,17 +82,12 @@ <h2 style="color:#2E7D32;">🍃 Le Jardin des Cadeaux Existentiels 🍃</h2>
-    <h2 style="color:#2E7D32;">🍃 Le Jardin des Cadeaux Existentiels 🍃</h2>
-    <p>Regardez la fraternité s'épanouir au gré des dons du monde entier...</p>
+    <h1>💐 Le Trésor Public</h1>
+    <p><strong>Le Petit Prince des Jardiniers</strong></p>
 
-    <div id="jardin-sacre">
-        </div>
+    <a href="transition.html?page=formulaire.html" class="soleil-don">
+        <div>☀️<br>ESPACE DU DON ENTIER</div>
+    </a>
 
-    <div id="jardin-sacre"></div>
-    </center>
+    <div class="bulles-grid">
+        <a href="transition.html?page=impot.html" class="nuage">
+            <h3 style="color:#008080; margin:0; text-transform:uppercase;">📜 Impôt Public</h3>
+            <p>Travaux publics en libre participation.</p>
+            <div class="exemples">Ex : Nettoyage bois communal...</div>
+        </a>
 
-    <div style="padding: 20px; font-weight: bold; font-size: 1.2em;">
-        "Chaque don est une fleur qui ne fane jamais."
+        <a href="transition.html?page=regulation.html" class="etoile-justice">
+            <div style="width:75%;">
+                <h3>⚖️ Régulation Citoyenne</h3>
+                <p>Justice avec délicatesse.</p>
+            </div>
+            <div style="width:75%;"><h3>⚖️ Régulation</h3><p>Justice avec délicatesse.</p></div>
+        </a>
+
+        <a href="transition.html?page=urgence.html" class="nuage nuage-rose">
+            <h3 style="color:#e91e63; margin:0;">❤️ Urgence & Écoute</h3>
+            <p>Besoins vitaux.</p>
+            <h3 style="color:#e91e63; margin:0;">❤️ Urgence</h3><p>Aide & Écoute.</p>
+        </a>
     </div>
-
-    <h3 style="color:#008080;">📖 Registre de la Fraternité</h3>
-    <div id="chargement">Récolte des messages en cours...</div>
-    <div class="mur-reel" id="mur-messages"></div>
-
-    <br><br>
-    <font size="2">
-        Copyright 2000 <a href="https://youtube.com" class="copyright-link">Le Petit Prince des Jardiniers</a>
-@@ -112,6 +105,34 @@ <h3 style="color:#008080;">📖 Registre de la Fraternité</h3>
-    </font>
 
     <div id="coffre-magique">🎁</div>
-    <div id="animal-container">
-        <div id="bulle-texte"></div>
-        <div id="corps-animal">🕊️</div>
-    </div>
 
-    <script type="text/javascript">
-        function googleTranslateElementInit() { new google.translate.TranslateElement({pageLanguage: 'fr'}, 'google_translate_element'); }
-    </script>
-    <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+    <footer>© 2000 <a href="https://www.youtube.com/channel/UCjsudx7f1sl7XQM8ylcBRdQ" target="_blank" style="color: inherit;">Le petit prince des jardiniers</a></footer>
 
     <script>
-        const scriptURL = 'https://script.google.com/macros/s/AKfycbwe3bMzbJMUQSEdeyprffw-FQpqLg9-fGcHJi2_1_Ix5kWmrisBoSo2Kzne-CMwe3s/exec';
+        const basePhrases = ["L'Impôt Public est un geste de cœur", "Besoin d'aide administrative ?", "Graines de générosité", "Le pardon est justice", "Besoin d'un câlin"];
+        const basePhrases = ["L'Impôt Public est un geste de cœur", "Graines de générosité", "Le pardon est justice", "Besoin d'un câlin"];
+        let disponibles = [...basePhrases];
+        const typesAnimaux = ['🕊️', '🦋', '🐝', '🐞'];
+        let messagerActif = null;
+        let count = 0;
 
-        async function chargerJardin() {
-            try {
-                const response = await fetch(scriptURL);
-                const data = await response.json();
-                const container = document.getElementById('annonces-container');
-                container.innerHTML = "";
+        const coffre = document.getElementById('coffre-magique');
+        let coffreX = window.innerWidth / 2 - 30;
+        let coffreY = window.innerHeight - 150;
 
-                data.forEach(annonce => {
-                    const card = document.createElement('div');
-                    card.style = "background:white; border:3px solid #2E7D32; border-radius:15px; padding:20px; margin-bottom:25px; text-align:left; box-shadow: 6px 6px 0px #008080;";
-                    
-                    card.innerHTML = `
-                        <font size="5" color="#E67E22"><b>📍 ${annonce.ville} (${annonce.pays})</b></font><br>
-                        <div style="background:#F0F9FF; padding:8px; border-radius:8px; margin:10px 0; border-left: 5px solid #008080;">
-                            <font size="3" color="#008080"><b>🚀 Zone d'action :</b> ${annonce.km}</font>
-                        </div>
-                        <font size="3"><b>Semé par :</b> ${annonce.prenom}</font><br>
-                        <hr color="#eeeeee">
-                        <font size="4">"${annonce.description}"</font><br>
-                        <hr color="#eeeeee">
-                        <font size="2" color="#666">📅 Expire dans : ${annonce.duree} | Le : ${new Date(annonce.date).toLocaleDateString()}</font>
-                    `;
-                    container.appendChild(card);
-                });
-            } catch (e) {
-                document.getElementById('annonces-container').innerHTML = "<p>Erreur de floraison du jardin.</p>";
-        const mesPhrases = [
-            "Une fleur vient d'éclore grâce à un don de paix",
-            "La fraternité grandit ici...",
-@@ -174,9 +195,10 @@ <h3 style="color:#008080;">📖 Registre de la Fraternité</h3>
-            "Regardez cette paix rayonnante s'installer",
-            "Un cadeau existentiel a été déposé"
-        ];
-        const animaux = ['🕊️', '🦋', '🐝', '🐞', '🦜', '🐰', '🐿️', '🦄'];
-        const fleurs = ['🌸', '🌼', '🌻', '🌺', '🌷', '🌹'];
+        document.addEventListener('click', () => { 
+            const a = document.getElementById('chantOiseaux');
+            if(a.paused) { a.volume = 0.05; a.play(); } 
+        });
 
-        const jardin = document.getElementById('jardin-sacre');
-        const animalCont = document.getElementById('animal-container');
-        const bulle = document.getElementById('bulle-texte');
-        const corps = document.getElementById('corps-animal');
-        const audio = document.getElementById('chantOiseaux');
+        function exploserEtEnvoler() {
+            for (let i = 0; i < 20; i++) {
+                const p = document.createElement('div');
+                p.innerHTML = ['❤️', '✨', '🌸', '🌟'][Math.floor(Math.random() * 4)];
+                p.style.position = 'fixed'; p.style.left = (coffreX + 30) + 'px'; p.style.top = (coffreY + 30) + 'px';
+                p.style.fontSize = '25px'; p.style.zIndex = '1000'; document.body.appendChild(p);
+                const angle = Math.random() * Math.PI * 2; const dist = Math.random() * 180;
+                p.animate([{ transform: 'translate(0, 0) scale(1)', opacity: 1 }, { transform: `translate(${Math.cos(angle)*dist}px, ${Math.sin(angle)*dist}px) scale(0)`, opacity: 0 }], 1000);
+                setTimeout(() => p.remove(), 1000);
+            }
+            coffre.animate([
+                { transform: 'translateY(0) scale(1.5)', opacity: 1 },
+                { transform: 'translateY(-1200px) scale(0.5)', opacity: 0 }
+            ], { duration: 1500, easing: 'ease-in', fill: 'forwards' });
 
-        let aniX, aniY, targetX, targetY, state = "WAITING";
-
-        document.addEventListener('click', () => { if(audio.paused) { audio.volume = 0.02; audio.play(); } });
-
-        function plantFlower() {
-            const f = document.createElement('div');
-            f.className = 'fleur-clonée';
-            f.innerText = fleurs[Math.floor(Math.random()*fleurs.length)];
-            f.style.left = Math.random() * 90 + "%";
-            f.style.top = Math.random() * 70 + 20 + "%";
-            jardin.appendChild(f);
+            // Réinitialiser le coffre après l'envol
+            setTimeout(() => {
+                coffreY = window.innerHeight - 150;
+                coffre.style.opacity = "1";
+            }, 3000);
+            setTimeout(() => { coffreY = window.innerHeight - 150; coffre.style.opacity = "1"; }, 3000);
         }
 
-        function startNewMessenger() {
-            bulle.innerText = mesPhrases[Math.floor(Math.random() * mesPhrases.length)];
-            corps.innerText = animaux[Math.floor(Math.random() * animaux.length)];
-            
-            aniX = -200; 
-            aniY = Math.random() * 300 + 100;
-            targetX = window.innerWidth + 200;
-            targetY = aniY + (Math.random() * 100 - 50);
-            
-            bulle.style.opacity = "1";
-            state = "CROSSING";
+        function createMessenger() {
+            if (count >= 3 || messagerActif) return;
+            const txt = disponibles.splice(Math.floor(Math.random()*disponibles.length), 1)[0];
+            const div = document.createElement('div');
+            div.className = "animal-container";
+            div.innerHTML = `<div class="bulle-texte" style="width:0px">${txt}</div><div style="font-size:60px">${typesAnimaux[Math.floor(Math.random()*4)]}</div>`;
+            // La bulle est vide au début
+            div.innerHTML = `<div class="bulle-texte" style="width:0px">${txt}</div><div class="emoji" style="font-size:60px">${typesAnimaux[Math.floor(Math.random()*4)]}</div>`;
+            document.body.appendChild(div);
+
+            messagerActif = { el: div, bulle: div.firstChild, x: -200, y: window.innerHeight / 2, tx: 100, state: "ENTRÉE" };
+            messagerActif = { el: div, bulle: div.firstChild, emoji: div.lastChild, x: -200, y: window.innerHeight / 2, tx: 150, state: "ENTRÉE" };
         }
 
         function loop() {
-            if (state === "CROSSING") {
-                aniX += 3; // L'animal traverse le jardin
-                aniY += Math.sin(aniX/50) * 2;
+            if (messagerActif) {
+                let m = messagerActif;
+                if (m.state === "ENTRÉE") {
+                    m.x += (m.tx - m.x) * 0.05;
+                    if (Math.abs(m.tx - m.x) < 5) {
+                        m.state = "LECTURE";
+                        m.state = "SORTIR_MESSAGE";
+                        m.bulle.style.opacity = 1;
+                        m.bulle.animate([{width: "0px"}, {width: "250px"}], {duration: 500, fill: 'forwards'});
+                        
+                        // Temps de lecture avant de lancer
+                        setTimeout(() => {
+                            if(m.state === "LECTURE") m.state = "LANCER";
+                        }, 2500);
+                        m.bulle.animate([{width: "0px", transform: "scale(0)"}, {width: "250px", transform: "scale(1)"}], {duration: 600, fill: 'forwards'});
+                        setTimeout(() => { m.state = "POUSSER"; }, 2000);
+                    }
+                } else if (m.state === "LANCER") {
+                    m.state = "PROJECTILE";
+                    // Calcul de la trajectoire vers le cadeau
+                } else if (m.state === "POUSSER") {
+                    m.state = "PROJECTION";
+                    // Animation de l'animal qui "pousse" (petit coup d'épaule)
+                    m.emoji.animate([{transform: "translateX(0)"}, {transform: "translateX(30px)"}, {transform: "translateX(0)"}], {duration: 200});
+                    
+                    // Projection du message
+                    const targetX = coffreX - m.x;
+                    const targetY = coffreY - m.y;
+                    
+                    m.bulle.animate([
+                        { transform: 'translate(0, 0) scale(1)', opacity: 1 },
+                        { transform: `translate(${targetX}px, ${targetY}px) scale(0.2)`, opacity: 0 }
+                    ], { duration: 600, easing: 'ease-in', fill: 'forwards' });
+                        { transform: `translate(${targetX}px, ${targetY}px) rotate(20deg) scale(0.1)`, opacity: 0 }
+                    ], { duration: 500, easing: 'ease-in', fill: 'forwards' });
 
-                // Chance de planter une fleur en passant
-                if(Math.random() < 0.01) plantFlower();
-
-                if (aniX > window.innerWidth + 100) {
-                    bulle.style.opacity = "0";
-                    setTimeout(startNewMessenger, 2000);
-                    state = "WAITING";
+                    setTimeout(() => {
+                        exploserEtEnvoler();
+                        m.state = "SORTIE";
+                    }, 600);
+                    setTimeout(() => { exploserEtEnvoler(); m.state = "SORTIE"; }, 500);
+                } else if (m.state === "SORTIE") {
+                    m.x -= 10;
+                    if (m.x < -300) {
+                        m.el.remove();
+                        messagerActif = null;
+                        count++;
+                    }
+                    if (m.x < -300) { m.el.remove(); messagerActif = null; count++; }
                 }
+                m.el.style.left = m.x + "px";
+                m.el.style.top = (m.y + Math.sin(Date.now()*0.005)*20) + "px";
             }
-
-            animalCont.style.left = aniX + "px";
-            animalCont.style.top = aniY + "px";
-            corps.style.transform = "scaleX(-1)"; // Toujours vers la droite
-
+            
+            coffre.style.left = coffreX + "px";
+            coffre.style.top = coffreY + "px";
+            coffre.style.left = coffreX + "px"; coffre.style.top = coffreY + "px";
             requestAnimationFrame(loop);
         }
-        window.onload = chargerJardin;
 
-        startNewMessenger();
+        setInterval(createMessenger, 4000);
         loop();
     </script>
 </body>
 </html>
-</html
