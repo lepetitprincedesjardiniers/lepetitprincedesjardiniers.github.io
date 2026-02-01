@@ -13,48 +13,44 @@
     <style>
         body { 
             font-family: 'Comic Sans MS', cursive; text-align: center; margin: 0; padding: 0; 
-            background: radial-gradient(circle at center, #1b2735 0%, #050608 100%) !important;
+            background: radial-gradient(circle at center, #1b2735 0%, #090a0f 100%);
             color: #ffffff; overflow-x: hidden; min-height: 100vh; position: relative;
         }
 
-        /* --- TRADUCTEUR TOUT EN HAUT --- */
-        #google_translate_element { position: absolute; top: 2px; left: 5px; z-index: 3000; opacity: 0.6; }
+        #google_translate_element { position: absolute; top: 2px; left: 10px; z-index: 2000; opacity: 0.6; }
 
         /* --- ÉTOILES --- */
-        .star { position: fixed; background: white; border-radius: 50%; z-index: 0; box-shadow: 0 0 10px white; animation: twinkle var(--duration) infinite ease-in-out; }
+        .star { position: fixed; background: #FFFFFF; border-radius: 50%; z-index: -1; box-shadow: 0 0 8px #FFFFFF; animation: twinkle var(--duration) infinite ease-in-out; }
         @keyframes twinkle { 0%, 100% { opacity: 0.3; transform: scale(0.8); } 50% { opacity: 1; transform: scale(1.2); } }
 
         /* --- MENU --- */
-        .menu-table { margin: 50px auto 20px; border-radius: 10px; background-color: #008080; border-collapse: collapse; position: relative; z-index: 10; overflow: hidden; }
+        .menu-table { margin: 55px auto 20px; border-radius: 10px; background-color: #008080; border-collapse: collapse; position: relative; z-index: 10; overflow: hidden; }
         .menu-table td { border: 1px solid #FFFFFF; transition: 0.3s; }
         .menu-table a { display: block; padding: 12px 20px; text-decoration: none; color: #FFFFFF; font-weight: bold; }
         .menu-table td:hover { background-color: #00b3b3; box-shadow: inset 0 0 10px white; }
         
-        #btn-son { position: fixed; top: 5px; right: 5px; z-index: 1000; background: rgba(255,255,255,0.2); border: 1px solid white; color: white; border-radius: 50%; cursor: pointer; padding: 5px; font-size: 18px; }
+        #btn-son { position: fixed; top: 10px; right: 10px; z-index: 1000; background: rgba(255,255,255,0.2); border: 1px solid white; color: white; border-radius: 50%; cursor: pointer; padding: 8px; font-size: 20px; }
 
-        /* --- HEADER --- */
-        .header-container { display: flex; align-items: center; justify-content: center; gap: 40px; margin: 20px auto; position: relative; z-index: 10; }
+        /* --- HEADER & TERRE --- */
+        .header-container { display: flex; align-items: center; justify-content: center; gap: 40px; margin: 20px auto; }
         .soleil-cadre { width: 180px; height: 180px; background: #FFD700; border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 0 30px #FFA500; animation: soleilScintille 4s ease-in-out infinite; }
         .soleil-cadre h1 { font-size: 1.1em; margin: 0; color: #000080; }
         @keyframes soleilScintille { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.05); } }
 
-        /* --- TERRE --- */
         .terre-don {
             width: 250px; height: 250px; margin: 20px auto; border-radius: 50%;
             background-image: url('https://upload.wikimedia.org/wikipedia/commons/thumb/c/c3/Solarsystemscope_texture_2k_earth_daymap.jpg/1200px-Solarsystemscope_texture_2k_earth_daymap.jpg');
             background-size: cover; background-repeat: repeat-x; display: flex; align-items: center; justify-content: center;
             text-decoration: none; color: white; font-weight: bold; box-shadow: inset -20px -20px 50px rgba(0,0,0,0.8), 0 0 20px rgba(0,191,255,0.5);
-            animation: rotationTerre 30s linear infinite; transition: 0.5s; position: relative; z-index: 5; overflow: hidden;
+            animation: rotationTerre 30s linear infinite; transition: 0.5s; position: relative; z-index: 5;
         }
+        .terre-don:hover { animation-duration: 8s; }
         @keyframes rotationTerre { from { background-position: 0 0; } to { background-position: 500px 0; } }
 
-        /* --- GRILLE RUBRIQUES --- */
+        /* --- GRILLE --- */
         .bulles-grid { display: flex; justify-content: center; align-items: stretch; gap: 25px; flex-wrap: wrap; padding: 20px; max-width: 1200px; margin: auto; position: relative; z-index: 5; }
-        
-        /* IMPOTS PUBLICS */
         .nuage { background: #e0f7fa; border: 3px solid #008080; border-radius: 50px; padding: 25px; width: 340px; min-height: 280px; text-decoration: none; color: #000080; display: flex; flex-direction: column; justify-content: center; transition: 0.3s; }
-        .nuage:hover { transform: scale(1.03); background: #f0ffff; }
-        
+        .nuage:hover { transform: translateY(-5px); background: #f0ffff; }
         .liste-exemples { font-size: 0.8em; text-align: left; margin: 10px auto; padding-left: 20px; color: #006666; font-style: italic; }
 
         .etoile-justice { 
@@ -67,7 +63,10 @@
         .split-box { display: flex; border-top: 1px solid #e91e63; padding-top: 10px; margin-top: 10px; }
         .split-part { flex: 1; text-decoration: none; color: #e91e63; font-weight: bold; padding: 10px; font-size: 0.85em; }
 
-        #coffre-magique { position: fixed; font-size: 55px; z-index: 4; pointer-events: none; filter: drop-shadow(0 0 10px gold); }
+        /* --- ANIMATIONS CADEAU ET MESSAGERS --- */
+        #coffre-magique { position: fixed; font-size: 55px; z-index: 100; cursor: pointer; filter: drop-shadow(0 0 10px gold); transition: opacity 0.5s, transform 0.2s; }
+        .animal-container { position: fixed; z-index: 90; pointer-events: none; transition: all 0.5s linear; }
+        .bulle-texte { background: white; border: 2px solid #2E7D32; border-radius: 15px; padding: 8px; font-weight: bold; color: black; font-size: 0.8em; position: absolute; left: 50px; top: -20px; width: 150px; }
         
         footer { padding: 40px; position: relative; z-index: 10; }
         .footer-link { color: rgba(255,255,255,0.6); text-decoration: none; font-size: 0.9em; }
@@ -104,20 +103,18 @@
         <a href="impot.html" class="nuage">
             <h3 style="color:#008080; margin:0; text-transform:uppercase;">📜 Impôts Publics</h3>
             <p style="margin:5px 0; font-weight: bold; font-size: 0.9em;">Travaux publics en libre participation.</p>
-            
             <ul class="liste-exemples">
                 <li>Nettoyage des sentiers communs</li>
                 <li>Réparation des clôtures du jardin</li>
                 <li>Arrosage des zones partagées</li>
                 <li>Entretien des outils collectifs</li>
             </ul>
-
             <p style="font-size: 0.8em; color:#d32f2f; font-weight:bold; margin-top: 5px; margin-bottom: 0;">Motivation indispensable.</p>
-            <p style="font-size: 0.8em; color:#d32f2f; font-weight:bold; margin-top: 0;">Attention : Travaux ingrats.</p>
+            <p style="font-size: 0.8em; color:#d32f2f; font-weight:bold; margin: 0;">Attention : Travaux ingrats.</p>
         </a>
 
         <a href="regulation.html" class="etoile-justice">
-            <h3 style="margin:0;">⚖️ Régulation Citoyenne</h3>
+            <h3 style="margin:0;">⚖️ Régulation</h3>
             <p style="font-size:0.85em; padding:10px 30px;">Médiation et harmonie citoyenne pour tous les jardiniers.</p>
         </a>
 
@@ -131,20 +128,20 @@
         </div>
     </div>
 
-    <div id="coffre-magique">🎁</div>
+    <div id="coffre-magique" onclick="exploserCadeau()">🎁</div>
 
     <footer>
         <a href="transition-externe.html" class="footer-link">© 2000 lepetitprince des jardiniers</a>
     </footer>
 
     <script>
+        // --- ETOILES ---
         function createStars() {
             for(let i=0; i<100; i++) {
                 let star = document.createElement('div');
                 star.className = 'star';
                 let size = Math.random() * 3 + 1;
-                star.style.width = size + 'px';
-                star.style.height = size + 'px';
+                star.style.width = size + 'px'; star.style.height = size + 'px';
                 star.style.left = Math.random() * 100 + 'vw';
                 star.style.top = Math.random() * 100 + 'vh';
                 star.style.setProperty('--duration', (Math.random() * 3 + 2) + 's');
@@ -153,19 +150,77 @@
         }
         createStars();
 
+        // --- CADEAU VOLANT ---
         const coffre = document.getElementById('coffre-magique');
         let cadeauPos = { x: window.innerWidth / 2, y: window.innerHeight / 2 };
-        let targetCadeau = { x: Math.random()*(window.innerWidth-100), y: Math.random()*(window.innerHeight-300) };
+        let targetCadeau = { x: Math.random()*(window.innerWidth-100), y: Math.random()*(window.innerHeight-200) };
 
-        function loop() {
-            cadeauPos.x += (targetCadeau.x - cadeauPos.x) * 0.01;
-            cadeauPos.y += (targetCadeau.y - cadeauPos.y) * 0.01;
-            if(Math.abs(cadeauPos.x - targetCadeau.x) < 50) targetCadeau = { x: Math.random()*(window.innerWidth-100), y: Math.random()*(window.innerHeight-300) };
+        function loopCadeau() {
+            cadeauPos.x += (targetCadeau.x - cadeauPos.x) * 0.02;
+            cadeauPos.y += (targetCadeau.y - cadeauPos.y) * 0.02;
+            if(Math.abs(cadeauPos.x - targetCadeau.x) < 20) targetCadeau = { x: Math.random()*(window.innerWidth-100), y: Math.random()*(window.innerHeight-200) };
             coffre.style.left = cadeauPos.x + "px";
-            coffre.style.top = (cadeauPos.y + Math.sin(Date.now()*0.002)*30) + "px";
-            requestAnimationFrame(loop);
+            coffre.style.top = (cadeauPos.y + Math.sin(Date.now()*0.002)*20) + "px";
+            requestAnimationFrame(loopCadeau);
         }
-        loop();
+        loopCadeau();
+
+        // --- EXPLOSION ETINCELLES ---
+        function exploserCadeau() {
+            const x = cadeauPos.x + 25; const y = cadeauPos.y + 25;
+            for (let i = 0; i < 25; i++) {
+                const p = document.createElement('div');
+                p.innerHTML = '✨'; p.style.position = 'fixed'; p.style.left = x + 'px'; p.style.top = y + 'px';
+                p.style.zIndex = "2000"; document.body.appendChild(p);
+                const angle = Math.random() * Math.PI * 2; const dist = Math.random() * 100 + 50;
+                p.animate([{ transform: 'translate(0,0)', opacity: 1 }, { transform: `translate(${Math.cos(angle)*dist}px, ${Math.sin(angle)*dist}px)`, opacity: 0 }], { duration: 800 });
+                setTimeout(() => p.remove(), 800);
+            }
+            coffre.style.opacity = "0";
+            setTimeout(() => { targetCadeau = { x: Math.random()*(window.innerWidth-100), y: Math.random()*(window.innerHeight-200) }; coffre.style.opacity = "1"; }, 1000);
+        }
+
+        // --- OISEAUX MESSAGERS ---
+        const phrases = ["L'Impôt Public est un geste de cœur", "Graines de générosité", "Le jardin vous aime", "Chaque don fleurit"];
+        const oiseauxEmojis = ['🐦', '🕊️', '🦋'];
+
+        function creerMessager() {
+            const container = document.createElement('div');
+            container.className = 'animal-container';
+            const oiseau = document.createElement('span');
+            oiseau.style.fontSize = "30px";
+            oiseau.innerHTML = oiseauxEmojis[Math.floor(Math.random()*oiseauxEmojis.length)];
+            
+            const bulle = document.createElement('div');
+            bulle.className = 'bulle-texte';
+            bulle.innerHTML = phrases[Math.floor(Math.random()*phrases.length)];
+            
+            container.appendChild(oiseau);
+            container.appendChild(bulle);
+            document.body.appendChild(container);
+
+            let startX = -200; let startY = Math.random() * window.innerHeight;
+            container.style.left = startX + "px"; container.style.top = startY + "px";
+
+            // L'oiseau fonce vers le cadeau
+            setTimeout(() => {
+                container.style.left = (cadeauPos.x - 50) + "px";
+                container.style.top = (cadeauPos.y - 20) + "px";
+            }, 100);
+
+            // Disparaît après avoir "livré" le message
+            setTimeout(() => {
+                container.style.opacity = "0";
+                setTimeout(() => container.remove(), 1000);
+            }, 4000);
+        }
+
+        setInterval(creerMessager, 7000); // Un oiseau toutes les 7 secondes
+
+        function toggleSon() {
+            const audio = new Audio('oiseaux.mp3'); // Note: nécessite un fichier oiseaux.mp3
+            audio.volume = 0.3; audio.play();
+        }
     </script>
 </body>
 </html>
