@@ -19,60 +19,59 @@
 
         #google_translate_element { position: absolute; top: 5px; left: 5px; z-index: 3000; opacity: 0.4; transform: scale(0.7); filter: grayscale(1); }
         
-        /* Menu et Titre en haut */
-        .header-container {
-            position: relative;
-            padding-top: 20px;
-            z-index: 100;
-        }
-
+        .header-container { position: relative; padding-top: 20px; z-index: 100; }
         .titre-fraternite { 
             display: block; font-size: 2em; letter-spacing: 3px; 
             color: #f0e68c; text-shadow: 0 0 15px rgba(255,230,140,0.5); font-weight: bold;
             margin-bottom: 10px;
         }
 
-        /* Menu */
         .menu-table { margin: 10px auto; border-radius: 10px; background-color: #008080; border-collapse: collapse; position: relative; z-index: 10; }
         .menu-table td { border: 1px solid #FFFFFF; }
         .menu-table a { display: block; padding: 12px 20px; text-decoration: none; color: #FFFFFF; font-weight: bold; }
         .menu-table td:hover { background-color: #00b3b3; }
 
-        /* Soleil avec effet arc-en-ciel */
+        /* Soleil - Lien vers jardin.html */
         .soleil-cadre { 
             width: 140px; height: 140px; background: #FFD700; border-radius: 50%; 
             display: flex; align-items: center; justify-content: center; 
             box-shadow: 0 0 25px #FFA500; margin: 20px auto; position: relative;
-            z-index: 20; transition: 0.8s; 
+            z-index: 20; transition: 0.8s; text-decoration: none;
         }
-        .soleil-cadre h1 { font-size: 0.9em; color: #333; line-height: 1.1; margin: 0; padding: 10px; pointer-events: none; }
+        .soleil-cadre h1 { font-size: 0.9em; color: #333; line-height: 1.1; margin: 0; padding: 10px; }
         .soleil-cadre:hover { 
             background: linear-gradient(45deg, #ff0000, #ff7f00, #ffff00, #00ff00, #0000ff, #4b0082, #8b00ff);
             box-shadow: 0 0 50px white;
             transform: scale(1.1) rotate(360deg);
         }
 
-        /* Étoiles */
         .star { position: fixed; background: white; border-radius: 50%; z-index: -1; animation: twinkle var(--duration) infinite ease-in-out, drift var(--drift-duration) linear infinite; }
         @keyframes twinkle { 0%, 100% { opacity: 0.3; transform: scale(0.8); } 50% { opacity: 1; transform: scale(1.2); } }
         @keyframes drift { from { transform: translateX(0); } to { transform: translateX(100px); } }
 
-        /* TERRE */
+        /* TERRE & TEXTE STYLE */
         .terre-don { 
             width: 350px; height: 350px; margin: 40px auto; border-radius: 50%; 
             background-image: url('https://upload.wikimedia.org/wikipedia/commons/thumb/c/c3/Solarsystemscope_texture_2k_earth_daymap.jpg/1200px-Solarsystemscope_texture_2k_earth_daymap.jpg'); 
             background-size: cover; display: flex; align-items: center; justify-content: center; 
-            text-decoration: none; color: white; font-weight: bold; 
-            box-shadow: inset -30px -30px 60px rgba(0,0,0,0.9); 
-            animation: rotationTerre 40s linear infinite; 
-            position: relative; z-index: 5; transition: transform 1.5s;
+            text-decoration: none; color: white; box-shadow: inset -30px -30px 60px rgba(0,0,0,0.9); 
+            animation: rotationTerre 40s linear infinite; position: relative; z-index: 5; transition: transform 1.5s;
         }
         .terre-don:hover { transform: rotate(360deg) scale(1.05); }
+        .texte-semis { 
+            font-family: 'Georgia', serif; font-style: italic; font-weight: bold; 
+            letter-spacing: 2px; text-shadow: 2px 2px 10px black; font-size: 1.4em; padding: 20px;
+        }
         @keyframes rotationTerre { from { background-position: 0 0; } to { background-position: 1000px 0; } }
 
-        /* Rubriques */
+        /* Rubriques avec effets souris */
         .bulles-grid { display: flex; justify-content: center; gap: 20px; flex-wrap: wrap; padding: 20px; position: relative; z-index: 5; }
-        .nuage, .cadre-aide { transition: transform 0.3s; background: #e0f7fa; border: 3px solid #008080; border-radius: 50px; padding: 20px; width: 320px; color: #000080; }
+        .nuage, .cadre-aide { transition: all 0.4s ease; background: #e0f7fa; border: 3px solid #008080; border-radius: 50px; padding: 20px; width: 320px; color: #000080; }
+        
+        /* Effet souris rubriques */
+        .nuage:hover { background: #b2ebf2; transform: translateY(-10px); box-shadow: 0 10px 20px rgba(0,255,255,0.2); }
+        .cadre-aide:hover { background: #ffcdd2; transform: translateY(-10px); box-shadow: 0 10px 20px rgba(255,0,0,0.2); }
+
         .phrases-impots { font-size: 0.8em; color: #d32f2f; font-weight: bold; margin: 8px 0; }
         .liste-exemples-discrets { font-size: 0.65em; text-align: left; color: rgba(0, 102, 102, 0.8); font-style: italic; list-style: none; padding-left: 15px; margin-top: 10px; border-top: 1px dashed #008080; }
 
@@ -82,33 +81,25 @@
             display: flex; flex-direction: column; align-items: center; justify-content: center; 
             text-decoration: none; color: #333; transition: 0.8s; padding: 20px; 
         }
-        .etoile-justice:hover { clip-path: circle(50% at 50% 50%); transform: scale(1.05); }
+        .etoile-justice:hover { clip-path: circle(50% at 50% 50%); transform: scale(1.05); background: #d1c4e9; }
 
-        .cadre-aide { background: #ffebee; border-color: #e91e63; }
         .btn-aide-container { display: flex; border-top: 1px solid #e91e63; margin-top: 10px; padding-top: 10px; gap: 10px; }
         .btn-aide-container a { flex: 1; color: #e91e63; font-weight: bold; text-decoration: none; font-size: 0.85em; }
 
         #coffre-magique { position: fixed; font-size: 55px; z-index: 8; filter: drop-shadow(0 0 15px gold); cursor: pointer; }
         .particule { position: fixed; pointer-events: none; z-index: 1000; font-size: 24px; }
         
-        /* Oiseaux et Messages */
-        .oiseau { position: fixed; font-size: 35px; z-index: 7; transition: transform 6s linear; pointer-events: none; }
+        /* Messagers et Messages agrandis */
+        .oiseau { position: fixed; font-size: 40px; z-index: 7; transition: transform 6s linear; pointer-events: none; }
         .message-volant { 
-            position: fixed; background: rgba(255,255,255,0.9); color: #e91e63; 
-            padding: 5px 15px; border-radius: 20px; font-size: 0.9em; font-weight: bold; 
-            border: 2px solid #ffc0cb; z-index: 9; transition: all 1.5s ease-in-out; 
-            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+            position: fixed; background: rgba(255,255,255,0.95); color: #2E7D32; 
+            padding: 8px 18px; border-radius: 25px; font-size: 1.2em; font-weight: bold; 
+            border: 2px solid #4CAF50; z-index: 9; transition: all 1.8s cubic-bezier(0.25, 0.1, 0.25, 1); 
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3); white-space: nowrap;
         }
 
-        /* Copyright avec effet */
-        .lien-copyright { 
-            display: inline-block; color: rgba(255,255,255,0.6); text-decoration: none; 
-            font-weight: bold; transition: 0.4s; padding: 10px;
-        }
-        .lien-copyright:hover { 
-            color: #00ffff; text-shadow: 0 0 10px #00ffff; transform: rotate(-2deg) scale(1.2);
-        }
-
+        .lien-copyright { display: inline-block; color: rgba(255,255,255,0.6); text-decoration: none; font-weight: bold; transition: 0.4s; padding: 10px; }
+        .lien-copyright:hover { color: #00ffff; text-shadow: 0 0 10px #00ffff; transform: rotate(-2deg) scale(1.2); }
         #btn-son { position: fixed; top: 10px; right: 10px; z-index: 1000; background: rgba(255,255,255,0.2); border: 1px solid white; color: white; border-radius: 50%; cursor: pointer; padding: 10px; font-size: 22px; }
     </style>
 </head>
@@ -116,7 +107,6 @@
 
     <div class="header-container">
         <div class="titre-fraternite">La fraternité du palais nature</div>
-        
         <table class="menu-table">
             <tr>
                 <td><a href="index.html">Accueil</a></td>
@@ -129,13 +119,13 @@
         </table>
     </div>
 
-    <div class="soleil-cadre"><h1>Le Trésor Public du jardin</h1></div>
+    <a href="jardin.html" class="soleil-cadre"><h1>Le Trésor Public du jardin</h1></a>
 
     <div id="google_translate_element"></div>
     <button id="btn-son" onclick="toggleSon()">🕊️</button>
 
     <a href="jardin.html" class="terre-don">
-        <div style="text-shadow: 2px 2px 8px black; font-size: 1.5em;">ESPACE DU SEMIS DE DON ENTIER</div>
+        <div class="texte-semis">ESPACE DU SEMIS DE DON ENTIER</div>
     </a>
 
     <div class="bulles-grid">
@@ -170,7 +160,6 @@
     </footer>
 
     <script>
-        // Génération des étoiles
         for(let i=0; i<65; i++) {
             let s = document.createElement('div'); s.className = 'star';
             s.style.width = s.style.height = (Math.random()*3+1)+'px';
@@ -180,7 +169,6 @@
             document.body.appendChild(s);
         }
 
-        // Mouvement du cadeau (index Z bas pour passer derrière les rubriques)
         const coffre = document.getElementById('coffre-magique');
         let cX = window.innerWidth/2, cY = window.innerHeight/2;
         let tX = Math.random()*(window.innerWidth-100), tY = Math.random()*(window.innerHeight-200);
@@ -202,54 +190,59 @@
                 document.body.appendChild(p);
                 const angle = Math.random() * Math.PI * 2;
                 const distance = Math.random() * 300 + 50;
-                p.animate([
-                    { transform: 'translate(0,0) scale(1.2)', opacity: 1 },
-                    { transform: `translate(${Math.cos(angle)*distance}px, ${Math.sin(angle)*distance}px) scale(0)`, opacity: 0 }
-                ], { duration: 1500, easing: 'ease-out' });
+                p.animate([{ transform: 'translate(0,0) scale(1.2)', opacity: 1 }, { transform: `translate(${Math.cos(angle)*distance}px, ${Math.sin(angle)*distance}px) scale(0)`, opacity: 0 }], { duration: 1500, easing: 'ease-out' });
                 setTimeout(() => p.remove(), 1500);
             }
             coffre.style.display = 'none';
             setTimeout(() => { coffre.style.display='block'; }, 3000);
         }
 
-        // Oiseaux messagers de Paix et d'Amour
-        function creerOiseau() {
-            const o = document.createElement('div'); o.className = 'oiseau'; o.innerHTML = '🕊️';
-            o.style.left = '-60px'; o.style.top = Math.random()*window.innerHeight+'px';
-            document.body.appendChild(o);
+        function creerMessager() {
+            const animaux = ['🕊️', '🦋', '🐝', '🐞'];
+            const a = document.createElement('div'); 
+            a.className = 'oiseau'; 
+            a.innerHTML = animaux[Math.floor(Math.random()*animaux.length)];
             
-            // L'oiseau traverse la page
-            setTimeout(() => o.style.transform = 'translateX(120vw)', 100);
+            const startFromLeft = Math.random() > 0.5;
+            a.style.top = Math.random()*window.innerHeight+'px';
+            
+            if(startFromLeft) {
+                a.style.left = '-60px';
+                a.style.transform = 'scaleX(1)'; // Regarde à droite
+                document.body.appendChild(a);
+                setTimeout(() => a.style.transform = 'translateX(120vw) scaleX(1)', 100);
+            } else {
+                a.style.left = '100vw';
+                a.style.transform = 'scaleX(-1)'; // Regarde à gauche
+                document.body.appendChild(a);
+                setTimeout(() => a.style.transform = 'translateX(-120vw) scaleX(-1)', 100);
+            }
 
-            // Lancer le message au milieu du chemin
             setTimeout(() => {
-                const messages = ["Amour ❤️", "Paix 🕊️", "Douceur ✨", "Fraternité 🤝"];
+                const messages = ["AMOUR ❤️", "PAIX 🕊️", "DOUCEUR ✨", "FRATERNITÉ 🤝", "JOIE 🌟"];
                 const m = document.createElement('div'); 
                 m.className = 'message-volant'; 
                 m.innerHTML = messages[Math.floor(Math.random()*messages.length)];
-                
-                const rect = o.getBoundingClientRect();
+                const rect = a.getBoundingClientRect();
                 m.style.left = rect.left+'px'; m.style.top = rect.top+'px';
                 document.body.appendChild(m);
 
-                // Le message se dirige vers le cadeau
                 setTimeout(() => { 
                     m.style.left = (cX + 20) + 'px'; 
                     m.style.top = (cY + 20) + 'px'; 
-                    m.style.transform = 'scale(0.2)'; 
+                    m.style.transform = 'scale(0.1)'; 
                     m.style.opacity = '0';
                 }, 100);
 
-                // Explosion à l'impact du message si le cadeau est là
                 setTimeout(() => { 
                     if(coffre.style.display !== 'none') exploserCadeau(); 
                     m.remove(); 
-                }, 1600);
-            }, 2000 + Math.random()*2000);
+                }, 1800);
+            }, 2500);
 
-            setTimeout(() => o.remove(), 7000);
+            setTimeout(() => a.remove(), 7000);
         }
-        setInterval(creerOiseau, 6000);
+        setInterval(creerMessager, 5000);
 
         let audio = new Audio('oiseaux.mp3');
         audio.loop = true;
