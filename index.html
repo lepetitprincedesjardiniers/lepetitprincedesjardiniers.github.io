@@ -18,14 +18,15 @@
         }
 
         #google_translate_element { position: absolute; top: 5px; left: 5px; z-index: 3000; opacity: 0.4; transform: scale(0.7); filter: grayscale(1); }
-        .phrase-discrete-top { display: block; padding-top: 15px; font-size: 0.95em; letter-spacing: 2px; color: rgba(255, 255, 255, 0.4); font-style: italic; }
+        .phrase-discrete-top { display: block; padding-top: 60px; font-size: 0.95em; letter-spacing: 2px; color: rgba(255, 255, 255, 0.4); font-style: italic; }
 
-        /* Étoiles */
-        .star { position: fixed; background: white; border-radius: 50%; z-index: -1; animation: twinkle var(--duration) infinite ease-in-out; }
+        /* Étoiles Mobiles */
+        .star { position: fixed; background: white; border-radius: 50%; z-index: -1; animation: twinkle var(--duration) infinite ease-in-out, drift var(--drift-duration) linear infinite; }
         @keyframes twinkle { 0%, 100% { opacity: 0.3; transform: scale(0.8); } 50% { opacity: 1; transform: scale(1.2); } }
+        @keyframes drift { from { transform: translateX(0); } to { transform: translateX(100px); } }
 
         /* Menu */
-        .menu-table { margin: 30px auto 10px; border-radius: 10px; background-color: #008080; border-collapse: collapse; position: relative; z-index: 10; }
+        .menu-table { margin: 10px auto 10px; border-radius: 10px; background-color: #008080; border-collapse: collapse; position: relative; z-index: 10; }
         .menu-table td { border: 1px solid #FFFFFF; }
         .menu-table a { display: block; padding: 12px 20px; text-decoration: none; color: #FFFFFF; font-weight: bold; }
         .menu-table td:hover { background-color: #00b3b3; }
@@ -34,47 +35,54 @@
         #btn-son { position: fixed; top: 10px; right: 10px; z-index: 1000; background: rgba(255,255,255,0.2); border: 1px solid white; color: white; border-radius: 50%; cursor: pointer; padding: 10px; font-size: 22px; transition: 0.3s; }
         #btn-son:hover { transform: scale(1.2); background: rgba(255,255,255,0.4); }
 
-        /* Soleil */
-        .soleil-cadre { width: 160px; height: 160px; background: #FFD700; border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 0 25px #FFA500; margin: 20px auto; position: relative; z-index: 10; }
+        /* Soleil en haut avec effet Arc-en-ciel */
+        .soleil-cadre { 
+            width: 140px; height: 140px; background: #FFD700; border-radius: 50%; 
+            display: flex; align-items: center; justify-content: center; 
+            box-shadow: 0 0 25px #FFA500; margin: 0 auto; position: absolute; top: 10px; left: 50%; 
+            transform: translateX(-50%); z-index: 20; transition: 0.5s; 
+        }
+        .soleil-cadre h1 { font-size: 1.1em; color: #333; }
+        .soleil-cadre:hover { 
+            box-shadow: 0 0 40px 10px rgba(255,0,0,0.5), 0 0 50px 20px rgba(255,165,0,0.5), 0 0 60px 30px rgba(255,255,0,0.5), 0 0 70px 40px rgba(0,128,0,0.5), 0 0 80px 50px rgba(0,0,255,0.5);
+            transform: translateX(-50%) scale(1.1);
+        }
         
-        /* TERRE AVEC DOUBLE ROTATION */
+        /* TERRE AGRANDIE */
         .terre-don { 
-            width: 220px; height: 220px; margin: 20px auto; border-radius: 50%; 
+            width: 350px; height: 350px; margin: 40px auto; border-radius: 50%; 
             background-image: url('https://upload.wikimedia.org/wikipedia/commons/thumb/c/c3/Solarsystemscope_texture_2k_earth_daymap.jpg/1200px-Solarsystemscope_texture_2k_earth_daymap.jpg'); 
             background-size: cover; display: flex; align-items: center; justify-content: center; 
             text-decoration: none; color: white; font-weight: bold; 
-            box-shadow: inset -20px -20px 50px rgba(0,0,0,0.8); 
-            animation: rotationTerre 30s linear infinite; 
+            box-shadow: inset -30px -30px 60px rgba(0,0,0,0.9); 
+            animation: rotationTerre 40s linear infinite; 
             position: relative; z-index: 5; transition: transform 1.5s cubic-bezier(0.4, 0, 0.2, 1);
         }
-        .terre-don:hover { transform: rotate(360deg) scale(1.1); box-shadow: 0 0 30px rgba(0, 191, 255, 0.6); }
-        @keyframes rotationTerre { from { background-position: 0 0; } to { background-position: 500px 0; } }
+        .terre-don:hover { transform: rotate(360deg) scale(1.05); box-shadow: 0 0 50px rgba(0, 191, 255, 0.8); }
+        @keyframes rotationTerre { from { background-position: 0 0; } to { background-position: 1000px 0; } }
 
-        /* Cadres */
+        /* Cadres avec effet léger au survol */
         .bulles-grid { display: flex; justify-content: center; gap: 20px; flex-wrap: wrap; padding: 20px; position: relative; z-index: 5; }
         
-        /* Impôts */
+        .nuage, .cadre-aide { transition: transform 0.3s, box-shadow 0.3s; cursor: default; }
+        .nuage:hover, .cadre-aide:hover { transform: translateY(-5px); box-shadow: 0 10px 20px rgba(255,255,255,0.2); }
+
         .nuage { background: #e0f7fa; border: 3px solid #008080; border-radius: 50px; padding: 20px; width: 320px; color: #000080; }
         .phrases-impots { font-size: 0.8em; color: #d32f2f; font-weight: bold; margin: 8px 0; }
         .liste-exemples-discrets { font-size: 0.65em; text-align: left; color: rgba(0, 102, 102, 0.6); font-style: italic; list-style: none; padding-left: 15px; }
 
-        /* Régulation : TRANSITION CERCLE */
         .etoile-justice { 
             background: #E6E6FA; border: 3px solid #9370DB; width: 300px; min-height: 250px; 
             clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%); 
             display: flex; flex-direction: column; align-items: center; justify-content: center; 
             text-decoration: none; color: #333; transition: 0.8s ease-in-out; padding: 20px; 
         }
-        .etoile-justice:hover { 
-            clip-path: circle(50% at 50% 50%);
-            background: #f3f0ff; transform: scale(1.05);
-        }
+        .etoile-justice:hover { clip-path: circle(50% at 50% 50%); background: #f3f0ff; transform: scale(1.05); }
 
         .cadre-aide { background: #ffebee; border: 3px solid #e91e63; border-radius: 50px; padding: 20px; width: 320px; color: #000080; }
         .btn-aide-container { display: flex; border-top: 1px solid #e91e63; margin-top: 10px; padding-top: 10px; gap: 10px; }
         .btn-aide-container a { flex: 1; color: #e91e63; font-weight: bold; text-decoration: none; font-size: 0.85em; }
 
-        /* Cadeau & Particules */
         #coffre-magique { position: fixed; font-size: 55px; z-index: 500; cursor: pointer; filter: drop-shadow(0 0 15px gold); }
         .particule { position: fixed; pointer-events: none; z-index: 1000; font-size: 24px; }
         .oiseau { position: fixed; font-size: 35px; z-index: 90; transition: transform 6s linear; pointer-events: none; }
@@ -85,6 +93,8 @@
     </style>
 </head>
 <body>
+
+    <div class="soleil-cadre"><h1>Le Trésor Public</h1></div>
 
     <span class="phrase-discrete-top">le petit prince des jardiniers</span>
     <div id="google_translate_element"></div>
@@ -101,10 +111,8 @@
         </tr>
     </table>
 
-    <div class="soleil-cadre"><h1>Le Trésor Public</h1></div>
-
     <a href="jardin.html" class="terre-don">
-        <div style="text-shadow: 2px 2px 4px black;">🌍<br>ESPACE DU DON ENTIER</div>
+        <div style="text-shadow: 2px 2px 8px black; font-size: 1.5em;">🌍<br>ESPACE DU DON ENTIER</div>
     </a>
 
     <div class="bulles-grid">
@@ -142,12 +150,13 @@
     </footer>
 
     <script>
-        // Étoiles de fond
-        for(let i=0; i<60; i++) {
+        // Étoiles de fond avec mouvement
+        for(let i=0; i<65; i++) {
             let s = document.createElement('div'); s.className = 'star';
             s.style.width = s.style.height = (Math.random()*3+1)+'px';
             s.style.left = Math.random()*100+'vw'; s.style.top = Math.random()*100+'vh';
             s.style.setProperty('--duration', (Math.random()*3+2)+'s');
+            s.style.setProperty('--drift-duration', (Math.random()*20+10)+'s');
             document.body.appendChild(s);
         }
 
@@ -185,13 +194,21 @@
             setTimeout(() => { coffre.style.display='block'; }, 2000);
         }
 
-        // CHANT DE L'OISEAU (Fichier : oiseaux.mp3)
+        // CHANT DE L'OISEAU (On/Off)
+        let audio = new Audio('oiseaux.mp3');
+        audio.loop = true;
+        let isPlaying = false;
+
         function toggleSon() {
-            const audio = new Audio('oiseaux.mp3');
-            audio.volume = 0.5;
-            audio.play().catch(e => {
-                console.log("Erreur : Assurez-vous que le fichier oiseaux.mp3 est dans le même dossier.");
-            });
+            if (isPlaying) {
+                audio.pause();
+                isPlaying = false;
+                document.getElementById('btn-son').style.opacity = "0.5";
+            } else {
+                audio.play().catch(e => console.log("Fichier audio introuvable."));
+                isPlaying = true;
+                document.getElementById('btn-son').style.opacity = "1";
+            }
         }
 
         function creerOiseau() {
