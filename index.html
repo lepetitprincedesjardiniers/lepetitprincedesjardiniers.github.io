@@ -3,60 +3,68 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sur l'Arc-en-Ciel...</title>
+    <title>Le Jardin du Petit Prince - Transition Magique</title>
     <style>
-        :root {
-            --rainbow: linear-gradient(90deg, #ff0000, #ff7f00, #ffff00, #00ff00, #0000ff, #4b0082, #8b00ff);
-        }
         body, html { 
             margin: 0; padding: 0; width: 100%; height: 100%; 
             overflow: hidden; font-family: 'Comic Sans MS', cursive;
-            background-color: #000; cursor: crosshair;
+            display: flex; align-items: center; justify-content: center;
+            background-color: #000;
+            cursor: crosshair;
         }
 
         #scene {
             position: relative; width: 100%; height: 100%;
             display: flex; align-items: center; justify-content: center;
-            transition: transform 0.8s ease-in;
+            transition: background 2s ease-in-out;
         }
 
-        /* --- LE PONT ARC-EN-CIEL --- */
-        .rainbow-bridge {
-            position: absolute; bottom: 0; width: 200%; height: 20vh;
-            background: var(--rainbow);
-            filter: blur(20px); opacity: 0.5;
-            animation: slide 10s linear infinite;
-        }
-        @keyframes slide { from { transform: translateX(-50%); } to { transform: translateX(0); } }
-
-        /* --- ÉLÉMENTS INTERACTIFS --- */
+        /* --- ÉLÉMENTS VOLANTS & CLIQUABLES --- */
         .interact-element {
-            position: absolute; z-index: 100; cursor: pointer;
-            animation: envol 4s cubic-bezier(0.25, 0.1, 0.25, 1) forwards;
+            position: absolute;
+            white-space: nowrap;
+            pointer-events: auto;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            z-index: 100;
+            animation: envol 4.5s cubic-bezier(0.25, 0.1, 0.25, 1) forwards;
+            cursor: pointer;
+            user-select: none;
         }
+
         .bulle-bonheur {
             background: white; color: #008080; padding: 12px 25px;
             border-radius: 30px; font-size: 1.1rem; font-weight: bold;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.3); border: 2px solid #FFD700;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+            border: 2px solid #FFD700;
         }
 
         @keyframes envol {
             0% { transform: translate(-100vw, 10vh) scale(0.5); opacity: 0; }
             20% { opacity: 1; }
+            80% { opacity: 1; }
             100% { transform: translate(100vw, -20vh) scale(1.2); opacity: 0; }
         }
 
-        /* --- BOUTON PASSER --- */
-        #skip-btn {
-            position: fixed; bottom: 30px; right: 30px;
-            background: rgba(255,255,255,0.2); border: 1px solid white;
-            color: white; padding: 10px 20px; border-radius: 20px;
-            cursor: pointer; opacity: 0; transition: 0.5s; z-index: 1000;
-            font-size: 0.8rem;
-        }
-        #skip-btn:hover { background: white; color: black; }
+        /* --- EFFETS DE THÈMES --- */
+        .star { position: absolute; background: white; border-radius: 50%; animation: blink 1s infinite alternate; }
+        @keyframes blink { from { opacity: 0.2; } to { opacity: 1; } }
 
-        /* --- EXPLOSIONS --- */
+        .fleur-pousse {
+            position: absolute; bottom: -50px; font-size: 3rem;
+            animation: floraison 3s forwards cubic-bezier(0.17, 0.67, 0.83, 0.67);
+            cursor: pointer;
+        }
+        @keyframes floraison { to { transform: translateY(-45vh) rotate(360deg) scale(1.5); } }
+
+        .neige {
+            position: absolute; top: -10px; color: white; font-size: 1rem;
+            animation: chute 4s linear forwards;
+        }
+        @keyframes chute { to { transform: translateY(100vh) rotate(360deg); } }
+
+        /* --- EXPLOSIONS & POUSSIÈRE --- */
         .particle {
             position: absolute; pointer-events: none;
             animation: particleAnim 0.8s forwards ease-out;
@@ -66,26 +74,29 @@
             100% { opacity: 0; transform: translate(var(--x), var(--y)) scale(0); }
         }
 
-        /* --- EFFET TUNNEL FINAL --- */
-        .flash {
-            position: fixed; top:0; left:0; width:100%; height:100%;
-            background: var(--rainbow); opacity: 0; pointer-events: none;
-            transition: opacity 0.5s; z-index: 2000;
+        .mouse-dust {
+            position: absolute; width: 4px; height: 4px; background: gold;
+            border-radius: 50%; pointer-events: none;
+            animation: dustFade 0.7s forwards;
+        }
+        @keyframes dustFade { to { opacity: 0; transform: scale(3); } }
+
+        .footer-poesie {
+            position: absolute; bottom: 20px; color: rgba(255,255,255,0.7);
+            text-align: center; font-style: italic; font-size: 0.9rem;
+            line-height: 1.4;
         }
     </style>
 </head>
 <body>
 
 <div id="scene">
-    <div class="rainbow-bridge"></div>
     <div id="container"></div>
-    <div style="color:white; text-align:center; z-index:10; font-style:italic;">
-        "Le silence s'efface devant l'éclat de l'arc-en-ciel..."
+    <div class="footer-poesie">
+        "Un silence irréel, puis l'éclair qui libère la joie..."<br>
+        Le Petit Prince des Jardiniers prépare votre chemin.
     </div>
 </div>
-
-<button id="skip-btn" onclick="goToNext()">Passer le voyage ➔</button>
-<div id="flash" class="flash"></div>
 
 <script>
     const phrases = [
@@ -98,29 +109,88 @@
     ];
 
     const container = document.getElementById('container');
-    const flash = document.getElementById('flash');
-    const skipBtn = document.getElementById('skip-btn');
-    const urlParams = new URLSearchParams(window.location.search);
-    const destination = urlParams.get('page') || 'index.html';
+    const scene = document.getElementById('scene');
 
+    // 1. Choix aléatoire du thème (Astral, Prairie, Nuages, ou Fêtes)
+    const currentTheme = ['astral', 'prairie', 'nuages', 'fetes'][Math.floor(Math.random() * 4)];
+    
+    function initTheme() {
+        if(currentTheme === 'astral') {
+            scene.style.background = "radial-gradient(circle, #001f3f, #000)";
+            for(let i=0; i<100; i++) createStaticElement('star');
+        } else if(currentTheme === 'prairie') {
+            scene.style.background = "linear-gradient(#87CEEB, #228B22)";
+            for(let i=0; i<15; i++) setTimeout(createFleur, i * 200);
+        } else if(currentTheme === 'fetes') {
+            scene.style.background = "linear-gradient(#1a2a6c, #b21f1f)";
+            setInterval(createNeige, 100);
+        } else {
+            scene.style.background = "linear-gradient(#4facfe, #00f2fe)";
+        }
+        
+        createMessenger();
+    }
+
+    // 2. Création de l'élément cliquable principal (Oiseau ou autre)
     function createMessenger() {
         const messenger = document.createElement('div');
         messenger.className = 'interact-element';
+        const icon = currentTheme === 'fetes' ? '🦌' : (currentTheme === 'prairie' ? '🦋' : '🕊️');
+        
         messenger.innerHTML = `
-            <div style="display:flex; align-items:center; gap:10px;">
-                <span style="font-size:3rem">🕊️</span>
-                <div class="bulle-bonheur">${phrases[Math.floor(Math.random()*phrases.length)]}</div>
-            </div>`;
+            <span style="font-size:3rem">${icon}</span>
+            <div class="bulle-bonheur">${phrases[Math.floor(Math.random()*phrases.length)]}</div>
+        `;
+        
         messenger.onclick = (e) => explode(e.clientX, e.clientY);
         container.appendChild(messenger);
     }
 
+    function createFleur() {
+        const f = document.createElement('div');
+        f.className = 'fleur-pousse';
+        f.style.left = Math.random() * 90 + 'vw';
+        f.innerHTML = ['🌸','🌻','🌼','🌷'][Math.floor(Math.random()*4)];
+        f.onclick = (e) => explode(e.clientX, e.clientY);
+        container.appendChild(f);
+    }
+
+    function createNeige() {
+        const n = document.createElement('div');
+        n.className = 'neige';
+        n.style.left = Math.random() * 100 + 'vw';
+        n.innerHTML = '❄️';
+        container.appendChild(n);
+        setTimeout(() => n.remove(), 4000);
+    }
+
+    function createStaticElement(type) {
+        const el = document.createElement('div');
+        el.className = type;
+        el.style.width = el.style.height = Math.random() * 3 + 'px';
+        el.style.left = Math.random() * 100 + 'vw';
+        el.style.top = Math.random() * 100 + 'vh';
+        container.appendChild(el);
+    }
+
+    // 3. Poussière d'étoiles au mouvement
+    window.onmousemove = (e) => {
+        const d = document.createElement('div');
+        d.className = 'mouse-dust';
+        d.style.left = e.clientX + 'px';
+        d.style.top = e.clientY + 'px';
+        document.body.appendChild(d);
+        setTimeout(() => d.remove(), 700);
+    };
+
+    // 4. Explosion de joie
     function explode(x, y) {
         for(let i=0; i<15; i++) {
             const p = document.createElement('div');
             p.className = 'particle';
-            p.innerHTML = ['🌈','✨','❤️','🌟'][Math.floor(Math.random()*4)];
-            p.style.left = x + 'px'; p.style.top = y + 'px';
+            p.innerHTML = ['✨','❤️','🌟','💥','🌸'][Math.floor(Math.random()*5)];
+            p.style.left = x + 'px';
+            p.style.top = y + 'px';
             p.style.setProperty('--x', (Math.random()*200 - 100) + 'px');
             p.style.setProperty('--y', (Math.random()*200 - 100) + 'px');
             document.body.appendChild(p);
@@ -128,19 +198,15 @@
         }
     }
 
-    function goToNext() {
-        flash.style.opacity = '1';
-        document.getElementById('scene').style.transform = 'scale(2)';
-        setTimeout(() => { window.location.href = destination; }, 600);
-    }
+    // 5. Redirection finale
+    const urlParams = new URLSearchParams(window.location.search);
+    const destination = urlParams.get('page') || 'index.html';
+    setTimeout(() => {
+        scene.style.opacity = '0';
+        setTimeout(() => { window.location.href = destination; }, 1000);
+    }, 4500);
 
-    // Apparition du bouton "Passer"
-    setTimeout(() => { skipBtn.style.opacity = "1"; }, 1500);
-
-    // Redirection automatique
-    setTimeout(goToNext, 4500);
-
-    window.onload = createMessenger;
+    window.onload = initTheme;
 </script>
 </body>
 </html>
