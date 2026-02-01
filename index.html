@@ -2,14 +2,7 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <title>Le Trésor Public - Accueil</title>
-    <script type="text/javascript">
-        function googleTranslateElementInit() {
-            new google.translate.TranslateElement({pageLanguage: 'fr'}, 'google_translate_element');
-        }
-    </script>
-    <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
-
+    <title>Le Trésor Public - La Fraternité</title>
     <style>
         body { 
             font-family: 'Comic Sans MS', cursive; text-align: center; margin: 0; padding: 0; 
@@ -17,221 +10,141 @@
             color: #ffffff; overflow-x: hidden; min-height: 100vh; position: relative;
         }
 
-        #google_translate_element { position: absolute; top: 5px; left: 5px; z-index: 3000; opacity: 0.4; transform: scale(0.7); filter: grayscale(1); }
-        
+        /* TITRE ET SOLEIL */
         .titre-fraternite { 
-            display: block; 
-            padding-top: 20px; 
-            font-size: 1.8em; 
-            letter-spacing: 3px; 
-            color: #f0e68c; 
-            text-shadow: 0 0 10px rgba(255,255,255,0.3);
-            position: relative;
-            z-index: 25;
+            display: block; padding-top: 20px; font-size: 1.8em; letter-spacing: 3px; 
+            color: #f0e68c; text-shadow: 0 0 10px rgba(255,255,255,0.3); z-index: 25;
         }
-
-        /* SOLEIL AVEC EFFET ARC-EN-CIEL AU SURVOL */
         .soleil-cadre { 
             width: 130px; height: 130px; background: #FFD700; border-radius: 50%; 
             display: flex; align-items: center; justify-content: center; 
-            box-shadow: 0 0 25px #FFA500; margin: 15px auto; position: relative; 
-            z-index: 20; transition: 0.5s; 
+            box-shadow: 0 0 25px #FFA500; margin: 15px auto; position: relative; z-index: 20; transition: 0.5s; 
         }
-        .soleil-cadre h1 { font-size: 1.0em; color: #333; margin: 0; padding: 10px; line-height: 1.1; z-index: 2; }
-        
-        /* L'effet arc-en-ciel */
+        .soleil-cadre:hover { transform: scale(1.1); box-shadow: 0 0 50px white; }
         .soleil-cadre::before {
             content: ""; position: absolute; top: -5px; left: -5px; right: -5px; bottom: -5px;
             border-radius: 50%; background: conic-gradient(red, orange, yellow, green, blue, indigo, violet, red);
-            z-index: -1; opacity: 0; transition: opacity 0.5s, transform 0.5s;
+            z-index: -1; opacity: 0; transition: opacity 0.5s;
         }
-
-        .soleil-cadre:hover { transform: scale(1.15); box-shadow: 0 0 50px white; }
         .soleil-cadre:hover::before { opacity: 1; animation: rotateRainbow 2s linear infinite; }
-
         @keyframes rotateRainbow { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
 
-        .star { position: fixed; background: white; border-radius: 50%; z-index: -1; animation: twinkle var(--duration) infinite ease-in-out, drift var(--drift-duration) linear infinite; }
-        @keyframes twinkle { 0%, 100% { opacity: 0.3; transform: scale(0.8); } 50% { opacity: 1; transform: scale(1.2); } }
-        @keyframes drift { from { transform: translateX(0); } to { transform: translateX(100px); } }
+        /* ÉTOILES ★ */
+        .star { position: fixed; color: white; z-index: -1; animation: twinkle var(--duration) infinite ease-in-out, drift var(--drift-duration) linear infinite; text-shadow: 0 0 5px #fff; }
+        @keyframes twinkle { 0%, 100% { opacity: 0.2; transform: scale(0.8); } 50% { opacity: 1; transform: scale(1.2); } }
+        @keyframes drift { from { transform: translateX(0); } to { transform: translateX(80px); } }
 
-        .menu-table { margin: 10px auto 20px; border-radius: 10px; background-color: #008080; border-collapse: collapse; position: relative; z-index: 10; }
-        .menu-table td { border: 1px solid #FFFFFF; }
-        .menu-table a { display: block; padding: 12px 20px; text-decoration: none; color: #FFFFFF; font-weight: bold; }
-        .menu-table td:hover { background-color: #00b3b3; }
+        /* CADEAU ET PARTICULES */
+        #coffre-magique { position: fixed; font-size: 55px; z-index: 500; cursor: pointer; filter: drop-shadow(0 0 15px gold); transition: opacity 0.3s; }
+        .particule { position: fixed; pointer-events: none; z-index: 1000; font-size: 30px; }
 
-        #btn-son { position: fixed; top: 10px; right: 10px; z-index: 1000; background: rgba(255,255,255,0.2); border: 1px solid white; color: white; border-radius: 50%; cursor: pointer; padding: 10px; font-size: 22px; transition: 0.3s; }
-        #btn-son:hover { transform: scale(1.2); background: rgba(255,255,255,0.4); }
-
-        .terre-don { 
-            width: 350px; height: 350px; margin: 30px auto; border-radius: 50%; 
-            background-image: url('https://upload.wikimedia.org/wikipedia/commons/thumb/c/c3/Solarsystemscope_texture_2k_earth_daymap.jpg/1200px-Solarsystemscope_texture_2k_earth_daymap.jpg'); 
-            background-size: cover; display: flex; align-items: center; justify-content: center; 
-            text-decoration: none; color: white; font-weight: bold; 
-            box-shadow: inset -30px -30px 60px rgba(0,0,0,0.9); 
-            animation: rotationTerre 40s linear infinite; 
-            position: relative; z-index: 5; transition: transform 1.5s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-        .terre-don:hover { transform: rotate(360deg) scale(1.05); box-shadow: 0 0 50px rgba(0, 191, 255, 0.8); }
-        @keyframes rotationTerre { from { background-position: 0 0; } to { background-position: 1000px 0; } }
-
-        .bulles-grid { display: flex; justify-content: center; gap: 20px; flex-wrap: wrap; padding: 20px; position: relative; z-index: 5; }
-        .nuage, .cadre-aide { transition: transform 0.3s, box-shadow 0.3s; cursor: default; }
-        .nuage:hover, .cadre-aide:hover { transform: translateY(-5px); box-shadow: 0 10px 20px rgba(255,255,255,0.2); }
-
-        .nuage { background: #e0f7fa; border: 3px solid #008080; border-radius: 50px; padding: 20px; width: 320px; color: #000080; }
-        .phrases-impots { font-size: 0.8em; color: #d32f2f; font-weight: bold; margin: 8px 0; }
-        
-        .exemples-ligne { 
-            font-size: 0.7em; 
-            text-align: center; 
-            color: rgba(0, 102, 102, 0.7); 
-            font-style: italic; 
-            margin-top: 15px;
-            padding: 0 10px;
-            line-height: 1.4;
+        /* OISEAUX ET MESSAGES */
+        .oiseau { position: fixed; font-size: 40px; z-index: 100; transition: transform 6s linear; pointer-events: none; }
+        .message-volant { 
+            position: fixed; background: #fff; color: #d32f2f; padding: 6px 12px; 
+            border-radius: 20px; font-size: 0.8em; font-weight: bold; border: 2px solid #ffca28; 
+            z-index: 600; box-shadow: 0 0 15px rgba(255,255,255,0.8);
+            pointer-events: none; transition: all 1.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
 
-        .etoile-justice { 
-            background: #E6E6FA; border: 3px solid #9370DB; width: 300px; min-height: 250px; 
-            clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%); 
-            display: flex; flex-direction: column; align-items: center; justify-content: center; 
-            text-decoration: none; color: #333; transition: 0.8s ease-in-out; padding: 20px; 
-        }
-        .etoile-justice:hover { clip-path: circle(50% at 50% 50%); background: #f3f0ff; transform: scale(1.05); }
-
-        .cadre-aide { background: #ffebee; border: 3px solid #e91e63; border-radius: 50px; padding: 20px; width: 320px; color: #000080; }
-        .btn-aide-container { display: flex; border-top: 1px solid #e91e63; margin-top: 10px; padding-top: 10px; gap: 10px; }
-        .btn-aide-container a { flex: 1; color: #e91e63; font-weight: bold; text-decoration: none; font-size: 0.85em; }
-
-        #coffre-magique { position: fixed; font-size: 55px; z-index: 500; cursor: pointer; filter: drop-shadow(0 0 15px gold); }
-        .particule { position: fixed; pointer-events: none; z-index: 1000; font-size: 24px; }
-        
-        footer { padding: 30px; }
-
-        /* COPYRIGHT BRILLANT AU SURVOL */
-        .lien-copyright { 
-            color: rgba(255,255,255,0.6); 
-            text-decoration: none; 
-            font-weight: bold; 
-            transition: 0.5s;
-            display: inline-block;
-        }
-        .lien-copyright:hover { 
-            color: #fff;
-            text-shadow: 0 0 10px #FFD700, 0 0 20px #FFA500;
-            transform: scale(1.1);
-            animation: glowPulse 1.5s infinite alternate;
-        }
-        @keyframes glowPulse { from { opacity: 0.8; } to { opacity: 1; text-shadow: 0 0 20px #FFD700, 0 0 30px #fff; } }
-
+        /* FOOTER */
+        footer { padding: 40px; }
+        .lien-copyright { color: rgba(255,255,255,0.6); text-decoration: none; transition: 0.4s; }
+        .lien-copyright:hover { color: #fff; text-shadow: 0 0 10px gold; transform: scale(1.1); }
     </style>
 </head>
 <body>
 
     <div class="titre-fraternite">La fraternité du palais nature</div>
-    <div class="soleil-cadre"><h1>Le Trésor Public</h1></div>
-    
-    <div id="google_translate_element"></div>
-    <button id="btn-son" onclick="toggleSon()">🕊️</button>
+    <div class="soleil-cadre"><h1 style="font-size: 1em; color: #333;">Le Trésor Public</h1></div>
 
-    <table class="menu-table">
-        <tr>
-            <td><a href="index.html">Accueil</a></td>
-            <td><a href="formulaire.html">Semer</a></td>
-            <td><a href="jardin.html">Le Jardin</a></td>
-            <td><a href="impot.html">Impôts Publics</a></td>
-            <td><a href="regulation.html">Régulation</a></td>
-        </tr>
-    </table>
-
-    <a href="jardin.html" class="terre-don">
-        <div style="text-shadow: 2px 2px 8px black; font-size: 1.5em;">🌍<br>ESPACE DU DON ENTIER</div>
-    </a>
-
-    <div class="bulles-grid">
-        <div class="nuage">
-            <h3 style="margin:0; font-size: 1em;">📜 Impôts Publics</h3>
-            <p style="font-size: 0.8em; font-weight: bold;">Travaux publics en participation libre.</p>
-            <div class="phrases-impots">Motivation indispensable.<br>Attention : Travaux ingrats.</div>
-            <div class="exemples-ligne">
-                <strong>exemples :</strong> réfection des routes et sentiers, aide administrative et courriers, entretien des espaces verts, soutien technique collectif...
-            </div>
-        </div>
-
-        <a href="regulation.html" class="etoile-justice">
-            <h3 style="margin:0;">⚖️ Régulation</h3>
-            <p style="font-size:0.8em;">Médiation et harmonie citoyenne pour tous les jardiniers.</p>
-        </a>
-
-        <div class="cadre-aide">
-            <h3 style="margin:0;">❤️ Aide & Écoute</h3>
-            <p style="font-size:0.8em;">Besoins vitaux ou oreille attentive.</p>
-            <div class="btn-aide-container">
-                <a href="urgence.html">Urgences</a>
-                <a href="ecoute.html">Écoute</a>
-            </div>
-        </div>
-    </div>
-
-    <div id="coffre-magique" onclick="exploserCadeau()">🎁</div>
+    <div id="coffre-magique">🎁</div>
 
     <footer>
-        <a href="transition-externe.html" class="lien-copyright">© 2000 le petit prince des jardiniers</a>
+        <a href="#" class="lien-copyright">© 2000 le petit prince des jardiniers</a>
     </footer>
 
     <script>
-        // Étoiles de fond
-        for(let i=0; i<65; i++) {
-            let s = document.createElement('div'); s.className = 'star';
-            s.style.width = s.style.height = (Math.random()*3+1)+'px';
+        // Création des étoiles
+        for(let i=0; i<60; i++) {
+            let s = document.createElement('div'); s.className = 'star'; s.innerHTML = '★';
             s.style.left = Math.random()*100+'vw'; s.style.top = Math.random()*100+'vh';
             s.style.setProperty('--duration', (Math.random()*3+2)+'s');
             s.style.setProperty('--drift-duration', (Math.random()*20+10)+'s');
+            s.style.fontSize = (Math.random()*12 + 8) + 'px';
             document.body.appendChild(s);
         }
 
-        const coffre = document.getElementById('coffre-magique');
+        // Mouvement du cadeau
+        const cadeau = document.getElementById('coffre-magique');
         let cX = window.innerWidth/2, cY = window.innerHeight/2;
         let tX = Math.random()*(window.innerWidth-100), tY = Math.random()*(window.innerHeight-200);
 
-        function move() {
-            cX += (tX - cX) * 0.015; cY += (tY - cY) * 0.015;
+        function animCadeau() {
+            cX += (tX - cX) * 0.02; cY += (tY - cY) * 0.02;
             if(Math.abs(cX-tX)<50) { tX=Math.random()*(window.innerWidth-100); tY=Math.random()*(window.innerHeight-200); }
-            coffre.style.left = cX+'px'; coffre.style.top = cY+'px';
-            requestAnimationFrame(move);
+            cadeau.style.left = cX+'px'; cadeau.style.top = cY+'px';
+            requestAnimationFrame(animCadeau);
         }
-        move();
+        animCadeau();
 
-        function exploserCadeau() {
-            const fleurs = ['🌸', '🌺', '🌼', '🌻', '✨', '🍀', '🌟'];
-            for(let i=0; i<65; i++) {
+        // Explosion
+        function exploser() {
+            const fleurs = ['🌸', '🌺', '🌼', '✨', '⭐', '🌻', '🌈'];
+            for(let i=0; i<40; i++) {
                 const p = document.createElement('div');
                 p.className = 'particule';
                 p.innerHTML = fleurs[Math.floor(Math.random()*fleurs.length)];
-                p.style.left = (cX + 20) + 'px'; p.style.top = (cY + 20) + 'px';
+                p.style.left = cX + 'px'; p.style.top = cY + 'px';
                 document.body.appendChild(p);
                 const angle = Math.random() * Math.PI * 2;
-                const distance = Math.random() * 300 + 50;
-                const duration = Math.random() * 1000 + 1000;
+                const dist = Math.random() * 200 + 50;
                 p.animate([
-                    { transform: 'translate(0,0) scale(1.2) rotate(0deg)', opacity: 1 },
-                    { transform: `translate(${Math.cos(angle)*distance}px, ${Math.sin(angle)*distance}px) scale(0) rotate(360deg)`, opacity: 0 }
-                ], { duration: duration, easing: 'ease-out' });
-                setTimeout(() => p.remove(), duration);
+                    { transform: 'translate(0,0) scale(1.5)', opacity: 1 },
+                    { transform: `translate(${Math.cos(angle)*dist}px, ${Math.sin(angle)*dist}px) scale(0)`, opacity: 0 }
+                ], { duration: 1200, easing: 'ease-out' });
+                setTimeout(() => p.remove(), 1200);
             }
-            coffre.style.display = 'none';
-            setTimeout(() => { coffre.style.display='block'; }, 2000);
+            cadeau.style.opacity = '0.3';
+            setTimeout(() => cadeau.style.opacity = '1', 1500);
         }
 
-        let audio = new Audio('oiseaux.mp3');
-        audio.loop = true;
-        let isPlaying = false;
+        // L'Oiseau qui lance le message
+        function lancerOiseau() {
+            const o = document.createElement('div'); o.className = 'oiseau'; o.innerHTML = '🕊️';
+            o.style.left = '-60px'; o.style.top = (Math.random()*50 + 10)+'vh';
+            document.body.appendChild(o);
+            
+            // Vol de l'oiseau
+            setTimeout(() => o.style.transform = 'translateX(120vw)', 100);
 
-        function toggleSon() {
-            if (isPlaying) { audio.pause(); isPlaying = false; document.getElementById('btn-son').style.opacity = "0.5"; } 
-            else { audio.play().catch(e => console.log("Audio non trouvé")); isPlaying = true; document.getElementById('btn-son').style.opacity = "1"; }
+            // Moment du lancer (quand il arrive vers le milieu)
+            setTimeout(() => {
+                const m = document.createElement('div'); m.className = 'message-volant';
+                m.innerHTML = "Un vœu ! ✨";
+                const r = o.getBoundingClientRect();
+                m.style.left = r.left + 'px'; m.style.top = r.top + 'px';
+                document.body.appendChild(m);
+
+                // Propulsion vers le cadeau
+                setTimeout(() => {
+                    m.style.left = (cX + 20) + 'px';
+                    m.style.top = (cY + 20) + 'px';
+                    m.style.transform = 'scale(0.5) rotate(720deg)';
+                }, 50);
+
+                // Impact
+                setTimeout(() => {
+                    exploser();
+                    m.remove();
+                }, 1250);
+
+            }, 2000 + Math.random()*2000);
+
+            setTimeout(() => o.remove(), 7000);
         }
+
+        setInterval(lancerOiseau, 8000);
     </script>
 </body>
 </html>
