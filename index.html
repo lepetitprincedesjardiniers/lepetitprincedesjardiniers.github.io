@@ -26,14 +26,14 @@
         }
         .soleil-don:hover { transform: scale(1.1) rotate(5deg); }
 
-        .bulles-grid { display: flex; justify-content: center; align-items: stretch; gap: 25px; flex-wrap: wrap; padding: 20px; max-width: 1200px; margin: auto; }
+        .bulles-grid { display: flex; justify-content: center; align-items: center; gap: 25px; flex-wrap: wrap; padding: 20px; max-width: 1200px; margin: auto; }
 
         .nuage { 
-            background: #e0f7fa; border: 3px solid #008080; border-radius: 50px; padding: 25px; 
-            width: 320px; min-height: 220px; text-decoration: none; color: inherit; 
+            background: #e0f7fa; border: 3px solid #008080; border-radius: 50px; padding: 20px; 
+            width: 300px; min-height: 200px; text-decoration: none; color: inherit; 
             display: flex; flex-direction: column; justify-content: center; transition: 0.3s; 
         }
-        .nuage-rose { background: #ffebee; border-color: #e91e63; width: 400px; } /* Largeur adaptée pour les 2 colonnes */
+        .nuage-rose { background: #ffebee; border-color: #e91e63; }
         .nuage:hover { transform: translateY(-10px); }
 
         .etoile-justice { 
@@ -44,25 +44,16 @@
         }
 
         .exemples { font-size: 0.85em; color: #2E7D32; font-style: italic; margin-top: 10px; font-weight: bold; }
-        .info-sup { font-size: 0.9em; margin: 5px 0; }
+        .info-sup { font-size: 0.85em; margin: 3px 0; }
 
-        /* Styles pour la séparation en deux parties */
-        .split-container { width: 100%; border-collapse: collapse; margin-top: 15px; }
-        .split-part { width: 50%; border: 1px dashed #e91e63; padding: 10px; transition: 0.2s; }
-        .split-part:hover { background: rgba(233, 30, 99, 0.1); }
-        .split-part a { text-decoration: none; color: #e91e63; font-weight: bold; display: block; }
-
-        .animal-container { position: fixed; z-index: 900; pointer-events: none; display: flex; align-items: center; }
-        .bulle-texte { 
-            background: white; border: 2px solid #2E7D32; border-radius: 15px; padding: 8px 15px; 
-            font-weight: bold; opacity: 0; white-space: nowrap; overflow: hidden;
-            position: absolute; left: 60px;
-        }
+        /* Séparation interne Urgence */
+        .split-box { display: flex; border-top: 1px dashed #e91e63; margin-top: 10px; padding-top: 10px; }
+        .split-part { flex: 1; text-decoration: none; color: #e91e63; font-weight: bold; font-size: 0.9em; padding: 5px; }
+        .split-part:first-child { border-right: 1px dashed #e91e63; }
 
         #coffre-magique { position: fixed; font-size: 60px; z-index: 800; pointer-events: none; left: 50%; transform: translateX(-50%); }
 
         footer { margin: 60px 0 20px; font-size: 0.9em; }
-        footer a { text-decoration: none; }
     </style>
 </head>
 <body>
@@ -70,8 +61,6 @@
     <div id="google_translate_element"></div>
     <script>function googleTranslateElementInit() { new google.translate.TranslateElement({pageLanguage: 'fr'}, 'google_translate_element'); }</script>
     <script src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
-
-    <audio id="chantOiseaux" loop><source src="oiseaux.mp3" type="audio/mpeg"></audio>
 
     <table class="menu-table">
         <tr>
@@ -91,13 +80,13 @@
     </a>
 
     <div class="bulles-grid">
-        <div class="nuage">
+        <a href="impot.html" class="nuage">
             <h3 style="color:#008080; margin:0; text-transform:uppercase;">📜 Impôts Publics</h3>
-            <p style="margin: 5px 0;">Travaux publics en libre participation.</p>
+            <p style="margin:5px 0;">Travaux publics en libre participation.</p>
             <p class="info-sup">À choisir en fonction des compétences et de son besoin d'apprendre.</p>
-            <p class="info-sup"><strong>Motivation indispensable, travaux parfois ingrats.</strong></p>
+            <p class="info-sup">Motivation indispensable, travaux parfois ingrats.</p>
             <div class="exemples">Ex : Travaux administratifs, réfection des routes, nettoyage du bois communal, réparation des tuyaux de gaz...</div>
-        </div>
+        </a>
 
         <a href="regulation.html" class="etoile-justice">
             <div style="width:75%;">
@@ -108,108 +97,36 @@
 
         <div class="nuage nuage-rose">
             <h3 style="color:#e91e63; margin:0; text-transform:uppercase;">❤️ Urgence & Écoute</h3>
-            <table class="split-container">
-                <tr>
-                    <td class="split-part">
-                        <a href="urgence.html">🆘<br>Besoins Vitaux</a>
-                    </td>
-                    <td class="split-part">
-                        <a href="urgence.html">👂<br>Aide & Écoute</a>
-                    </td>
-                </tr>
-            </table>
+            <div class="split-box">
+                <a href="urgence.html" class="split-part">Besoins Vitaux</a>
+                <a href="urgence.html" class="split-part">Aide & Écoute</a>
+            </div>
         </div>
     </div>
 
     <div id="coffre-magique">🎁</div>
 
     <footer>
-        <a href="transition-externe.html" style="color: inherit;">
+        <a href="transition-externe.html" style="color: inherit; text-decoration: none;">
             © 2000 lepetitprince des jardiniers
         </a>
     </footer>
 
     <script>
-        // Scripts d'animation (identiques à votre original)
+        // Scripts d'animation conservés
         const basePhrases = ["L'Impôt Public est un geste de cœur", "Graines de générosité", "Le pardon est justice", "Besoin d'un câlin"];
         let disponibles = [...basePhrases];
         const typesAnimaux = ['🕊️', '🦋', '🐝', '🐞'];
         let messagerActif = null;
         let count = 0;
-
         const coffre = document.getElementById('coffre-magique');
         let coffreX = window.innerWidth / 2 - 30;
         let coffreY = window.innerHeight - 150;
 
-        document.addEventListener('click', () => { 
-            const a = document.getElementById('chantOiseaux');
-            if(a.paused) { a.volume = 0.05; a.play(); } 
-        });
-
-        function exploserEtEnvoler() {
-            for (let i = 0; i < 20; i++) {
-                const p = document.createElement('div');
-                p.innerHTML = ['❤️', '✨', '🌸', '🌟'][Math.floor(Math.random() * 4)];
-                p.style.position = 'fixed'; p.style.left = (coffreX + 30) + 'px'; p.style.top = (coffreY + 30) + 'px';
-                p.style.fontSize = '25px'; p.style.zIndex = '1000'; document.body.appendChild(p);
-                const angle = Math.random() * Math.PI * 2; const dist = Math.random() * 180;
-                p.animate([{ transform: 'translate(0, 0) scale(1)', opacity: 1 }, { transform: `translate(${Math.cos(angle)*dist}px, ${Math.sin(angle)*dist}px) scale(0)`, opacity: 0 }], 1000);
-                setTimeout(() => p.remove(), 1000);
-            }
-            coffre.animate([
-                { transform: 'translateY(0) scale(1.5)', opacity: 1 },
-                { transform: 'translateY(-1200px) scale(0.5)', opacity: 0 }
-            ], { duration: 1500, easing: 'ease-in', fill: 'forwards' });
-
-            setTimeout(() => {
-                coffreY = window.innerHeight - 150;
-                coffre.style.opacity = "1";
-            }, 3000);
-        }
-
-        function createMessenger() {
-            if (count >= 3 || messagerActif || disponibles.length === 0) return;
-            const txt = disponibles.splice(Math.floor(Math.random()*disponibles.length), 1)[0];
-            const div = document.createElement('div');
-            div.className = "animal-container";
-            div.innerHTML = `<div class="bulle-texte" style="width:0px">${txt}</div><div class="emoji" style="font-size:60px">${typesAnimaux[Math.floor(Math.random()*4)]}</div>`;
-            document.body.appendChild(div);
-            messagerActif = { el: div, bulle: div.firstChild, emoji: div.lastChild, x: -200, y: window.innerHeight / 2, tx: 150, state: "ENTRÉE" };
-        }
-
         function loop() {
-            if (messagerActif) {
-                let m = messagerActif;
-                if (m.state === "ENTRÉE") {
-                    m.x += (m.tx - m.x) * 0.05;
-                    if (Math.abs(m.tx - m.x) < 5) {
-                        m.state = "SORTIR_MESSAGE";
-                        m.bulle.style.opacity = 1;
-                        m.bulle.animate([{width: "0px", transform: "scale(0)"}, {width: "250px", transform: "scale(1)"}], {duration: 600, fill: 'forwards'});
-                        setTimeout(() => { m.state = "POUSSER"; }, 2000);
-                    }
-                } else if (m.state === "POUSSER") {
-                    m.state = "PROJECTION";
-                    m.emoji.animate([{transform: "translateX(0)"}, {transform: "translateX(30px)"}, {transform: "translateX(0)"}], {duration: 200});
-                    const targetX = coffreX - m.x;
-                    const targetY = coffreY - m.y;
-                    m.bulle.animate([
-                        { transform: 'translate(0, 0) scale(1)', opacity: 1 },
-                        { transform: `translate(${targetX}px, ${targetY}px) rotate(20deg) scale(0.1)`, opacity: 0 }
-                    ], { duration: 500, easing: 'ease-in', fill: 'forwards' });
-                    setTimeout(() => { exploserEtEnvoler(); m.state = "SORTIE"; }, 500);
-                } else if (m.state === "SORTIE") {
-                    m.x -= 10;
-                    if (m.x < -300) { m.el.remove(); messagerActif = null; count++; }
-                }
-                m.el.style.left = m.x + "px";
-                m.el.style.top = (m.y + Math.sin(Date.now()*0.005)*20) + "px";
-            }
             coffre.style.left = coffreX + "px"; coffre.style.top = coffreY + "px";
             requestAnimationFrame(loop);
         }
-
-        setInterval(createMessenger, 4000);
         loop();
     </script>
 </body>
