@@ -45,9 +45,17 @@
             transform: scale(1.1) rotate(360deg);
         }
 
-        .star { position: fixed; background: white; border-radius: 50%; z-index: -1; animation: twinkle var(--duration) infinite ease-in-out, drift var(--drift-duration) linear infinite; }
-        @keyframes twinkle { 0%, 100% { opacity: 0.3; transform: scale(0.8); } 50% { opacity: 1; transform: scale(1.2); } }
-        @keyframes drift { from { transform: translateX(0); } to { transform: translateX(100px); } }
+        /* Nouvelles Étoiles scintillantes */
+        .star { 
+            position: fixed; color: white; z-index: -1; 
+            text-shadow: 0 0 8px white;
+            animation: twinkle var(--duration) infinite ease-in-out; 
+            user-select: none;
+        }
+        @keyframes twinkle { 
+            0%, 100% { opacity: 0.2; transform: scale(0.7) rotate(0deg); } 
+            50% { opacity: 1; transform: scale(1.2) rotate(15deg); } 
+        }
 
         /* TERRE & TEXTE STYLE */
         .terre-don { 
@@ -67,8 +75,6 @@
         /* Rubriques avec effets souris */
         .bulles-grid { display: flex; justify-content: center; gap: 20px; flex-wrap: wrap; padding: 20px; position: relative; z-index: 5; }
         .nuage, .cadre-aide { transition: all 0.4s ease; background: #e0f7fa; border: 3px solid #008080; border-radius: 50px; padding: 20px; width: 320px; color: #000080; }
-        
-        /* Effet souris rubriques */
         .nuage:hover { background: #b2ebf2; transform: translateY(-10px); box-shadow: 0 10px 20px rgba(0,255,255,0.2); }
         .cadre-aide:hover { background: #ffcdd2; transform: translateY(-10px); box-shadow: 0 10px 20px rgba(255,0,0,0.2); }
 
@@ -83,13 +89,10 @@
         }
         .etoile-justice:hover { clip-path: circle(50% at 50% 50%); transform: scale(1.05); background: #d1c4e9; }
 
-        .btn-aide-container { display: flex; border-top: 1px solid #e91e63; margin-top: 10px; padding-top: 10px; gap: 10px; }
-        .btn-aide-container a { flex: 1; color: #e91e63; font-weight: bold; text-decoration: none; font-size: 0.85em; }
-
         #coffre-magique { position: fixed; font-size: 55px; z-index: 8; filter: drop-shadow(0 0 15px gold); cursor: pointer; }
         .particule { position: fixed; pointer-events: none; z-index: 1000; font-size: 24px; }
         
-        /* Messagers et Messages agrandis */
+        /* Messagers et Messages */
         .oiseau { position: fixed; font-size: 40px; z-index: 7; transition: transform 6s linear; pointer-events: none; }
         .message-volant { 
             position: fixed; background: rgba(255,255,255,0.95); color: #2E7D32; 
@@ -99,7 +102,6 @@
         }
 
         .lien-copyright { display: inline-block; color: rgba(255,255,255,0.6); text-decoration: none; font-weight: bold; transition: 0.4s; padding: 10px; }
-        .lien-copyright:hover { color: #00ffff; text-shadow: 0 0 10px #00ffff; transform: rotate(-2deg) scale(1.2); }
         #btn-son { position: fixed; top: 10px; right: 10px; z-index: 1000; background: rgba(255,255,255,0.2); border: 1px solid white; color: white; border-radius: 50%; cursor: pointer; padding: 10px; font-size: 22px; }
     </style>
 </head>
@@ -160,15 +162,40 @@
     </footer>
 
     <script>
-        for(let i=0; i<65; i++) {
-            let s = document.createElement('div'); s.className = 'star';
-            s.style.width = s.style.height = (Math.random()*3+1)+'px';
-            s.style.left = Math.random()*100+'vw'; s.style.top = Math.random()*100+'vh';
+        // SYSTÈME ASTROMONIQUE RÉEL
+        const starTypes = ['✦', '★', '✶', '·', '✧'];
+        const constellations = [
+            // Grande Ourse (Ursa Major)
+            {x: 15, y: 20}, {x: 20, y: 18}, {x: 25, y: 22}, {x: 30, y: 25}, 
+            {x: 31, y: 32}, {x: 40, y: 33}, {x: 38, y: 24},
+            // Cassiopée (W)
+            {x: 70, y: 15}, {x: 75, y: 20}, {x: 80, y: 16}, {x: 85, y: 22}, {x: 90, y: 14},
+            // Orion (Ceinture et épaules)
+            {x: 10, y: 70}, {x: 25, y: 65}, {x: 15, y: 75}, {x: 17, y: 75}, {x: 19, y: 75}, 
+            {x: 12, y: 85}, {x: 22, y: 82}
+        ];
+
+        function createStar(x, y, isConstellation = false) {
+            let s = document.createElement('div'); 
+            s.className = 'star';
+            s.innerHTML = starTypes[Math.floor(Math.random() * starTypes.length)];
+            s.style.left = x + 'vw'; 
+            s.style.top = y + 'vh';
+            s.style.fontSize = (isConstellation ? (Math.random()*10+15) : (Math.random()*8+5)) + 'px';
             s.style.setProperty('--duration', (Math.random()*3+2)+'s');
-            s.style.setProperty('--drift-duration', (Math.random()*20+10)+'s');
+            if(isConstellation) s.style.color = '#fffce0'; // Étoiles guides légèrement dorées
             document.body.appendChild(s);
         }
 
+        // Tracer les constellations réelles
+        constellations.forEach(pos => createStar(pos.x, pos.y, true));
+
+        // Ajouter le reste du ciel aléatoire
+        for(let i=0; i<80; i++) {
+            createStar(Math.random()*100, Math.random()*100);
+        }
+
+        // Logique du cadeau et des messagers
         const coffre = document.getElementById('coffre-magique');
         let cX = window.innerWidth/2, cY = window.innerHeight/2;
         let tX = Math.random()*(window.innerWidth-100), tY = Math.random()*(window.innerHeight-200);
@@ -202,55 +229,33 @@
             const a = document.createElement('div'); 
             a.className = 'oiseau'; 
             a.innerHTML = animaux[Math.floor(Math.random()*animaux.length)];
-            
             const startFromLeft = Math.random() > 0.5;
             a.style.top = Math.random()*window.innerHeight+'px';
-            
             if(startFromLeft) {
-                a.style.left = '-60px';
-                a.style.transform = 'scaleX(1)'; // Regarde à droite
+                a.style.left = '-60px'; a.style.transform = 'scaleX(1)';
                 document.body.appendChild(a);
                 setTimeout(() => a.style.transform = 'translateX(120vw) scaleX(1)', 100);
             } else {
-                a.style.left = '100vw';
-                a.style.transform = 'scaleX(-1)'; // Regarde à gauche
+                a.style.left = '100vw'; a.style.transform = 'scaleX(-1)';
                 document.body.appendChild(a);
                 setTimeout(() => a.style.transform = 'translateX(-120vw) scaleX(-1)', 100);
             }
-
             setTimeout(() => {
-                const messages = ["AMOUR ❤️", "PAIX 🕊️", "DOUCEUR ✨", "FRATERNITÉ 🤝", "JOIE 🌟"];
                 const m = document.createElement('div'); 
                 m.className = 'message-volant'; 
-                m.innerHTML = messages[Math.floor(Math.random()*messages.length)];
+                m.innerHTML = ["AMOUR ❤️", "PAIX 🕊️", "DOUCEUR ✨", "FRATERNITÉ 🤝", "JOIE 🌟"][Math.floor(Math.random()*5)];
                 const rect = a.getBoundingClientRect();
                 m.style.left = rect.left+'px'; m.style.top = rect.top+'px';
                 document.body.appendChild(m);
-
-                setTimeout(() => { 
-                    m.style.left = (cX + 20) + 'px'; 
-                    m.style.top = (cY + 20) + 'px'; 
-                    m.style.transform = 'scale(0.1)'; 
-                    m.style.opacity = '0';
-                }, 100);
-
-                setTimeout(() => { 
-                    if(coffre.style.display !== 'none') exploserCadeau(); 
-                    m.remove(); 
-                }, 1800);
+                setTimeout(() => { m.style.left = (cX+20)+'px'; m.style.top = (cY+20)+'px'; m.style.transform = 'scale(0.1)'; m.style.opacity = '0'; }, 100);
+                setTimeout(() => { if(coffre.style.display !== 'none') exploserCadeau(); m.remove(); }, 1800);
             }, 2500);
-
             setTimeout(() => a.remove(), 7000);
         }
         setInterval(creerMessager, 5000);
 
-        let audio = new Audio('oiseaux.mp3');
-        audio.loop = true;
-        let isPlaying = false;
-        function toggleSon() {
-            if (isPlaying) { audio.pause(); isPlaying = false; }
-            else { audio.play().catch(e => {}); isPlaying = true; }
-        }
+        let audio = new Audio('oiseaux.mp3'); audio.loop = true; let isPlaying = false;
+        function toggleSon() { if (isPlaying) { audio.pause(); isPlaying = false; } else { audio.play().catch(e => {}); isPlaying = true; } }
     </script>
 </body>
 </html>
