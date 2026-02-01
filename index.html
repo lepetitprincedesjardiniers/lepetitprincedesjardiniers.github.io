@@ -18,7 +18,31 @@
         }
 
         #google_translate_element { position: absolute; top: 5px; left: 5px; z-index: 3000; opacity: 0.4; transform: scale(0.7); filter: grayscale(1); }
-        .phrase-discrete-top { display: block; padding-top: 60px; font-size: 0.95em; letter-spacing: 2px; color: rgba(255, 255, 255, 0.4); font-style: italic; }
+        
+        /* Titre tout en haut */
+        .titre-fraternite { 
+            display: block; 
+            padding-top: 20px; 
+            font-size: 1.8em; 
+            letter-spacing: 3px; 
+            color: #f0e68c; 
+            text-shadow: 0 0 10px rgba(255,255,255,0.3);
+            position: relative;
+            z-index: 25;
+        }
+
+        /* Soleil sous le titre */
+        .soleil-cadre { 
+            width: 130px; height: 130px; background: #FFD700; border-radius: 50%; 
+            display: flex; align-items: center; justify-content: center; 
+            box-shadow: 0 0 25px #FFA500; margin: 15px auto; position: relative; 
+            z-index: 20; transition: 0.5s; 
+        }
+        .soleil-cadre h1 { font-size: 1.0em; color: #333; margin: 0; padding: 10px; line-height: 1.1; }
+        .soleil-cadre:hover { 
+            box-shadow: 0 0 40px 10px rgba(255,0,0,0.5), 0 0 50px 20px rgba(255,165,0,0.5), 0 0 60px 30px rgba(255,255,0,0.5), 0 0 70px 40px rgba(0,128,0,0.5), 0 0 80px 50px rgba(0,0,255,0.5);
+            transform: scale(1.1);
+        }
 
         /* Étoiles Mobiles */
         .star { position: fixed; background: white; border-radius: 50%; z-index: -1; animation: twinkle var(--duration) infinite ease-in-out, drift var(--drift-duration) linear infinite; }
@@ -26,31 +50,18 @@
         @keyframes drift { from { transform: translateX(0); } to { transform: translateX(100px); } }
 
         /* Menu */
-        .menu-table { margin: 10px auto 10px; border-radius: 10px; background-color: #008080; border-collapse: collapse; position: relative; z-index: 10; }
+        .menu-table { margin: 10px auto 20px; border-radius: 10px; background-color: #008080; border-collapse: collapse; position: relative; z-index: 10; }
         .menu-table td { border: 1px solid #FFFFFF; }
         .menu-table a { display: block; padding: 12px 20px; text-decoration: none; color: #FFFFFF; font-weight: bold; }
         .menu-table td:hover { background-color: #00b3b3; }
 
-        /* BOUTON OISEAU CHANTEUR */
+        /* BOUTON OISEAU */
         #btn-son { position: fixed; top: 10px; right: 10px; z-index: 1000; background: rgba(255,255,255,0.2); border: 1px solid white; color: white; border-radius: 50%; cursor: pointer; padding: 10px; font-size: 22px; transition: 0.3s; }
         #btn-son:hover { transform: scale(1.2); background: rgba(255,255,255,0.4); }
 
-        /* Soleil en haut avec effet Arc-en-ciel */
-        .soleil-cadre { 
-            width: 140px; height: 140px; background: #FFD700; border-radius: 50%; 
-            display: flex; align-items: center; justify-content: center; 
-            box-shadow: 0 0 25px #FFA500; margin: 0 auto; position: absolute; top: 10px; left: 50%; 
-            transform: translateX(-50%); z-index: 20; transition: 0.5s; 
-        }
-        .soleil-cadre h1 { font-size: 1.1em; color: #333; }
-        .soleil-cadre:hover { 
-            box-shadow: 0 0 40px 10px rgba(255,0,0,0.5), 0 0 50px 20px rgba(255,165,0,0.5), 0 0 60px 30px rgba(255,255,0,0.5), 0 0 70px 40px rgba(0,128,0,0.5), 0 0 80px 50px rgba(0,0,255,0.5);
-            transform: translateX(-50%) scale(1.1);
-        }
-        
         /* TERRE AGRANDIE */
         .terre-don { 
-            width: 350px; height: 350px; margin: 40px auto; border-radius: 50%; 
+            width: 350px; height: 350px; margin: 30px auto; border-radius: 50%; 
             background-image: url('https://upload.wikimedia.org/wikipedia/commons/thumb/c/c3/Solarsystemscope_texture_2k_earth_daymap.jpg/1200px-Solarsystemscope_texture_2k_earth_daymap.jpg'); 
             background-size: cover; display: flex; align-items: center; justify-content: center; 
             text-decoration: none; color: white; font-weight: bold; 
@@ -61,9 +72,8 @@
         .terre-don:hover { transform: rotate(360deg) scale(1.05); box-shadow: 0 0 50px rgba(0, 191, 255, 0.8); }
         @keyframes rotationTerre { from { background-position: 0 0; } to { background-position: 1000px 0; } }
 
-        /* Cadres avec effet léger au survol */
+        /* Cases avec effet au survol */
         .bulles-grid { display: flex; justify-content: center; gap: 20px; flex-wrap: wrap; padding: 20px; position: relative; z-index: 5; }
-        
         .nuage, .cadre-aide { transition: transform 0.3s, box-shadow 0.3s; cursor: default; }
         .nuage:hover, .cadre-aide:hover { transform: translateY(-5px); box-shadow: 0 10px 20px rgba(255,255,255,0.2); }
 
@@ -94,9 +104,10 @@
 </head>
 <body>
 
-    <div class="soleil-cadre"><h1>Le Trésor Public</h1></div>
+    <div class="titre-fraternite">La fraternité du palais nature</div>
 
-    <span class="phrase-discrete-top">le petit prince des jardiniers</span>
+    <div class="soleil-cadre"><h1>Le Trésor Public</h1></div>
+    
     <div id="google_translate_element"></div>
     
     <button id="btn-son" onclick="toggleSon()">🕊️</button>
@@ -146,7 +157,7 @@
     <div id="coffre-magique" onclick="exploserCadeau()">🎁</div>
 
     <footer>
-        <a href="transition-externe.html" class="lien-copyright">© 2000 le petit prince des jardiniers !</a>
+        <a href="transition-externe.html" class="lien-copyright">© 2000 le petit prince des jardiniers</a>
     </footer>
 
     <script>
