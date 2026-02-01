@@ -1,10 +1,8 @@
-<!DOCTYPE html>
-<html lang="fr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sur l'Arc-en-Ciel...</title>
     <title>Le Jardin du Petit Prince - Transition Magique</title>
-    <title>Le Message du Jardinier</title>
     <style>
         :root {
             --rainbow: linear-gradient(90deg, #ff0000, #ff7f00, #ffff00, #00ff00, #0000ff, #4b0082, #8b00ff);
@@ -12,42 +10,49 @@
         body, html { 
             margin: 0; padding: 0; width: 100%; height: 100%; 
             overflow: hidden; font-family: 'Comic Sans MS', cursive;
+            background-color: #000; cursor: crosshair;
             display: flex; align-items: center; justify-content: center;
             background-color: #000;
             cursor: crosshair;
-            background: radial-gradient(circle at center, #1b2735 0%, #090a0f 100%);
-            color: white; cursor: crosshair;
         }
 
         #scene {
             position: relative; width: 100%; height: 100%;
             display: flex; align-items: center; justify-content: center;
-            transition: background 2s ease-in-out;
+            transition: transform 0.8s ease-in;
         }
 
+        /* --- LE PONT ARC-EN-CIEL --- */
+        .rainbow-bridge {
+            position: absolute; bottom: 0; width: 200%; height: 20vh;
+            background: var(--rainbow);
+            filter: blur(20px); opacity: 0.5;
+            animation: slide 10s linear infinite;
+            transition: background 2s ease-in-out;
+        }
+        @keyframes slide { from { transform: translateX(-50%); } to { transform: translateX(0); } }
+
+        /* --- ÉLÉMENTS INTERACTIFS --- */
         /* --- ÉLÉMENTS VOLANTS & CLIQUABLES --- */
         .interact-element {
-        /* --- MESSAGER QUI S'ARRÊTE --- */
-        .messenger-wrapper {
+            position: absolute; z-index: 100; cursor: pointer;
+            animation: envol 4s cubic-bezier(0.25, 0.1, 0.25, 1) forwards;
             position: absolute;
             white-space: nowrap;
             pointer-events: auto;
             display: flex;
-            flex-direction: column;
             align-items: center;
             gap: 15px;
-            gap: 20px;
             z-index: 100;
             animation: envol 4.5s cubic-bezier(0.25, 0.1, 0.25, 1) forwards;
             cursor: pointer;
             user-select: none;
-            opacity: 0;
-            animation: arrivee 1.5s ease-out forwards;
         }
 
         .bulle-bonheur {
             background: white; color: #008080; padding: 12px 25px;
             border-radius: 30px; font-size: 1.1rem; font-weight: bold;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.3); border: 2px solid #FFD700;
             box-shadow: 0 10px 25px rgba(0,0,0,0.3);
             border: 2px solid #FFD700;
         }
@@ -57,40 +62,31 @@
             20% { opacity: 1; }
             80% { opacity: 1; }
             100% { transform: translate(100vw, -20vh) scale(1.2); opacity: 0; }
-            background: white; color: #004d40;
-            padding: 20px 35px; border-radius: 50px;
-            font-size: 1.4rem; font-weight: bold;
-            box-shadow: 0 0 40px rgba(255, 255, 255, 0.3);
-            border: 3px solid #FFD700;
-            max-width: 80vw; text-align: center;
-            cursor: pointer; transition: transform 0.3s;
         }
-        .bulle-bonheur:hover { transform: scale(1.05); }
 
+        /* --- BOUTON PASSER --- */
+        #skip-btn {
+            position: fixed; bottom: 30px; right: 30px;
+            background: rgba(255,255,255,0.2); border: 1px solid white;
+            color: white; padding: 10px 20px; border-radius: 20px;
+            cursor: pointer; opacity: 0; transition: 0.5s; z-index: 1000;
+            font-size: 0.8rem;
         /* --- EFFETS DE THÈMES --- */
         .star { position: absolute; background: white; border-radius: 50%; animation: blink 1s infinite alternate; }
         @keyframes blink { from { opacity: 0.2; } to { opacity: 1; } }
-        .animal { font-size: 4rem; cursor: pointer; filter: drop-shadow(0 0 10px gold); }
 
         .fleur-pousse {
             position: absolute; bottom: -50px; font-size: 3rem;
             animation: floraison 3s forwards cubic-bezier(0.17, 0.67, 0.83, 0.67);
             cursor: pointer;
-        @keyframes arrivee {
-            from { transform: translateY(100vh) scale(0.5); opacity: 0; }
-            to { transform: translateY(0) scale(1); opacity: 1; }
         }
+        #skip-btn:hover { background: white; color: black; }
         @keyframes floraison { to { transform: translateY(-45vh) rotate(360deg) scale(1.5); } }
 
+        /* --- EXPLOSIONS --- */
         .neige {
             position: absolute; top: -10px; color: white; font-size: 1rem;
             animation: chute 4s linear forwards;
-        /* Animation de départ avec sillage arc-en-ciel */
-        .depart {
-            animation: envol-final 1.5s cubic-bezier(0.6, -0.28, 0.735, 0.045) forwards !important;
-        }
-        @keyframes envol-final {
-            to { transform: translate(120vw, -100vh) scale(2) rotate(20deg); opacity: 0; }
         }
         @keyframes chute { to { transform: translateY(100vh) rotate(360deg); } }
 
@@ -98,30 +94,19 @@
         .particle {
             position: absolute; pointer-events: none;
             animation: particleAnim 0.8s forwards ease-out;
-        /* --- SILLAGE ARC-EN-CIEL --- */
-        .trail {
-            position: absolute; border-radius: 50%; pointer-events: none;
-            background: var(--rainbow); z-index: 90;
-            animation: trail-fade 0.8s forwards;
-        }
-        @keyframes particleAnim {
-            0% { opacity: 1; transform: translate(0,0) scale(1); }
+@@ -66,27 +74,30 @@
             100% { opacity: 0; transform: translate(var(--x), var(--y)) scale(0); }
-        @keyframes trail-fade {
-            from { opacity: 1; transform: scale(1); }
-            to { opacity: 0; transform: scale(0.1); }
         }
 
+        /* --- EFFET TUNNEL FINAL --- */
+        .flash {
+            position: fixed; top:0; left:0; width:100%; height:100%;
+            background: var(--rainbow); opacity: 0; pointer-events: none;
+            transition: opacity 0.5s; z-index: 2000;
         .mouse-dust {
             position: absolute; width: 4px; height: 4px; background: gold;
             border-radius: 50%; pointer-events: none;
             animation: dustFade 0.7s forwards;
-        /* --- BOUTON PASSER --- */
-        #skip {
-            position: fixed; bottom: 20px; right: 20px;
-            background: none; border: 1px solid rgba(255,255,255,0.3);
-            color: white; padding: 8px 15px; border-radius: 20px;
-            cursor: pointer; font-size: 0.7rem; opacity: 0.5;
         }
         @keyframes dustFade { to { opacity: 0; transform: scale(3); } }
 
@@ -129,40 +114,36 @@
             position: absolute; bottom: 20px; color: rgba(255,255,255,0.7);
             text-align: center; font-style: italic; font-size: 0.9rem;
             line-height: 1.4;
-        .flash {
-            position: fixed; top:0; left:0; width:100%; height:100%;
-            background: white; opacity: 0; pointer-events: none; z-index: 2000;
         }
     </style>
 </head>
 <body>
 
 <div id="scene">
+    <div class="rainbow-bridge"></div>
     <div id="container"></div>
+    <div style="color:white; text-align:center; z-index:10; font-style:italic;">
+        "Le silence s'efface devant l'éclat de l'arc-en-ciel..."
     <div class="footer-poesie">
         "Un silence irréel, puis l'éclair qui libère la joie..."<br>
         Le Petit Prince des Jardiniers prépare votre chemin.
-    <div id="messenger-box" class="messenger-wrapper">
-        <div class="bulle-bonheur" id="message-text" onclick="userTriggered()"></div>
-        <div class="animal" id="animal-icon" onclick="userTriggered()">🕊️</div>
     </div>
 </div>
 
-<button id="skip" onclick="finish()">Passer directement</button>
+<button id="skip-btn" onclick="goToNext()">Passer le voyage ➔</button>
 <div id="flash" class="flash"></div>
 
 <script>
     const phrases = [
         "Ici, on sème des graines de générosité pour récolter de l'altruisme",
-        "Attention : zone de gratuité absolue pour cadeau réellement efficace",
-        "Attention : zone de gratuité absolue pour un cadeau réellement efficace",
-        "La meilleure justice est encore le pardon",
-        "Cadeaux sans détour, cadeaux sans demande de retour",
-        "Regardez la fraternité s'épanouir au gré des dons du monde entier...",
-        "Chaque don est une fleur qui ne se fane jamais"
+@@ -98,49 +109,104 @@
     ];
 
     const container = document.getElementById('container');
+    const flash = document.getElementById('flash');
+    const skipBtn = document.getElementById('skip-btn');
+    const urlParams = new URLSearchParams(window.location.search);
+    const destination = urlParams.get('page') || 'index.html';
     const scene = document.getElementById('scene');
 
     // 1. Choix aléatoire du thème (Astral, Prairie, Nuages, ou Fêtes)
@@ -192,35 +173,16 @@
         const icon = currentTheme === 'fetes' ? '🦌' : (currentTheme === 'prairie' ? '🦋' : '🕊️');
         
         messenger.innerHTML = `
+            <div style="display:flex; align-items:center; gap:10px;">
+                <span style="font-size:3rem">🕊️</span>
+                <div class="bulle-bonheur">${phrases[Math.floor(Math.random()*phrases.length)]}</div>
+            </div>`;
             <span style="font-size:3rem">${icon}</span>
             <div class="bulle-bonheur">${phrases[Math.floor(Math.random()*phrases.length)]}</div>
         `;
         
         messenger.onclick = (e) => explode(e.clientX, e.clientY);
         container.appendChild(messenger);
-    const box = document.getElementById('messenger-box');
-    const msg = document.getElementById('message-text');
-    const icon = document.getElementById('animal-icon');
-    const flash = document.getElementById('flash');
-
-    // Configuration
-    const isHoliday = [11, 0].includes(new Date().getMonth());
-    msg.innerText = phrases[Math.floor(Math.random() * phrases.length)];
-    icon.innerText = isHoliday ? '✨' : ['🕊️', '🦋', '🐞'][Math.floor(Math.random() * 3)];
-
-    // Gestion du sillage lors du départ
-    let trailInterval;
-    function startTrail() {
-        trailInterval = setInterval(() => {
-            const rect = icon.getBoundingClientRect();
-            const t = document.createElement('div');
-            t.className = 'trail';
-            t.style.width = t.style.height = '20px';
-            t.style.left = rect.left + 'px';
-            t.style.top = rect.top + 'px';
-            document.body.appendChild(t);
-            setTimeout(() => t.remove(), 800);
-        }, 20);
     }
 
     function createFleur() {
@@ -230,10 +192,6 @@
         f.innerHTML = ['🌸','🌻','🌼','🌷'][Math.floor(Math.random()*4)];
         f.onclick = (e) => explode(e.clientX, e.clientY);
         container.appendChild(f);
-    function userTriggered() {
-        // Explosion de joie au clic
-        for(let i=0; i<20; i++) createParticle(window.innerWidth/2, window.innerHeight/2);
-        triggerDepart();
     }
 
     function createNeige() {
@@ -243,10 +201,6 @@
         n.innerHTML = '❄️';
         container.appendChild(n);
         setTimeout(() => n.remove(), 4000);
-    function triggerDepart() {
-        startTrail();
-        box.classList.add('depart');
-        setTimeout(finish, 1200);
     }
 
     function createStaticElement(type) {
@@ -256,21 +210,6 @@
         el.style.left = Math.random() * 100 + 'vw';
         el.style.top = Math.random() * 100 + 'vh';
         container.appendChild(el);
-    function createParticle(x, y) {
-        const p = document.createElement('div');
-        p.style.position = 'fixed';
-        p.style.left = x + 'px'; p.style.top = y + 'px';
-        p.innerHTML = ['🌈','❤️','✨','🌸'][Math.floor(Math.random()*4)];
-        p.style.fontSize = '2rem'; p.style.pointerEvents = 'none';
-        document.body.appendChild(p);
-        
-        const angle = Math.random() * Math.PI * 2;
-        const dist = 100 + Math.random() * 150;
-        p.animate([
-            { transform: 'translate(0,0) scale(1)', opacity: 1 },
-            { transform: `translate(${Math.cos(angle)*dist}px, ${Math.sin(angle)*dist}px) scale(0)`, opacity: 0 }
-        ], { duration: 1000, easing: 'ease-out' });
-        setTimeout(() => p.remove(), 1000);
     }
 
     // 3. Poussière d'étoiles au mouvement
@@ -288,6 +227,8 @@
         for(let i=0; i<15; i++) {
             const p = document.createElement('div');
             p.className = 'particle';
+            p.innerHTML = ['🌈','✨','❤️','🌟'][Math.floor(Math.random()*4)];
+            p.style.left = x + 'px'; p.style.top = y + 'px';
             p.innerHTML = ['✨','❤️','🌟','💥','🌸'][Math.floor(Math.random()*5)];
             p.style.left = x + 'px';
             p.style.top = y + 'px';
@@ -296,15 +237,19 @@
             document.body.appendChild(p);
             setTimeout(() => p.remove(), 800);
         }
-    function finish() {
-        clearInterval(trailInterval);
-        flash.style.transition = "opacity 0.4s";
-        flash.style.opacity = 1;
-        const params = new URLSearchParams(window.location.search);
-        const next = params.get('page') || 'index.html';
-        setTimeout(() => window.location.href = next, 400);
     }
 
+    function goToNext() {
+        flash.style.opacity = '1';
+        document.getElementById('scene').style.transform = 'scale(2)';
+        setTimeout(() => { window.location.href = destination; }, 600);
+    }
+
+    // Apparition du bouton "Passer"
+    setTimeout(() => { skipBtn.style.opacity = "1"; }, 1500);
+
+    // Redirection automatique
+    setTimeout(goToNext, 4500);
     // 5. Redirection finale
     const urlParams = new URLSearchParams(window.location.search);
     const destination = urlParams.get('page') || 'index.html';
@@ -312,12 +257,8 @@
         scene.style.opacity = '0';
         setTimeout(() => { window.location.href = destination; }, 1000);
     }, 4500);
-    // Chronologie automatique :
-    // 1. Arrivée (0s - 1.5s)
-    // 2. Pause lecture (1.5s - 5s)
-    // 3. Départ (5s)
-    setTimeout(triggerDepart, 5000); 
 
+    window.onload = createMessenger;
     window.onload = initTheme;
 </script>
 </body>
