@@ -60,9 +60,100 @@
         }
         @keyframes trail-fade { to { opacity: 0; transform: scale(0.1); } }
 
-        /* --- BOUTON PASSER --- */
         #skip {
             position: fixed; bottom: 30px; right: 30px;
             background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.3);
             color: white; padding: 12px 25px; border-radius: 30px;
-            cursor: pointer;
+            cursor: pointer; z-index: 1000; font-weight: bold;
+        }
+
+        .flash-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: white; opacity: 0; pointer-events: none; z-index: 2000;
+        }
+    </style>
+</head>
+<body>
+
+<canvas id="canvas-bg"></canvas>
+<div id="flash" class="flash-overlay"></div>
+
+<div id="scene">
+    <div id="messenger-container"></div>
+</div>
+
+<button id="skip" onclick="finishTransition()">Passer l'animation ➔</button>
+
+<script>
+    const canvas = document.getElementById('canvas-bg');
+    const ctx = canvas.getContext('2d');
+    
+    const phrases = ["Merci pour votre visite ! 🌸", "À bientôt dans les jardins... ✨", "Le voyage continue ❤️"];
+    const animaux = ['🕊️', '🦋', '🦢'];
+
+    function init() {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+        createMessenger();
+        animateStars();
+    }
+
+    function animateStars() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        ctx.fillStyle = "white";
+        for(let i=0; i<100; i++) {
+            ctx.beginPath();
+            ctx.arc(Math.random()*canvas.width, Math.random()*canvas.height, Math.random()*2, 0, Math.PI*2);
+            ctx.fill();
+        }
+        requestAnimationFrame(animateStars);
+    }
+
+    function createMessenger() {
+        const container = document.getElementById('messenger-container');
+        const wrapper = document.createElement('div');
+        wrapper.className = 'messenger-wrapper';
+        wrapper.innerHTML = `
+            <div class="bulle">${phrases[Math.floor(Math.random()*phrases.length)]}</div>
+            <div class="animal-icon" id="animal-emoji">${animaux[Math.floor(Math.random()*animaux.length)]}</div>
+        `;
+        
+        wrapper.onclick = () => startDeparture(wrapper);
+        container.appendChild(wrapper);
+
+        // Envol automatique si pas de clic après 5s
+        setTimeout(() => startDeparture(wrapper), 5000);
+    }
+
+    function startDeparture(el) {
+        if(el.classList.contains('envol-arc-en-ciel')) return;
+        el.classList.add('envol-arc-en-ciel');
+        
+        // Création du sillage arc-en-ciel
+        const trailTimer = setInterval(() => {
+            const rect = document.getElementById('animal-emoji').getBoundingClientRect();
+            const dot = document.createElement('div');
+            dot.className = 'trail';
+            dot.style.width = '15px'; dot.style.height = '15px';
+            dot.style.left = rect.left + 'px'; dot.style.top = rect.top + 'px';
+            document.body.appendChild(dot);
+            setTimeout(() => dot.remove(), 800);
+        }, 40);
+
+        setTimeout(() => {
+            clearInterval(trailTimer);
+            finishTransition();
+        }, 1900);
+    }
+
+    function finishTransition() {
+        document.getElementById('flash').style.opacity = 1;
+        const params = new URLSearchParams(window.location.search);
+        const dest = params.get('page') || 'https://www.youtube.com/channel/UCjsudx7f1sl7XQM8ylcBRdQ';
+        setTimeout(() => { window.location.href = dest; }, 600);
+    }
+
+    window.onload = init;
+</script>
+</body>
+</html>
