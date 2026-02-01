@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Le Voyage du Petit Prince - Multilingue</title>
+    <title>Le Voyage du Petit Prince - Transition Intelligente</title>
     <style>
         :root {
             --rainbow: linear-gradient(90deg, #ff0000, #ff7f00, #ffff00, #00ff00, #0000ff, #4b0082, #8b00ff);
@@ -36,6 +36,7 @@
             padding: 12px 25px; border-radius: 50px; font-weight: bold;
             box-shadow: 0 0 20px rgba(255, 255, 255, 0.2);
             border: 1px solid rgba(255, 215, 0, 0.5); font-size: 1.2rem;
+            max-width: 80vw;
         }
         .animal-icon { font-size: 4rem; filter: drop-shadow(0 0 15px white); }
         .envol-arc-en-ciel { animation: envol 1.5s cubic-bezier(0.6, -0.28, 0.735, 0.045) forwards !important; }
@@ -75,7 +76,7 @@
     const ctx = canvas.getContext('2d');
     const flash = document.getElementById('flash');
     
-    // Dictionnaire des traductions
+    // Traductions intégrées
     const translations = {
         fr: {
             phrases: ["Sème la générosité", "Le pardon est une force", "La fraternité est un jardin", "Un don est une fleur"],
@@ -91,16 +92,25 @@
             phrases: ["Siembra generosidad", "El perdón es fuerza", "La fraternidad es un jardín", "Un regalo es una flor"],
             poesie: "El silencio de un astro, el destello de un instante...",
             skip: "Pasar ➔"
-        },
-        de: {
-            phrases: ["Säe Großzügigkeit", "Vergebung ist Stärke", "Brüderlichkeit ist ein Garten", "Ein Geschenk ist eine Blume"],
-            poesie: "Das Schweigen eines Sterns, der Blitz dines Augenblicks...",
-            skip: "Überspringen ➔"
         }
     };
 
-    // Récupération de la langue (par défaut FR)
-    const userLang = localStorage.getItem('lang') || 'fr';
+    // Fonction pour lire la langue depuis le cookie de Google Translate
+    function getGoogleLang() {
+        const name = "googtrans=";
+        const decodedCookie = decodeURIComponent(document.cookie);
+        const ca = decodedCookie.split(';');
+        for(let i = 0; i < ca.length; i++) {
+            let c = ca[i].trim();
+            if (c.indexOf(name) == 0) {
+                // googtrans format: /fr/en ou /fr/es
+                return c.substring(name.length).split('/').pop().toLowerCase();
+            }
+        }
+        return "fr";
+    }
+
+    const userLang = getGoogleLang();
     const content = translations[userLang] || translations['fr'];
 
     const animaux = ['🕊️', '🦊', '🐱', '🦄', '🦋', '🦌', '🦢'];
@@ -149,7 +159,9 @@
         if(el.classList.contains('envol-arc-en-ciel')) return;
         el.classList.add('envol-arc-en-ciel');
         const trailTimer = setInterval(() => {
-            const rect = document.getElementById('target-animal').getBoundingClientRect();
+            const node = document.getElementById('target-animal');
+            if(!node) return;
+            const rect = node.getBoundingClientRect();
             createTrailDot(rect.left + rect.width/2, rect.top + rect.height/2);
         }, 25);
         setTimeout(() => { clearInterval(trailTimer); finishTransition(); }, 1300);
