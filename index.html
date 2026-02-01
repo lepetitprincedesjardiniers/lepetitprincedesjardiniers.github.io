@@ -10,24 +10,28 @@
             color: #ffffff; overflow-x: hidden; min-height: 100vh; position: relative;
         }
 
-        /* --- DÉCOR SPATIAL --- */
+        /* --- DÉCOR --- */
         .star { position: fixed; background: white; border-radius: 50%; opacity: 0.8; z-index: -1; }
-        @keyframes scintiller-etoile { from { opacity: 0.3; } to { opacity: 1; } }
-        .planet { position: fixed; border-radius: 50%; z-index: -1; opacity: 0.6; box-shadow: inset -5px -5px 10px rgba(0,0,0,0.5); }
-        #ufo { position: fixed; font-size: 40px; z-index: 1000; top: 15%; left: -100px; filter: drop-shadow(0 0 10px #00ff00); }
 
-        /* --- TRADUCTEUR --- */
-        #google_translate_element { padding: 10px; background: rgba(255,255,255,0.1); border-bottom: 1px solid #008080; min-height: 40px; }
-
-        /* --- MENU --- */
+        /* --- TRADUCTEUR & MENU --- */
+        #google_translate_element { padding: 10px; background: rgba(255,255,255,0.1); border-bottom: 1px solid #008080; }
         .menu-table { margin: 20px auto; border-radius: 10px; background-color: #008080; border-collapse: collapse; }
         .menu-table td { padding: 10px 15px; border: 1px solid #FFFFFF; }
-        .menu-table a { text-decoration: none; color: #FFFFFF; font-weight: bold; transition: 0.3s; }
-        .menu-table td:hover { background-color: #006666; }
+        .menu-table a { text-decoration: none; color: #FFFFFF; font-weight: bold; }
 
-        /* --- HEADER & BOUQUETS DROITS --- */
+        /* --- HEADER & BOUQUETS REDRESSÉS --- */
         .header-container { display: flex; align-items: center; justify-content: center; gap: 40px; margin: 30px auto; }
-        .petit-bouquet-gauche, .petit-bouquet-droite { font-size: 35px; transform: rotate(0deg); } 
+        
+        .petit-bouquet-gauche { 
+            font-size: 35px; 
+            display: inline-block;
+            transform: rotate(15deg); /* Compensation pour le dessin de l'émoji */
+        } 
+        .petit-bouquet-droite { 
+            font-size: 35px; 
+            display: inline-block;
+            transform: scaleX(-1) rotate(15deg); /* Effet miroir + compensation */
+        } 
 
         .terre-cadre {
             width: 250px; height: 250px;
@@ -45,47 +49,46 @@
             100% { box-shadow: 0 0 15px red; }
         }
 
-        /* --- SOLEIL --- */
         .soleil-don {
             background: #FFD700; width: 180px; height: 180px; border-radius: 50%;
             display: flex; align-items: center; justify-content: center;
             box-shadow: 0 0 50px #FFA500; margin: 40px auto; cursor: pointer; transition: 0.4s;
             text-decoration: none; color: #000080; font-weight: bold;
         }
-        .soleil-don:hover { transform: scale(1.2); animation: rotation-soleil 5s linear infinite; }
+        .soleil-don:hover { transform: scale(1.1); animation: rotation-soleil 5s linear infinite; }
         @keyframes rotation-soleil { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
 
-        /* --- GRILLE ET SECTIONS (RETOUR AU STYLE SOURCE) --- */
+        /* --- RUBRIQUES --- */
         .bulles-grid { display: flex; justify-content: center; align-items: stretch; gap: 25px; flex-wrap: wrap; padding: 20px; max-width: 1200px; margin: auto; }
         
         .nuage { 
             background: #e0f7fa; border: 3px solid #008080; border-radius: 50px; padding: 20px; 
-            width: 300px; min-height: 250px; text-decoration: none; color: #000080; 
+            width: 320px; min-height: 250px; text-decoration: none; color: #000080; 
             display: flex; flex-direction: column; justify-content: center; transition: 0.3s; 
         }
         .nuage:hover { transform: translateY(-10px); }
 
-        /* Styles spécifiques pour le texte descriptif */
-        .info-sup { font-size: 0.9em; margin: 5px 0; color: #006666; }
-        .exemples { font-size: 0.8em; font-style: italic; margin-top: 5px; color: #004d40; }
+        .info-sup { font-size: 0.9em; margin: 3px 0; color: #006666; }
+        .alerte-travail { font-size: 0.9em; color: #d32f2f; font-weight: bold; margin: 2px 0; }
+        .exemples { font-size: 0.8em; font-style: italic; margin-top: 8px; color: #004d40; }
 
         .etoile-justice { 
             background: #E6E6FA; border: 3px solid #9370DB; width: 300px; min-height: 250px; 
             clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%); 
-            transition: 0.6s ease-in-out; cursor: pointer; text-decoration: none; color: inherit; 
+            transition: 0.6s ease-in-out; text-decoration: none; color: #333; 
             display: flex; align-items: center; justify-content: center; 
         }
         .etoile-justice:hover { 
             clip-path: polygon(50% 0%, 100% 0%, 100% 100%, 100% 100%, 100% 100%, 50% 100%, 0% 100%, 0% 100%, 0% 0%, 0% 0%);
-            border-radius: 50%; transform: scale(1.05);
+            border-radius: 50%;
         }
 
         .nuage-rose { background: #ffebee; border-color: #e91e63; }
-        .titre-urgence-rose { color: #e91e63; font-weight: bold; text-transform: uppercase; font-size: 1.2em; margin-bottom: 15px; }
+        .titre-urgence-rose { color: #e91e63; font-weight: bold; text-transform: uppercase; margin-bottom: 15px; }
         .split-box { display: flex; border-top: 1px solid #e91e63; padding-top: 10px; }
-        .split-part { flex: 1; text-decoration: none; color: #e91e63; font-weight: bold; font-size: 1em; padding: 10px; }
+        .split-part { flex: 1; text-decoration: none; color: #e91e63; font-weight: bold; padding: 10px; }
 
-        /* --- ANIMATIONS OISEAUX ET COFFRE --- */
+        /* --- ANIMATIONS OISEAU/CADEAU --- */
         .animal-container { position: fixed; z-index: 900; pointer-events: none; display: flex; align-items: center; }
         .bulle-texte { background: white; border: 2px solid #2E7D32; border-radius: 15px; padding: 8px 15px; font-weight: bold; color: black; opacity: 0; white-space: nowrap; position: absolute; left: 60px; }
         #coffre-magique { position: fixed; font-size: 60px; z-index: 800; pointer-events: none; left: 50%; transform: translateX(-50%); }
@@ -96,13 +99,10 @@
 <body>
 
     <audio id="chantOiseaux" loop><source src="oiseaux.mp3" type="audio/mpeg"></audio>
-    <div id="ufo">🛸</div>
     <div id="google_translate_element"></div>
     
     <script>
-        function googleTranslateElementInit() {
-            new google.translate.TranslateElement({pageLanguage: 'fr'}, 'google_translate_element');
-        }
+        function googleTranslateElementInit() { new google.translate.TranslateElement({pageLanguage: 'fr'}, 'google_translate_element'); }
     </script>
     <script src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
 
@@ -133,8 +133,10 @@
     <div class="bulles-grid">
         <a href="impot.html" class="nuage">
             <h3 style="color:#008080; margin:0; text-transform:uppercase;">📜 Impôts Publics</h3>
-            <p style="margin:5px 0;">Travaux publics en libre participation.</p>
+            <p style="margin:5px 0; font-weight: bold;">Travaux publics en libre participation.</p>
             <p class="info-sup">À choisir selon ses compétences.</p>
+            <p class="alerte-travail">Motivation indispensable.</p>
+            <p class="alerte-travail">Travaux souvent ingrats.</p>
             <div class="exemples">Ex : Travaux administratifs, routes, nettoyage...</div>
         </a>
 
@@ -163,7 +165,7 @@
     </footer>
 
     <script>
-        // --- LOGIQUE JS ORIGINELLE ---
+        // --- LOGIQUE JS ORIGINALE ---
         const basePhrases = ["L'Impôt Public est un geste de cœur", "Graines de générosité", "Le pardon est justice", "Besoin d'un câlin"];
         let disponibles = [...basePhrases];
         const typesAnimaux = ['🕊️', '🦋', '🐝', '🐞'];
@@ -231,33 +233,19 @@
             requestAnimationFrame(loop);
         }
 
-        // --- DÉCORATION SPATIALE ---
         function createSpace() {
-            for(let i=0; i<80; i++) {
+            for(let i=0; i<60; i++) {
                 let star = document.createElement('div');
                 star.className = 'star';
-                let s = Math.random() * 3 + 'px';
+                let s = Math.random() * 2 + 'px';
                 star.style.width = s; star.style.height = s;
                 star.style.top = Math.random() * 100 + 'vh';
                 star.style.left = Math.random() * 100 + 'vw';
-                if(Math.random() > 0.5) star.style.animation = `scintiller-etoile ${Math.random()*2+1}s infinite alternate`;
                 document.body.appendChild(star);
             }
         }
 
-        function launchUFO() {
-            const ufo = document.getElementById('ufo');
-            let x = -100;
-            const fly = setInterval(() => {
-                x += 3;
-                ufo.style.left = x + 'px';
-                ufo.style.top = (120 + Math.sin(x/50)*40) + 'px';
-                if(x > window.innerWidth + 100) { clearInterval(fly); ufo.remove(); }
-            }, 20);
-        }
-
         createSpace();
-        setTimeout(launchUFO, 3000);
         setInterval(createMessenger, 4000);
         loop();
     </script>
