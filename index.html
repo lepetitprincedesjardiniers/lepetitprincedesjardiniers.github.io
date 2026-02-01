@@ -10,29 +10,45 @@
             color: #ffffff; overflow-x: hidden; min-height: 100vh; position: relative;
         }
 
-        /* --- ÉTOILES --- */
-        .star { position: fixed; background: #FFFFFF; border-radius: 50%; z-index: -1; box-shadow: 0 0 8px #FFFFFF; }
+        /* --- ÉTOILES ANIMÉES --- */
+        .star { 
+            position: fixed; background: #FFFFFF; border-radius: 50%; z-index: -1; box-shadow: 0 0 8px #FFFFFF;
+            animation: twinkle var(--duration) infinite ease-in-out, moveStar var(--move-duration) infinite linear;
+        }
+        @keyframes twinkle {
+            0%, 100% { opacity: 0.3; transform: scale(0.8); }
+            50% { opacity: 1; transform: scale(1.2); }
+        }
+        @keyframes moveStar {
+            from { transform: translateY(0); }
+            to { transform: translateY(-100vh); }
+        }
 
-        /* --- MENU --- */
-        .menu-table { margin: 20px auto; border-radius: 10px; background-color: #008080; border-collapse: collapse; position: relative; z-index: 10; }
-        .menu-table td { border: 1px solid #FFFFFF; padding: 0; }
-        .menu-table a { display: block; padding: 10px 15px; text-decoration: none; color: #FFFFFF; font-weight: bold; }
+        /* --- MENU AVEC EFFETS --- */
+        .menu-table { margin: 20px auto; border-radius: 10px; background-color: #008080; border-collapse: collapse; position: relative; z-index: 10; overflow: hidden; }
+        .menu-table td { border: 1px solid #FFFFFF; padding: 0; transition: 0.3s; }
+        .menu-table a { display: block; padding: 12px 20px; text-decoration: none; color: #FFFFFF; font-weight: bold; transition: 0.3s; }
         
-        #btn-son { position: fixed; top: 10px; right: 10px; z-index: 1000; background: rgba(255,255,255,0.2); border: 1px solid white; color: white; border-radius: 50%; cursor: pointer; padding: 8px; font-size: 20px; }
+        /* Effet au survol des boutons du menu */
+        .menu-table td:hover { background-color: #00b3b3; box-shadow: inset 0 0 10px white; }
+        .menu-table a:hover { transform: scale(1.1); color: #fff; text-shadow: 0 0 5px white; }
+        
+        #btn-son { position: fixed; top: 10px; right: 10px; z-index: 1000; background: rgba(255,255,255,0.2); border: 1px solid white; color: white; border-radius: 50%; cursor: pointer; padding: 8px; font-size: 20px; transition: 0.3s; }
+        #btn-son:hover { background: rgba(255,255,255,0.4); transform: scale(1.1); }
 
-        /* --- HEADER : BOUQUETS --- */
+        /* --- HEADER --- */
         .header-container { display: flex; align-items: center; justify-content: center; gap: 40px; margin: 30px auto; }
         .petit-bouquet-gauche { font-size: 50px; transform: rotate(15deg); }
         .petit-bouquet-droite { font-size: 50px; display: inline-block; transform: rotate(-25deg) !important; }
-
         .soleil-cadre {
             width: 180px; height: 180px; background: #FFD700; border-radius: 50%;
             display: flex; align-items: center; justify-content: center;
-            box-shadow: 0 0 30px #FFA500; animation: scintiller 4s ease-in-out infinite;
+            box-shadow: 0 0 30px #FFA500; animation: soleilScintille 4s ease-in-out infinite;
         }
         .soleil-cadre h1 { font-size: 1.1em; margin: 0; color: #000080; }
+        @keyframes soleilScintille { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.05); } }
 
-        /* --- TERRE TOURANTE --- */
+        /* --- TERRE --- */
         .terre-don {
             width: 250px; height: 250px; margin: 20px auto; border-radius: 50%;
             background-image: url('https://upload.wikimedia.org/wikipedia/commons/thumb/2/22/Earth_Western_Hemisphere_transparent_background.png/600px-Earth_Western_Hemisphere_transparent_background.png');
@@ -41,42 +57,43 @@
             animation: rainbow-shadow 4s linear infinite; position: relative; z-index: 5;
         }
         .terre-don:hover { transform: rotate(360deg); }
+        @keyframes rainbow-shadow { 0% { box-shadow: 0 0 20px red; } 50% { box-shadow: 0 0 20px blue; } 100% { box-shadow: 0 0 20px red; } }
 
         /* --- RUBRIQUES --- */
         .bulles-grid { display: flex; justify-content: center; align-items: stretch; gap: 25px; flex-wrap: wrap; padding: 20px; max-width: 1200px; margin: auto; position: relative; z-index: 5; }
-        
-        /* IMPOTS */
         .nuage { background: #e0f7fa; border: 3px solid #008080; border-radius: 50px; padding: 20px; width: 320px; min-height: 250px; text-decoration: none; color: #000080; display: flex; flex-direction: column; justify-content: center; transition: 0.3s; }
-        
-        /* REGULATION TRANSFORMATION */
+        .nuage:hover { transform: scale(1.03); background: #f0ffff; }
+
+        /* REGULATION TRANSFORMATION EN ROND */
         .etoile-justice { 
             background: #E6E6FA; border: 3px solid #9370DB; width: 300px; min-height: 250px; 
             clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%); 
             display: flex; flex-direction: column; align-items: center; justify-content: center; 
             text-decoration: none; color: #333; transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
         }
-        .etoile-justice:hover { clip-path: polygon(100% 0, 100% 100%, 0% 100%, 0 50%, 0 0); border-radius: 50px; transform: scale(1.05); }
+        .etoile-justice:hover { 
+            clip-path: circle(50% at 50% 50%);
+            border-radius: 50%; 
+            transform: scale(1.1); 
+            background: #efedff;
+        }
 
-        /* URGENCE ROSE */
         .nuage-rose { background: #ffebee; border-color: #e91e63; }
         .split-box { display: flex; border-top: 1px solid #e91e63; padding-top: 10px; margin-top: 10px; }
-        .split-part { flex: 1; text-decoration: none; color: #e91e63; font-weight: bold; padding: 10px; }
+        .split-part { flex: 1; text-decoration: none; color: #e91e63; font-weight: bold; padding: 10px; transition: 0.3s; }
+        .split-part:hover { background: #fff0f5; border-radius: 10px; }
 
-        /* --- CADEAU & MESSAGERS --- */
+        /* --- CADEAU --- */
         #coffre-magique { position: fixed; font-size: 55px; z-index: 4; pointer-events: none; filter: drop-shadow(0 0 10px gold); transition: opacity 0.5s; }
         .animal-container { position: fixed; z-index: 900; pointer-events: none; }
         .bulle-texte { background: white; border: 2px solid #2E7D32; border-radius: 15px; padding: 10px; font-weight: bold; color: black; opacity: 0; position: absolute; left: 70px; width: 200px; transition: opacity 0.3s; }
         
-        @keyframes scintiller { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.05); } }
-        @keyframes rainbow-shadow { 0% { box-shadow: 0 0 20px red; } 50% { box-shadow: 0 0 20px blue; } 100% { box-shadow: 0 0 20px red; } }
-
         footer { padding: 40px; position: relative; z-index: 10; }
     </style>
 </head>
 <body>
 
     <audio id="chantOiseaux" loop src="oiseaux.mp3"></audio>
-
     <button id="btn-son" onclick="toggleSon()">🐦</button>
 
     <table class="menu-table">
@@ -141,9 +158,13 @@
             for(let i=0; i<85; i++) {
                 let star = document.createElement('div');
                 star.className = 'star';
-                star.style.width = star.style.height = (Math.random() * 3 + 2) + 'px';
+                let size = (Math.random() * 3 + 2) + 'px';
+                star.style.width = star.style.height = size;
                 star.style.left = Math.random() * 100 + 'vw';
                 star.style.top = Math.random() * 100 + 'vh';
+                star.style.setProperty('--duration', (Math.random() * 3 + 2) + 's');
+                star.style.setProperty('--move-duration', (Math.random() * 60 + 60) + 's');
+                star.style.animationDelay = (Math.random() * 10) + 's';
                 document.body.appendChild(star);
             }
         }
