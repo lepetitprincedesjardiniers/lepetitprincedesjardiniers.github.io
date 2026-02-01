@@ -79,4 +79,134 @@
 
         .etoile-justice { 
             background: #E6E6FA; border: 3px solid #9370DB; width: 300px; min-height: 280px; 
-            clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
+            clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%); 
+            display: flex; flex-direction: column; align-items: center; justify-content: center; text-decoration: none; color: #333; transition: 0.8s;
+        }
+        .etoile-justice:hover { clip-path: polygon(100% 0, 100% 100%, 0 100%, 0 0); border-radius: 50%; transform: scale(1.1); background: #efedff; }
+
+        /* --- ANIMATIONS CADEAU/OISEAUX --- */
+        #coffre-magique { position: fixed; font-size: 55px; z-index: 100; cursor: pointer; filter: drop-shadow(0 0 10px gold); transition: opacity 0.5s; }
+        .oiseau { position: fixed; font-size: 30px; z-index: 90; transition: all 5s linear; pointer-events: none; }
+        .message-volant { position: fixed; background: white; color: black; padding: 5px 12px; border-radius: 12px; font-size: 0.8em; font-weight: bold; border: 2px solid #2E7D32; z-index: 95; transition: all 1.8s ease-in-out; box-shadow: 0 4px 8px rgba(0,0,0,0.2); }
+
+        footer { padding: 40px; }
+        .footer-link { color: rgba(255,255,255,0.6); text-decoration: none; font-size: 0.9em; font-weight: bold; }
+    </style>
+</head>
+<body>
+
+    <div id="google_translate_element"></div>
+    <button id="btn-son" onclick="toggleSon()">🐦</button>
+
+    <table class="menu-table">
+        <tr>
+            <td><a href="index.html">Accueil</a></td>
+            <td><a href="formulaire.html">Semer</a></td>
+            <td><a href="jardin.html">Le Jardin</a></td>
+            <td><a href="impot.html">Impôts Publics</a></td>
+            <td><a href="regulation.html">Régulation</a></td>
+        </tr>
+    </table>
+
+    <div class="soleil-cadre"><h1>Le Trésor Public</h1></div>
+
+    <a href="jardin.html" class="terre-don">
+        <div style="text-shadow: 2px 2px 6px black; background: rgba(0,0,0,0.3); padding: 5px; border-radius: 10px;">🌍<br>ESPACE DU DON ENTIER</div>
+    </a>
+
+    <div class="bulles-grid">
+        <a href="impot.html" class="nuage">
+            <h3 style="color:#008080; margin:0; text-transform:uppercase;">📜 Impôts Publics</h3>
+            <p style="margin:5px 0; font-weight: bold; font-size: 0.9em;">Travaux publics en libre participation.</p>
+            <ul class="liste-exemples">
+                <li>Nettoyage des sentiers communs</li>
+                <li>Réparation des clôtures du jardin</li>
+                <li>Arrosage des zones partagées</li>
+                <li>Entretien des outils collectifs</li>
+            </ul>
+            <p style="font-size: 0.8em; color:#d32f2f; font-weight:bold; margin-top: 5px;">Motivation indispensable.<br>Attention : Travaux ingrats.</p>
+        </a>
+
+        <a href="regulation.html" class="etoile-justice">
+            <h3 style="margin:0;">⚖️ Régulation</h3>
+            <p style="font-size:0.85em; padding:10px 30px; color:#333;">Médiation et harmonie citoyenne pour tous les jardiniers.</p>
+        </a>
+
+        <div class="nuage" style="background: #ffebee; border-color: #e91e63;">
+            <h3 style="color:#e91e63; margin:0;">❤️ Aide & Écoute</h3>
+            <p style="font-size:0.8em; color: #444; margin: 10px 0;">Besoins vitaux, urgences sociales ou oreille attentive.</p>
+            <div style="display: flex; border-top: 1px solid #e91e63; margin-top: 10px; padding-top:10px;">
+                <a href="urgence.html" style="flex:1; color:#e91e63; text-decoration:none; font-weight:bold;">Urgences</a>
+                <a href="ecoute.html" style="flex:1; color:#e91e63; text-decoration:none; font-weight:bold;">Écoute</a>
+            </div>
+        </div>
+    </div>
+
+    <div id="coffre-magique" onclick="exploserCadeau()">🎁</div>
+
+    <footer>
+        <a href="transition-externe.html" class="footer-link">© 2000 le petit prince des jardiniers !</a>
+    </footer>
+
+    <script>
+        for(let i=0; i<100; i++) {
+            let s = document.createElement('div'); s.className = 'star';
+            let size = Math.random()*3+1; s.style.width = size+'px'; s.style.height = size+'px';
+            s.style.left = Math.random()*100+'vw'; s.style.top = Math.random()*100+'vh';
+            s.style.setProperty('--duration', (Math.random()*3+2)+'s');
+            s.style.setProperty('--speed', (Math.random()*60+120)+'s');
+            document.body.appendChild(s);
+        }
+
+        const coffre = document.getElementById('coffre-magique');
+        let cX = window.innerWidth/2, cY = window.innerHeight/2;
+        let tX = Math.random()*window.innerWidth, tY = Math.random()*window.innerHeight;
+
+        function moveCadeau() {
+            cX += (tX - cX) * 0.015; cY += (tY - cY) * 0.015;
+            if(Math.abs(cX - tX) < 40) { tX = Math.random()*(window.innerWidth-100); tY = Math.random()*(window.innerHeight-200); }
+            coffre.style.left = cX + "px"; coffre.style.top = cY + "px";
+            requestAnimationFrame(moveCadeau);
+        }
+        moveCadeau();
+
+        function exploserCadeau() {
+            for (let i = 0; i < 40; i++) {
+                const p = document.createElement('div');
+                p.innerHTML = ['✨','🌟','🌸','💎'][Math.floor(Math.random()*4)];
+                p.style.position = 'fixed'; p.style.left = cX+25+'px'; p.style.top = cY+25+'px';
+                p.style.zIndex = "2000"; document.body.appendChild(p);
+                const a = Math.random()*Math.PI*2, d = Math.random()*200+50;
+                p.animate([{transform:'scale(1)', opacity:1}, {transform:`translate(${Math.cos(a)*d}px, ${Math.sin(a)*d}px) scale(0)`, opacity:0}], 1200);
+                setTimeout(() => p.remove(), 1200);
+            }
+            coffre.style.opacity = "0";
+            setTimeout(() => { tX = Math.random()*window.innerWidth; coffre.style.opacity = "1"; }, 1000);
+        }
+
+        const phrases = ["L'Impôt Public est un geste de cœur", "Graines de générosité", "Le jardin vous aime"];
+        function creerOiseau() {
+            const o = document.createElement('div');
+            o.className = 'oiseau'; o.innerHTML = '🕊️';
+            o.style.left = '-50px'; o.style.top = Math.random()*window.innerHeight+'px';
+            document.body.appendChild(o);
+            setTimeout(() => { o.style.left = '110vw'; o.style.top = Math.random()*window.innerHeight+'px'; }, 100);
+            setTimeout(() => {
+                const m = document.createElement('div');
+                m.className = 'message-volant'; m.innerHTML = phrases[Math.floor(Math.random()*phrases.length)];
+                m.style.left = o.offsetLeft+"px"; m.style.top = o.offsetTop+"px";
+                document.body.appendChild(m);
+                setTimeout(() => { m.style.left = cX+"px"; m.style.top = cY+"px"; m.style.opacity="0"; m.style.transform="scale(0)"; }, 100);
+                setTimeout(() => m.remove(), 2000);
+            }, 3000);
+            setTimeout(() => o.remove(), 8000);
+        }
+        setInterval(creerOiseau, 7000);
+
+        function toggleSon() {
+            const audio = new Audio('https://www.lasonotheque.org/upload/mp3/0014.mp3');
+            audio.volume = 0.2; audio.play();
+        }
+    </script>
+</body>
+</html>
