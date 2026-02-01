@@ -8,7 +8,7 @@
             font-family: 'Comic Sans MS', cursive; text-align: center; margin: 0; padding: 0; 
             background: radial-gradient(circle at center, #1b2735 0%, #090a0f 100%);
             color: #ffffff; overflow-x: hidden; min-height: 100vh; position: relative;
-            padding-bottom: 180px; /* Espace pour le footer et le coffre */
+            padding-bottom: 180px; 
         }
 
         /* --- ÉTOILES --- */
@@ -19,17 +19,10 @@
         .menu-table td { border: 1px solid #FFFFFF; padding: 0; }
         .menu-table a { display: block; padding: 10px 15px; text-decoration: none; color: #FFFFFF; font-weight: bold; }
 
-        /* --- HEADER : BOUQUETS BLOQUÉS DROITS --- */
-        .header-container { 
-            display: flex; align-items: center; justify-content: center; 
-            gap: 40px; margin: 30px auto; 
-        }
-        .petit-bouquet { 
-            font-size: 50px; 
-            display: inline-block;
-            transform: rotate(0deg) !important; /* Force la droiture */
-            line-height: 1;
-        }
+        /* --- HEADER : BOUQUETS --- */
+        .header-container { display: flex; align-items: center; justify-content: center; gap: 40px; margin: 30px auto; }
+        .petit-bouquet-gauche { font-size: 50px; }
+        .petit-bouquet-droite { font-size: 50px; transform: rotate(-15deg); }
 
         .soleil-cadre {
             width: 180px; height: 180px; background: #FFD700; border-radius: 50%;
@@ -47,24 +40,30 @@
             cursor: pointer; transition: transform 2s; text-decoration: none; color: white; font-weight: bold;
             animation: rainbow-shadow 4s linear infinite;
         }
-        .terre-don:hover { transform: rotate(360deg); }
         @keyframes rainbow-shadow { 0% { box-shadow: 0 0 20px red; } 50% { box-shadow: 0 0 20px blue; } 100% { box-shadow: 0 0 20px red; } }
 
         /* --- RUBRIQUES --- */
-        .bulles-grid { display: flex; justify-content: center; align-items: stretch; gap: 20px; flex-wrap: wrap; padding: 20px; }
-        .nuage { background: #e0f7fa; border: 3px solid #008080; border-radius: 50px; padding: 20px; width: 300px; min-height: 220px; text-decoration: none; color: #000080; display: flex; flex-direction: column; justify-content: center; }
-        .etoile-justice { background: #E6E6FA; border: 3px solid #9370DB; width: 280px; min-height: 220px; clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%); display: flex; align-items: center; justify-content: center; text-decoration: none; color: #333; }
+        .bulles-grid { display: flex; justify-content: center; align-items: stretch; gap: 25px; flex-wrap: wrap; padding: 20px; max-width: 1200px; margin: auto; }
+        .nuage { background: #e0f7fa; border: 3px solid #008080; border-radius: 50px; padding: 20px; width: 320px; min-height: 250px; text-decoration: none; color: #000080; display: flex; flex-direction: column; justify-content: center; }
+        .info-sup { font-size: 0.9em; margin: 3px 0; color: #006666; }
+        .alerte-travail { font-size: 0.9em; color: #d32f2f; font-weight: bold; margin: 2px 0; }
+        .exemples { font-size: 0.8em; font-style: italic; margin-top: 8px; color: #004d40; }
+        .etoile-justice { background: #E6E6FA; border: 3px solid #9370DB; width: 300px; min-height: 250px; clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%); display: flex; align-items: center; justify-content: center; text-decoration: none; color: #333; }
         .nuage-rose { background: #ffebee; border-color: #e91e63; }
+        .titre-urgence-rose { color: #e91e63; font-weight: bold; text-transform: uppercase; margin-bottom: 15px; }
+        .split-box { display: flex; border-top: 1px solid #e91e63; padding-top: 10px; }
+        .split-part { flex: 1; text-decoration: none; color: #e91e63; font-weight: bold; padding: 10px; }
 
-        /* --- ANIMATIONS MESSAGERS & COFFRE --- */
+        /* --- ANIMATIONS --- */
         .animal-container { position: fixed; z-index: 900; pointer-events: none; }
         .bulle-texte { 
             background: white; border: 2px solid #2E7D32; border-radius: 15px; padding: 10px; 
-            font-weight: bold; color: black; opacity: 0; position: absolute; left: 70px; width: 200px; transition: opacity 0.5s;
+            font-weight: bold; color: black; opacity: 0; position: absolute; left: 70px; width: 200px; 
+            transition: opacity 0.3s;
         }
         #coffre-magique { position: fixed; font-size: 60px; z-index: 800; left: 50%; transform: translateX(-50%); bottom: 40px; }
         
-        footer { padding: 40px; position: relative; z-index: 10; font-size: 0.9em; }
+        footer { padding: 40px; position: relative; z-index: 10; }
     </style>
 </head>
 <body>
@@ -82,9 +81,9 @@
     </table>
 
     <div class="header-container">
-        <div class="petit-bouquet">💐</div>
+        <div class="petit-bouquet-gauche">💐</div>
         <div class="soleil-cadre"><h1>Le Trésor Public</h1></div>
-        <div class="petit-bouquet">💐</div>
+        <div class="petit-bouquet-droite">💐</div>
     </div>
 
     <p><strong>Le Petit Prince des Jardiniers</strong></p>
@@ -95,16 +94,21 @@
 
     <div class="bulles-grid">
         <a href="impot.html" class="nuage">
-            <h3>📜 Impôts Publics</h3>
-            <p><strong>Travaux publics en libre participation.</strong></p>
-            <p style="font-size:0.85em">Choix selon compétences. Motivation indispensable. Travaux ingrats.</p>
+            <h3 style="color:#008080; margin:0; text-transform:uppercase;">📜 Impôts Publics</h3>
+            <p style="margin:5px 0; font-weight: bold;">Travaux publics en libre participation.</p>
+            <p class="info-sup">À choisir selon ses compétences.</p>
+            <p class="alerte-travail">Motivation indispensable.</p>
+            <p class="alerte-travail">Travaux souvent ingrats.</p>
+            <div class="exemples">Ex : Travaux administratifs, routes, nettoyage...</div>
         </a>
-        <a href="regulation.html" class="etoile-justice"><div>⚖️ Régulation</div></a>
+
+        <a href="regulation.html" class="etoile-justice"><div>⚖️ Régulation Citoyenne</div></a>
+
         <div class="nuage nuage-rose">
-            <h3 style="color:#e91e63">❤️ Urgence & Écoute</h3>
-            <div style="display:flex; gap:10px; justify-content:center;">
-                <a href="urgence.html" style="color:#e91e63; font-weight:bold;">Besoins</a>
-                <a href="urgence.html" style="color:#e91e63; font-weight:bold;">Aide</a>
+            <div class="titre-urgence-rose">❤️ Urgence & Écoute</div>
+            <div class="split-box">
+                <a href="urgence.html" class="split-part">Besoins Vitaux</a>
+                <a href="urgence.html" class="split-part">Aide & Écoute</a>
             </div>
         </div>
     </div>
@@ -122,7 +126,7 @@
         });
 
         function createStars() {
-            for(let i=0; i<70; i++) {
+            for(let i=0; i<75; i++) {
                 let star = document.createElement('div');
                 star.className = 'star';
                 let s = (Math.random() * 3 + 2) + 'px';
@@ -138,9 +142,10 @@
         const phrases = ["L'Impôt Public est un geste de cœur", "Graines de générosité", "Le pardon est justice", "Besoin d'un câlin"];
         const emojis = ['🕊️', '🦋', '🐝', '🐞'];
         let messagerActif = null;
+        const coffre = document.getElementById('coffre-magique');
 
-        function animationExplosion() {
-            const coffre = document.getElementById('coffre-magique');
+        function animationEnvolCoffre() {
+            // Explosion d'étoiles
             const rect = coffre.getBoundingClientRect();
             for (let i = 0; i < 15; i++) {
                 const p = document.createElement('div');
@@ -151,7 +156,11 @@
                 p.animate([{ opacity: 1 }, { transform: `translate(${Math.cos(angle)*dist}px, ${Math.sin(angle)*dist}px)`, opacity: 0 }], 1000);
                 setTimeout(() => p.remove(), 1000);
             }
-            coffre.animate([{ transform: 'translateX(-50%) scale(1)' }, { transform: 'translateX(-50%) scale(1.4)' }, { transform: 'translateX(-50%) scale(1)' }], 600);
+            // Envol vers le haut
+            coffre.animate([
+                { transform: 'translateX(-50%) translateY(0)', opacity: 1 },
+                { transform: 'translateX(-50%) translateY(-600px)', opacity: 0 }
+            ], { duration: 1500, easing: 'ease-in' });
         }
 
         function createMessenger() {
@@ -160,7 +169,7 @@
             div.className = "animal-container";
             div.innerHTML = `<div class="bulle-texte">${phrases[Math.floor(Math.random()*phrases.length)]}</div><div style="font-size:60px">${emojis[Math.floor(Math.random()*4)]}</div>`;
             document.body.appendChild(div);
-            messagerActif = { el: div, bulle: div.firstChild, x: -250, y: 200, state: "ENTRÉE" };
+            messagerActif = { el: div, bulle: div.firstChild, x: -250, y: 250, state: "ENTRÉE" };
         }
 
         function loop() {
@@ -170,8 +179,21 @@
                     m.x += (150 - m.x) * 0.05;
                     if (m.x > 145) {
                         m.state = "MESSAGE"; m.bulle.style.opacity = 1;
-                        setTimeout(() => { animationExplosion(); m.state = "SORTIE"; }, 4000); // 4 sec pour lire
+                        setTimeout(() => { m.state = "TIR"; }, 3000);
                     }
+                } else if (m.state === "TIR") {
+                    m.state = "PROJECTION";
+                    const rect = coffre.getBoundingClientRect();
+                    // Le message fonce vers le cadeau
+                    m.bulle.animate([
+                        { left: '70px', top: '10px', transform: 'scale(1)', opacity: 1 },
+                        { left: (rect.left - m.x) + 'px', top: (rect.top - m.y) + 'px', transform: 'scale(0.1)', opacity: 0 }
+                    ], { duration: 800, easing: 'ease-in' });
+                    
+                    setTimeout(() => {
+                        animationEnvolCoffre();
+                        m.state = "SORTIE";
+                    }, 750);
                 } else if (m.state === "SORTIE") {
                     m.x -= 8;
                     if (m.x < -300) { m.el.remove(); messagerActif = null; }
