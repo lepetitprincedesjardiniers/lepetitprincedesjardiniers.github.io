@@ -1,265 +1,226 @@
+<html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sur l'Arc-en-Ciel...</title>
-    <title>Le Jardin du Petit Prince - Transition Magique</title>
+    <title>Le Jardin - Le Petit Prince</title>
+<meta charset="UTF-8">
+    <title>Le Jardin de la Fraternité</title>
     <style>
-        :root {
-            --rainbow: linear-gradient(90deg, #ff0000, #ff7f00, #ffff00, #00ff00, #0000ff, #4b0082, #8b00ff);
-        }
-        body, html { 
-            margin: 0; padding: 0; width: 100%; height: 100%; 
-            overflow: hidden; font-family: 'Comic Sans MS', cursive;
-            background-color: #000; cursor: crosshair;
-            display: flex; align-items: center; justify-content: center;
-            background-color: #000;
-            cursor: crosshair;
+        /* ON GARDE TON STYLE ORIGINAL */
+        body { font-family: 'Comic Sans MS', cursive; text-align: center; margin: 0; padding: 0; background-color: #FFFF00; color: #000080; overflow-x: hidden; min-height: 100vh; }
+
+        
+        .menu-table { margin: 20px auto; border-radius: 10px; background-color: #008080; border-collapse: collapse; }
+        .menu-table { margin: 20px auto; border-radius: 10px; background-color: #008080; border-collapse: collapse; margin-left: auto; margin-right: auto;}
+        .menu-table td { padding: 10px 15px; border: 1px solid #FFFFFF; }
+        .menu-table a { text-decoration: none; color: #FFFFFF; font-weight: bold; }
+
+@@ -35,34 +34,34 @@
+        /* Espace du Jardin Sacré */
+        #jardin-sacre {
+            position: relative;
+            height: 300px;
+@@ -33,121 +33,67 @@
+            100% { transform: scale(1) rotate(0deg); opacity: 1; }
         }
 
-        #scene {
-            position: relative; width: 100%; height: 100%;
-            display: flex; align-items: center; justify-content: center;
-            transition: transform 0.8s ease-in;
+        /* STYLE POUR LES NOUVEAUX MESSAGES DU TABLEAU */
+        .mur-reel {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 20px;
+            padding: 40px;
+            max-width: 1200px;
+            margin: auto;
         }
-
-        /* --- LE PONT ARC-EN-CIEL --- */
-        .rainbow-bridge {
-            position: absolute; bottom: 0; width: 200%; height: 20vh;
-            background: var(--rainbow);
-            filter: blur(20px); opacity: 0.5;
-            animation: slide 10s linear infinite;
-            transition: background 2s ease-in-out;
+        .carte-message {
+            background: rgba(255, 255, 255, 0.9);
+            border: 3px solid #008080;
+            border-radius: 15px;
+            padding: 15px;
+            box-shadow: 5px 5px 0px #008080;
+            transition: 0.3s;
         }
-        @keyframes slide { from { transform: translateX(-50%); } to { transform: translateX(0); } }
+        .carte-message:hover { transform: scale(1.02); }
+        .type-tag { font-size: 0.7em; background: #E67E22; color: white; padding: 2px 8px; border-radius: 5px; text-transform: uppercase; }
 
-        /* --- ÉLÉMENTS INTERACTIFS --- */
-        /* --- ÉLÉMENTS VOLANTS & CLIQUABLES --- */
-        .interact-element {
-            position: absolute; z-index: 100; cursor: pointer;
-            animation: envol 4s cubic-bezier(0.25, 0.1, 0.25, 1) forwards;
-            position: absolute;
-            white-space: nowrap;
-            pointer-events: auto;
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            z-index: 100;
-            animation: envol 4.5s cubic-bezier(0.25, 0.1, 0.25, 1) forwards;
-            cursor: pointer;
-            user-select: none;
-        }
+        #coffre-magique { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); font-size: 60px; z-index: 800; }
+        #animal-container { position: fixed; z-index: 900; white-space: nowrap; display: flex; align-items: center; pointer-events: none; }
+        #corps-animal { font-size: 50px; }
+        #bulle-texte { background: rgba(255, 255, 255, 0.9); border-radius: 15px; padding: 8px 15px; font-style: italic; color: #2E7D32; margin-right: 10px; font-weight: bold; border: 2px solid #2E7D32; opacity: 0; transition: opacity 0.3s; }
 
-        .bulle-bonheur {
-            background: white; color: #008080; padding: 12px 25px;
-            border-radius: 30px; font-size: 1.1rem; font-weight: bold;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.3); border: 2px solid #FFD700;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.3);
-            border: 2px solid #FFD700;
-        }
-
-        @keyframes envol {
-            0% { transform: translate(-100vw, 10vh) scale(0.5); opacity: 0; }
-            20% { opacity: 1; }
-            80% { opacity: 1; }
-            100% { transform: translate(100vw, -20vh) scale(1.2); opacity: 0; }
-        }
-
-        /* --- BOUTON PASSER --- */
-        #skip-btn {
-            position: fixed; bottom: 30px; right: 30px;
-            background: rgba(255,255,255,0.2); border: 1px solid white;
-            color: white; padding: 10px 20px; border-radius: 20px;
-            cursor: pointer; opacity: 0; transition: 0.5s; z-index: 1000;
-            font-size: 0.8rem;
-        /* --- EFFETS DE THÈMES --- */
-        .star { position: absolute; background: white; border-radius: 50%; animation: blink 1s infinite alternate; }
-        @keyframes blink { from { opacity: 0.2; } to { opacity: 1; } }
-
-        .fleur-pousse {
-            position: absolute; bottom: -50px; font-size: 3rem;
-            animation: floraison 3s forwards cubic-bezier(0.17, 0.67, 0.83, 0.67);
-            cursor: pointer;
-        }
-        #skip-btn:hover { background: white; color: black; }
-        @keyframes floraison { to { transform: translateY(-45vh) rotate(360deg) scale(1.5); } }
-
-        /* --- EXPLOSIONS --- */
-        .neige {
-            position: absolute; top: -10px; color: white; font-size: 1rem;
-            animation: chute 4s linear forwards;
-        }
-        @keyframes chute { to { transform: translateY(100vh) rotate(360deg); } }
-
-        /* --- EXPLOSIONS & POUSSIÈRE --- */
-        .particle {
-            position: absolute; pointer-events: none;
-            animation: particleAnim 0.8s forwards ease-out;
-@@ -66,27 +74,30 @@
-            100% { opacity: 0; transform: translate(var(--x), var(--y)) scale(0); }
-        }
-
-        /* --- EFFET TUNNEL FINAL --- */
-        .flash {
-            position: fixed; top:0; left:0; width:100%; height:100%;
-            background: var(--rainbow); opacity: 0; pointer-events: none;
-            transition: opacity 0.5s; z-index: 2000;
-        .mouse-dust {
-            position: absolute; width: 4px; height: 4px; background: gold;
-            border-radius: 50%; pointer-events: none;
-            animation: dustFade 0.7s forwards;
-        }
-        @keyframes dustFade { to { opacity: 0; transform: scale(3); } }
-
-        .footer-poesie {
-            position: absolute; bottom: 20px; color: rgba(255,255,255,0.7);
-            text-align: center; font-style: italic; font-size: 0.9rem;
-            line-height: 1.4;
-        }
+        
+        .copyright-link { color: #000080; text-decoration: none; font-weight: bold; }
     </style>
 </head>
+<body bgcolor="#FFFF00" text="#000080" style="font-family:'Comic Sans MS', cursive; text-align:center; margin:0; padding:0;">
+
+    <center>
+        <div id="google_translate_element" style="padding:10px;"></div>
+
+        <table class="notranslate" border="1" cellpadding="10" bgcolor="#008080" style="margin-top:10px; border-radius:10px;">
+            <tr>
+                <td><a href="index.html" style="text-decoration:none;"><font color="#FFFFFF"><b>Accueil</b></font></a></td>
+                <td><a href="formulaire.html" style="text-decoration:none;"><font color="#FFFFFF"><b>Semer</b></font></a></td>
+                <td><a href="jardin.html" style="text-decoration:none;"><font color="#FFFFFF"><b>Le Jardin</b></font></a></td>
+                <td><a href="contact.html" style="text-decoration:none;"><font color="#FFFFFF"><b>Contact</b></font></a></td>
+            </tr>
+        </table>
+
+        <br>
+        <font size="6" color="#2E7D32">🌻 <u><b>LE JARDIN DES GRAINES</b></u> 🌻</font>
+        <br><br>
+
+        <div id="annonces-container" style="width:90%; max-width:900px;">
+            <p><i>Chargement du jardin en cours...</i></p>
 <body>
 
-<div id="scene">
-    <div class="rainbow-bridge"></div>
-    <div id="container"></div>
-    <div style="color:white; text-align:center; z-index:10; font-style:italic;">
-        "Le silence s'efface devant l'éclat de l'arc-en-ciel..."
-    <div class="footer-poesie">
-        "Un silence irréel, puis l'éclair qui libère la joie..."<br>
-        Le Petit Prince des Jardiniers prépare votre chemin.
+    <audio id="chantOiseaux" loop><source src="oiseaux.mp3" type="audio/mpeg"></audio>
+@@ -75,7 +74,6 @@
+
+    <div id="google_translate_element" style="padding:10px;"></div>
+
+    <table class="menu-table">
+        <tr>
+            <td><a href="index.html">Accueil</a></td>
+            <td><a href="formulaire.html">Semer</a></td>
+            <td><a href="jardin.html">Le Jardin</a></td>
+            <td><a href="contact.html">Contact</a></td>
+            <td><a href="urgence.html">Urgences</a></td>
+        </tr>
+    </table>
+
+@@ -84,17 +82,12 @@ <h2 style="color:#2E7D32;">🍃 Le Jardin des Cadeaux Existentiels 🍃</h2>
+    <h2 style="color:#2E7D32;">🍃 Le Jardin des Cadeaux Existentiels 🍃</h2>
+    <p>Regardez la fraternité s'épanouir au gré des dons du monde entier...</p>
+
+    <div id="jardin-sacre">
+        </div>
+
+    <div id="jardin-sacre"></div>
+    </center>
+
+    <div style="padding: 20px; font-weight: bold; font-size: 1.2em;">
+        "Chaque don est une fleur qui ne fane jamais."
     </div>
-</div>
 
-<button id="skip-btn" onclick="goToNext()">Passer le voyage ➔</button>
-<div id="flash" class="flash"></div>
+    <h3 style="color:#008080;">📖 Registre de la Fraternité</h3>
+    <div id="chargement">Récolte des messages en cours...</div>
+    <div class="mur-reel" id="mur-messages"></div>
 
-<script>
-    const phrases = [
-        "Ici, on sème des graines de générosité pour récolter de l'altruisme",
-@@ -98,49 +109,104 @@
-    ];
+    <br><br>
+    <font size="2">
+        Copyright 2000 <a href="https://youtube.com" class="copyright-link">Le Petit Prince des Jardiniers</a>
+@@ -112,6 +105,34 @@ <h3 style="color:#008080;">📖 Registre de la Fraternité</h3>
+    </font>
 
-    const container = document.getElementById('container');
-    const flash = document.getElementById('flash');
-    const skipBtn = document.getElementById('skip-btn');
-    const urlParams = new URLSearchParams(window.location.search);
-    const destination = urlParams.get('page') || 'index.html';
-    const scene = document.getElementById('scene');
+    <div id="coffre-magique">🎁</div>
+    <div id="animal-container">
+        <div id="bulle-texte"></div>
+        <div id="corps-animal">🕊️</div>
+    </div>
 
-    // 1. Choix aléatoire du thème (Astral, Prairie, Nuages, ou Fêtes)
-    const currentTheme = ['astral', 'prairie', 'nuages', 'fetes'][Math.floor(Math.random() * 4)];
-    
-    function initTheme() {
-        if(currentTheme === 'astral') {
-            scene.style.background = "radial-gradient(circle, #001f3f, #000)";
-            for(let i=0; i<100; i++) createStaticElement('star');
-        } else if(currentTheme === 'prairie') {
-            scene.style.background = "linear-gradient(#87CEEB, #228B22)";
-            for(let i=0; i<15; i++) setTimeout(createFleur, i * 200);
-        } else if(currentTheme === 'fetes') {
-            scene.style.background = "linear-gradient(#1a2a6c, #b21f1f)";
-            setInterval(createNeige, 100);
-        } else {
-            scene.style.background = "linear-gradient(#4facfe, #00f2fe)";
+    <script type="text/javascript">
+        function googleTranslateElementInit() { new google.translate.TranslateElement({pageLanguage: 'fr'}, 'google_translate_element'); }
+    </script>
+    <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+
+    <script>
+        const scriptURL = 'https://script.google.com/macros/s/AKfycbwe3bMzbJMUQSEdeyprffw-FQpqLg9-fGcHJi2_1_Ix5kWmrisBoSo2Kzne-CMwe3s/exec';
+
+        async function chargerJardin() {
+            try {
+                const response = await fetch(scriptURL);
+                const data = await response.json();
+                const container = document.getElementById('annonces-container');
+                container.innerHTML = "";
+
+                data.forEach(annonce => {
+                    const card = document.createElement('div');
+                    card.style = "background:white; border:3px solid #2E7D32; border-radius:15px; padding:20px; margin-bottom:25px; text-align:left; box-shadow: 6px 6px 0px #008080;";
+                    
+                    card.innerHTML = `
+                        <font size="5" color="#E67E22"><b>📍 ${annonce.ville} (${annonce.pays})</b></font><br>
+                        <div style="background:#F0F9FF; padding:8px; border-radius:8px; margin:10px 0; border-left: 5px solid #008080;">
+                            <font size="3" color="#008080"><b>🚀 Zone d'action :</b> ${annonce.km}</font>
+                        </div>
+                        <font size="3"><b>Semé par :</b> ${annonce.prenom}</font><br>
+                        <hr color="#eeeeee">
+                        <font size="4">"${annonce.description}"</font><br>
+                        <hr color="#eeeeee">
+                        <font size="2" color="#666">📅 Expire dans : ${annonce.duree} | Le : ${new Date(annonce.date).toLocaleDateString()}</font>
+                    `;
+                    container.appendChild(card);
+                });
+            } catch (e) {
+                document.getElementById('annonces-container').innerHTML = "<p>Erreur de floraison du jardin.</p>";
+        const mesPhrases = [
+            "Une fleur vient d'éclore grâce à un don de paix",
+            "La fraternité grandit ici...",
+@@ -174,9 +195,10 @@ <h3 style="color:#008080;">📖 Registre de la Fraternité</h3>
+            "Regardez cette paix rayonnante s'installer",
+            "Un cadeau existentiel a été déposé"
+        ];
+        const animaux = ['🕊️', '🦋', '🐝', '🐞', '🦜', '🐰', '🐿️', '🦄'];
+        const fleurs = ['🌸', '🌼', '🌻', '🌺', '🌷', '🌹'];
+
+        const jardin = document.getElementById('jardin-sacre');
+        const animalCont = document.getElementById('animal-container');
+        const bulle = document.getElementById('bulle-texte');
+        const corps = document.getElementById('corps-animal');
+        const audio = document.getElementById('chantOiseaux');
+
+        let aniX, aniY, targetX, targetY, state = "WAITING";
+
+        document.addEventListener('click', () => { if(audio.paused) { audio.volume = 0.02; audio.play(); } });
+
+        function plantFlower() {
+            const f = document.createElement('div');
+            f.className = 'fleur-clonée';
+            f.innerText = fleurs[Math.floor(Math.random()*fleurs.length)];
+            f.style.left = Math.random() * 90 + "%";
+            f.style.top = Math.random() * 70 + 20 + "%";
+            jardin.appendChild(f);
         }
-        
-        createMessenger();
-    }
 
-    // 2. Création de l'élément cliquable principal (Oiseau ou autre)
-    function createMessenger() {
-        const messenger = document.createElement('div');
-        messenger.className = 'interact-element';
-        const icon = currentTheme === 'fetes' ? '🦌' : (currentTheme === 'prairie' ? '🦋' : '🕊️');
-        
-        messenger.innerHTML = `
-            <div style="display:flex; align-items:center; gap:10px;">
-                <span style="font-size:3rem">🕊️</span>
-                <div class="bulle-bonheur">${phrases[Math.floor(Math.random()*phrases.length)]}</div>
-            </div>`;
-            <span style="font-size:3rem">${icon}</span>
-            <div class="bulle-bonheur">${phrases[Math.floor(Math.random()*phrases.length)]}</div>
-        `;
-        
-        messenger.onclick = (e) => explode(e.clientX, e.clientY);
-        container.appendChild(messenger);
-    }
-
-    function createFleur() {
-        const f = document.createElement('div');
-        f.className = 'fleur-pousse';
-        f.style.left = Math.random() * 90 + 'vw';
-        f.innerHTML = ['🌸','🌻','🌼','🌷'][Math.floor(Math.random()*4)];
-        f.onclick = (e) => explode(e.clientX, e.clientY);
-        container.appendChild(f);
-    }
-
-    function createNeige() {
-        const n = document.createElement('div');
-        n.className = 'neige';
-        n.style.left = Math.random() * 100 + 'vw';
-        n.innerHTML = '❄️';
-        container.appendChild(n);
-        setTimeout(() => n.remove(), 4000);
-    }
-
-    function createStaticElement(type) {
-        const el = document.createElement('div');
-        el.className = type;
-        el.style.width = el.style.height = Math.random() * 3 + 'px';
-        el.style.left = Math.random() * 100 + 'vw';
-        el.style.top = Math.random() * 100 + 'vh';
-        container.appendChild(el);
-    }
-
-    // 3. Poussière d'étoiles au mouvement
-    window.onmousemove = (e) => {
-        const d = document.createElement('div');
-        d.className = 'mouse-dust';
-        d.style.left = e.clientX + 'px';
-        d.style.top = e.clientY + 'px';
-        document.body.appendChild(d);
-        setTimeout(() => d.remove(), 700);
-    };
-
-    // 4. Explosion de joie
-    function explode(x, y) {
-        for(let i=0; i<15; i++) {
-            const p = document.createElement('div');
-            p.className = 'particle';
-            p.innerHTML = ['🌈','✨','❤️','🌟'][Math.floor(Math.random()*4)];
-            p.style.left = x + 'px'; p.style.top = y + 'px';
-            p.innerHTML = ['✨','❤️','🌟','💥','🌸'][Math.floor(Math.random()*5)];
-            p.style.left = x + 'px';
-            p.style.top = y + 'px';
-            p.style.setProperty('--x', (Math.random()*200 - 100) + 'px');
-            p.style.setProperty('--y', (Math.random()*200 - 100) + 'px');
-            document.body.appendChild(p);
-            setTimeout(() => p.remove(), 800);
+        function startNewMessenger() {
+            bulle.innerText = mesPhrases[Math.floor(Math.random() * mesPhrases.length)];
+            corps.innerText = animaux[Math.floor(Math.random() * animaux.length)];
+            
+            aniX = -200; 
+            aniY = Math.random() * 300 + 100;
+            targetX = window.innerWidth + 200;
+            targetY = aniY + (Math.random() * 100 - 50);
+            
+            bulle.style.opacity = "1";
+            state = "CROSSING";
         }
-    }
 
-    function goToNext() {
-        flash.style.opacity = '1';
-        document.getElementById('scene').style.transform = 'scale(2)';
-        setTimeout(() => { window.location.href = destination; }, 600);
-    }
+        function loop() {
+            if (state === "CROSSING") {
+                aniX += 3; // L'animal traverse le jardin
+                aniY += Math.sin(aniX/50) * 2;
 
-    // Apparition du bouton "Passer"
-    setTimeout(() => { skipBtn.style.opacity = "1"; }, 1500);
+                // Chance de planter une fleur en passant
+                if(Math.random() < 0.01) plantFlower();
 
-    // Redirection automatique
-    setTimeout(goToNext, 4500);
-    // 5. Redirection finale
-    const urlParams = new URLSearchParams(window.location.search);
-    const destination = urlParams.get('page') || 'index.html';
-    setTimeout(() => {
-        scene.style.opacity = '0';
-        setTimeout(() => { window.location.href = destination; }, 1000);
-    }, 4500);
+                if (aniX > window.innerWidth + 100) {
+                    bulle.style.opacity = "0";
+                    setTimeout(startNewMessenger, 2000);
+                    state = "WAITING";
+                }
+            }
 
-    window.onload = createMessenger;
-    window.onload = initTheme;
-</script>
+            animalCont.style.left = aniX + "px";
+            animalCont.style.top = aniY + "px";
+            corps.style.transform = "scaleX(-1)"; // Toujours vers la droite
+
+            requestAnimationFrame(loop);
+        }
+        window.onload = chargerJardin;
+
+        startNewMessenger();
+        loop();
+    </script>
 </body>
 </html>
+</html
