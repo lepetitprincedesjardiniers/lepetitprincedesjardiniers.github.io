@@ -19,40 +19,44 @@
 
         #google_translate_element { position: absolute; top: 5px; left: 5px; z-index: 3000; opacity: 0.4; transform: scale(0.7); filter: grayscale(1); }
         
-        /* Nouveau Titre Stylisé */
-        .titre-fraternite { 
-            display: block; padding-top: 160px; font-size: 2em; letter-spacing: 3px; 
-            color: #f0e68c; text-shadow: 0 0 15px rgba(255,230,140,0.5); font-weight: bold;
+        /* Menu et Titre en haut */
+        .header-container {
+            position: relative;
+            padding-top: 20px;
+            z-index: 100;
         }
 
-        /* Étoiles Mobiles */
-        .star { position: fixed; background: white; border-radius: 50%; z-index: -1; animation: twinkle var(--duration) infinite ease-in-out, drift var(--drift-duration) linear infinite; }
-        @keyframes twinkle { 0%, 100% { opacity: 0.3; transform: scale(0.8); } 50% { opacity: 1; transform: scale(1.2); } }
-        @keyframes drift { from { transform: translateX(0); } to { transform: translateX(100px); } }
+        .titre-fraternite { 
+            display: block; font-size: 2em; letter-spacing: 3px; 
+            color: #f0e68c; text-shadow: 0 0 15px rgba(255,230,140,0.5); font-weight: bold;
+            margin-bottom: 10px;
+        }
 
         /* Menu */
-        .menu-table { margin: 20px auto 10px; border-radius: 10px; background-color: #008080; border-collapse: collapse; position: relative; z-index: 10; }
+        .menu-table { margin: 10px auto; border-radius: 10px; background-color: #008080; border-collapse: collapse; position: relative; z-index: 10; }
         .menu-table td { border: 1px solid #FFFFFF; }
         .menu-table a { display: block; padding: 12px 20px; text-decoration: none; color: #FFFFFF; font-weight: bold; }
         .menu-table td:hover { background-color: #00b3b3; }
 
-        /* BOUTON OISEAU CHANTEUR */
-        #btn-son { position: fixed; top: 10px; right: 10px; z-index: 1000; background: rgba(255,255,255,0.2); border: 1px solid white; color: white; border-radius: 50%; cursor: pointer; padding: 10px; font-size: 22px; transition: 0.3s; }
-        #btn-son:hover { transform: scale(1.2); background: rgba(255,255,255,0.4); }
-
-        /* Soleil TOUT EN HAUT */
+        /* Soleil avec effet arc-en-ciel */
         .soleil-cadre { 
-            width: 130px; height: 130px; background: #FFD700; border-radius: 50%; 
+            width: 140px; height: 140px; background: #FFD700; border-radius: 50%; 
             display: flex; align-items: center; justify-content: center; 
-            box-shadow: 0 0 25px #FFA500; margin: 0 auto; position: absolute; top: 10px; left: 50%; 
-            transform: translateX(-50%); z-index: 20; transition: 0.5s; 
+            box-shadow: 0 0 25px #FFA500; margin: 20px auto; position: relative;
+            z-index: 20; transition: 0.8s; 
         }
-        .soleil-cadre h1 { font-size: 1.0em; color: #333; line-height: 1.1; margin: 0; padding: 10px; }
+        .soleil-cadre h1 { font-size: 0.9em; color: #333; line-height: 1.1; margin: 0; padding: 10px; pointer-events: none; }
         .soleil-cadre:hover { 
-            box-shadow: 0 0 40px 10px rgba(255,0,0,0.5), 0 0 50px 20px rgba(255,165,0,0.5), 0 0 60px 30px rgba(255,255,0,0.5);
-            transform: translateX(-50%) scale(1.1);
+            background: linear-gradient(45deg, #ff0000, #ff7f00, #ffff00, #00ff00, #0000ff, #4b0082, #8b00ff);
+            box-shadow: 0 0 50px white;
+            transform: scale(1.1) rotate(360deg);
         }
-        
+
+        /* Étoiles */
+        .star { position: fixed; background: white; border-radius: 50%; z-index: -1; animation: twinkle var(--duration) infinite ease-in-out, drift var(--drift-duration) linear infinite; }
+        @keyframes twinkle { 0%, 100% { opacity: 0.3; transform: scale(0.8); } 50% { opacity: 1; transform: scale(1.2); } }
+        @keyframes drift { from { transform: translateX(0); } to { transform: translateX(100px); } }
+
         /* TERRE */
         .terre-don { 
             width: 350px; height: 350px; margin: 40px auto; border-radius: 50%; 
@@ -68,11 +72,9 @@
 
         /* Rubriques */
         .bulles-grid { display: flex; justify-content: center; gap: 20px; flex-wrap: wrap; padding: 20px; position: relative; z-index: 5; }
-        
         .nuage, .cadre-aide { transition: transform 0.3s; background: #e0f7fa; border: 3px solid #008080; border-radius: 50px; padding: 20px; width: 320px; color: #000080; }
-
         .phrases-impots { font-size: 0.8em; color: #d32f2f; font-weight: bold; margin: 8px 0; }
-        .liste-exemples-discrets { font-size: 0.65em; text-align: left; color: rgba(0, 102, 102, 0.6); font-style: italic; list-style: none; padding-left: 15px; }
+        .liste-exemples-discrets { font-size: 0.65em; text-align: left; color: rgba(0, 102, 102, 0.8); font-style: italic; list-style: none; padding-left: 15px; margin-top: 10px; border-top: 1px dashed #008080; }
 
         .etoile-justice { 
             background: #E6E6FA; border: 3px solid #9370DB; width: 300px; min-height: 250px; 
@@ -86,35 +88,54 @@
         .btn-aide-container { display: flex; border-top: 1px solid #e91e63; margin-top: 10px; padding-top: 10px; gap: 10px; }
         .btn-aide-container a { flex: 1; color: #e91e63; font-weight: bold; text-decoration: none; font-size: 0.85em; }
 
-        #coffre-magique { position: fixed; font-size: 55px; z-index: 500; filter: drop-shadow(0 0 15px gold); }
+        #coffre-magique { position: fixed; font-size: 55px; z-index: 8; filter: drop-shadow(0 0 15px gold); cursor: pointer; }
         .particule { position: fixed; pointer-events: none; z-index: 1000; font-size: 24px; }
-        .oiseau { position: fixed; font-size: 35px; z-index: 90; transition: transform 6s linear; }
-        .message-volant { position: fixed; background: white; color: #2E7D32; padding: 4px 12px; border-radius: 12px; font-size: 0.8em; font-weight: bold; border: 2px solid #2E7D32; z-index: 600; }
+        
+        /* Oiseaux et Messages */
+        .oiseau { position: fixed; font-size: 35px; z-index: 7; transition: transform 6s linear; pointer-events: none; }
+        .message-volant { 
+            position: fixed; background: rgba(255,255,255,0.9); color: #e91e63; 
+            padding: 5px 15px; border-radius: 20px; font-size: 0.9em; font-weight: bold; 
+            border: 2px solid #ffc0cb; z-index: 9; transition: all 1.5s ease-in-out; 
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+        }
 
-        footer { padding: 30px; }
-        .lien-copyright { color: rgba(255,255,255,0.6); text-decoration: none; font-weight: bold; }
+        /* Copyright avec effet */
+        .lien-copyright { 
+            display: inline-block; color: rgba(255,255,255,0.6); text-decoration: none; 
+            font-weight: bold; transition: 0.4s; padding: 10px;
+        }
+        .lien-copyright:hover { 
+            color: #00ffff; text-shadow: 0 0 10px #00ffff; transform: rotate(-2deg) scale(1.2);
+        }
+
+        #btn-son { position: fixed; top: 10px; right: 10px; z-index: 1000; background: rgba(255,255,255,0.2); border: 1px solid white; color: white; border-radius: 50%; cursor: pointer; padding: 10px; font-size: 22px; }
     </style>
 </head>
 <body>
 
-    <div class="soleil-cadre"><h1>Le Trésor Public</h1></div>
-    <div class="titre-fraternite">La fraternité du palais nature</div>
+    <div class="header-container">
+        <div class="titre-fraternite">La fraternité du palais nature</div>
+        
+        <table class="menu-table">
+            <tr>
+                <td><a href="index.html">Accueil</a></td>
+                <td><a href="formulaire.html">Semer</a></td>
+                <td><a href="jardin.html">Le Jardin</a></td>
+                <td><a href="impot.html">Impôts Publics</a></td>
+                <td><a href="regulation.html">Régulation</a></td>
+                <td><a href="urgence.html">Aide</a></td>
+            </tr>
+        </table>
+    </div>
+
+    <div class="soleil-cadre"><h1>Le Trésor Public du jardin</h1></div>
 
     <div id="google_translate_element"></div>
     <button id="btn-son" onclick="toggleSon()">🕊️</button>
 
-    <table class="menu-table">
-        <tr>
-            <td><a href="index.html">Accueil</a></td>
-            <td><a href="formulaire.html">Semer</a></td>
-            <td><a href="jardin.html">Le Jardin</a></td>
-            <td><a href="impot.html">Impôts Publics</a></td>
-            <td><a href="regulation.html">Régulation</a></td>
-        </tr>
-    </table>
-
     <a href="jardin.html" class="terre-don">
-        <div style="text-shadow: 2px 2px 8px black; font-size: 1.5em;">🌍<br>ESPACE DU DON ENTIER</div>
+        <div style="text-shadow: 2px 2px 8px black; font-size: 1.5em;">ESPACE DU SEMIS DE DON ENTIER</div>
     </a>
 
     <div class="bulles-grid">
@@ -123,10 +144,7 @@
             <p style="font-size: 0.8em; font-weight: bold;">Travaux publics en participation libre.</p>
             <div class="phrases-impots">Motivation indispensable.<br>Attention : Travaux ingrats.</div>
             <ul class="liste-exemples-discrets">
-                <li>réfection des routes et sentiers...</li>
-                <li>aide administrative et courriers...</li>
-                <li>entretien des espaces verts...</li>
-                <li>soutien technique collectif...</li>
+                <li>ex: réfection des routes et sentiers, aide administrative, entretien des espaces verts, soutien technique collectif.</li>
             </ul>
         </div>
 
@@ -152,6 +170,7 @@
     </footer>
 
     <script>
+        // Génération des étoiles
         for(let i=0; i<65; i++) {
             let s = document.createElement('div'); s.className = 'star';
             s.style.width = s.style.height = (Math.random()*3+1)+'px';
@@ -161,6 +180,7 @@
             document.body.appendChild(s);
         }
 
+        // Mouvement du cadeau (index Z bas pour passer derrière les rubriques)
         const coffre = document.getElementById('coffre-magique');
         let cX = window.innerWidth/2, cY = window.innerHeight/2;
         let tX = Math.random()*(window.innerWidth-100), tY = Math.random()*(window.innerHeight-200);
@@ -174,7 +194,7 @@
         move();
 
         function exploserCadeau() {
-            const fleurs = ['🌸', '✨', '🌻', '🍀', '🌟'];
+            const fleurs = ['🌸', '✨', '🌻', '🍀', '🌟', '❤️'];
             for(let i=0; i<65; i++) {
                 const p = document.createElement('div');
                 p.className = 'particule'; p.innerHTML = fleurs[Math.floor(Math.random()*fleurs.length)];
@@ -189,8 +209,47 @@
                 setTimeout(() => p.remove(), 1500);
             }
             coffre.style.display = 'none';
-            setTimeout(() => { coffre.style.display='block'; }, 2000);
+            setTimeout(() => { coffre.style.display='block'; }, 3000);
         }
+
+        // Oiseaux messagers de Paix et d'Amour
+        function creerOiseau() {
+            const o = document.createElement('div'); o.className = 'oiseau'; o.innerHTML = '🕊️';
+            o.style.left = '-60px'; o.style.top = Math.random()*window.innerHeight+'px';
+            document.body.appendChild(o);
+            
+            // L'oiseau traverse la page
+            setTimeout(() => o.style.transform = 'translateX(120vw)', 100);
+
+            // Lancer le message au milieu du chemin
+            setTimeout(() => {
+                const messages = ["Amour ❤️", "Paix 🕊️", "Douceur ✨", "Fraternité 🤝"];
+                const m = document.createElement('div'); 
+                m.className = 'message-volant'; 
+                m.innerHTML = messages[Math.floor(Math.random()*messages.length)];
+                
+                const rect = o.getBoundingClientRect();
+                m.style.left = rect.left+'px'; m.style.top = rect.top+'px';
+                document.body.appendChild(m);
+
+                // Le message se dirige vers le cadeau
+                setTimeout(() => { 
+                    m.style.left = (cX + 20) + 'px'; 
+                    m.style.top = (cY + 20) + 'px'; 
+                    m.style.transform = 'scale(0.2)'; 
+                    m.style.opacity = '0';
+                }, 100);
+
+                // Explosion à l'impact du message si le cadeau est là
+                setTimeout(() => { 
+                    if(coffre.style.display !== 'none') exploserCadeau(); 
+                    m.remove(); 
+                }, 1600);
+            }, 2000 + Math.random()*2000);
+
+            setTimeout(() => o.remove(), 7000);
+        }
+        setInterval(creerOiseau, 6000);
 
         let audio = new Audio('oiseaux.mp3');
         audio.loop = true;
@@ -199,26 +258,6 @@
             if (isPlaying) { audio.pause(); isPlaying = false; }
             else { audio.play().catch(e => {}); isPlaying = true; }
         }
-
-        function creerOiseau() {
-            const o = document.createElement('div'); o.className = 'oiseau'; o.innerHTML = '🕊️';
-            o.style.left = '-60px'; o.style.top = Math.random()*window.innerHeight+'px';
-            document.body.appendChild(o);
-            setTimeout(() => o.style.transform = 'translateX(120vw)', 100);
-            setTimeout(() => {
-                const m = document.createElement('div'); m.className = 'message-volant'; m.innerHTML = "Un cadeau !";
-                const rect = o.getBoundingClientRect();
-                m.style.left = rect.left+'px'; m.style.top = rect.top+'px';
-                document.body.appendChild(m);
-                setTimeout(() => { 
-                    m.style.left = (cX + 15) + 'px'; m.style.top = (cY + 15) + 'px'; 
-                    m.style.transform = 'scale(0.5)'; m.style.opacity = '0';
-                }, 100);
-                setTimeout(() => { if(coffre.style.display !== 'none') exploserCadeau(); m.remove(); }, 1300);
-            }, 2500);
-            setTimeout(() => o.remove(), 7000);
-        }
-        setInterval(creerOiseau, 8000);
     </script>
 </body>
 </html>
