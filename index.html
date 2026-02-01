@@ -17,7 +17,6 @@
             color: #ffffff; overflow-x: hidden; min-height: 100vh; position: relative;
         }
 
-        /* --- TRADUCTEUR EN HAUT À GAUCHE --- */
         #google_translate_element { 
             position: absolute; top: 5px; left: 5px; z-index: 3000; 
             opacity: 0.6; transform: scale(0.8); transform-origin: top left; filter: grayscale(1);
@@ -39,7 +38,8 @@
         .menu-table a { display: block; padding: 12px 20px; text-decoration: none; color: #FFFFFF; font-weight: bold; }
         .menu-table td:hover { background-color: #00b3b3; }
         
-        #btn-son { position: fixed; top: 10px; right: 10px; z-index: 1000; background: rgba(255,255,255,0.2); border: 1px solid white; color: white; border-radius: 50%; cursor: pointer; padding: 8px; font-size: 20px; }
+        #btn-son { position: fixed; top: 10px; right: 10px; z-index: 1000; background: rgba(255,255,255,0.3); border: 2px solid white; color: white; border-radius: 50%; cursor: pointer; padding: 10px; font-size: 25px; transition: 0.3s; }
+        #btn-son:hover { transform: scale(1.2); background: rgba(255,255,255,0.5); }
 
         /* --- SOLEIL ARC-EN-CIEL --- */
         .soleil-cadre { 
@@ -52,22 +52,22 @@
             box-shadow: 0 0 0 10px rgba(255,0,0,0.4), 0 0 0 20px rgba(255,165,0,0.3), 0 0 0 30px rgba(255,255,0,0.2), 0 0 0 40px rgba(0,128,0,0.2), 0 0 0 50px rgba(0,0,255,0.1);
         }
         .soleil-cadre h1 { font-size: 1.1em; margin: 0; color: #000080; }
-        @keyframes soleilScintille { 0%, 100% { transform: scale(0.95); } 50% { transform: scale(1.05); } }
 
-        /* --- TERRE CALME --- */
+        /* --- TERRE AVEC EFFET RETROUVÉ --- */
         .terre-don {
             width: 250px; height: 250px; margin: 20px auto; border-radius: 50%;
             background-image: url('https://upload.wikimedia.org/wikipedia/commons/thumb/c/c3/Solarsystemscope_texture_2k_earth_daymap.jpg/1200px-Solarsystemscope_texture_2k_earth_daymap.jpg');
             background-size: cover; background-repeat: repeat-x; display: flex; align-items: center; justify-content: center;
             text-decoration: none; color: white; font-weight: bold; box-shadow: inset -20px -20px 50px rgba(0,0,0,0.8), 0 0 20px rgba(0,191,255,0.5);
-            animation: rotationTerre 30s linear infinite; position: relative; z-index: 5;
+            animation: rotationTerre 30s linear infinite; position: relative; z-index: 5; transition: 0.5s ease;
         }
-        @keyframes rotationTerre { from { background-position: 0 0; } to { background-position: 500px 0; } }
+        .terre-don:hover { transform: scale(1.1); box-shadow: 0 0 40px rgba(0,191,255,0.8); }
 
-        /* --- GRILLE & CASES --- */
+        /* --- GRILLE & CASES AVEC LUEUR AU SURVOL --- */
         .bulles-grid { display: flex; justify-content: center; align-items: stretch; gap: 25px; flex-wrap: wrap; padding: 20px; max-width: 1200px; margin: auto; position: relative; z-index: 5; }
-        .nuage { background: #e0f7fa; border: 3px solid #008080; border-radius: 50px; padding: 25px; width: 340px; min-height: 280px; text-decoration: none; color: #000080; display: flex; flex-direction: column; justify-content: center; transition: 0.3s; }
-        
+        .nuage { background: #e0f7fa; border: 3px solid #008080; border-radius: 50px; padding: 25px; width: 340px; min-height: 280px; text-decoration: none; color: #000080; display: flex; flex-direction: column; justify-content: center; transition: 0.4s ease; }
+        .nuage:hover { box-shadow: 0 0 20px rgba(255,255,255,0.5); transform: translateY(-5px); background: #f0ffff; }
+
         .liste-exemples { font-size: 0.85em; text-align: left; margin: 5px auto; padding-left: 20px; color: #006666; font-style: italic; }
 
         .etoile-justice { 
@@ -79,11 +79,11 @@
 
         /* --- CADEAU & OISEAUX --- */
         #coffre-magique { position: fixed; font-size: 55px; z-index: 100; cursor: pointer; filter: drop-shadow(0 0 10px gold); transition: opacity 0.5s; }
-        .oiseau { position: fixed; font-size: 30px; z-index: 90; transition: all 6s linear; pointer-events: none; }
+        .oiseau { position: fixed; font-size: 35px; z-index: 90; transition: all 6s linear; pointer-events: none; }
+        .message-volant { position: fixed; background: white; color: black; padding: 4px 10px; border-radius: 10px; font-size: 0.75em; font-weight: bold; border: 2px solid #2E7D32; z-index: 150; transition: all 1.5s ease-in; box-shadow: 0 2px 5px rgba(0,0,0,0.3); }
 
-        /* --- PIED DE PAGE --- */
         footer { padding: 60px 20px; position: relative; z-index: 10; }
-        .signature { color: rgba(255,255,255,0.8); text-decoration: none; font-size: 1.1em; font-weight: bold; text-shadow: 0 0 10px rgba(255,255,255,0.4); }
+        .signature { color: rgba(255,255,255,0.8); text-decoration: none; font-size: 1.1em; font-weight: bold; }
     </style>
 </head>
 <body>
@@ -108,20 +108,20 @@
     </a>
 
     <div class="bulles-grid">
-        <a href="impot.html" class="nuage">
+        <div class="nuage">
             <h3 style="color:#008080; margin:0; text-transform:uppercase;">📜 Impôts Publics</h3>
             <p style="margin:5px 0; font-weight: bold; font-size: 0.9em;">Travaux publics en libre participation.</p>
             <p style="font-size: 0.8em; color:#d32f2f; font-weight:bold; margin: 5px 0;">Motivation indispensable. Attention : Travaux ingrats.</p>
             <div style="text-align: left; margin-top: 10px;">
                 <span style="font-size: 0.85em; font-weight: bold; color: #008080;">ex :</span>
                 <ul class="liste-exemples">
-                    <li>Nettoyage des sentiers communs</li>
-                    <li>Réparation des clôtures du jardin</li>
-                    <li>Arrosage des zones partagées</li>
-                    <li>Entretien des outils collectifs</li>
+                    <li>Réfection des routes et sentiers</li>
+                    <li>Aide administrative et courriers</li>
+                    <li>Entretien des espaces verts communs</li>
+                    <li>Soutien technique collectif</li>
                 </ul>
             </div>
-        </a>
+        </div>
 
         <a href="regulation.html" class="etoile-justice">
             <h3 style="margin:0;">⚖️ Régulation</h3>
@@ -145,8 +145,8 @@
     </footer>
 
     <script>
-        // --- ÉTOILES MOBILES ---
-        for(let i=0; i<100; i++) {
+        // --- ÉTOILES ---
+        for(let i=0; i<80; i++) {
             let s = document.createElement('div'); s.className = 'star';
             let size = Math.random()*3+1; s.style.width = size+'px'; s.style.height = size+'px';
             s.style.left = Math.random()*100+'vw'; s.style.top = Math.random()*100+'vh';
@@ -155,7 +155,7 @@
             document.body.appendChild(s);
         }
 
-        // --- MOUVEMENT DU CADEAU ---
+        // --- CADEAU ---
         const coffre = document.getElementById('coffre-magique');
         let cX = window.innerWidth/2, cY = window.innerHeight/2;
         let tX = Math.random()*window.innerWidth, tY = Math.random()*window.innerHeight;
@@ -168,7 +168,6 @@
         }
         moveCadeau();
 
-        // --- EXPLOSION DU CADEAU (ÉTIINCELLES) ---
         function exploserCadeau() {
             for (let i = 0; i < 40; i++) {
                 const p = document.createElement('div');
@@ -183,21 +182,35 @@
             setTimeout(() => { tX = Math.random()*window.innerWidth; coffre.style.opacity = "1"; }, 1000);
         }
 
-        // --- VOL DES OISEAUX ---
+        // --- OISEAUX & MESSAGES ---
+        const phrases = ["Générosité !", "Pour toi !", "Cadeau !"];
         function creerOiseau() {
             const o = document.createElement('div');
             o.className = 'oiseau'; o.innerHTML = '🕊️';
-            o.style.left = '-50px'; o.style.top = Math.random()*window.innerHeight+'px';
+            o.style.left = '-60px'; o.style.top = Math.random()*window.innerHeight+'px';
             document.body.appendChild(o);
             setTimeout(() => { o.style.left = '110vw'; }, 100);
-            setTimeout(() => o.remove(), 7000);
+            setTimeout(() => {
+                const m = document.createElement('div');
+                m.className = 'message-volant'; m.innerHTML = phrases[Math.floor(Math.random()*phrases.length)];
+                m.style.left = o.offsetLeft + "px"; m.style.top = o.offsetTop + "px";
+                document.body.appendChild(m);
+                setTimeout(() => { m.style.left = (cX + 20) + "px"; m.style.top = (cY + 20) + "px"; m.style.transform = "scale(0.5)"; m.style.opacity = "0"; }, 100);
+                setTimeout(() => { exploserCadeau(); m.remove(); }, 1600);
+            }, 3000);
+            setTimeout(() => o.remove(), 8000);
         }
         setInterval(creerOiseau, 8000);
 
+        // --- SON ---
         function toggleSon() {
-            const audio = new Audio('https://www.lasonotheque.org/upload/mp3/0014.mp3');
-            audio.volume = 0.2; audio.play();
+            // Utilisation d'un son de forêt/oiseau fonctionnel
+            const audio = new Audio('https://assets.mixkit.co/active_storage/sfx/2533/2533-preview.mp3');
+            audio.volume = 0.4;
+            audio.play().catch(e => console.log("L'interaction utilisateur est requise pour le son."));
         }
+
+        function rotationTerre() { /* décoratif */ }
     </script>
 </body>
 </html>
