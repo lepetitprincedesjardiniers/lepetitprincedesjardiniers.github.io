@@ -29,47 +29,70 @@
             display: flex; align-items: center; justify-content: center; 
             box-shadow: 0 0 25px #FFA500; margin: 15px auto; position: relative; z-index: 20; transition: 0.5s; 
         }
-        .soleil-cadre h1 { font-size: 1.0em; color: #333; margin: 0; padding: 10px; line-height: 1.1; }
+        .soleil-cadre h1 { font-size: 1.0em; color: #333; margin: 0; padding: 10px; line-height: 1.1; z-index: 2; }
+        .soleil-cadre::before {
+            content: ""; position: absolute; top: -5px; left: -5px; right: -5px; bottom: -5px;
+            border-radius: 50%; background: conic-gradient(red, orange, yellow, green, blue, indigo, violet, red);
+            z-index: -1; opacity: 0; transition: opacity 0.5s;
+        }
+        .soleil-cadre:hover::before { opacity: 1; animation: rotateRainbow 2s linear infinite; }
+        @keyframes rotateRainbow { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
 
         /* ÉTOILES ★ */
         .star { position: fixed; color: white; z-index: -1; animation: twinkle var(--duration) infinite ease-in-out, drift var(--drift-duration) linear infinite; text-shadow: 0 0 5px #fff; }
         @keyframes twinkle { 0%, 100% { opacity: 0.2; transform: scale(0.8); } 50% { opacity: 1; transform: scale(1.2); } }
         @keyframes drift { from { transform: translateX(0); } to { transform: translateX(80px); } }
 
-        /* MENU & TERRE */
+        /* MENU */
         .menu-table { margin: 10px auto 20px; border-radius: 10px; background-color: #008080; border-collapse: collapse; position: relative; z-index: 10; }
         .menu-table td { border: 1px solid #FFFFFF; }
         .menu-table a { display: block; padding: 12px 20px; text-decoration: none; color: #FFFFFF; font-weight: bold; }
+        .menu-table td:hover { background-color: #00b3b3; }
+
+        /* TERRE */
         .terre-don { 
             width: 320px; height: 320px; margin: 30px auto; border-radius: 50%; 
             background-image: url('https://upload.wikimedia.org/wikipedia/commons/thumb/c/c3/Solarsystemscope_texture_2k_earth_daymap.jpg/1200px-Solarsystemscope_texture_2k_earth_daymap.jpg'); 
             background-size: cover; display: flex; align-items: center; justify-content: center; 
             text-decoration: none; color: white; font-weight: bold; 
             box-shadow: inset -30px -30px 60px rgba(0,0,0,0.9); 
-            animation: rotationTerre 40s linear infinite; position: relative; z-index: 5;
+            animation: rotationTerre 40s linear infinite; position: relative; z-index: 5; transition: transform 1s;
         }
+        .terre-don:hover { transform: scale(1.05); }
         @keyframes rotationTerre { from { background-position: 0 0; } to { background-position: 1000px 0; } }
 
         /* RUBRIQUES */
         .bulles-grid { display: flex; justify-content: center; gap: 20px; flex-wrap: wrap; padding: 20px; position: relative; z-index: 5; }
-        .nuage, .cadre-aide { background: #e0f7fa; border: 3px solid #008080; border-radius: 50px; padding: 20px; width: 300px; color: #000080; }
+        .nuage, .cadre-aide { background: #e0f7fa; border: 3px solid #008080; border-radius: 50px; padding: 20px; width: 300px; color: #000080; transition: 0.3s; }
+        .nuage:hover, .cadre-aide:hover { transform: translateY(-5px); box-shadow: 0 5px 15px white; }
+        .exemples-ligne { font-size: 0.7em; color: rgba(0, 102, 102, 0.7); font-style: italic; margin-top: 10px; }
 
-        /* MESSAGERS & MESSAGES */
-        .messager { 
-            position: fixed; font-size: 55px; z-index: 100; pointer-events: none; 
-            transition: left 6s linear, top 1.5s ease-in-out; 
-            filter: drop-shadow(0 0 10px rgba(255,255,255,0.6));
+        .etoile-justice { 
+            background: #E6E6FA; border: 3px solid #9370DB; width: 280px; min-height: 250px; 
+            clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%); 
+            display: flex; flex-direction: column; align-items: center; justify-content: center; 
+            text-decoration: none; color: #333; transition: 0.8s; padding: 10px; 
         }
-        
+        .etoile-justice:hover { clip-path: circle(50% at 50% 50%); transform: scale(1.05); }
+
+        .cadre-aide { background: #ffebee; border-color: #e91e63; }
+        .btn-aide-container { display: flex; border-top: 1px solid #e91e63; margin-top: 10px; padding-top: 10px; gap: 10px; }
+        .btn-aide-container a { flex: 1; color: #e91e63; font-weight: bold; text-decoration: none; font-size: 0.8em; }
+
+        /* ANIMATIONS MESSAGERS */
+        .messager { position: fixed; font-size: 55px; z-index: 100; pointer-events: none; transition: left 6s linear, top 1.5s ease-in-out; }
         .message-volant { 
             position: fixed; background: #ffffff; color: #2E7D32; padding: 12px 24px; 
             border-radius: 30px; font-size: 1.1em; font-weight: 900; border: 4px solid #FFD700; 
-            z-index: 600; box-shadow: 0 8px 20px rgba(0,0,0,0.3);
-            pointer-events: none; transition: all 1.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            z-index: 600; box-shadow: 0 8px 20px rgba(0,0,0,0.3); pointer-events: none;
+            transition: all 1.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
 
-        #coffre-magique { position: fixed; font-size: 65px; z-index: 500; filter: drop-shadow(0 0 20px gold); transition: transform 0.2s; }
+        #coffre-magique { position: fixed; font-size: 65px; z-index: 500; filter: drop-shadow(0 0 20px gold); }
         .particule { position: fixed; pointer-events: none; z-index: 1000; font-size: 30px; }
+
+        footer { padding: 40px; }
+        .lien-copyright { color: rgba(255,255,255,0.6); text-decoration: none; font-weight: bold; }
     </style>
 </head>
 <body>
@@ -93,7 +116,35 @@
         <div style="text-shadow: 2px 2px 8px black; font-size: 1.2em;">🌍<br>ESPACE DU DON ENTIER</div>
     </a>
 
+    <div class="bulles-grid">
+        <div class="nuage">
+            <h3 style="margin:0;">📜 Impôts Publics</h3>
+            <p style="font-size: 0.8em; font-weight: bold;">Participation citoyenne libre.</p>
+            <div class="exemples-ligne">
+                <strong>exemples :</strong> réfection des routes, aide administrative, entretien des jardins, soutien technique collectif...
+            </div>
+        </div>
+
+        <a href="regulation.html" class="etoile-justice">
+            <h3 style="margin:0;">⚖️ Régulation</h3>
+            <p style="font-size:0.8em;">Médiation et harmonie.</p>
+        </a>
+
+        <div class="cadre-aide">
+            <h3 style="margin:0;">❤️ Aide & Écoute</h3>
+            <p style="font-size:0.8em;">Solidarité pour tous.</p>
+            <div class="btn-aide-container">
+                <a href="urgence.html">Urgences</a>
+                <a href="ecoute.html">Écoute</a>
+            </div>
+        </div>
+    </div>
+
     <div id="coffre-magique">🎁</div>
+
+    <footer>
+        <a href="transition-externe.html" class="lien-copyright">© 2000 le petit prince des jardiniers</a>
+    </footer>
 
     <script>
         // ÉTOILES ★
@@ -106,7 +157,7 @@
             document.body.appendChild(s);
         }
 
-        // CADEAU
+        // CADEAU MOBILE
         const cadeau = document.getElementById('coffre-magique');
         let cX = window.innerWidth/2, cY = window.innerHeight/2;
         let tX = Math.random()*(window.innerWidth-100), tY = Math.random()*(window.innerHeight-200);
@@ -120,8 +171,8 @@
         animCadeau();
 
         function exploser() {
-            const fleurs = ['🌸', '🌺', '✨', '⭐', '🌻', '🌈', '💫'];
-            for(let i=0; i<40; i++) {
+            const fleurs = ['🌸', '🌺', '✨', '⭐', '🌻', '🌈', '💫', '💥'];
+            for(let i=0; i<45; i++) {
                 const p = document.createElement('div'); p.className = 'particule';
                 p.innerHTML = fleurs[Math.floor(Math.random()*fleurs.length)];
                 p.style.left = (cX + 30) + 'px'; p.style.top = (cY + 30) + 'px';
@@ -133,65 +184,51 @@
             }
         }
 
-        // MESSAGERS QUI POUSSENT LE MESSAGE
+        // MESSAGERS TÊTE EN AVANT
         function lancerMessager() {
             const icons = ['🕊️', '🦋', '🐝', '🐲', '🧚', '🛸'];
-            const textes = ["Paix ✨", "Cadeau 🎁", "Joie 🌸", "Espoir 🌟"];
+            const textes = ["Amour ✨", "Pour toi 🎁", "Bonheur 🌸", "Fraternité 🤝"];
+            const deGauche = Math.random() > 0.5;
             
             const m = document.createElement('div');
             m.className = 'messager';
             m.innerHTML = icons[Math.floor(Math.random()*icons.length)];
-            
-            // Départ (gauche ou droite aléatoire)
-            const deGauche = Math.random() > 0.5;
             m.style.left = deGauche ? '-100px' : (window.innerWidth + 100) + 'px';
             m.style.top = (Math.random() * 60 + 10) + 'vh';
-            
-            // Direction de la tête (scaleX(-1) pour retourner l'emoji si besoin)
             m.style.transform = deGauche ? 'scaleX(-1)' : 'scaleX(1)';
-            
             document.body.appendChild(m);
 
-            // Vol vers le centre
-            setTimeout(() => {
-                m.style.left = deGauche ? '30vw' : '70vw';
-            }, 100);
+            setTimeout(() => { m.style.left = deGauche ? '30vw' : '70vw'; }, 100);
 
-            // Le message apparaît devant sa tête
             setTimeout(() => {
                 const msg = document.createElement('div');
                 msg.className = 'message-volant';
                 msg.innerHTML = textes[Math.floor(Math.random()*textes.length)];
-                
                 const r = m.getBoundingClientRect();
-                // Positionnement "devant la tête"
-                msg.style.left = deGauche ? (r.right + 10) + 'px' : (r.left - 150) + 'px';
+                msg.style.left = deGauche ? (r.right + 5) + 'px' : (r.left - 160) + 'px';
                 msg.style.top = r.top + 'px';
                 document.body.appendChild(msg);
 
-                // L'animal donne un petit coup de tête (animation)
-                m.style.transition = "all 0.3s ease-out";
                 setTimeout(() => {
-                    m.style.transform = (deGauche ? 'scaleX(-1)' : 'scaleX(1)') + ' translateX(' + (deGauche ? 30 : -30) + 'px)';
-                    
-                    // Le message est propulsé vers le cadeau
-                    msg.style.left = (cX + 10) + 'px';
-                    msg.style.top = (cY + 10) + 'px';
+                    // L'animal avance brusquement (coup de tête)
+                    m.style.transition = "0.3s";
+                    m.style.transform += deGauche ? " translateX(40px)" : " translateX(-40px)";
+                    // Propulsion
+                    msg.style.left = (cX + 15) + 'px';
+                    msg.style.top = (cY + 15) + 'px';
                     msg.style.transform = 'scale(0.3) rotate(360deg)';
-                }, 800);
+                }, 1000);
 
                 setTimeout(() => { 
                     exploser(); 
                     msg.remove();
-                    // L'animal repart après avoir poussé
+                    m.style.transition = "6s linear";
                     m.style.left = deGauche ? '120vw' : '-120vw';
-                }, 2000);
-
+                }, 2200);
             }, 2500);
 
             setTimeout(() => m.remove(), 10000);
         }
-
         setInterval(lancerMessager, 9000);
     </script>
 </body>
