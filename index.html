@@ -17,26 +17,12 @@
             color: #ffffff; overflow-x: hidden; min-height: 100vh; position: relative;
         }
 
-        /* --- STYLE DU TRADUCTEUR (DISCRET ET HAUT) --- */
-        #google_translate_element { 
-            position: absolute; 
-            top: 5px; 
-            left: 10px; 
-            z-index: 2000; 
-            opacity: 0.6; 
-            transition: opacity 0.3s;
-        }
+        /* --- TRADUCTEUR DISCRET --- */
+        #google_translate_element { position: absolute; top: 5px; left: 10px; z-index: 2000; opacity: 0.6; transition: opacity 0.3s; }
         #google_translate_element:hover { opacity: 1; }
 
-        /* --- ÉTOILES (CORRIGÉES) --- */
-        .star { 
-            position: fixed; 
-            background: white; 
-            border-radius: 50%; 
-            z-index: 0; 
-            box-shadow: 0 0 10px white;
-            animation: twinkle var(--duration) infinite ease-in-out;
-        }
+        /* --- ÉTOILES --- */
+        .star { position: fixed; background: white; border-radius: 50%; z-index: 0; box-shadow: 0 0 10px white; animation: twinkle var(--duration) infinite ease-in-out; }
         @keyframes twinkle { 0%, 100% { opacity: 0.3; transform: scale(0.8); } 50% { opacity: 1; transform: scale(1.2); } }
 
         /* --- MENU --- */
@@ -76,4 +62,121 @@
         .etoile-justice { 
             background: #E6E6FA; border: 3px solid #9370DB; width: 300px; min-height: 250px; 
             clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%); 
-            display: flex; flex-direction: column; align-items:
+            display: flex; flex-direction: column; align-items: center; justify-content: center; text-decoration: none; color: #333; transition: 0.6s;
+        }
+        .etoile-justice:hover { clip-path: circle(50% at 50% 50%); border-radius: 50%; transform: scale(1.1); background: #efedff; }
+
+        .nuage-rose { background: #ffebee; border-color: #e91e63; }
+        .split-box { display: flex; border-top: 1px solid #e91e63; padding-top: 10px; margin-top: 10px; }
+        .split-part { flex: 1; text-decoration: none; color: #e91e63; font-weight: bold; padding: 10px; font-size: 0.85em; transition: 0.2s; }
+        .split-part:hover { background: rgba(233, 30, 99, 0.1); border-radius: 15px; }
+
+        /* --- MESSAGER --- */
+        #coffre-magique { position: fixed; font-size: 55px; z-index: 4; pointer-events: none; filter: drop-shadow(0 0 10px gold); transition: opacity 0.5s; }
+        
+        /* --- FOOTER --- */
+        footer { padding: 40px; position: relative; z-index: 10; }
+        .footer-link { color: rgba(255,255,255,0.6); text-decoration: none; font-size: 0.9em; transition: 0.3s; }
+        .footer-link:hover { color: white; }
+    </style>
+</head>
+<body>
+
+    <div id="google_translate_element"></div>
+    
+    <audio id="chantOiseaux" loop src="oiseaux.mp3"></audio>
+    <button id="btn-son" onclick="toggleSon()">🐦</button>
+
+    <table class="menu-table">
+        <tr>
+            <td><a href="index.html">Accueil</a></td>
+            <td><a href="formulaire.html">Semer</a></td>
+            <td><a href="jardin.html">Le Jardin</a></td>
+            <td><a href="impot.html">Impôts Publics</a></td>
+            <td><a href="regulation.html">Régulation</a></td>
+        </tr>
+    </table>
+
+    <p style="font-size: 1.6em; font-weight: bold; margin: 10px 0; position: relative; z-index: 10;">Le Petit Prince des Jardiniers</p>
+
+    <div class="header-container">
+        <div class="petit-bouquet-gauche">💐</div>
+        <div class="soleil-cadre"><h1>Le Trésor Public</h1></div>
+        <div class="petit-bouquet-droite">💐</div>
+    </div>
+
+    <a href="jardin.html" class="terre-don">
+        <div style="text-shadow: 2px 2px 6px black; background: rgba(0,0,0,0.3); padding: 5px; border-radius: 10px;">🌍<br>ESPACE DU DON ENTIER</div>
+    </a>
+
+    <div class="bulles-grid">
+        <a href="impot.html" class="nuage">
+            <h3 style="color:#008080; margin:0; text-transform:uppercase;">📜 Impôts Publics</h3>
+            <p style="margin:5px 0; font-weight: bold; font-size: 0.9em;">Travaux publics en libre participation.</p>
+            <ul class="liste-exemples">
+                <li>Nettoyage des sentiers communs</li>
+                <li>Réparation des clôtures du jardin</li>
+                <li>Arrosage des zones partagées</li>
+                <li>Entretien des outils collectifs</li>
+            </ul>
+            <p style="font-size: 0.8em; color:#d32f2f; font-weight:bold; margin-top: 5px;">Motivation indispensable.<br>Attention : Travaux ingrats.</p>
+        </a>
+
+        <a href="regulation.html" class="etoile-justice">
+            <h3 style="margin:0;">⚖️ Régulation Citoyenne</h3>
+            <p style="font-size:0.85em; padding:10px 30px;">Médiation et harmonie citoyenne pour tous les jardiniers.</p>
+        </a>
+
+        <div class="nuage nuage-rose">
+            <h3 style="color:#e91e63; margin:0;">❤️ Aide & Écoute</h3>
+            <p style="font-size:0.8em; color: #444; margin: 10px 0;">Besoins vitaux, urgences sociales ou simplement une oreille attentive.</p>
+            <div class="split-box">
+                <a href="urgence.html" class="split-part">Besoins Vitaux</a>
+                <a href="ecoute.html" class="split-part">Aide & Écoute</a>
+            </div>
+        </div>
+    </div>
+
+    <div id="coffre-magique">🎁</div>
+
+    <footer>
+        <a href="transition-externe.html" class="footer-link">© 2000 lepetitprince des jardiniers</a>
+    </footer>
+
+    <script>
+        function createStars() {
+            for(let i=0; i<100; i++) {
+                let star = document.createElement('div');
+                star.className = 'star';
+                let size = Math.random() * 3 + 1;
+                star.style.width = size + 'px';
+                star.style.height = size + 'px';
+                star.style.left = Math.random() * 100 + 'vw';
+                star.style.top = Math.random() * 100 + 'vh';
+                star.style.setProperty('--duration', (Math.random() * 3 + 2) + 's');
+                document.body.appendChild(star);
+            }
+        }
+        createStars();
+
+        function toggleSon() {
+            const audio = document.getElementById('chantOiseaux');
+            if (audio.paused) { audio.volume = 0.4; audio.play(); } else { audio.pause(); }
+        }
+
+        const coffre = document.getElementById('coffre-magique');
+        let cadeauPos = { x: window.innerWidth / 2, y: window.innerHeight / 2 };
+        let targetCadeau = { x: Math.random()*(window.innerWidth-100), y: Math.random()*(window.innerHeight-300) };
+
+        function loop() {
+            cadeauPos.x += (targetCadeau.x - cadeauPos.x) * 0.01;
+            cadeauPos.y += (targetCadeau.y - cadeauPos.y) * 0.01;
+            if(Math.abs(cadeauPos.x - targetCadeau.x) < 50) targetCadeau = { x: Math.random()*(window.innerWidth-100), y: Math.random()*(window.innerHeight-300) };
+            coffre.style.left = cadeauPos.x + "px";
+            coffre.style.top = (cadeauPos.y + Math.sin(Date.now()*0.002)*30) + "px";
+            requestAnimationFrame(loop);
+        }
+        loop();
+    </script>
+</body>
+</html>
