@@ -6,27 +6,18 @@
     <style>
         body { 
             font-family: 'Comic Sans MS', cursive; text-align: center; margin: 0; padding: 0; 
-            /* Fond Espace Étoilé */
             background: radial-gradient(circle at center, #1b2735 0%, #090a0f 100%);
-            color: #ffffff; 
-            overflow-x: hidden; min-height: 100vh; 
-            position: relative;
+            color: #ffffff; overflow-x: hidden; min-height: 100vh; position: relative;
         }
 
-        /* --- ÉLÉMENTS DE DÉCOR SPATIAL --- */
+        /* --- DÉCOR SPATIAL --- */
         .star { position: fixed; background: white; border-radius: 50%; opacity: 0.8; z-index: -1; }
         @keyframes scintiller-etoile { from { opacity: 0.3; } to { opacity: 1; } }
-        
-        .planet { position: fixed; border-radius: 50%; z-index: -1; opacity: 0.7; box-shadow: inset -5px -5px 10px rgba(0,0,0,0.5); }
-        
-        #ufo { 
-            position: fixed; font-size: 40px; z-index: 1000; top: 20%; left: -100px; 
-            filter: drop-shadow(0 0 10px #00ff00);
-        }
+        .planet { position: fixed; border-radius: 50%; z-index: -1; opacity: 0.6; box-shadow: inset -5px -5px 10px rgba(0,0,0,0.5); }
+        #ufo { position: fixed; font-size: 40px; z-index: 1000; top: 15%; left: -100px; filter: drop-shadow(0 0 10px #00ff00); }
 
         /* --- INTERFACE --- */
         #google_translate_element { padding: 10px; background: rgba(255,255,255,0.1); border-bottom: 1px solid #008080; min-height: 40px; }
-
         .menu-table { margin: 20px auto; border-radius: 10px; background-color: #008080; border-collapse: collapse; }
         .menu-table td { padding: 10px 15px; border: 1px solid #FFFFFF; }
         .menu-table a { text-decoration: none; color: #FFFFFF; font-weight: bold; transition: 0.3s; }
@@ -34,11 +25,9 @@
 
         .header-container { display: flex; align-items: center; justify-content: center; gap: 40px; margin: 30px auto; }
         
-        /* Bouquet redressé */
-        .petit-bouquet-gauche { font-size: 35px; transform: rotate(0deg); } 
-        .petit-bouquet-droite { font-size: 35px; transform: rotate(25deg); } 
+        /* MODIFICATION : LES DEUX BOUQUETS À 0 DEGRÉ */
+        .petit-bouquet-gauche, .petit-bouquet-droite { font-size: 35px; transform: rotate(0deg); } 
 
-        /* Trésor Public dans la Terre avec Box Shadow Arc-en-ciel */
         .terre-cadre {
             width: 250px; height: 250px;
             background-image: url('https://upload.wikimedia.org/wikipedia/commons/thumb/2/22/Earth_Western_Hemisphere_transparent_background.png/600px-Earth_Western_Hemisphere_transparent_background.png');
@@ -46,18 +35,15 @@
             display: flex; align-items: center; justify-content: center;
             animation: rainbow-shadow 4s linear infinite;
         }
-        .terre-cadre h1 { font-size: 1.5em; text-shadow: 2px 2px 5px black; margin: 0; padding: 10px; }
+        .terre-cadre h1 { font-size: 1.5em; text-shadow: 2px 2px 5px black; margin: 0; color: white; }
 
         @keyframes rainbow-shadow {
             0% { box-shadow: 0 0 15px red; }
-            20% { box-shadow: 0 0 15px orange; }
-            40% { box-shadow: 0 0 15px green; }
-            60% { box-shadow: 0 0 15px blue; }
-            80% { box-shadow: 0 0 15px violet; }
+            33% { box-shadow: 0 0 15px green; }
+            66% { box-shadow: 0 0 15px blue; }
             100% { box-shadow: 0 0 15px red; }
         }
 
-        /* Soleil et Bulles */
         .soleil-don {
             background: #FFD700; width: 180px; height: 180px; border-radius: 50%;
             display: flex; align-items: center; justify-content: center;
@@ -67,24 +53,35 @@
         .soleil-don:hover { transform: scale(1.2); animation: rotation-soleil 5s linear infinite; }
         @keyframes rotation-soleil { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
 
+        /* --- RUBRIQUES (STYLE ET CONTENU ORIGINEL) --- */
         .bulles-grid { display: flex; justify-content: center; align-items: stretch; gap: 25px; flex-wrap: wrap; padding: 20px; max-width: 1200px; margin: auto; }
+        
         .nuage { 
             background: rgba(224, 247, 250, 0.95); border: 3px solid #008080; border-radius: 50px; padding: 20px; 
-            width: 300px; min-height: 250px; text-decoration: none; color: #008080; 
+            width: 300px; min-height: 250px; text-decoration: none; color: #333; 
             display: flex; flex-direction: column; justify-content: center; transition: 0.3s; 
         }
-        .nuage-rose { background: #ffebee; border-color: #e91e63; color: #e91e63; }
+        .nuage:hover { transform: translateY(-10px); }
 
         .etoile-justice { 
             background: #E6E6FA; border: 3px solid #9370DB; width: 300px; min-height: 250px; 
             clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%); 
-            transition: 0.6s ease-in-out; cursor: pointer; text-decoration: none; color: #4b0082; 
+            transition: 0.6s ease-in-out; cursor: pointer; text-decoration: none; color: #333; 
             display: flex; align-items: center; justify-content: center; 
         }
+        .etoile-justice:hover { 
+            clip-path: polygon(50% 0%, 100% 0%, 100% 100%, 100% 100%, 100% 100%, 50% 100%, 0% 100%, 0% 100%, 0% 0%, 0% 0%);
+            border-radius: 50%; transform: scale(1.05);
+        }
 
-        /* Animations Originelles */
+        .nuage-rose { background: #ffebee; border-color: #e91e63; }
+        .titre-urgence-rose { color: #e91e63; font-weight: bold; text-transform: uppercase; margin-bottom: 15px; }
+        .split-box { display: flex; border-top: 1px solid #e91e63; padding-top: 10px; }
+        .split-part { flex: 1; text-decoration: none; color: #e91e63; font-weight: bold; padding: 10px; }
+
+        /* --- ANIMATIONS OISEAUX ET COFFRE --- */
         .animal-container { position: fixed; z-index: 900; pointer-events: none; display: flex; align-items: center; }
-        .bulle-texte { background: white; border: 2px solid #2E7D32; border-radius: 15px; padding: 8px 15px; font-weight: bold; color: #333; opacity: 0; white-space: nowrap; position: absolute; left: 60px; }
+        .bulle-texte { background: white; border: 2px solid #2E7D32; border-radius: 15px; padding: 8px 15px; font-weight: bold; color: black; opacity: 0; white-space: nowrap; position: absolute; left: 60px; }
         #coffre-magique { position: fixed; font-size: 60px; z-index: 800; pointer-events: none; left: 50%; transform: translateX(-50%); }
 
         footer { margin: 60px 0 20px; font-size: 0.9em; }
@@ -92,6 +89,7 @@
 </head>
 <body>
 
+    <audio id="chantOiseaux" loop><source src="oiseaux.mp3" type="audio/mpeg"></audio>
     <div id="ufo">🛸</div>
     <div id="google_translate_element"></div>
     
@@ -101,8 +99,6 @@
         }
     </script>
     <script src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
-
-    <audio id="chantOiseaux" loop><source src="oiseaux.mp3" type="audio/mpeg"></audio>
 
     <table class="menu-table">
         <tr>
@@ -130,8 +126,10 @@
 
     <div class="bulles-grid">
         <a href="impot.html" class="nuage">
-            <h3 style="margin:0; text-transform:uppercase;">📜 Impôts Publics</h3>
-            <p>Travaux publics en libre participation.</p>
+            <h3 style="color:#008080; margin:0; text-transform:uppercase;">📜 Impôts Publics</h3>
+            <p style="margin:5px 0;">Travaux publics en libre participation.</p>
+            <p style="font-size:0.9em; color:#666;">À choisir selon ses compétences.</p>
+            <div style="font-size:0.8em; font-style:italic; margin-top:5px;">Ex : Travaux administratifs, routes, nettoyage...</div>
         </a>
 
         <a href="regulation.html" class="etoile-justice">
@@ -142,10 +140,10 @@
         </a>
 
         <div class="nuage nuage-rose">
-            <div style="font-weight: bold; text-transform: uppercase;">❤️ Urgence & Écoute</div>
-            <div style="display: flex; border-top: 1px solid #e91e63; margin-top: 10px; padding-top: 10px;">
-                <a href="urgence.html" style="flex: 1; text-decoration: none; color: #e91e63; font-weight: bold;">Besoins Vitaux</a>
-                <a href="urgence.html" style="flex: 1; text-decoration: none; color: #e91e63; font-weight: bold;">Aide & Écoute</a>
+            <div class="titre-urgence-rose">❤️ Urgence & Écoute</div>
+            <div class="split-box">
+                <a href="urgence.html" class="split-part">Besoins Vitaux</a>
+                <a href="urgence.html" class="split-part">Aide & Écoute</a>
             </div>
         </div>
     </div>
@@ -159,7 +157,7 @@
     </footer>
 
     <script>
-        // --- LOGIQUE ORIGINALE ---
+        // --- JS ORIGINEL ---
         const basePhrases = ["L'Impôt Public est un geste de cœur", "Graines de générosité", "Le pardon est justice", "Besoin d'un câlin"];
         let disponibles = [...basePhrases];
         const typesAnimaux = ['🕊️', '🦋', '🐝', '🐞'];
@@ -227,27 +225,25 @@
             requestAnimationFrame(loop);
         }
 
-        // --- NOUVELLE LOGIQUE SPATIALE ---
+        // --- NOUVEAUX DÉCORS ---
         function createSpace() {
-            // Étoiles
-            for(let i=0; i<100; i++) {
+            for(let i=0; i<80; i++) {
                 let star = document.createElement('div');
                 star.className = 'star';
-                let size = Math.random() * 3 + 'px';
-                star.style.width = size; star.style.height = size;
+                let s = Math.random() * 3 + 'px';
+                star.style.width = s; star.style.height = s;
                 star.style.top = Math.random() * 100 + 'vh';
                 star.style.left = Math.random() * 100 + 'vw';
                 if(Math.random() > 0.5) star.style.animation = `scintiller-etoile ${Math.random()*2+1}s infinite alternate`;
                 document.body.appendChild(star);
             }
-            // Planètes
             const colors = ['#ffcc00', '#ff5733', '#33ff57', '#3357ff'];
-            for(let i=0; i<6; i++) {
+            for(let i=0; i<5; i++) {
                 let p = document.createElement('div');
                 p.className = 'planet';
-                let size = Math.random() * 30 + 10 + 'px';
+                let size = Math.random() * 20 + 10 + 'px';
                 p.style.width = size; p.style.height = size;
-                p.style.top = Math.random() * 90 + 'vh';
+                p.style.top = Math.random() * 80 + 'vh';
                 p.style.left = Math.random() * 90 + 'vw';
                 p.style.background = colors[i % colors.length];
                 document.body.appendChild(p);
@@ -258,14 +254,13 @@
             const ufo = document.getElementById('ufo');
             let x = -100;
             const fly = setInterval(() => {
-                x += 4;
+                x += 3;
                 ufo.style.left = x + 'px';
-                ufo.style.top = (150 + Math.sin(x/40)*40) + 'px';
+                ufo.style.top = (120 + Math.sin(x/50)*40) + 'px';
                 if(x > window.innerWidth + 100) { clearInterval(fly); ufo.remove(); }
             }, 20);
         }
 
-        // Lancement global
         createSpace();
         setTimeout(launchUFO, 3000);
         setInterval(createMessenger, 4000);
