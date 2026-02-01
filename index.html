@@ -19,7 +19,6 @@
 
         #google_translate_element { position: absolute; top: 5px; left: 5px; z-index: 3000; opacity: 0.4; transform: scale(0.7); filter: grayscale(1); }
         
-        /* Titre tout en haut */
         .titre-fraternite { 
             display: block; 
             padding-top: 20px; 
@@ -31,35 +30,39 @@
             z-index: 25;
         }
 
-        /* Soleil sous le titre */
+        /* SOLEIL AVEC EFFET ARC-EN-CIEL AU SURVOL */
         .soleil-cadre { 
             width: 130px; height: 130px; background: #FFD700; border-radius: 50%; 
             display: flex; align-items: center; justify-content: center; 
             box-shadow: 0 0 25px #FFA500; margin: 15px auto; position: relative; 
             z-index: 20; transition: 0.5s; 
         }
-        .soleil-cadre h1 { font-size: 1.0em; color: #333; margin: 0; padding: 10px; line-height: 1.1; }
-        .soleil-cadre:hover { 
-            box-shadow: 0 0 40px 10px rgba(255,0,0,0.5), 0 0 50px 20px rgba(255,165,0,0.5), 0 0 60px 30px rgba(255,255,0,0.5), 0 0 70px 40px rgba(0,128,0,0.5), 0 0 80px 50px rgba(0,0,255,0.5);
-            transform: scale(1.1);
+        .soleil-cadre h1 { font-size: 1.0em; color: #333; margin: 0; padding: 10px; line-height: 1.1; z-index: 2; }
+        
+        /* L'effet arc-en-ciel */
+        .soleil-cadre::before {
+            content: ""; position: absolute; top: -5px; left: -5px; right: -5px; bottom: -5px;
+            border-radius: 50%; background: conic-gradient(red, orange, yellow, green, blue, indigo, violet, red);
+            z-index: -1; opacity: 0; transition: opacity 0.5s, transform 0.5s;
         }
 
-        /* Étoiles Mobiles */
+        .soleil-cadre:hover { transform: scale(1.15); box-shadow: 0 0 50px white; }
+        .soleil-cadre:hover::before { opacity: 1; animation: rotateRainbow 2s linear infinite; }
+
+        @keyframes rotateRainbow { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+
         .star { position: fixed; background: white; border-radius: 50%; z-index: -1; animation: twinkle var(--duration) infinite ease-in-out, drift var(--drift-duration) linear infinite; }
         @keyframes twinkle { 0%, 100% { opacity: 0.3; transform: scale(0.8); } 50% { opacity: 1; transform: scale(1.2); } }
         @keyframes drift { from { transform: translateX(0); } to { transform: translateX(100px); } }
 
-        /* Menu */
         .menu-table { margin: 10px auto 20px; border-radius: 10px; background-color: #008080; border-collapse: collapse; position: relative; z-index: 10; }
         .menu-table td { border: 1px solid #FFFFFF; }
         .menu-table a { display: block; padding: 12px 20px; text-decoration: none; color: #FFFFFF; font-weight: bold; }
         .menu-table td:hover { background-color: #00b3b3; }
 
-        /* BOUTON OISEAU */
         #btn-son { position: fixed; top: 10px; right: 10px; z-index: 1000; background: rgba(255,255,255,0.2); border: 1px solid white; color: white; border-radius: 50%; cursor: pointer; padding: 10px; font-size: 22px; transition: 0.3s; }
         #btn-son:hover { transform: scale(1.2); background: rgba(255,255,255,0.4); }
 
-        /* TERRE AGRANDIE */
         .terre-don { 
             width: 350px; height: 350px; margin: 30px auto; border-radius: 50%; 
             background-image: url('https://upload.wikimedia.org/wikipedia/commons/thumb/c/c3/Solarsystemscope_texture_2k_earth_daymap.jpg/1200px-Solarsystemscope_texture_2k_earth_daymap.jpg'); 
@@ -72,14 +75,22 @@
         .terre-don:hover { transform: rotate(360deg) scale(1.05); box-shadow: 0 0 50px rgba(0, 191, 255, 0.8); }
         @keyframes rotationTerre { from { background-position: 0 0; } to { background-position: 1000px 0; } }
 
-        /* Cases avec effet au survol */
         .bulles-grid { display: flex; justify-content: center; gap: 20px; flex-wrap: wrap; padding: 20px; position: relative; z-index: 5; }
         .nuage, .cadre-aide { transition: transform 0.3s, box-shadow 0.3s; cursor: default; }
         .nuage:hover, .cadre-aide:hover { transform: translateY(-5px); box-shadow: 0 10px 20px rgba(255,255,255,0.2); }
 
         .nuage { background: #e0f7fa; border: 3px solid #008080; border-radius: 50px; padding: 20px; width: 320px; color: #000080; }
         .phrases-impots { font-size: 0.8em; color: #d32f2f; font-weight: bold; margin: 8px 0; }
-        .liste-exemples-discrets { font-size: 0.65em; text-align: left; color: rgba(0, 102, 102, 0.6); font-style: italic; list-style: none; padding-left: 15px; }
+        
+        .exemples-ligne { 
+            font-size: 0.7em; 
+            text-align: center; 
+            color: rgba(0, 102, 102, 0.7); 
+            font-style: italic; 
+            margin-top: 15px;
+            padding: 0 10px;
+            line-height: 1.4;
+        }
 
         .etoile-justice { 
             background: #E6E6FA; border: 3px solid #9370DB; width: 300px; min-height: 250px; 
@@ -95,21 +106,33 @@
 
         #coffre-magique { position: fixed; font-size: 55px; z-index: 500; cursor: pointer; filter: drop-shadow(0 0 15px gold); }
         .particule { position: fixed; pointer-events: none; z-index: 1000; font-size: 24px; }
-        .oiseau { position: fixed; font-size: 35px; z-index: 90; transition: transform 6s linear; pointer-events: none; }
-        .message-volant { position: fixed; background: white; color: #2E7D32; padding: 4px 12px; border-radius: 12px; font-size: 0.8em; font-weight: bold; border: 2px solid #2E7D32; z-index: 600; transition: all 1.2s cubic-bezier(0.25, 0.1, 0.25, 1); box-shadow: 0 4px 10px rgba(0,0,0,0.3); }
-
+        
         footer { padding: 30px; }
-        .lien-copyright { color: rgba(255,255,255,0.6); text-decoration: none; font-weight: bold; }
+
+        /* COPYRIGHT BRILLANT AU SURVOL */
+        .lien-copyright { 
+            color: rgba(255,255,255,0.6); 
+            text-decoration: none; 
+            font-weight: bold; 
+            transition: 0.5s;
+            display: inline-block;
+        }
+        .lien-copyright:hover { 
+            color: #fff;
+            text-shadow: 0 0 10px #FFD700, 0 0 20px #FFA500;
+            transform: scale(1.1);
+            animation: glowPulse 1.5s infinite alternate;
+        }
+        @keyframes glowPulse { from { opacity: 0.8; } to { opacity: 1; text-shadow: 0 0 20px #FFD700, 0 0 30px #fff; } }
+
     </style>
 </head>
 <body>
 
     <div class="titre-fraternite">La fraternité du palais nature</div>
-
     <div class="soleil-cadre"><h1>Le Trésor Public</h1></div>
     
     <div id="google_translate_element"></div>
-    
     <button id="btn-son" onclick="toggleSon()">🕊️</button>
 
     <table class="menu-table">
@@ -131,12 +154,9 @@
             <h3 style="margin:0; font-size: 1em;">📜 Impôts Publics</h3>
             <p style="font-size: 0.8em; font-weight: bold;">Travaux publics en participation libre.</p>
             <div class="phrases-impots">Motivation indispensable.<br>Attention : Travaux ingrats.</div>
-            <ul class="liste-exemples-discrets">
-                <li>réfection des routes et sentiers...</li>
-                <li>aide administrative et courriers...</li>
-                <li>entretien des espaces verts...</li>
-                <li>soutien technique collectif...</li>
-            </ul>
+            <div class="exemples-ligne">
+                <strong>exemples :</strong> réfection des routes et sentiers, aide administrative et courriers, entretien des espaces verts, soutien technique collectif...
+            </div>
         </div>
 
         <a href="regulation.html" class="etoile-justice">
@@ -161,7 +181,7 @@
     </footer>
 
     <script>
-        // Étoiles de fond avec mouvement
+        // Étoiles de fond
         for(let i=0; i<65; i++) {
             let s = document.createElement('div'); s.className = 'star';
             s.style.width = s.style.height = (Math.random()*3+1)+'px';
@@ -171,7 +191,6 @@
             document.body.appendChild(s);
         }
 
-        // Mouvement cadeau
         const coffre = document.getElementById('coffre-magique');
         let cX = window.innerWidth/2, cY = window.innerHeight/2;
         let tX = Math.random()*(window.innerWidth-100), tY = Math.random()*(window.innerHeight-200);
@@ -205,42 +224,14 @@
             setTimeout(() => { coffre.style.display='block'; }, 2000);
         }
 
-        // CHANT DE L'OISEAU (On/Off)
         let audio = new Audio('oiseaux.mp3');
         audio.loop = true;
         let isPlaying = false;
 
         function toggleSon() {
-            if (isPlaying) {
-                audio.pause();
-                isPlaying = false;
-                document.getElementById('btn-son').style.opacity = "0.5";
-            } else {
-                audio.play().catch(e => console.log("Fichier audio introuvable."));
-                isPlaying = true;
-                document.getElementById('btn-son').style.opacity = "1";
-            }
+            if (isPlaying) { audio.pause(); isPlaying = false; document.getElementById('btn-son').style.opacity = "0.5"; } 
+            else { audio.play().catch(e => console.log("Audio non trouvé")); isPlaying = true; document.getElementById('btn-son').style.opacity = "1"; }
         }
-
-        function creerOiseau() {
-            const o = document.createElement('div'); o.className = 'oiseau'; o.innerHTML = '🕊️';
-            o.style.left = '-60px'; o.style.top = Math.random()*window.innerHeight+'px';
-            document.body.appendChild(o);
-            setTimeout(() => o.style.transform = 'translateX(120vw)', 100);
-            setTimeout(() => {
-                const m = document.createElement('div'); m.className = 'message-volant'; m.innerHTML = "Un cadeau !";
-                const rect = o.getBoundingClientRect();
-                m.style.left = rect.left+'px'; m.style.top = rect.top+'px';
-                document.body.appendChild(m);
-                setTimeout(() => { 
-                    m.style.left = (cX + 15) + 'px'; m.style.top = (cY + 15) + 'px'; 
-                    m.style.transform = 'scale(0.5)'; m.style.opacity = '0';
-                }, 100);
-                setTimeout(() => { if(coffre.style.display !== 'none') exploserCadeau(); m.remove(); }, 1300);
-            }, 2500);
-            setTimeout(() => o.remove(), 7000);
-        }
-        setInterval(creerOiseau, 8000);
     </script>
 </body>
 </html>
