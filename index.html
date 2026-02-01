@@ -18,14 +18,10 @@
         .menu-table td { border: 1px solid #FFFFFF; padding: 0; }
         .menu-table a { display: block; padding: 10px 15px; text-decoration: none; color: #FFFFFF; font-weight: bold; }
 
-        /* --- HEADER : BOUQUETS CORRIGÉS --- */
+        /* --- HEADER : BOUQUETS --- */
         .header-container { display: flex; align-items: center; justify-content: center; gap: 40px; margin: 30px auto; }
-        .petit-bouquet-gauche { font-size: 50px; transform: rotate(15deg); } /* Penche vers la droite (le soleil) */
-        .petit-bouquet-droite { 
-            font-size: 50px; 
-            display: inline-block;
-            transform: rotate(-25deg) !important; /* FORCE l'inclinaison vers la GAUCHE (le soleil) */
-        }
+        .petit-bouquet-gauche { font-size: 50px; transform: rotate(15deg); }
+        .petit-bouquet-droite { font-size: 50px; display: inline-block; transform: rotate(-25deg) !important; }
 
         .soleil-cadre {
             width: 180px; height: 180px; background: #FFD700; border-radius: 50%;
@@ -35,27 +31,36 @@
         .soleil-cadre h1 { font-size: 1.1em; margin: 0; color: #000080; }
         @keyframes scintiller { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.05); } }
 
-        /* --- TERRE --- */
+        /* --- TERRE TOURANTE --- */
         .terre-don {
             width: 250px; height: 250px; margin: 20px auto; border-radius: 50%;
             background-image: url('https://upload.wikimedia.org/wikipedia/commons/thumb/2/22/Earth_Western_Hemisphere_transparent_background.png/600px-Earth_Western_Hemisphere_transparent_background.png');
             background-size: cover; display: flex; align-items: center; justify-content: center;
-            cursor: pointer; transition: transform 2s; text-decoration: none; color: white; font-weight: bold;
+            cursor: pointer; transition: transform 2s ease-in-out; text-decoration: none; color: white; font-weight: bold;
             animation: rainbow-shadow 4s linear infinite; position: relative; z-index: 5;
         }
+        .terre-don:hover { transform: rotate(360deg); }
         @keyframes rainbow-shadow { 0% { box-shadow: 0 0 20px red; } 50% { box-shadow: 0 0 20px blue; } 100% { box-shadow: 0 0 20px red; } }
 
         /* --- RUBRIQUES --- */
         .bulles-grid { display: flex; justify-content: center; align-items: stretch; gap: 25px; flex-wrap: wrap; padding: 20px; max-width: 1200px; margin: auto; position: relative; z-index: 5; }
-        .nuage { background: #e0f7fa; border: 3px solid #008080; border-radius: 50px; padding: 20px; width: 320px; min-height: 250px; text-decoration: none; color: #000080; display: flex; flex-direction: column; justify-content: center; }
-        .info-sup { font-size: 0.9em; margin: 3px 0; color: #006666; }
-        .alerte-travail { font-size: 0.9em; color: #d32f2f; font-weight: bold; margin: 2px 0; }
-        .etoile-justice { background: #E6E6FA; border: 3px solid #9370DB; width: 300px; min-height: 250px; clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%); display: flex; align-items: center; justify-content: center; text-decoration: none; color: #333; }
+        
+        .nuage { background: #e0f7fa; border: 3px solid #008080; border-radius: 50px; padding: 20px; width: 320px; min-height: 250px; text-decoration: none; color: #000080; display: flex; flex-direction: column; justify-content: center; transition: 0.3s; }
+        
+        /* REGULATION TRANSFORMATION */
+        .etoile-justice { 
+            background: #E6E6FA; border: 3px solid #9370DB; width: 300px; min-height: 250px; 
+            clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%); 
+            display: flex; flex-direction: column; align-items: center; justify-content: center; 
+            text-decoration: none; color: #333; transition: all 0.6s ease;
+        }
+        .etoile-justice:hover { clip-path: polygon(100% 0, 100% 100%, 0% 100%, 0 50%, 0 0); border-radius: 30px; transform: scale(1.05); }
+
         .nuage-rose { background: #ffebee; border-color: #e91e63; }
-        .split-box { display: flex; border-top: 1px solid #e91e63; padding-top: 10px; }
+        .split-box { display: flex; border-top: 1px solid #e91e63; padding-top: 10px; margin-top: 10px; }
         .split-part { flex: 1; text-decoration: none; color: #e91e63; font-weight: bold; padding: 10px; }
 
-        /* --- CADEAU NAVIGATEUR --- */
+        /* --- CADEAU & MESSAGERS --- */
         #coffre-magique { position: fixed; font-size: 55px; z-index: 4; pointer-events: none; filter: drop-shadow(0 0 10px gold); }
         .animal-container { position: fixed; z-index: 900; pointer-events: none; }
         .bulle-texte { background: white; border: 2px solid #2E7D32; border-radius: 15px; padding: 10px; font-weight: bold; color: black; opacity: 0; position: absolute; left: 70px; width: 200px; transition: opacity 0.3s; }
@@ -91,17 +96,22 @@
 
     <div class="bulles-grid">
         <a href="impot.html" class="nuage">
-            <h3 style="color:#008080; margin:0;">📜 Impôts Publics</h3>
-            <p><strong>Travaux publics en libre participation.</strong></p>
-            <p class="info-sup">À choisir selon ses compétences.</p>
-            <p class="alerte-travail">Motivation indispensable / Travaux ingrats.</p>
+            <h3 style="color:#008080; margin:0; text-transform:uppercase;">📜 Impôts Publics</h3>
+            <p style="margin:5px 0; font-weight: bold;">Travaux publics en libre participation.</p>
+            <p style="font-size: 0.9em;">À choisir selon ses compétences.</p>
+            <p style="font-size: 0.9em; color:#d32f2f; font-weight:bold;">Motivation indispensable. Travaux ingrats.</p>
         </a>
-        <a href="regulation.html" class="etoile-justice"><div>⚖️ Régulation</div></a>
+
+        <a href="regulation.html" class="etoile-justice">
+            <h3 style="margin:0;">⚖️ Régulation</h3>
+            <p style="font-size:0.8em; padding:0 40px;">Justice citoyenne, médiation et équité pour tous les jardiniers du monde.</p>
+        </a>
+
         <div class="nuage nuage-rose">
-            <h3 style="color:#e91e63">❤️ Urgence & Écoute</h3>
+            <h3 style="color:#e91e63; margin:0;">❤️ Urgence & Écoute</h3>
             <div class="split-box">
-                <a href="urgence.html" class="split-part">Besoins</a>
-                <a href="urgence.html" class="split-part">Écoute</a>
+                <a href="urgence.html" class="split-part">Besoins Vitaux</a>
+                <a href="urgence.html" class="split-part">Aide & Écoute</a>
             </div>
         </div>
     </div>
@@ -138,33 +148,26 @@
         let targetCadeau = { x: Math.random() * (window.innerWidth - 100), y: Math.random() * (window.innerHeight - 200) };
 
         function fleurEtincelles(x, y) {
-            const colors = ['#FF0000', '#00FF00', '#00FFFF', '#FFFF00', '#FF00FF', '#FFFFFF'];
+            const colors = ['#FF4500', '#DA70D6', '#00FA9A', '#FFD700', '#00BFFF'];
             for (let i = 0; i < 40; i++) {
                 const p = document.createElement('div');
-                p.innerHTML = '🌸';
-                p.style.position = 'fixed'; 
+                p.innerHTML = '✨'; p.style.position = 'fixed'; 
                 p.style.left = x + 'px'; p.style.top = y + 'px';
                 p.style.fontSize = (Math.random() * 15 + 10) + 'px';
                 p.style.color = colors[Math.floor(Math.random()*colors.length)];
-                p.style.zIndex = "1000";
                 document.body.appendChild(p);
-                
-                const angle = Math.random() * Math.PI * 2;
-                const dist = Math.random() * 250 + 100;
-                
+                const angle = Math.random() * Math.PI * 2; const dist = Math.random() * 200 + 100;
                 p.animate([
-                    { transform: 'translate(0,0) scale(1) rotate(0deg)', opacity: 1 },
-                    { transform: `translate(${Math.cos(angle)*dist}px, ${Math.sin(angle)*dist}px) scale(0) rotate(360deg)`, opacity: 0 }
-                ], { duration: 2000, easing: 'ease-out' });
-                
-                setTimeout(() => p.remove(), 2000);
+                    { transform: 'translate(0,0) scale(1)', opacity: 1 },
+                    { transform: `translate(${Math.cos(angle)*dist}px, ${Math.sin(angle)*dist}px) scale(0)`, opacity: 0 }
+                ], { duration: 1800, easing: 'ease-out' });
+                setTimeout(() => p.remove(), 1800);
             }
-            // Téléportation du cadeau après explosion
             coffre.style.opacity = "0";
             setTimeout(() => {
                 cadeauPos = { x: Math.random() * (window.innerWidth-100), y: Math.random() * (window.innerHeight-200) };
                 coffre.style.opacity = "1";
-            }, 1000);
+            }, 1200);
         }
 
         function createMessenger() {
@@ -177,34 +180,23 @@
         }
 
         function loop() {
-            // Navigation fluide du cadeau
-            cadeauPos.x += (targetCadeau.x - cadeauPos.x) * 0.005;
-            cadeauPos.y += (targetCadeau.y - cadeauPos.y) * 0.005;
-            if(Math.abs(cadeauPos.x - targetCadeau.x) < 20) {
+            cadeauPos.x += (targetCadeau.x - cadeauPos.x) * 0.007;
+            cadeauPos.y += (targetCadeau.y - cadeauPos.y) * 0.007;
+            if(Math.abs(cadeauPos.x - targetCadeau.x) < 30) {
                 targetCadeau = { x: Math.random() * (window.innerWidth - 100), y: Math.random() * (window.innerHeight - 200) };
             }
             coffre.style.left = cadeauPos.x + "px";
-            coffre.style.top = (cadeauPos.y + Math.sin(Date.now()*0.003)*40) + "px";
+            coffre.style.top = (cadeauPos.y + Math.sin(Date.now()*0.003)*30) + "px";
 
             if (messagerActif) {
                 let m = messagerActif;
                 if (m.state === "ENTRÉE") {
                     m.x += (150 - m.x) * 0.05;
-                    if (m.x > 140) {
-                        m.state = "MESSAGE"; m.bulle.style.opacity = 1;
-                        setTimeout(() => { m.state = "TIR"; }, 3000);
-                    }
+                    if (m.x > 140) { m.state = "MESSAGE"; m.bulle.style.opacity = 1; setTimeout(() => { m.state = "TIR"; }, 3500); }
                 } else if (m.state === "TIR") {
                     m.state = "PROJECTION";
-                    m.bulle.animate([
-                        { left: '70px', top: '10px', opacity: 1 },
-                        { left: (cadeauPos.x - m.x) + 'px', top: (cadeauPos.y - m.y) + 'px', opacity: 0, scale: 0 }
-                    ], { duration: 800 });
-                    
-                    setTimeout(() => {
-                        fleurEtincelles(cadeauPos.x + 30, cadeauPos.y + 30);
-                        m.state = "SORTIE";
-                    }, 750);
+                    m.bulle.animate([{ opacity: 1 }, { left: (cadeauPos.x - m.x) + 'px', top: (cadeauPos.y - m.y) + 'px', opacity: 0, scale: 0 }], { duration: 800 });
+                    setTimeout(() => { fleurEtincelles(cadeauPos.x + 30, cadeauPos.y + 30); m.state = "SORTIE"; }, 750);
                 } else if (m.state === "SORTIE") {
                     m.x -= 10;
                     if (m.x < -300) { m.el.remove(); messagerActif = null; }
