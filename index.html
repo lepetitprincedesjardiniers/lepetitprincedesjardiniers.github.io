@@ -9,7 +9,8 @@
             background-color: #FFFF00; color: #000080; overflow-x: hidden; min-height: 100vh; 
         }
 
-        #google_translate_element { padding: 10px; background: rgba(255,255,255,0.5); border-bottom: 1px solid #008080; }
+        /* Barre de traduction */
+        #google_translate_element { padding: 10px; background: rgba(255,255,255,0.5); border-bottom: 1px solid #008080; min-height: 40px; }
 
         /* Style du Menu de Navigation */
         .menu-table { margin: 20px auto; border-radius: 10px; background-color: #008080; border-collapse: collapse; }
@@ -17,15 +18,15 @@
         .menu-table a { text-decoration: none; color: #FFFFFF; font-weight: bold; transition: 0.3s; }
         .menu-table td:hover { background-color: #006666; }
 
-        /* Titre avec Arc-en-ciel scintillant et Bouquets redressés */
+        /* Titre avec Arc-en-ciel et Bouquets droits */
         .header-container {
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 15px;
+            gap: 20px;
             margin: 30px auto;
         }
-        .petit-bouquet { font-size: 30px; transform: rotate(0deg); } /* Bouquets redressés */
+        .petit-bouquet { font-size: 35px; }
 
         .arc-en-ciel-box {
             border: 6px solid;
@@ -35,8 +36,8 @@
             animation: scintiller 2s infinite alternate;
         }
         @keyframes scintiller {
-            from { box-shadow: 0 0 10px #fff, 0 0 20px #fff, 0 0 30px #ff00de; }
-            to { box-shadow: 0 0 5px #fff, 0 0 10px #fff, 0 0 15px #00d2ff; }
+            from { box-shadow: 0 0 10px #fff, 0 0 20px #ff00de; }
+            to { box-shadow: 0 0 5px #fff, 0 0 15px #00d2ff; }
         }
 
         /* Soleil : Tourne uniquement au survol */
@@ -49,13 +50,14 @@
         }
         .soleil-don:hover { 
             transform: scale(1.2); 
-            animation: rotation-soleil 4s linear infinite; /* Animation activée au hover */
+            animation: rotation-soleil 5s linear infinite;
         }
         @keyframes rotation-soleil {
             from { transform: rotate(0deg); }
             to { transform: rotate(360deg); }
         }
 
+        /* Grille des bulles */
         .bulles-grid { display: flex; justify-content: center; align-items: stretch; gap: 25px; flex-wrap: wrap; padding: 20px; max-width: 1200px; margin: auto; }
 
         .nuage { 
@@ -77,10 +79,12 @@
             border-radius: 50%; transform: scale(1.05);
         }
 
+        /* Urgence & Écoute harmonisé */
         .titre-urgence-rose { color: #e91e63; font-weight: bold; text-transform: uppercase; font-size: 1.2em; margin-bottom: 15px; }
         .split-box { display: flex; border-top: 1px solid #e91e63; padding-top: 10px; }
         .split-part { flex: 1; text-decoration: none; color: #e91e63; font-weight: bold; font-size: 1em; padding: 10px; }
 
+        /* Animations Coffre et Animaux */
         .animal-container { position: fixed; z-index: 900; pointer-events: none; display: flex; align-items: center; }
         .bulle-texte { background: white; border: 2px solid #2E7D32; border-radius: 15px; padding: 8px 15px; font-weight: bold; opacity: 0; white-space: nowrap; overflow: hidden; position: absolute; left: 60px; }
         #coffre-magique { position: fixed; font-size: 60px; z-index: 800; pointer-events: none; left: 50%; transform: translateX(-50%); }
@@ -91,12 +95,14 @@
 <body>
 
     <div id="google_translate_element"></div>
-    <script>function googleTranslateElementInit() { new google.translate.TranslateElement({pageLanguage: 'fr'}, 'google_translate_element'); }</script>
+    <script>
+        function googleTranslateElementInit() {
+            new google.translate.TranslateElement({pageLanguage: 'fr'}, 'google_translate_element');
+        }
+    </script>
     <script src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
 
-    <audio id="chantOiseaux" loop>
-        <source src="oiseaux.mp3" type="audio/mpeg">
-    </audio>
+    <audio id="chantOiseaux" loop><source src="oiseaux.mp3" type="audio/mpeg"></audio>
 
     <table class="menu-table">
         <tr>
@@ -126,9 +132,7 @@
         <a href="impot.html" class="nuage">
             <h3 style="color:#008080; margin:0; text-transform:uppercase;">📜 Impôts Publics</h3>
             <p style="margin:5px 0;">Travaux publics en libre participation.</p>
-            <p class="info-sup">À choisir en fonction des compétences et de son besoin d'apprendre.</p>
-            <p class="info-sup">Motivation indispensable, travaux parfois ingrats.</p>
-            <div class="exemples">Ex : Travaux administratifs, réfection des routes, nettoyage du bois communal, réparation des tuyaux de gaz...</div>
+            <div class="exemples">Ex : Travaux administratifs, réfection des routes, nettoyage communal...</div>
         </a>
 
         <a href="regulation.html" class="etoile-justice">
@@ -156,7 +160,7 @@
     </footer>
 
     <script>
-        // Le script de gestion du son et des animations est maintenu
+        // RÉTABLISSEMENT COMPLET DES SCRIPTS DE BASE
         const basePhrases = ["L'Impôt Public est un geste de cœur", "Graines de générosité", "Le pardon est justice", "Besoin d'un câlin"];
         let disponibles = [...basePhrases];
         const typesAnimaux = ['🕊️', '🦋', '🐝', '🐞'];
@@ -167,13 +171,9 @@
         let coffreX = window.innerWidth / 2 - 30;
         let coffreY = window.innerHeight - 150;
 
-        // Déclenchement du son au premier clic
         document.addEventListener('click', () => { 
             const a = document.getElementById('chantOiseaux');
-            if(a.paused) { 
-                a.volume = 0.05; 
-                a.play().catch(e => console.log("L'audio nécessite une interaction utilisateur")); 
-            } 
+            if(a.paused) { a.volume = 0.05; a.play().catch(e => {}); } 
         });
 
         function exploserEtEnvoler() {
