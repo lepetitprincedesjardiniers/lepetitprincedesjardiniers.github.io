@@ -16,16 +16,17 @@
         .planet { position: fixed; border-radius: 50%; z-index: -1; opacity: 0.6; box-shadow: inset -5px -5px 10px rgba(0,0,0,0.5); }
         #ufo { position: fixed; font-size: 40px; z-index: 1000; top: 15%; left: -100px; filter: drop-shadow(0 0 10px #00ff00); }
 
-        /* --- INTERFACE --- */
+        /* --- TRADUCTEUR --- */
         #google_translate_element { padding: 10px; background: rgba(255,255,255,0.1); border-bottom: 1px solid #008080; min-height: 40px; }
+
+        /* --- MENU --- */
         .menu-table { margin: 20px auto; border-radius: 10px; background-color: #008080; border-collapse: collapse; }
         .menu-table td { padding: 10px 15px; border: 1px solid #FFFFFF; }
         .menu-table a { text-decoration: none; color: #FFFFFF; font-weight: bold; transition: 0.3s; }
         .menu-table td:hover { background-color: #006666; }
 
+        /* --- HEADER & BOUQUETS DROITS --- */
         .header-container { display: flex; align-items: center; justify-content: center; gap: 40px; margin: 30px auto; }
-        
-        /* MODIFICATION : LES DEUX BOUQUETS À 0 DEGRÉ */
         .petit-bouquet-gauche, .petit-bouquet-droite { font-size: 35px; transform: rotate(0deg); } 
 
         .terre-cadre {
@@ -44,6 +45,7 @@
             100% { box-shadow: 0 0 15px red; }
         }
 
+        /* --- SOLEIL --- */
         .soleil-don {
             background: #FFD700; width: 180px; height: 180px; border-radius: 50%;
             display: flex; align-items: center; justify-content: center;
@@ -53,20 +55,24 @@
         .soleil-don:hover { transform: scale(1.2); animation: rotation-soleil 5s linear infinite; }
         @keyframes rotation-soleil { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
 
-        /* --- RUBRIQUES (STYLE ET CONTENU ORIGINEL) --- */
+        /* --- GRILLE ET SECTIONS (RETOUR AU STYLE SOURCE) --- */
         .bulles-grid { display: flex; justify-content: center; align-items: stretch; gap: 25px; flex-wrap: wrap; padding: 20px; max-width: 1200px; margin: auto; }
         
         .nuage { 
-            background: rgba(224, 247, 250, 0.95); border: 3px solid #008080; border-radius: 50px; padding: 20px; 
-            width: 300px; min-height: 250px; text-decoration: none; color: #333; 
+            background: #e0f7fa; border: 3px solid #008080; border-radius: 50px; padding: 20px; 
+            width: 300px; min-height: 250px; text-decoration: none; color: #000080; 
             display: flex; flex-direction: column; justify-content: center; transition: 0.3s; 
         }
         .nuage:hover { transform: translateY(-10px); }
 
+        /* Styles spécifiques pour le texte descriptif */
+        .info-sup { font-size: 0.9em; margin: 5px 0; color: #006666; }
+        .exemples { font-size: 0.8em; font-style: italic; margin-top: 5px; color: #004d40; }
+
         .etoile-justice { 
             background: #E6E6FA; border: 3px solid #9370DB; width: 300px; min-height: 250px; 
             clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%); 
-            transition: 0.6s ease-in-out; cursor: pointer; text-decoration: none; color: #333; 
+            transition: 0.6s ease-in-out; cursor: pointer; text-decoration: none; color: inherit; 
             display: flex; align-items: center; justify-content: center; 
         }
         .etoile-justice:hover { 
@@ -75,9 +81,9 @@
         }
 
         .nuage-rose { background: #ffebee; border-color: #e91e63; }
-        .titre-urgence-rose { color: #e91e63; font-weight: bold; text-transform: uppercase; margin-bottom: 15px; }
+        .titre-urgence-rose { color: #e91e63; font-weight: bold; text-transform: uppercase; font-size: 1.2em; margin-bottom: 15px; }
         .split-box { display: flex; border-top: 1px solid #e91e63; padding-top: 10px; }
-        .split-part { flex: 1; text-decoration: none; color: #e91e63; font-weight: bold; padding: 10px; }
+        .split-part { flex: 1; text-decoration: none; color: #e91e63; font-weight: bold; font-size: 1em; padding: 10px; }
 
         /* --- ANIMATIONS OISEAUX ET COFFRE --- */
         .animal-container { position: fixed; z-index: 900; pointer-events: none; display: flex; align-items: center; }
@@ -128,8 +134,8 @@
         <a href="impot.html" class="nuage">
             <h3 style="color:#008080; margin:0; text-transform:uppercase;">📜 Impôts Publics</h3>
             <p style="margin:5px 0;">Travaux publics en libre participation.</p>
-            <p style="font-size:0.9em; color:#666;">À choisir selon ses compétences.</p>
-            <div style="font-size:0.8em; font-style:italic; margin-top:5px;">Ex : Travaux administratifs, routes, nettoyage...</div>
+            <p class="info-sup">À choisir selon ses compétences.</p>
+            <div class="exemples">Ex : Travaux administratifs, routes, nettoyage...</div>
         </a>
 
         <a href="regulation.html" class="etoile-justice">
@@ -157,7 +163,7 @@
     </footer>
 
     <script>
-        // --- JS ORIGINEL ---
+        // --- LOGIQUE JS ORIGINELLE ---
         const basePhrases = ["L'Impôt Public est un geste de cœur", "Graines de générosité", "Le pardon est justice", "Besoin d'un câlin"];
         let disponibles = [...basePhrases];
         const typesAnimaux = ['🕊️', '🦋', '🐝', '🐞'];
@@ -225,7 +231,7 @@
             requestAnimationFrame(loop);
         }
 
-        // --- NOUVEAUX DÉCORS ---
+        // --- DÉCORATION SPATIALE ---
         function createSpace() {
             for(let i=0; i<80; i++) {
                 let star = document.createElement('div');
@@ -236,17 +242,6 @@
                 star.style.left = Math.random() * 100 + 'vw';
                 if(Math.random() > 0.5) star.style.animation = `scintiller-etoile ${Math.random()*2+1}s infinite alternate`;
                 document.body.appendChild(star);
-            }
-            const colors = ['#ffcc00', '#ff5733', '#33ff57', '#3357ff'];
-            for(let i=0; i<5; i++) {
-                let p = document.createElement('div');
-                p.className = 'planet';
-                let size = Math.random() * 20 + 10 + 'px';
-                p.style.width = size; p.style.height = size;
-                p.style.top = Math.random() * 80 + 'vh';
-                p.style.left = Math.random() * 90 + 'vw';
-                p.style.background = colors[i % colors.length];
-                document.body.appendChild(p);
             }
         }
 
