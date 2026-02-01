@@ -17,7 +17,25 @@
             color: #ffffff; overflow-x: hidden; min-height: 100vh; position: relative;
         }
 
-        #google_translate_element { position: absolute; top: 10px; left: 10px; z-index: 2000; }
+        /* --- STYLE DU TRADUCTEUR (MOINS VIF) --- */
+        #google_translate_element { 
+            position: absolute; 
+            top: 5px; /* Plus haut */
+            left: 10px; 
+            z-index: 2000; 
+            opacity: 0.7; /* Moins vif/translucide */
+            transition: opacity 0.3s;
+        }
+        #google_translate_element:hover { opacity: 1; }
+
+        /* Correction pour les couleurs du gadget Google */
+        .goog-te-gadget-simple {
+            background-color: rgba(255, 255, 255, 0.1) !important;
+            border: 1px solid rgba(255, 255, 255, 0.2) !important;
+            padding: 3px !important;
+            border-radius: 4px !important;
+        }
+        .goog-te-gadget-simple span { color: #ccc !important; font-size: 11px !important; }
 
         /* --- ÉTOILES --- */
         .star { 
@@ -28,7 +46,7 @@
         @keyframes moveStar { from { transform: translateY(0); } to { transform: translateY(-100vh); } }
 
         /* --- MENU --- */
-        .menu-table { margin: 60px auto 20px; border-radius: 10px; background-color: #008080; border-collapse: collapse; position: relative; z-index: 10; overflow: hidden; }
+        .menu-table { margin: 50px auto 20px; border-radius: 10px; background-color: #008080; border-collapse: collapse; position: relative; z-index: 10; overflow: hidden; }
         .menu-table td { border: 1px solid #FFFFFF; transition: 0.3s; }
         .menu-table a { display: block; padding: 12px 20px; text-decoration: none; color: #FFFFFF; font-weight: bold; }
         .menu-table td:hover { background-color: #00b3b3; box-shadow: inset 0 0 10px white; }
@@ -57,7 +75,6 @@
         /* --- GRILLE RUBRIQUES --- */
         .bulles-grid { display: flex; justify-content: center; align-items: stretch; gap: 25px; flex-wrap: wrap; padding: 20px; max-width: 1200px; margin: auto; position: relative; z-index: 5; }
         
-        /* IMPOTS PUBLICS AVEC EXEMPLES */
         .nuage { background: #e0f7fa; border: 3px solid #008080; border-radius: 50px; padding: 25px; width: 340px; min-height: 280px; text-decoration: none; color: #000080; display: flex; flex-direction: column; justify-content: center; transition: 0.3s; }
         .nuage:hover { transform: scale(1.03); background: #f0ffff; }
         .liste-exemples { font-size: 0.75em; text-align: left; margin: 10px auto; padding-left: 20px; color: #006666; font-style: italic; }
@@ -115,14 +132,12 @@
             <h3 style="color:#008080; margin:0; text-transform:uppercase;">📜 Impôts Publics</h3>
             <p style="margin:5px 0; font-weight: bold; font-size: 0.9em;">Travaux publics en libre participation.</p>
             <p style="font-size: 0.8em; margin: 5px 0;">À choisir selon vos talents et envies de partage.</p>
-            
             <ul class="liste-exemples">
                 <li>Nettoyage des sentiers communs</li>
                 <li>Réparation des clôtures du jardin</li>
                 <li>Arrosage des zones partagées</li>
                 <li>Entretien des outils collectifs</li>
             </ul>
-
             <p style="font-size: 0.8em; color:#d32f2f; font-weight:bold; margin-top: 5px;">Motivation indispensable.<br>Attention : Travaux ingrats.</p>
         </a>
 
@@ -144,13 +159,13 @@
     <div id="coffre-magique">🎁</div>
 
     <script>
-        // --- ÉTOILES ---
         function createStars() {
             for(let i=0; i<85; i++) {
                 let star = document.createElement('div');
                 star.className = 'star';
                 star.style.left = Math.random() * 100 + 'vw';
                 star.style.top = Math.random() * 100 + 'vh';
+                star.style.width = star.style.height = (Math.random()*3+1)+'px';
                 star.style.setProperty('--duration', (Math.random() * 3 + 2) + 's');
                 star.style.setProperty('--move-duration', (Math.random() * 60 + 120) + 's');
                 document.body.appendChild(star);
@@ -163,7 +178,6 @@
             if (audio.paused) { audio.volume = 0.4; audio.play(); } else { audio.pause(); }
         }
 
-        // --- MESSAGER ET CADEAU ---
         const phrases = ["L'Impôt Public est un geste de cœur", "Graines de générosité", "Le pardon est justice", "Le jardin vous aime"];
         const emojis = ['🕊️', '🦋', '🐝', '🐞'];
         let messagerActif = null;
