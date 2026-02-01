@@ -17,6 +17,8 @@
         .menu-table { margin: 20px auto; border-radius: 10px; background-color: #008080; border-collapse: collapse; position: relative; z-index: 10; }
         .menu-table td { border: 1px solid #FFFFFF; padding: 0; }
         .menu-table a { display: block; padding: 10px 15px; text-decoration: none; color: #FFFFFF; font-weight: bold; }
+        
+        #btn-son { position: fixed; top: 10px; right: 10px; z-index: 1000; background: rgba(255,255,255,0.2); border: 1px solid white; color: white; border-radius: 50%; cursor: pointer; padding: 8px; font-size: 20px; }
 
         /* --- HEADER : BOUQUETS --- */
         .header-container { display: flex; align-items: center; justify-content: center; gap: 40px; margin: 30px auto; }
@@ -29,7 +31,6 @@
             box-shadow: 0 0 30px #FFA500; animation: scintiller 4s ease-in-out infinite;
         }
         .soleil-cadre h1 { font-size: 1.1em; margin: 0; color: #000080; }
-        @keyframes scintiller { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.05); } }
 
         /* --- TERRE TOURANTE --- */
         .terre-don {
@@ -40,11 +41,11 @@
             animation: rainbow-shadow 4s linear infinite; position: relative; z-index: 5;
         }
         .terre-don:hover { transform: rotate(360deg); }
-        @keyframes rainbow-shadow { 0% { box-shadow: 0 0 20px red; } 50% { box-shadow: 0 0 20px blue; } 100% { box-shadow: 0 0 20px red; } }
 
         /* --- RUBRIQUES --- */
         .bulles-grid { display: flex; justify-content: center; align-items: stretch; gap: 25px; flex-wrap: wrap; padding: 20px; max-width: 1200px; margin: auto; position: relative; z-index: 5; }
         
+        /* IMPOTS */
         .nuage { background: #e0f7fa; border: 3px solid #008080; border-radius: 50px; padding: 20px; width: 320px; min-height: 250px; text-decoration: none; color: #000080; display: flex; flex-direction: column; justify-content: center; transition: 0.3s; }
         
         /* REGULATION TRANSFORMATION */
@@ -52,25 +53,31 @@
             background: #E6E6FA; border: 3px solid #9370DB; width: 300px; min-height: 250px; 
             clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%); 
             display: flex; flex-direction: column; align-items: center; justify-content: center; 
-            text-decoration: none; color: #333; transition: all 0.6s ease;
+            text-decoration: none; color: #333; transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
         }
-        .etoile-justice:hover { clip-path: polygon(100% 0, 100% 100%, 0% 100%, 0 50%, 0 0); border-radius: 30px; transform: scale(1.05); }
+        .etoile-justice:hover { clip-path: polygon(100% 0, 100% 100%, 0% 100%, 0 50%, 0 0); border-radius: 50px; transform: scale(1.05); }
 
+        /* URGENCE ROSE */
         .nuage-rose { background: #ffebee; border-color: #e91e63; }
         .split-box { display: flex; border-top: 1px solid #e91e63; padding-top: 10px; margin-top: 10px; }
         .split-part { flex: 1; text-decoration: none; color: #e91e63; font-weight: bold; padding: 10px; }
 
         /* --- CADEAU & MESSAGERS --- */
-        #coffre-magique { position: fixed; font-size: 55px; z-index: 4; pointer-events: none; filter: drop-shadow(0 0 10px gold); }
+        #coffre-magique { position: fixed; font-size: 55px; z-index: 4; pointer-events: none; filter: drop-shadow(0 0 10px gold); transition: opacity 0.5s; }
         .animal-container { position: fixed; z-index: 900; pointer-events: none; }
         .bulle-texte { background: white; border: 2px solid #2E7D32; border-radius: 15px; padding: 10px; font-weight: bold; color: black; opacity: 0; position: absolute; left: 70px; width: 200px; transition: opacity 0.3s; }
         
+        @keyframes scintiller { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.05); } }
+        @keyframes rainbow-shadow { 0% { box-shadow: 0 0 20px red; } 50% { box-shadow: 0 0 20px blue; } 100% { box-shadow: 0 0 20px red; } }
+
         footer { padding: 40px; position: relative; z-index: 10; }
     </style>
 </head>
 <body>
 
-    <audio id="chantOiseaux" loop><source src="https://www.lasonotheque.org/m3u/0367.m3u" type="audio/mpeg"></audio>
+    <audio id="chantOiseaux" loop src="oiseaux.mp3"></audio>
+
+    <button id="btn-son" onclick="toggleSon()">🐦</button>
 
     <table class="menu-table">
         <tr>
@@ -103,8 +110,8 @@
         </a>
 
         <a href="regulation.html" class="etoile-justice">
-            <h3 style="margin:0;">⚖️ Régulation</h3>
-            <p style="font-size:0.8em; padding:0 40px;">Justice citoyenne, médiation et équité pour tous les jardiniers du monde.</p>
+            <h3 style="margin:0;">⚖️ Régulation Citoyenne</h3>
+            <p style="font-size:0.85em; padding:10px 30px;">Médiation, équité et harmonie pour tous les jardiniers du monde.</p>
         </a>
 
         <div class="nuage nuage-rose">
@@ -123,13 +130,15 @@
     </footer>
 
     <script>
-        document.addEventListener('click', () => { 
-            const a = document.getElementById('chantOiseaux');
-            if(a.paused) { a.volume = 0.1; a.play(); } 
-        });
+        const audio = document.getElementById('chantOiseaux');
+        function toggleSon() {
+            if (audio.paused) { audio.volume = 0.4; audio.play(); } 
+            else { audio.pause(); }
+        }
+        document.addEventListener('click', () => { if(audio.paused) { audio.volume = 0.4; audio.play(); } }, { once: true });
 
         function createStars() {
-            for(let i=0; i<80; i++) {
+            for(let i=0; i<85; i++) {
                 let star = document.createElement('div');
                 star.className = 'star';
                 star.style.width = star.style.height = (Math.random() * 3 + 2) + 'px';
@@ -143,31 +152,25 @@
         const emojis = ['🕊️', '🦋', '🐝', '🐞'];
         let messagerActif = null;
         const coffre = document.getElementById('coffre-magique');
-        
         let cadeauPos = { x: window.innerWidth / 2, y: window.innerHeight / 2 };
-        let targetCadeau = { x: Math.random() * (window.innerWidth - 100), y: Math.random() * (window.innerHeight - 200) };
+        let targetCadeau = { x: Math.random() * (window.innerWidth - 100), y: Math.random() * (window.innerHeight - 300) };
 
         function fleurEtincelles(x, y) {
-            const colors = ['#FF4500', '#DA70D6', '#00FA9A', '#FFD700', '#00BFFF'];
-            for (let i = 0; i < 40; i++) {
+            const colors = ['#FF4500', '#DA70D6', '#00FA9A', '#FFD700', '#FFFFFF'];
+            for (let i = 0; i < 45; i++) {
                 const p = document.createElement('div');
                 p.innerHTML = '✨'; p.style.position = 'fixed'; 
                 p.style.left = x + 'px'; p.style.top = y + 'px';
-                p.style.fontSize = (Math.random() * 15 + 10) + 'px';
+                p.style.fontSize = (Math.random() * 20 + 10) + 'px';
                 p.style.color = colors[Math.floor(Math.random()*colors.length)];
+                p.style.zIndex = "1000";
                 document.body.appendChild(p);
-                const angle = Math.random() * Math.PI * 2; const dist = Math.random() * 200 + 100;
-                p.animate([
-                    { transform: 'translate(0,0) scale(1)', opacity: 1 },
-                    { transform: `translate(${Math.cos(angle)*dist}px, ${Math.sin(angle)*dist}px) scale(0)`, opacity: 0 }
-                ], { duration: 1800, easing: 'ease-out' });
-                setTimeout(() => p.remove(), 1800);
+                const angle = Math.random() * Math.PI * 2; const dist = Math.random() * 250 + 50;
+                p.animate([{ transform: 'translate(0,0) scale(1)', opacity: 1 }, { transform: `translate(${Math.cos(angle)*dist}px, ${Math.sin(angle)*dist}px) scale(0)`, opacity: 0 }], { duration: 1500 });
+                setTimeout(() => p.remove(), 1500);
             }
             coffre.style.opacity = "0";
-            setTimeout(() => {
-                cadeauPos = { x: Math.random() * (window.innerWidth-100), y: Math.random() * (window.innerHeight-200) };
-                coffre.style.opacity = "1";
-            }, 1200);
+            setTimeout(() => { cadeauPos = { x: Math.random() * (window.innerWidth-100), y: Math.random() * (window.innerHeight-300) }; coffre.style.opacity = "1"; }, 1500);
         }
 
         function createMessenger() {
@@ -180,13 +183,11 @@
         }
 
         function loop() {
-            cadeauPos.x += (targetCadeau.x - cadeauPos.x) * 0.007;
-            cadeauPos.y += (targetCadeau.y - cadeauPos.y) * 0.007;
-            if(Math.abs(cadeauPos.x - targetCadeau.x) < 30) {
-                targetCadeau = { x: Math.random() * (window.innerWidth - 100), y: Math.random() * (window.innerHeight - 200) };
-            }
+            cadeauPos.x += (targetCadeau.x - cadeauPos.x) * 0.008;
+            cadeauPos.y += (targetCadeau.y - cadeauPos.y) * 0.008;
+            if(Math.abs(cadeauPos.x - targetCadeau.x) < 40) targetCadeau = { x: Math.random() * (window.innerWidth - 100), y: Math.random() * (window.innerHeight - 300) };
             coffre.style.left = cadeauPos.x + "px";
-            coffre.style.top = (cadeauPos.y + Math.sin(Date.now()*0.003)*30) + "px";
+            coffre.style.top = (cadeauPos.y + Math.sin(Date.now()*0.002)*40) + "px";
 
             if (messagerActif) {
                 let m = messagerActif;
@@ -195,8 +196,8 @@
                     if (m.x > 140) { m.state = "MESSAGE"; m.bulle.style.opacity = 1; setTimeout(() => { m.state = "TIR"; }, 3500); }
                 } else if (m.state === "TIR") {
                     m.state = "PROJECTION";
-                    m.bulle.animate([{ opacity: 1 }, { left: (cadeauPos.x - m.x) + 'px', top: (cadeauPos.y - m.y) + 'px', opacity: 0, scale: 0 }], { duration: 800 });
-                    setTimeout(() => { fleurEtincelles(cadeauPos.x + 30, cadeauPos.y + 30); m.state = "SORTIE"; }, 750);
+                    m.bulle.animate([{ opacity: 1 }, { left: (cadeauPos.x - m.x) + 'px', top: (cadeauPos.y - m.y) + 'px', opacity: 0, scale: 0 }], { duration: 900 });
+                    setTimeout(() => { fleurEtincelles(cadeauPos.x + 30, cadeauPos.y + 30); m.state = "SORTIE"; }, 850);
                 } else if (m.state === "SORTIE") {
                     m.x -= 10;
                     if (m.x < -300) { m.el.remove(); messagerActif = null; }
@@ -208,7 +209,7 @@
         }
 
         createStars();
-        setInterval(createMessenger, 9000);
+        setInterval(createMessenger, 10000);
         loop();
     </script>
 </body>
