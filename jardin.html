@@ -24,33 +24,31 @@
 
         #jardin-sacre { position: relative; height: 180px; width: 100%; overflow: hidden; background: rgba(255,255,255,0.1); margin-top: 10px; }
         .fleur-clonée { position: absolute; font-size: 25px; animation: apparitionFleur 1s ease-out forwards; }
-        @keyframes apparitionFleur { 0% { transform: scale(0) rotate(-50deg); opacity: 0; } 100% { transform: scale(1) rotate(0deg); opacity: 1; } }
         
-        /* MODIF : MOTEUR DE RECHERCHE RÉORGANISÉ */
-        .search-box { background: #008080; padding: 25px; margin: 20px auto; max-width: 800px; border-radius: 20px; color: white; box-shadow: 0 4px 15px rgba(0,0,0,0.2); }
+        /* MODIF : MOTEUR DE RECHERCHE DESCENDU ET LARGEUR VILLE RÉDUITE */
+        .search-box { background: #008080; padding: 25px; margin: 40px auto 20px auto; max-width: 700px; border-radius: 20px; color: white; box-shadow: 0 4px 15px rgba(0,0,0,0.2); }
         .search-container { display: flex; flex-direction: column; gap: 20px; align-items: center; }
-        .search-row-top { width: 100%; display: flex; justify-content: center; }
-        .search-row-bottom { width: 100%; }
-        
         .search-item { display: flex; flex-direction: column; align-items: center; width: 100%; }
         .search-item label { font-size: 0.85em; margin-bottom: 8px; font-weight: bold; color: #E0F2F1; }
         .search-item input { padding: 12px; border-radius: 15px; border: none; outline: none; text-align: center; color: #004D40; font-weight: bold; }
         
-        /* Input spécifique pour le "Quoi" (plus long) */
-        .input-large { width: 85%; max-width: 600px; }
-        .input-medium { width: 60%; max-width: 400px; }
+        .input-large { width: 90%; max-width: 550px; }
+        .input-ville { width: 40%; max-width: 250px; } /* Largeur ville diminuée */
 
-        .mur-reel { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 30px; padding: 20px; max-width: 1200px; margin: auto; }
-        .carte-message { background: rgba(255, 255, 255, 0.95); border: 3px solid #008080; border-radius: 12px; padding: 12px; box-shadow: 4px 4px 0px #008080; transition: 0.3s; color: #333; text-align: left; word-wrap: break-word; cursor: pointer; font-size: 0.8em; }
+        /* MODIF : REGISTRE REMONTÉ SOUS LE MOTEUR */
+        .registre-titre { color: #008080; margin: 30px 0 10px 0; }
+        .mur-reel { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 30px; padding: 20px; max-width: 1200px; margin: 0 auto 50px auto; }
+        
+        .carte-message { background: rgba(255, 255, 255, 0.95); border: 3px solid #008080; border-radius: 12px; padding: 12px; box-shadow: 4px 4px 0px #008080; transition: 0.3s; color: #333; text-align: left; cursor: pointer; font-size: 0.8em; }
         .carte-message:hover { transform: translateY(-5px); box-shadow: 8px 8px 0px #2E7D32; }
 
         #fond-sombre { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); z-index: 2000; justify-content: center; align-items: center; }
-        .message-geant { background: #FFFFF0; width: 85%; max-width: 650px; padding: 30px; border-radius: 25px; border: 8px solid #008080; position: relative; text-align: center; box-shadow: 0 0 30px rgba(255,255,255,0.2); }
+        .message-geant { background: #FFFFF0; width: 85%; max-width: 650px; padding: 30px; border-radius: 25px; border: 8px solid #008080; position: relative; text-align: center; }
         .bouton-fermer { position: absolute; top: -20px; right: -20px; background: #FF1493; color: white; border: 4px solid white; border-radius: 50%; width: 40px; height: 40px; cursor: pointer; font-weight: bold; font-size: 20px; }
-        
-        .geant-header { font-size: 1.5em; color: #2E7D32; border-bottom: 2px solid #008080; margin-bottom: 20px; padding-bottom: 10px; }
-        .geant-texte { font-size: 1.3em; color: #000080; line-height: 1.5; margin: 20px 0; font-weight: bold; }
-        .geant-details { font-size: 0.9em; background: #E0F2F1; padding: 15px; border-radius: 15px; color: #555; text-align: left; }
+
+        /* MODIF : EFFET SUR LE COPYRIGHT */
+        .copyright-link { color: #000080; text-decoration: none; font-weight: bold; transition: 0.3s; padding: 5px; border-radius: 5px; }
+        .copyright-link:hover { color: #FFD700; background: #008080; text-shadow: 0 0 5px #FFF; transform: scale(1.1); display: inline-block; }
 
         #animal-container { position: fixed; z-index: 900; white-space: nowrap; display: flex; align-items: center; pointer-events: none; }
         #corps-animal { font-size: 50px; }
@@ -82,27 +80,23 @@
     <div class="phrase-sous">Les talents, les créations, les savoirs, les offrandes...les cadeaux entiers....</div>
     <div class="phrase-sous">Une pure joie altruiste.</div>
 
+    <div id="jardin-sacre"></div>
+
     <div class="search-box">
         <h3 style="margin-top:0;">🔍 Chercher une graine de fraternité</h3>
         <div class="search-container">
-            <div class="search-row-top">
-                <div class="search-item">
-                    <label>Tu rayonnes dans quel secteur ?</label>
-                    <input type="text" id="searchLoc" class="input-medium" onkeyup="filtrerAnnonces()" placeholder="Pays ou Ville...">
-                </div>
+            <div class="search-item">
+                <label>Tu rayonnes dans quel secteur ?</label>
+                <input type="text" id="searchLoc" class="input-ville" onkeyup="filtrerAnnonces()" placeholder="Pays ou Ville...">
             </div>
-            <div class="search-row-bottom">
-                <div class="search-item">
-                    <label>Quoi? Pourquoi? Pour moi, Pour toi, Pour nous quoi!</label>
-                    <input type="text" id="searchKeyword" class="input-large" onkeyup="filtrerAnnonces()" placeholder="Un talent, un mot-clé, un espoir...">
-                </div>
+            <div class="search-item">
+                <label>Quoi? Pourquoi? Pour moi, Pour toi, Pour nous quoi!</label>
+                <input type="text" id="searchKeyword" class="input-large" onkeyup="filtrerAnnonces()" placeholder="Un talent, un mot-clé, un espoir...">
             </div>
         </div>
     </div>
 
-    <div id="jardin-sacre"></div>
-
-    <h3 style="color:#008080;">📖 Registre de la Fraternité</h3>
+    <h3 class="registre-titre">📖 Registre de la Fraternité</h3>
     <div id="chargement">✨ Récolte des messages en cours...</div>
     <div class="mur-reel" id="mur-messages"></div>
 
@@ -115,7 +109,7 @@
 
     <br><br>
     <font size="2">
-        Copyright 2026 <a href="transition-externe.html" style="color:#000080;font-weight:bold;text-decoration:none;">Le Petit Prince des Jardiniers</a>
+        Copyright 2026 <a href="transition-externe.html" class="copyright-link">Le Petit Prince des Jardiniers</a>
     </font>
 
     <div id="animal-container">
@@ -165,9 +159,9 @@
                 carte.className = 'carte-message';
                 carte.onclick = () => ouvrirGrandMessage(ann);
                 carte.innerHTML = `
-                    <div class="carte-header"><span style="font-weight:bold;color:#2E7D32;">${ann.nom || "Anonyme"}</span></div>
+                    <div style="border-bottom:1px solid #ddd;margin-bottom:8px;padding-bottom:5px;"><span style="font-weight:bold;color:#2E7D32;">${ann.nom || "Anonyme"}</span></div>
                     <div style="font-weight:bold;color:#000080;">"${ann.message ? ann.message.substring(0, 40) + '...' : ""}"</div>
-                    <div style="font-size:0.7em; margin-top:5px; color:#666;">📍 ${ann.ville || ""}</div>
+                    <div style="font-size:0.75em; margin-top:5px; color:#666;">📍 ${ann.ville || ""}</div>
                 `;
                 conteneur.appendChild(carte);
             });
@@ -175,17 +169,15 @@
 
         function ouvrirGrandMessage(ann) {
             const datePropre = ann.date ? new Date(ann.date).toLocaleDateString('fr-FR') : "Récemment";
-            const html = `
-                <div class="geant-header">🌱 Offrande de ${ann.nom || "Anonyme"}</div>
-                <div class="geant-texte">"${ann.message || ""}"</div>
-                <div class="geant-details">
+            document.getElementById('geant-contenu').innerHTML = `
+                <div style="font-size:1.5em; color:#2E7D32; border-bottom:2px solid #008080; margin-bottom:20px; padding-bottom:10px;">🌱 Offrande de ${ann.nom || "Anonyme"}</div>
+                <div style="font-size:1.3em; color:#000080; line-height:1.5; margin:20px 0; font-weight:bold;">"${ann.message || ""}"</div>
+                <div style="font-size:0.9em; background:#E0F2F1; padding:15px; border-radius:15px; color:#555; text-align:left;">
                     <b>📍 Lieu :</b> ${ann.ville || ""}, ${ann.pays || ""}<br>
                     <b>🗓️ Date :</b> ${datePropre}<br>
                     <b>✨ Rayon :</b> ${ann.rayon || "Non spécifié"}<br>
                     <b>⏳ Durée :</b> ${ann.duree || "Non spécifiée"}
-                </div>
-            `;
-            document.getElementById('geant-contenu').innerHTML = html;
+                </div>`;
             document.getElementById('fond-sombre').style.display = 'flex';
         }
 
@@ -244,7 +236,6 @@
         }
 
         window.onload = () => { chargerAnnonces(); loop(); startPluie(); };
-
         document.addEventListener('click', () => { 
             const audio = document.getElementById('chantOiseaux');
             if(audio.paused) audio.play(); 
