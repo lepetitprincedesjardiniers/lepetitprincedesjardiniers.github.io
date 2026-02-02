@@ -4,10 +4,9 @@
     <meta charset="UTF-8">
     <title>Le Jardin de la Fraternité - Registre</title>
     <style>
-        /* --- STYLE ORIGINAL --- */
+        /* --- STYLE ORIGINAL CONSERVÉ --- */
         body { font-family: 'Comic Sans MS', cursive; text-align: center; margin: 0; padding: 0; background-color: #FFFF00; color: #000080; overflow-x: hidden; min-height: 100vh; }
 
-        /* MODIF : Centrage du menu tout en haut */
         .header-top { width: 100%; display: flex; flex-direction: column; align-items: center; background: rgba(255,255,255,0.3); padding-top: 10px; }
         
         .menu-table { margin: 10px auto; border-radius: 10px; background-color: #008080; border-collapse: collapse; }
@@ -15,24 +14,45 @@
         .menu-table a { text-decoration: none; color: #FFFFFF; font-weight: bold; font-size: 0.9em; }
         .menu-table td:hover { background-color: #006666; }
 
-        /* MODIF : Effet Rose Description */
         .phrase-rose { color: #ff1493; font-weight: bold; font-size: 1.2em; text-shadow: 1px 1px 2px #ff69b4; animation: eclat 1.5s infinite alternate; margin-top: 15px; }
         @keyframes eclat { from { opacity: 0.7; } to { opacity: 1; } }
         .phrase-sous { color: #000080; font-weight: bold; margin: 5px 0; }
 
-        /* MODIF : Animation fleurs qui tombent */
         .fleur-pluie { position: fixed; top: -50px; z-index: 9999; pointer-events: none; animation: chute linear forwards; }
         @keyframes chute { to { transform: translateY(110vh) rotate(360deg); } }
 
-        #jardin-sacre { position: relative; height: 180px; width: 100%; overflow: hidden; background: rgba(255,255,255,0.1); border-bottom: 2px dashed #008080; }
+        /* MODIF : Suppression du pointillé border-bottom */
+        #jardin-sacre { position: relative; height: 180px; width: 100%; overflow: hidden; background: rgba(255,255,255,0.1); }
+        
         .fleur-clonée { position: absolute; font-size: 25px; animation: apparitionFleur 1s ease-out forwards; }
         @keyframes apparitionFleur { 0% { transform: scale(0) rotate(-50deg); opacity: 0; } 100% { transform: scale(1) rotate(0deg); opacity: 1; } }
         
         .search-box { background: #008080; padding: 20px; margin: 20px auto; max-width: 600px; border-radius: 15px; color: white; box-shadow: 0 4px 8px rgba(0,0,0,0.2); }
         .search-box input { padding: 12px; width: 85%; border-radius: 25px; border: none; font-size: 1em; outline: none; text-align: center; }
-        .mur-reel { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 20px; padding: 20px; max-width: 1200px; margin: auto; }
-        .carte-message { background: rgba(255, 255, 255, 0.95); border: 3px solid #008080; border-radius: 15px; padding: 15px; box-shadow: 5px 5px 0px #008080; transition: 0.3s; color: #333; text-align: left; }
-        .carte-message:hover { transform: scale(1.03); }
+        
+        .mur-reel { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 30px; padding: 20px; max-width: 1200px; margin: auto; }
+        
+        /* MODIF : Cartes qui s'agrandissent vraiment et ne débordent pas */
+        .carte-message { 
+            background: rgba(255, 255, 255, 0.95); 
+            border: 3px solid #008080; 
+            border-radius: 15px; 
+            padding: 15px; 
+            box-shadow: 5px 5px 0px #008080; 
+            transition: transform 0.4s ease, z-index 0s; 
+            color: #333; 
+            text-align: left;
+            word-wrap: break-word; /* Empêche le texte long de sortir */
+            overflow-wrap: break-word;
+            position: relative;
+            z-index: 1;
+        }
+        .carte-message:hover { 
+            transform: scale(1.15); /* Agrandissement réel */
+            z-index: 100; /* Passe au dessus des autres */
+            box-shadow: 10px 10px 20px rgba(0,0,0,0.2);
+        }
+
         .carte-header { border-bottom: 1px solid #ddd; margin-bottom: 10px; padding-bottom: 5px; }
         .nom-donneur { font-weight: bold; color: #2E7D32; font-size: 1.1em; }
         .lieu-tag { font-size: 0.8em; color: #666; font-style: italic; }
@@ -70,12 +90,12 @@
     <div class="phrase-sous">Les talents, les créations, les savoirs, les offrandes...les cadeaux entiers....</div>
     <div class="phrase-sous">Une pure joie altruiste.</div>
 
-    <div id="jardin-sacre"></div>
-
     <div class="search-box">
         <h3>🔍 Chercher une graine de fraternité</h3>
         <input type="text" id="searchInput" onkeyup="filtrerAnnonces()" placeholder="Chercher une ville, un pays, une graine...">
     </div>
+
+    <div id="jardin-sacre"></div>
 
     <h3 style="color:#008080;">📖 Registre de la Fraternité</h3>
     <div id="chargement">✨ Récolte des messages en cours...</div>
@@ -83,7 +103,7 @@
 
     <br><br>
     <font size="2">
-        Copyright 2026 <a href="https://youtube.com" class="copyright-link">Le Petit Prince des Jardiniers</a>
+        Copyright 2026 <a href="transition-externe.html" class="copyright-link">Le Petit Prince des Jardiniers</a>
     </font>
 
     <div id="coffre-magique">🎁</div>
@@ -101,7 +121,6 @@
         const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxz40XE2KiPXTNZsW-mIg-fm55EivK0r9wzZ5ECFRdEIY53nYH9nLGYRoI71OX93oII/exec"; 
         let toutesLesAnnonces = [];
 
-        // --- Nouveaux messages pour les oiseaux ---
         const mesPhrases = [
             "La notion de 'Semis' : Ici l'offrande véritable est une 'graine' de Bonté altruiste.",
             "Aucun 'merci' n'est obligatoire, la joie de donner est une récompense suffisante",
@@ -142,7 +161,6 @@
             afficherAnnonces(filtre);
         }
 
-        // --- Animation de pluie de fleurs temporaire ---
         function startPluie() {
             let count = 0;
             const interval = setInterval(() => {
@@ -159,10 +177,12 @@
             }, 300);
         }
 
-        // --- Boucle animation Oiseau et Fleurs du milieu ---
         const animaux = ['🕊️', '🦋', '🐝', '🐞', '🦜'];
         const fleurs = ['🌸', '🌼', '🌻', '🌺', '🌷'];
         let aniX = -200, aniY = 100;
+
+        // MODIF : Initialisation du premier message immédiatement
+        document.getElementById('bulle-texte').innerText = mesPhrases[0];
 
         function loop() {
             aniX += 2;
