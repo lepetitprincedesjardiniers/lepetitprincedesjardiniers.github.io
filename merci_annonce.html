@@ -3,12 +3,34 @@
 <head>
     <meta charset="UTF-8">
     <title>Graine Semée ! - Le Petit Prince</title>
+    <style>
+        /* On garde ton style de menu pour la cohérence */
+        .menu-table { margin: 20px auto; border-radius: 10px; background-color: #008080; border-collapse: collapse; }
+        .menu-table td { padding: 10px 15px; border: 1px solid #FFFFFF; transition: 0.3s; }
+        .menu-table a { text-decoration: none; color: #FFFFFF; font-weight: bold; font-size: 0.9em; font-family:'Comic Sans MS', cursive; }
+        #google_translate_element { margin-top: 10px; }
+    </style>
 </head>
 <body bgcolor="#FFFF00" text="#000080" style="font-family:'Comic Sans MS', cursive; text-align:center;">
+
+    <div id="google_translate_element"></div>
+
+    <table class="menu-table" align="center">
+        <tr>
+            <td><a href="index.html">Accueil</a></td>
+            <td><a href="formulaire.html">Semer</a></td>
+            <td><a href="jardin.html">Le Jardin</a></td>
+            <td><a href="impot.html">Impôts Publics</a></td>
+            <td><a href="regulation.html">Régulation</a></td>
+            <td><a href="urgence.html">Aide</a></td>
+        </tr>
+    </table>
+
     <br><br>
     <div style="font-size: 70px;">💚 🎁 💚</div>
     <font size="7" color="#2E7D32"><b>GRAINE BIEN SEMÉE !</b></font>
     <br><br>
+
     <table border="4" cellpadding="30" bgcolor="#FFFFFF" align="center" style="border-color:#2E7D32; border-radius:40px; max-width:600px; box-shadow: 10px 10px 0px #E67E22;">
         <tr>
             <td>
@@ -18,9 +40,17 @@
             </td>
         </tr>
     </table>
+
     <br><br>
     <div style="font-size: 50px;">🌱 🌿 🌸 🌼 🌻</div>
     <br>
-    <a href="jardin.html"><button style="padding:15px 30px; background-color:#E67E22; color:white; border-radius:10px; cursor:pointer; border:none; font-weight:bold;">VOIR LE JARDIN</button></a>
+
+    <a href="jardin.html"><button style="padding:15px 30px; background-color:#E67E22; color:white; border-radius:10px; cursor:pointer; border:none; font-weight:bold; font-family:'Comic Sans MS', cursive;">VOIR LE JARDIN</button></a>
+
+    <script type="text/javascript">
+        function googleTranslateElementInit() { new google.translate.TranslateElement({pageLanguage: 'fr'}, 'google_translate_element'); }
+    </script>
+    <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+
 </body>
 </html>
