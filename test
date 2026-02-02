@@ -2,136 +2,51 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <title>Le Trésor Public - Test Fraternité</title>
-    
-    <script type="text/javascript">
-        function googleTranslateElementInit() {
-            new google.translate.TranslateElement({pageLanguage: 'fr'}, 'google_translate_element');
-        }
-    </script>
-    <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
-
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Le Jardin de Fraternité</title>
     <style>
         body { 
-            font-family: 'Comic Sans MS', cursive; text-align: center; margin: 0; padding: 0; 
-            background: radial-gradient(circle at center, #1b2735 0%, #090a0f 100%);
-            color: #ffffff; overflow-x: hidden; min-height: 100vh; position: relative;
+            background: #090a0f; color: #f0e68c; 
+            font-family: 'Comic Sans MS', cursive; text-align: center;
+            margin: 0; padding: 20px;
         }
-
-        #google_translate_element { position: absolute; top: 10px; left: 10px; z-index: 3000; opacity: 0.6; }
-
-        .header-container { padding: 20px; }
-        .titre-fraternite { font-size: 2em; color: #f0e68c; font-weight: bold; text-shadow: 0 0 10px rgba(240,230,140,0.5); }
-        
-        .menu-table { margin: 15px auto; border-radius: 10px; background-color: #008080; border-collapse: collapse; position: relative; z-index: 10; }
-        .menu-table td { border: 1px solid #FFFFFF; }
-        .menu-table a { display: block; padding: 12px 20px; text-decoration: none; color: #FFFFFF; font-weight: bold; }
-
-        /* LE SOLEIL (Pur CSS) */
-        .soleil-cadre { 
-            width: 140px; height: 140px; background: #FFD700; border-radius: 50%; 
-            display: flex; align-items: center; justify-content: center; 
-            box-shadow: 0 0 30px #FFA500; margin: 20px auto; position: relative; z-index: 20; 
-            text-decoration: none; color: #333; transition: 0.8s;
+        .soleil { 
+            width: 100px; height: 100px; background: gold; border-radius: 50%;
+            margin: 20px auto; box-shadow: 0 0 20px orange;
+            display: flex; align-items: center; justify-content: center; color: #333;
         }
-        .soleil-cadre:hover { transform: scale(1.1) rotate(360deg); background: #FFF; }
-
-        /* LA PLANÈTE FRATERNITÉ (Remplacement de l'image par un dégradé) */
-        .planete-don { 
-            width: 280px; height: 280px; margin: 30px auto; border-radius: 50%; 
-            background: radial-gradient(circle at 30% 30%, #4facfe 0%, #00f2fe 100%);
-            display: flex; flex-direction: column; align-items: center; justify-content: center; 
-            box-shadow: inset -20px -20px 50px rgba(0,0,0,0.6), 0 0 20px rgba(79,172,254,0.4);
-            position: relative; z-index: 5; animation: pulsation 4s infinite ease-in-out;
+        .bulle {
+            background: rgba(255,255,255,0.1); border: 2px solid #008080;
+            padding: 15px; border-radius: 20px; margin: 10px auto; max-width: 400px;
         }
-        @keyframes pulsation { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.03); } }
-
-        /* RUBRIQUES */
-        .bulles-grid { display: flex; justify-content: center; gap: 20px; flex-wrap: wrap; padding: 20px; position: relative; z-index: 5; }
-        .nuage { background: #e1f5fe; border: 3px solid #008080; border-radius: 50px; padding: 20px; width: 300px; color: #000080; transition: 0.4s; text-decoration: none; }
-        .nuage:hover { transform: translateY(-10px); background: #ffffff; }
-
-        /* MOTEUR DE RECHERCHE */
-        .moteur-fraternel { 
-            background: rgba(255, 255, 255, 0.05); border: 2px solid #f0e68c; padding: 25px; 
-            border-radius: 20px; max-width: 550px; margin: 40px auto; position: relative; z-index: 10;
-        }
-        .moteur-fraternel input { padding: 10px; border-radius: 10px; border: none; margin: 8px; width: 80%; background: rgba(255,255,255,0.9); }
-        .btn-rayonner { background: #008080; color: white; border: none; padding: 12px 25px; border-radius: 20px; font-weight: bold; cursor: pointer; margin-top: 15px; }
-
-        .boussole { font-style: italic; color: #f0e68c; padding: 20px; font-size: 0.9em; }
-
-        /* ÉTOILES SANS IMAGES */
-        .star { position: fixed; color: white; z-index: -1; animation: twinkle var(--d) infinite; }
-        @keyframes twinkle { 0%, 100% { opacity: 0.2; transform: scale(0.8); } 50% { opacity: 1; transform: scale(1.1); } }
-
-        #coffre-magique { position: fixed; bottom: 20px; left: 20px; font-size: 50px; cursor: pointer; z-index: 100; }
+        .moteur { border: 1px dashed #f0e68c; padding: 20px; margin-top: 30px; }
+        input { margin: 10px; padding: 5px; border-radius: 10px; border: none; }
     </style>
 </head>
 <body>
 
-    <div id="google_translate_element"></div>
+    <h1>🕊️ Fraternité du Palais Nature</h1>
 
-    <div class="header-container">
-        <div class="titre-fraternite">La fraternité du palais nature</div>
-        <table class="menu-table">
-            <tr>
-                <td><a href="index.html">Accueil</a></td>
-                <td><a href="jardin.html">Le Jardin</a></td>
-                <td><a href="impot.html">Impôts</a></td>
-                <td><a href="regulation.html">Régulation</a></td>
-                <td><a href="urgence.html">Aide</a></td>
-            </tr>
-        </table>
+    <div class="soleil">DONS</div>
+
+    <div class="bulle">
+        <h3>📜 Œuvre Commune</h3>
+        <p>L'impôt volontaire pour la cité.</p>
     </div>
 
-    <div class="soleil-cadre">
-        <strong style="font-size: 0.8em;">DONS ENTIERS</strong>
+    <div class="bulle">
+        <h3>⭐ Main Tendue</h3>
+        <p>Aide, écoute et soins.</p>
     </div>
 
-    <div class="planete-don">
-        <div style="font-weight: bold; text-shadow: 1px 1px 5px rgba(0,0,0,0.5);">RAYONNEMENT</div>
-        <div style="font-size: 0.7em;">Cadeaux du Cœur</div>
+    <div class="moteur">
+        <h3>🔍 Rayonnement</h3>
+        <input type="text" placeholder="Ville / Pays"><br>
+        <input type="range" min="1" max="500"><br>
+        <button style="padding: 10px; background: #008080; color: white; border: none; border-radius: 10px;">Lancer</button>
     </div>
 
-    <div class="bulles-grid">
-        <a href="impot.html" class="nuage">
-            <h3 style="margin:0;">📜 Œuvre Commune</h3>
-            <p style="font-size: 0.8em;">Impôt volontaire : routes, bois, cité. Ma fierté est de servir.</p>
-        </a>
-        <a href="urgence.html" class="nuage" style="background: #fff9c4; border-color: #fbc02d;">
-            <h3 style="margin:0;">⭐ Main Tendue</h3>
-            <p style="font-size: 0.8em;">Santé, charpente, farine ou câlin de l'âme.</p>
-        </a>
-    </div>
+    <p><i>"Tu prépares le pain, je prépare la chanson."</i></p>
 
-    <div class="moteur-fraternel">
-        <h3>🔍 Où brilles-tu ?</h3>
-        <input type="text" placeholder="Pays / Ville">
-        <p style="font-size: 0.8em; margin: 5px;">Distance de dévotion :</p>
-        <input type="range" min="1" max="500" style="width:60%">
-        <input type="text" placeholder="Quoi ? Pourquoi ? Pour NOUS !">
-        <br>
-        <button class="btn-rayonner">Lancer la recherche fraternelle</button>
-    </div>
-
-    <div class="boussole">
-        🧩 <b>Boussole :</b> Tu prépares le pain, je prépare la chanson.
-    </div>
-
-    <div id="coffre-magique">🎁</div>
-
-    <script>
-        // Générateur d'étoiles CSS
-        for(let i=0; i<60; i++) {
-            let s = document.createElement('div');
-            s.className = 'star';
-            s.innerHTML = '✦';
-            s.style.left = Math.random()*100+'vw';
-            s.style.top = Math.random()*100+'vh';
-            s.style.setProperty('--d', (Math.random()*3+2)+'s');
-            document.body.appendChild(s);
-        }
-    </script>
 </body>
 </html>
