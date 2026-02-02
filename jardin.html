@@ -15,51 +15,62 @@
         .menu-table a { text-decoration: none; color: #FFFFFF; font-weight: bold; font-size: 0.9em; }
         .menu-table td:hover { background-color: #006666; }
 
-        .phrase-rose { color: #ff1493; font-weight: bold; font-size: 1.2em; text-shadow: 1px 1px 2px #ff69b4; animation: eclat 1.5s infinite alternate; margin-top: 15px; }
+        .phrase-rose { color: #ff1493; font-weight: bold; font-size: 1.2em; text-shadow: 1px 1px 2px #ff69b4; animation: eclat 1.5s infinite alternate; margin-top: 10px; }
         @keyframes eclat { from { opacity: 0.7; } to { opacity: 1; } }
-        .phrase-sous { color: #000080; font-weight: bold; margin: 5px 0; }
+        .phrase-sous { color: #000080; font-weight: bold; margin: 2px 0; }
 
-        /* ZONE DÉCO HAUT (REMISE EN PLACE) */
-        #jardin-sacre { position: relative; height: 150px; width: 100%; overflow: hidden; background: rgba(255,255,255,0.1); margin-top: 10px; }
+        /* ZONE DÉCO HAUTE */
+        #jardin-sacre { position: relative; height: 120px; width: 100%; overflow: hidden; background: rgba(255,255,255,0.1); margin-top: 5px; }
         .fleur-clonée { position: absolute; font-size: 25px; animation: apparitionFleur 1s ease-out forwards; }
         @keyframes apparitionFleur { 0% { transform: scale(0) rotate(-50deg); opacity: 0; } 100% { transform: scale(1) rotate(0deg); opacity: 1; } }
 
-        /* PLUIE DE FLEURS */
+        /* FLEURS ÉTOILES VOLANTES (NOUVEAUTÉ) */
+        .fleur-etoile { position: fixed; pointer-events: none; z-index: 999; font-size: 15px; animation: volEtoile linear infinite; opacity: 0.8; }
+        @keyframes volEtoile {
+            0% { transform: translate(0, 0) rotate(0deg); }
+            25% { transform: translate(100px, 100px) rotate(90deg); }
+            50% { transform: translate(0, 200px) rotate(180deg); }
+            75% { transform: translate(-100px, 100px) rotate(270deg); }
+            100% { transform: translate(0, 0) rotate(360deg); }
+        }
+
+        /* PLUIE DE FLEURS CLASSIQUE */
         .fleur-pluie { position: fixed; top: -50px; z-index: 9999; pointer-events: none; animation: chute linear forwards; }
         @keyframes chute { to { transform: translateY(110vh) rotate(360deg); } }
 
-        /* MOTEUR DE RECHERCHE (BAISSÉ) */
-        .search-box { background: #008080; padding: 20px; margin: 40px auto 20px auto; max-width: 700px; border-radius: 20px; color: white; box-shadow: 0 4px 15px rgba(0,0,0,0.2); position: relative; z-index: 10; }
-        .search-container { display: flex; flex-direction: column; gap: 15px; align-items: center; }
+        /* MOTEUR DE RECHERCHE (REMONTÉ) */
+        .search-box { background: #008080; padding: 15px; margin: 15px auto 10px auto; max-width: 700px; border-radius: 20px; color: white; box-shadow: 0 4px 15px rgba(0,0,0,0.2); position: relative; z-index: 10; }
+        .search-container { display: flex; flex-direction: column; gap: 10px; align-items: center; }
         .search-item { display: flex; flex-direction: column; align-items: center; width: 100%; }
-        .search-item label { font-size: 0.85em; margin-bottom: 5px; font-weight: bold; color: #E0F2F1; }
-        .search-item input { padding: 10px; border-radius: 15px; border: none; outline: none; text-align: center; color: #004D40; font-weight: bold; }
-        .input-large { width: 90%; max-width: 550px; }
-        .input-ville { width: 40%; max-width: 250px; }
+        .search-item label { font-size: 0.8em; margin-bottom: 3px; font-weight: bold; color: #E0F2F1; }
+        .search-item input { padding: 8px; border-radius: 12px; border: none; outline: none; text-align: center; color: #004D40; font-weight: bold; }
+        .input-large { width: 90%; max-width: 500px; }
+        .input-ville { width: 40%; max-width: 220px; }
 
-        /* REGISTRE */
-        .registre-titre { color: #008080; margin: 30px 0 10px 0; font-size: 1.4em; }
-        .mur-reel { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 25px; padding: 15px; max-width: 1200px; margin: 0 auto 60px auto; }
+        /* REGISTRE (REMONTÉ) */
+        .registre-titre { color: #008080; margin: 15px 0 5px 0; font-size: 1.3em; }
+        .mur-reel { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 20px; padding: 10px; max-width: 1200px; margin: 0 auto 50px auto; }
         
-        .carte-message { background: rgba(255, 255, 255, 0.95); border: 3px solid #008080; border-radius: 12px; padding: 12px; box-shadow: 4px 4px 0px #008080; transition: 0.3s; color: #333; text-align: left; cursor: pointer; font-size: 0.8em; }
+        .carte-message { background: rgba(255, 255, 255, 0.95); border: 3px solid #008080; border-radius: 12px; padding: 10px; box-shadow: 4px 4px 0px #008080; transition: 0.3s; color: #333; text-align: left; cursor: pointer; font-size: 0.8em; }
         .carte-message:hover { transform: translateY(-5px); box-shadow: 8px 8px 0px #2E7D32; }
 
         /* MODALE */
         #fond-sombre { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); z-index: 2000; justify-content: center; align-items: center; }
-        .message-geant { background: #FFFFF0; width: 85%; max-width: 650px; padding: 30px; border-radius: 25px; border: 8px solid #008080; position: relative; text-align: center; }
-        .bouton-fermer { position: absolute; top: -20px; right: -20px; background: #FF1493; color: white; border: 4px solid white; border-radius: 50%; width: 40px; height: 40px; cursor: pointer; font-weight: bold; font-size: 20px; }
+        .message-geant { background: #FFFFF0; width: 85%; max-width: 600px; padding: 25px; border-radius: 25px; border: 8px solid #008080; position: relative; text-align: center; }
+        .bouton-fermer { position: absolute; top: -15px; right: -15px; background: #FF1493; color: white; border: 4px solid white; border-radius: 50%; width: 35px; height: 35px; cursor: pointer; font-weight: bold; font-size: 18px; }
 
-        /* COPYRIGHT VOLANT (FIXÉ EN BAS) */
-        .copyright-wrapper { position: fixed; bottom: 10px; left: 50%; transform: translateX(-50%); background: rgba(255,255,255,0.8); padding: 5px 15px; border-radius: 20px; z-index: 1000; border: 2px solid #008080; }
+        /* COPYRIGHT VOLANT */
+        .copyright-wrapper { position: fixed; bottom: 10px; left: 50%; transform: translateX(-50%); background: rgba(255,255,255,0.9); padding: 5px 15px; border-radius: 20px; z-index: 1000; border: 2px solid #008080; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
         .copyright-link { color: #000080; text-decoration: none; font-weight: bold; transition: all 0.3s; }
         .copyright-link:hover { color: #ff1493; text-shadow: 0 0 10px #FFD700; }
-        .star { position: absolute; pointer-events: none; opacity: 0; transition: transform 0.5s, opacity 0.5s; color: #FFD700; font-size: 12px; }
-        .copyright-wrapper:hover .star { opacity: 1; }
+        .star-copy { position: absolute; pointer-events: none; opacity: 0; transition: transform 0.5s, opacity 0.5s; color: #FFD700; font-size: 12px; }
+        .copyright-wrapper:hover .star-copy { opacity: 1; }
 
+        /* ANIMAUX ET BULLES */
         #animal-container { position: fixed; z-index: 900; white-space: nowrap; display: flex; align-items: center; pointer-events: none; }
         #corps-animal { font-size: 50px; }
         #bulle-texte { background: rgba(255, 255, 255, 0.9); border-radius: 15px; padding: 8px 15px; font-style: italic; color: #2E7D32; margin-right: 10px; font-weight: bold; border: 2px solid #2E7D32; opacity: 0; transition: opacity 0.3s; }
-        #chargement { font-weight: bold; color: #008080; margin: 15px; font-size: 1.1em; }
+        #chargement { font-weight: bold; color: #008080; margin: 10px; font-size: 1.1em; }
     </style>
 </head>
 <body>
@@ -80,7 +91,7 @@
 
     <audio id="chantOiseaux" loop><source src="oiseaux.mp3" type="audio/mpeg"></audio>
 
-    <h2 style="color:#2E7D32; margin-top: 15px;">🍃 Le Jardin des Cadeaux Existentiels 🍃</h2>
+    <h2 style="color:#2E7D32; margin-top: 10px;">🍃 Le Jardin des Cadeaux Existentiels 🍃</h2>
 
     <div class="phrase-rose">Bienvenue au Jardin ensoleilleur des Dons entiers :</div>
     <div class="phrase-sous">Les talents, les créations, les savoirs, les offrandes...les cadeaux entiers....</div>
@@ -89,7 +100,7 @@
     <div id="jardin-sacre"></div>
 
     <div class="search-box">
-        <h3 style="margin:0 0 10px 0; font-size: 1.1em;">🔍 Chercher une graine de fraternité</h3>
+        <h3 style="margin:0 0 8px 0; font-size: 1em;">🔍 Chercher une graine de fraternité</h3>
         <div class="search-container">
             <div class="search-item">
                 <label>Tu rayonnes dans quel secteur ?</label>
@@ -146,11 +157,25 @@
         const animaux = ['🕊️', '🦋', '🐝', '🐞', '🦜'];
         const fleurs = ['🌸', '🌼', '🌻', '🌺', '🌷'];
 
-        // Étoiles du copyright
+        // 1. Création des 20 fleurs-étoiles volantes
+        function genererFleursEtoiles() {
+            for(let i=0; i<20; i++) {
+                const fe = document.createElement('div');
+                fe.className = 'fleur-etoile';
+                fe.innerText = fleurs[Math.floor(Math.random()*fleurs.length)];
+                fe.style.left = Math.random() * 100 + "vw";
+                fe.style.top = Math.random() * 100 + "vh";
+                fe.style.animationDuration = (Math.random() * 10 + 10) + "s";
+                fe.style.animationDelay = (Math.random() * 5) + "s";
+                document.body.appendChild(fe);
+            }
+        }
+
+        // 2. Étoiles du copyright
         const wrap = document.getElementById('copyWrap');
         for(let i=0; i<8; i++) {
             const s = document.createElement('span');
-            s.className = 'star'; s.innerText = '★';
+            s.className = 'star-copy'; s.innerText = '★';
             const angle = (i / 8) * Math.PI * 2;
             s.style.left = "50%"; s.style.top = "50%";
             wrap.addEventListener('mouseenter', () => {
@@ -167,7 +192,7 @@
                 toutesLesAnnonces = data.reverse(); 
                 afficherAnnonces(toutesLesAnnonces);
                 document.getElementById('chargement').style.display = 'none';
-            } catch (e) { document.getElementById('chargement').innerText = "Erreur."; }
+            } catch (e) { document.getElementById('chargement').innerText = "Erreur de connexion."; }
         }
 
         function afficherAnnonces(annonces) {
@@ -178,9 +203,9 @@
                 carte.className = 'carte-message';
                 carte.onclick = () => ouvrirGrandMessage(ann);
                 carte.innerHTML = `
-                    <div style="border-bottom:1px solid #ddd;margin-bottom:8px;padding-bottom:5px;"><span style="font-weight:bold;color:#2E7D32;">${ann.nom || "Anonyme"}</span></div>
+                    <div style="border-bottom:1px solid #ddd;margin-bottom:5px;padding-bottom:3px;"><span style="font-weight:bold;color:#2E7D32;">${ann.nom || "Anonyme"}</span></div>
                     <div style="font-weight:bold;color:#000080;">"${ann.message ? ann.message.substring(0, 40) + '...' : ""}"</div>
-                    <div style="font-size:0.75em; margin-top:5px; color:#666;">📍 ${ann.ville || ""}</div>
+                    <div style="font-size:0.7em; margin-top:3px; color:#666;">📍 ${ann.ville || ""}</div>
                 `;
                 conteneur.appendChild(carte);
             });
@@ -189,9 +214,9 @@
         function ouvrirGrandMessage(ann) {
             const datePropre = ann.date ? new Date(ann.date).toLocaleDateString('fr-FR') : "Récemment";
             document.getElementById('geant-contenu').innerHTML = `
-                <div style="font-size:1.5em; color:#2E7D32; border-bottom:2px solid #008080; margin-bottom:20px; padding-bottom:10px;">🌱 Offrande de ${ann.nom || "Anonyme"}</div>
-                <div style="font-size:1.3em; color:#000080; line-height:1.5; margin:20px 0; font-weight:bold;">"${ann.message || ""}"</div>
-                <div style="font-size:0.9em; background:#E0F2F1; padding:15px; border-radius:15px; color:#555; text-align:left;">
+                <div style="font-size:1.4em; color:#2E7D32; border-bottom:2px solid #008080; margin-bottom:15px; padding-bottom:10px;">🌱 Offrande de ${ann.nom || "Anonyme"}</div>
+                <div style="font-size:1.2em; color:#000080; line-height:1.4; margin:15px 0; font-weight:bold;">"${ann.message || ""}"</div>
+                <div style="font-size:0.85em; background:#E0F2F1; padding:12px; border-radius:15px; color:#555; text-align:left;">
                     <b>📍 Lieu :</b> ${ann.ville || ""}, ${ann.pays || ""}<br>
                     <b>🗓️ Date :</b> ${datePropre}<br>
                     <b>✨ Rayon :</b> ${ann.rayon || "Non spécifié"}<br>
@@ -224,8 +249,8 @@
                 f.style.animationDuration = (Math.random() * 3 + 2) + "s";
                 document.body.appendChild(f);
                 setTimeout(() => f.remove(), 5000);
-                if(count++ > 40) clearInterval(interval);
-            }, 300);
+                if(count++ > 30) clearInterval(interval);
+            }, 400);
         }
 
         let aniX = -200, aniY = 100;
@@ -233,7 +258,8 @@
 
         function loop() {
             aniX += 2;
-            aniY += Math.sin(aniX/50) * 1;
+            aniY += Math.sin(aniX/50) * 1.5;
+            
             if(Math.random() < 0.005) {
                 const f = document.createElement('div');
                 f.className = 'fleur-clonée';
@@ -242,8 +268,10 @@
                 f.style.top = Math.random() * 80 + "%";
                 document.getElementById('jardin-sacre').appendChild(f);
             }
+
             if (aniX > window.innerWidth + 100) {
                 aniX = -200;
+                // Aléatoire pur pour le message et l'animal
                 document.getElementById('bulle-texte').innerText = mesPhrases[Math.floor(Math.random()*mesPhrases.length)];
                 document.getElementById('corps-animal').innerText = animaux[Math.floor(Math.random()*animaux.length)];
             }
@@ -254,7 +282,7 @@
             requestAnimationFrame(loop);
         }
 
-        window.onload = () => { chargerAnnonces(); loop(); startPluie(); };
+        window.onload = () => { chargerAnnonces(); loop(); startPluie(); genererFleursEtoiles(); };
         document.addEventListener('click', () => { 
             const audio = document.getElementById('chantOiseaux');
             if(audio.paused) audio.play(); 
