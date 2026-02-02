@@ -7,20 +7,20 @@
         /* --- STYLE DE BASE --- */
         body { font-family: 'Comic Sans MS', cursive; text-align: center; margin: 0; padding: 0; background-color: #FFFF00; color: #000080; overflow-x: hidden; min-height: 100vh; padding-bottom: 80px; }
 
-        .top-bar { position: relative; width: 100%; min-height: 50px; background: rgba(255,255,255,0.3); padding: 5px 0; }
+        .top-bar { position: relative; width: 100%; min-height: 40px; background: rgba(255,255,255,0.3); padding: 5px 0; }
         #google_translate_element { position: absolute; left: 10px; top: 10px; transform: scale(0.8); transform-origin: top left; }
         
-        .menu-table { margin: 10px auto; border-radius: 10px; background-color: #008080; border-collapse: collapse; }
-        .menu-table td { padding: 10px 15px; border: 1px solid #FFFFFF; }
-        .menu-table a { text-decoration: none; color: #FFFFFF; font-weight: bold; font-size: 0.9em; }
+        .menu-table { margin: 5px auto; border-radius: 10px; background-color: #008080; border-collapse: collapse; }
+        .menu-table td { padding: 8px 15px; border: 1px solid #FFFFFF; }
+        .menu-table a { text-decoration: none; color: #FFFFFF; font-weight: bold; font-size: 0.85em; }
         .menu-table td:hover { background-color: #006666; }
 
-        .phrase-rose { color: #ff1493; font-weight: bold; font-size: 1.2em; text-shadow: 1px 1px 2px #ff69b4; animation: eclat 1.5s infinite alternate; margin-top: 10px; }
+        .phrase-rose { color: #ff1493; font-weight: bold; font-size: 1.1em; text-shadow: 1px 1px 2px #ff69b4; animation: eclat 1.5s infinite alternate; margin-top: 5px; }
         @keyframes eclat { from { opacity: 0.7; } to { opacity: 1; } }
-        .phrase-sous { color: #000080; font-weight: bold; margin: 2px 0; }
+        .phrase-sous { color: #000080; font-weight: bold; margin: 1px 0; font-size: 0.9em; }
 
         /* ZONE DÉCO HAUTE */
-        #jardin-sacre { position: relative; height: 120px; width: 100%; overflow: hidden; background: rgba(255,255,255,0.1); margin-top: 5px; }
+        #jardin-sacre { position: relative; height: 100px; width: 100%; overflow: hidden; background: rgba(255,255,255,0.1); margin-top: 5px; }
         .fleur-clonée { position: absolute; font-size: 25px; animation: apparitionFleur 1s ease-out forwards; }
         @keyframes apparitionFleur { 0% { transform: scale(0) rotate(-50deg); opacity: 0; } 100% { transform: scale(1) rotate(0deg); opacity: 1; } }
 
@@ -34,68 +34,50 @@
             100% { transform: translate(0, 0) rotate(360deg); }
         }
 
-        /* PLUIE DE FLEURS */
-        .fleur-pluie { position: fixed; top: -50px; z-index: 9999; pointer-events: none; animation: chute linear forwards; }
-        @keyframes chute { to { transform: translateY(110vh) rotate(360deg); } }
-
-        /* MOTEUR DE RECHERCHE */
-        .search-box { background: #008080; padding: 15px; margin: 15px auto 10px auto; max-width: 700px; border-radius: 20px; color: white; box-shadow: 0 4px 15px rgba(0,0,0,0.2); position: relative; z-index: 10; }
-        .search-container { display: flex; flex-direction: column; gap: 10px; align-items: center; }
+        /* MOTEUR DE RECHERCHE (REMONTÉ) */
+        .search-box { background: #008080; padding: 12px; margin: 10px auto 10px auto; max-width: 700px; border-radius: 20px; color: white; box-shadow: 0 4px 15px rgba(0,0,0,0.2); position: relative; z-index: 10; }
+        .search-container { display: flex; flex-direction: column; gap: 8px; align-items: center; }
         .search-item { display: flex; flex-direction: column; align-items: center; width: 100%; }
-        .search-item label { font-size: 0.8em; margin-bottom: 3px; font-weight: bold; color: #E0F2F1; }
-        .search-item input { padding: 8px; border-radius: 12px; border: none; outline: none; text-align: center; color: #004D40; font-weight: bold; }
+        .search-item label { font-size: 0.75em; margin-bottom: 2px; font-weight: bold; color: #E0F2F1; }
+        .search-item input { padding: 7px; border-radius: 12px; border: none; outline: none; text-align: center; color: #004D40; font-weight: bold; }
         .input-large { width: 90%; max-width: 500px; }
         .input-ville { width: 40%; max-width: 220px; }
 
-        /* REGISTRE & CARTES (Correction débordement) */
-        .registre-titre { color: #008080; margin: 15px 0 5px 0; font-size: 1.3em; }
-        .mur-reel { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 20px; padding: 10px; max-width: 1200px; margin: 0 auto 50px auto; }
+        /* REGISTRE & CARTES */
+        .registre-titre { color: #008080; margin: 10px 0 5px 0; font-size: 1.2em; }
+        .mur-reel { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 15px; padding: 10px; max-width: 1200px; margin: 0 auto 50px auto; }
         
         .carte-message { 
-            background: rgba(255, 255, 255, 0.95); 
-            border: 3px solid #008080; 
-            border-radius: 12px; 
-            padding: 12px; 
-            box-shadow: 4px 4px 0px #008080; 
-            transition: 0.3s; 
-            color: #333; 
-            text-align: left; 
-            cursor: pointer; 
-            font-size: 0.85em;
-            height: 150px; /* Hauteur fixe pour l'harmonie */
-            overflow-y: auto; /* Scroll si le texte est trop long */
-            display: flex;
-            flex-direction: column;
+            background: rgba(255, 255, 255, 0.95); border: 3px solid #008080; border-radius: 12px; padding: 12px; 
+            box-shadow: 4px 4px 0px #008080; transition: 0.3s; color: #333; text-align: left; cursor: pointer; 
+            font-size: 0.85em; height: 140px; overflow-y: auto; display: flex; flex-direction: column;
+            overflow-wrap: break-word; word-break: break-word;
         }
         .carte-message:hover { transform: translateY(-5px); box-shadow: 8px 8px 0px #2E7D32; }
 
-        /* MODALE GÉANTE (ZOOM ENCORE PLUS GRAND) */
+        /* ZOOM GÉANT CORRIGÉ */
         #fond-sombre { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); z-index: 2000; justify-content: center; align-items: center; }
         .message-geant { 
-            background: #FFFFF0; 
-            width: 92%; 
-            max-width: 850px; /* Plus large */
-            max-height: 85vh;
-            padding: 40px; 
-            border-radius: 30px; 
-            border: 10px solid #008080; 
-            position: relative; 
-            text-align: center; 
-            overflow-y: auto;
+            background: #FFFFF0; width: 92%; max-width: 850px; max-height: 85vh; padding: 35px; border-radius: 30px; 
+            border: 10px solid #008080; position: relative; text-align: center; overflow-y: auto;
+            overflow-wrap: break-word; word-break: break-word; /* Retour à la ligne forcé */
         }
-        .bouton-fermer { position: absolute; top: 10px; right: 15px; background: #FF1493; color: white; border: 4px solid white; border-radius: 50%; width: 45px; height: 45px; cursor: pointer; font-weight: bold; font-size: 22px; z-index: 10; }
+        .bouton-fermer { position: absolute; top: 10px; right: 15px; background: #FF1493; color: white; border: 4px solid white; border-radius: 50%; width: 40px; height: 40px; cursor: pointer; font-weight: bold; font-size: 20px; z-index: 10; }
 
-        /* COPYRIGHT VOLANT (DATE : 2000) */
-        .copyright-wrapper { position: fixed; bottom: 10px; left: 50%; transform: translateX(-50%); background: rgba(255,255,255,0.9); padding: 5px 15px; border-radius: 20px; z-index: 1000; border: 2px solid #008080; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
+        /* COPYRIGHT VOLANT 2000 */
+        .copyright-wrapper { position: fixed; bottom: 10px; left: 50%; transform: translateX(-50%); background: rgba(255,255,255,0.9); padding: 5px 15px; border-radius: 20px; z-index: 1000; border: 2px solid #008080; }
         .copyright-link { color: #000080; text-decoration: none; font-weight: bold; transition: all 0.3s; }
-        .copyright-link:hover { color: #ff1493; text-shadow: 0 0 10px #FFD700; }
         .star-copy { position: absolute; pointer-events: none; opacity: 0; transition: transform 0.5s, opacity 0.5s; color: #FFD700; font-size: 12px; }
         .copyright-wrapper:hover .star-copy { opacity: 1; }
 
         /* ANIMAUX ET BULLES */
         #animal-container { position: fixed; z-index: 900; white-space: nowrap; display: flex; align-items: center; pointer-events: none; }
         #corps-animal { font-size: 50px; }
-        #bulle-texte { background: rgba(255, 255, 255, 0.9); border-radius: 15px; padding: 8px 15px; font-style: italic; color: #2E7D32; margin-right: 10px; font-weight: bold; border: 2px solid #2E7D32; opacity: 0; transition: opacity 0.3s; max-width: 250px; white-space: normal; }
+        #bulle-texte { 
+            background: rgba(255, 255, 255, 0.9); border-radius: 15px; padding: 8px 15px; font-style: italic; color: #2E7D32; 
+            margin-right: 10px; font-weight: bold; border: 2px solid #2E7D32; opacity: 0; transition: opacity 0.3s; 
+            max-width: 250px; white-space: normal; overflow-wrap: break-word;
+        }
         #chargement { font-weight: bold; color: #008080; margin: 10px; font-size: 1.1em; }
     </style>
 </head>
@@ -117,7 +99,7 @@
 
     <audio id="chantOiseaux" loop><source src="oiseaux.mp3" type="audio/mpeg"></audio>
 
-    <h2 style="color:#2E7D32; margin-top: 10px;">🍃 Le Jardin des Cadeaux Existentiels 🍃</h2>
+    <h2 style="color:#2E7D32; margin-top: 5px; font-size: 1.4em;">🍃 Le Jardin des Cadeaux Existentiels 🍃</h2>
 
     <div class="phrase-rose">Bienvenue au Jardin ensoleilleur des Dons entiers :</div>
     <div class="phrase-sous">Les talents, les créations, les savoirs, les offrandes...les cadeaux entiers....</div>
@@ -126,7 +108,7 @@
     <div id="jardin-sacre"></div>
 
     <div class="search-box">
-        <h3 style="margin:0 0 8px 0; font-size: 1em;">🔍 Chercher une graine de fraternité</h3>
+        <h3 style="margin:0 0 5px 0; font-size: 0.95em;">🔍 Chercher une graine de fraternité</h3>
         <div class="search-container">
             <div class="search-item">
                 <label>Tu rayonnes dans quel secteur ?</label>
@@ -237,8 +219,8 @@
         function ouvrirGrandMessage(ann) {
             const datePropre = ann.date ? new Date(ann.date).toLocaleDateString('fr-FR') : "Récemment";
             document.getElementById('geant-contenu').innerHTML = `
-                <div style="font-size:2em; color:#2E7D32; border-bottom:3px solid #008080; margin-bottom:25px; padding-bottom:15px; font-weight:bold;">🌱 L'offrande de ${ann.nom || "Anonyme"}</div>
-                <div style="font-size:1.6em; color:#000080; line-height:1.6; margin:30px 0; font-weight:bold; text-align:left; background:white; padding:20px; border-radius:15px; border-left:8px solid #FF1493;">"${ann.message || ""}"</div>
+                <div style="font-size:1.8em; color:#2E7D32; border-bottom:3px solid #008080; margin-bottom:20px; padding-bottom:15px; font-weight:bold;">🌱 L'offrande de ${ann.nom || "Anonyme"}</div>
+                <div style="font-size:1.5em; color:#000080; line-height:1.5; margin:20px 0; font-weight:bold; text-align:left; background:white; padding:20px; border-radius:15px; border-left:8px solid #FF1493;">"${ann.message || ""}"</div>
                 <div style="font-size:1.1em; background:#E0F2F1; padding:20px; border-radius:20px; color:#333; text-align:left; display:grid; grid-template-columns: 1fr 1fr; gap:10px;">
                     <div><b>📍 Lieu :</b> ${ann.ville || ""}, ${ann.pays || ""}</div>
                     <div><b>🗓️ Date :</b> ${datePropre}</div>
@@ -261,22 +243,10 @@
             afficherAnnonces(filtre);
         }
 
-        function startPluie() {
-            let count = 0;
-            const interval = setInterval(() => {
-                const f = document.createElement('div');
-                f.className = 'fleur-pluie';
-                f.innerText = fleurs[Math.floor(Math.random()*fleurs.length)];
-                f.style.left = Math.random() * 100 + "vw";
-                f.style.fontSize = (Math.random() * 20 + 20) + "px";
-                f.style.animationDuration = (Math.random() * 3 + 2) + "s";
-                document.body.appendChild(f);
-                setTimeout(() => f.remove(), 5000);
-                if(count++ > 30) clearInterval(interval);
-            }, 400);
-        }
-
         let aniX = -200, aniY = 100;
+        // INIT : Charger un premier message tout de suite
+        document.getElementById('bulle-texte').innerText = mesPhrases[Math.floor(Math.random()*mesPhrases.length)];
+
         function loop() {
             aniX += 2;
             aniY += Math.sin(aniX/50) * 1.5;
@@ -288,22 +258,24 @@
                 f.style.top = Math.random() * 80 + "%";
                 document.getElementById('jardin-sacre').appendChild(f);
             }
-            if (aniX > window.innerWidth + 100) {
-                aniX = -200;
+            if (aniX > window.innerWidth + 200) {
+                aniX = -250;
+                // On change SYSTEMATIQUEMENT le texte et l'animal ici
                 document.getElementById('bulle-texte').innerText = mesPhrases[Math.floor(Math.random()*mesPhrases.length)];
                 document.getElementById('corps-animal').innerText = animaux[Math.floor(Math.random()*animaux.length)];
             }
             const container = document.getElementById('animal-container');
             container.style.left = aniX + "px";
             container.style.top = aniY + "px";
-            document.getElementById('bulle-texte').style.opacity = (aniX > 0 && aniX < window.innerWidth) ? "1" : "0";
+            // Affichage de la bulle
+            document.getElementById('bulle-texte').style.opacity = (aniX > -100 && aniX < window.innerWidth) ? "1" : "0";
             requestAnimationFrame(loop);
         }
 
-        window.onload = () => { chargerAnnonces(); loop(); startPluie(); genererFleursEtoiles(); };
+        window.onload = () => { chargerAnnonces(); loop(); genererFleursEtoiles(); };
         document.addEventListener('click', () => { 
             const audio = document.getElementById('chantOiseaux');
-            if(audio.paused) audio.play(); 
+            if(audio && audio.paused) audio.play(); 
         }, {once: true});
     </script>
 </body>
