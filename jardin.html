@@ -7,7 +7,9 @@
         /* --- STYLE ORIGINAL CONSERVÉ --- */
         body { font-family: 'Comic Sans MS', cursive; text-align: center; margin: 0; padding: 0; background-color: #FFFF00; color: #000080; overflow-x: hidden; min-height: 100vh; }
 
-        .header-top { width: 100%; display: flex; flex-direction: column; align-items: center; background: rgba(255,255,255,0.3); padding-top: 10px; }
+        /* MODIF : Traducteur en haut à gauche et Menu centré */
+        .top-bar { position: relative; width: 100%; min-height: 50px; background: rgba(255,255,255,0.3); padding: 5px 0; }
+        #google_translate_element { position: absolute; left: 10px; top: 10px; transform: scale(0.8); transform-origin: top left; }
         
         .menu-table { margin: 10px auto; border-radius: 10px; background-color: #008080; border-collapse: collapse; }
         .menu-table td { padding: 10px 15px; border: 1px solid #FFFFFF; }
@@ -22,16 +24,18 @@
         @keyframes chute { to { transform: translateY(110vh) rotate(360deg); } }
 
         #jardin-sacre { position: relative; height: 180px; width: 100%; overflow: hidden; background: rgba(255,255,255,0.1); }
-        
         .fleur-clonée { position: absolute; font-size: 25px; animation: apparitionFleur 1s ease-out forwards; }
         @keyframes apparitionFleur { 0% { transform: scale(0) rotate(-50deg); opacity: 0; } 100% { transform: scale(1) rotate(0deg); opacity: 1; } }
         
-        .search-box { background: #008080; padding: 20px; margin: 20px auto; max-width: 600px; border-radius: 15px; color: white; box-shadow: 0 4px 8px rgba(0,0,0,0.2); }
-        .search-box input { padding: 12px; width: 85%; border-radius: 25px; border: none; font-size: 1em; outline: none; text-align: center; }
-        
+        /* MODIF : Nouveau Moteur de Recherche Simple */
+        .search-box { background: #008080; padding: 25px; margin: 20px auto; max-width: 800px; border-radius: 20px; color: white; box-shadow: 0 4px 15px rgba(0,0,0,0.2); }
+        .search-grid { display: flex; flex-wrap: wrap; justify-content: center; gap: 15px; }
+        .search-item { display: flex; flex-direction: column; align-items: center; flex: 1; min-width: 200px; }
+        .search-item label { font-size: 0.8em; margin-bottom: 8px; font-weight: bold; color: #E0F2F1; }
+        .search-item input, .search-item select { padding: 10px; border-radius: 15px; border: none; width: 90%; outline: none; text-align: center; color: #004D40; font-weight: bold; }
+
         .mur-reel { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 40px; padding: 20px; max-width: 1200px; margin: auto; }
         
-        /* MODIF : Petites cases avec grand zoom au survol */
         .carte-message { 
             background: rgba(255, 255, 255, 0.95); 
             border: 3px solid #008080; 
@@ -44,10 +48,10 @@
             word-wrap: break-word;
             position: relative;
             z-index: 1;
-            font-size: 0.85em; /* Un peu plus petit au repos */
+            font-size: 0.85em;
         }
         .carte-message:hover { 
-            transform: scale(1.25); /* Zoom encore plus grand */
+            transform: scale(1.25); 
             z-index: 100; 
             box-shadow: 15px 15px 30px rgba(0,0,0,0.3);
             background: #FFFFFF;
@@ -69,7 +73,7 @@
 </head>
 <body>
 
-    <div class="header-top">
+    <div class="top-bar">
         <div id="google_translate_element"></div>
         <table class="menu-table">
             <tr>
@@ -92,8 +96,26 @@
     <div class="phrase-sous">Une pure joie altruiste.</div>
 
     <div class="search-box">
-        <h3>🔍 Chercher une graine de fraternité</h3>
-        <input type="text" id="searchInput" onkeyup="filtrerAnnonces()" placeholder="Ville, Pays, Message...">
+        <div class="search-grid">
+            <div class="search-item">
+                <label>Tu rayonnes dans quel secteur ?</label>
+                <input type="text" id="searchLoc" onkeyup="filtrerAnnonces()" placeholder="Pays ou Ville...">
+            </div>
+            <div class="search-item">
+                <label>Distance max de ta dévotion ?</label>
+                <select id="searchRayon" onchange="filtrerAnnonces()">
+                    <option value="">Toute distance (km)</option>
+                    <option value="10">10 km</option>
+                    <option value="50">50 km</option>
+                    <option value="100">100 km</option>
+                    <option value="500">500 km</option>
+                </select>
+            </div>
+            <div class="search-item">
+                <label>Quoi? Pourquoi? Pour nous quoi!</label>
+                <input type="text" id="searchKeyword" onkeyup="filtrerAnnonces()" placeholder="Un talent, un mot-clé...">
+            </div>
+        </div>
     </div>
 
     <div id="jardin-sacre"></div>
@@ -114,7 +136,7 @@
     </div>
 
     <script type="text/javascript">
-        function googleTranslateElementInit() { new google.translate.TranslateElement({pageLanguage: 'fr'}, 'google_translate_element'); }
+        function googleTranslateElementInit() { new google.translate.TranslateElement({pageLanguage: 'fr', layout: google.translate.TranslateElement.InlineLayout.SIMPLE}, 'google_translate_element'); }
     </script>
     <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
 
@@ -169,8 +191,18 @@
         }
 
         function filtrerAnnonces() {
-            const val = document.getElementById('searchInput').value.toLowerCase();
-            const filtre = toutesLesAnnonces.filter(ann => (ann.nom && ann.nom.toLowerCase().includes(val)) || (ann.ville && ann.ville.toLowerCase().includes(val)) || (ann.pays && ann.pays.toLowerCase().includes(val)) || (ann.message && ann.message.toLowerCase().includes(val)));
+            const loc = document.getElementById('searchLoc').value.toLowerCase();
+            const ray = document.getElementById('searchRayon').value;
+            const key = document.getElementById('searchKeyword').value.toLowerCase();
+
+            const filtre = toutesLesAnnonces.filter(ann => {
+                const matchLoc = (ann.ville && ann.ville.toLowerCase().includes(loc)) || (ann.pays && ann.pays.toLowerCase().includes(loc));
+                const matchKey = (ann.message && ann.message.toLowerCase().includes(key)) || (ann.nom && ann.nom.toLowerCase().includes(key));
+                // Filtrage simple sur le texte du rayon si présent
+                const matchRay = ray === "" || (ann.rayon && ann.rayon.includes(ray));
+                
+                return matchLoc && matchKey && matchRay;
+            });
             afficherAnnonces(filtre);
         }
 
