@@ -7,11 +7,11 @@
         /* --- STYLE ORIGINAL CONSERVÉ --- */
         body { font-family: 'Comic Sans MS', cursive; text-align: center; margin: 0; padding: 0; background-color: #FFFF00; color: #000080; overflow-x: hidden; min-height: 100vh; }
 
-        .menu-table { margin: 20px auto; border-radius: 10px; background-color: #008080; border-collapse: collapse; }
+        .menu-table { margin: 10px auto; border-radius: 10px; background-color: #008080; border-collapse: collapse; }
         .menu-table td { padding: 10px 15px; border: 1px solid #FFFFFF; }
         .menu-table a { text-decoration: none; color: #FFFFFF; font-weight: bold; }
 
-        #jardin-sacre { position: relative; height: 200px; width: 100%; overflow: hidden; }
+        #jardin-sacre { position: relative; height: 180px; width: 100%; overflow: hidden; background: rgba(255,255,255,0.1); }
         
         .fleur-clonée {
             position: absolute;
@@ -35,14 +35,15 @@
             box-shadow: 0 4px 8px rgba(0,0,0,0.2);
         }
         .search-box input {
-            padding: 10px;
-            width: 70%;
-            border-radius: 5px;
+            padding: 12px;
+            width: 80%;
+            border-radius: 25px;
             border: none;
             font-size: 1em;
+            outline: none;
         }
 
-        /* --- AFFICHAGE DES ANNONCES (MUR RÉEL) --- */
+        /* --- AFFICHAGE DES ANNONCES --- */
         .mur-reel {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
@@ -65,7 +66,7 @@
         .carte-header { border-bottom: 1px solid #ddd; margin-bottom: 10px; padding-bottom: 5px; }
         .nom-donneur { font-weight: bold; color: #2E7D32; font-size: 1.1em; }
         .lieu-tag { font-size: 0.8em; color: #666; font-style: italic; }
-        .message-contenu { margin-top: 10px; font-size: 0.95em; line-height: 1.4; }
+        .message-contenu { margin-top: 10px; font-size: 0.95em; line-height: 1.4; font-weight: bold; color: #000080; }
 
         /* --- ÉLÉMENTS MAGIQUES --- */
         #coffre-magique { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); font-size: 60px; z-index: 800; }
@@ -74,14 +75,14 @@
         #bulle-texte { background: rgba(255, 255, 255, 0.9); border-radius: 15px; padding: 8px 15px; font-style: italic; color: #2E7D32; margin-right: 10px; font-weight: bold; border: 2px solid #2E7D32; opacity: 0; transition: opacity 0.3s; }
 
         .copyright-link { color: #000080; text-decoration: none; font-weight: bold; }
-        #chargement { font-weight: bold; color: #008080; margin: 20px; }
+        #chargement { font-weight: bold; color: #008080; margin: 20px; font-size: 1.2em; }
     </style>
 </head>
 <body>
 
-    <div style="display: flex; justify-content: space-between; align-items: center; padding: 10px; background: rgba(255,255,255,0.3);">
+    <div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; padding: 10px; background: rgba(255,255,255,0.3);">
         <div id="google_translate_element"></div>
-        <table class="menu-table" style="margin: 0;">
+        <table class="menu-table">
             <tr>
                 <td><a href="index.html">Accueil</a></td>
                 <td><a href="formulaire.html">Semer</a></td>
@@ -94,10 +95,9 @@
 
     <audio id="chantOiseaux" loop><source src="oiseaux.mp3" type="audio/mpeg"></audio>
 
-    <h2 style="color:#2E7D32; margin-top: 30px;">🍃 Le Jardin des Cadeaux Existentiels 🍃</h2>
+    <h2 style="color:#2E7D32; margin-top: 20px;">🍃 Le Jardin des Cadeaux Existentiels 🍃</h2>
     
-    <div id="jardin-sacre">
-        </div>
+    <div id="jardin-sacre"></div>
 
     <div class="search-box">
         <h3>🔍 Chercher une graine de fraternité</h3>
@@ -105,7 +105,7 @@
     </div>
 
     <h3 style="color:#008080;">📖 Registre de la Fraternité</h3>
-    <div id="chargement">✨ Récolte des messages en cours dans le jardin...</div>
+    <div id="chargement">✨ Récolte des messages en cours...</div>
     
     <div class="mur-reel" id="mur-messages"></div>
 
@@ -126,41 +126,39 @@
     <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
 
     <script>
-        // --- CONFIGURATION DE LA BASE DE DONNÉES ---
-        // Remplacez URL_DE_VOTRE_SCRIPT par l'URL Web App fournie par Google Apps Script
-        const SCRIPT_URL = "URL_DE_VOTRE_SCRIPT"; 
+        // --- CONFIGURATION DATA ---
+        // REMPLACE CETTE URL PAR TON URL DE DEPLOIEMENT GOOGLE
+        const SCRIPT_URL = "TON_URL_SCRIPT_ICI"; 
         let toutesLesAnnonces = [];
 
         async function chargerAnnonces() {
             try {
                 const response = await fetch(SCRIPT_URL);
                 const data = await response.json();
-                toutesLesAnnonces = data;
+                toutesLesAnnonces = data.reverse(); 
                 afficherAnnonces(toutesLesAnnonces);
                 document.getElementById('chargement').style.display = 'none';
             } catch (error) {
-                console.error("Erreur de chargement:", error);
-                document.getElementById('chargement').innerText = "Le jardin se repose, réessayez plus tard.";
+                console.error("Erreur:", error);
+                document.getElementById('chargement').innerText = "Le jardin est timide, rechargez la page.";
             }
         }
 
         function afficherAnnonces(annonces) {
             const conteneur = document.getElementById('mur-messages');
             conteneur.innerHTML = '';
-
             annonces.forEach(ann => {
+                const datePropre = ann.date ? new Date(ann.date).toLocaleDateString('fr-FR') : "Récemment";
                 const carte = document.createElement('div');
                 carte.className = 'carte-message';
                 carte.innerHTML = `
                     <div class="carte-header">
-                        <span class="nom-donneur">${ann.Nom}</span><br>
-                        <span class="lieu-tag">📍 ${ann.Ville}, ${ann.Pays}</span>
+                        <span class="nom-donneur">${ann.nom || "Anonyme"}</span><br>
+                        <span class="lieu-tag">📍 ${ann.ville || ""}, ${ann.pays || ""}</span>
                     </div>
-                    <div class="message-contenu">
-                        "${ann.Message}"
-                    </div>
-                    <div style="font-size:0.7em; margin-top:10px; color:#888;">
-                        Semé le ${ann.Date}
+                    <div class="message-contenu">"${ann.message || ""}"</div>
+                    <div style="font-size:0.75em; margin-top:10px; color:#666; font-style: italic;">
+                        Semé le ${datePropre}
                     </div>
                 `;
                 conteneur.appendChild(carte);
@@ -170,23 +168,23 @@
         function filtrerAnnonces() {
             const val = document.getElementById('searchInput').value.toLowerCase();
             const filtre = toutesLesAnnonces.filter(ann => 
-                ann.Nom.toLowerCase().includes(val) || 
-                ann.Ville.toLowerCase().includes(val) || 
-                ann.Message.toLowerCase().includes(val)
+                (ann.nom && ann.nom.toLowerCase().includes(val)) || 
+                (ann.ville && ann.ville.toLowerCase().includes(val)) || 
+                (ann.message && ann.message.toLowerCase().includes(val))
             );
             afficherAnnonces(filtre);
         }
 
-        // --- LOGIQUE D'ANIMATION ORIGINALE ---
+        // --- ANIMATIONS ---
         const mesPhrases = ["Une fleur vient d'éclore", "La fraternité grandit...", "Un cadeau déposé !", "Paix sur ce jardin"];
-        const animaux = ['🕊️', '🦋', '🐝', '🐞', '🦜', '🐰'];
+        const animaux = ['🕊️', '🦋', '🐝', '🐞', '🦜', '🐰', '🐿️'];
         const fleurs = ['🌸', '🌼', '🌻', '🌺', '🌷', '🌹'];
         const jardin = document.getElementById('jardin-sacre');
         const animalCont = document.getElementById('animal-container');
         const bulle = document.getElementById('bulle-texte');
         const corps = document.getElementById('corps-animal');
 
-        let aniX = -200, aniY = 100, state = "CROSSING";
+        let aniX = -200, aniY = 100;
 
         function plantFlower() {
             const f = document.createElement('div');
@@ -198,15 +196,13 @@
         }
 
         function loop() {
-            if (state === "CROSSING") {
-                aniX += 2;
-                aniY += Math.sin(aniX/50) * 1;
-                if(Math.random() < 0.005) plantFlower();
-                if (aniX > window.innerWidth + 100) {
-                    aniX = -200;
-                    bulle.innerText = mesPhrases[Math.floor(Math.random()*mesPhrases.length)];
-                    corps.innerText = animaux[Math.floor(Math.random()*animaux.length)];
-                }
+            aniX += 2;
+            aniY += Math.sin(aniX/50) * 1;
+            if(Math.random() < 0.005) plantFlower();
+            if (aniX > window.innerWidth + 100) {
+                aniX = -200;
+                bulle.innerText = mesPhrases[Math.floor(Math.random()*mesPhrases.length)];
+                corps.innerText = animaux[Math.floor(Math.random()*animaux.length)];
             }
             animalCont.style.left = aniX + "px";
             animalCont.style.top = aniY + "px";
@@ -214,13 +210,9 @@
             requestAnimationFrame(loop);
         }
 
-        // Lancement
         chargerAnnonces();
         loop();
-        document.addEventListener('click', () => { 
-            const a = document.getElementById('chantOiseaux');
-            a.volume = 0.1; a.play(); 
-        });
+        document.addEventListener('click', () => { document.getElementById('chantOiseaux').play(); }, {once: true});
     </script>
 </body>
 </html>
