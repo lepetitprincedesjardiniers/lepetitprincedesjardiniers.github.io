@@ -2,29 +2,24 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <title>Semer un Don - Le Petit Prince</title>
     <title>Semer un Don - Le Petit Prince des Jardiniers</title>
     <style>
         body { font-family: 'Comic Sans MS', cursive; text-align: center; margin: 0; padding: 0; background-color: #FFFF00; color: #000080; overflow-x: hidden; min-height: 100vh; }
         
-        /* Menu */
+        /* Traducteur discret */
+        #google_translate_element { position: absolute; top: 5px; left: 5px; z-index: 1000; opacity: 0.7; transform: scale(0.8); }
+
+        /* Menu Complet */
         .menu-table { margin: 20px auto; border-radius: 10px; background-color: #008080; border-collapse: collapse; }
-        .menu-table td { padding: 10px 15px; border: 1px solid #FFFFFF; }
-        .menu-table a { text-decoration: none; color: #FFFFFF; font-weight: bold; }
+        .menu-table td { padding: 10px 15px; border: 1px solid #FFFFFF; transition: 0.3s; }
+        .menu-table td:hover { background-color: #00b3b3; }
+        .menu-table a { text-decoration: none; color: #FFFFFF; font-weight: bold; font-size: 0.9em; }
 
         /* Conteneur Formulaire */
         .form-container { 
-            background: white; 
-            padding: 30px; 
-            border-radius: 20px; 
-            display: inline-block; 
-            margin-top: 10px; 
             background: white; padding: 30px; border-radius: 20px; 
             display: inline-block; margin-top: 10px; 
             box-shadow: 0px 10px 20px rgba(0,0,0,0.1); 
-            width: 90%; 
-            max-width: 550px;
-            margin-bottom: 180px; 
             width: 90%; max-width: 550px; margin-bottom: 180px; 
         }
 
@@ -32,34 +27,13 @@
         label { font-weight: bold; color: #008080; display: block; margin-bottom: 5px; }
 
         input, textarea, select { 
-            width: 100%; 
-            padding: 12px; 
-            margin-bottom: 15px;
-            border: 2px solid #008080; 
-            border-radius: 10px; 
-            font-family: 'Comic Sans MS';
-            font-size: 1em;
-            box-sizing: border-box;
-            background-color: #f9f9f9;
             width: 100%; padding: 12px; margin-bottom: 15px;
             border: 2px solid #008080; border-radius: 10px; 
             font-family: 'Comic Sans MS'; font-size: 1em; box-sizing: border-box;
             background-color: #fcfcfc;
         }
 
-        /* Bouton */
         .btn-envoyer { 
-            width: 100%;
-            padding: 20px; 
-            background: #E67E22; 
-            color: white; 
-            border: none; 
-            border-radius: 20px; 
-            cursor: pointer; 
-            font-weight: bold; 
-            font-size: 1.1em;
-            box-shadow: 0px 4px 0px #b35900;
-            transition: transform 0.1s;
             width: 100%; padding: 20px; background: #E67E22; color: white; 
             border: none; border-radius: 20px; cursor: pointer; 
             font-weight: bold; font-size: 1.1em; box-shadow: 0px 4px 0px #b35900;
@@ -78,26 +52,25 @@
         @keyframes fly { 0% { transform: translate(0, 0) rotate(0deg); opacity: 1; } 100% { transform: translate(var(--dx), var(--dy)) rotate(360deg); opacity: 0; } }
         
         .copyright-link { color: #000080; text-decoration: none; font-weight: bold; }
-        .copyright-link:hover { text-decoration: underline; }
     </style>
 </head>
 <body>
 
     <audio id="chantOiseaux" loop><source src="oiseaux.mp3" type="audio/mpeg"></audio>
 
-    <div id="google_translate_element" style="padding:10px;"></div>
+    <div id="google_translate_element"></div>
 
     <table class="menu-table">
         <tr>
             <td><a href="index.html">Accueil</a></td>
             <td><a href="formulaire.html">Semer</a></td>
             <td><a href="jardin.html">Le Jardin</a></td>
-            <td><a href="contact.html">Contact</a></td>
+            <td><a href="impot.html">Impôts Publics</a></td>
+            <td><a href="regulation.html">Régulation</a></td>
+            <td><a href="urgence.html">Aide</a></td>
         </tr>
     </table>
 
-    <h2 style="color:#E67E22;">🌟 Semer un Don entier</h2>
-    <p style="font-weight:bold;">Un vrai cadeau existentiel pour une paix rayonnante...</p>
     <h2 style="color:#E67E22;">🌟 Semer un Don - Le Petit Prince des Jardiniers</h2>
     <p style="font-weight:bold; color:#008080;">Chaque graine est un acte de fraternité...</p>
 
@@ -105,8 +78,6 @@
         <form action="https://formspree.io/f/TON_ID" method="POST">
 
             <div class="form-group">
-                <label>Identité du Jardinier</label>
-                <input type="text" name="nom" placeholder="Ton Prénom" required>
                 <label>Identité amoureuse</label>
                 <input type="text" name="nom" placeholder="Ton Prénom de coeur" required>
             </div>
@@ -114,38 +85,35 @@
             <div class="form-group">
                 <label>Provenance (Monde sans frontières)</label>
                 <select name="pays" required>
-                    <option value="" disabled selected>Choisis ton pays sans frontière ! 🌍</option>
-                    <option value="France">France</option>
-                    <option value="Belgique">Belgique</option>
-                    <option value="Suisse">Suisse</option>
-                    <option value="Canada">Canada</option>
-                    <option value="Algérie">Algérie</option>
-                    <option value="Maroc">Maroc</option>
-                    <option value="Tunisie">Tunisie</option>
-                    <option value="Sénégal">Sénégal</option>
-                    <option value="Côte d'Ivoire">Côte d'Ivoire</option>
-                    <option value="Luxembourg">Luxembourg</option>
-                    <option value="International">Partout ailleurs dans le monde...</option>
+                    <option value="" disabled selected>Choisis ton pays ! 🌍</option>
                     <optgroup label="🌍 Pays du Monde">
-                        <option value="Algérie">Algérie</option>
-                        <option value="Belgique">Belgique</option>
-                        <option value="Canada">Canada</option>
-                        <option value="Côte d'Ivoire">Côte d'Ivoire</option>
                         <option value="France">France</option>
-                        <option value="Maroc">Maroc</option>
-                        <option value="Sénégal">Sénégal</option>
+                        <option value="Belgique">Belgique</option>
                         <option value="Suisse">Suisse</option>
+                        <option value="Canada">Canada</option>
+                        <option value="Algérie">Algérie</option>
+                        <option value="Maroc">Maroc</option>
+                        <option value="Tunisie">Tunisie</option>
+                        <option value="Sénégal">Sénégal</option>
+                        <option value="Côte d'Ivoire">Côte d'Ivoire</option>
+                        <option value="Luxembourg">Luxembourg</option>
+                        <option value="Espagne">Espagne</option>
+                        <option value="Italie">Italie</option>
+                        <option value="Allemagne">Allemagne</option>
+                        <option value="Portugal">Portugal</option>
+                        <option value="USA">USA</option>
+                        <option value="Brésil">Brésil</option>
                     </optgroup>
                     <optgroup label="✨ Territoires de l'Âme">
                         <option value="Groland">Groland</option>
                         <option value="Belle Brousse">La Belle Brousse</option>
                         <option value="Forêt Merveilleuse">La Forêt Merveilleuse</option>
                         <option value="Pays des Schtroumpfs">Pays des Schtroumpfs</option>
-                        <option value="Déconnade Internationale">Déconnade Internationale</option>
                         <option value="Fidèle Indétrônable">La Fidèle Indétrônable</option>
                     </optgroup>
-                    <option value="Autre Pays">Autre pays non référencé...</option>
                 </select>
+                <label style="font-size: 0.8em; margin-top: 5px;">Tu peux vivre dans le pays de ton choix : précise son nom</label>
+                <input type="text" name="pays_libre" placeholder="Nom du pays choisi">
                 <input type="text" name="ville" placeholder="Ta Ville" required>
             </div>
 
@@ -168,15 +136,12 @@
                     <option value="1_mois">1 Mois</option>
                     <option value="annuel">Annuel (Une année de don)</option>
                     <option value="Eternel">Éternel (Un don pour l'éternité)</option>
-                    <option value="annuel">Annuel</option>
-                    <option value="Eternel">Éternel</option>
                 </select>
             </div>
 
             <div class="form-group">
-                <label>Description du Don</label>
-                <textarea name="message" rows="4" placeholder="Décris ici ton don, ton cadeau pour le monde..." required></textarea>
-                <textarea name="message" rows="4" placeholder="Ton cadeau amoureux pour le monde..." required></textarea>
+                <label>Description du Don amoureux</label>
+                <textarea name="message" rows="4" placeholder="Décris ici ton Don amoureux, ton cadeau pour le monde..." required></textarea>
             </div>
 
             <button type="submit" class="btn-envoyer">ENGENDRER DE LA FRATERNITÉ UNIVERSELLE</button>
@@ -200,15 +165,8 @@
     <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
 
     <script>
-        const mesPhrases = [
-            "Le cadeau existentiel produit un don collectif",
-            "Une paix rayonnante pour le monde",
-            "Engendrer de la fraternité...",
-            "La confiance cordiale du Don sincère"
-        ];
-        const animaux = ['🕊️', '🦋', '🐝', '🐞', '🦜', '🐰', '🐿️', '🐬', '🦄'];
-        const mesPhrases = ["Semer un don avec le Petit Prince...", "Engendrer de la fraternité...", "L'amour est la seule graine qui ne fane jamais"];
-        const animaux = ['🕊️', '🦋', '🐝', '🐞', '🦜', '🐰'];
+        const mesPhrases = ["Semer un don amoureux...", "Engendrer de la fraternité...", "L'amour est la seule graine qui ne fane jamais"];
+        const animaux = ['🕊️', '🦋', '🐝', '🐞', '🦜', '🐰', '🐿️'];
         const fleurs = ['🌸', '🌼', '🌻', '🌺'];
 
         const animalCont = document.getElementById('animal-container');
@@ -219,7 +177,7 @@
 
         let aniX, aniY, targetX, targetY, state = "WAITING";
 
-        document.addEventListener('click', () => { if(audio.paused) { audio.volume = 0.02; audio.play(); } });
+        document.addEventListener('click', () => { if(audio.paused) { audio.volume = 0.05; audio.play(); } });
 
         function createConfetti() {
             for(let i=0; i<15; i++) {
@@ -264,3 +222,4 @@
         startNewMessenger(); loop();
     </script>
 </body>
+</html>
