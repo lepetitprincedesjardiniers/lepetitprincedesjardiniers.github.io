@@ -150,9 +150,29 @@
             conteneur.innerHTML = '';
             
             if(annonces.length === 0) {
-                conteneur.innerHTML = "<p>Aucune graine ne correspond à votre recherche.</p>";
+                conteneur.innerHTML = "<p>Aucun don trouvé ici pour le moment.</p>";
                 return;
             }
+
+            annonces.forEach(ann => {
+                const datePropre = ann.date ? new Date(ann.date).toLocaleDateString('fr-FR') : "Récemment";
+                const carte = document.createElement('div');
+                carte.className = 'carte-message';
+                carte.innerHTML = `
+                    <div class="carte-header">
+                        <span class="nom-donneur">${ann.nom || "Anonyme"}</span><br>
+                        <span class="lieu-tag">📍 ${ann.ville || ""}, ${ann.pays || ""}</span>
+                    </div>
+                    <div class="message-contenu">"${ann.message || ""}"</div>
+                    <div style="font-size:0.75em; margin-top:10px; color:#666; font-style: italic; line-height: 1.5;">
+                        Semé le ${datePropre}<br>
+                        ✨ <b>Zone :</b> ${ann.rayon || "Non précisé"}<br>
+                        ⏳ <b>Durée :</b> ${ann.duree || "Non précisée"}
+                    </div>
+                `;
+                conteneur.appendChild(carte);
+            });
+        }
 
             annonces.forEach(ann => {
                 const datePropre = ann.date ? new Date(ann.date).toLocaleDateString('fr-FR') : "Récemment";
