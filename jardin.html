@@ -4,8 +4,8 @@
     <meta charset="UTF-8">
     <title>Le Jardin de la Fraternité - Registre</title>
     <style>
-        /* --- STYLE CONSERVÉ --- */
-        body { font-family: 'Comic Sans MS', cursive; text-align: center; margin: 0; padding: 0; background-color: #FFFF00; color: #000080; overflow-x: hidden; min-height: 100vh; }
+        /* --- STYLE DE BASE --- */
+        body { font-family: 'Comic Sans MS', cursive; text-align: center; margin: 0; padding: 0; background-color: #FFFF00; color: #000080; overflow-x: hidden; min-height: 100vh; padding-bottom: 80px; }
 
         .top-bar { position: relative; width: 100%; min-height: 50px; background: rgba(255,255,255,0.3); padding: 5px 0; }
         #google_translate_element { position: absolute; left: 10px; top: 10px; transform: scale(0.8); transform-origin: top left; }
@@ -19,38 +19,40 @@
         @keyframes eclat { from { opacity: 0.7; } to { opacity: 1; } }
         .phrase-sous { color: #000080; font-weight: bold; margin: 5px 0; }
 
+        /* ZONE DÉCO HAUT (REMISE EN PLACE) */
+        #jardin-sacre { position: relative; height: 150px; width: 100%; overflow: hidden; background: rgba(255,255,255,0.1); margin-top: 10px; }
+        .fleur-clonée { position: absolute; font-size: 25px; animation: apparitionFleur 1s ease-out forwards; }
+        @keyframes apparitionFleur { 0% { transform: scale(0) rotate(-50deg); opacity: 0; } 100% { transform: scale(1) rotate(0deg); opacity: 1; } }
+
+        /* PLUIE DE FLEURS */
         .fleur-pluie { position: fixed; top: -50px; z-index: 9999; pointer-events: none; animation: chute linear forwards; }
         @keyframes chute { to { transform: translateY(110vh) rotate(360deg); } }
 
-        #jardin-sacre { position: relative; height: 180px; width: 100%; overflow: hidden; background: rgba(255,255,255,0.1); margin-top: 10px; }
-        .fleur-clonée { position: absolute; font-size: 25px; animation: apparitionFleur 1s ease-out forwards; }
-        
-        /* MODIF : MOTEUR DE RECHERCHE MONTÉ (3-4 lignes sous le titre) */
-        .search-box { background: #008080; padding: 20px; margin: 25px auto 15px auto; max-width: 700px; border-radius: 20px; color: white; box-shadow: 0 4px 15px rgba(0,0,0,0.2); }
+        /* MOTEUR DE RECHERCHE (BAISSÉ) */
+        .search-box { background: #008080; padding: 20px; margin: 40px auto 20px auto; max-width: 700px; border-radius: 20px; color: white; box-shadow: 0 4px 15px rgba(0,0,0,0.2); position: relative; z-index: 10; }
         .search-container { display: flex; flex-direction: column; gap: 15px; align-items: center; }
         .search-item { display: flex; flex-direction: column; align-items: center; width: 100%; }
         .search-item label { font-size: 0.85em; margin-bottom: 5px; font-weight: bold; color: #E0F2F1; }
         .search-item input { padding: 10px; border-radius: 15px; border: none; outline: none; text-align: center; color: #004D40; font-weight: bold; }
-        
         .input-large { width: 90%; max-width: 550px; }
         .input-ville { width: 40%; max-width: 250px; }
 
-        /* MODIF : REGISTRE ET ANNONCES (2-3 lignes sous le bloc recherche) */
-        .registre-titre { color: #008080; margin: 20px 0 10px 0; font-size: 1.4em; }
-        .mur-reel { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 25px; padding: 15px; max-width: 1200px; margin: 0 auto 40px auto; }
+        /* REGISTRE */
+        .registre-titre { color: #008080; margin: 30px 0 10px 0; font-size: 1.4em; }
+        .mur-reel { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 25px; padding: 15px; max-width: 1200px; margin: 0 auto 60px auto; }
         
         .carte-message { background: rgba(255, 255, 255, 0.95); border: 3px solid #008080; border-radius: 12px; padding: 12px; box-shadow: 4px 4px 0px #008080; transition: 0.3s; color: #333; text-align: left; cursor: pointer; font-size: 0.8em; }
         .carte-message:hover { transform: translateY(-5px); box-shadow: 8px 8px 0px #2E7D32; }
 
+        /* MODALE */
         #fond-sombre { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); z-index: 2000; justify-content: center; align-items: center; }
         .message-geant { background: #FFFFF0; width: 85%; max-width: 650px; padding: 30px; border-radius: 25px; border: 8px solid #008080; position: relative; text-align: center; }
         .bouton-fermer { position: absolute; top: -20px; right: -20px; background: #FF1493; color: white; border: 4px solid white; border-radius: 50%; width: 40px; height: 40px; cursor: pointer; font-weight: bold; font-size: 20px; }
 
-        /* MODIF : EFFET ÉTOILES SUR LE COPYRIGHT */
-        .copyright-wrapper { position: relative; display: inline-block; margin-top: 20px; padding-bottom: 30px; }
-        .copyright-link { color: #000080; text-decoration: none; font-weight: bold; position: relative; z-index: 2; transition: all 0.3s; }
+        /* COPYRIGHT VOLANT (FIXÉ EN BAS) */
+        .copyright-wrapper { position: fixed; bottom: 10px; left: 50%; transform: translateX(-50%); background: rgba(255,255,255,0.8); padding: 5px 15px; border-radius: 20px; z-index: 1000; border: 2px solid #008080; }
+        .copyright-link { color: #000080; text-decoration: none; font-weight: bold; transition: all 0.3s; }
         .copyright-link:hover { color: #ff1493; text-shadow: 0 0 10px #FFD700; }
-        
         .star { position: absolute; pointer-events: none; opacity: 0; transition: transform 0.5s, opacity 0.5s; color: #FFD700; font-size: 12px; }
         .copyright-wrapper:hover .star { opacity: 1; }
 
@@ -84,6 +86,8 @@
     <div class="phrase-sous">Les talents, les créations, les savoirs, les offrandes...les cadeaux entiers....</div>
     <div class="phrase-sous">Une pure joie altruiste.</div>
 
+    <div id="jardin-sacre"></div>
+
     <div class="search-box">
         <h3 style="margin:0 0 10px 0; font-size: 1.1em;">🔍 Chercher une graine de fraternité</h3>
         <div class="search-container">
@@ -109,13 +113,11 @@
         </div>
     </div>
 
-    <div id="jardin-sacre"></div>
-
     <div class="copyright-wrapper" id="copyWrap">
         <font size="2">
             Copyright 2026 <a href="transition-externe.html" class="copyright-link">Le Petit Prince des Jardiniers</a>
         </font>
-        </div>
+    </div>
 
     <div id="animal-container">
         <div id="bulle-texte"></div>
@@ -144,23 +146,17 @@
         const animaux = ['🕊️', '🦋', '🐝', '🐞', '🦜'];
         const fleurs = ['🌸', '🌼', '🌻', '🌺', '🌷'];
 
-        // Création des étoiles pour le copyright
+        // Étoiles du copyright
         const wrap = document.getElementById('copyWrap');
         for(let i=0; i<8; i++) {
             const s = document.createElement('span');
-            s.className = 'star';
-            s.innerText = '★';
+            s.className = 'star'; s.innerText = '★';
             const angle = (i / 8) * Math.PI * 2;
-            s.style.left = "50%";
-            s.style.top = "50%";
-            // Animation personnalisée au survol via JS
+            s.style.left = "50%"; s.style.top = "50%";
             wrap.addEventListener('mouseenter', () => {
-                const dist = 40;
-                s.style.transform = `translate(${Math.cos(angle)*dist}px, ${Math.sin(angle)*dist}px) scale(1.5)`;
+                s.style.transform = `translate(${Math.cos(angle)*40}px, ${Math.sin(angle)*40}px) scale(1.5)`;
             });
-            wrap.addEventListener('mouseleave', () => {
-                s.style.transform = `translate(0,0) scale(0)`;
-            });
+            wrap.addEventListener('mouseleave', () => { s.style.transform = `translate(0,0) scale(0)`; });
             wrap.appendChild(s);
         }
 
@@ -171,9 +167,7 @@
                 toutesLesAnnonces = data.reverse(); 
                 afficherAnnonces(toutesLesAnnonces);
                 document.getElementById('chargement').style.display = 'none';
-            } catch (error) {
-                document.getElementById('chargement').innerText = "Erreur de chargement.";
-            }
+            } catch (e) { document.getElementById('chargement').innerText = "Erreur."; }
         }
 
         function afficherAnnonces(annonces) {
