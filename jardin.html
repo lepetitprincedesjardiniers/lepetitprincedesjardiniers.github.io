@@ -34,12 +34,11 @@
         .input-ville { width: 40%; max-width: 220px; }
 
         /* REGISTRE & CARTES */
-        .registre-titre { color: #008080; margin: 10px 0 5px 0; font-size: 1.2em; }
         .mur-reel { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 15px; padding: 10px; max-width: 1200px; margin: 0 auto 50px auto; }
         .carte-message { 
             background: rgba(255, 255, 255, 0.95); border: 3px solid #008080; border-radius: 12px; padding: 12px; 
             box-shadow: 4px 4px 0px #008080; transition: 0.3s; color: #333; text-align: left; cursor: pointer; 
-            font-size: 0.85em; height: 140px; overflow-y: auto; display: flex; flex-direction: column;
+            font-size: 0.85em; height: 160px; overflow-y: auto; display: flex; flex-direction: column;
             overflow-wrap: break-word; word-break: break-word;
         }
 
@@ -66,7 +65,29 @@
             100% { transform: translate(var(--mx), var(--my)) scale(0) rotate(360deg); opacity: 0; }
         }
 
-        .copyright-wrapper { position: fixed; bottom: 5px; left: 50%; transform: translateX(-50%); background: rgba(255,255,255,0.6); padding: 3px 10px; border-radius: 15px; font-size: 0.65em; opacity: 0.8; z-index: 1000; }
+        /* COPYRIGHT */
+        .copyright-wrapper { 
+            position: fixed; bottom: 5px; left: 50%; transform: translateX(-50%); 
+            background: rgba(255,255,255,0.6); padding: 5px 20px; border-radius: 15px; 
+            font-size: 0.75em; opacity: 0.9; z-index: 1000; color: #000080;
+        }
+        
+        /* EFFET MAGIQUE UNIQUEMENT SUR LE TEXTE DU PRINCE */
+        .prince-link {
+            display: inline-block;
+            text-decoration: none;
+            color: #000080;
+            font-weight: bold;
+            transition: 0.4s;
+            padding: 2px 5px;
+            border-radius: 5px;
+        }
+        .prince-link:hover {
+            color: #FF1493;
+            text-shadow: 0 0 8px #FF1493;
+            transform: scale(1.2) rotate(-2deg);
+            background: rgba(255, 255, 255, 0.8);
+        }
     </style>
 </head>
 <body onclick="activerMusique()">
@@ -125,7 +146,7 @@
     </div>
 
     <div class="copyright-wrapper">
-        Copyright 2000 <a href="transition-externe.html" style="color:#000080;text-decoration:none;">Le Petit Prince des Jardiniers</a>
+        Copyright 2000 <a href="transition-externe.html" class="prince-link" onclick="clicMagiqueCopyright(event)">Le Petit Prince des Jardiniers</a>
     </div>
 
     <script type="text/javascript">
@@ -199,22 +220,30 @@
             estVivant = false;
             const container = document.getElementById('animal-container');
             const rect = container.getBoundingClientRect();
-            for (let i = 0; i < 30; i++) {
-                const star = document.createElement('div');
-                star.className = 'magie';
-                star.innerText = ['✨', '⭐', '🌟'][Math.floor(Math.random()*3)];
-                star.style.left = (rect.left + rect.width/2) + 'px';
-                star.style.top = (rect.top + rect.height/2) + 'px';
-                star.style.setProperty('--mx', (Math.random() - 0.5) * 300 + 'px');
-                star.style.setProperty('--my', (Math.random() - 0.5) * 300 + 'px');
-                document.body.appendChild(star);
-                setTimeout(() => star.remove(), 1500);
-            }
+            creerExplosionEtoiles(rect.left + rect.width/2, rect.top + rect.height/2);
             container.style.opacity = "0";
             setTimeout(() => {
                 container.style.display = "none";
                 setTimeout(reinitialiserAnimal, 2000);
             }, 300);
+        }
+
+        function clicMagiqueCopyright(e) {
+            creerExplosionEtoiles(e.clientX, e.clientY);
+        }
+
+        function creerExplosionEtoiles(x, y) {
+            for (let i = 0; i < 20; i++) {
+                const star = document.createElement('div');
+                star.className = 'magie';
+                star.innerText = ['✨', '⭐', '🌟', '💖'][Math.floor(Math.random()*4)];
+                star.style.left = x + 'px';
+                star.style.top = y + 'px';
+                star.style.setProperty('--mx', (Math.random() - 0.5) * 250 + 'px');
+                star.style.setProperty('--my', (Math.random() - 0.5) * -250 + 'px');
+                document.body.appendChild(star);
+                setTimeout(() => star.remove(), 1500);
+            }
         }
 
         async function chargerAnnonces() {
@@ -234,13 +263,24 @@
                 const carte = document.createElement('div');
                 carte.className = 'carte-message';
                 carte.onclick = () => ouvrirGrandMessage(ann);
-                carte.innerHTML = `<div style="font-weight:bold;color:#2E7D32;border-bottom:1px solid #eee;margin-bottom:5px;">${ann.nom || "Anonyme"}</div><div style="color:#000080;flex-grow:1;">"${ann.message || ""}"</div><div style="font-size:0.8em;color:#888;margin-top:5px;">📍 ${ann.ville || ""}</div>`;
+                // RÉTABLISSEMENT DES DÉTAILS ICI
+                carte.innerHTML = `
+                    <div style="font-weight:bold;color:#2E7D32;border-bottom:1px solid #eee;margin-bottom:5px;">${ann.nom || "Anonyme"}</div>
+                    <div style="color:#000080;flex-grow:1; font-style:italic;">"${ann.message || ""}"</div>
+                    <div style="font-size:0.85em;color:#008080;margin-top:5px; font-weight:bold;">📍 ${ann.ville || ""} (${ann.pays || ""})</div>
+                `;
                 conteneur.appendChild(carte);
             });
         }
 
         function ouvrirGrandMessage(ann) {
-            document.getElementById('geant-contenu').innerHTML = `<h2 style="color:#2E7D32;">🌱 Offrande de ${ann.nom}</h2><p style="font-size:1.5em; color:#000080; padding:20px; border-left:8px solid #FF1493; background:white; text-align:left;">"${ann.message}"</p><p>📍 Lieu : ${ann.ville}, ${ann.pays}</p>`;
+            document.getElementById('geant-contenu').innerHTML = `
+                <h2 style="color:#2E7D32;">🌱 Offrande de ${ann.nom}</h2>
+                <p style="font-size:1.5em; color:#000080; padding:20px; border-left:8px solid #FF1493; background:white; text-align:left;">"${ann.message}"</p>
+                <div style="background:#e0f2f1; padding:10px; border-radius:10px; color:#004d40; font-weight:bold;">
+                    📍 Lieu : ${ann.ville || "Non précisé"}, ${ann.pays || ""}
+                </div>
+            `;
             document.getElementById('fond-sombre').style.display = 'flex';
         }
 
