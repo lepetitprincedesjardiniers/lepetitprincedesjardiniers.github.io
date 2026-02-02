@@ -8,7 +8,7 @@
         body { font-family: 'Comic Sans MS', cursive; text-align: center; margin: 0; padding: 0; background-color: #FFFF00; color: #000080; overflow-x: hidden; min-height: 100vh; padding-bottom: 80px; }
 
         .top-bar { position: relative; width: 100%; min-height: 40px; background: rgba(255,255,255,0.3); padding: 5px 0; }
-        #google_translate_element { position: absolute; left: 10px; top: 10px; transform: scale(0.8); transform-origin: top left; }
+        #google_translate_element { position: absolute; left: 10px; top: 10px; transform: scale(0.8); transform-origin: top left; z-index: 1000; }
         
         .menu-table { margin: 5px auto; border-radius: 10px; background-color: #008080; border-collapse: collapse; }
         .menu-table td { padding: 8px 15px; border: 1px solid #FFFFFF; }
@@ -36,7 +36,6 @@
         /* REGISTRE & CARTES */
         .registre-titre { color: #008080; margin: 10px 0 5px 0; font-size: 1.2em; }
         .mur-reel { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 15px; padding: 10px; max-width: 1200px; margin: 0 auto 50px auto; }
-        
         .carte-message { 
             background: rgba(255, 255, 255, 0.95); border: 3px solid #008080; border-radius: 12px; padding: 12px; 
             box-shadow: 4px 4px 0px #008080; transition: 0.3s; color: #333; text-align: left; cursor: pointer; 
@@ -49,7 +48,6 @@
         .message-geant { 
             background: #FFFFF0; width: 92%; max-width: 850px; max-height: 85vh; padding: 35px; border-radius: 30px; 
             border: 10px solid #008080; position: relative; text-align: center; overflow-y: auto;
-            overflow-wrap: break-word; word-break: break-word;
         }
 
         /* ANIMAUX ET BULLES VOLANTES */
@@ -68,11 +66,10 @@
             100% { transform: translate(var(--mx), var(--my)) scale(0) rotate(360deg); opacity: 0; }
         }
 
-        /* COPYRIGHT */
         .copyright-wrapper { position: fixed; bottom: 5px; left: 50%; transform: translateX(-50%); background: rgba(255,255,255,0.6); padding: 3px 10px; border-radius: 15px; font-size: 0.65em; opacity: 0.8; z-index: 1000; }
     </style>
 </head>
-<body>
+<body onclick="activerMusique()">
 
     <div class="top-bar">
         <div id="google_translate_element"></div>
@@ -112,7 +109,7 @@
         </div>
     </div>
 
-    <div id="chargement">✨ Récolte en cours...</div>
+    <div id="chargement" style="font-weight:bold; color:#008080; margin:10px;">✨ Récolte en cours...</div>
     <div class="mur-reel" id="mur-messages"></div>
 
     <div id="fond-sombre" onclick="fermerGrandMessage()">
@@ -131,13 +128,17 @@
         Copyright 2000 <a href="transition-externe.html" style="color:#000080;text-decoration:none;">Le Petit Prince des Jardiniers</a>
     </div>
 
+    <script type="text/javascript">
+        function googleTranslateElementInit() {
+            new google.translate.TranslateElement({pageLanguage: 'fr'}, 'google_translate_element');
+        }
+    </script>
     <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
 
     <script>
         const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxz40XE2KiPXTNZsW-mIg-fm55EivK0r9wzZ5ECFRdEIY53nYH9nLGYRoI71OX93oII/exec"; 
         let toutesLesAnnonces = [];
         
-        // PHRASES DE L'OISEAU RESTAURÉES
         const mesPhrases = [
             "La notion de 'Semis' : Ici l'offrande véritable est une 'graine' de Bonté altruiste.",
             "Aucun 'merci' n'est obligatoire, la joie de donner est une récompense suffisante",
@@ -150,7 +151,11 @@
         const animaux = ['🕊️', '🦋', '🐝', '🐞', '🦜'];
         const fleurs = ['🌸', '🌼', '🌻', '🌺', '🌷'];
 
-        // --- VOL ALÉATOIRE ---
+        function activerMusique() {
+            const audio = document.getElementById('chantOiseaux');
+            audio.play().catch(() => {});
+        }
+
         let posX = -300, posY = 100, angle = 0, estVivant = true;
 
         function loop() {
@@ -158,7 +163,6 @@
                 posX += 1.5 + Math.random(); 
                 angle += 0.02;
                 posY += Math.sin(angle) * 1.2 + (Math.random() - 0.5) * 2;
-
                 if (posY < 50) posY = 50;
                 if (posY > window.innerHeight / 2.5) posY = window.innerHeight / 2.5;
 
@@ -166,7 +170,6 @@
                 container.style.left = posX + "px";
                 container.style.top = posY + "px";
 
-                // Animation des fleurs dans le bandeau haut
                 if(Math.random() < 0.005) {
                     const f = document.createElement('div');
                     f.className = 'fleur-clonée';
@@ -185,8 +188,9 @@
             estVivant = true;
             posX = -400;
             posY = Math.random() * (window.innerHeight / 3) + 50;
-            document.getElementById('animal-container').style.display = "flex";
-            document.getElementById('animal-container').style.opacity = "1";
+            const container = document.getElementById('animal-container');
+            container.style.display = "flex";
+            container.style.opacity = "1";
             document.getElementById('bulle-texte').innerText = mesPhrases[Math.floor(Math.random()*mesPhrases.length)];
             document.getElementById('corps-animal').innerText = animaux[Math.floor(Math.random()*animaux.length)];
         }
@@ -195,7 +199,6 @@
             estVivant = false;
             const container = document.getElementById('animal-container');
             const rect = container.getBoundingClientRect();
-            
             for (let i = 0; i < 30; i++) {
                 const star = document.createElement('div');
                 star.className = 'magie';
@@ -207,7 +210,6 @@
                 document.body.appendChild(star);
                 setTimeout(() => star.remove(), 1500);
             }
-
             container.style.opacity = "0";
             setTimeout(() => {
                 container.style.display = "none";
@@ -222,7 +224,7 @@
                 toutesLesAnnonces = data.reverse(); 
                 afficherAnnonces(toutesLesAnnonces);
                 document.getElementById('chargement').style.display = 'none';
-            } catch (e) { document.getElementById('chargement').innerText = "Erreur."; }
+            } catch (e) { document.getElementById('chargement').innerText = "Erreur de récolte."; }
         }
 
         function afficherAnnonces(annonces) {
@@ -256,7 +258,6 @@
         }
 
         window.onload = () => { chargerAnnonces(); reinitialiserAnimal(); loop(); };
-        function googleTranslateElementInit() { new google.translate.TranslateElement({pageLanguage: 'fr'}, 'google_translate_element'); }
     </script>
 </body>
 </html>
