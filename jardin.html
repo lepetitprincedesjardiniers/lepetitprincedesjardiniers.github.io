@@ -24,7 +24,7 @@
         .fleur-clonée { position: absolute; font-size: 25px; animation: apparitionFleur 1s ease-out forwards; }
         @keyframes apparitionFleur { 0% { transform: scale(0) rotate(-50deg); opacity: 0; } 100% { transform: scale(1) rotate(0deg); opacity: 1; } }
 
-        /* FLEURS ÉTOILES VOLANTES (NOUVEAUTÉ) */
+        /* FLEURS ÉTOILES VOLANTES */
         .fleur-etoile { position: fixed; pointer-events: none; z-index: 999; font-size: 15px; animation: volEtoile linear infinite; opacity: 0.8; }
         @keyframes volEtoile {
             0% { transform: translate(0, 0) rotate(0deg); }
@@ -38,7 +38,7 @@
         .fleur-pluie { position: fixed; top: -50px; z-index: 9999; pointer-events: none; animation: chute linear forwards; }
         @keyframes chute { to { transform: translateY(110vh) rotate(360deg); } }
 
-        /* MOTEUR DE RECHERCHE (REMONTÉ) */
+        /* MOTEUR DE RECHERCHE */
         .search-box { background: #008080; padding: 15px; margin: 15px auto 10px auto; max-width: 700px; border-radius: 20px; color: white; box-shadow: 0 4px 15px rgba(0,0,0,0.2); position: relative; z-index: 10; }
         .search-container { display: flex; flex-direction: column; gap: 10px; align-items: center; }
         .search-item { display: flex; flex-direction: column; align-items: center; width: 100%; }
@@ -47,7 +47,7 @@
         .input-large { width: 90%; max-width: 500px; }
         .input-ville { width: 40%; max-width: 220px; }
 
-        /* REGISTRE (REMONTÉ) */
+        /* REGISTRE */
         .registre-titre { color: #008080; margin: 15px 0 5px 0; font-size: 1.3em; }
         .mur-reel { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 20px; padding: 10px; max-width: 1200px; margin: 0 auto 50px auto; }
         
@@ -59,7 +59,7 @@
         .message-geant { background: #FFFFF0; width: 85%; max-width: 600px; padding: 25px; border-radius: 25px; border: 8px solid #008080; position: relative; text-align: center; }
         .bouton-fermer { position: absolute; top: -15px; right: -15px; background: #FF1493; color: white; border: 4px solid white; border-radius: 50%; width: 35px; height: 35px; cursor: pointer; font-weight: bold; font-size: 18px; }
 
-        /* COPYRIGHT VOLANT */
+        /* COPYRIGHT VOLANT (DATE MISE À JOUR : 2000) */
         .copyright-wrapper { position: fixed; bottom: 10px; left: 50%; transform: translateX(-50%); background: rgba(255,255,255,0.9); padding: 5px 15px; border-radius: 20px; z-index: 1000; border: 2px solid #008080; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
         .copyright-link { color: #000080; text-decoration: none; font-weight: bold; transition: all 0.3s; }
         .copyright-link:hover { color: #ff1493; text-shadow: 0 0 10px #FFD700; }
@@ -126,7 +126,7 @@
 
     <div class="copyright-wrapper" id="copyWrap">
         <font size="2">
-            Copyright 2026 <a href="transition-externe.html" class="copyright-link">Le Petit Prince des Jardiniers</a>
+            Copyright 2000 <a href="transition-externe.html" class="copyright-link">Le Petit Prince des Jardiniers</a>
         </font>
     </div>
 
@@ -157,7 +157,6 @@
         const animaux = ['🕊️', '🦋', '🐝', '🐞', '🦜'];
         const fleurs = ['🌸', '🌼', '🌻', '🌺', '🌷'];
 
-        // 1. Création des 20 fleurs-étoiles volantes
         function genererFleursEtoiles() {
             for(let i=0; i<20; i++) {
                 const fe = document.createElement('div');
@@ -171,7 +170,6 @@
             }
         }
 
-        // 2. Étoiles du copyright
         const wrap = document.getElementById('copyWrap');
         for(let i=0; i<8; i++) {
             const s = document.createElement('span');
@@ -192,7 +190,7 @@
                 toutesLesAnnonces = data.reverse(); 
                 afficherAnnonces(toutesLesAnnonces);
                 document.getElementById('chargement').style.display = 'none';
-            } catch (e) { document.getElementById('chargement').innerText = "Erreur de connexion."; }
+            } catch (e) { document.getElementById('chargement').innerText = "Erreur."; }
         }
 
         function afficherAnnonces(annonces) {
@@ -259,7 +257,6 @@
         function loop() {
             aniX += 2;
             aniY += Math.sin(aniX/50) * 1.5;
-            
             if(Math.random() < 0.005) {
                 const f = document.createElement('div');
                 f.className = 'fleur-clonée';
@@ -268,10 +265,8 @@
                 f.style.top = Math.random() * 80 + "%";
                 document.getElementById('jardin-sacre').appendChild(f);
             }
-
             if (aniX > window.innerWidth + 100) {
                 aniX = -200;
-                // Aléatoire pur pour le message et l'animal
                 document.getElementById('bulle-texte').innerText = mesPhrases[Math.floor(Math.random()*mesPhrases.length)];
                 document.getElementById('corps-animal').innerText = animaux[Math.floor(Math.random()*animaux.length)];
             }
