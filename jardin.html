@@ -34,7 +34,7 @@
             100% { transform: translate(0, 0) rotate(360deg); }
         }
 
-        /* PLUIE DE FLEURS CLASSIQUE */
+        /* PLUIE DE FLEURS */
         .fleur-pluie { position: fixed; top: -50px; z-index: 9999; pointer-events: none; animation: chute linear forwards; }
         @keyframes chute { to { transform: translateY(110vh) rotate(360deg); } }
 
@@ -47,19 +47,45 @@
         .input-large { width: 90%; max-width: 500px; }
         .input-ville { width: 40%; max-width: 220px; }
 
-        /* REGISTRE */
+        /* REGISTRE & CARTES (Correction débordement) */
         .registre-titre { color: #008080; margin: 15px 0 5px 0; font-size: 1.3em; }
-        .mur-reel { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 20px; padding: 10px; max-width: 1200px; margin: 0 auto 50px auto; }
+        .mur-reel { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 20px; padding: 10px; max-width: 1200px; margin: 0 auto 50px auto; }
         
-        .carte-message { background: rgba(255, 255, 255, 0.95); border: 3px solid #008080; border-radius: 12px; padding: 10px; box-shadow: 4px 4px 0px #008080; transition: 0.3s; color: #333; text-align: left; cursor: pointer; font-size: 0.8em; }
+        .carte-message { 
+            background: rgba(255, 255, 255, 0.95); 
+            border: 3px solid #008080; 
+            border-radius: 12px; 
+            padding: 12px; 
+            box-shadow: 4px 4px 0px #008080; 
+            transition: 0.3s; 
+            color: #333; 
+            text-align: left; 
+            cursor: pointer; 
+            font-size: 0.85em;
+            height: 150px; /* Hauteur fixe pour l'harmonie */
+            overflow-y: auto; /* Scroll si le texte est trop long */
+            display: flex;
+            flex-direction: column;
+        }
         .carte-message:hover { transform: translateY(-5px); box-shadow: 8px 8px 0px #2E7D32; }
 
-        /* MODALE */
-        #fond-sombre { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); z-index: 2000; justify-content: center; align-items: center; }
-        .message-geant { background: #FFFFF0; width: 85%; max-width: 600px; padding: 25px; border-radius: 25px; border: 8px solid #008080; position: relative; text-align: center; }
-        .bouton-fermer { position: absolute; top: -15px; right: -15px; background: #FF1493; color: white; border: 4px solid white; border-radius: 50%; width: 35px; height: 35px; cursor: pointer; font-weight: bold; font-size: 18px; }
+        /* MODALE GÉANTE (ZOOM ENCORE PLUS GRAND) */
+        #fond-sombre { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); z-index: 2000; justify-content: center; align-items: center; }
+        .message-geant { 
+            background: #FFFFF0; 
+            width: 92%; 
+            max-width: 850px; /* Plus large */
+            max-height: 85vh;
+            padding: 40px; 
+            border-radius: 30px; 
+            border: 10px solid #008080; 
+            position: relative; 
+            text-align: center; 
+            overflow-y: auto;
+        }
+        .bouton-fermer { position: absolute; top: 10px; right: 15px; background: #FF1493; color: white; border: 4px solid white; border-radius: 50%; width: 45px; height: 45px; cursor: pointer; font-weight: bold; font-size: 22px; z-index: 10; }
 
-        /* COPYRIGHT VOLANT (DATE MISE À JOUR : 2000) */
+        /* COPYRIGHT VOLANT (DATE : 2000) */
         .copyright-wrapper { position: fixed; bottom: 10px; left: 50%; transform: translateX(-50%); background: rgba(255,255,255,0.9); padding: 5px 15px; border-radius: 20px; z-index: 1000; border: 2px solid #008080; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
         .copyright-link { color: #000080; text-decoration: none; font-weight: bold; transition: all 0.3s; }
         .copyright-link:hover { color: #ff1493; text-shadow: 0 0 10px #FFD700; }
@@ -69,7 +95,7 @@
         /* ANIMAUX ET BULLES */
         #animal-container { position: fixed; z-index: 900; white-space: nowrap; display: flex; align-items: center; pointer-events: none; }
         #corps-animal { font-size: 50px; }
-        #bulle-texte { background: rgba(255, 255, 255, 0.9); border-radius: 15px; padding: 8px 15px; font-style: italic; color: #2E7D32; margin-right: 10px; font-weight: bold; border: 2px solid #2E7D32; opacity: 0; transition: opacity 0.3s; }
+        #bulle-texte { background: rgba(255, 255, 255, 0.9); border-radius: 15px; padding: 8px 15px; font-style: italic; color: #2E7D32; margin-right: 10px; font-weight: bold; border: 2px solid #2E7D32; opacity: 0; transition: opacity 0.3s; max-width: 250px; white-space: normal; }
         #chargement { font-weight: bold; color: #008080; margin: 10px; font-size: 1.1em; }
     </style>
 </head>
@@ -165,7 +191,6 @@
                 fe.style.left = Math.random() * 100 + "vw";
                 fe.style.top = Math.random() * 100 + "vh";
                 fe.style.animationDuration = (Math.random() * 10 + 10) + "s";
-                fe.style.animationDelay = (Math.random() * 5) + "s";
                 document.body.appendChild(fe);
             }
         }
@@ -201,9 +226,9 @@
                 carte.className = 'carte-message';
                 carte.onclick = () => ouvrirGrandMessage(ann);
                 carte.innerHTML = `
-                    <div style="border-bottom:1px solid #ddd;margin-bottom:5px;padding-bottom:3px;"><span style="font-weight:bold;color:#2E7D32;">${ann.nom || "Anonyme"}</span></div>
-                    <div style="font-weight:bold;color:#000080;">"${ann.message ? ann.message.substring(0, 40) + '...' : ""}"</div>
-                    <div style="font-size:0.7em; margin-top:3px; color:#666;">📍 ${ann.ville || ""}</div>
+                    <div style="border-bottom:1px solid #008080;margin-bottom:8px;padding-bottom:5px;font-weight:bold;color:#2E7D32;">${ann.nom || "Anonyme"}</div>
+                    <div style="font-weight:bold;color:#000080;flex-grow:1;">"${ann.message || ""}"</div>
+                    <div style="font-size:0.75em; margin-top:8px; color:#666; font-style:italic;">📍 ${ann.ville || ""}</div>
                 `;
                 conteneur.appendChild(carte);
             });
@@ -212,13 +237,13 @@
         function ouvrirGrandMessage(ann) {
             const datePropre = ann.date ? new Date(ann.date).toLocaleDateString('fr-FR') : "Récemment";
             document.getElementById('geant-contenu').innerHTML = `
-                <div style="font-size:1.4em; color:#2E7D32; border-bottom:2px solid #008080; margin-bottom:15px; padding-bottom:10px;">🌱 Offrande de ${ann.nom || "Anonyme"}</div>
-                <div style="font-size:1.2em; color:#000080; line-height:1.4; margin:15px 0; font-weight:bold;">"${ann.message || ""}"</div>
-                <div style="font-size:0.85em; background:#E0F2F1; padding:12px; border-radius:15px; color:#555; text-align:left;">
-                    <b>📍 Lieu :</b> ${ann.ville || ""}, ${ann.pays || ""}<br>
-                    <b>🗓️ Date :</b> ${datePropre}<br>
-                    <b>✨ Rayon :</b> ${ann.rayon || "Non spécifié"}<br>
-                    <b>⏳ Durée :</b> ${ann.duree || "Non spécifiée"}
+                <div style="font-size:2em; color:#2E7D32; border-bottom:3px solid #008080; margin-bottom:25px; padding-bottom:15px; font-weight:bold;">🌱 L'offrande de ${ann.nom || "Anonyme"}</div>
+                <div style="font-size:1.6em; color:#000080; line-height:1.6; margin:30px 0; font-weight:bold; text-align:left; background:white; padding:20px; border-radius:15px; border-left:8px solid #FF1493;">"${ann.message || ""}"</div>
+                <div style="font-size:1.1em; background:#E0F2F1; padding:20px; border-radius:20px; color:#333; text-align:left; display:grid; grid-template-columns: 1fr 1fr; gap:10px;">
+                    <div><b>📍 Lieu :</b> ${ann.ville || ""}, ${ann.pays || ""}</div>
+                    <div><b>🗓️ Date :</b> ${datePropre}</div>
+                    <div><b>✨ Rayon :</b> ${ann.rayon || "Non spécifié"}</div>
+                    <div><b>⏳ Durée :</b> ${ann.duree || "Non spécifiée"}</div>
                 </div>`;
             document.getElementById('fond-sombre').style.display = 'flex';
         }
@@ -252,8 +277,6 @@
         }
 
         let aniX = -200, aniY = 100;
-        document.getElementById('bulle-texte').innerText = mesPhrases[0];
-
         function loop() {
             aniX += 2;
             aniY += Math.sin(aniX/50) * 1.5;
