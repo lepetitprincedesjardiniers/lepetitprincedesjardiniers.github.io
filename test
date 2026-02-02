@@ -1,0 +1,40 @@
+<section id="tresor-public" style="text-align: center; padding: 50px; background: #fdf6e3;">
+    
+    <div class="soleil-container" style="margin-bottom: 50px;">
+        <div class="soleil" style="background: #ffce00; width: 150px; height: 150px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; box-shadow: 0 0 30px #ffce00; cursor: pointer;">
+            <strong style="color: #5d4037; font-size: 1.2em;">LES DONS ENTIERS</strong>
+        </div>
+        <p style="font-style: italic; color: #8d6e63; margin-top: 15px;">"La pure joie altruiste : talents, savoirs et cadeaux."</p>
+    </div>
+
+    <div class="bulles-container" style="display: flex; justify-content: space-around; flex-wrap: wrap; gap: 20px;">
+        
+        <div class="bulle-nuage" style="background: #e1f5fe; border: 2px dashed #03a9f4; padding: 20px; border-radius: 50px; width: 280px;">
+            <h3>☁️ L'Œuvre Commune</h3>
+            <p style="font-size: 0.9em;"><strong>Impôt Volontaire :</strong> Nettoyage, routes, logistique. La fierté de servir la cité.</p>
+        </div>
+
+        <div class="bulle-etoile" style="background: #fff9c4; border: 2px solid #fbc02d; padding: 20px; border-radius: 20px; width: 280px; position: relative;">
+            <h3>⭐ La Main Tendue</h3>
+            <p style="font-size: 0.9em;"><strong>Urgences :</strong> Santé, charpente, farine ou câlin de l'âme.</p>
+        </div>
+
+        <div class="bulle-nuage" style="background: #f1f8e9; border: 2px dashed #8bc34a; padding: 20px; border-radius: 50px; width: 280px;">
+            <h3>🌿 Cocon d'Écoute</h3>
+            <p style="font-size: 0.9em;"><strong>Réconciliation :</strong> Déposer son conflit pour recevoir le pardon et l'harmonie.</p>
+        </div>
+    </div>
+
+    <hr style="margin: 40px 0; border: 0; border-top: 1px solid #ddd;">
+
+    <div class="moteur-fraternel" style="background: white; padding: 30px; border-radius: 15px; border: 1px solid #eee;">
+        <h2>🔍 Rayonnement Fraternel</h2>
+        <form>
+            <p>Où brilles-tu ? <input type="text" placeholder="Pays, Ville"></p>
+            <p>Distance max de ta dévotion ? <input type="range" min="0" max="500"> (en km)</p>
+            <p>Quoi ? Pourquoi ? <input type="text" placeholder="Mots-clés (farine, écoute...)"></p>
+            <button type="button" style="background: #ffce00; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer; font-weight: bold;">Lancer la recherche pour NOUS</button>
+        </form>
+    </div>
+
+</section>
