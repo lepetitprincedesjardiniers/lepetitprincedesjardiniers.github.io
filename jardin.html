@@ -34,7 +34,7 @@
             100% { transform: translate(0, 0) rotate(360deg); }
         }
 
-        /* MOTEUR DE RECHERCHE (REMONTÉ) */
+        /* MOTEUR DE RECHERCHE */
         .search-box { background: #008080; padding: 12px; margin: 10px auto 10px auto; max-width: 700px; border-radius: 20px; color: white; box-shadow: 0 4px 15px rgba(0,0,0,0.2); position: relative; z-index: 10; }
         .search-container { display: flex; flex-direction: column; gap: 8px; align-items: center; }
         .search-item { display: flex; flex-direction: column; align-items: center; width: 100%; }
@@ -55,28 +55,41 @@
         }
         .carte-message:hover { transform: translateY(-5px); box-shadow: 8px 8px 0px #2E7D32; }
 
-        /* ZOOM GÉANT CORRIGÉ */
+        /* ZOOM GÉANT */
         #fond-sombre { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); z-index: 2000; justify-content: center; align-items: center; }
         .message-geant { 
             background: #FFFFF0; width: 92%; max-width: 850px; max-height: 85vh; padding: 35px; border-radius: 30px; 
             border: 10px solid #008080; position: relative; text-align: center; overflow-y: auto;
-            overflow-wrap: break-word; word-break: break-word; /* Retour à la ligne forcé */
+            overflow-wrap: break-word; word-break: break-word;
         }
         .bouton-fermer { position: absolute; top: 10px; right: 15px; background: #FF1493; color: white; border: 4px solid white; border-radius: 50%; width: 40px; height: 40px; cursor: pointer; font-weight: bold; font-size: 20px; z-index: 10; }
 
-        /* COPYRIGHT VOLANT 2000 */
-        .copyright-wrapper { position: fixed; bottom: 10px; left: 50%; transform: translateX(-50%); background: rgba(255,255,255,0.9); padding: 5px 15px; border-radius: 20px; z-index: 1000; border: 2px solid #008080; }
-        .copyright-link { color: #000080; text-decoration: none; font-weight: bold; transition: all 0.3s; }
-        .star-copy { position: absolute; pointer-events: none; opacity: 0; transition: transform 0.5s, opacity 0.5s; color: #FFD700; font-size: 12px; }
-        .copyright-wrapper:hover .star-copy { opacity: 1; }
+        /* COPYRIGHT DISCRET & EFFET MAGIQUE */
+        .copyright-wrapper { 
+            position: fixed; bottom: 5px; left: 50%; transform: translateX(-50%); 
+            background: rgba(255,255,255,0.6); padding: 3px 10px; border-radius: 15px; 
+            z-index: 1000; border: 1px solid rgba(0,128,128,0.3); font-size: 0.65em; 
+            transition: all 0.5s; opacity: 0.8;
+        }
+        .copyright-wrapper:hover { opacity: 1; background: rgba(255,255,255,0.9); border-color: #008080; }
+        .copyright-link { color: #000080; text-decoration: none; opacity: 0.7; }
+        
+        .poussiere { 
+            position: absolute; pointer-events: none; background: #FFD700; border-radius: 50%;
+            animation: envolPoussiere 1.5s ease-out forwards; 
+        }
+        @keyframes envolPoussiere {
+            0% { transform: translate(0,0) scale(1); opacity: 1; }
+            100% { transform: translate(var(--x), var(--y)) scale(0); opacity: 0; }
+        }
 
         /* ANIMAUX ET BULLES */
-        #animal-container { position: fixed; z-index: 900; white-space: nowrap; display: flex; align-items: center; pointer-events: none; }
-        #corps-animal { font-size: 50px; }
+        #animal-container { position: fixed; z-index: 900; white-space: nowrap; display: flex; align-items: center; pointer-events: none; flex-direction: row; }
+        #corps-animal { font-size: 50px; order: 1; }
         #bulle-texte { 
-            background: rgba(255, 255, 255, 0.9); border-radius: 15px; padding: 8px 15px; font-style: italic; color: #2E7D32; 
-            margin-right: 10px; font-weight: bold; border: 2px solid #2E7D32; opacity: 0; transition: opacity 0.3s; 
-            max-width: 250px; white-space: normal; overflow-wrap: break-word;
+            order: 2; background: rgba(255, 255, 255, 0.9); border-radius: 15px; padding: 8px 15px; 
+            font-style: italic; color: #2E7D32; margin-left: 10px; font-weight: bold; border: 2px solid #2E7D32; 
+            opacity: 0; transition: opacity 0.3s; max-width: 250px; white-space: normal; overflow-wrap: break-word;
         }
         #chargement { font-weight: bold; color: #008080; margin: 10px; font-size: 1.1em; }
     </style>
@@ -132,15 +145,13 @@
         </div>
     </div>
 
-    <div class="copyright-wrapper" id="copyWrap">
-        <font size="2">
-            Copyright 2000 <a href="transition-externe.html" class="copyright-link">Le Petit Prince des Jardiniers</a>
-        </font>
+    <div class="copyright-wrapper" id="copyWrap" onmousemove="creerPoussiere(event)">
+        Copyright 2000 <a href="transition-externe.html" class="copyright-link">Le Petit Prince des Jardiniers</a>
     </div>
 
     <div id="animal-container">
-        <div id="bulle-texte"></div>
         <div id="corps-animal">🕊️</div>
+        <div id="bulle-texte"></div>
     </div>
 
     <script type="text/javascript">
@@ -177,17 +188,19 @@
             }
         }
 
-        const wrap = document.getElementById('copyWrap');
-        for(let i=0; i<8; i++) {
-            const s = document.createElement('span');
-            s.className = 'star-copy'; s.innerText = '★';
-            const angle = (i / 8) * Math.PI * 2;
-            s.style.left = "50%"; s.style.top = "50%";
-            wrap.addEventListener('mouseenter', () => {
-                s.style.transform = `translate(${Math.cos(angle)*40}px, ${Math.sin(angle)*40}px) scale(1.5)`;
-            });
-            wrap.addEventListener('mouseleave', () => { s.style.transform = `translate(0,0) scale(0)`; });
-            wrap.appendChild(s);
+        // Effet magique complémentaire pour le copyright
+        function creerPoussiere(e) {
+            const p = document.createElement('div');
+            p.className = 'poussiere';
+            const size = Math.random() * 4 + 2;
+            p.style.width = size + 'px';
+            p.style.height = size + 'px';
+            p.style.left = e.clientX + 'px';
+            p.style.top = e.clientY + 'px';
+            p.style.setProperty('--x', (Math.random() - 0.5) * 60 + 'px');
+            p.style.setProperty('--y', -(Math.random() * 50 + 20) + 'px');
+            document.body.appendChild(p);
+            setTimeout(() => p.remove(), 1500);
         }
 
         async function chargerAnnonces() {
@@ -243,13 +256,15 @@
             afficherAnnonces(filtre);
         }
 
-        let aniX = -200, aniY = 100;
-        // INIT : Charger un premier message tout de suite
+        let aniX = -400; 
+        let aniY = Math.random() * (window.innerHeight / 3); 
+
         document.getElementById('bulle-texte').innerText = mesPhrases[Math.floor(Math.random()*mesPhrases.length)];
 
         function loop() {
-            aniX += 2;
-            aniY += Math.sin(aniX/50) * 1.5;
+            aniX += 2; 
+            let oscillation = Math.sin(aniX / 50) * 1.5; 
+            
             if(Math.random() < 0.005) {
                 const f = document.createElement('div');
                 f.className = 'fleur-clonée';
@@ -258,17 +273,18 @@
                 f.style.top = Math.random() * 80 + "%";
                 document.getElementById('jardin-sacre').appendChild(f);
             }
-            if (aniX > window.innerWidth + 200) {
-                aniX = -250;
-                // On change SYSTEMATIQUEMENT le texte et l'animal ici
+
+            if (aniX > window.innerWidth + 300) {
+                aniX = -500; 
+                aniY = Math.random() * (window.innerHeight / 3); 
                 document.getElementById('bulle-texte').innerText = mesPhrases[Math.floor(Math.random()*mesPhrases.length)];
                 document.getElementById('corps-animal').innerText = animaux[Math.floor(Math.random()*animaux.length)];
             }
+
             const container = document.getElementById('animal-container');
             container.style.left = aniX + "px";
-            container.style.top = aniY + "px";
-            // Affichage de la bulle
-            document.getElementById('bulle-texte').style.opacity = (aniX > -100 && aniX < window.innerWidth) ? "1" : "0";
+            container.style.top = (aniY + oscillation) + "px";
+            document.getElementById('bulle-texte').style.opacity = (aniX > -300 && aniX < window.innerWidth) ? "1" : "0";
             requestAnimationFrame(loop);
         }
 
