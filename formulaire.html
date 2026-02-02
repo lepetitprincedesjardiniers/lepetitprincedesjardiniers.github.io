@@ -5,58 +5,28 @@
     <title>Semer un Don - Le Petit Prince des Jardiniers</title>
     <style>
         body { font-family: 'Comic Sans MS', cursive; text-align: center; margin: 0; padding: 0; background-color: #FFFF00; color: #000080; overflow-x: hidden; min-height: 100vh; }
-        
-        /* Traducteur discret */
         #google_translate_element { position: absolute; top: 5px; left: 5px; z-index: 1000; opacity: 0.7; transform: scale(0.8); }
-
-        /* Menu Complet */
         .menu-table { margin: 20px auto; border-radius: 10px; background-color: #008080; border-collapse: collapse; }
         .menu-table td { padding: 10px 15px; border: 1px solid #FFFFFF; transition: 0.3s; }
         .menu-table td:hover { background-color: #00b3b3; }
         .menu-table a { text-decoration: none; color: #FFFFFF; font-weight: bold; font-size: 0.9em; }
-
-        /* Conteneur Formulaire */
-        .form-container { 
-            background: white; padding: 30px; border-radius: 20px; 
-            display: inline-block; margin-top: 10px; 
-            box-shadow: 0px 10px 20px rgba(0,0,0,0.1); 
-            width: 90%; max-width: 550px; margin-bottom: 180px; 
-        }
-
+        .form-container { background: white; padding: 30px; border-radius: 20px; display: inline-block; margin-top: 10px; box-shadow: 0px 10px 20px rgba(0,0,0,0.1); width: 90%; max-width: 550px; margin-bottom: 180px; }
         .form-group { text-align: left; margin: 10px 20px; }
         label { font-weight: bold; color: #008080; display: block; margin-bottom: 5px; }
-
-        input, textarea, select { 
-            width: 100%; padding: 12px; margin-bottom: 15px;
-            border: 2px solid #008080; border-radius: 10px; 
-            font-family: 'Comic Sans MS'; font-size: 1em; box-sizing: border-box;
-            background-color: #fcfcfc;
-        }
-
-        .btn-envoyer { 
-            width: 100%; padding: 20px; background: #E67E22; color: white; 
-            border: none; border-radius: 20px; cursor: pointer; 
-            font-weight: bold; font-size: 1.1em; box-shadow: 0px 4px 0px #b35900;
-            transition: 0.1s;
-        }
+        .sous-label { font-size: 0.75em; color: #006666; margin-bottom: 5px; display: block; font-style: italic; }
+        input, textarea, select { width: 100%; padding: 12px; margin-bottom: 15px; border: 2px solid #008080; border-radius: 10px; font-family: 'Comic Sans MS'; font-size: 1em; box-sizing: border-box; background-color: #fcfcfc; }
+        .btn-envoyer { width: 100%; padding: 20px; background: #E67E22; color: white; border: none; border-radius: 20px; cursor: pointer; font-weight: bold; font-size: 1.1em; box-shadow: 0px 4px 0px #b35900; transition: 0.1s; }
         .btn-envoyer:active { transform: translateY(4px); box-shadow: 0px 0px 0px #b35900; }
-
-        /* Animations Animaux et Coffre */
         #coffre-magique { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); font-size: 60px; z-index: 800; transition: transform 0.3s; }
         #animal-container { position: fixed; z-index: 900; white-space: nowrap; display: flex; align-items: center; pointer-events: none; }
         #corps-animal { font-size: 50px; }
         #bulle-texte { background: rgba(255, 255, 255, 0.9); border-radius: 15px; padding: 8px 15px; font-style: italic; color: #2E7D32; margin-right: 10px; font-weight: bold; border: 2px solid #2E7D32; opacity: 0; transition: opacity 0.3s; }
-
         .pop { transform: translateX(-50%) scale(1.4) !important; }
         .confetti { position: fixed; z-index: 799; pointer-events: none; animation: fly 2s ease-out forwards; }
         @keyframes fly { 0% { transform: translate(0, 0) rotate(0deg); opacity: 1; } 100% { transform: translate(var(--dx), var(--dy)) rotate(360deg); opacity: 0; } }
-        
-        .copyright-link { color: #000080; text-decoration: none; font-weight: bold; }
     </style>
 </head>
 <body>
-
-    <audio id="chantOiseaux" loop><source src="oiseaux.mp3" type="audio/mpeg"></audio>
 
     <div id="google_translate_element"></div>
 
@@ -75,8 +45,8 @@
     <p style="font-weight:bold; color:#008080;">Chaque graine est un acte de fraternité...</p>
 
     <div class="form-container">
-        <form action="https://formspree.io/f/TON_ID" method="POST">
-
+        <form action="https://script.google.com/macros/s/AKfycbxz40XE2KiPXTNZsW-mIg-fm55EivK0r9wzZ5ECFRdEIY53nYH9nLGYRoI71OX93oII/exec" method="POST">
+            
             <div class="form-group">
                 <label>Identité amoureuse</label>
                 <input type="text" name="nom" placeholder="Ton Prénom de coeur" required>
@@ -84,7 +54,8 @@
 
             <div class="form-group">
                 <label>Provenance (Monde sans frontières)</label>
-                <select name="pays" required>
+                <span class="sous-label">Tu peux vivre dans le pays de ton choix : précise son nom.</span>
+                <select name="pays_select">
                     <option value="" disabled selected>Choisis ton pays ! 🌍</option>
                     <optgroup label="🌍 Pays du Monde">
                         <option value="France">France</option>
@@ -95,47 +66,33 @@
                         <option value="Maroc">Maroc</option>
                         <option value="Tunisie">Tunisie</option>
                         <option value="Sénégal">Sénégal</option>
-                        <option value="Côte d'Ivoire">Côte d'Ivoire</option>
-                        <option value="Luxembourg">Luxembourg</option>
-                        <option value="Espagne">Espagne</option>
-                        <option value="Italie">Italie</option>
-                        <option value="Allemagne">Allemagne</option>
-                        <option value="Portugal">Portugal</option>
-                        <option value="USA">USA</option>
-                        <option value="Brésil">Brésil</option>
-                    </optgroup>
-                    <optgroup label="✨ Territoires de l'Âme">
-                        <option value="Groland">Groland</option>
-                        <option value="Belle Brousse">La Belle Brousse</option>
-                        <option value="Forêt Merveilleuse">La Forêt Merveilleuse</option>
-                        <option value="Pays des Schtroumpfs">Pays des Schtroumpfs</option>
-                        <option value="Fidèle Indétrônable">La Fidèle Indétrônable</option>
                     </optgroup>
                 </select>
-                <label style="font-size: 0.8em; margin-top: 5px;">Tu peux vivre dans le pays de ton choix : précise son nom</label>
-                <input type="text" name="pays_libre" placeholder="Nom du pays choisi">
+                <input type="text" name="localisation" placeholder="Tu peux choisir un autre pays, si cela te plait.">
                 <input type="text" name="ville" placeholder="Ta Ville" required>
             </div>
 
             <div class="form-group">
                 <label>Zone d'offrande (Rayon d'action)</label>
                 <select name="rayon" required>
-                    <option value="5km">5 km / 3.1 miles</option>
-                    <option value="10km">10 km / 6.2 miles</option>
-                    <option value="50km">50 km / 31 miles</option>
-                    <option value="100km">100 km / 62 miles</option>
-                    <option value="Infini">Rayon Infini (Fraternité Universelle)</option>
+                    <option value="2km">2 km</option>
+                    <option value="5km">5 km</option>
+                    <option value="10km">10 km</option>
+                    <option value="50km">50 km</option>
+                    <option value="100km">100 km</option>
+                    <option value="Infini">Rayon Infini</option>
                 </select>
             </div>
 
             <div class="form-group">
                 <label>Durée du cadeau existentiel</label>
+                <span class="sous-label">Mise à jour automatique selon ton choix initial.</span>
                 <select name="duree" required>
                     <option value="1_jour">1 Journée</option>
                     <option value="1_semaine">1 Semaine</option>
                     <option value="1_mois">1 Mois</option>
-                    <option value="annuel">Annuel (Une année de don)</option>
-                    <option value="Eternel">Éternel (Un don pour l'éternité)</option>
+                    <option value="annuel">Annuel</option>
+                    <option value="Eternel">Éternel</option>
                 </select>
             </div>
 
@@ -147,11 +104,6 @@
             <button type="submit" class="btn-envoyer">ENGENDRER DE LA FRATERNITÉ UNIVERSELLE</button>
         </form>
     </div>
-
-    <br>
-    <font size="2">
-        Copyright 2000 <a href="https://youtube.com" class="copyright-link">Le Petit Prince des Jardiniers</a>
-    </font>
 
     <div id="coffre-magique">🎁</div>
     <div id="animal-container">
@@ -165,32 +117,14 @@
     <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
 
     <script>
-        const mesPhrases = ["Semer un don amoureux...", "Engendrer de la fraternité...", "L'amour est la seule graine qui ne fane jamais"];
+        const mesPhrases = ["Semer un don amoureux...", "Engendrer de la fraternité...", "L'amour est la seule graine..."];
         const animaux = ['🕊️', '🦋', '🐝', '🐞', '🦜', '🐰', '🐿️'];
         const fleurs = ['🌸', '🌼', '🌻', '🌺'];
-
         const animalCont = document.getElementById('animal-container');
         const bulle = document.getElementById('bulle-texte');
         const corps = document.getElementById('corps-animal');
         const coffre = document.getElementById('coffre-magique');
-        const audio = document.getElementById('chantOiseaux');
-
         let aniX, aniY, targetX, targetY, state = "WAITING";
-
-        document.addEventListener('click', () => { if(audio.paused) { audio.volume = 0.05; audio.play(); } });
-
-        function createConfetti() {
-            for(let i=0; i<15; i++) {
-                const c = document.createElement('div');
-                c.className = 'confetti';
-                c.innerText = fleurs[Math.floor(Math.random()*fleurs.length)];
-                c.style.left = "50%"; c.style.bottom = "60px";
-                c.style.setProperty('--dx', (Math.random()*400 - 200) + "px");
-                c.style.setProperty('--dy', (Math.random()*-400 - 100) + "px");
-                document.body.appendChild(c);
-                setTimeout(() => c.remove(), 2000);
-            }
-        }
 
         function startNewMessenger() {
             bulle.innerText = mesPhrases[Math.floor(Math.random() * mesPhrases.length)];
@@ -205,7 +139,7 @@
                 aniX += (targetX - aniX) * 0.015; aniY += (targetY - aniY) * 0.015;
                 bulle.style.opacity = "1";
                 if (Math.sqrt(Math.pow(targetX-aniX,2)+Math.pow(targetY-aniY,2)) < 60) {
-                    state = "DEPOSITING"; coffre.classList.add('pop'); createConfetti();
+                    state = "DEPOSITING"; coffre.classList.add('pop');
                     setTimeout(() => { 
                         bulle.style.opacity = "0"; coffre.classList.remove('pop'); state = "LEAVING";
                         targetX = window.innerWidth + 500; targetY = 200; 
