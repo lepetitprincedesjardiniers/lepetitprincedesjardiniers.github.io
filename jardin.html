@@ -64,7 +64,7 @@
         }
         .bouton-fermer { position: absolute; top: 10px; right: 15px; background: #FF1493; color: white; border: 4px solid white; border-radius: 50%; width: 40px; height: 40px; cursor: pointer; font-weight: bold; font-size: 20px; z-index: 10; }
 
-        /* COPYRIGHT DISCRET & EFFET MAGIQUE */
+        /* COPYRIGHT DISCRET */
         .copyright-wrapper { 
             position: fixed; bottom: 5px; left: 50%; transform: translateX(-50%); 
             background: rgba(255,255,255,0.6); padding: 3px 10px; border-radius: 15px; 
@@ -83,13 +83,24 @@
             100% { transform: translate(var(--x), var(--y)) scale(0); opacity: 0; }
         }
 
-        /* ANIMAUX ET BULLES */
+        /* ANIMAUX ET BULLES (REDUITS & CORRIGES) */
         #animal-container { position: fixed; z-index: 900; white-space: nowrap; display: flex; align-items: center; pointer-events: none; flex-direction: row; }
-        #corps-animal { font-size: 50px; order: 1; }
+        
+        #corps-animal { 
+            font-size: 35px; /* Plus petit */
+            order: 1; 
+            transform: scaleX(-1); /* L'animal regarde maintenant vers la DROITE */
+            margin-right: -5px; /* Pour que le bec touche la bulle */
+        }
+        
         #bulle-texte { 
-            order: 2; background: rgba(255, 255, 255, 0.9); border-radius: 15px; padding: 8px 15px; 
-            font-style: italic; color: #2E7D32; margin-left: 10px; font-weight: bold; border: 2px solid #2E7D32; 
-            opacity: 0; transition: opacity 0.3s; max-width: 250px; white-space: normal; overflow-wrap: break-word;
+            order: 2; 
+            background: rgba(255, 255, 255, 0.9); border-radius: 12px; padding: 6px 12px; 
+            font-style: italic; color: #2E7D32; font-weight: bold; border: 2px solid #2E7D32; 
+            opacity: 0; transition: opacity 0.3s; 
+            max-width: 180px; /* Bulle plus étroite */
+            font-size: 0.8em; /* Texte plus petit */
+            white-space: normal; overflow-wrap: break-word;
         }
         #chargement { font-weight: bold; color: #008080; margin: 10px; font-size: 1.1em; }
     </style>
@@ -188,7 +199,6 @@
             }
         }
 
-        // Effet magique complémentaire pour le copyright
         function creerPoussiere(e) {
             const p = document.createElement('div');
             p.className = 'poussiere';
@@ -262,18 +272,9 @@
         document.getElementById('bulle-texte').innerText = mesPhrases[Math.floor(Math.random()*mesPhrases.length)];
 
         function loop() {
-            aniX += 2; 
+            aniX += 1.8; // Vitesse un peu plus douce
             let oscillation = Math.sin(aniX / 50) * 1.5; 
             
-            if(Math.random() < 0.005) {
-                const f = document.createElement('div');
-                f.className = 'fleur-clonée';
-                f.innerText = fleurs[Math.floor(Math.random()*fleurs.length)];
-                f.style.left = Math.random() * 95 + "%";
-                f.style.top = Math.random() * 80 + "%";
-                document.getElementById('jardin-sacre').appendChild(f);
-            }
-
             if (aniX > window.innerWidth + 300) {
                 aniX = -500; 
                 aniY = Math.random() * (window.innerHeight / 3); 
