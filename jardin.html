@@ -4,14 +4,14 @@
     <meta charset="UTF-8">
     <title>Le Jardin de la Fraternité - Registre</title>
     <style>
-        /* --- STYLE ORIGINAL CONSERVÉ --- */
+        /* --- STYLE ORIGINAL --- */
         body { font-family: 'Comic Sans MS', cursive; text-align: center; margin: 0; padding: 0; background-color: #FFFF00; color: #000080; overflow-x: hidden; min-height: 100vh; }
 
         .menu-table { margin: 10px auto; border-radius: 10px; background-color: #008080; border-collapse: collapse; }
         .menu-table td { padding: 10px 15px; border: 1px solid #FFFFFF; }
         .menu-table a { text-decoration: none; color: #FFFFFF; font-weight: bold; }
 
-        #jardin-sacre { position: relative; height: 180px; width: 100%; overflow: hidden; background: rgba(255,255,255,0.1); }
+        #jardin-sacre { position: relative; height: 180px; width: 100%; overflow: hidden; background: rgba(255,255,255,0.1); border-bottom: 2px dashed #008080; }
         
         .fleur-clonée {
             position: absolute;
@@ -41,6 +41,7 @@
             border: none;
             font-size: 1em;
             outline: none;
+            text-align: center;
         }
 
         /* --- AFFICHAGE DES ANNONCES --- */
@@ -101,7 +102,7 @@
 
     <div class="search-box">
         <h3>🔍 Chercher une graine de fraternité</h3>
-        <input type="text" id="searchInput" onkeyup="filtrerAnnonces()" placeholder="Ville, Nom ou Message...">
+        <input type="text" id="searchInput" onkeyup="filtrerAnnonces()" placeholder="Chercher une ville, un nom...">
     </div>
 
     <h3 style="color:#008080;">📖 Registre de la Fraternité</h3>
@@ -111,7 +112,7 @@
 
     <br><br>
     <font size="2">
-        Copyright 2026 <a href="https://youtube.com" class="copyright-link">Le Petit Prince des Jardiniers</a>
+        Copyright 2000 <a href="https://youtube.com" class="copyright-link">Le Petit Prince des Jardiniers</a>
     </font>
 
     <div id="coffre-magique">🎁</div>
@@ -127,26 +128,32 @@
 
     <script>
         // --- CONFIGURATION DATA ---
-        // REMPLACE CETTE URL PAR TON URL DE DEPLOIEMENT GOOGLE
-        const SCRIPT_URL = "TON_URL_SCRIPT_ICI"; 
+        const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxz40XE2KiPXTNZsW-mIg-fm55EivK0r9wzZ5ECFRdEIY53nYH9nLGYRoI71OX93oII/exec"; 
         let toutesLesAnnonces = [];
 
         async function chargerAnnonces() {
             try {
                 const response = await fetch(SCRIPT_URL);
                 const data = await response.json();
+                // On inverse pour voir les plus récents en premier
                 toutesLesAnnonces = data.reverse(); 
                 afficherAnnonces(toutesLesAnnonces);
                 document.getElementById('chargement').style.display = 'none';
             } catch (error) {
                 console.error("Erreur:", error);
-                document.getElementById('chargement').innerText = "Le jardin est timide, rechargez la page.";
+                document.getElementById('chargement').innerText = "Le jardin se repose, rechargez la page.";
             }
         }
 
         function afficherAnnonces(annonces) {
             const conteneur = document.getElementById('mur-messages');
             conteneur.innerHTML = '';
+            
+            if(annonces.length === 0) {
+                conteneur.innerHTML = "<p>Aucune graine ne correspond à votre recherche.</p>";
+                return;
+            }
+
             annonces.forEach(ann => {
                 const datePropre = ann.date ? new Date(ann.date).toLocaleDateString('fr-FR') : "Récemment";
                 const carte = document.createElement('div');
@@ -175,7 +182,7 @@
             afficherAnnonces(filtre);
         }
 
-        // --- ANIMATIONS ---
+        // --- ANIMATIONS ORIGINALES ---
         const mesPhrases = ["Une fleur vient d'éclore", "La fraternité grandit...", "Un cadeau déposé !", "Paix sur ce jardin"];
         const animaux = ['🕊️', '🦋', '🐝', '🐞', '🦜', '🐰', '🐿️'];
         const fleurs = ['🌸', '🌼', '🌻', '🌺', '🌷', '🌹'];
@@ -210,6 +217,7 @@
             requestAnimationFrame(loop);
         }
 
+        // Lancement
         chargerAnnonces();
         loop();
         document.addEventListener('click', () => { document.getElementById('chantOiseaux').play(); }, {once: true});
