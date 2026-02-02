@@ -64,20 +64,32 @@
         }
         .bouton-fermer { position: absolute; top: 10px; right: 15px; background: #FF1493; color: white; border: 4px solid white; border-radius: 50%; width: 40px; height: 40px; cursor: pointer; font-weight: bold; font-size: 20px; z-index: 10; }
 
-        /* COPYRIGHT VOLANT 2000 */
-        .copyright-wrapper { position: fixed; bottom: 10px; left: 50%; transform: translateX(-50%); background: rgba(255,255,255,0.9); padding: 5px 15px; border-radius: 20px; z-index: 1000; border: 2px solid #008080; }
-        .copyright-link { color: #000080; text-decoration: none; font-weight: bold; transition: all 0.3s; }
-        .star-copy { position: absolute; pointer-events: none; opacity: 0; transition: transform 0.5s, opacity 0.5s; color: #FFD700; font-size: 12px; }
-        .copyright-wrapper:hover .star-copy { opacity: 1; }
+        /* COPYRIGHT DISCRET & EFFET MAGIQUE */
+        .copyright-wrapper { 
+            position: fixed; bottom: 5px; left: 50%; transform: translateX(-50%); 
+            background: rgba(255,255,255,0.6); padding: 3px 10px; border-radius: 15px; 
+            z-index: 1000; border: 1px solid rgba(0,128,128,0.3); font-size: 0.65em; 
+            transition: all 0.5s; opacity: 0.8;
+        }
+        .copyright-wrapper:hover { opacity: 1; background: rgba(255,255,255,0.9); border-color: #008080; }
+        .copyright-link { color: #000080; text-decoration: none; opacity: 0.7; }
+        
+        .poussiere { 
+            position: absolute; pointer-events: none; background: #FFD700; border-radius: 50%;
+            animation: envolPoussiere 1.5s ease-out forwards; 
+        }
+        @keyframes envolPoussiere {
+            0% { transform: translate(0,0) scale(1); opacity: 1; }
+            100% { transform: translate(var(--x), var(--y)) scale(0); opacity: 0; }
+        }
 
-        /* ANIMAUX ET BULLES (INVERSION : OISEAU DERRIÈRE) */
+        /* ANIMAUX ET BULLES */
         #animal-container { position: fixed; z-index: 900; white-space: nowrap; display: flex; align-items: center; pointer-events: none; flex-direction: row; }
-        #corps-animal { font-size: 50px; order: 1; } /* L'oiseau est l'élément n°1 */
+        #corps-animal { font-size: 50px; order: 1; }
         #bulle-texte { 
-            order: 2; /* La bulle est l'élément n°2, placée après l'oiseau à droite */
-            background: rgba(255, 255, 255, 0.9); border-radius: 15px; padding: 8px 15px; font-style: italic; color: #2E7D32; 
-            margin-left: 10px; font-weight: bold; border: 2px solid #2E7D32; opacity: 0; transition: opacity 0.3s; 
-            max-width: 250px; white-space: normal; overflow-wrap: break-word;
+            order: 2; background: rgba(255, 255, 255, 0.9); border-radius: 15px; padding: 8px 15px; 
+            font-style: italic; color: #2E7D32; margin-left: 10px; font-weight: bold; border: 2px solid #2E7D32; 
+            opacity: 0; transition: opacity 0.3s; max-width: 250px; white-space: normal; overflow-wrap: break-word;
         }
         #chargement { font-weight: bold; color: #008080; margin: 10px; font-size: 1.1em; }
     </style>
@@ -116,7 +128,7 @@
                 <input type="text" id="searchLoc" class="input-ville" onkeyup="filtrerAnnonces()" placeholder="Pays ou Ville...">
             </div>
             <div class="search-item">
-                <label>Quoi? Pourquoi? For moi, For toi, For nous quoi!</label>
+                <label>Quoi? Pourquoi? Pour moi, Pour toi, Pour nous quoi!</label>
                 <input type="text" id="searchKeyword" class="input-large" onkeyup="filtrerAnnonces()" placeholder="Un talent, un mot-clé, un espoir...">
             </div>
         </div>
@@ -133,10 +145,8 @@
         </div>
     </div>
 
-    <div class="copyright-wrapper" id="copyWrap">
-        <font size="2">
-            Copyright 2000 <a href="transition-externe.html" class="copyright-link">Le Petit Prince des Jardiniers</a>
-        </font>
+    <div class="copyright-wrapper" id="copyWrap" onmousemove="creerPoussiere(event)">
+        Copyright 2000 <a href="transition-externe.html" class="copyright-link">Le Petit Prince des Jardiniers</a>
     </div>
 
     <div id="animal-container">
@@ -176,6 +186,21 @@
                 fe.style.animationDuration = (Math.random() * 10 + 10) + "s";
                 document.body.appendChild(fe);
             }
+        }
+
+        // Effet magique complémentaire pour le copyright
+        function creerPoussiere(e) {
+            const p = document.createElement('div');
+            p.className = 'poussiere';
+            const size = Math.random() * 4 + 2;
+            p.style.width = size + 'px';
+            p.style.height = size + 'px';
+            p.style.left = e.clientX + 'px';
+            p.style.top = e.clientY + 'px';
+            p.style.setProperty('--x', (Math.random() - 0.5) * 60 + 'px');
+            p.style.setProperty('--y', -(Math.random() * 50 + 20) + 'px');
+            document.body.appendChild(p);
+            setTimeout(() => p.remove(), 1500);
         }
 
         async function chargerAnnonces() {
@@ -231,17 +256,15 @@
             afficherAnnonces(filtre);
         }
 
-        // --- ANIMATION OISEAU QUI POUSSE ---
-        let aniX = -400; // Départ plus loin à gauche
-        let aniY = Math.random() * (window.innerHeight / 3); // Hauteur aléatoire dans le 1er tiers
+        let aniX = -400; 
+        let aniY = Math.random() * (window.innerHeight / 3); 
 
         document.getElementById('bulle-texte').innerText = mesPhrases[Math.floor(Math.random()*mesPhrases.length)];
 
         function loop() {
-            aniX += 2; // Vitesse horizontale
-            let oscillation = Math.sin(aniX / 50) * 1.5; // Vol un peu ondulé
+            aniX += 2; 
+            let oscillation = Math.sin(aniX / 50) * 1.5; 
             
-            // Fleurs dans le bandeau du haut
             if(Math.random() < 0.005) {
                 const f = document.createElement('div');
                 f.className = 'fleur-clonée';
@@ -251,10 +274,9 @@
                 document.getElementById('jardin-sacre').appendChild(f);
             }
 
-            // Quand l'oiseau sort de l'écran (à droite)
             if (aniX > window.innerWidth + 300) {
-                aniX = -500; // Il revient à gauche
-                aniY = Math.random() * (window.innerHeight / 3); // Nouvelle hauteur aléatoire (1er tiers)
+                aniX = -500; 
+                aniY = Math.random() * (window.innerHeight / 3); 
                 document.getElementById('bulle-texte').innerText = mesPhrases[Math.floor(Math.random()*mesPhrases.length)];
                 document.getElementById('corps-animal').innerText = animaux[Math.floor(Math.random()*animaux.length)];
             }
@@ -262,10 +284,7 @@
             const container = document.getElementById('animal-container');
             container.style.left = aniX + "px";
             container.style.top = (aniY + oscillation) + "px";
-            
-            // Gestion de l'opacité de la bulle
             document.getElementById('bulle-texte').style.opacity = (aniX > -300 && aniX < window.innerWidth) ? "1" : "0";
-            
             requestAnimationFrame(loop);
         }
 
