@@ -5,48 +5,22 @@
     <title>Semer un Don - Le Petit Prince des Jardiniers</title>
     <style>
         body { font-family: 'Comic Sans MS', cursive; text-align: center; margin: 0; padding: 0; background-color: #FFFF00; color: #000080; overflow-x: hidden; min-height: 100vh; }
-        
         #google_translate_element { position: absolute; top: 5px; left: 5px; z-index: 1000; opacity: 0.7; transform: scale(0.8); }
-
-        /* Menu de navigation */
         .menu-table { margin: 20px auto; border-radius: 10px; background-color: #008080; border-collapse: collapse; margin-left: auto; margin-right: auto;}
         .menu-table td { padding: 10px 15px; border: 1px solid #FFFFFF; transition: 0.3s; }
         .menu-table td:hover { background-color: #00b3b3; }
         .menu-table a { text-decoration: none; color: #FFFFFF; font-weight: bold; font-size: 0.9em; }
-
-        /* Conteneur du formulaire */
-        .form-container { 
-            background: white; padding: 30px; border-radius: 20px; 
-            display: inline-block; margin-top: 10px; 
-            box-shadow: 0px 10px 20px rgba(0,0,0,0.1); 
-            width: 90%; max-width: 550px; margin-bottom: 180px; 
-        }
-
+        .form-container { background: white; padding: 30px; border-radius: 20px; display: inline-block; margin-top: 10px; box-shadow: 0px 10px 20px rgba(0,0,0,0.1); width: 90%; max-width: 550px; margin-bottom: 180px; }
         .form-group { text-align: left; margin: 10px 20px; }
         label { font-weight: bold; color: #008080; display: block; margin-bottom: 5px; }
         .sous-label { font-size: 0.75em; color: #006666; margin-bottom: 5px; display: block; font-style: italic; }
-
-        input, textarea, select { 
-            width: 100%; padding: 12px; margin-bottom: 15px;
-            border: 2px solid #008080; border-radius: 10px; 
-            font-family: 'Comic Sans MS'; font-size: 1em; box-sizing: border-box;
-            background-color: #fcfcfc;
-        }
-
-        .btn-envoyer { 
-            width: 100%; padding: 20px; background: #E67E22; color: white; 
-            border: none; border-radius: 20px; cursor: pointer; 
-            font-weight: bold; font-size: 1.1em; box-shadow: 0px 4px 0px #b35900;
-            transition: 0.1s;
-        }
+        input, textarea, select { width: 100%; padding: 12px; margin-bottom: 15px; border: 2px solid #008080; border-radius: 10px; font-family: 'Comic Sans MS'; font-size: 1em; box-sizing: border-box; background-color: #fcfcfc; }
+        .btn-envoyer { width: 100%; padding: 20px; background: #E67E22; color: white; border: none; border-radius: 20px; cursor: pointer; font-weight: bold; font-size: 1.1em; box-shadow: 0px 4px 0px #b35900; transition: 0.1s; }
         .btn-envoyer:active { transform: translateY(4px); box-shadow: 0px 0px 0px #b35900; }
-
-        /* Animations */
         #coffre-magique { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); font-size: 60px; z-index: 800; transition: transform 0.3s; }
         #animal-container { position: fixed; z-index: 900; white-space: nowrap; display: flex; align-items: center; pointer-events: none; }
         #corps-animal { font-size: 50px; }
         #bulle-texte { background: rgba(255, 255, 255, 0.9); border-radius: 15px; padding: 8px 15px; font-style: italic; color: #2E7D32; margin-right: 10px; font-weight: bold; border: 2px solid #2E7D32; opacity: 0; transition: opacity 0.3s; }
-
         .pop { transform: translateX(-50%) scale(1.4) !important; }
         .copyright-link { color: #000080; text-decoration: none; font-weight: bold; }
     </style>
@@ -54,7 +28,6 @@
 <body>
 
     <audio id="chantOiseaux" loop><source src="oiseaux.mp3" type="audio/mpeg"></audio>
-
     <div id="google_translate_element"></div>
 
     <table class="menu-table">
@@ -69,8 +42,7 @@
     </table>
 
     <h2 style="color:#E67E22;">🌟 Semer un Don - Le Petit Prince des Jardiniers</h2>
-    <p style="font-weight:bold; color:#008080;">Chaque graine est un acte de fraternité...</p>
-
+    
     <div class="form-container">
         <form action="https://script.google.com/macros/s/AKfycbxz40XE2KiPXTNZsW-mIg-fm55EivK0r9wzZ5ECFRdEIY53nYH9nLGYRoI71OX93oII/exec" method="POST">
             
@@ -84,27 +56,68 @@
                 <span class="sous-label">Tu peux vivre dans le pays de ton choix : précise son nom.</span>
                 
                 <select name="pays_select" id="pays_select">
-                    <option value="" disabled selected>Choisis ton pays dans la liste... 🌍</option>
-                    <optgroup label="✨ Pays Imaginaires">
+                    <option value="" disabled selected>Choisis ton pays... 🌍</option>
+                    
+                    <optgroup label="🇪🇺 Europe">
+                        <option value="Albanie">Albanie</option><option value="Allemagne">Allemagne</option><option value="Andorre">Andorre</option><option value="Autriche">Autriche</option>
+                        <option value="Belgique">Belgique</option><option value="Biélorussie">Biélorussie</option><option value="Bosnie-Herzégovine">Bosnie-Herzégovine</option>
+                        <option value="Bulgarie">Bulgarie</option><option value="Chypre">Chypre</option><option value="Croatie">Croatie</option><option value="Danemark">Danemark</option>
+                        <option value="Espagne">Espagne</option><option value="Estonie">Estonie</option><option value="Finlande">Finlande</option><option value="France">France</option>
+                        <option value="Grèce">Grèce</option><option value="Hongrie">Hongrie</option><option value="Irlande">Irlande</option><option value="Islande">Islande</option>
+                        <option value="Italie">Italie</option><option value="Lettonie">Lettonie</option><option value="Liechtenstein">Liechtenstein</option><option value="Lituanie">Lituanie</option>
+                        <option value="Luxembourg">Luxembourg</option><option value="Malte">Malte</option><option value="Moldavie">Moldavie</option><option value="Monaco">Monaco</option>
+                        <option value="Monténégro">Monténégro</option><option value="Norvège">Norvège</option><option value="Pays-Bas">Pays-Bas</option><option value="Pologne">Pologne</option>
+                        <option value="Portugal">Portugal</option><option value="République tchèque">République tchèque</option><option value="Roumanie">Roumanie</option>
+                        <option value="Royaume-Uni">Royaume-Uni</option><option value="Russie">Russie</option><option value="Saint-Marin">Saint-Marin</option><option value="Serbie">Serbie</option>
+                        <option value="Slovaquie">Slovaquie</option><option value="Slovénie">Slovénie</option><option value="Suède">Suède</option><option value="Suisse">Suisse</option><option value="Ukraine">Ukraine</option>
+                    </optgroup>
+
+                    <optgroup label="🌍 Afrique">
+                        <option value="Afrique du Sud">Afrique du Sud</option><option value="Algérie">Algérie</option><option value="Angola">Angola</option><option value="Bénin">Bénin</option>
+                        <option value="Botswana">Botswana</option><option value="Burkina Faso">Burkina Faso</option><option value="Burundi">Burundi</option><option value="Cameroun">Cameroun</option>
+                        <option value="Cap-Vert">Cap-Vert</option><option value="Comores">Comores</option><option value="Congo">Congo</option><option value="Côte d'Ivoire">Côte d'Ivoire</option>
+                        <option value="Djibouti">Djibouti</option><option value="Égypte">Égypte</option><option value="Érythrée">Érythrée</option><option value="Éthiopie">Éthiopie</option>
+                        <option value="Gabon">Gabon</option><option value="Gambie">Gambie</option><option value="Ghana">Ghana</option><option value="Guinée">Guinée</option>
+                        <option value="Kenya">Kenya</option><option value="Madagascar">Madagascar</option><option value="Mali">Mali</option><option value="Maroc">Maroc</option>
+                        <option value="Maurice">Maurice</option><option value="Mauritanie">Mauritanie</option><option value="Mozambique">Mozambique</option><option value="Namibie">Namibie</option>
+                        <option value="Niger">Niger</option><option value="Nigeria">Nigeria</option><option value="Ouganda">Ouganda</option><option value="Rwanda">Rwanda</option>
+                        <option value="Sénégal">Sénégal</option><option value="Seychelles">Seychelles</option><option value="Somalie">Somalie</option><option value="Soudan">Soudan</option>
+                        <option value="Tanzanie">Tanzanie</option><option value="Tchad">Tchad</option><option value="Togo">Togo</option><option value="Tunisie">Tunisie</option>
+                        <option value="Zambie">Zambie</option><option value="Zimbabwe">Zimbabwe</option>
+                    </optgroup>
+
+                    <optgroup label="🌎 Amériques">
+                        <option value="Argentine">Argentine</option><option value="Bahamas">Bahamas</option><option value="Barbade">Barbade</option><option value="Belize">Belize</option>
+                        <option value="Bolivie">Bolivie</option><option value="Brésil">Brésil</option><option value="Canada">Canada</option><option value="Chili">Chili</option>
+                        <option value="Colombie">Colombie</option><option value="Costa Rica">Costa Rica</option><option value="Cuba">Cuba</option><option value="Équateur">Équateur</option>
+                        <option value="États-Unis">États-Unis</option><option value="Guatemala">Guatemala</option><option value="Haïti">Haïti</option><option value="Honduras">Honduras</option>
+                        <option value="Jamaïque">Jamaïque</option><option value="Mexique">Mexique</option><option value="Nicaragua">Nicaragua</option><option value="Panama">Panama</option>
+                        <option value="Paraguay">Paraguay</option><option value="Pérou">Pérou</option><option value="République dominicaine">République dominicaine</option>
+                        <option value="Salvador">Salvador</option><option value="Uruguay">Uruguay</option><option value="Venezuela">Venezuela</option>
+                    </optgroup>
+
+                    <optgroup label="🌏 Asie & Océanie">
+                        <option value="Afghanistan">Afghanistan</option><option value="Arabie saoudite">Arabie saoudite</option><option value="Arménie">Arménie</option>
+                        <option value="Australie">Australie</option><option value="Azerbaïdjan">Azerbaïdjan</option><option value="Bahreïn">Bahreïn</option><option value="Bangladesh">Bangladesh</option>
+                        <option value="Bhoutan">Bhoutan</option><option value="Birmanie">Birmanie</option><option value="Cambodge">Cambodge</option><option value="Chine">Chine</option>
+                        <option value="Corée du Nord">Corée du Nord</option><option value="Corée du Sud">Corée du Sud</option><option value="Émirats arabes unis">Émirats arabes unis</option>
+                        <option value="Géorgie">Géorgie</option><option value="Inde">Inde</option><option value="Indonésie">Indonésie</option><option value="Irak">Irak</option>
+                        <option value="Iran">Iran</option><option value="Israël">Israël</option><option value="Japon">Japon</option><option value="Jordanie">Jordanie</option>
+                        <option value="Kazakhstan">Kazakhstan</option><option value="Kirghizistan">Kirghizistan</option><option value="Koweït">Koweït</option><option value="Laos">Laos</option>
+                        <option value="Liban">Liban</option><option value="Malaisie">Malaisie</option><option value="Maldives">Maldives</option><option value="Mongolie">Mongolie</option>
+                        <option value="Népal">Népal</option><option value="Nouvelle-Zélande">Nouvelle-Zélande</option><option value="Oman">Oman</option><option value="Ouzbékistan">Ouzbékistan</option>
+                        <option value="Pakistan">Pakistan</option><option value="Philippines">Philippines</option><option value="Qatar">Qatar</option><option value="Singapour">Singapour</option>
+                        <option value="Sri Lanka">Sri Lanka</option><option value="Syrie">Syrie</option><option value="Tadjikistan">Tadjikistan</option><option value="Thaïlande">Thaïlande</option>
+                        <option value="Turquie">Turquie</option><option value="Viêt Nam">Viêt Nam</option><option value="Yémen">Yémen</option>
+                    </optgroup>
+
+                    <optgroup label="✨ Pays Imaginaires & Rêvés">
                         <option value="Groland">Groland (Je l'ai d'abord rêvé)</option>
                         <option value="Syldavie">Syldavie</option>
                         <option value="Bordurie">Bordurie</option>
                         <option value="Utopie">Utopie</option>
                         <option value="Neverland">Neverland</option>
-                    </optgroup>
-                    <optgroup label="🌍 Pays du Monde">
-                        <option value="France">France</option>
-                        <option value="Belgique">Belgique</option>
-                        <option value="Suisse">Suisse</option>
-                        <option value="Canada">Canada</option>
-                        <option value="Algérie">Algérie</option>
-                        <option value="Maroc">Maroc</option>
-                        <option value="Tunisie">Tunisie</option>
-                        <option value="Sénégal">Sénégal</option>
-                        <option value="Madagascar">Madagascar</option>
-                        <option value="Espagne">Espagne</option>
-                        <option value="Italie">Italie</option>
-                        <option value="Allemagne">Allemagne</option>
+                        <option value="L'astéroïde B 612">L'astéroïde B 612</option>
                     </optgroup>
                 </select>
 
@@ -146,15 +159,10 @@
     </div>
 
     <br>
-    <font size="2">
-        Copyright 2000 <a href="https://youtube.com" class="copyright-link">Le Petit Prince des Jardiniers</a>
-    </font>
+    <font size="2">Copyright 2000 <a href="https://youtube.com" class="copyright-link">Le Petit Prince des Jardiniers</a></font>
 
     <div id="coffre-magique">🎁</div>
-    <div id="animal-container">
-        <div id="bulle-texte"></div>
-        <div id="corps-animal">🕊️</div>
-    </div>
+    <div id="animal-container"><div id="bulle-texte"></div><div id="corps-animal">🕊️</div></div>
 
     <script type="text/javascript">
         function googleTranslateElementInit() { new google.translate.TranslateElement({pageLanguage: 'fr'}, 'google_translate_element'); }
@@ -171,7 +179,6 @@
         const audio = document.getElementById('chantOiseaux');
 
         let aniX, aniY, targetX, targetY, state = "WAITING";
-
         document.addEventListener('click', () => { if(audio.paused) { audio.volume = 0.05; audio.play(); } });
 
         function startNewMessenger() {
