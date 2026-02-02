@@ -21,7 +21,6 @@
         .fleur-pluie { position: fixed; top: -50px; z-index: 9999; pointer-events: none; animation: chute linear forwards; }
         @keyframes chute { to { transform: translateY(110vh) rotate(360deg); } }
 
-        /* MODIF : Suppression du pointillé border-bottom */
         #jardin-sacre { position: relative; height: 180px; width: 100%; overflow: hidden; background: rgba(255,255,255,0.1); }
         
         .fleur-clonée { position: absolute; font-size: 25px; animation: apparitionFleur 1s ease-out forwards; }
@@ -30,33 +29,35 @@
         .search-box { background: #008080; padding: 20px; margin: 20px auto; max-width: 600px; border-radius: 15px; color: white; box-shadow: 0 4px 8px rgba(0,0,0,0.2); }
         .search-box input { padding: 12px; width: 85%; border-radius: 25px; border: none; font-size: 1em; outline: none; text-align: center; }
         
-        .mur-reel { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 30px; padding: 20px; max-width: 1200px; margin: auto; }
+        .mur-reel { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 40px; padding: 20px; max-width: 1200px; margin: auto; }
         
-        /* MODIF : Cartes qui s'agrandissent vraiment et ne débordent pas */
+        /* MODIF : Petites cases avec grand zoom au survol */
         .carte-message { 
             background: rgba(255, 255, 255, 0.95); 
             border: 3px solid #008080; 
-            border-radius: 15px; 
-            padding: 15px; 
-            box-shadow: 5px 5px 0px #008080; 
-            transition: transform 0.4s ease, z-index 0s; 
+            border-radius: 12px; 
+            padding: 12px; 
+            box-shadow: 4px 4px 0px #008080; 
+            transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); 
             color: #333; 
             text-align: left;
-            word-wrap: break-word; /* Empêche le texte long de sortir */
-            overflow-wrap: break-word;
+            word-wrap: break-word;
             position: relative;
             z-index: 1;
+            font-size: 0.85em; /* Un peu plus petit au repos */
         }
         .carte-message:hover { 
-            transform: scale(1.15); /* Agrandissement réel */
-            z-index: 100; /* Passe au dessus des autres */
-            box-shadow: 10px 10px 20px rgba(0,0,0,0.2);
+            transform: scale(1.25); /* Zoom encore plus grand */
+            z-index: 100; 
+            box-shadow: 15px 15px 30px rgba(0,0,0,0.3);
+            background: #FFFFFF;
         }
 
-        .carte-header { border-bottom: 1px solid #ddd; margin-bottom: 10px; padding-bottom: 5px; }
-        .nom-donneur { font-weight: bold; color: #2E7D32; font-size: 1.1em; }
-        .lieu-tag { font-size: 0.8em; color: #666; font-style: italic; }
-        .message-contenu { margin-top: 10px; font-size: 0.95em; line-height: 1.4; font-weight: bold; color: #000080; }
+        .carte-header { border-bottom: 1px solid #ddd; margin-bottom: 8px; padding-bottom: 5px; }
+        .nom-donneur { font-weight: bold; color: #2E7D32; font-size: 1em; }
+        .lieu-tag { font-size: 0.75em; color: #666; font-style: italic; }
+        .message-contenu { margin-top: 8px; font-size: 0.9em; line-height: 1.3; font-weight: bold; color: #000080; }
+        .details-don { font-size: 0.7em; margin-top: 8px; color: #555; border-top: 1px dashed #ccc; padding-top: 5px; line-height: 1.4; }
 
         #coffre-magique { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); font-size: 60px; z-index: 800; }
         #animal-container { position: fixed; z-index: 900; white-space: nowrap; display: flex; align-items: center; pointer-events: none; }
@@ -92,7 +93,7 @@
 
     <div class="search-box">
         <h3>🔍 Chercher une graine de fraternité</h3>
-        <input type="text" id="searchInput" onkeyup="filtrerAnnonces()" placeholder="Chercher une ville, un pays, une graine...">
+        <input type="text" id="searchInput" onkeyup="filtrerAnnonces()" placeholder="Ville, Pays, Message...">
     </div>
 
     <div id="jardin-sacre"></div>
@@ -148,16 +149,28 @@
             const conteneur = document.getElementById('mur-messages');
             conteneur.innerHTML = '';
             annonces.forEach(ann => {
+                const datePropre = ann.date ? new Date(ann.date).toLocaleDateString('fr-FR') : "Récemment";
                 const carte = document.createElement('div');
                 carte.className = 'carte-message';
-                carte.innerHTML = `<div class="carte-header"><span class="nom-donneur">${ann.nom || "Anonyme"}</span><br><span class="lieu-tag">📍 ${ann.ville || ""}, ${ann.pays || ""}</span></div><div class="message-contenu">"${ann.message || ""}"</div>`;
+                carte.innerHTML = `
+                    <div class="carte-header">
+                        <span class="nom-donneur">${ann.nom || "Anonyme"}</span><br>
+                        <span class="lieu-tag">📍 ${ann.ville || ""}, ${ann.pays || ""}</span>
+                    </div>
+                    <div class="message-contenu">"${ann.message || ""}"</div>
+                    <div class="details-don">
+                        🗓️ Semé le : ${datePropre}<br>
+                        ✨ Zone : ${ann.rayon || "Non spécifié"}<br>
+                        ⏳ Durée : ${ann.duree || "Non spécifiée"}
+                    </div>
+                `;
                 conteneur.appendChild(carte);
             });
         }
 
         function filtrerAnnonces() {
             const val = document.getElementById('searchInput').value.toLowerCase();
-            const filtre = toutesLesAnnonces.filter(ann => (ann.nom && ann.nom.toLowerCase().includes(val)) || (ann.message && ann.message.toLowerCase().includes(val)));
+            const filtre = toutesLesAnnonces.filter(ann => (ann.nom && ann.nom.toLowerCase().includes(val)) || (ann.ville && ann.ville.toLowerCase().includes(val)) || (ann.pays && ann.pays.toLowerCase().includes(val)) || (ann.message && ann.message.toLowerCase().includes(val)));
             afficherAnnonces(filtre);
         }
 
@@ -180,8 +193,6 @@
         const animaux = ['🕊️', '🦋', '🐝', '🐞', '🦜'];
         const fleurs = ['🌸', '🌼', '🌻', '🌺', '🌷'];
         let aniX = -200, aniY = 100;
-
-        // MODIF : Initialisation du premier message immédiatement
         document.getElementById('bulle-texte').innerText = mesPhrases[0];
 
         function loop() {
