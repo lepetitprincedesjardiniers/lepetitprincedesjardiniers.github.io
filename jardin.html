@@ -67,10 +67,13 @@
         /* COPYRIGHT DISCRET */
         .copyright-wrapper { 
             position: fixed; bottom: 5px; left: 50%; transform: translateX(-50%); 
-            background: rgba(255,255,255,0.6); padding: 3px 10px; border-radius: 15px; 
-            z-index: 1000; border: 1px solid rgba(0,128,128,0.3); font-size: 0.65em; 
-            transition: all 0.5s; opacity: 0.8;
+            background: rgba(255,255,255,0.7); padding: 5px 15px; border-radius: 15px; 
+            z-index: 1000; border: 2px solid #ff1493; font-size: 0.8em; 
+            transition: all 0.5s; opacity: 0.9;
         }
+        .copyright-wrapper a { text-decoration: none; color: #ff1493; font-weight: bold; }
+        .copyright-wrapper:hover { background: #ff1493; }
+        .copyright-wrapper:hover a { color: white; }
         
         /* ANIMAUX ET BULLES */
         #animal-container { position: fixed; z-index: 900; white-space: nowrap; display: flex; align-items: center; pointer-events: none; flex-direction: row; }
@@ -137,6 +140,10 @@
             <button class="bouton-fermer" onclick="fermerGrandMessage()">X</button>
             <div id="geant-contenu"></div>
         </div>
+    </div>
+
+    <div class="copyright-wrapper">
+        <a href="merci-externe.html">© Le Petit Prince des Jardiniers 🌹</a>
     </div>
 
     <div id="animal-container">
