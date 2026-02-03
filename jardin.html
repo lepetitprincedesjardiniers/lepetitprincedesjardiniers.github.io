@@ -4,53 +4,74 @@
     <meta charset="UTF-8">
     <title>Le Jardin de la Fraternité - Registre</title>
     <style>
-        /* --- STYLE DE BASE (RÉTABLI) --- */
+        /* --- TON STYLE ORIGINAL --- */
         body { font-family: 'Comic Sans MS', cursive; text-align: center; margin: 0; padding: 0; background-color: #FFFF00; color: #000080; overflow-x: hidden; min-height: 100vh; padding-bottom: 80px; }
 
         .top-bar { position: relative; width: 100%; min-height: 40px; background: rgba(255,255,255,0.3); padding: 5px 0; }
         #google_translate_element { position: absolute; left: 10px; top: 10px; transform: scale(0.8); transform-origin: top left; }
         
         .menu-table { margin: 5px auto; border-radius: 10px; background-color: #008080; border-collapse: collapse; }
-        .menu-table td { padding: 8px 15px; border: 1px solid #FFFFFF; }
+        .menu-table td { padding: 8px 15px; border: 1px solid #FFFFFF; transition: 0.3s; }
         .menu-table a { text-decoration: none; color: #FFFFFF; font-weight: bold; font-size: 0.85em; }
-        .menu-table td:hover { background-color: #006666; box-shadow: 0 0 10px #FFFFFF; }
+        .menu-table td:hover { background-color: #006666; box-shadow: 0 0 10px #FFFFFF; } 
 
         .phrase-rose { color: #ff1493; font-weight: bold; font-size: 1.1em; text-shadow: 1px 1px 2px #ff69b4; animation: eclat 1.5s infinite alternate; margin-top: 5px; }
         @keyframes eclat { from { opacity: 0.7; } to { opacity: 1; } }
+        .phrase-sous { color: #000080; font-weight: bold; margin: 1px 0; font-size: 0.9em; }
 
-        /* ZONE DÉCO HAUTE */
-        #jardin-sacre { position: relative; height: 100px; width: 100%; overflow: hidden; background: rgba(255,255,255,0.1); }
+        #jardin-sacre { position: relative; height: 100px; width: 100%; overflow: hidden; background: rgba(255,255,255,0.1); margin-top: 5px; }
         .fleur-clonée { position: absolute; font-size: 25px; animation: apparitionFleur 1s ease-out forwards; }
         @keyframes apparitionFleur { 0% { transform: scale(0) rotate(-50deg); opacity: 0; } 100% { transform: scale(1) rotate(0deg); opacity: 1; } }
 
-        /* PLUIE DE FLEURS */
+        /* EFFET PLUIE DE FLEURS */
         .fleur-etoile { position: fixed; pointer-events: none; z-index: 999; font-size: 15px; animation: volEtoile linear infinite; opacity: 0.8; }
         @keyframes volEtoile {
             0% { transform: translate(0, 0) rotate(0deg); }
-            100% { transform: translate(200px, 1000px) rotate(360deg); }
+            100% { transform: translate(150px, 110vh) rotate(360deg); }
         }
 
-        /* OISEAUX ET MESSAGES (LOGIQUE ORIGINALE) */
-        #animal-container { position: fixed; z-index: 900; white-space: nowrap; display: flex; align-items: center; pointer-events: none; top: 50px; }
-        #corps-animal { font-size: 50px; order: 1; pointer-events: auto; cursor: pointer; }
+        /* MOTEUR DE RECHERCHE SCINDÉ */
+        .search-box { background: #008080; padding: 12px; margin: 10px auto; max-width: 700px; border-radius: 20px; color: white; box-shadow: 0 4px 15px rgba(0,0,0,0.2); position: relative; z-index: 10; }
+        .search-container { display: flex; flex-direction: column; gap: 8px; align-items: center; }
+        .search-row { display: flex; gap: 10px; width: 95%; max-width: 550px; }
+        .search-item { display: flex; flex-direction: column; align-items: center; width: 100%; }
+        .search-item label { font-size: 0.9em; margin-bottom: 4px; font-weight: bold; color: #FFFFFF; }
+        .search-item input { padding: 10px; border-radius: 12px; border: 2px solid transparent; outline: none; text-align: center; color: #004D40; font-weight: bold; width: 100%; transition: all 0.3s; }
+
+        /* EFFETS ALEATOIRES SUR FOCUS */
+        .effet-croissance:focus { transform: scale(1.04); background: #E0F2F1; }
+        .effet-lueur:focus { box-shadow: 0 0 15px #FFD700; border-color: #FFD700; }
+        .effet-secousse:focus { animation: shake 0.3s; border-color: #FF1493; }
+        @keyframes shake { 0%, 100% {transform: translateX(0);} 25% {transform: translateX(-4px);} 75% {transform: translateX(4px);} }
+
+        /* REGISTRE & CARTES AVEC EFFET ZOOM */
+        .mur-reel { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 15px; padding: 10px; max-width: 1200px; margin: 0 auto 50px auto; }
+        .carte-message { 
+            background: rgba(255, 255, 255, 0.95); border: 3px solid #008080; border-radius: 12px; padding: 12px; 
+            box-shadow: 4px 4px 0px #008080; transition: 0.3s; color: #333; text-align: left; cursor: pointer; 
+            font-size: 0.85em; height: 180px; overflow-y: auto; display: flex; flex-direction: column;
+            overflow-wrap: break-word; word-break: break-word; white-space: pre-wrap;
+        }
+        .carte-message:hover { transform: translateY(-5px) scale(1.02); box-shadow: 8px 8px 0px #2E7D32; }
+
+        /* FOND SOMBRE ET MESSAGE GÉANT */
+        #fond-sombre { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); z-index: 2000; justify-content: center; align-items: center; }
+        .message-geant { 
+            background: #FFFFF0; width: 92%; max-width: 850px; max-height: 85vh; padding: 35px; border-radius: 30px; 
+            border: 10px solid #008080; position: relative; text-align: center; overflow-y: auto;
+            overflow-wrap: break-word; word-break: break-word; white-space: pre-wrap;
+        }
+        .bouton-fermer { position: absolute; top: 10px; right: 15px; background: #FF1493; color: white; border: 4px solid white; border-radius: 50%; width: 40px; height: 40px; cursor: pointer; font-weight: bold; font-size: 20px; z-index: 10; }
+
+        /* COPYRIGHT AVEC EFFET LUEUR */
+        .copyright-wrapper { position: fixed; bottom: 5px; left: 50%; transform: translateX(-50%); background: rgba(255,255,255,0.7); padding: 5px 15px; border-radius: 15px; z-index: 1000; border: 1px solid #008080; font-size: 0.75em; transition: 0.3s; }
+        .copyright-wrapper a { text-decoration: none; color: #008080; font-weight: bold; }
+        .copyright-wrapper:hover { box-shadow: 0 0 15px #FF1493; border-color: #FF1493; }
+
+        /* OISEAU PORTEUR QUI POUSSE LE MESSAGE */
+        #animal-container { position: fixed; z-index: 900; white-space: nowrap; display: flex; align-items: center; flex-direction: row; pointer-events: auto; cursor: pointer; }
+        #corps-animal { font-size: 50px; order: 1; }
         #bulle-texte { order: 2; background: rgba(255, 255, 255, 0.9); border-radius: 15px; padding: 8px 15px; font-style: italic; color: #2E7D32; margin-left: 10px; font-weight: bold; border: 2px solid #2E7D32; opacity: 0; transition: opacity 0.3s; max-width: 250px; white-space: normal; }
-
-        /* CARTES ET ZOOM */
-        .mur-reel { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 15px; padding: 10px; max-width: 1200px; margin: 0 auto; }
-        .carte-message { background: white; border: 3px solid #008080; border-radius: 12px; padding: 12px; box-shadow: 4px 4px 0px #008080; cursor: pointer; transition: 0.3s; height: 160px; overflow: hidden; text-align: left; }
-        .carte-message:hover { transform: scale(1.02); }
-
-        #fond-sombre { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); z-index: 2000; justify-content: center; align-items: center; }
-        .message-geant { background: #FFFFF0; width: 90%; max-width: 800px; padding: 30px; border-radius: 20px; border: 8px solid #008080; position: relative; }
-
-        /* COPYRIGHT HYPERTEXTE (RÉTABLI) */
-        .copyright-wrapper { position: fixed; bottom: 5px; left: 50%; transform: translateX(-50%); background: rgba(255,255,255,0.6); padding: 3px 10px; border-radius: 15px; z-index: 1000; border: 1px solid rgba(0,128,128,0.3); font-size: 0.7em; }
-        .copyright-wrapper a { color: #008080; text-decoration: none; font-weight: bold; transition: 0.3s; }
-        .copyright-wrapper a:hover { color: #ff1493; text-shadow: 0 0 5px #ff1493; }
-
-        /* MOTEUR DE RECHERCHE */
-        .search-box { background: #008080; padding: 10px; margin: 10px auto; max-width: 600px; border-radius: 15px; color: white; }
-        .search-box input { padding: 5px; border-radius: 5px; border: none; margin: 5px; text-align: center; font-weight: bold; }
     </style>
 </head>
 <body>
@@ -69,110 +90,129 @@
         </table>
     </div>
 
-    <audio id="chantOiseaux" loop src="oiseaux.mp3"></audio>
+    <audio id="chantOiseaux" loop><source src="oiseaux.mp3" type="audio/mpeg"></audio>
 
-    <h2 style="color:#2E7D32;">🍃 Le Jardin des Cadeaux Existentiels 🍃</h2>
-    <div class="phrase-rose">Bienvenue au Jardin ensoleilleur des Dons entiers</div>
+    <h2 style="color:#2E7D32; margin-top: 5px; font-size: 1.4em;">🍃 Le Jardin des Cadeaux Existentiels 🍃</h2>
+    <div class="phrase-rose">Bienvenue au Jardin ensoleilleur des Dons entiers :</div>
+    <div class="phrase-sous">Les talents, les créations, les savoirs, les offrandes... Une pure joie altruiste.</div>
 
     <div id="jardin-sacre"></div>
 
     <div class="search-box">
-        <input type="text" id="searchVille" onkeyup="filtrer()" placeholder="Ville...">
-        <input type="text" id="searchPays" onkeyup="filtrer()" placeholder="Pays...">
-        <input type="text" id="searchKeyword" onkeyup="filtrer()" placeholder="Mots-clés...">
+        <div class="search-container">
+            <div class="search-row">
+                <div class="search-item">
+                    <label>Ville</label>
+                    <input type="text" id="searchVille" onkeyup="filtrerAnnonces()" onfocus="appliquerEffet(this)" placeholder="Ville...">
+                </div>
+                <div class="search-item">
+                    <label>Pays</label>
+                    <input type="text" id="searchPays" onkeyup="filtrerAnnonces()" onfocus="appliquerEffet(this)" placeholder="Pays...">
+                </div>
+            </div>
+            <div class="search-item" style="width: 95%;">
+                <label>Quoi? Pourquoi? Pour nous quoi!</label>
+                <input type="text" id="searchKeyword" onkeyup="filtrerAnnonces()" onfocus="appliquerEffet(this)" placeholder="Mots-clés...">
+            </div>
+        </div>
     </div>
 
     <div id="mur-messages" class="mur-reel"></div>
 
-    <div id="fond-sombre" onclick="this.style.display='none'"><div class="message-geant" id="geant-contenu"></div></div>
+    <div id="fond-sombre" onclick="fermerGrandMessage()">
+        <div class="message-geant" onclick="event.stopPropagation()">
+            <button class="bouton-fermer" onclick="fermerGrandMessage()">X</button>
+            <div id="geant-contenu"></div>
+        </div>
+    </div>
 
-    <div id="animal-container">
-        <div id="corps-animal" onclick="exploser(this)">🕊️</div>
+    <div id="animal-container" onclick="exploser(this)">
+        <div id="corps-animal">🕊️</div>
         <div id="bulle-texte"></div>
     </div>
 
     <div class="copyright-wrapper">
-        <a href="copyright.html">© 2024-2025 Le Jardin de la Fraternité - Tous droits réservés</a>
+        <a href="copyright.html">© 2024-2026 Le Jardin de la Fraternité</a>
     </div>
 
     <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
 
     <script>
         function googleTranslateElementInit() { new google.translate.TranslateElement({pageLanguage: 'fr'}, 'google_translate_element'); }
+        
+        const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxz40XE2KiPXTNZsW-mIg-fm55EivK0r9wzZ5ECFRdEIY53nYH9nLGYRoI71OX93oII/exec"; 
+        let toutesLesAnnonces = [];
 
-        const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxz40XE2KiPXTNZsW-mIg-fm55EivK0r9wzZ5ECFRdEIY53nYH9nLGYRoI71OX93oII/exec";
-        let annonces = [];
-
-        async function charger() {
-            const res = await fetch(SCRIPT_URL);
-            annonces = await res.json();
-            afficher(annonces);
-            document.body.onclick = () => document.getElementById('chantOiseaux').play();
+        function appliquerEffet(el) {
+            const list = ['effet-croissance', 'effet-lueur', 'effet-secousse'];
+            list.forEach(c => el.classList.remove(c));
+            el.classList.add(list[Math.floor(Math.random()*list.length)]);
         }
 
-        function afficher(data) {
-            const m = document.getElementById('mur-messages');
-            m.innerHTML = '';
-            data.forEach(a => {
-                const d = a.date ? new Date(a.date).toLocaleDateString('fr-FR', {day:'2-digit', month:'2-digit', year:'numeric'}) : "Récent";
-                const div = document.createElement('div');
-                div.className = 'carte-message';
-                div.onclick = () => {
-                    document.getElementById('geant-contenu').innerHTML = `<h2>${a.nom}</h2><p>${a.message}</p><small>${d} - ${a.ville}</small>`;
-                    document.getElementById('fond-sombre').style.display = 'flex';
-                };
-                div.innerHTML = `<strong>${a.nom}</strong><br><small>${d}</small><p>${a.message}</p>`;
-                m.appendChild(div);
+        async function chargerAnnonces() {
+            try {
+                const response = await fetch(SCRIPT_URL);
+                const data = await response.json();
+                toutesLesAnnonces = data.reverse(); 
+                afficherAnnonces(toutesLesAnnonces);
+            } catch (e) { console.log("Erreur de chargement"); }
+        }
+
+        function afficherAnnonces(annonces) {
+            const conteneur = document.getElementById('mur-messages');
+            conteneur.innerHTML = '';
+            annonces.forEach(ann => {
+                const d = ann.date ? new Date(ann.date).toLocaleDateString('fr-FR') : "Récemment";
+                const dur = (ann.duree || "").replace(/_/g, " ");
+                const carte = document.createElement('div');
+                carte.className = 'carte-message';
+                carte.onclick = () => ouvrirGrandMessage(ann, d, dur);
+                carte.innerHTML = `
+                    <div style="font-weight:bold;color:#2E7D32;">${ann.nom || "Anonyme"}</div>
+                    <div style="font-weight:bold;color:#000080;flex-grow:1;margin:5px 0;">"${ann.message || ""}"</div>
+                    <div style="font-size:0.7em; color:#666; border-top:1px solid #ddd; padding-top:4px;">
+                        📍 ${ann.ville || ""} | 🎯 Rayon: ${ann.rayon || "N/A"}<br>
+                        📅 ${d} | ⌛ ${dur}
+                    </div>
+                `;
+                conteneur.appendChild(carte);
             });
         }
 
-        function filtrer() {
+        function filtrerAnnonces() {
             const v = document.getElementById('searchVille').value.toLowerCase();
             const p = document.getElementById('searchPays').value.toLowerCase();
             const k = document.getElementById('searchKeyword').value.toLowerCase();
-            afficher(annonces.filter(a => (a.ville||"").toLowerCase().includes(v) && (a.pays||"").toLowerCase().includes(p) && (a.message||"").toLowerCase().includes(k)));
+            const res = toutesLesAnnonces.filter(ann => {
+                return (ann.ville||"").toLowerCase().includes(v) && 
+                       (ann.pays||"").toLowerCase().includes(p) && 
+                       ((ann.message||"").toLowerCase().includes(k) || (ann.nom||"").toLowerCase().includes(k));
+            });
+            afficherAnnonces(res);
         }
 
-        // ANIMATIONS ORIGINALES
+        function ouvrirGrandMessage(ann, d, dur) {
+            document.getElementById('geant-contenu').innerHTML = `
+                <div style="font-size:1.8em; color:#2E7D32; border-bottom:3px solid #008080; margin-bottom:20px; padding-bottom:15px; font-weight:bold;">🌱 L'offrande de ${ann.nom}</div>
+                <div style="font-size:1.5em; color:#000080; line-height:1.5; margin:20px 0; font-weight:bold; text-align:left; background:white; padding:20px; border-radius:15px; border-left:8px solid #FF1493;">"${ann.message}"</div>
+                <div style="font-size:1.1em; background:#E0F2F1; padding:20px; border-radius:20px; text-align:left;">
+                   📍 Lieu: ${ann.ville} (${ann.pays}) | 🎯 Rayon: ${ann.rayon}<br>
+                   📅 Date: ${d} | ⌛ Validité: ${dur}
+                </div>`;
+            document.getElementById('fond-sombre').style.display = 'flex';
+        }
+
+        function fermerGrandMessage() { document.getElementById('fond-sombre').style.display = 'none'; }
+
+        // --- ANIMATIONS DÉCO ---
         let posX = -200;
-        function vol() {
+        function animerOiseau() {
             const c = document.getElementById('animal-container');
             const b = document.getElementById('bulle-texte');
             posX += 2;
             c.style.left = posX + "px";
-            if(posX > window.innerWidth) { posX = -200; c.style.top = Math.random()*200 + "px"; }
-            if(Math.random() < 0.01 && b.style.opacity == 0) {
-                b.innerText = "Un message pour vous...";
+            if(posX > window.innerWidth + 200) { posX = -200; c.style.top = Math.random()*200 + "px"; }
+            if(Math.random() < 0.005) {
+                b.innerText = "La fraternité grandit...";
                 b.style.opacity = 1;
-                setTimeout(() => b.style.opacity = 0, 3000);
-            }
-            requestAnimationFrame(vol);
-        }
-
-        function exploser(el) {
-            el.innerText = "✨";
-            setTimeout(() => el.innerText = "🕊️", 500);
-            for(let i=0; i<8; i++) {
-                const f = document.createElement('div');
-                f.className = 'fleur-etoile';
-                f.innerText = "🌸";
-                f.style.left = posX + "px"; f.style.top = document.getElementById('animal-container').style.top;
-                document.body.appendChild(f);
-                setTimeout(() => f.remove(), 2000);
-            }
-        }
-
-        setInterval(() => {
-            const f = document.createElement('div');
-            f.className = 'fleur-etoile';
-            f.innerText = "🌸";
-            f.style.left = Math.random()*100 + "vw"; f.style.top = "-20px";
-            f.style.animationDuration = "5s";
-            document.body.appendChild(f);
-            setTimeout(() => f.remove(), 5000);
-        }, 1000);
-
-        window.onload = () => { charger(); vol(); };
-    </script>
-</body>
-</html>
+                setTimeout(() =>
