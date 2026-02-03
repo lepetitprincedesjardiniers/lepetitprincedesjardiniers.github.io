@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!DOCTYPE html> 
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
@@ -77,11 +77,11 @@
         
         /* ANIMAUX ET BULLES */
         #animal-container { position: fixed; z-index: 900; white-space: nowrap; display: flex; align-items: center; pointer-events: none; flex-direction: row; }
-        #corps-animal { font-size: 28px; order: 1; } 
+        #corps-animal { font-size: 28px; order: 1; } /* Taille de l'animal réduite */
         #bulle-texte { 
             order: 2; background: rgba(255, 255, 255, 0.9); border-radius: 12px; padding: 5px 10px; 
             font-style: italic; color: #2E7D32; margin-left: 8px; font-weight: bold; border: 1px solid #2E7D32; 
-            opacity: 0; transition: opacity 0.3s; max-width: 180px; font-size: 0.75em; 
+            opacity: 0; transition: opacity 0.3s; max-width: 180px; font-size: 0.75em; /* Bulle réduite */
             white-space: normal; overflow-wrap: break-word;
         }
     </style>
@@ -182,15 +182,10 @@
                 const datePub = ann.date ? new Date(ann.date).toLocaleDateString('fr-FR') : "N/C";
                 const dateVal = ann.validite || "Permanente";
                 
-                // Reconstruction avec alignements forcés
                 carte.innerHTML = `
-                    <div style="margin-bottom:6px; font-weight:bold; color:#2E7D32; text-align:center; width:100%;">${ann.nom || "Anonyme"}</div>
-                    
-                    <div style="text-align: left !important; flex-grow:1; display:block; width:100%;">
-                        <div style="font-weight:bold; color:#000080; font-size:0.95em; margin-bottom:5px;">"${ann.message || ""}"</div>
-                    </div>
-
-                    <div style="font-size:0.62em; color:#666; border-top:1px solid #eee; padding-top:3px; line-height:1.1; text-align: left !important; width:100%;">
+                    <div style="margin-bottom:4px;font-weight:bold;color:#2E7D32;text-align:center;width:100%;">${ann.nom || "Anonyme"}</div>
+                    <div style="font-weight:bold;color:#000080;flex-grow:1;overflow:hidden;font-size:0.95em;text-align:left;margin-bottom:4px;">"${ann.message || ""}"</div>
+                    <div style="font-size:0.62em; color:#777; border-top:1px solid #eee; padding-top:2px; line-height:1.1; text-align: left !important; width: 100%; display: block; clear: both;">
                         📅 ${datePub} • ⏳ ${dateVal}<br>
                         📍 ${ann.ville || ""}, ${ann.pays || ""}
                     </div>
@@ -218,14 +213,10 @@
             const dateVal = ann.validite || "Permanente";
             document.getElementById('geant-contenu').innerHTML = `
                 <div style="font-size:1.6em; color:#2E7D32; border-bottom:3px solid #008080; margin-bottom:15px; padding-bottom:10px; font-weight:bold; text-align:center;">🌱 L'offrande de ${ann.nom || "Anonyme"}</div>
-                
-                <div style="text-align:left !important; width:100%;">
-                    <div style="font-size:1.4em; color:#000080; line-height:1.4; margin:15px 0; font-weight:bold; background:white; padding:15px; border-radius:15px; border-left:8px solid #FF1493;">"${ann.message || ""}"</div>
-                </div>
-
-                <div style="font-size:0.85em; background:#f4fbfb; padding:8px 12px; border-radius:15px; color:#555; text-align:left !important; border:1px solid #d0e8e8; width:fit-content;">
-                    <p style="margin:2px 0;"><strong>📍 Lieu :</strong> ${ann.ville || ""}, ${ann.pays || ""}</p>
-                    <p style="margin:2px 0;"><strong>📅 Publié :</strong> ${datePub} | <strong>⏳ Validité :</strong> ${dateVal}</p>
+                <div style="font-size:1.4em; color:#000080; line-height:1.4; margin:10px 0; font-weight:bold; text-align:left; background:white; padding:15px; border-radius:15px; border-left:8px solid #FF1493;">"${ann.message || ""}"</div>
+                <div style="font-size:0.85em; background:#f4fbfb; padding:8px; border-radius:15px; color:#555; text-align:left !important; border:1px solid #d0e8e8; width: 100%; box-sizing: border-box;">
+                    <p style="margin:2px 0; text-align:left;"><strong>📍 Lieu :</strong> ${ann.ville || ""}, ${ann.pays || ""}</p>
+                    <p style="margin:2px 0; text-align:left;"><strong>📅 Publication :</strong> ${datePub} | <strong>⏳ Validité :</strong> ${dateVal}</p>
                 </div>
             `;
             document.getElementById('fond-sombre').style.display = 'flex';
@@ -269,6 +260,25 @@
                 bulle.style.opacity = 1;
                 setTimeout(() => bulle.style.opacity = 0, 1500);
             }, 6000);
+
+            corps.style.pointerEvents = "auto";
+            corps.style.cursor = "pointer";
+            corps.onclick = (e) => {
+                for(let i=0; i<12; i++) {
+                    const spark = document.createElement('div');
+                    spark.style.position = 'fixed';
+                    spark.style.left = e.clientX + 'px';
+                    spark.style.top = e.clientY + 'px';
+                    spark.innerHTML = '✨';
+                    spark.style.transition = 'all 0.8s';
+                    spark.style.zIndex = '1000';
+                    document.body.appendChild(spark);
+                    setTimeout(() => {
+                        spark.style.transform = `translate(${(Math.random()-0.5)*150}px, ${(Math.random()-0.5)*150}px) scale(0)`;
+                        setTimeout(() => spark.remove(), 800);
+                    }, 10);
+                }
+            };
         }
 
         function decoFixe() {
