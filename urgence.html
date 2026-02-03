@@ -6,39 +6,31 @@
     <style>
         body { 
             font-family: 'Comic Sans MS', cursive; text-align: center; margin: 0; padding: 0; 
-            background: radial-gradient(circle at center, #4a0000 0%, #1a0000 100%);
+            background: radial-gradient(circle at center, #4a0000 0%, #000000 100%);
             color: #ffffff; overflow-x: hidden; min-height: 100vh;
         }
 
-        /* MENU FIDÈLE */
         .menu-table { margin: 10px auto; border-radius: 10px; background-color: #008080; border-collapse: collapse; position: relative; z-index: 10; }
-        .menu-table td { border: 1px solid #FFFFFF; transition: 0.3s; }
+        .menu-table td { border: 1px solid #FFFFFF; }
         .menu-table a { display: block; padding: 12px 20px; text-decoration: none; color: #FFFFFF; font-weight: bold; }
-        .menu-table td:hover { background-color: #00b3b3; }
 
-        /* L'ÉTOILE D'URGENCE */
         .etoile-sos {
-            background: #ff1493; width: 180px; height: 180px; margin: 20px auto;
+            background: #ff1493; width: 160px; height: 160px; margin: 20px auto;
             clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
             display: flex; align-items: center; justify-content: center;
-            animation: pulse 1.5s infinite; box-shadow: 0 0 40px #ff1493; font-weight: bold;
+            animation: pulse 1.5s infinite; box-shadow: 0 0 30px #ff1493; font-weight: bold;
         }
-        @keyframes pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.1); } }
+        @keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.1); } 100% { transform: scale(1); } }
 
-        /* FORMULAIRE URGENCE */
         .form-container { 
-            background: white; border: 5px solid #ff1493; border-radius: 30px; 
-            width: 90%; max-width: 600px; margin: 20px auto; padding: 25px; color: #333;
+            background: #FFF0F5; border: 5px solid #ff1493; border-radius: 30px; 
+            width: 90%; max-width: 600px; margin: 20px auto; padding: 25px; color: #8b0000;
         }
         input, textarea { width: 100%; padding: 12px; margin: 8px 0; border-radius: 12px; border: 2px solid #ff1493; box-sizing: border-box; font-family: inherit; }
         .btn-envoi { background: #ff1493; color: white; border: none; padding: 18px; border-radius: 25px; font-weight: bold; cursor: pointer; width: 100%; font-size: 1.1em; }
 
-        /* LISTE DES ANNONCES */
         .liste-annonces { max-width: 700px; margin: 40px auto; padding: 20px; }
-        .carte { background: white; border-left: 10px solid #ff1493; border-radius: 15px; padding: 20px; margin-bottom: 20px; text-align: left; color: #333; box-shadow: 0 5px 15px rgba(0,0,0,0.3); }
-        
-        .star { position: fixed; color: white; z-index: -1; animation: twinkle 3s infinite; }
-        @keyframes twinkle { 0%, 100% { opacity: 0.3; } 50% { opacity: 1; } }
+        .carte { background: white; border-left: 10px solid #ff1493; border-radius: 15px; padding: 20px; margin-bottom: 20px; text-align: left; color: #333; box-shadow: 0 4px 15px rgba(255,20,147,0.3); }
     </style>
 </head>
 <body>
@@ -52,30 +44,26 @@
             <td><a href="regulation.html">Régulation</a></td>
             <td><a href="urgence.html">Urgences</a></td>
             <td><a href="aide.html">Aide</a></td>
+            <td><a href="savoirs.html">Savoirs</a></td>
         </tr>
     </table>
 
     <div class="etoile-sos">S.O.S</div>
-    <h1>Urgence & Détresse</h1>
-    <p><i>Santé, Matière, Survie.</i></p>
+    <h1>L'Éspace Urgence & Détresse</h1>
+    <p><i>Soutien médical et matériel : Le cri du corps.</i></p>
 
     <div class="form-container">
         <form id="urgForm">
-            <input type="text" id="nomU" placeholder="Ton nom / Ton Cri" required>
-            <input type="text" id="locU" placeholder="Où es-tu ? (Ville / Pays)" required>
-            <textarea id="msgU" rows="4" placeholder="Ex: Besoin d'opérer la cervelle, ma charpente vacille..." required></textarea>
-            <button type="submit" class="btn-envoi">LANCER L'APPEL À LA FRATERNITÉ 🕊️</button>
+            <input type="text" id="nomU" placeholder="Ton nom / Ton cri" required>
+            <textarea id="msgU" rows="4" placeholder="Ex: J'ai besoin de me faire opérer la cervelle... Ma charpente vacille..." required></textarea>
+            <button type="submit" class="btn-envoi">LANCER L'APPEL 🕊️</button>
         </form>
     </div>
 
     <div class="liste-annonces">
-        <h2 style="color: #ff1493;">🚨 Appels de détresse en cours</h2>
-        <div id="flux-urgences"><p>Appel de la sagesse...</p></div>
+        <h2 style="color: #ffb6c1;">🚨 Appels Critiques</h2>
+        <div id="flux-urgences">Chargement...</div>
     </div>
-
-    <footer>
-        <a href="transition-externe.html" style="color: rgba(255,255,255,0.4); text-decoration: none;">© 2000 le petit prince des jardiniers</a>
-    </footer>
 
     <script>
         const URL = "https://script.google.com/macros/s/AKfycbz4ncs9qw_AfmKSER5QST-P0OeKQggQaq86QC6liS53uZ9sx4Lo_-4-h1knXKWqgQMc/exec";
@@ -84,14 +72,14 @@
             e.preventDefault();
             const btn = e.target.querySelector('button');
             btn.innerText = "L'appel voyage..."; btn.disabled = true;
-            const d = { date: new Date().toLocaleDateString('fr-FR'), type: "URGENCE", nom: document.getElementById('nomU').value, localisation: document.getElementById('locU').value, message: document.getElementById('msgU').value };
-            fetch(URL, { method: 'POST', mode: 'no-cors', body: JSON.stringify(d) }).then(() => { alert("Appel lancé !"); location.reload(); });
+            const d = { date: new Date().toLocaleDateString('fr-FR'), type: "URGENCE", nom: document.getElementById('nomU').value, localisation: "Espace Urgence", message: document.getElementById('msgU').value };
+            fetch(URL, { method: 'POST', mode: 'no-cors', body: JSON.stringify(d) }).then(() => { alert("Appel envoyé à la communauté."); location.reload(); });
         });
 
         fetch(URL).then(r => r.json()).then(data => {
             const f = document.getElementById('flux-urgences'); f.innerHTML = "";
             data.filter(i => i.type === "URGENCE").reverse().forEach(i => {
-                f.innerHTML += `<div class="carte"><small>${i.date} - ${i.localisation}</small><br><b>${i.nom} :</b><p>"${i.message}"</p></div>`;
+                f.innerHTML += `<div class="carte"><small>${i.date}</small><br><b>${i.nom} :</b><p>"${i.message}"</p></div>`;
             });
         });
     </script>
