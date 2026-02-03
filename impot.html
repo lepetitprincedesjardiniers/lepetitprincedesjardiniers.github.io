@@ -3,53 +3,73 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Impôt Public - Participation Citoyenne</title>
+    <title>Impôt Public - Le Petit Prince des Jardiniers</title>
     <style>
-        body { font-family: 'Comic Sans MS', cursive; background-color: #E8F5E9; color: #004d40; margin: 0; text-align: center; transition: all 0.3s ease; }
+        body { font-family: 'Comic Sans MS', cursive; background-color: #E8F5E9; color: #004d40; margin: 0; text-align: center; }
         
-        #google_translate_element { padding: 10px; background: rgba(255,255,255,0.8); border-bottom: 2px solid #008080; }
+        /* Traducteur Discret en haut à gauche */
+        .header-tools { display: flex; justify-content: flex-start; align-items: center; padding: 10px; background: rgba(255,255,255,0.5); border-bottom: 2px solid #008080; }
+        #google_translate_element { margin-right: 20px; }
 
-        .menu-table { margin: 20px auto; background-color: #008080; border-collapse: collapse; border-radius: 10px; overflow: hidden; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
-        .menu-table td { padding: 12px 20px; border: 1px solid #FFFFFF; transition: background 0.3s; }
-        .menu-table td:hover { background-color: #2e7d32; cursor: pointer; }
+        /* Boutons Musique style Index */
+        .music-controls { display: flex; gap: 10px; }
+        .btn-music { background: #008080; color: white; border: none; padding: 5px 10px; border-radius: 5px; cursor: pointer; font-size: 12px; font-weight: bold; }
+        .btn-music:hover { background: #2e7d32; }
+
+        /* Menu */
+        .menu-table { margin: 20px auto; background-color: #008080; border-collapse: collapse; border-radius: 10px; overflow: hidden; }
+        .menu-table td { padding: 12px 20px; border: 1px solid #FFFFFF; transition: 0.3s; }
+        .menu-table td:hover { background: #2e7d32; }
         .menu-table a { text-decoration: none; color: #FFFFFF; font-weight: bold; }
         
         .intro-box { background: white; border: 3px solid #008080; border-radius: 20px; width: 90%; max-width: 800px; margin: 20px auto; padding: 30px; box-shadow: 5px 5px 15px rgba(0,0,0,0.1); }
-        
-        .zone-explication { text-align: left; background: #F1F8E9; border-left: 5px solid #008080; padding: 20px; margin-bottom: 25px; border-radius: 10px; color: #004d40; line-height: 1.6; }
-        .zone-explication p { margin: 10px 0; font-size: 1.05em; }
+        .zone-explication { text-align: left; background: #F1F8E9; border-left: 5px solid #008080; padding: 20px; margin-bottom: 25px; border-radius: 10px; line-height: 1.6; }
 
         .action-hub { margin: 20px 0; display: flex; justify-content: center; gap: 20px; flex-wrap: wrap; }
-        .btn-principal { text-decoration: none; padding: 15px 30px; border-radius: 25px; font-weight: bold; transition: 0.3s; box-shadow: 4px 4px 0px #004d40; cursor: pointer; display: inline-block; border: none; }
+        .btn-principal { text-decoration: none; padding: 15px 30px; border-radius: 25px; font-weight: bold; transition: 0.3s; box-shadow: 4px 4px 0px #004d40; cursor: pointer; border: none; display: inline-block; }
         .btn-consult { background: #2e7d32; color: white; }
         .btn-declare { background: #FFFFFF; color: #2e7d32; border: 2px solid #2e7d32; }
-        
-        /* Effets de survol */
-        .btn-principal:hover { transform: scale(1.05); box-shadow: 2px 2px 0px #004d40; filter: brightness(1.1); }
+        .btn-principal:hover { transform: scale(1.05); }
 
-        #section-formulaire { display: none; animation: fadeIn 0.6s ease; }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
-        
+        #section-formulaire { display: none; animation: fadeIn 0.5s; }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
         .form-container { background: white; border: 5px solid #008080; border-radius: 30px; width: 90%; max-width: 800px; margin: 20px auto; padding: 25px; box-shadow: 10px 10px 0px #008080; }
         .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; text-align: left; }
-        label { display: block; margin-top: 10px; font-weight: bold; color: #00695c; }
-        input, textarea, select { width: 100%; padding: 12px; margin: 5px 0; border-radius: 12px; border: 2px solid #008080; box-sizing: border-box; font-family: inherit; }
-        input:focus { border-color: #E67E22; outline: none; background: #FFFDE7; }
+        label { display: block; margin-top: 10px; font-weight: bold; }
+        input, textarea, select { width: 100%; padding: 12px; margin: 5px 0; border-radius: 12px; border: 2px solid #008080; font-family: inherit; }
+        .full-width { grid-column: 1 / -1; }
         
-        .btn-envoi { background: #008080; color: white; border: none; padding: 18px 40px; border-radius: 25px; font-weight: bold; cursor: pointer; font-size: 1.2em; margin-top: 20px; transition: 0.3s; }
-        .btn-envoi:hover { background: #E67E22; transform: translateY(-3px); }
+        .btn-envoi { background: #008080; color: white; border: none; padding: 18px 40px; border-radius: 25px; font-weight: bold; cursor: pointer; margin-top: 20px; }
 
-        .copyright { margin: 40px 0 20px; font-size: 0.8em; color: #004d40; opacity: 0.7; }
+        .copyright { margin: 40px 0; font-size: 0.9em; }
+        .copyright a { color: #008080; text-decoration: none; font-weight: bold; }
     </style>
 </head>
 <body>
 
-    <div id="google_translate_element"></div>
-    <script>function googleTranslateElementInit(){ new google.translate.TranslateElement({pageLanguage:'fr'},'google_translate_element'); }</script>
-    <script src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+    <div class="header-tools">
+        <div id="google_translate_element"></div>
+        <div class="music-controls">
+            <button class="btn-music" onclick="playMusic()">▶ PLAY</button>
+            <button class="btn-music" onclick="stopMusic()">◼ STOP</button>
+        </div>
+    </div>
 
+    <audio id="bgMusic" loop>
+        <source src="votre-musique.mp3" type="audio/mpeg">
+    </audio>
     <audio id="snd-pop" src="https://www.soundjay.com/buttons/sounds/button-37.mp3"></audio>
     <audio id="snd-valid" src="https://www.soundjay.com/buttons/sounds/button-10.mp3"></audio>
+
+    <script>
+        function googleTranslateElementInit() { new google.translate.TranslateElement({pageLanguage: 'fr'}, 'google_translate_element'); }
+        function playMusic() { document.getElementById('bgMusic').play(); }
+        function stopMusic() { document.getElementById('bgMusic').pause(); document.getElementById('bgMusic').currentTime = 0; }
+        function playPop() { document.getElementById('snd-pop').play().catch(()=>{}); }
+        function playValid() { document.getElementById('snd-valid').play().catch(()=>{}); }
+    </script>
+    <script src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
 
     <table class="menu-table">
         <tr>
@@ -99,14 +119,11 @@
     </div>
 
     <div class="copyright">
-        © 2026 - Le Jardin des Sages - Concept de Trésor Public Citoyen - Tous droits réservés
+        © 2000 <a href="transition-externe.html">Le Petit Prince des Jardiniers</a>
     </div>
 
     <script>
         const URL_SERVEUR = "https://script.google.com/macros/s/AKfycbz4ncs9qw_AfmKSER5QST-P0OeKQggQaq86QC6liS53uZ9sx4Lo_-4-h1knXKWqgQMc/exec";
-        
-        function playPop() { document.getElementById('snd-pop').play().catch(()=>{}); }
-        function playValid() { document.getElementById('snd-valid').play().catch(()=>{}); }
 
         function ouvrirFormulaire() {
             playPop();
@@ -118,9 +135,7 @@
             e.preventDefault();
             playValid();
             const btn = document.getElementById('btnEnvoi');
-            btn.innerText = "Gravure en cours..."; btn.disabled = true;
-
-            const msgComplet = `[${document.getElementById('categorie').value}] ${document.getElementById('message').value} (Besoin : ${document.getElementById('besoin').value || 'Aucun'})`;
+            btn.innerText = "Gravure..."; btn.disabled = true;
 
             fetch(URL_SERVEUR, { 
                 method: 'POST', mode: 'no-cors', 
@@ -129,10 +144,10 @@
                     type: "impot",
                     nom: document.getElementById('nom').value,
                     localisation: document.getElementById('ville').value,
-                    message: msgComplet
+                    message: `[${document.getElementById('categorie').value}] ${document.getElementById('message').value}`
                 })
             }).then(() => { 
-                alert("Action gravée dans les Communs !"); 
+                alert("Action gravée !"); 
                 window.location.href = "registre_public.html"; 
             });
         });
