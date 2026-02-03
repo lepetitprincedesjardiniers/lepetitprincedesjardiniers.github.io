@@ -2,38 +2,41 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <title>Le Grand Registre - Le Jardin des Citoyens</title>
+    <title>Le Grand Registre - Maintenance & Communs</title>
     <style>
-        /* Reprise du style exact de jardin.html / formulaire.html */
-        body { font-family: 'Comic Sans MS', cursive; text-align: center; margin: 0; padding: 0; background-color: #FFFF00; color: #000080; overflow-x: hidden; min-height: 100vh; }
+        body { font-family: 'Comic Sans MS', cursive; text-align: center; margin: 0; padding: 0; background-color: #FFFF00; color: #000080; min-height: 100vh; }
         
         .menu-table { margin: 20px auto; border-radius: 10px; background-color: #008080; border-collapse: collapse; margin-left: auto; margin-right: auto;}
         .menu-table td { padding: 10px 15px; border: 1px solid #FFFFFF; transition: 0.3s; }
-        .menu-table td:hover { background-color: #00b3b3; }
         .menu-table a { text-decoration: none; color: #FFFFFF; font-weight: bold; font-size: 0.9em; }
 
-        .container { background: white; padding: 30px; border-radius: 20px; display: inline-block; margin-top: 10px; box-shadow: 0px 10px 20px rgba(0,0,0,0.1); width: 90%; max-width: 800px; margin-bottom: 50px; position: relative; z-index: 10; border: 3px solid #008080; }
+        .container { background: white; padding: 30px; border-radius: 20px; display: inline-block; margin-top: 10px; box-shadow: 0px 10px 20px rgba(0,0,0,0.1); width: 90%; max-width: 850px; margin-bottom: 50px; border: 3px solid #008080; }
 
         #searchBox { width: 80%; padding: 12px; margin-bottom: 20px; border: 2px solid #008080; border-radius: 15px; font-family: 'Comic Sans MS'; }
 
-        /* Style des cartes d'impôt façon "fleurs du jardin" */
+        /* Filtres par catégories critiques */
+        .filter-tags { margin-bottom: 20px; display: flex; justify-content: center; gap: 10px; flex-wrap: wrap; }
+        .tag { padding: 5px 12px; border-radius: 20px; background: #E0F2F1; color: #008080; cursor: pointer; font-size: 0.8em; border: 1px solid #008080; font-weight: bold; }
+        .tag:hover { background: #008080; color: white; }
+
         .carte-action { 
             background: #f9f9f9; border: 2px solid #008080; border-radius: 15px; 
             padding: 20px; margin: 15px 0; text-align: left; 
-            box-shadow: 5px 5px 0px #008080; transition: 0.3s;
+            box-shadow: 5px 5px 0px #008080; position: relative;
         }
 
-        .nom-titre { color: #E67E22; font-size: 1.2em; font-weight: bold; }
-        .badge-loc { background: #008080; color: white; padding: 3px 8px; border-radius: 8px; font-size: 0.8em; margin-left: 10px; }
+        .nom-titre { color: #E67E22; font-size: 1.1em; font-weight: bold; display: flex; justify-content: space-between; }
+        .badge-loc { background: #008080; color: white; padding: 3px 8px; border-radius: 8px; font-size: 0.75em; }
         
+        .type-info { font-size: 0.85em; color: #2e7d32; font-weight: bold; margin: 5px 0; display: block; }
+
         .reponse-sage { 
             margin-top: 15px; margin-left: 20px; padding: 10px; 
             background: #DCEDC8; border-left: 4px solid #2E7D32; 
-            border-radius: 8px; font-style: italic; color: #2E7D32;
+            border-radius: 8px; font-style: italic; color: #2E7D32; font-size: 0.9em;
         }
 
-        .btn-avis { color: #008080; cursor: pointer; font-weight: bold; font-size: 0.8em; margin-top: 10px; display: block; text-decoration: underline; }
-
+        .btn-avis { color: #008080; cursor: pointer; font-weight: bold; font-size: 0.8em; margin-top: 10px; display: inline-block; text-decoration: underline; }
         #loader { font-style: italic; color: #008080; margin-top: 20px; }
     </style>
 </head>
@@ -44,18 +47,24 @@
             <td><a href="index.html">Accueil</a></td>
             <td><a href="formulaire.html">Semer</a></td>
             <td><a href="jardin.html">Le Jardin</a></td>
-            <td><a href="impot.html">Déclarer</a></td>
+            <td><a href="impot.html">Déclarer Travaux</a></td>
             <td><a href="registre_public.html">Le Registre</a></td>
         </tr>
     </table>
 
-    <h2 style="color:#E67E22;">📖 Le Grand Livre de l'Impôt Citoyen</h2>
-    <p>Chaque action est une fleur qui ne fane jamais.</p>
-
+    <h2 style="color:#E67E22;">📖 Registre des Travaux & Communs</h2>
+    
     <div class="container">
-        <input type="text" id="searchBox" onkeyup="filtrer()" placeholder="🔍 Rechercher un jardinier ou une action...">
+        <input type="text" id="searchBox" onkeyup="filtrer()" placeholder="🔍 Chercher une ville, un nom, un brevet...">
         
-        <div id="loader">Chargement des archives impériales... 🌿</div>
+        <div class="filter-tags">
+            <span class="tag" onclick="setSearch('Infrastructures')">🏗️ Maintenance</span>
+            <span class="tag" onclick="setSearch('Travaux Ingrats')">🧹 Brigade Ingrate</span>
+            <span class="tag" onclick="setSearch('Ingénierie')">⚙️ Plans Libres</span>
+            <span class="tag" onclick="setSearch('')">Tout voir</span>
+        </div>
+
+        <div id="loader">Consultation des archives en cours... 🌿</div>
         <div id="flux-conteneur"></div>
     </div>
 
@@ -66,11 +75,9 @@
             try {
                 const r = await fetch(URL_SERVEUR);
                 const data = await r.json();
-                
                 document.getElementById('loader').style.display = "none";
                 const conteneur = document.getElementById('flux-conteneur');
                 
-                // Filtrage : on ne garde que les "impots"
                 const actions = data.filter(d => d.type === "impot").reverse();
                 const avis = data.filter(d => d.type === "avis_impot");
 
@@ -83,31 +90,27 @@
                     const div = document.createElement('div');
                     div.className = 'carte-action';
                     div.innerHTML = `
-                        <div class="nom-titre">👤 ${item.nom} <span class="badge-loc">📍 ${item.localisation}</span></div>
-                        <p style="margin: 10px 0;">"${item.message}"</p>
-                        <small style="color: #666;">Inscrit le ${item.date}</small>
+                        <div class="nom-titre">
+                            <span>👤 ${item.nom}</span>
+                            <span class="badge-loc">📍 ${item.localisation}</span>
+                        </div>
+                        <p style="margin: 10px 0; line-height: 1.4;">${item.message}</p>
+                        <small style="color: #666;">Enregistré le ${item.date}</small>
                         ${rHTML}
-                        <span class="btn-avis" onclick="apporterAvis('${item.nom}')">⚖️ Apporter un avis de Sage</span>
+                        <div style="margin-top:10px;">
+                            <span class="btn-avis" onclick="apporterAvis('${item.nom}')">⚖️ Apporter un Avis de Sage</span>
+                        </div>
                     `;
                     conteneur.appendChild(div);
                 });
             } catch (e) {
-                document.getElementById('loader').innerText = "Le livre est fermé pour le moment... réessaie plus tard !";
+                document.getElementById('loader').innerText = "Erreur de connexion au Registre.";
             }
         }
 
-        function apporterAvis(dest) {
-            const m = prompt("Ton message de Sage :");
-            if (m) {
-                const n = prompt("Ton nom :") || "Anonyme";
-                fetch(URL_SERVEUR, {
-                    method: 'POST', mode: 'no-cors',
-                    body: JSON.stringify({
-                        date: new Date().toLocaleDateString('fr-FR'),
-                        type: "avis_impot", nom: n, localisation: dest, message: m
-                    })
-                }).then(() => { alert("Sagesse enregistrée !"); location.reload(); });
-            }
+        function setSearch(term) {
+            document.getElementById('searchBox').value = term;
+            filtrer();
         }
 
         function filtrer() {
@@ -118,8 +121,21 @@
             }
         }
 
+        function apporterAvis(dest) {
+            const m = prompt("Votre avis ou validation :");
+            if (m) {
+                const n = prompt("Votre nom :") || "Sage Anonyme";
+                fetch(URL_SERVEUR, {
+                    method: 'POST', mode: 'no-cors',
+                    body: JSON.stringify({
+                        date: new Date().toLocaleDateString('fr-FR'),
+                        type: "avis_impot", nom: n, localisation: dest, message: m
+                    })
+                }).then(() => { alert("Avis enregistré !"); location.reload(); });
+            }
+        }
+
         chargerDonnees();
     </script>
-
 </body>
 </html>
