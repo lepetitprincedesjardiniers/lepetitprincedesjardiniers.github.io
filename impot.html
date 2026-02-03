@@ -7,23 +7,23 @@
     <style>
         body { font-family: 'Comic Sans MS', cursive; background-color: #E8F5E9; color: #004d40; margin: 0; text-align: center; }
         
-        /* Traducteur ULTRA DISCRET */
+        /* Traducteur ULTRA DISCRET en haut à gauche */
         .header-tools { display: flex; justify-content: flex-start; padding: 5px; background: rgba(255,255,255,0.3); }
-        #google_translate_element { transform: scale(0.8); transform-origin: top left; opacity: 0.7; transition: opacity 0.3s; }
+        #google_translate_element { transform: scale(0.7); transform-origin: top left; opacity: 0.6; transition: opacity 0.3s; }
         #google_translate_element:hover { opacity: 1; }
 
-        /* Menu */
+        /* Menu de navigation */
         .menu-table { margin: 15px auto; background-color: #008080; border-collapse: collapse; border-radius: 10px; overflow: hidden; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
         .menu-table td { padding: 10px 18px; border: 1px solid #FFFFFF; transition: 0.3s; }
         .menu-table td:hover { background: #2e7d32; }
         .menu-table a { text-decoration: none; color: #FFFFFF; font-weight: bold; font-size: 0.9em; }
         
-        /* Intro */
+        /* Conteneur d'introduction */
         .intro-box { background: white; border: 3px solid #008080; border-radius: 20px; width: 85%; max-width: 800px; margin: 20px auto; padding: 25px; box-shadow: 5px 5px 15px rgba(0,0,0,0.1); }
-        .zone-explication { text-align: left; background: #F1F8E9; border-left: 5px solid #008080; padding: 20px; margin-bottom: 25px; border-radius: 10px; line-height: 1.5; }
+        .zone-explication { text-align: left; background: #F1F8E9; border-left: 5px solid #008080; padding: 20px; margin-bottom: 25px; border-radius: 10px; line-height: 1.5; color: #004d40; }
         .zone-explication p { margin: 8px 0; }
 
-        /* Boutons */
+        /* Boutons principaux */
         .action-hub { margin: 20px 0; display: flex; justify-content: center; gap: 15px; flex-wrap: wrap; }
         .btn-principal { text-decoration: none; padding: 12px 25px; border-radius: 25px; font-weight: bold; transition: 0.3s; box-shadow: 3px 3px 0px #004d40; cursor: pointer; border: none; display: inline-block; }
         .btn-consult { background: #2e7d32; color: white; }
@@ -31,20 +31,35 @@
         .btn-principal:hover { transform: scale(1.03); filter: brightness(1.1); }
 
         /* Formulaire */
-        #section-formulaire { display: none; animation: fadeIn 0.5s ease; }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        #section-formulaire { display: none; animation: fadeIn 0.6s ease; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
+        
         .form-container { background: white; border: 5px solid #008080; border-radius: 30px; width: 85%; max-width: 800px; margin: 20px auto; padding: 25px; box-shadow: 8px 8px 0px #008080; }
         .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; text-align: left; }
-        label { display: block; margin-top: 8px; font-weight: bold; font-size: 0.9em; }
-        input, textarea, select { width: 100%; padding: 10px; border-radius: 10px; border: 2px solid #008080; font-family: inherit; }
+        label { display: block; margin-top: 10px; font-weight: bold; font-size: 0.9em; color: #00695c; }
+        input, textarea, select { width: 100%; padding: 10px; border-radius: 10px; border: 2px solid #008080; font-family: inherit; box-sizing: border-box; }
+        select { background-color: #f0fdf4; cursor: pointer; }
         .full-width { grid-column: 1 / -1; }
-        .btn-envoi { background: #008080; color: white; border: none; padding: 15px 35px; border-radius: 20px; font-weight: bold; cursor: pointer; margin-top: 15px; transition: 0.3s; }
+        
+        .btn-envoi { background: #008080; color: white; border: none; padding: 15px 35px; border-radius: 20px; font-weight: bold; cursor: pointer; margin-top: 15px; transition: 0.3s; width: 100%; }
         .btn-envoi:hover { background: #E67E22; transform: translateY(-2px); }
 
-        /* Copyright */
-        .copyright { margin: 50px 0 30px; font-size: 0.9em; color: #004d40; }
-        .copyright a { color: #E67E22; text-decoration: none; font-weight: bold; padding: 5px 10px; border-radius: 5px; transition: all 0.4s ease; display: inline-block; }
-        .copyright a:hover { background: #E67E22; color: white; transform: scale(1.2) rotate(-2deg); }
+        /* COPYRIGHT AVEC EFFET */
+        .copyright { margin: 50px 0 30px; font-size: 0.85em; color: #004d40; opacity: 0.8; }
+        .copyright a { 
+            color: #008080; 
+            text-decoration: none; 
+            font-weight: bold; 
+            padding: 4px 8px;
+            transition: all 0.4s ease;
+            display: inline-block;
+        }
+        .copyright a:hover { 
+            background: #E67E22; 
+            color: white; 
+            transform: scale(1.15) rotate(-2deg);
+            border-radius: 5px;
+        }
     </style>
 </head>
 <body>
@@ -58,32 +73,26 @@
 
     <script>
         function googleTranslateElementInit() { new google.translate.TranslateElement({pageLanguage: 'fr', layout: google.translate.TranslateElement.InlineLayout.SIMPLE}, 'google_translate_element'); }
-        
         function playPop() { document.getElementById('snd-pop').play().catch(()=>{}); }
-        
         function playOiseaux() { 
             const song = document.getElementById('snd-oiseaux');
             song.play().catch(()=>{});
-            // Arrête le son après 2 secondes
-            setTimeout(() => {
-                song.pause();
-                song.currentTime = 0;
-            }, 2000);
+            setTimeout(() => { song.pause(); song.currentTime = 0; }, 2000); // Arrête après 2s
         }
     </script>
     <script src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
 
     <table class="menu-table">
         <tr>
-            <td><a href="index.html">Accueil</a></td>
-            <td><a href="formulaire.html">Semer</a></td>
-            <td><a href="jardin.html">Le Jardin</a></td>
-            <td><a href="impot.html">Impôt Public</a></td>
-            <td><a href="registre_public.html">Le Registre</a></td>
+            <td><a href="index.html" onmouseover="playPop()">Accueil</a></td>
+            <td><a href="formulaire.html" onmouseover="playPop()">Semer</a></td>
+            <td><a href="jardin.html" onmouseover="playPop()">Le Jardin</a></td>
+            <td><a href="impot.html" onmouseover="playPop()">Impôt Public</a></td>
+            <td><a href="registre_public.html" onmouseover="playPop()">Le Registre</a></td>
         </tr>
     </table>
 
-    <h1 style="color: #00695c;">📜 Le Trésor Public</h1>
+    <h1 style="color: #00695c; text-shadow: 1px 1px 0px white;">📜 Le Trésor Public</h1>
 
     <div class="intro-box">
         <div class="zone-explication">
@@ -105,16 +114,33 @@
             <div class="form-grid">
                 <div><label>Identité / Pseudo :</label><input type="text" id="nom" required></div>
                 <div><label>Localisation :</label><input type="text" id="ville" required></div>
+                
                 <div class="full-width">
-                    <label>Sous-rubrique d'intervention :</label>
+                    <label>Sous-rubrique d'intervention précise :</label>
                     <select id="categorie">
-                        <option value="Maintenance">🏗️ Maintenance des Infrastructures Globales</option>
-                        <option value="Brigade Ingrate">🧹 La Brigade des Travaux Ingrats</option>
-                        <option value="Ingénierie">⚙️ Soutien Technique et Ingénierie</option>
+                        <optgroup label="🏗️ MAINTENANCE & RÉSEAUX">
+                            <option value="Maintenance-Eau">Gestion de l'Eau & Assainissement</option>
+                            <option value="Maintenance-Energie">Énergie & Flux (Solaire/Réseaux)</option>
+                            <option value="Maintenance-Num">Numérique, Fibres & Serveurs</option>
+                            <option value="Maintenance-Routes">Réseaux de Transport & Chemins</option>
+                        </optgroup>
+                        
+                        <optgroup label="🧹 BRIGADE DES TRAVAUX INGRATS">
+                            <option value="Ingrats-Dechets">Collecte & Valorisation des Déchets</option>
+                            <option value="Ingrats-Proprete">Nettoyage Public & Curage</option>
+                            <option value="Ingrats-Logistique">Manutention & Tâches Pénibles</option>
+                        </optgroup>
+                        
+                        <optgroup label="⚙️ INGÉNIERIE & COMMUNS MONDIAUX">
+                            <option value="Inge-Brevets">Conception de Brevets & Plans Libres</option>
+                            <option value="Inge-Global">Satellites, Câbles & Communs Mondiaux</option>
+                            <option value="Inge-Support">Support Technique Spécialisé</option>
+                        </optgroup>
                     </select>
                 </div>
-                <div class="full-width"><label>Description de l'action :</label><textarea id="message" rows="4" required></textarea></div>
-                <div class="full-width"><label>Besoins éventuels :</label><input type="text" id="besoin"></div>
+
+                <div class="full-width"><label>Description de la contribution :</label><textarea id="message" rows="4" required></textarea></div>
+                <div class="full-width"><label>Besoins (outils, aide...) :</label><input type="text" id="besoin"></div>
             </div>
             <button type="submit" id="btnEnvoi" class="btn-envoi" onmouseover="playPop()">GRAVER AU REGISTRE 🌿</button>
         </form>
@@ -135,9 +161,11 @@
 
         document.getElementById('impotForm').addEventListener('submit', function(e) {
             e.preventDefault();
-            playOiseaux(); // Le chant d'oiseaux de 2 secondes
+            playOiseaux();
             const btn = document.getElementById('btnEnvoi');
-            btn.innerText = "Traitement..."; btn.disabled = true;
+            btn.innerText = "Traitement en cours..."; btn.disabled = true;
+
+            const labelCat = document.getElementById('categorie').options[document.getElementById('categorie').selectedIndex].text;
 
             fetch(URL_SERVEUR, { 
                 method: 'POST', mode: 'no-cors', 
@@ -146,11 +174,11 @@
                     type: "impot",
                     nom: document.getElementById('nom').value,
                     localisation: document.getElementById('ville').value,
-                    message: `[${document.getElementById('categorie').value}] ${document.getElementById('message').value}`
+                    message: `[${labelCat}] ${document.getElementById('message').value} (Besoins: ${document.getElementById('besoin').value || 'Aucun'})`
                 })
             }).then(() => { 
-                setTimeout(() => { // On attend un peu pour laisser le son finir
-                    alert("Action gravée dans le Grand Livre !"); 
+                setTimeout(() => {
+                    alert("Votre action a été gravée dans les Communs !"); 
                     window.location.href = "registre_public.html"; 
                 }, 2000);
             });
