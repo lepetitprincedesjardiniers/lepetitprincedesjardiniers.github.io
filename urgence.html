@@ -2,27 +2,46 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Urgences - Le Trésor Public</title>
+    <title>URGENCES - L'Étoile de la Main Tendue</title>
     <style>
-        body { font-family: 'Comic Sans MS', cursive; background-color: #FFFF00; color: #000080; margin: 0; text-align: center; }
-        #google_translate_element { padding: 10px; background: rgba(255,255,255,0.5); border-bottom: 2px solid #e91e63; }
-        .menu-table { margin: 20px auto; background-color: #008080; border-collapse: collapse; border-radius: 10px; overflow: hidden; }
-        .menu-table td { padding: 12px 20px; border: 1px solid #FFFFFF; }
-        .menu-table a { text-decoration: none; color: #FFFFFF; font-weight: bold; }
-        .form-container { background: white; border: 5px solid #e91e63; border-radius: 30px; width: 90%; max-width: 650px; margin: 20px auto; padding: 25px; box-shadow: 10px 10px 0px #e91e63; }
-        label { display: block; margin-top: 15px; font-weight: bold; text-align: left; }
-        input, textarea, select { width: 100%; padding: 12px; margin: 8px 0; border-radius: 12px; border: 2px solid #e91e63; box-sizing: border-box; font-family: inherit; }
-        .btn-envoi { background: #e91e63; color: white; border: none; padding: 18px 40px; border-radius: 25px; font-weight: bold; cursor: pointer; font-size: 1.2em; }
-        .carte-alerte { background: white; border-left: 10px solid #e91e63; border-radius: 15px; padding: 20px; margin: 20px auto; max-width: 650px; text-align: left; box-shadow: 4px 4px 10px rgba(0,0,0,0.1); }
-        .reponse-aide { margin-left: 30px; margin-top: 10px; padding: 10px; background: #FFF9C4; border-left: 4px solid #008080; border-radius: 8px; font-size: 0.9em; }
+        body { 
+            font-family: 'Comic Sans MS', cursive; text-align: center; margin: 0; padding: 0; 
+            background: radial-gradient(circle, #4a0000 0%, #000000 100%);
+            color: #ffffff; overflow-x: hidden; min-height: 100vh;
+        }
+
+        /* MENU ET TRADUCTEUR (IDENTIQUE INDEX) */
+        .menu-table { margin: 20px auto; background-color: #008080; border-collapse: collapse; border-radius: 10px; z-index: 100; position: relative;}
+        .menu-table td { border: 1px solid #FFFFFF; }
+        .menu-table a { display: block; padding: 12px 20px; text-decoration: none; color: #FFFFFF; font-weight: bold; }
+        
+        /* L'ÉTOILE D'URGENCE */
+        .etoile-sos {
+            background: #ff1493; width: 200px; height: 200px; margin: 30px auto;
+            clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
+            display: flex; align-items: center; justify-content: center;
+            animation: pulse 2s infinite; box-shadow: 0 0 50px #ff1493;
+        }
+        @keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.1); opacity: 0.8; } 100% { transform: scale(1); } }
+
+        /* FORMULAIRE */
+        .form-urgence {
+            background: white; color: #333; max-width: 600px; margin: 20px auto;
+            padding: 25px; border-radius: 30px; border: 5px solid #ff1493;
+        }
+        input, textarea { width: 100%; padding: 10px; margin: 10px 0; border-radius: 10px; border: 2px solid #ff1493; box-sizing: border-box; }
+        .btn-envoi { background: #ff1493; color: white; border: none; padding: 15px 30px; border-radius: 20px; font-weight: bold; cursor: pointer; width: 100%; }
+
+        /* AFFICHAGE ANNONCES */
+        .liste-urgences { max-width: 800px; margin: 40px auto; padding: 10px; }
+        .carte-urgence { background: rgba(255,255,255,0.9); color: black; border-left: 10px solid #ff1493; margin-bottom: 15px; padding: 20px; border-radius: 10px; text-align: left; }
+
+        /* EFFETS (Étoiles) */
+        .star { position: fixed; color: white; z-index: -1; animation: twinkle 3s infinite; }
+        @keyframes twinkle { 0%, 100% { opacity: 0.3; } 50% { opacity: 1; } }
     </style>
 </head>
 <body>
-
-    <div id="google_translate_element"></div>
-    <script>function googleTranslateElementInit() { new google.translate.TranslateElement({pageLanguage: 'fr'}, 'google_translate_element'); }</script>
-    <script src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
 
     <table class="menu-table">
         <tr>
@@ -31,89 +50,50 @@
             <td><a href="jardin.html">Le Jardin</a></td>
             <td><a href="regulation.html">Régulation</a></td>
             <td><a href="urgence.html">Urgences</a></td>
+            <td><a href="aide.html">Aide</a></td>
         </tr>
     </table>
 
-    <h1>🚨 SOS : Besoins du Cœur</h1>
+    <div class="etoile-sos"><b>S.O.S</b></div>
+    <h1>Urgence & Détresse Vitale</h1>
+    <p><i>Soutien médical, nourriture de vie, charpente qui vacille...</i></p>
 
-    <div class="form-container">
-        <form id="urgencyForm">
-            <label>Ton Identité :</label>
-            <input type="text" id="nom" placeholder="Ton nom ou pseudo" required>
-
-            <label>Zone Géographique (Pays, Ville) :</label>
-            <input type="text" id="ville" placeholder="Ex: France, Pessac" required>
-
-            <label>Durée de l'annonce :</label>
-            <select id="duree">
-                <option value="1 mois">1 mois</option>
-                <option value="6 mois">6 mois</option>
-                <option value="A vie">A vie (Jusqu'à résolution)</option>
-            </select>
-
-            <label>Besoin de :</label>
-            <textarea id="message" rows="5" placeholder="Ex: J'ai faim ! J'ai ma toiture à refaire, j'ai besoin de 3.5 bras..."></textarea>
-
-            <button type="submit" id="btnEnvoi" class="btn-envoi">LANCER L'APPEL 🚀</button>
+    <div class="form-urgence">
+        <form id="urgForm">
+            <input type="text" id="nom" placeholder="Ton nom / Ton Cri" required>
+            <input type="text" id="loc" placeholder="Où es-tu ? (Ville / Pays)" required>
+            <textarea id="msg" rows="4" placeholder="Décris l'urgence (Ex: Besoin d'opérer la cervelle...)" required></textarea>
+            <button type="submit" class="btn-envoi">LANCER L'APPEL 🕊️</button>
         </form>
     </div>
 
-    <hr style="width: 80%; border: 1px solid #e91e63; opacity: 0.2;">
+    <div class="liste-urgences" id="flux-urgences">
+        </div>
 
-    <div style="max-width: 650px; margin: auto; padding: 10px;">
-        <input type="text" id="searchBox" onkeyup="filtrer()" placeholder="🔍 Chercher une ville, un pays ou un besoin..." style="border-color: #008080;">
-        <div id="flux-urgences"></div>
-    </div>
+    <footer>
+        <a href="transition-externe.html" style="color: grey; text-decoration: none;">© 2000 le petit prince des jardiniers</a>
+    </footer>
 
     <script>
         const URL_SERVEUR = "https://script.google.com/macros/s/AKfycbz4ncs9qw_AfmKSER5QST-P0OeKQggQaq86QC6liS53uZ9sx4Lo_-4-h1knXKWqgQMc/exec";
 
-        document.getElementById('urgencyForm').addEventListener('submit', function(e) {
+        document.getElementById('urgForm').addEventListener('submit', function(e) {
             e.preventDefault();
-            const btn = document.getElementById('btnEnvoi');
-            btn.innerText = "Envoi du SOS..."; btn.disabled = true;
-
-            fetch(URL_SERVEUR, { 
-                method: 'POST', mode: 'no-cors', 
-                body: JSON.stringify({
-                    date: new Date().toLocaleDateString('fr-FR'),
-                    type: "Urgence",
-                    nom: document.getElementById('nom').value,
-                    localisation: document.getElementById('ville').value + " (" + document.getElementById('duree').value + ")",
-                    message: document.getElementById('message').value
-                })
-            }).then(() => { alert("Signal envoyé !"); location.reload(); });
+            const d = { 
+                date: new Date().toLocaleDateString('fr-FR'), type: "URGENCE", 
+                nom: document.getElementById('nom').value, localisation: document.getElementById('loc').value, 
+                message: document.getElementById('msg').value 
+            };
+            fetch(URL_SERVEUR, { method: 'POST', mode: 'no-cors', body: JSON.stringify(d) })
+            .then(() => { alert("Appel envoyé !"); location.reload(); });
         });
-
-        function apporterAide(dest) {
-            const m = prompt("Comment peux-tu aider ?");
-            if (m) {
-                fetch(URL_SERVEUR, { method: 'POST', mode: 'no-cors', body: JSON.stringify({
-                    date: new Date().toLocaleDateString('fr-FR'), type: "avis", nom: prompt("Ton nom :") || "Anonyme", localisation: dest, message: m
-                })}).then(() => { alert("Merci !"); location.reload(); });
-            }
-        }
 
         fetch(URL_SERVEUR).then(r => r.json()).then(data => {
             const flux = document.getElementById('flux-urgences');
-            const alertes = data.filter(d => d.type === "Urgence").reverse();
-            const aides = data.filter(d => d.type === "avis");
-            alertes.forEach(u => {
-                let rHTML = ""; aides.filter(a => a.localisation === u.nom).forEach(a => {
-                    rHTML += `<div class="reponse-aide"><b>🤝 ${a.nom} :</b> ${a.message}</div>`;
-                });
-                const div = document.createElement('div');
-                div.className = 'carte-alerte';
-                div.innerHTML = `<small>${u.date}</small> - <b style="color:#e91e63">🚨 SOS</b><br><b>${u.nom}</b> à ${u.localisation}<p><b>Besoin de :</b> ${u.message}</p>${rHTML}<hr style="border:0; border-top: 1px dotted #e91e63;"><span style="color:#008080; cursor:pointer; font-weight:bold; font-size:0.8em;" onclick="apporterAide('${u.nom}')">🤝 RÉPONDRE</span>`;
-                flux.appendChild(div);
+            data.filter(i => i.type === "URGENCE").reverse().forEach(i => {
+                flux.innerHTML += `<div class="carte-urgence"><b>${i.nom}</b> (${i.date}) - ${i.localisation}<br><i>"${i.message}"</i></div>`;
             });
         });
-
-        function filtrer() {
-            let val = document.getElementById('searchBox').value.toLowerCase();
-            let cards = document.getElementsByClassName('carte-alerte');
-            for (let c of cards) { c.style.display = c.innerText.toLowerCase().includes(val) ? "" : "none"; }
-        }
     </script>
 </body>
 </html>
