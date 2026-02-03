@@ -5,32 +5,51 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Impôt Public - Participation Citoyenne</title>
     <style>
-        body { font-family: 'Comic Sans MS', cursive; background-color: #E8F5E9; color: #004d40; margin: 0; text-align: center; }
-        .menu-table { margin: 20px auto; background-color: #008080; border-collapse: collapse; border-radius: 10px; overflow: hidden; margin-left: auto; margin-right: auto; }
-        .menu-table td { padding: 12px 20px; border: 1px solid #FFFFFF; }
+        body { font-family: 'Comic Sans MS', cursive; background-color: #E8F5E9; color: #004d40; margin: 0; text-align: center; transition: all 0.3s ease; }
+        
+        #google_translate_element { padding: 10px; background: rgba(255,255,255,0.8); border-bottom: 2px solid #008080; }
+
+        .menu-table { margin: 20px auto; background-color: #008080; border-collapse: collapse; border-radius: 10px; overflow: hidden; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
+        .menu-table td { padding: 12px 20px; border: 1px solid #FFFFFF; transition: background 0.3s; }
+        .menu-table td:hover { background-color: #2e7d32; cursor: pointer; }
         .menu-table a { text-decoration: none; color: #FFFFFF; font-weight: bold; }
         
         .intro-box { background: white; border: 3px solid #008080; border-radius: 20px; width: 90%; max-width: 800px; margin: 20px auto; padding: 30px; box-shadow: 5px 5px 15px rgba(0,0,0,0.1); }
         
-        /* Zone pour tes 3 à 5 phrases */
         .zone-explication { text-align: left; background: #F1F8E9; border-left: 5px solid #008080; padding: 20px; margin-bottom: 25px; border-radius: 10px; color: #004d40; line-height: 1.6; }
         .zone-explication p { margin: 10px 0; font-size: 1.05em; }
 
         .action-hub { margin: 20px 0; display: flex; justify-content: center; gap: 20px; flex-wrap: wrap; }
-        .btn-principal { text-decoration: none; padding: 15px 30px; border-radius: 25px; font-weight: bold; transition: 0.3s; box-shadow: 4px 4px 0px #004d40; cursor: pointer; display: inline-block; }
+        .btn-principal { text-decoration: none; padding: 15px 30px; border-radius: 25px; font-weight: bold; transition: 0.3s; box-shadow: 4px 4px 0px #004d40; cursor: pointer; display: inline-block; border: none; }
         .btn-consult { background: #2e7d32; color: white; }
         .btn-declare { background: #FFFFFF; color: #2e7d32; border: 2px solid #2e7d32; }
+        
+        /* Effets de survol */
+        .btn-principal:hover { transform: scale(1.05); box-shadow: 2px 2px 0px #004d40; filter: brightness(1.1); }
 
-        #section-formulaire { display: none; }
+        #section-formulaire { display: none; animation: fadeIn 0.6s ease; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        
         .form-container { background: white; border: 5px solid #008080; border-radius: 30px; width: 90%; max-width: 800px; margin: 20px auto; padding: 25px; box-shadow: 10px 10px 0px #008080; }
         .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; text-align: left; }
-        label { display: block; margin-top: 10px; font-weight: bold; color: #00695c; font-size: 0.9em; }
+        label { display: block; margin-top: 10px; font-weight: bold; color: #00695c; }
         input, textarea, select { width: 100%; padding: 12px; margin: 5px 0; border-radius: 12px; border: 2px solid #008080; box-sizing: border-box; font-family: inherit; }
-        .full-width { grid-column: 1 / -1; }
-        .btn-envoi { background: #008080; color: white; border: none; padding: 18px 40px; border-radius: 25px; font-weight: bold; cursor: pointer; font-size: 1.2em; margin-top: 20px; }
+        input:focus { border-color: #E67E22; outline: none; background: #FFFDE7; }
+        
+        .btn-envoi { background: #008080; color: white; border: none; padding: 18px 40px; border-radius: 25px; font-weight: bold; cursor: pointer; font-size: 1.2em; margin-top: 20px; transition: 0.3s; }
+        .btn-envoi:hover { background: #E67E22; transform: translateY(-3px); }
+
+        .copyright { margin: 40px 0 20px; font-size: 0.8em; color: #004d40; opacity: 0.7; }
     </style>
 </head>
 <body>
+
+    <div id="google_translate_element"></div>
+    <script>function googleTranslateElementInit(){ new google.translate.TranslateElement({pageLanguage:'fr'},'google_translate_element'); }</script>
+    <script src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+
+    <audio id="snd-pop" src="https://www.soundjay.com/buttons/sounds/button-37.mp3"></audio>
+    <audio id="snd-valid" src="https://www.soundjay.com/buttons/sounds/button-10.mp3"></audio>
 
     <table class="menu-table">
         <tr>
@@ -54,22 +73,16 @@
         </div>
 
         <div class="action-hub">
-            <a href="registre_public.html" class="btn-principal btn-consult">📖 CONSULTER LE REGISTRE</a>
-            <div onclick="ouvrirFormulaire()" class="btn-principal btn-declare">✍️ DÉCLARER UNE ACTION</div>
+            <a href="registre_public.html" class="btn-principal btn-consult" onmouseover="playPop()">📖 CONSULTER LE REGISTRE</a>
+            <div onclick="ouvrirFormulaire()" class="btn-principal btn-declare" onmouseover="playPop()">✍️ DÉCLARER UNE ACTION</div>
         </div>
     </div>
 
     <div id="section-formulaire" class="form-container">
         <form id="impotForm">
             <div class="form-grid">
-                <div>
-                    <label>Identité / Pseudo :</label>
-                    <input type="text" id="nom" required>
-                </div>
-                <div>
-                    <label>Localisation :</label>
-                    <input type="text" id="ville" required>
-                </div>
+                <div><label>Identité / Pseudo :</label><input type="text" id="nom" required></div>
+                <div><label>Localisation :</label><input type="text" id="ville" required></div>
                 <div class="full-width">
                     <label>Sous-rubrique d'intervention :</label>
                     <select id="categorie">
@@ -78,31 +91,34 @@
                         <option value="Ingénierie">⚙️ Soutien Technique et Ingénierie</option>
                     </select>
                 </div>
-                <div class="full-width">
-                    <label>Description de la contribution :</label>
-                    <textarea id="message" rows="4" required></textarea>
-                </div>
-                <div class="full-width">
-                    <label>Besoins :</label>
-                    <input type="text" id="besoin">
-                </div>
+                <div class="full-width"><label>Description :</label><textarea id="message" rows="4" required></textarea></div>
+                <div class="full-width"><label>Besoins :</label><input type="text" id="besoin"></div>
             </div>
-            <button type="submit" id="btnEnvoi" class="btn-envoi">GRAVER AU REGISTRE 🌿</button>
+            <button type="submit" id="btnEnvoi" class="btn-envoi" onmouseover="playPop()">GRAVER AU REGISTRE 🌿</button>
         </form>
+    </div>
+
+    <div class="copyright">
+        © 2026 - Le Jardin des Sages - Concept de Trésor Public Citoyen - Tous droits réservés
     </div>
 
     <script>
         const URL_SERVEUR = "https://script.google.com/macros/s/AKfycbz4ncs9qw_AfmKSER5QST-P0OeKQggQaq86QC6liS53uZ9sx4Lo_-4-h1knXKWqgQMc/exec";
+        
+        function playPop() { document.getElementById('snd-pop').play().catch(()=>{}); }
+        function playValid() { document.getElementById('snd-valid').play().catch(()=>{}); }
 
         function ouvrirFormulaire() {
+            playPop();
             document.getElementById('section-formulaire').style.display = 'block';
             window.scrollTo({ top: document.getElementById('section-formulaire').offsetTop, behavior: 'smooth' });
         }
 
         document.getElementById('impotForm').addEventListener('submit', function(e) {
             e.preventDefault();
+            playValid();
             const btn = document.getElementById('btnEnvoi');
-            btn.innerText = "Traitement..."; btn.disabled = true;
+            btn.innerText = "Gravure en cours..."; btn.disabled = true;
 
             const msgComplet = `[${document.getElementById('categorie').value}] ${document.getElementById('message').value} (Besoin : ${document.getElementById('besoin').value || 'Aucun'})`;
 
@@ -116,7 +132,7 @@
                     message: msgComplet
                 })
             }).then(() => { 
-                alert("Action enregistrée."); 
+                alert("Action gravée dans les Communs !"); 
                 window.location.href = "registre_public.html"; 
             });
         });
