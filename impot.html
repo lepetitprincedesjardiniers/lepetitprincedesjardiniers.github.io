@@ -10,9 +10,14 @@
         .menu-table td { padding: 12px 20px; border: 1px solid #FFFFFF; }
         .menu-table a { text-decoration: none; color: #FFFFFF; font-weight: bold; }
         
-        .intro-box { background: white; border: 3px solid #008080; border-radius: 20px; width: 90%; max-width: 800px; margin: 20px auto; padding: 25px; box-shadow: 5px 5px 15px rgba(0,0,0,0.1); }
+        .intro-box { background: white; border: 3px solid #008080; border-radius: 20px; width: 90%; max-width: 800px; margin: 20px auto; padding: 30px; box-shadow: 5px 5px 15px rgba(0,0,0,0.1); }
+        
+        /* Zone pour tes 3 à 5 phrases */
+        .zone-explication { text-align: left; background: #F1F8E9; border-left: 5px solid #008080; padding: 20px; margin-bottom: 25px; border-radius: 10px; color: #004d40; line-height: 1.6; }
+        .zone-explication p { margin: 10px 0; font-size: 1.05em; }
+
         .action-hub { margin: 20px 0; display: flex; justify-content: center; gap: 20px; flex-wrap: wrap; }
-        .btn-principal { text-decoration: none; padding: 15px 25px; border-radius: 25px; font-weight: bold; transition: 0.3s; box-shadow: 4px 4px 0px #004d40; cursor: pointer; }
+        .btn-principal { text-decoration: none; padding: 15px 30px; border-radius: 25px; font-weight: bold; transition: 0.3s; box-shadow: 4px 4px 0px #004d40; cursor: pointer; display: inline-block; }
         .btn-consult { background: #2e7d32; color: white; }
         .btn-declare { background: #FFFFFF; color: #2e7d32; border: 2px solid #2e7d32; }
 
@@ -40,11 +45,17 @@
     <h1>📜 Le Trésor Public : Participation aux Communs</h1>
 
     <div class="intro-box">
-        <h2>Travaux & Participation</h2>
-        <p>Ici, on remplace la fiscalité par la contribution aux tâches critiques. Choisissez votre mode d'action :</p>
+        <div class="zone-explication">
+            <p>XXX (Phrase 1)</p>
+            <p>XXX (Phrase 2)</p>
+            <p>XXX (Phrase 3)</p>
+            <p>XXX (Phrase 4)</p>
+            <p>XXX (Phrase 5)</p>
+        </div>
+
         <div class="action-hub">
-            <a href="registre_public.html" class="btn-principal btn-consult">📖 CONSULTER LES ANNONCES</a>
-            <div onclick="ouvrirFormulaire()" class="btn-principal btn-declare">✍️ PASSER UNE ANNONCE</div>
+            <a href="registre_public.html" class="btn-principal btn-consult">📖 CONSULTER LE REGISTRE</a>
+            <div onclick="ouvrirFormulaire()" class="btn-principal btn-declare">✍️ DÉCLARER UNE ACTION</div>
         </div>
     </div>
 
@@ -53,30 +64,30 @@
             <div class="form-grid">
                 <div>
                     <label>Identité / Pseudo :</label>
-                    <input type="text" id="nom" placeholder="Qui êtes-vous ?" required>
+                    <input type="text" id="nom" required>
                 </div>
                 <div>
-                    <label>Localisation de l'action :</label>
-                    <input type="text" id="ville" placeholder="Ville, Cité ou Zone" required>
+                    <label>Localisation :</label>
+                    <input type="text" id="ville" required>
                 </div>
                 <div class="full-width">
                     <label>Sous-rubrique d'intervention :</label>
                     <select id="categorie">
-                        <option value="Maintenance">🏗️ Maintenance (Eaux, Numérique, Routes, Satellites)</option>
-                        <option value="Brigade Ingrate">🧹 Brigade des Travaux Ingrats (Rotation Déchets/Assainissement)</option>
-                        <option value="Ingénierie">⚙️ Soutien Technique & Ingénierie (Brevets et Plans Libres)</option>
+                        <option value="Maintenance">🏗️ Maintenance des Infrastructures Globales</option>
+                        <option value="Brigade Ingrate">🧹 La Brigade des Travaux Ingrats</option>
+                        <option value="Ingénierie">⚙️ Soutien Technique et Ingénierie</option>
                     </select>
                 </div>
                 <div class="full-width">
-                    <label>Description de votre contribution :</label>
-                    <textarea id="message" rows="4" placeholder="Détaillez votre action pour la communauté..." required></textarea>
+                    <label>Description de la contribution :</label>
+                    <textarea id="message" rows="4" required></textarea>
                 </div>
                 <div class="full-width">
-                    <label>Besoins (facultatif) :</label>
-                    <input type="text" id="besoin" placeholder="Matériel ou aide souhaitée pour continuer">
+                    <label>Besoins :</label>
+                    <input type="text" id="besoin">
                 </div>
             </div>
-            <button type="submit" id="btnEnvoi" class="btn-envoi">AJOUTER AU REGISTRE 🌿</button>
+            <button type="submit" id="btnEnvoi" class="btn-envoi">GRAVER AU REGISTRE 🌿</button>
         </form>
     </div>
 
@@ -91,9 +102,9 @@
         document.getElementById('impotForm').addEventListener('submit', function(e) {
             e.preventDefault();
             const btn = document.getElementById('btnEnvoi');
-            btn.innerText = "Inscription..."; btn.disabled = true;
+            btn.innerText = "Traitement..."; btn.disabled = true;
 
-            const msgComplet = `[${document.getElementById('categorie').value}] ${document.getElementById('message').value} (Besoins : ${document.getElementById('besoin').value || 'Aucun'})`;
+            const msgComplet = `[${document.getElementById('categorie').value}] ${document.getElementById('message').value} (Besoin : ${document.getElementById('besoin').value || 'Aucun'})`;
 
             fetch(URL_SERVEUR, { 
                 method: 'POST', mode: 'no-cors', 
@@ -105,7 +116,7 @@
                     message: msgComplet
                 })
             }).then(() => { 
-                alert("Votre action a été ajoutée au Registre Public."); 
+                alert("Action enregistrée."); 
                 window.location.href = "registre_public.html"; 
             });
         });
