@@ -1,30 +1,23 @@
-<!DOCTYPE html> 
+<!DOCTYPE html>
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
     <title>Le Jardin de la Fraternité - Registre</title>
     <style>
-        /* --- STYLE DE BASE --- */
+        /* --- STYLE DE BASE (CONSERVÉ) --- */
         body { font-family: 'Comic Sans MS', cursive; text-align: center; margin: 0; padding: 0; background-color: #FFFF00; color: #000080; overflow-x: hidden; min-height: 100vh; padding-bottom: 80px; }
-
         .top-bar { position: relative; width: 100%; min-height: 40px; background: rgba(255,255,255,0.3); padding: 5px 0; }
         #google_translate_element { position: absolute; left: 10px; top: 10px; transform: scale(0.8); transform-origin: top left; }
-        
         .menu-table { margin: 5px auto; border-radius: 10px; background-color: #008080; border-collapse: collapse; }
         .menu-table td { padding: 8px 15px; border: 1px solid #FFFFFF; }
         .menu-table a { text-decoration: none; color: #FFFFFF; font-weight: bold; font-size: 0.85em; }
         .menu-table td:hover { background-color: #006666; }
-
         .phrase-rose { color: #ff1493; font-weight: bold; font-size: 1.1em; text-shadow: 1px 1px 2px #ff69b4; animation: eclat 1.5s infinite alternate; margin-top: 5px; }
         @keyframes eclat { from { opacity: 0.7; } to { opacity: 1; } }
         .phrase-sous { color: #000080; font-weight: bold; margin: 1px 0; font-size: 0.9em; }
-
-        /* ZONE DÉCO HAUTE */
         #jardin-sacre { position: relative; height: 100px; width: 100%; overflow: hidden; background: rgba(255,255,255,0.1); margin-top: 5px; }
         .fleur-clonée { position: absolute; font-size: 25px; animation: apparitionFleur 1s ease-out forwards; }
         @keyframes apparitionFleur { 0% { transform: scale(0) rotate(-50deg); opacity: 0; } 100% { transform: scale(1) rotate(0deg); opacity: 1; } }
-
-        /* FLEURS ÉTOILES VOLANTES */
         .fleur-etoile { position: fixed; pointer-events: none; z-index: 999; font-size: 15px; animation: volEtoile linear infinite; opacity: 0.8; }
         @keyframes volEtoile {
             0% { transform: translate(0, 0) rotate(0deg); }
@@ -33,8 +26,6 @@
             75% { transform: translate(-100px, 100px) rotate(270deg); }
             100% { transform: translate(0, 0) rotate(360deg); }
         }
-
-        /* MOTEUR DE RECHERCHE */
         .search-box { background: #008080; padding: 12px; margin: 10px auto 10px auto; max-width: 700px; border-radius: 20px; color: white; box-shadow: 0 4px 15px rgba(0,0,0,0.2); position: relative; z-index: 10; }
         .search-container { display: flex; flex-direction: column; gap: 8px; align-items: center; }
         .search-row { display: flex; gap: 10px; width: 100%; justify-content: center; }
@@ -42,11 +33,8 @@
         .search-item label { font-size: 0.9em; margin-bottom: 4px; font-weight: bold; color: #FFFFFF; }
         .search-item input { padding: 10px; border-radius: 12px; border: none; outline: none; text-align: center; color: #004D40; font-weight: bold; width: 90%; }
         .input-large { width: 95% !important; max-width: 550px; }
-
-        /* REGISTRE & CARTES */
         .registre-titre { color: #008080; margin: 10px 0 5px 0; font-size: 1.2em; }
-        .mur-reel { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 15px; padding: 10px; max-width: 1200px; margin: 0 auto 50px auto; }
-        
+        .mur-reel { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 15px; padding: 10px; max-width: 1200px; margin: 0 auto 20px auto; }
         .carte-message { 
             background: rgba(255, 255, 255, 0.95); border: 3px solid #008080; border-radius: 12px; padding: 12px; 
             box-shadow: 4px 4px 0px #008080; transition: 0.3s; color: #333; text-align: left; cursor: pointer; 
@@ -54,8 +42,6 @@
             overflow-wrap: break-word; word-break: break-word; white-space: pre-wrap;
         }
         .carte-message:hover { transform: scale(1.05); box-shadow: 0px 10px 20px rgba(0,0,0,0.2); border-color: #ff1493; }
-
-        /* ZOOM GÉANT */
         #fond-sombre { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); z-index: 2000; justify-content: center; align-items: center; }
         .message-geant { 
             background: #FFFFF0; width: 92%; max-width: 850px; max-height: 85vh; padding: 35px; border-radius: 30px; 
@@ -63,8 +49,6 @@
             overflow-wrap: break-word; word-break: break-word; white-space: pre-wrap;
         }
         .bouton-fermer { position: absolute; top: 10px; right: 15px; background: #FF1493; color: white; border: 4px solid white; border-radius: 50%; width: 40px; height: 40px; cursor: pointer; font-weight: bold; font-size: 20px; z-index: 10; }
-
-        /* COPYRIGHT DISCRET */
         .copyright-wrapper { 
             position: fixed; bottom: 5px; left: 50%; transform: translateX(-50%); 
             background: rgba(255,255,255,0.7); padding: 5px 15px; border-radius: 15px; 
@@ -74,8 +58,6 @@
         .copyright-wrapper a { text-decoration: none; color: #ff1493; font-weight: bold; }
         .copyright-wrapper:hover { background: #ff1493; }
         .copyright-wrapper:hover a { color: white; }
-        
-        /* ANIMAUX ET BULLES */
         #animal-container { position: fixed; z-index: 900; white-space: nowrap; display: flex; align-items: center; pointer-events: none; flex-direction: row; }
         #corps-animal { font-size: 28px; order: 1; }
         #bulle-texte { 
@@ -84,6 +66,13 @@
             opacity: 0; transition: opacity 0.3s; max-width: 180px; font-size: 0.75em; 
             white-space: normal; overflow-wrap: break-word;
         }
+        /* NOUVEAU STYLE BOUTON */
+        #btn-voir-plus {
+            display: none; margin: 20px auto; padding: 15px 30px; background: #008080; color: white;
+            border: 3px solid white; border-radius: 30px; font-family: 'Comic Sans MS', cursive;
+            font-weight: bold; cursor: pointer; box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+        }
+        #btn-voir-plus:hover { background: #006666; transform: scale(1.05); }
     </style>
 </head>
 <body>
@@ -134,7 +123,10 @@
 
     <h3 class="registre-titre">📖 Registre de la Fraternité</h3>
     <div id="chargement" style="font-weight: bold; color: #008080;">✨ Récolte des messages en cours...</div>
+    
     <div class="mur-reel" id="mur-messages"></div>
+    
+    <button id="btn-voir-plus" onclick="chargerPlus()">Voir plus de graines... 🌱</button>
 
     <div id="fond-sombre" onclick="fermerGrandMessage()">
         <div class="message-geant" onclick="event.stopPropagation()">
@@ -160,25 +152,66 @@
     <script>
         const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxz40XE2KiPXTNZsW-mIg-fm55EivK0r9wzZ5ECFRdEIY53nYH9nLGYRoI71OX93oII/exec"; 
         let toutesLesAnnonces = [];
+        let annoncesFiltreesGlobal = [];
+        let indexActuel = 0;
+        const TAILLE_PAGE = 50; // Nombre d'annonces par bloc
+        let debounceTimer;
 
         async function chargerAnnonces() {
             try {
                 const response = await fetch(SCRIPT_URL);
                 const data = await response.json();
                 toutesLesAnnonces = data.reverse(); 
-                afficherAnnonces(toutesLesAnnonces);
                 document.getElementById('chargement').style.display = 'none';
+                executerFiltrage(); // Affichage initial
             } catch (e) { document.getElementById('chargement').innerText = "Erreur."; }
         }
 
-        // --- FONCTION MAGIQUE POUR TROUVER LA DATE ---
+        // --- DEBOUNCE TECHNIQUE ---
+        function filtrerAnnonces() {
+            clearTimeout(debounceTimer);
+            debounceTimer = setTimeout(() => {
+                executerFiltrage();
+            }, 300);
+        }
+
+        function executerFiltrage() {
+            const pays = document.getElementById('searchPays').value.toLowerCase().trim();
+            const ville = document.getElementById('searchVille').value.toLowerCase().trim();
+            const mot = document.getElementById('searchKeyword').value.toLowerCase().trim();
+
+            annoncesFiltreesGlobal = toutesLesAnnonces.filter(ann => {
+                const matchPays = (ann.pays || "").toLowerCase().includes(pays);
+                const matchVille = (ann.ville || "").toLowerCase().includes(ville);
+                const matchMot = (ann.message || "").toLowerCase().includes(mot) || (ann.nom || "").toLowerCase().includes(mot);
+                return matchPays && matchVille && matchMot;
+            });
+
+            // Mise à jour du compteur de résultats
+            const nb = annoncesFiltreesGlobal.length;
+            document.querySelector('.registre-titre').innerText = `📖 Registre (${nb} graines trouvées)`;
+
+            indexActuel = 0;
+            document.getElementById('mur-messages').innerHTML = '';
+            chargerPlus();
+        }
+
+        // --- FILTRAGE OPTIMISÉ (PAGINATION) ---
+        function chargerPlus() {
+            const suite = annoncesFiltreesGlobal.slice(indexActuel, indexActuel + TAILLE_PAGE);
+            afficherAnnonces(suite);
+            indexActuel += TAILLE_PAGE;
+
+            // Afficher le bouton si il reste des résultats
+            const btn = document.getElementById('btn-voir-plus');
+            btn.style.display = (indexActuel < annoncesFiltreesGlobal.length) ? 'block' : 'none';
+        }
+
         function extraireDate(objet) {
-            // Liste des clés à tester en priorité
             const clesPrioritaires = ['timestamp', 'Horodateur', 'date', 'Date', 'Time'];
             for (let cle of clesPrioritaires) {
                 if (objet[cle]) return formaterDate(objet[cle]);
             }
-            // Sinon, on cherche n'importe quelle valeur qui ressemble à une date
             for (let cle in objet) {
                 let valeur = objet[cle];
                 if (valeur && (typeof valeur === 'string' || typeof valeur === 'number')) {
@@ -198,7 +231,8 @@
 
         function afficherAnnonces(annonces) {
             const conteneur = document.getElementById('mur-messages');
-            conteneur.innerHTML = '';
+            const fragment = document.createDocumentFragment();
+
             annonces.forEach(ann => {
                 const carte = document.createElement('div');
                 carte.className = 'carte-message';
@@ -215,22 +249,9 @@
                         <span style="display:block; text-align:left;">📍 ${ann.ville || ""}, ${ann.pays || ""}</span>
                     </div>
                 `;
-                conteneur.appendChild(carte);
+                fragment.appendChild(carte);
             });
-        }
-
-        function filtrerAnnonces() {
-            const pays = document.getElementById('searchPays').value.toLowerCase();
-            const ville = document.getElementById('searchVille').value.toLowerCase();
-            const mot = document.getElementById('searchKeyword').value.toLowerCase();
-
-            const filtrees = toutesLesAnnonces.filter(ann => {
-                const matchPays = (ann.pays || "").toLowerCase().includes(pays);
-                const matchVille = (ann.ville || "").toLowerCase().includes(ville);
-                const matchMot = (ann.message || "").toLowerCase().includes(mot) || (ann.nom || "").toLowerCase().includes(mot);
-                return matchPays && matchVille && matchMot;
-            });
-            afficherAnnonces(filtrees);
+            conteneur.appendChild(fragment);
         }
 
         function ouvrirGrandMessage(ann) {
@@ -249,7 +270,7 @@
 
         function fermerGrandMessage() { document.getElementById('fond-sombre').style.display = 'none'; }
 
-        /* --- EFFETS ET ANIMATIONS --- */
+        /* --- EFFETS ET ANIMATIONS (CONSERVÉS) --- */
         const animauxEmojis = ['🕊️', '🦋', '🐝', '🐞', '🦜'];
         const fleursEmojis = ['🌸', '🌼', '🌻', '🌺', '🌷'];
 
@@ -270,10 +291,8 @@
             const corps = document.getElementById('corps-animal');
             const bulle = document.getElementById('bulle-texte');
             const phrases = ["Un don !", "Fraternité", "Coucou", "Bel esprit"];
-            
             let x = Math.random() * window.innerWidth;
             let y = Math.random() * window.innerHeight;
-            
             setInterval(() => {
                 x = Math.random() * (window.innerWidth - 80);
                 y = Math.random() * (window.innerHeight - 80);
@@ -285,7 +304,6 @@
                 bulle.style.opacity = 1;
                 setTimeout(() => bulle.style.opacity = 0, 1500);
             }, 6000);
-
             corps.style.pointerEvents = "auto";
             corps.style.cursor = "pointer";
             corps.onclick = (e) => {
@@ -326,6 +344,5 @@
             document.getElementById('chantOiseaux').play().catch(() => {});
         };
     </script>
-
 </body>
 </html>
