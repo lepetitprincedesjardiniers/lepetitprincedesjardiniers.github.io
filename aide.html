@@ -6,25 +6,29 @@
     <style>
         body { 
             font-family: 'Comic Sans MS', cursive; text-align: center; margin: 0; padding: 0; 
-            background: radial-gradient(circle, #1a0a2e 0%, #000000 100%);
-            color: #ffffff; min-height: 100vh;
+            background: radial-gradient(circle at center, #1a0a2e 0%, #000000 100%);
+            color: #ffffff; overflow-x: hidden; min-height: 100vh;
         }
 
-        .menu-table { margin: 20px auto; background-color: #008080; border-collapse: collapse; border-radius: 10px; }
-        .menu-table td { border: 1px solid #FFFFFF; }
+        /* MENU FIDÈLE */
+        .menu-table { margin: 10px auto; border-radius: 10px; background-color: #008080; border-collapse: collapse; position: relative; z-index: 10; }
+        .menu-table td { border: 1px solid #FFFFFF; transition: 0.3s; }
         .menu-table a { display: block; padding: 12px 20px; text-decoration: none; color: #FFFFFF; font-weight: bold; }
 
-        .coeur-aide { font-size: 80px; margin: 20px; filter: drop-shadow(0 0 20px #9370DB); animation: float 3s infinite ease-in-out; }
+        .coeur { font-size: 80px; margin: 20px; animation: float 3s infinite ease-in-out; filter: drop-shadow(0 0 15px #9370DB); }
         @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-15px); } }
 
-        .form-aide {
-            background: #F3E5F5; color: #4a148c; max-width: 600px; margin: 20px auto;
-            padding: 25px; border-radius: 30px; border: 5px solid #9370DB;
+        /* FORMULAIRE AIDE */
+        .form-container { 
+            background: #F3E5F5; border: 5px solid #9370DB; border-radius: 30px; 
+            width: 90%; max-width: 600px; margin: 20px auto; padding: 25px; color: #4a148c;
         }
-        input, textarea { width: 100%; padding: 10px; margin: 10px 0; border-radius: 10px; border: 2px solid #9370DB; box-sizing: border-box; }
-        .btn-envoi { background: #9370DB; color: white; border: none; padding: 15px 30px; border-radius: 20px; font-weight: bold; cursor: pointer; width: 100%; }
+        input, textarea { width: 100%; padding: 12px; margin: 8px 0; border-radius: 12px; border: 2px solid #9370DB; box-sizing: border-box; font-family: inherit; }
+        .btn-envoi { background: #9370DB; color: white; border: none; padding: 18px; border-radius: 25px; font-weight: bold; cursor: pointer; width: 100%; font-size: 1.1em; }
 
-        .carte-aide { background: white; color: #333; border-left: 10px solid #9370DB; margin-bottom: 15px; padding: 20px; border-radius: 10px; text-align: left; box-shadow: 0 4px 15px rgba(147,112,219,0.2); }
+        /* LISTE DES ANNONCES */
+        .liste-annonces { max-width: 700px; margin: 40px auto; padding: 20px; }
+        .carte { background: white; border-left: 10px solid #9370DB; border-radius: 15px; padding: 20px; margin-bottom: 20px; text-align: left; color: #333; box-shadow: 0 4px 15px rgba(147,112,219,0.3); }
     </style>
 </head>
 <body>
@@ -34,45 +38,49 @@
             <td><a href="index.html">Accueil</a></td>
             <td><a href="formulaire.html">Semer</a></td>
             <td><a href="jardin.html">Le Jardin</a></td>
+            <td><a href="impot.html">Impôts</a></td>
             <td><a href="regulation.html">Régulation</a></td>
             <td><a href="urgence.html">Urgences</a></td>
             <td><a href="aide.html">Aide</a></td>
         </tr>
     </table>
 
-    <div class="coeur-aide">💖</div>
+    <div class="coeur">💖</div>
     <h1>Aide & Écoute</h1>
-    <p><i>Câlin de l'âme, oreille attentive, besoin d'un espoir...</i></p>
+    <p><i>Le Câlin de l'Âme.</i></p>
 
-    <div class="form-aide">
+    <div class="form-container">
         <form id="aideForm">
-            <input type="text" id="nom" placeholder="Ton petit nom">
-            <textarea id="msg" rows="4" placeholder="De quoi ton cœur a-t-il besoin ?"></textarea>
+            <input type="text" id="nomA" placeholder="Ton petit nom" required>
+            <textarea id="msgA" rows="4" placeholder="Mon cœur est lourd, je cherche une oreille attentive..." required></textarea>
             <button type="submit" class="btn-envoi">DÉPOSER MON CŒUR 🕊️</button>
         </form>
     </div>
 
-    <div style="max-width: 800px; margin: 40px auto; padding: 10px;" id="flux-aide">
-        </div>
+    <div class="liste-annonces">
+        <h2 style="color: #9370DB;">🌸 Les Cœurs à Écouter</h2>
+        <div id="flux-aide"><p>Appel de la douceur...</p></div>
+    </div>
+
+    <footer>
+        <a href="transition-externe.html" style="color: rgba(255,255,255,0.4); text-decoration: none;">© 2000 le petit prince des jardiniers</a>
+    </footer>
 
     <script>
-        const URL_SERVEUR = "https://script.google.com/macros/s/AKfycbz4ncs9qw_AfmKSER5QST-P0OeKQggQaq86QC6liS53uZ9sx4Lo_-4-h1knXKWqgQMc/exec";
+        const URL = "https://script.google.com/macros/s/AKfycbz4ncs9qw_AfmKSER5QST-P0OeKQggQaq86QC6liS53uZ9sx4Lo_-4-h1knXKWqgQMc/exec";
 
         document.getElementById('aideForm').addEventListener('submit', function(e) {
             e.preventDefault();
-            const d = { 
-                date: new Date().toLocaleDateString('fr-FR'), type: "AIDE", 
-                nom: document.getElementById('nom').value, localisation: "Espace Cœur", 
-                message: document.getElementById('msg').value 
-            };
-            fetch(URL_SERVEUR, { method: 'POST', mode: 'no-cors', body: JSON.stringify(d) })
-            .then(() => { alert("Message déposé avec douceur."); location.reload(); });
+            const btn = e.target.querySelector('button');
+            btn.innerText = "Le message s'envole..."; btn.disabled = true;
+            const d = { date: new Date().toLocaleDateString('fr-FR'), type: "AIDE", nom: document.getElementById('nomA').value, localisation: "Espace Cœur", message: document.getElementById('msgA').value };
+            fetch(URL, { method: 'POST', mode: 'no-cors', body: JSON.stringify(d) }).then(() => { alert("Message déposé avec douceur."); location.reload(); });
         });
 
-        fetch(URL_SERVEUR).then(r => r.json()).then(data => {
-            const flux = document.getElementById('flux-aide');
+        fetch(URL).then(r => r.json()).then(data => {
+            const f = document.getElementById('flux-aide'); f.innerHTML = "";
             data.filter(i => i.type === "AIDE").reverse().forEach(i => {
-                flux.innerHTML += `<div class="carte-aide"><b>${i.nom}</b> (${i.date})<br>"${i.message}"</div>`;
+                f.innerHTML += `<div class="carte"><small>${i.date}</small><br><b>${i.nom} :</b><p>"${i.message}"</p></div>`;
             });
         });
     </script>
