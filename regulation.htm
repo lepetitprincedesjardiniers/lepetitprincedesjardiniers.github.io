@@ -6,46 +6,87 @@
     <title>Régulation - Le Petit Prince des Jardiniers</title>
     <style>
         body { font-family: 'Comic Sans MS', cursive; background-color: #E3F2FD; color: #01579b; margin: 0; text-align: center; }
+        
+        /* Traducteur ULTRA DISCRET */
         .header-tools { display: flex; justify-content: flex-start; padding: 5px; background: rgba(255,255,255,0.3); }
-        #google_translate_element { transform: scale(0.7); transform-origin: top left; opacity: 0.6; }
-        .menu-table { margin: 15px auto; background-color: #0288d1; border-collapse: collapse; border-radius: 10px; overflow: hidden; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
+        #google_translate_element { transform: scale(0.7); transform-origin: top left; opacity: 0.6; transition: opacity 0.3s; }
+        #google_translate_element:hover { opacity: 1; }
+
+        /* Menu de navigation */
+        .menu-table { margin: 15px auto; background-color: #0288d1; border-collapse: collapse; border-radius: 10px; overflow: hidden; box-shadow: 0 4px 6px rgba(0,0,0,0.1); margin-left: auto; margin-right: auto; }
         .menu-table td { padding: 10px 18px; border: 1px solid #FFFFFF; transition: 0.3s; }
         .menu-table td:hover { background: #03a9f4; }
         .menu-table a { text-decoration: none; color: #FFFFFF; font-weight: bold; font-size: 0.9em; }
-        .intro-box { background: white; border: 3px solid #0288d1; border-radius: 20px; width: 85%; max-width: 800px; margin: 20px auto; padding: 25px; }
-        .zone-explication { text-align: left; background: #E1F5FE; border-left: 5px solid #0288d1; padding: 20px; margin-bottom: 25px; border-radius: 10px; }
-        .action-hub { margin: 20px 0; display: flex; justify-content: center; gap: 15px; }
-        .btn-principal { padding: 12px 25px; border-radius: 25px; font-weight: bold; transition: 0.3s; cursor: pointer; border: none; text-decoration: none; }
+        
+        /* Boites de contenu */
+        .intro-box { background: white; border: 3px solid #0288d1; border-radius: 20px; width: 85%; max-width: 800px; margin: 20px auto; padding: 25px; box-shadow: 5px 5px 15px rgba(0,0,0,0.05); }
+        .zone-explication { text-align: left; background: #E1F5FE; border-left: 5px solid #0288d1; padding: 20px; margin-bottom: 25px; border-radius: 10px; line-height: 1.5; }
+        
+        .action-hub { margin: 20px 0; display: flex; justify-content: center; gap: 15px; flex-wrap: wrap; }
+        .btn-principal { padding: 12px 25px; border-radius: 25px; font-weight: bold; transition: 0.3s; cursor: pointer; border: none; text-decoration: none; display: inline-block; box-shadow: 3px 3px 0px #01579b; }
         .btn-consult { background: #0288d1; color: white; }
         .btn-declare { background: white; color: #0288d1; border: 2px solid #0288d1; }
+        .btn-principal:hover { transform: scale(1.05); filter: brightness(1.1); }
+
+        /* Formulaire */
         #section-formulaire { display: none; animation: fadeIn 0.6s ease; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
+        
         .form-container { background: white; border: 5px solid #0288d1; border-radius: 30px; width: 85%; max-width: 800px; margin: 20px auto; padding: 25px; box-shadow: 8px 8px 0px #0288d1; }
         .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; text-align: left; }
+        label { display: block; margin-top: 10px; font-weight: bold; font-size: 0.9em; }
         input, textarea, select { width: 100%; padding: 10px; border-radius: 10px; border: 2px solid #0288d1; font-family: inherit; box-sizing: border-box; }
         .full-width { grid-column: 1 / -1; }
-        .btn-envoi { background: #0288d1; color: white; border: none; padding: 15px 35px; border-radius: 20px; font-weight: bold; cursor: pointer; width: 100%; }
-        .copyright { margin: 50px 0 30px; font-size: 0.85em; }
-        .copyright a { color: #0288d1; text-decoration: none; font-weight: bold; padding: 4px 8px; transition: 0.4s; }
-        .copyright a:hover { background: #E67E22; color: white; border-radius: 5px; }
+        
+        .btn-envoi { background: #0288d1; color: white; border: none; padding: 15px 35px; border-radius: 20px; font-weight: bold; cursor: pointer; width: 100%; transition: 0.3s; margin-top: 10px; }
+        .btn-envoi:hover { background: #E67E22; transform: translateY(-2px); }
+
+        /* COPYRIGHT */
+        .copyright { margin: 50px 0 30px; font-size: 0.85em; color: #01579b; }
+        .copyright a { 
+            color: #0288d1; 
+            text-decoration: none; 
+            font-weight: bold; 
+            padding: 4px 8px; 
+            transition: 0.4s ease; 
+            display: inline-block; 
+        }
+        .copyright a:hover { 
+            background: #E67E22; 
+            color: white; 
+            border-radius: 5px; 
+            transform: scale(1.15) rotate(-2deg); 
+        }
     </style>
 </head>
 <body>
     <div class="header-tools"><div id="google_translate_element"></div></div>
+    
     <audio id="snd-pop" src="https://www.soundjay.com/buttons/sounds/button-37.mp3"></audio>
     <audio id="snd-oiseaux" src="oiseaux.mp3"></audio>
 
+    <script>
+        function googleTranslateElementInit() { new google.translate.TranslateElement({pageLanguage: 'fr', layout: google.translate.TranslateElement.InlineLayout.SIMPLE}, 'google_translate_element'); }
+        function playPop() { document.getElementById('snd-pop').play().catch(()=>{}); }
+        function playOiseaux() { 
+            const song = document.getElementById('snd-oiseaux');
+            song.play().catch(()=>{});
+            setTimeout(() => { song.pause(); song.currentTime = 0; }, 2000);
+        }
+    </script>
+    <script src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+
     <table class="menu-table">
         <tr>
-            <td><a href="index.html">Accueil</a></td>
-            <td><a href="formulaire.html">Semer</a></td>
-            <td><a href="regulation.html">Régulation</a></td>
-            <td><a href="impot.html">Impôt Public</a></td>
-            <td><a href="registre_public.html">Le Registre</a></td>
+            <td><a href="index.html" onmouseover="playPop()">Accueil</a></td>
+            <td><a href="formulaire.html" onmouseover="playPop()">Semer</a></td>
+            <td><a href="regulation.html" onmouseover="playPop()">Régulation</a></td>
+            <td><a href="impot.html" onmouseover="playPop()">Impôt Public</a></td>
+            <td><a href="registre_public.html" onmouseover="playPop()">Le Registre</a></td>
         </tr>
     </table>
 
-    <h1>⚖️ Régulation & Harmonie</h1>
+    <h1 style="text-shadow: 1px 1px 0px white;">⚖️ Régulation & Harmonie</h1>
 
     <div class="intro-box">
         <div class="zone-explication">
@@ -55,8 +96,8 @@
             <p>XXX (Phrase 4 : Harmonie du Jardin)</p>
         </div>
         <div class="action-hub">
-            <a href="registre_regulation.html" class="btn-principal btn-consult">📖 VOIR LES AVIS</a>
-            <div onclick="ouvrirFormulaire()" class="btn-principal btn-declare">✍️ SAISIR LE CONSEIL</div>
+            <a href="registre_regulation.html" class="btn-principal btn-consult" onmouseover="playPop()">📖 VOIR LES AVIS</a>
+            <div onclick="ouvrirFormulaire()" class="btn-principal btn-declare" onmouseover="playPop()">✍️ SAISIR LE CONSEIL</div>
         </div>
     </div>
 
@@ -80,21 +121,28 @@
                 </div>
                 <div class="full-width"><label>Exposé des faits ou de l'idée :</label><textarea id="message" rows="4" required></textarea></div>
             </div>
-            <button type="submit" id="btnEnvoi" class="btn-envoi">SOUMETTRE AU CONSEIL 🌿</button>
+            <button type="submit" id="btnEnvoi" class="btn-envoi" onmouseover="playPop()">SOUMETTRE AU CONSEIL 🌿</button>
         </form>
     </div>
 
-    <div class="copyright">© 2000 <a href="transition-externe.html">Le Petit Prince des Jardiniers</a></div>
+    <div class="copyright">© 2000 <a href="transition-externe.html" onmouseover="playPop()">Le Petit Prince des Jardiniers</a></div>
 
     <script>
         const URL_SERVEUR = "https://script.google.com/macros/s/AKfycbz4ncs9qw_AfmKSER5QST-P0OeKQggQaq86QC6liS53uZ9sx4Lo_-4-h1knXKWqgQMc/exec";
-        function ouvrirFormulaire() { document.getElementById('section-formulaire').style.display = 'block'; window.scrollTo({ top: document.getElementById('section-formulaire').offsetTop, behavior: 'smooth' }); }
+        
+        function ouvrirFormulaire() { 
+            playPop();
+            document.getElementById('section-formulaire').style.display = 'block'; 
+            window.scrollTo({ top: document.getElementById('section-formulaire').offsetTop, behavior: 'smooth' }); 
+        }
         
         document.getElementById('regForm').addEventListener('submit', function(e) {
             e.preventDefault();
-            const song = document.getElementById('snd-oiseaux');
-            song.play().catch(()=>{});
-            setTimeout(() => { song.pause(); song.currentTime = 0; }, 2000);
+            playOiseaux();
+            const btn = document.getElementById('btnEnvoi');
+            btn.innerText = "Transmission au Conseil..."; btn.disabled = true;
+
+            const catLabel = document.getElementById('categorie').options[document.getElementById('categorie').selectedIndex].text;
 
             fetch(URL_SERVEUR, { 
                 method: 'POST', mode: 'no-cors', 
@@ -103,10 +151,13 @@
                     type: "regulation",
                     nom: document.getElementById('nom').value,
                     localisation: document.getElementById('ville').value,
-                    message: `[${document.getElementById('categorie').value}] ${document.getElementById('message').value}`
+                    message: `[${catLabel}] ${document.getElementById('message').value}`
                 })
             }).then(() => { 
-                setTimeout(() => { alert("Saisie enregistrée."); window.location.href = "registre_regulation.html"; }, 2000);
+                setTimeout(() => { 
+                    alert("Votre demande a été transmise au Conseil des Sages."); 
+                    window.location.href = "registre_regulation.html"; 
+                }, 2000);
             });
         });
     </script>
