@@ -2,73 +2,82 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <title>Le Grand Registre - Maintenance & Communs</title>
+    <title>Le Grand Registre - Le Petit Prince des Jardiniers</title>
     <style>
         body { font-family: 'Comic Sans MS', cursive; text-align: center; margin: 0; padding: 0; background-color: #FFFF00; color: #000080; min-height: 100vh; }
         
-        .menu-table { margin: 20px auto; border-radius: 10px; background-color: #008080; border-collapse: collapse; margin-left: auto; margin-right: auto;}
-        .menu-table td { padding: 10px 15px; border: 1px solid #FFFFFF; transition: 0.3s; }
-        .menu-table a { text-decoration: none; color: #FFFFFF; font-weight: bold; font-size: 0.9em; }
+        /* Traducteur ULTRA DISCRET */
+        .header-tools { display: flex; justify-content: flex-start; padding: 5px; background: rgba(255,255,255,0.3); }
+        #google_translate_element { transform: scale(0.8); transform-origin: top left; opacity: 0.7; }
 
-        .container { background: white; padding: 30px; border-radius: 20px; display: inline-block; margin-top: 10px; box-shadow: 0px 10px 20px rgba(0,0,0,0.1); width: 90%; max-width: 850px; margin-bottom: 50px; border: 3px solid #008080; }
+        /* Menu */
+        .menu-table { margin: 15px auto; background-color: #008080; border-collapse: collapse; border-radius: 10px; overflow: hidden; margin-left: auto; margin-right: auto; }
+        .menu-table td { padding: 10px 18px; border: 1px solid #FFFFFF; transition: 0.3s; }
+        .menu-table td:hover { background: #2e7d32; }
+        .menu-table a { text-decoration: none; color: #FFFFFF; font-weight: bold; }
+
+        .container { background: white; padding: 30px; border-radius: 20px; display: inline-block; margin-top: 10px; box-shadow: 0px 10px 20px rgba(0,0,0,0.1); width: 90%; max-width: 850px; margin-bottom: 50px; border: 3px solid #008080; color: #004d40; }
 
         #searchBox { width: 80%; padding: 12px; margin-bottom: 20px; border: 2px solid #008080; border-radius: 15px; font-family: 'Comic Sans MS'; }
 
-        /* Filtres par catégories critiques */
-        .filter-tags { margin-bottom: 20px; display: flex; justify-content: center; gap: 10px; flex-wrap: wrap; }
-        .tag { padding: 5px 12px; border-radius: 20px; background: #E0F2F1; color: #008080; cursor: pointer; font-size: 0.8em; border: 1px solid #008080; font-weight: bold; }
-        .tag:hover { background: #008080; color: white; }
-
+        /* Cartes d'annonces */
         .carte-action { 
             background: #f9f9f9; border: 2px solid #008080; border-radius: 15px; 
             padding: 20px; margin: 15px 0; text-align: left; 
-            box-shadow: 5px 5px 0px #008080; position: relative;
+            box-shadow: 4px 4px 0px #008080; transition: 0.3s;
         }
+        .carte-action:hover { transform: scale(1.01); }
 
         .nom-titre { color: #E67E22; font-size: 1.1em; font-weight: bold; display: flex; justify-content: space-between; }
         .badge-loc { background: #008080; color: white; padding: 3px 8px; border-radius: 8px; font-size: 0.75em; }
-        
-        .type-info { font-size: 0.85em; color: #2e7d32; font-weight: bold; margin: 5px 0; display: block; }
 
-        .reponse-sage { 
-            margin-top: 15px; margin-left: 20px; padding: 10px; 
-            background: #DCEDC8; border-left: 4px solid #2E7D32; 
-            border-radius: 8px; font-style: italic; color: #2E7D32; font-size: 0.9em;
-        }
+        /* Copyright avec effet Petit Prince */
+        .copyright { margin: 40px 0; font-size: 0.9em; }
+        .copyright a { color: #E67E22; text-decoration: none; font-weight: bold; padding: 5px 10px; transition: all 0.4s ease; display: inline-block; }
+        .copyright a:hover { background: #E67E22; color: white; transform: scale(1.2) rotate(-2deg); }
 
-        .btn-avis { color: #008080; cursor: pointer; font-weight: bold; font-size: 0.8em; margin-top: 10px; display: inline-block; text-decoration: underline; }
         #loader { font-style: italic; color: #008080; margin-top: 20px; }
     </style>
 </head>
 <body>
 
+    <div class="header-tools">
+        <div id="google_translate_element"></div>
+    </div>
+
+    <audio id="snd-pop" src="https://www.soundjay.com/buttons/sounds/button-37.mp3"></audio>
+
+    <script>
+        function googleTranslateElementInit() { new google.translate.TranslateElement({pageLanguage: 'fr', layout: google.translate.TranslateElement.InlineLayout.SIMPLE}, 'google_translate_element'); }
+        function playPop() { document.getElementById('snd-pop').play().catch(()=>{}); }
+    </script>
+    <script src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+
     <table class="menu-table">
         <tr>
-            <td><a href="index.html">Accueil</a></td>
-            <td><a href="formulaire.html">Semer</a></td>
-            <td><a href="jardin.html">Le Jardin</a></td>
-            <td><a href="impot.html">Déclarer Travaux</a></td>
-            <td><a href="registre_public.html">Le Registre</a></td>
+            <td><a href="index.html" onmouseover="playPop()">Accueil</a></td>
+            <td><a href="formulaire.html" onmouseover="playPop()">Semer</a></td>
+            <td><a href="jardin.html" onmouseover="playPop()">Le Jardin</a></td>
+            <td><a href="impot.html" onmouseover="playPop()">Impôt Public</a></td>
+            <td><a href="registre_public.html" onmouseover="playPop()">Le Registre</a></td>
         </tr>
     </table>
 
-    <h2 style="color:#E67E22;">📖 Registre des Travaux & Communs</h2>
+    <h2 style="color:#004d40;">📖 Registre des Actions aux Communs</h2>
     
     <div class="container">
-        <input type="text" id="searchBox" onkeyup="filtrer()" placeholder="🔍 Chercher une ville, un nom, un brevet...">
+        <input type="text" id="searchBox" onkeyup="filtrer()" placeholder="🔍 Chercher une ville, un nom, une tâche...">
         
-        <div class="filter-tags">
-            <span class="tag" onclick="setSearch('Infrastructures')">🏗️ Maintenance</span>
-            <span class="tag" onclick="setSearch('Travaux Ingrats')">🧹 Brigade Ingrate</span>
-            <span class="tag" onclick="setSearch('Ingénierie')">⚙️ Plans Libres</span>
-            <span class="tag" onclick="setSearch('')">Tout voir</span>
-        </div>
-
         <div id="loader">Consultation des archives en cours... 🌿</div>
         <div id="flux-conteneur"></div>
     </div>
 
+    <div class="copyright">
+        © 2000 <a href="transition-externe.html">Le Petit Prince des Jardiniers</a>
+    </div>
+
     <script>
+        // L'URL de ton script Google Sheets
         const URL_SERVEUR = "https://script.google.com/macros/s/AKfycbz4ncs9qw_AfmKSER5QST-P0OeKQggQaq86QC6liS53uZ9sx4Lo_-4-h1knXKWqgQMc/exec";
 
         async function chargerDonnees() {
@@ -78,15 +87,16 @@
                 document.getElementById('loader').style.display = "none";
                 const conteneur = document.getElementById('flux-conteneur');
                 
+                // On filtre pour ne garder que les entrées de type "impot"
                 const actions = data.filter(d => d.type === "impot").reverse();
-                const avis = data.filter(d => d.type === "avis_impot");
+
+                if(actions.length === 0) {
+                    document.getElementById('loader').innerText = "Aucune annonce enregistrée pour le moment.";
+                    document.getElementById('loader').style.display = "block";
+                    return;
+                }
 
                 actions.forEach(item => {
-                    let rHTML = "";
-                    avis.filter(a => a.localisation === item.nom).forEach(a => {
-                        rHTML += `<div class="reponse-sage"><b>🌿 Avis du Sage ${a.nom} :</b> ${a.message}</div>`;
-                    });
-
                     const div = document.createElement('div');
                     div.className = 'carte-action';
                     div.innerHTML = `
@@ -94,23 +104,14 @@
                             <span>👤 ${item.nom}</span>
                             <span class="badge-loc">📍 ${item.localisation}</span>
                         </div>
-                        <p style="margin: 10px 0; line-height: 1.4;">${item.message}</p>
-                        <small style="color: #666;">Enregistré le ${item.date}</small>
-                        ${rHTML}
-                        <div style="margin-top:10px;">
-                            <span class="btn-avis" onclick="apporterAvis('${item.nom}')">⚖️ Apporter un Avis de Sage</span>
-                        </div>
+                        <p style="margin: 10px 0; line-height: 1.4; color: #333;">${item.message}</p>
+                        <small style="color: #666;">Gravé le ${item.date}</small>
                     `;
                     conteneur.appendChild(div);
                 });
             } catch (e) {
-                document.getElementById('loader').innerText = "Erreur de connexion au Registre.";
+                document.getElementById('loader').innerHTML = "⚠️ Impossible d'accéder aux données.<br><small>Vérifiez que le script Google est bien publié en 'Exécuter en tant que : Moi' et 'Qui a accès : Tout le monde'.</small>";
             }
-        }
-
-        function setSearch(term) {
-            document.getElementById('searchBox').value = term;
-            filtrer();
         }
 
         function filtrer() {
@@ -118,20 +119,6 @@
             let cards = document.getElementsByClassName('carte-action');
             for (let c of cards) {
                 c.style.display = c.innerText.toLowerCase().includes(val) ? "" : "none";
-            }
-        }
-
-        function apporterAvis(dest) {
-            const m = prompt("Votre avis ou validation :");
-            if (m) {
-                const n = prompt("Votre nom :") || "Sage Anonyme";
-                fetch(URL_SERVEUR, {
-                    method: 'POST', mode: 'no-cors',
-                    body: JSON.stringify({
-                        date: new Date().toLocaleDateString('fr-FR'),
-                        type: "avis_impot", nom: n, localisation: dest, message: m
-                    })
-                }).then(() => { alert("Avis enregistré !"); location.reload(); });
             }
         }
 
