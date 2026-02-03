@@ -2,72 +2,29 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <title>Urgence & Détresse - L'Étoile de la Main Tendue</title>
+    <title>AIDE & ÉCOUTE - Le Câlin de l'Âme</title>
     <style>
         body { 
-            font-family: 'Comic Sans MS', cursive; 
-            background: radial-gradient(circle, #2c3e50 0%, #000000 100%); 
-            color: #ffffff; 
-            margin: 0; text-align: center; 
+            font-family: 'Comic Sans MS', cursive; text-align: center; margin: 0; padding: 0; 
+            background: radial-gradient(circle, #1a0a2e 0%, #000000 100%);
+            color: #ffffff; min-height: 100vh;
         }
 
-        /* MENU FIDÈLE */
-        .menu-table { margin: 20px auto; background-color: #008080; border-collapse: collapse; border-radius: 10px; overflow: hidden; }
-        .menu-table td { padding: 12px 20px; border: 1px solid #FFFFFF; }
-        .menu-table a { text-decoration: none; color: #FFFFFF; font-weight: bold; }
+        .menu-table { margin: 20px auto; background-color: #008080; border-collapse: collapse; border-radius: 10px; }
+        .menu-table td { border: 1px solid #FFFFFF; }
+        .menu-table a { display: block; padding: 12px 20px; text-decoration: none; color: #FFFFFF; font-weight: bold; }
 
-        /* L'ÉTOILE DE LA MAIN TENDUE */
-        .etoile-header {
-            background: #FFB6C1; /* Rose doux */
-            color: #8b0000;
-            width: 300px; height: 300px;
-            margin: 30px auto;
-            clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
-            display: flex; flex-direction: column; align-items: center; justify-content: center;
-            box-shadow: 0 0 30px #ff69b4;
-            padding: 20px;
+        .coeur-aide { font-size: 80px; margin: 20px; filter: drop-shadow(0 0 20px #9370DB); animation: float 3s infinite ease-in-out; }
+        @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-15px); } }
+
+        .form-aide {
+            background: #F3E5F5; color: #4a148c; max-width: 600px; margin: 20px auto;
+            padding: 25px; border-radius: 30px; border: 5px solid #9370DB;
         }
+        input, textarea { width: 100%; padding: 10px; margin: 10px 0; border-radius: 10px; border: 2px solid #9370DB; box-sizing: border-box; }
+        .btn-envoi { background: #9370DB; color: white; border: none; padding: 15px 30px; border-radius: 20px; font-weight: bold; cursor: pointer; width: 100%; }
 
-        .section-urgence {
-            display: flex; justify-content: center; gap: 30px; flex-wrap: wrap; padding: 20px;
-        }
-
-        .carte-appel {
-            background: rgba(255, 255, 255, 0.1);
-            border: 2px solid #ff69b4;
-            border-radius: 20px;
-            width: 350px; padding: 20px;
-            backdrop-filter: blur(5px);
-            text-align: left;
-        }
-
-        .carte-appel h2 { color: #ffb6c1; border-bottom: 1px solid #ffb6c1; padding-bottom: 10px; }
-        
-        .exemples { font-style: italic; font-size: 0.9em; color: #ddd; margin-bottom: 15px; }
-        
-        /* FORMULAIRE D'APPEL */
-        .form-urgence {
-            background: white; color: #333;
-            max-width: 600px; margin: 40px auto;
-            padding: 30px; border-radius: 30px;
-            border: 8px solid #ff1493;
-        }
-
-        input, textarea, select {
-            width: 100%; padding: 12px; margin: 10px 0;
-            border-radius: 10px; border: 2px solid #ff1493;
-            font-family: inherit;
-        }
-
-        .btn-appel {
-            background: #ff1493; color: white; border: none;
-            padding: 20px; width: 100%; border-radius: 50px;
-            font-weight: bold; font-size: 1.3em; cursor: pointer;
-            text-shadow: 1px 1px 2px black;
-        }
-
-        .btn-appel:hover { background: #ff69b4; transform: scale(1.02); }
-
+        .carte-aide { background: white; color: #333; border-left: 10px solid #9370DB; margin-bottom: 15px; padding: 20px; border-radius: 10px; text-align: left; box-shadow: 0 4px 15px rgba(147,112,219,0.2); }
     </style>
 </head>
 <body>
@@ -77,84 +34,47 @@
             <td><a href="index.html">Accueil</a></td>
             <td><a href="formulaire.html">Semer</a></td>
             <td><a href="jardin.html">Le Jardin</a></td>
-            <td><a href="impot.html">Impôts</a></td>
             <td><a href="regulation.html">Régulation</a></td>
-            <td><a href="aide.html">Urgences</a></td>
-            <td><a href="savoirs.html">Savoirs</a></td>
+            <td><a href="urgence.html">Urgences</a></td>
+            <td><a href="aide.html">Aide</a></td>
         </tr>
     </table>
 
-    <div class="etoile-header">
-        <h1 style="font-size: 1.2em; margin: 0;">L'ÉTOILE DE LA</h1>
-        <h1 style="font-size: 1.5em; margin: 0;">MAIN TENDUE</h1>
-        <p style="font-size: 0.8em; font-weight: bold; text-align: center;">Répondre aux appels du cœur et du corps</p>
-    </div>
+    <div class="coeur-aide">💖</div>
+    <h1>Aide & Écoute</h1>
+    <p><i>Câlin de l'âme, oreille attentive, besoin d'un espoir...</i></p>
 
-    <div class="section-urgence">
-        <div class="carte-appel">
-            <h2>🏥 Corps & Matière</h2>
-            <p>Pour les besoins vitaux, la santé et les fondations de la vie.</p>
-            <div class="exemples">
-                "J'ai besoin d'une opération de la cervelle."<br>
-                "Ma charpente vacille, aidez-moi à construire."<br>
-                "Recherche farine pour le pain partagé."
-            </div>
-        </div>
-
-        <div class="carte-appel" style="border-color: #9370DB;">
-            <h2 style="color: #E6E6FA;">💖 Câlin de l'Âme</h2>
-            <p>Pour le soutien moral, la solitude et le poids du cœur.</p>
-            <div class="exemples">
-                "Mon cœur est lourd, je cherche une oreille."<br>
-                "Besoin d'un poème ou d'une présence."<br>
-                "Je cherche un souffle d'espoir pour ma journée."
-            </div>
-        </div>
-    </div>
-
-    <div class="form-urgence">
-        <h2 style="color: #ff1493; margin-top: 0;">Lancer un appel à la fraternité</h2>
-        <form id="formUrgence">
-            <input type="text" id="nom" placeholder="Ton nom ou ton souffle (pseudo)" required>
-            
-            <select id="typeBesoin">
-                <option value="Corps & Matière">🏥 Besoin de Matière (Santé, Nourriture, Travaux)</option>
-                <option value="Câlin de l'Âme">💖 Besoin de l'Âme (Écoute, Réconfort, Moral)</option>
-            </select>
-
-            <textarea id="message" rows="6" placeholder="Expose ton besoin avec la sincérité d'un enfant..." required></textarea>
-
-            <button type="submit" class="btn-appel">LANCER MON APPEL DANS L'ESPACE 🕊️</button>
+    <div class="form-aide">
+        <form id="aideForm">
+            <input type="text" id="nom" placeholder="Ton petit nom">
+            <textarea id="msg" rows="4" placeholder="De quoi ton cœur a-t-il besoin ?"></textarea>
+            <button type="submit" class="btn-envoi">DÉPOSER MON CŒUR 🕊️</button>
         </form>
     </div>
+
+    <div style="max-width: 800px; margin: 40px auto; padding: 10px;" id="flux-aide">
+        </div>
 
     <script>
         const URL_SERVEUR = "https://script.google.com/macros/s/AKfycbz4ncs9qw_AfmKSER5QST-P0OeKQggQaq86QC6liS53uZ9sx4Lo_-4-h1knXKWqgQMc/exec";
 
-        document.getElementById('formUrgence').addEventListener('submit', function(e) {
+        document.getElementById('aideForm').addEventListener('submit', function(e) {
             e.preventDefault();
-            const btn = e.target.querySelector('button');
-            btn.innerText = "L'appel voyage...";
-            btn.disabled = true;
-
-            const donnees = {
-                date: new Date().toLocaleDateString('fr-FR'),
-                type: "URGENCE - " + document.getElementById('typeBesoin').value,
-                nom: document.getElementById('nom').value,
-                localisation: "Espace Urgence",
-                message: document.getElementById('message').value
+            const d = { 
+                date: new Date().toLocaleDateString('fr-FR'), type: "AIDE", 
+                nom: document.getElementById('nom').value, localisation: "Espace Cœur", 
+                message: document.getElementById('msg').value 
             };
+            fetch(URL_SERVEUR, { method: 'POST', mode: 'no-cors', body: JSON.stringify(d) })
+            .then(() => { alert("Message déposé avec douceur."); location.reload(); });
+        });
 
-            fetch(URL_SERVEUR, {
-                method: 'POST',
-                mode: 'no-cors',
-                body: JSON.stringify(donnees)
-            }).then(() => {
-                alert("Ton appel a rejoint l'Étoile. La communauté l'entendra.");
-                location.reload();
+        fetch(URL_SERVEUR).then(r => r.json()).then(data => {
+            const flux = document.getElementById('flux-aide');
+            data.filter(i => i.type === "AIDE").reverse().forEach(i => {
+                flux.innerHTML += `<div class="carte-aide"><b>${i.nom}</b> (${i.date})<br>"${i.message}"</div>`;
             });
         });
     </script>
-
 </body>
 </html>
