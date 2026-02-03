@@ -184,10 +184,10 @@
                 
                 carte.innerHTML = `
                     <div style="margin-bottom:4px;font-weight:bold;color:#2E7D32;text-align:center;width:100%;">${ann.nom || "Anonyme"}</div>
-                    <div style="font-weight:bold;color:#000080;flex-grow:1;overflow:hidden;font-size:0.95em;text-align:left;margin-bottom:4px;">"${ann.message || ""}"</div>
-                    <div style="font-size:0.62em; color:#777; border-top:1px solid #eee; padding-top:2px; line-height:1.1; text-align: left !important; width: 100%; display: block; clear: both;">
-                        📅 ${datePub} • ⏳ ${dateVal}<br>
-                        📍 ${ann.ville || ""}, ${ann.pays || ""}
+                    <div style="font-weight:bold;color:#000080;flex-grow:1;overflow:hidden;font-size:0.95em;text-align:left;margin-bottom:6px;width:100%;display:block;">"${ann.message || ""}"</div>
+                    <div style="font-size:0.62em; color:#777; border-top:1px solid #eee; padding-top:2px; line-height:1.1; text-align: left !important; width: 100%; display: table; clear: both;">
+                        <span style="display:block; text-align:left;">📅 ${datePub} • ⏳ ${dateVal}</span>
+                        <span style="display:block; text-align:left;">📍 ${ann.ville || ""}, ${ann.pays || ""}</span>
                     </div>
                 `;
                 conteneur.appendChild(carte);
@@ -212,11 +212,11 @@
             const datePub = ann.date ? new Date(ann.date).toLocaleDateString('fr-FR') : "N/C";
             const dateVal = ann.validite || "Permanente";
             document.getElementById('geant-contenu').innerHTML = `
-                <div style="font-size:1.6em; color:#2E7D32; border-bottom:3px solid #008080; margin-bottom:15px; padding-bottom:10px; font-weight:bold; text-align:center;">🌱 L'offrande de ${ann.nom || "Anonyme"}</div>
-                <div style="font-size:1.4em; color:#000080; line-height:1.4; margin:10px 0; font-weight:bold; text-align:left; background:white; padding:15px; border-radius:15px; border-left:8px solid #FF1493;">"${ann.message || ""}"</div>
-                <div style="font-size:0.85em; background:#f4fbfb; padding:8px; border-radius:15px; color:#555; text-align:left !important; border:1px solid #d0e8e8; width: 100%; box-sizing: border-box;">
-                    <p style="margin:2px 0; text-align:left;"><strong>📍 Lieu :</strong> ${ann.ville || ""}, ${ann.pays || ""}</p>
-                    <p style="margin:2px 0; text-align:left;"><strong>📅 Publication :</strong> ${datePub} | <strong>⏳ Validité :</strong> ${dateVal}</p>
+                <div style="font-size:1.6em; color:#2E7D32; border-bottom:3px solid #008080; margin-bottom:15px; padding-bottom:10px; font-weight:bold; text-align:center; width:100%;">🌱 L'offrande de ${ann.nom || "Anonyme"}</div>
+                <div style="font-size:1.4em; color:#000080; line-height:1.4; margin:10px 0; font-weight:bold; text-align:left; background:white; padding:15px; border-radius:15px; border-left:8px solid #FF1493; width:100%; box-sizing:border-box;">"${ann.message || ""}"</div>
+                <div style="font-size:0.85em; background:#f4fbfb; padding:10px; border-radius:15px; color:#555; text-align:left !important; border:1px solid #d0e8e8; width: 100%; box-sizing: border-box; display:block;">
+                    <p style="margin:2px 0; text-align:left !important; display:block;"><strong>📍 Lieu :</strong> ${ann.ville || ""}, ${ann.pays || ""}</p>
+                    <p style="margin:2px 0; text-align:left !important; display:block;"><strong>📅 Publication :</strong> ${datePub} | <strong>⏳ Validité :</strong> ${dateVal}</p>
                 </div>
             `;
             document.getElementById('fond-sombre').style.display = 'flex';
