@@ -2,50 +2,126 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <title>Registre de Régulation - Le Petit Prince</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registre de Régulation - Le Petit Prince des Jardiniers</title>
     <style>
-        body { font-family: 'Comic Sans MS', cursive; text-align: center; margin: 0; background-color: #E3F2FD; color: #01579b; }
-        .menu-table { margin: 15px auto; background-color: #0288d1; border-collapse: collapse; border-radius: 10px; overflow: hidden; }
-        .menu-table td { padding: 10px 18px; border: 1px solid #FFFFFF; }
-        .menu-table a { text-decoration: none; color: #FFFFFF; font-weight: bold; }
-        .container { background: white; padding: 20px; border-radius: 20px; width: 90%; max-width: 800px; display: inline-block; border: 3px solid #0288d1; margin-top: 20px; }
-        .carte { background: #f1f8ff; border: 2px solid #0288d1; border-radius: 15px; padding: 15px; margin: 10px 0; text-align: left; }
-        .titre { color: #E67E22; font-weight: bold; display: flex; justify-content: space-between; }
-        #loader { color: #0288d1; font-style: italic; }
+        body { font-family: 'Comic Sans MS', cursive; background-color: #E3F2FD; color: #01579b; margin: 0; text-align: center; }
+        
+        /* Traducteur ULTRA DISCRET */
+        .header-tools { display: flex; justify-content: flex-start; padding: 5px; background: rgba(255,255,255,0.3); }
+        #google_translate_element { transform: scale(0.7); transform-origin: top left; opacity: 0.6; transition: opacity 0.3s; }
+        #google_translate_element:hover { opacity: 1; }
+
+        /* Menu de navigation */
+        .menu-table { margin: 15px auto; background-color: #0288d1; border-collapse: collapse; border-radius: 10px; overflow: hidden; box-shadow: 0 4px 6px rgba(0,0,0,0.1); margin-left: auto; margin-right: auto; }
+        .menu-table td { padding: 10px 18px; border: 1px solid #FFFFFF; transition: 0.3s; }
+        .menu-table td:hover { background: #03a9f4; }
+        .menu-table a { text-decoration: none; color: #FFFFFF; font-weight: bold; font-size: 0.9em; }
+
+        /* Conteneur du Registre */
+        .container { background: white; padding: 30px; border-radius: 20px; display: inline-block; margin-top: 10px; box-shadow: 0px 10px 20px rgba(0,0,0,0.05); width: 90%; max-width: 850px; margin-bottom: 50px; border: 3px solid #0288d1; color: #01579b; }
+
+        #searchBox { width: 80%; padding: 12px; margin-bottom: 20px; border: 2px solid #0288d1; border-radius: 15px; font-family: 'Comic Sans MS'; outline: none; }
+
+        /* Cartes d'avis */
+        .carte-avis { 
+            background: #f1f8ff; border: 2px solid #0288d1; border-radius: 15px; 
+            padding: 20px; margin: 15px 0; text-align: left; 
+            box-shadow: 4px 4px 0px #0288d1; transition: 0.3s;
+        }
+        .carte-avis:hover { transform: scale(1.01); background: #ffffff; }
+
+        .nom-titre { color: #E67E22; font-size: 1.1em; font-weight: bold; display: flex; justify-content: space-between; align-items: center; }
+        .badge-loc { background: #0288d1; color: white; padding: 3px 10px; border-radius: 8px; font-size: 0.75em; font-weight: normal; }
+
+        /* Copyright */
+        .copyright { margin: 40px 0; font-size: 0.85em; }
+        .copyright a { color: #0288d1; text-decoration: none; font-weight: bold; padding: 5px 10px; transition: 0.4s ease; display: inline-block; }
+        .copyright a:hover { background: #E67E22; color: white; transform: scale(1.2) rotate(-2deg); border-radius: 5px; }
+
+        #loader { font-style: italic; color: #0288d1; margin-top: 20px; }
     </style>
 </head>
 <body>
+
+    <div class="header-tools"><div id="google_translate_element"></div></div>
+    <audio id="snd-pop" src="https://www.soundjay.com/buttons/sounds/button-37.mp3"></audio>
+
+    <script>
+        function googleTranslateElementInit() { new google.translate.TranslateElement({pageLanguage: 'fr', layout: google.translate.TranslateElement.InlineLayout.SIMPLE}, 'google_translate_element'); }
+        function playPop() { document.getElementById('snd-pop').play().catch(()=>{}); }
+    </script>
+    <script src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+
     <table class="menu-table">
         <tr>
-            <td><a href="index.html">Accueil</a></td>
-            <td><a href="regulation.html">Régulation</a></td>
-            <td><a href="registre_public.html">Registre Public</a></td>
+            <td><a href="index.html" onmouseover="playPop()">Accueil</a></td>
+            <td><a href="formulaire.html" onmouseover="playPop()">Semer</a></td>
+            <td><a href="regulation.html" onmouseover="playPop()">Régulation</a></td>
+            <td><a href="impot.html" onmouseover="playPop()">Impôt Public</a></td>
+            <td><a href="registre_public.html" onmouseover="playPop()">Le Registre</a></td>
         </tr>
     </table>
-    <h2>⚖️ Suivi des Avis & Médiations</h2>
+
+    <h2 style="text-shadow: 1px 1px 0px white;">⚖️ Suivi des Avis & Médiations</h2>
+    
     <div class="container">
-        <div id="loader">Appel au Conseil des Sages...</div>
-        <div id="flux"></div>
+        <input type="text" id="searchBox" onkeyup="filtrer()" placeholder="🔍 Chercher un avis, une ville, un Sage...">
+        
+        <div id="loader">Appel au Conseil des Sages en cours... 🌿</div>
+        <div id="flux-conteneur"></div>
+    </div>
+
+    <div class="copyright">
+        © 2000 <a href="transition-externe.html" onmouseover="playPop()">Le Petit Prince des Jardiniers</a>
     </div>
 
     <script>
         const URL_SERVEUR = "https://script.google.com/macros/s/AKfycbz4ncs9qw_AfmKSER5QST-P0OeKQggQaq86QC6liS53uZ9sx4Lo_-4-h1knXKWqgQMc/exec";
-        async function charger() {
+
+        async function chargerDonnees() {
             try {
                 const r = await fetch(URL_SERVEUR);
                 const data = await r.json();
                 document.getElementById('loader').style.display = "none";
-                const flux = document.getElementById('flux');
-                data.filter(d => d.type === "regulation").reverse().forEach(item => {
-                    const d = document.createElement('div');
-                    d.className = 'carte';
-                    d.innerHTML = `<div class="titre"><span>⚖️ ${item.nom}</span><small>📍 ${item.localisation}</small></div>
-                                   <p>${item.message}</p><small>Le ${item.date}</small>`;
-                    flux.appendChild(d);
+                const conteneur = document.getElementById('flux-conteneur');
+                
+                // On filtre pour ne garder que les entrées de type "regulation"
+                const avis = data.filter(d => d.type === "regulation").reverse();
+
+                if(avis.length === 0) {
+                    document.getElementById('loader').innerText = "Aucun avis n'a encore été rendu par le Conseil.";
+                    document.getElementById('loader').style.display = "block";
+                    return;
+                }
+
+                avis.forEach(item => {
+                    const div = document.createElement('div');
+                    div.className = 'carte-avis';
+                    div.innerHTML = `
+                        <div class="nom-titre">
+                            <span>👤 ${item.nom}</span>
+                            <span class="badge-loc">📍 ${item.localisation}</span>
+                        </div>
+                        <p style="margin: 12px 0; line-height: 1.5; color: #333;">${item.message}</p>
+                        <small style="color: #666; font-size: 0.8em;">Transmis au Conseil le ${item.date}</small>
+                    `;
+                    conteneur.appendChild(div);
                 });
-            } catch(e) { document.getElementById('loader').innerText = "Erreur de chargement."; }
+            } catch (e) {
+                document.getElementById('loader').innerHTML = "⚠️ Connexion au Conseil interrompue.";
+            }
         }
-        charger();
+
+        function filtrer() {
+            let val = document.getElementById('searchBox').value.toLowerCase();
+            let cards = document.getElementsByClassName('carte-avis');
+            for (let c of cards) {
+                c.style.display = c.innerText.toLowerCase().includes(val) ? "" : "none";
+            }
+        }
+
+        chargerDonnees();
     </script>
 </body>
 </html>
