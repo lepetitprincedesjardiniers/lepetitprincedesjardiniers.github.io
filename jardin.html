@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <title>Le Jardin de la Fraternité - Registre</title>
     <style>
-        /* --- STYLE DE BASE --- */
+        /* --- STYLE DE BASE (Rétabli) --- */
         body { font-family: 'Comic Sans MS', cursive; text-align: center; margin: 0; padding: 0; background-color: #FFFF00; color: #000080; overflow-x: hidden; min-height: 100vh; padding-bottom: 80px; }
 
         .top-bar { position: relative; width: 100%; min-height: 40px; background: rgba(255,255,255,0.3); padding: 5px 0; }
@@ -19,39 +19,61 @@
         @keyframes eclat { from { opacity: 0.7; } to { opacity: 1; } }
         .phrase-sous { color: #000080; font-weight: bold; margin: 1px 0; font-size: 0.9em; }
 
-        /* ZONE DÉCO HAUTE */
+        /* ZONE DÉCO (Rétablie) */
         #jardin-sacre { position: relative; height: 100px; width: 100%; overflow: hidden; background: rgba(255,255,255,0.1); margin-top: 5px; }
         .fleur-clonée { position: absolute; font-size: 25px; animation: apparitionFleur 1s ease-out forwards; }
         @keyframes apparitionFleur { 0% { transform: scale(0) rotate(-50deg); opacity: 0; } 100% { transform: scale(1) rotate(0deg); opacity: 1; } }
 
-        /* MOTEUR DE RECHERCHE */
+        .fleur-etoile { position: fixed; pointer-events: none; z-index: 999; font-size: 15px; animation: volEtoile linear infinite; opacity: 0.8; }
+        @keyframes volEtoile {
+            0% { transform: translate(0, 0) rotate(0deg); }
+            25% { transform: translate(100px, 100px) rotate(90deg); }
+            50% { transform: translate(0, 200px) rotate(180deg); }
+            75% { transform: translate(-100px, 100px) rotate(270deg); }
+            100% { transform: translate(0, 0) rotate(360deg); }
+        }
+
+        /* MOTEUR DE RECHERCHE (Modifié selon demande) */
         .search-box { background: #008080; padding: 12px; margin: 10px auto 10px auto; max-width: 700px; border-radius: 20px; color: white; box-shadow: 0 4px 15px rgba(0,0,0,0.2); position: relative; z-index: 10; }
         .search-container { display: flex; flex-direction: column; gap: 8px; align-items: center; }
         .search-row { display: flex; gap: 10px; width: 95%; max-width: 550px; justify-content: center; }
         .search-item { display: flex; flex-direction: column; align-items: center; width: 100%; }
         .search-item label { font-size: 0.9em; margin-bottom: 4px; font-weight: bold; color: #FFFFFF; }
-        .search-item input { padding: 10px; border-radius: 12px; border: none; outline: none; text-align: center; color: #004D40; font-weight: bold; width: 100%; }
-        .input-large { width: 95%; max-width: 550px; }
+        .search-item input { 
+            padding: 10px; border-radius: 12px; border: 2px solid transparent; outline: none; 
+            text-align: center; color: #004D40; font-weight: bold; width: 100%; transition: all 0.4s ease;
+        }
 
-        /* REGISTRE & CARTES */
+        /* Effets de focus approuvés */
+        .effet-croissance:focus { transform: scale(1.05); background-color: #e0f2f1; border-color: #ff1493; }
+        .effet-lueur:focus { box-shadow: 0 0 15px #FFD700; background-color: #fffde7; border-color: #FFD700; }
+        .effet-secousse:focus { animation: microSecousse 0.3s ease; border-color: #00e676; background-color: #f1f8e9; }
+        @keyframes microSecousse { 0% { transform: translateX(0); } 25% { transform: translateX(-3px); } 50% { transform: translateX(3px); } 100% { transform: translateX(0); } }
+
+        /* REGISTRE & CARTES (Correction débordement texte) */
         .registre-titre { color: #008080; margin: 10px 0 5px 0; font-size: 1.2em; }
         .mur-reel { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 15px; padding: 10px; max-width: 1200px; margin: 0 auto 50px auto; }
-        
         .carte-message { 
             background: rgba(255, 255, 255, 0.95); border: 3px solid #008080; border-radius: 12px; padding: 12px; 
             box-shadow: 4px 4px 0px #008080; transition: 0.3s; color: #333; text-align: left; cursor: pointer; 
             font-size: 0.85em; height: 140px; overflow-y: auto; display: flex; flex-direction: column;
-            overflow-wrap: break-word; word-break: break-word; white-space: pre-wrap; /* MISE A LIGNE AUTOMATIQUE */
+            overflow-wrap: break-word; word-break: break-word; white-space: pre-wrap; /* Retour ligne */
         }
         .carte-message:hover { transform: translateY(-5px); box-shadow: 8px 8px 0px #2E7D32; }
 
-        /* ZOOM GÉANT */
+        /* ZOOM (Rétabli) */
         #fond-sombre { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); z-index: 2000; justify-content: center; align-items: center; }
         .message-geant { 
             background: #FFFFF0; width: 92%; max-width: 850px; max-height: 85vh; padding: 35px; border-radius: 30px; 
             border: 10px solid #008080; position: relative; text-align: center; overflow-y: auto;
             overflow-wrap: break-word; word-break: break-word; white-space: pre-wrap;
         }
+        .bouton-fermer { position: absolute; top: 10px; right: 15px; background: #FF1493; color: white; border: 4px solid white; border-radius: 50%; width: 40px; height: 40px; cursor: pointer; font-weight: bold; font-size: 20px; z-index: 10; }
+
+        .copyright-wrapper { position: fixed; bottom: 5px; left: 50%; transform: translateX(-50%); background: rgba(255,255,255,0.6); padding: 3px 10px; border-radius: 15px; z-index: 1000; font-size: 0.65em; opacity: 0.8; }
+        #animal-container { position: fixed; z-index: 900; display: flex; align-items: center; pointer-events: none; }
+        #corps-animal { font-size: 50px; }
+        #bulle-texte { background: white; border-radius: 15px; padding: 8px 15px; font-style: italic; color: #2E7D32; border: 2px solid #2E7D32; opacity: 0; transition: opacity 0.3s; max-width: 250px; }
     </style>
 </head>
 <body>
@@ -70,6 +92,8 @@
         </table>
     </div>
 
+    <audio id="chantOiseaux" loop><source src="oiseaux.mp3" type="audio/mpeg"></audio>
+
     <h2 style="color:#2E7D32; margin-top: 5px; font-size: 1.4em;">🍃 Le Jardin des Cadeaux Existentiels 🍃</h2>
 
     <div class="phrase-rose">Bienvenue au Jardin ensoleilleur des Dons entiers :</div>
@@ -84,16 +108,16 @@
             <div class="search-row">
                 <div class="search-item">
                     <label>Ville</label>
-                    <input type="text" id="searchVille" onkeyup="filtrerAnnonces()" placeholder="Quelle ville ?">
+                    <input type="text" id="searchVille" onkeyup="filtrerAnnonces()" onfocus="appliquerEffetHasard(this)" placeholder="Quelle ville ?">
                 </div>
                 <div class="search-item">
                     <label>Pays</label>
-                    <input type="text" id="searchPays" onkeyup="filtrerAnnonces()" placeholder="Quel pays ?">
+                    <input type="text" id="searchPays" onkeyup="filtrerAnnonces()" onfocus="appliquerEffetHasard(this)" placeholder="Quel pays ?">
                 </div>
             </div>
             <div class="search-item">
                 <label>Quoi? Pourquoi? Pour moi, Pour toi, Pour nous quoi!</label>
-                <input type="text" id="searchKeyword" class="input-large" onkeyup="filtrerAnnonces()" placeholder="Mots-clés...">
+                <input type="text" id="searchKeyword" style="width: 95%;" onkeyup="filtrerAnnonces()" onfocus="appliquerEffetHasard(this)" placeholder="Mots-clés...">
             </div>
         </div>
     </div>
@@ -102,9 +126,34 @@
     <div id="chargement" style="font-weight: bold; color: #008080;">✨ Récolte des messages en cours...</div>
     <div class="mur-reel" id="mur-messages"></div>
 
+    <div id="fond-sombre" onclick="fermerGrandMessage()">
+        <div class="message-geant" onclick="event.stopPropagation()">
+            <button class="bouton-fermer" onclick="fermerGrandMessage()">X</button>
+            <div id="geant-contenu"></div>
+        </div>
+    </div>
+
+    <div id="animal-container">
+        <div id="corps-animal">🕊️</div>
+        <div id="bulle-texte"></div>
+    </div>
+
+    <div class="copyright-wrapper">© 2024-2025 Le Jardin de la Fraternité</div>
+
+    <script type="text/javascript">
+        function googleTranslateElementInit() { new google.translate.TranslateElement({pageLanguage: 'fr'}, 'google_translate_element'); }
+    </script>
+    <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+
     <script>
         const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxz40XE2KiPXTNZsW-mIg-fm55EivK0r9wzZ5ECFRdEIY53nYH9nLGYRoI71OX93oII/exec"; 
         let toutesLesAnnonces = [];
+
+        function appliquerEffetHasard(element) {
+            const effets = ['effet-croissance', 'effet-lueur', 'effet-secousse'];
+            effets.forEach(e => element.classList.remove(e));
+            element.classList.add(effets[Math.floor(Math.random() * effets.length)]);
+        }
 
         async function chargerAnnonces() {
             try {
@@ -124,7 +173,7 @@
                 carte.className = 'carte-message';
                 carte.onclick = () => ouvrirGrandMessage(ann);
                 carte.innerHTML = `
-                    <div style="margin-bottom:8px;padding-bottom:5px;font-weight:bold;color:#2E7D32;">${ann.nom || "Anonyme"}</div>
+                    <div style="margin-bottom:8px;font-weight:bold;color:#2E7D32;">${ann.nom || "Anonyme"}</div>
                     <div style="font-weight:bold;color:#000080;flex-grow:1;">"${ann.message || ""}"</div>
                     <div style="font-size:0.75em; margin-top:8px; color:#666; font-style:italic;">📍 ${ann.ville || ""} ${ann.pays ? '('+ann.pays+')' : ''}</div>
                 `;
@@ -133,20 +182,37 @@
         }
 
         function filtrerAnnonces() {
-            const villeVal = document.getElementById('searchVille').value.toLowerCase();
-            const paysVal = document.getElementById('searchPays').value.toLowerCase();
-            const keywordVal = document.getElementById('searchKeyword').value.toLowerCase();
-
-            const resultats = toutesLesAnnonces.filter(ann => {
-                const villeMatch = (ann.ville || "").toLowerCase().includes(villeVal);
-                const paysMatch = (ann.pays || "").toLowerCase().includes(paysVal);
-                const messageMatch = (ann.message || "").toLowerCase().includes(keywordVal) || (ann.nom || "").toLowerCase().includes(keywordVal);
-                
-                return villeMatch && paysMatch && messageMatch;
+            const v = document.getElementById('searchVille').value.toLowerCase();
+            const p = document.getElementById('searchPays').value.toLowerCase();
+            const k = document.getElementById('searchKeyword').value.toLowerCase();
+            const res = toutesLesAnnonces.filter(ann => {
+                const villeM = (ann.ville || "").toLowerCase().includes(v);
+                const paysM = (ann.pays || "").toLowerCase().includes(p);
+                const motM = (ann.message || "").toLowerCase().includes(k) || (ann.nom || "").toLowerCase().includes(k);
+                return villeM && paysM && motM;
             });
-
-            afficherAnnonces(resultats);
+            afficherAnnonces(res);
         }
+
+        function ouvrirGrandMessage(ann) {
+            document.getElementById('geant-contenu').innerHTML = `<h3>${ann.nom}</h3><p>${ann.message}</p><p>📍 ${ann.ville} (${ann.pays})</p>`;
+            document.getElementById('fond-sombre').style.display = 'flex';
+        }
+        function fermerGrandMessage() { document.getElementById('fond-sombre').style.display = 'none'; }
+
+        // Animation décorative (Rétablie)
+        setInterval(() => {
+            const container = document.getElementById('jardin-sacre');
+            if(container) {
+                const f = document.createElement('div');
+                f.className = 'fleur-clonée';
+                f.innerText = ['🌸', '🌼', '🌻', '🌺', '🌷'][Math.floor(Math.random()*5)];
+                f.style.left = Math.random() * 95 + "%";
+                f.style.top = Math.random() * 60 + "px";
+                container.appendChild(f);
+                setTimeout(() => f.remove(), 3000);
+            }
+        }, 2000);
 
         window.onload = chargerAnnonces;
     </script>
