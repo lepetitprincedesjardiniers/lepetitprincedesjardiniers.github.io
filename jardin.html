@@ -183,9 +183,9 @@
                 const dateVal = ann.validite || "Permanente";
                 
                 carte.innerHTML = `
-                    <div style="margin-bottom:6px;font-weight:bold;color:#2E7D32;">${ann.nom || "Anonyme"}</div>
-                    <div style="font-weight:bold;color:#000080;flex-grow:1;overflow:hidden;font-size:0.95em;">"${ann.message || ""}"</div>
-                    <div style="font-size:0.65em; margin-top:8px; color:#777; border-top:1px solid #eee; padding-top:4px; line-height:1.2; text-align: left;">
+                    <div style="margin-bottom:6px;font-weight:bold;color:#2E7D32;text-align:left;">${ann.nom || "Anonyme"}</div>
+                    <div style="font-weight:bold;color:#000080;flex-grow:1;overflow:hidden;font-size:0.95em;text-align:left;">"${ann.message || ""}"</div>
+                    <div style="font-size:0.65em; margin-top:8px; color:#777; border-top:1px solid #eee; padding-top:4px; line-height:1.2; text-align:left !important; width: 100%;">
                         📅 ${datePub} • ⏳ ${dateVal}<br>
                         📍 ${ann.ville || ""}, ${ann.pays || ""}
                     </div>
