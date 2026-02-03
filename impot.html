@@ -29,6 +29,7 @@
         .reponse-sage { margin-left: 30px; margin-top: 10px; padding: 10px; background: #DCEDC8; border-left: 4px solid #008080; border-radius: 8px; font-size: 0.9em; }
         
         #searchBox { width: 90%; max-width: 700px; padding: 12px; margin: 20px auto; border-radius: 25px; border: 2px solid #008080; }
+        .logistique-tag { color: #E67E22; font-weight: bold; font-size: 0.85em; }
     </style>
 </head>
 <body>
@@ -39,11 +40,12 @@
 
     <table class="menu-table">
         <tr>
-            <td><a href="transition.html?page=index.html">Accueil</a></td>
-            <td><a href="transition.html?page=formulaire.html">Semer</a></td>
-            <td><a href="transition.html?page=jardin.html">Le Jardin</a></td>
-            <td><a href="transition.html?page=impot.html">Impôt Public</a></td>
-            <td><a href="transition.html?page=regulation.html">Régulation</a></td>
+            <td><a href="index.html">Accueil</a></td>
+            <td><a href="formulaire.html">Semer</a></td>
+            <td><a href="jardin.html">Le Jardin</a></td>
+            <td><a href="impot.html">Impôt Public</a></td>
+            <td><a href="regulation.html">Régulation</a></td>
+            <td><a href="aide.html">Aide</a></td>
         </tr>
     </table>
 
@@ -75,6 +77,23 @@
                     <label>Temps consacré :</label>
                     <input type="text" id="temps" placeholder="Ex: 2 heures, 1 matinée...">
                 </div>
+
+                <div>
+                    <label>Portée de l'action :</label>
+                    <select id="portee">
+                        <option value="Local">Cité Locale</option>
+                        <option value="International">International / Flux Mondiaux</option>
+                    </select>
+                </div>
+                <div>
+                    <label>Mode d'appui logistique :</label>
+                    <select id="logistique">
+                        <option value="Autonome">Don Entier (J'assure tout)</option>
+                        <option value="Point Fixe">À récupérer sur place</option>
+                        <option value="Appui requis">Besoin d'appui (Travaux Publics)</option>
+                    </select>
+                </div>
+
                 <div class="full-width">
                     <label>Description détaillée de l'Impôt Citoyen :</label>
                     <textarea id="message" rows="4" placeholder="Qu'as-tu accompli pour le bien commun ?" required></textarea>
@@ -102,8 +121,9 @@
             const btn = document.getElementById('btnEnvoi');
             btn.innerText = "Inscription..."; btn.disabled = true;
 
-            const locComplet = `${document.getElementById('ville').value} | Cat: ${document.getElementById('categorie').value} | Temps: ${document.getElementById('temps').value}`;
-            const msgComplet = `${document.getElementById('message').value} (Besoin: ${document.getElementById('besoin').value || 'Aucun'})`;
+            // Compilation des données avec les nouveaux champs
+            const locComplet = `${document.getElementById('ville').value} | Portée: ${document.getElementById('portee').value}`;
+            const msgComplet = `${document.getElementById('message').value} [Logistique: ${document.getElementById('logistique').value}] (Besoin: ${document.getElementById('besoin').value || 'Aucun'})`;
 
             fetch(URL_SERVEUR, { 
                 method: 'POST', mode: 'no-cors', 
