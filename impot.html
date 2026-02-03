@@ -7,65 +7,71 @@
     <style>
         body { font-family: 'Comic Sans MS', cursive; background-color: #E8F5E9; color: #004d40; margin: 0; text-align: center; }
         
-        /* Traducteur Discret en haut à gauche */
-        .header-tools { display: flex; justify-content: flex-start; align-items: center; padding: 10px; background: rgba(255,255,255,0.5); border-bottom: 2px solid #008080; }
-        #google_translate_element { margin-right: 20px; }
+        /* Traducteur ULTRA DISCRET en haut à gauche */
+        .header-tools { display: flex; justify-content: flex-start; padding: 5px; background: rgba(255,255,255,0.3); }
+        #google_translate_element { transform: scale(0.8); transform-origin: top left; opacity: 0.7; transition: opacity 0.3s; }
+        #google_translate_element:hover { opacity: 1; }
 
-        /* Boutons Musique style Index */
-        .music-controls { display: flex; gap: 10px; }
-        .btn-music { background: #008080; color: white; border: none; padding: 5px 10px; border-radius: 5px; cursor: pointer; font-size: 12px; font-weight: bold; }
-        .btn-music:hover { background: #2e7d32; }
-
-        /* Menu */
-        .menu-table { margin: 20px auto; background-color: #008080; border-collapse: collapse; border-radius: 10px; overflow: hidden; }
-        .menu-table td { padding: 12px 20px; border: 1px solid #FFFFFF; transition: 0.3s; }
+        /* Menu de navigation */
+        .menu-table { margin: 15px auto; background-color: #008080; border-collapse: collapse; border-radius: 10px; overflow: hidden; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
+        .menu-table td { padding: 10px 18px; border: 1px solid #FFFFFF; transition: 0.3s; }
         .menu-table td:hover { background: #2e7d32; }
-        .menu-table a { text-decoration: none; color: #FFFFFF; font-weight: bold; }
+        .menu-table a { text-decoration: none; color: #FFFFFF; font-weight: bold; font-size: 0.9em; }
         
-        .intro-box { background: white; border: 3px solid #008080; border-radius: 20px; width: 90%; max-width: 800px; margin: 20px auto; padding: 30px; box-shadow: 5px 5px 15px rgba(0,0,0,0.1); }
-        .zone-explication { text-align: left; background: #F1F8E9; border-left: 5px solid #008080; padding: 20px; margin-bottom: 25px; border-radius: 10px; line-height: 1.6; }
+        /* Boite d'introduction */
+        .intro-box { background: white; border: 3px solid #008080; border-radius: 20px; width: 85%; max-width: 800px; margin: 20px auto; padding: 25px; box-shadow: 5px 5px 15px rgba(0,0,0,0.1); }
+        .zone-explication { text-align: left; background: #F1F8E9; border-left: 5px solid #008080; padding: 20px; margin-bottom: 25px; border-radius: 10px; line-height: 1.5; }
+        .zone-explication p { margin: 8px 0; }
 
-        .action-hub { margin: 20px 0; display: flex; justify-content: center; gap: 20px; flex-wrap: wrap; }
-        .btn-principal { text-decoration: none; padding: 15px 30px; border-radius: 25px; font-weight: bold; transition: 0.3s; box-shadow: 4px 4px 0px #004d40; cursor: pointer; border: none; display: inline-block; }
+        /* Boutons principaux */
+        .action-hub { margin: 20px 0; display: flex; justify-content: center; gap: 15px; flex-wrap: wrap; }
+        .btn-principal { text-decoration: none; padding: 12px 25px; border-radius: 25px; font-weight: bold; transition: 0.3s; box-shadow: 3px 3px 0px #004d40; cursor: pointer; border: none; display: inline-block; }
         .btn-consult { background: #2e7d32; color: white; }
         .btn-declare { background: #FFFFFF; color: #2e7d32; border: 2px solid #2e7d32; }
-        .btn-principal:hover { transform: scale(1.05); }
+        .btn-principal:hover { transform: scale(1.03); filter: brightness(1.1); }
 
-        #section-formulaire { display: none; animation: fadeIn 0.5s; }
-        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-
-        .form-container { background: white; border: 5px solid #008080; border-radius: 30px; width: 90%; max-width: 800px; margin: 20px auto; padding: 25px; box-shadow: 10px 10px 0px #008080; }
+        /* Formulaire */
+        #section-formulaire { display: none; animation: fadeIn 0.5s ease; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        .form-container { background: white; border: 5px solid #008080; border-radius: 30px; width: 85%; max-width: 800px; margin: 20px auto; padding: 25px; box-shadow: 8px 8px 0px #008080; }
         .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; text-align: left; }
-        label { display: block; margin-top: 10px; font-weight: bold; }
-        input, textarea, select { width: 100%; padding: 12px; margin: 5px 0; border-radius: 12px; border: 2px solid #008080; font-family: inherit; }
+        label { display: block; margin-top: 8px; font-weight: bold; font-size: 0.9em; }
+        input, textarea, select { width: 100%; padding: 10px; border-radius: 10px; border: 2px solid #008080; font-family: inherit; }
         .full-width { grid-column: 1 / -1; }
-        
-        .btn-envoi { background: #008080; color: white; border: none; padding: 18px 40px; border-radius: 25px; font-weight: bold; cursor: pointer; margin-top: 20px; }
+        .btn-envoi { background: #008080; color: white; border: none; padding: 15px 35px; border-radius: 20px; font-weight: bold; cursor: pointer; margin-top: 15px; transition: 0.3s; }
+        .btn-envoi:hover { background: #E67E22; transform: translateY(-2px); }
 
-        .copyright { margin: 40px 0; font-size: 0.9em; }
-        .copyright a { color: #008080; text-decoration: none; font-weight: bold; }
+        /* COPYRIGHT AVEC EFFET */
+        .copyright { margin: 50px 0 30px; font-size: 0.9em; color: #004d40; }
+        .copyright a { 
+            color: #E67E22; 
+            text-decoration: none; 
+            font-weight: bold; 
+            padding: 5px 10px;
+            border-radius: 5px;
+            transition: all 0.4s ease;
+            display: inline-block;
+        }
+        .copyright a:hover { 
+            background: #E67E22; 
+            color: white; 
+            transform: scale(1.2) rotate(-2deg);
+            box-shadow: 0 4px 10px rgba(230, 126, 34, 0.4);
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.2);
+        }
     </style>
 </head>
 <body>
 
     <div class="header-tools">
         <div id="google_translate_element"></div>
-        <div class="music-controls">
-            <button class="btn-music" onclick="playMusic()">▶ PLAY</button>
-            <button class="btn-music" onclick="stopMusic()">◼ STOP</button>
-        </div>
     </div>
 
-    <audio id="bgMusic" loop>
-        <source src="votre-musique.mp3" type="audio/mpeg">
-    </audio>
     <audio id="snd-pop" src="https://www.soundjay.com/buttons/sounds/button-37.mp3"></audio>
     <audio id="snd-valid" src="https://www.soundjay.com/buttons/sounds/button-10.mp3"></audio>
 
     <script>
-        function googleTranslateElementInit() { new google.translate.TranslateElement({pageLanguage: 'fr'}, 'google_translate_element'); }
-        function playMusic() { document.getElementById('bgMusic').play(); }
-        function stopMusic() { document.getElementById('bgMusic').pause(); document.getElementById('bgMusic').currentTime = 0; }
+        function googleTranslateElementInit() { new google.translate.TranslateElement({pageLanguage: 'fr', layout: google.translate.TranslateElement.InlineLayout.SIMPLE}, 'google_translate_element'); }
         function playPop() { document.getElementById('snd-pop').play().catch(()=>{}); }
         function playValid() { document.getElementById('snd-valid').play().catch(()=>{}); }
     </script>
@@ -81,7 +87,7 @@
         </tr>
     </table>
 
-    <h1>📜 Le Trésor Public : Participation aux Communs</h1>
+    <h1 style="color: #00695c;">📜 Le Trésor Public</h1>
 
     <div class="intro-box">
         <div class="zone-explication">
@@ -111,8 +117,8 @@
                         <option value="Ingénierie">⚙️ Soutien Technique et Ingénierie</option>
                     </select>
                 </div>
-                <div class="full-width"><label>Description :</label><textarea id="message" rows="4" required></textarea></div>
-                <div class="full-width"><label>Besoins :</label><input type="text" id="besoin"></div>
+                <div class="full-width"><label>Description de l'action :</label><textarea id="message" rows="4" required></textarea></div>
+                <div class="full-width"><label>Besoins éventuels :</label><input type="text" id="besoin"></div>
             </div>
             <button type="submit" id="btnEnvoi" class="btn-envoi" onmouseover="playPop()">GRAVER AU REGISTRE 🌿</button>
         </form>
@@ -135,7 +141,7 @@
             e.preventDefault();
             playValid();
             const btn = document.getElementById('btnEnvoi');
-            btn.innerText = "Gravure..."; btn.disabled = true;
+            btn.innerText = "Traitement..."; btn.disabled = true;
 
             fetch(URL_SERVEUR, { 
                 method: 'POST', mode: 'no-cors', 
@@ -147,7 +153,7 @@
                     message: `[${document.getElementById('categorie').value}] ${document.getElementById('message').value}`
                 })
             }).then(() => { 
-                alert("Action gravée !"); 
+                alert("Action gravée dans le Grand Livre !"); 
                 window.location.href = "registre_public.html"; 
             });
         });
