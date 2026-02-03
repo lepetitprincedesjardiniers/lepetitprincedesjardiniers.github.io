@@ -35,13 +35,13 @@
         }
 
         /* MOTEUR DE RECHERCHE */
-        .search-box { background: #008080; padding: 12px; margin: 10px auto 10px auto; max-width: 700px; border-radius: 20px; color: white; box-shadow: 0 4px 15px rgba(0,0,0,0.2); position: relative; z-index: 10; border: none; /* Supprimé pointillé ici */ }
+        .search-box { background: #008080; padding: 12px; margin: 10px auto 10px auto; max-width: 700px; border-radius: 20px; color: white; box-shadow: 0 4px 15px rgba(0,0,0,0.2); position: relative; z-index: 10; }
         .search-container { display: flex; flex-direction: column; gap: 8px; align-items: center; }
-        .search-row { display: flex; gap: 10px; width: 95%; max-width: 550px; justify-content: center; }
+        .search-row { display: flex; gap: 10px; width: 100%; justify-content: center; }
         .search-item { display: flex; flex-direction: column; align-items: center; width: 100%; }
         .search-item label { font-size: 0.9em; margin-bottom: 4px; font-weight: bold; color: #FFFFFF; }
-        .search-item input { padding: 10px; border-radius: 12px; border: none; outline: none; text-align: center; color: #004D40; font-weight: bold; width: 100%; box-sizing: border-box; }
-        .input-large { width: 95%; max-width: 550px; }
+        .search-item input { padding: 10px; border-radius: 12px; border: none; outline: none; text-align: center; color: #004D40; font-weight: bold; width: 90%; }
+        .input-large { width: 95% !important; max-width: 550px; }
 
         /* REGISTRE & CARTES */
         .registre-titre { color: #008080; margin: 10px 0 5px 0; font-size: 1.2em; }
@@ -50,20 +50,17 @@
         .carte-message { 
             background: rgba(255, 255, 255, 0.95); border: 3px solid #008080; border-radius: 12px; padding: 12px; 
             box-shadow: 4px 4px 0px #008080; transition: 0.3s; color: #333; text-align: left; cursor: pointer; 
-            font-size: 0.85em; height: 180px; /* Légèrement augmenté pour les nouvelles infos */
-            overflow-y: auto; display: flex; flex-direction: column;
-            overflow-wrap: break-word; word-break: break-word;
-            white-space: normal; /* Force le retour à la ligne */
+            font-size: 0.85em; height: 180px; overflow-y: auto; display: flex; flex-direction: column;
+            overflow-wrap: break-word; word-break: break-word; white-space: pre-wrap;
         }
-        /* Effet d'approche sur les cases */
-        .carte-message:hover { transform: scale(1.05); background-color: #f0fff0; box-shadow: 8px 8px 15px rgba(0,0,0,0.2); border-color: #FF1493; }
+        .carte-message:hover { transform: scale(1.05); box-shadow: 0px 10px 20px rgba(0,0,0,0.2); border-color: #ff1493; }
 
         /* ZOOM GÉANT */
         #fond-sombre { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); z-index: 2000; justify-content: center; align-items: center; }
         .message-geant { 
             background: #FFFFF0; width: 92%; max-width: 850px; max-height: 85vh; padding: 35px; border-radius: 30px; 
             border: 10px solid #008080; position: relative; text-align: center; overflow-y: auto;
-            overflow-wrap: break-word; word-break: break-word;
+            overflow-wrap: break-word; word-break: break-word; white-space: pre-wrap;
         }
         .bouton-fermer { position: absolute; top: 10px; right: 15px; background: #FF1493; color: white; border: 4px solid white; border-radius: 50%; width: 40px; height: 40px; cursor: pointer; font-weight: bold; font-size: 20px; z-index: 10; }
 
@@ -76,7 +73,7 @@
         }
         
         /* ANIMAUX ET BULLES */
-        #animal-container { position: fixed; z-index: 900; white-space: nowrap; display: flex; align-items: center; pointer-events: auto; flex-direction: row; cursor: pointer; }
+        #animal-container { position: fixed; z-index: 900; white-space: nowrap; display: flex; align-items: center; pointer-events: none; flex-direction: row; }
         #corps-animal { font-size: 50px; order: 1; }
         #bulle-texte { 
             order: 2; background: rgba(255, 255, 255, 0.9); border-radius: 15px; padding: 8px 15px; 
@@ -85,7 +82,7 @@
         }
     </style>
 </head>
-<body onload="chargerAnnonces()">
+<body>
 
     <div class="top-bar">
         <div id="google_translate_element"></div>
@@ -101,7 +98,7 @@
         </table>
     </div>
 
-    <audio id="chantOiseaux" autoplay loop><source src="oiseaux.mp3" type="audio/mpeg"></audio>
+    <audio id="chantOiseaux" loop><source src="oiseaux.mp3" type="audio/mpeg"></audio>
 
     <h2 style="color:#2E7D32; margin-top: 5px; font-size: 1.4em;">🍃 Le Jardin des Cadeaux Existentiels 🍃</h2>
 
@@ -116,17 +113,17 @@
         <div class="search-container">
             <div class="search-row">
                 <div class="search-item">
-                    <label>Ville</label>
-                    <input type="text" id="searchVille" onkeyup="filtrerAnnonces()" placeholder="Ex: Paris...">
+                    <label>Pays</label>
+                    <input type="text" id="searchPays" onkeyup="filtrerAnnonces()" placeholder="Chercher un pays...">
                 </div>
                 <div class="search-item">
-                    <label>Pays</label>
-                    <input type="text" id="searchPays" onkeyup="filtrerAnnonces()" placeholder="Ex: France...">
+                    <label>Ville</label>
+                    <input type="text" id="searchVille" onkeyup="filtrerAnnonces()" placeholder="Chercher une ville...">
                 </div>
             </div>
             <div class="search-item">
                 <label>Quoi? Pourquoi? Pour moi, Pour toi, Pour nous quoi!</label>
-                <input type="text" id="searchKeyword" class="input-large" onkeyup="filtrerAnnonces()" placeholder="Mots clés (talent, objet...)">
+                <input type="text" id="searchKeyword" class="input-large" onkeyup="filtrerAnnonces()" placeholder="Mots clés...">
             </div>
         </div>
     </div>
@@ -142,13 +139,9 @@
         </div>
     </div>
 
-    <div id="animal-container" onclick="exploserAnimal(event)">
+    <div id="animal-container">
         <div id="corps-animal">🕊️</div>
         <div id="bulle-texte"></div>
-    </div>
-
-    <div class="copyright-wrapper">
-        <a href="https://cedric-villas-allure-privee.com" style="text-decoration:none; color:inherit;">© Jardin de la Fraternité</a>
     </div>
 
     <script type="text/javascript">
@@ -160,10 +153,6 @@
         const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxz40XE2KiPXTNZsW-mIg-fm55EivK0r9wzZ5ECFRdEIY53nYH9nLGYRoI71OX93oII/exec"; 
         let toutesLesAnnonces = [];
 
-        const mesPhrases = ["Une fleur vient d'éclore", "La fraternité grandit...", "Un cadeau déposé !", "Paix sur ce jardin"];
-        const animaux = ['🕊️', '🦋', '🐝', '🐞', '🦜'];
-        const fleurs = ['🌸', '🌼', '🌻', '🌺', '🌷'];
-
         async function chargerAnnonces() {
             try {
                 const response = await fetch(SCRIPT_URL);
@@ -171,28 +160,27 @@
                 toutesLesAnnonces = data.reverse(); 
                 afficherAnnonces(toutesLesAnnonces);
                 document.getElementById('chargement').style.display = 'none';
-            } catch (e) { document.getElementById('chargement').innerText = "Erreur de chargement."; }
+            } catch (e) { document.getElementById('chargement').innerText = "Erreur."; }
         }
 
         function afficherAnnonces(annonces) {
             const conteneur = document.getElementById('mur-messages');
             conteneur.innerHTML = '';
             annonces.forEach(ann => {
-                const datePub = ann.date ? new Date(ann.date).toLocaleDateString('fr-FR') : "N/C";
-                // Simulation d'une date de validité (ex: + 3 mois)
-                const dateVal = ann.date ? new Date(new Date(ann.date).setMonth(new Date(ann.date).getMonth() + 3)).toLocaleDateString('fr-FR') : "Permanente";
-                
                 const carte = document.createElement('div');
                 carte.className = 'carte-message';
                 carte.onclick = () => ouvrirGrandMessage(ann);
                 
+                const datePub = ann.date ? new Date(ann.date).toLocaleDateString('fr-FR') : "N/C";
+                const dateVal = ann.validite || "Permanente";
+                
                 carte.innerHTML = `
-                    <div style="margin-bottom:5px;font-weight:bold;color:#2E7D32;">${ann.nom || "Anonyme"}</div>
-                    <div style="font-weight:bold;color:#000080;flex-grow:1;overflow:hidden;margin-bottom:5px;">"${ann.message || ""}"</div>
-                    <div style="border-top:1px solid #eee; padding-top:5px; font-size:0.7em; color:#444;">
-                        <div>📍 <b>Lieu:</b> ${ann.ville || ""} (${ann.pays || ""})</div>
-                        <div>📅 <b>Publié le:</b> ${datePub}</div>
-                        <div>⌛ <b>Valide jusqu'au:</b> ${dateVal}</div>
+                    <div style="margin-bottom:8px;font-weight:bold;color:#2E7D32;">${ann.nom || "Anonyme"}</div>
+                    <div style="font-weight:bold;color:#000080;flex-grow:1;overflow:hidden;">"${ann.message || ""}"</div>
+                    <div style="font-size:0.7em; margin-top:10px; color:#666; border-top:1px solid #eee; padding-top:5px;">
+                        📅 Publié: ${datePub}<br>
+                        ⏳ Valide: ${dateVal}<br>
+                        📍 ${ann.ville || ""}, ${ann.pays || ""}
                     </div>
                 `;
                 conteneur.appendChild(carte);
@@ -200,27 +188,29 @@
         }
 
         function filtrerAnnonces() {
-            const ville = document.getElementById('searchVille').value.toLowerCase();
             const pays = document.getElementById('searchPays').value.toLowerCase();
-            const keyword = document.getElementById('searchKeyword').value.toLowerCase();
+            const ville = document.getElementById('searchVille').value.toLowerCase();
+            const mot = document.getElementById('searchKeyword').value.toLowerCase();
 
-            const filtrées = toutesLesAnnonces.filter(ann => {
-                const matchVille = (ann.ville || "").toLowerCase().includes(ville);
+            const filtrees = toutesLesAnnonces.filter(ann => {
                 const matchPays = (ann.pays || "").toLowerCase().includes(pays);
-                const matchKey = (ann.message || "").toLowerCase().includes(keyword) || (ann.nom || "").toLowerCase().includes(keyword);
-                return matchVille && matchPays && matchKey;
+                const matchVille = (ann.ville || "").toLowerCase().includes(ville);
+                const matchMot = (ann.message || "").toLowerCase().includes(mot) || (ann.nom || "").toLowerCase().includes(mot);
+                return matchPays && matchVille && matchMot;
             });
-            afficherAnnonces(filtrées);
+            afficherAnnonces(filtrees);
         }
 
         function ouvrirGrandMessage(ann) {
-            const datePropre = ann.date ? new Date(ann.date).toLocaleDateString('fr-FR') : "Récemment";
+            const datePub = ann.date ? new Date(ann.date).toLocaleDateString('fr-FR') : "N/C";
+            const dateVal = ann.validite || "Permanente";
             document.getElementById('geant-contenu').innerHTML = `
                 <div style="font-size:1.8em; color:#2E7D32; border-bottom:3px solid #008080; margin-bottom:20px; padding-bottom:15px; font-weight:bold;">🌱 L'offrande de ${ann.nom || "Anonyme"}</div>
                 <div style="font-size:1.5em; color:#000080; line-height:1.5; margin:20px 0; font-weight:bold; text-align:left; background:white; padding:20px; border-radius:15px; border-left:8px solid #FF1493;">"${ann.message || ""}"</div>
                 <div style="font-size:1.1em; background:#E0F2F1; padding:20px; border-radius:20px; color:#333; text-align:left;">
-                    <b>📍 Lieu :</b> ${ann.ville || ""} / ${ann.pays || ""}<br>
-                    <b>📅 Date :</b> ${datePropre}
+                    <p><strong>📍 Lieu :</strong> ${ann.ville || ""}, ${ann.pays || ""}</p>
+                    <p><strong>📅 Date de publication :</strong> ${datePub}</p>
+                    <p><strong>⏳ Date de validité :</strong> ${dateVal}</p>
                 </div>
             `;
             document.getElementById('fond-sombre').style.display = 'flex';
@@ -228,57 +218,80 @@
 
         function fermerGrandMessage() { document.getElementById('fond-sombre').style.display = 'none'; }
 
-        /* EFFET FLEURS ET ANIMAUX (CONSERVÉ) */
-        setInterval(() => {
-            const f = document.createElement('div');
-            f.className = 'fleur-etoile';
-            f.style.left = Math.random() * 100 + "vw";
-            f.style.top = "-20px";
-            f.innerText = fleurs[Math.floor(Math.random() * fleurs.length)];
-            f.style.animationDuration = (Math.random() * 3 + 2) + "s";
-            document.body.appendChild(f);
-            setTimeout(() => f.remove(), 5000);
-        }, 1000);
+        /* --- EFFETS ET ANIMATIONS --- */
+        const animauxEmojis = ['🕊️', '🦋', '🐝', '🐞', '🦜'];
+        const fleursEmojis = ['🌸', '🌼', '🌻', '🌺', '🌷'];
 
-        // Animation de l'oiseau porteur de message
-        const container = document.getElementById('animal-container');
-        const bulle = document.getElementById('bulle-texte');
-        const corps = document.getElementById('corps-animal');
+        function creerPluieFleurs() {
+            for(let i=0; i<30; i++) {
+                const f = document.createElement('div');
+                f.className = 'fleur-etoile';
+                f.innerHTML = fleursEmojis[Math.floor(Math.random()*fleursEmojis.length)];
+                f.style.left = Math.random()*100 + 'vw';
+                f.style.top = Math.random()*100 + 'vh';
+                f.style.animationDuration = (5 + Math.random()*10) + 's';
+                document.body.appendChild(f);
+            }
+        }
 
-        function moveAnimal() {
-            const x = Math.random() * (window.innerWidth - 200);
-            const y = Math.random() * (window.innerHeight - 100);
-            container.style.transition = "all 4s ease-in-out";
-            container.style.left = x + "px";
-            container.style.top = y + "px";
+        function animerOiseau() {
+            const container = document.getElementById('animal-container');
+            const corps = document.getElementById('corps-animal');
+            const bulle = document.getElementById('bulle-texte');
+            const phrases = ["Un nouveau don !", "La fraternité rayonne", "Cliquez-moi !", "Quelle belle énergie"];
             
-            if(Math.random() > 0.5) {
-                bulle.innerText = mesPhrases[Math.floor(Math.random()*mesPhrases.length)];
+            let x = Math.random() * window.innerWidth;
+            let y = Math.random() * window.innerHeight;
+            
+            setInterval(() => {
+                x = Math.random() * (window.innerWidth - 100);
+                y = Math.random() * (window.innerHeight - 100);
+                container.style.transition = "all 4s ease-in-out";
+                container.style.left = x + "px";
+                container.style.top = y + "px";
+                corps.innerHTML = animauxEmojis[Math.floor(Math.random()*animauxEmojis.length)];
+                bulle.innerHTML = phrases[Math.floor(Math.random()*phrases.length)];
                 bulle.style.opacity = 1;
-                setTimeout(() => { bulle.style.opacity = 0; }, 2000);
-            }
-        }
-        setInterval(moveAnimal, 5000);
+                setTimeout(() => bulle.style.opacity = 0, 2000);
+            }, 5000);
 
-        function exploserAnimal(e) {
-            const rect = corps.getBoundingClientRect();
-            for(let i=0; i<12; i++) {
-                const etincelle = document.createElement('div');
-                etincelle.innerText = '✨';
-                etincelle.style.position = 'fixed';
-                etincelle.style.left = rect.left + 25 + 'px';
-                etincelle.style.top = rect.top + 25 + 'px';
-                etincelle.style.transition = 'all 0.8s ease-out';
-                etincelle.style.zIndex = 1000;
-                document.body.appendChild(etincelle);
-                setTimeout(() => {
-                    etincelle.style.transform = `translate(${(Math.random()-0.5)*200}px, ${(Math.random()-0.5)*200}px) scale(0)`;
-                    etincelle.style.opacity = 0;
-                }, 10);
-                setTimeout(() => etincelle.remove(), 800);
-            }
-            corps.innerText = animaux[Math.floor(Math.random()*animaux.length)];
+            corps.style.pointerEvents = "auto";
+            corps.onclick = (e) => {
+                for(let i=0; i<15; i++) {
+                    const spark = document.createElement('div');
+                    spark.style.position = 'fixed';
+                    spark.style.left = e.clientX + 'px';
+                    spark.style.top = e.clientY + 'px';
+                    spark.innerHTML = '✨';
+                    spark.style.transition = 'all 0.8s';
+                    document.body.appendChild(spark);
+                    setTimeout(() => {
+                        spark.style.transform = `translate(${(Math.random()-0.5)*200}px, ${(Math.random()-0.5)*200}px) scale(0)`;
+                        setTimeout(() => spark.remove(), 800);
+                    }, 10);
+                }
+            };
         }
+
+        function decoFixe() {
+            const jardin = document.getElementById('jardin-sacre');
+            for(let i=0; i<15; i++) {
+                const f = document.createElement('div');
+                f.className = 'fleur-clonée';
+                f.innerHTML = fleursEmojis[Math.floor(Math.random()*fleursEmojis.length)];
+                f.style.left = Math.random()*95 + '%';
+                f.style.top = Math.random()*60 + 'px';
+                jardin.appendChild(f);
+            }
+        }
+
+        window.onload = () => {
+            chargerAnnonces();
+            creerPluieFleurs();
+            animerOiseau();
+            decoFixe();
+            document.getElementById('chantOiseaux').play().catch(() => console.log("Son en attente d'interaction"));
+        };
     </script>
 
 </body>
