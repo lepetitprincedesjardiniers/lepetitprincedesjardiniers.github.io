@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Impôt Public - Le Trésor Public</title>
+    <title>Impôt Public - Le Trésor des Communs</title>
     <style>
         body { font-family: 'Comic Sans MS', cursive; background-color: #E8F5E9; color: #004d40; margin: 0; text-align: center; }
         #google_translate_element { padding: 10px; background: rgba(255,255,255,0.5); border-bottom: 2px solid #008080; }
@@ -12,19 +12,28 @@
         .menu-table td { padding: 12px 20px; border: 1px solid #FFFFFF; }
         .menu-table a { text-decoration: none; color: #FFFFFF; font-weight: bold; }
         
-        .form-container { background: white; border: 5px solid #008080; border-radius: 30px; width: 90%; max-width: 700px; margin: 20px auto; padding: 25px; box-shadow: 10px 10px 0px #008080; }
-        .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; text-align: left; }
-        @media (max-width: 600px) { .form-grid { grid-template-columns: 1fr; } }
+        .intro-box { background: white; border: 3px solid #008080; border-radius: 20px; width: 95%; max-width: 900px; margin: 20px auto; padding: 25px; box-shadow: 5px 5px 15px rgba(0,0,0,0.1); }
+        
+        /* Grille des 3 piliers critiques */
+        .concept-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 15px; margin-top: 25px; }
+        @media (max-width: 800px) { .concept-grid { grid-template-columns: 1fr; } }
+        
+        .concept-card { background: #F1F8E9; padding: 15px; border-radius: 15px; border-top: 5px solid #008080; text-align: left; font-size: 0.9em; }
+        .concept-card h3 { margin-top: 0; color: #2e7d32; font-size: 1.1em; border-bottom: 1px solid #008080; padding-bottom: 5px; }
 
-        label { display: block; margin-top: 10px; font-weight: bold; color: #00695c; }
-        input, textarea, select { width: 100%; padding: 12px; margin: 5px 0; border-radius: 12px; border: 2px solid #008080; box-sizing: border-box; font-family: inherit; font-size: 14px; }
-        
+        .action-hub { margin: 30px 0; display: flex; justify-content: center; gap: 20px; flex-wrap: wrap; }
+        .btn-principal { text-decoration: none; padding: 18px 25px; border-radius: 30px; font-weight: bold; font-size: 1.1em; transition: 0.3s; box-shadow: 4px 4px 0px #004d40; display: flex; align-items: center; gap: 10px; }
+        .btn-consult { background: #2e7d32; color: white; border: 2px solid #2e7d32; }
+        .btn-declare { background: #FFFFFF; color: #2e7d32; border: 2px solid #2e7d32; }
+        .btn-principal:hover { transform: translateY(-3px); }
+
+        #section-formulaire { display: none; }
+        .form-container { background: white; border: 5px solid #008080; border-radius: 30px; width: 90%; max-width: 800px; margin: 20px auto; padding: 25px; box-shadow: 10px 10px 0px #008080; }
+        .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; text-align: left; }
+        label { display: block; margin-top: 10px; font-weight: bold; color: #00695c; font-size: 0.9em; }
+        input, textarea, select { width: 100%; padding: 12px; margin: 5px 0; border-radius: 12px; border: 2px solid #008080; box-sizing: border-box; font-family: inherit; }
         .full-width { grid-column: 1 / -1; }
-        
-        .btn-envoi { background: #008080; color: white; border: none; padding: 18px 40px; border-radius: 25px; font-weight: bold; cursor: pointer; font-size: 1.2em; transition: 0.3s; margin-top: 20px; }
-        .btn-envoi:hover { transform: scale(1.05); background: #2e7d32; }
-        
-        .logistique-tag { color: #E67E22; font-weight: bold; font-size: 0.85em; }
+        .btn-envoi { background: #008080; color: white; border: none; padding: 18px 40px; border-radius: 25px; font-weight: bold; cursor: pointer; font-size: 1.2em; margin-top: 20px; }
     </style>
 </head>
 <body>
@@ -40,15 +49,38 @@
             <td><a href="jardin.html">Le Jardin</a></td>
             <td><a href="impot.html">Impôt Public</a></td>
             <td><a href="registre_public.html">Le Registre</a></td>
-            <td><a href="regulation.html">Régulation</a></td>
-            <td><a href="aide.html">Aide</a></td>
         </tr>
     </table>
 
-    <h1>📜 Registre de l'Impôt Public</h1>
-    <p>Déclarez ici vos travaux citoyens ou vos offres de service pour la communauté.</p>
+    <h1>📜 Le Trésor Public : Travaux & Participation</h1>
 
-    <div class="form-container">
+    <div class="intro-box">
+        <h2>Ici, la fiscalité est une contribution aux tâches critiques.</h2>
+        <p>Pour que la cité fleurisse, nous remplaçons l'argent par la participation directe aux besoins réels du monde.</p>
+        
+        <div class="concept-grid">
+            <div class="concept-card">
+                <h3>🌐 Maintenance Globale</h3>
+                <p>Réparation des réseaux (eau, numérique, routes). Gestion des câbles sous-marins et satellites comme des "Communs".</p>
+            </div>
+            <div class="concept-card">
+                <h3>🧹 Brigade des Travaux Ingrats</h3>
+                <p>Rotation équitable des tâches pénibles (déchets, assainissement) pour éviter que le poids ne repose sur les mêmes.</p>
+            </div>
+            <div class="concept-card">
+                <h3>🛠️ Ingénierie & Brevets</h3>
+                <p>Mise à disposition de plans et brevets libres pour que chaque cité construise ses propres outils.</p>
+            </div>
+        </div>
+
+        <div class="action-hub">
+            <a href="registre_public.html" class="btn-principal btn-consult">📖 CONSULTER LE REGISTRE</a>
+            <a href="#section-formulaire" onclick="ouvrirFormulaire()" class="btn-principal btn-declare">✍️ DÉCLARER MA CONTRIBUTION</a>
+        </div>
+    </div>
+
+    <div id="section-formulaire" class="form-container">
+        <h3>📝 Inscription au Grand Livre des Travaux</h3>
         <form id="impotForm">
             <div class="form-grid">
                 <div>
@@ -56,63 +88,66 @@
                     <input type="text" id="nom" placeholder="Qui es-tu ?" required>
                 </div>
                 <div>
-                    <label>Localisation (Ville/Pays) :</label>
-                    <input type="text" id="ville" placeholder="Où s'est passé l'action ?" required>
+                    <label>Localisation (Action réalisée) :</label>
+                    <input type="text" id="ville" placeholder="Ville ou zone géographique" required>
                 </div>
                 <div>
-                    <label>Catégorie de l'Action :</label>
+                    <label>Type de Contribution Critique :</label>
                     <select id="categorie">
-                        <option value="Environnement">🌿 Environnement / Nature</option>
-                        <option value="Social">🤝 Aide Sociale / Entraide</option>
-                        <option value="Administratif">📑 Aide Administrative</option>
-                        <option value="Technique">🛠️ Bricolage / Technique</option>
-                        <option value="Savoir">📚 Transmission de Savoir</option>
+                        <option value="Infrastructures">🏗️ Maintenance Infrastructures (Eau, Numérique, Réseaux)</option>
+                        <option value="Travaux Ingrats">🧹 Brigade des Travaux Ingrats (Déchets, Assainissement)</option>
+                        <option value="Ingénierie">⚙️ Soutien Technique & Plans Libres (Brevets Ouverts)</option>
+                        <option value="Savoir">📚 Transmission de Savoir-faire</option>
+                        <option value="International">🛰️ Maintenance Communs Mondiaux (Satellites, Câbles)</option>
                     </select>
                 </div>
                 <div>
-                    <label>Temps consacré :</label>
-                    <input type="text" id="temps" placeholder="Ex: 2 heures, 1 matinée...">
+                    <label>Temps ou Portée de l'action :</label>
+                    <input type="text" id="temps" placeholder="Ex: 1 cycle de rotation, 1 brevet partagé...">
                 </div>
-
                 <div>
-                    <label>Portée de l'action :</label>
+                    <label>Échelle d'intervention :</label>
                     <select id="portee">
-                        <option value="Local">Cité Locale</option>
-                        <option value="International">International / Flux Mondiaux</option>
+                        <option value="Locale">Locale (Ma Cité)</option>
+                        <option value="Internationale">Internationale (Flux Mondiaux / Communs)</option>
                     </select>
                 </div>
                 <div>
-                    <label>Mode d'appui logistique :</label>
+                    <label>Mode Logistique :</label>
                     <select id="logistique">
-                        <option value="Autonome">Don Entier (J'assure tout)</option>
-                        <option value="Point Fixe">À récupérer sur place</option>
-                        <option value="Appui requis">Besoin d'appui (Travaux Publics)</option>
+                        <option value="Autonome">Autonome (J'ai mes outils)</option>
+                        <option value="Appui requis">Appui requis (Demande aux Travaux Publics)</option>
+                        <option value="Plan partagé">Plan/Brevet partagé (Numérique)</option>
                     </select>
                 </div>
-
                 <div class="full-width">
-                    <label>Description détaillée de l'Impôt Citoyen :</label>
-                    <textarea id="message" rows="4" placeholder="Qu'as-tu accompli pour le bien commun ?" required></textarea>
+                    <label>Description précise de la tâche accomplie :</label>
+                    <textarea id="message" rows="4" placeholder="Qu'as-tu fait pour la maintenance ou la rotation des tâches ?" required></textarea>
                 </div>
                 <div class="full-width">
-                    <label>Besoins pour continuer (facultatif) :</label>
-                    <input type="text" id="besoin" placeholder="Matériel, aide, outils...">
+                    <label>Outils ou aide nécessaires pour la prochaine fois :</label>
+                    <input type="text" id="besoin" placeholder="Accès serveur, matériel lourd, équipe de soutien...">
                 </div>
             </div>
-            <button type="submit" id="btnEnvoi" class="btn-envoi">DÉPOSER MA GRAINE AU REGISTRE 🌿</button>
+            <button type="submit" id="btnEnvoi" class="btn-envoi">GRAVER DANS LE REGISTRE 🌿</button>
         </form>
     </div>
 
     <script>
         const URL_SERVEUR = "https://script.google.com/macros/s/AKfycbz4ncs9qw_AfmKSER5QST-P0OeKQggQaq86QC6liS53uZ9sx4Lo_-4-h1knXKWqgQMc/exec";
 
+        function ouvrirFormulaire() {
+            document.getElementById('section-formulaire').style.display = 'block';
+            window.scrollTo({ top: document.getElementById('section-formulaire').offsetTop, behavior: 'smooth' });
+        }
+
         document.getElementById('impotForm').addEventListener('submit', function(e) {
             e.preventDefault();
             const btn = document.getElementById('btnEnvoi');
-            btn.innerText = "Inscription au registre..."; btn.disabled = true;
+            btn.innerText = "Validation par les Sages..."; btn.disabled = true;
 
-            const locComplet = `${document.getElementById('ville').value} | Portée: ${document.getElementById('portee').value}`;
-            const msgComplet = `${document.getElementById('message').value} [Logistique: ${document.getElementById('logistique').value}] (Besoin: ${document.getElementById('besoin').value || 'Aucun'})`;
+            const locComplet = `${document.getElementById('ville').value} | Échelle: ${document.getElementById('portee').value}`;
+            const msgComplet = `[${document.getElementById('categorie').value}] ${document.getElementById('message').value} (Logistique: ${document.getElementById('logistique').value} | Temps: ${document.getElementById('temps').value})`;
 
             fetch(URL_SERVEUR, { 
                 method: 'POST', mode: 'no-cors', 
@@ -124,10 +159,8 @@
                     message: msgComplet
                 })
             }).then(() => { 
-                alert("Action inscrite au Trésor Public ! Merci."); 
+                alert("Action validée au Registre des Communs !"); 
                 window.location.href = "registre_public.html"; 
-            }).catch(() => {
-                window.location.href = "registre_public.html";
             });
         });
     </script>
