@@ -171,6 +171,31 @@
             } catch (e) { document.getElementById('chargement').innerText = "Erreur."; }
         }
 
+        // --- FONCTION MAGIQUE POUR TROUVER LA DATE ---
+        function extraireDate(objet) {
+            // Liste des clés à tester en priorité
+            const clesPrioritaires = ['timestamp', 'Horodateur', 'date', 'Date', 'Time'];
+            for (let cle of clesPrioritaires) {
+                if (objet[cle]) return formaterDate(objet[cle]);
+            }
+            // Sinon, on cherche n'importe quelle valeur qui ressemble à une date
+            for (let cle in objet) {
+                let valeur = objet[cle];
+                if (valeur && (typeof valeur === 'string' || typeof valeur === 'number')) {
+                    let d = new Date(valeur);
+                    if (!isNaN(d.getTime()) && d.getFullYear() > 2000) {
+                        return d.toLocaleDateString('fr-FR');
+                    }
+                }
+            }
+            return "N/C";
+        }
+
+        function formaterDate(val) {
+            let d = new Date(val);
+            return isNaN(d.getTime()) ? "N/C" : d.toLocaleDateString('fr-FR');
+        }
+
         function afficherAnnonces(annonces) {
             const conteneur = document.getElementById('mur-messages');
             conteneur.innerHTML = '';
@@ -179,9 +204,7 @@
                 carte.className = 'carte-message';
                 carte.onclick = () => ouvrirGrandMessage(ann);
                 
-                // Détection multi-noms pour la date (timestamp, Horodateur ou date)
-                const dateBrute = ann.timestamp || ann.Horodateur || ann.date || ann.Date;
-                const datePub = dateBrute ? new Date(dateBrute).toLocaleDateString('fr-FR') : "N/C";
+                const datePub = extraireDate(ann);
                 const dateVal = ann.validite || "Permanente";
                 
                 carte.innerHTML = `
@@ -211,8 +234,7 @@
         }
 
         function ouvrirGrandMessage(ann) {
-            const dateBrute = ann.timestamp || ann.Horodateur || ann.date || ann.Date;
-            const datePub = dateBrute ? new Date(dateBrute).toLocaleDateString('fr-FR') : "N/C";
+            const datePub = extraireDate(ann);
             const dateVal = ann.validite || "Permanente";
             document.getElementById('geant-contenu').innerHTML = `
                 <div style="font-size:1.6em; color:#2E7D32; border-bottom:3px solid #008080; margin-bottom:15px; padding-bottom:10px; font-weight:bold; text-align:center; width:100%;">🌱 L'offrande de ${ann.nom || "Anonyme"}</div>
