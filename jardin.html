@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <title>Le Jardin de la Fraternité - Registre</title>
     <style>
-        /* --- STYLE DE BASE (CONSERVÉ) --- */
+        /* --- STYLE DE BASE (INTÉGRALEMENT CONSERVÉ) --- */
         body { font-family: 'Comic Sans MS', cursive; text-align: center; margin: 0; padding: 0; background-color: #FFFF00; color: #000080; overflow-x: hidden; min-height: 100vh; padding-bottom: 80px; }
         .top-bar { position: relative; width: 100%; min-height: 40px; background: rgba(255,255,255,0.3); padding: 5px 0; }
         #google_translate_element { position: absolute; left: 10px; top: 10px; transform: scale(0.8); transform-origin: top left; }
@@ -38,7 +38,7 @@
         .carte-message { 
             background: rgba(255, 255, 255, 0.95); border: 3px solid #008080; border-radius: 12px; padding: 12px; 
             box-shadow: 4px 4px 0px #008080; transition: 0.3s; color: #333; text-align: left; cursor: pointer; 
-            font-size: 0.85em; height: 180px; overflow-y: auto; display: flex; flex-direction: column;
+            font-size: 0.85em; height: 210px; overflow-y: auto; display: flex; flex-direction: column;
             overflow-wrap: break-word; word-break: break-word; white-space: pre-wrap;
         }
         .carte-message:hover { transform: scale(1.05); box-shadow: 0px 10px 20px rgba(0,0,0,0.2); border-color: #ff1493; }
@@ -66,13 +66,15 @@
             opacity: 0; transition: opacity 0.3s; max-width: 180px; font-size: 0.75em; 
             white-space: normal; overflow-wrap: break-word;
         }
-        /* NOUVEAU STYLE BOUTON */
         #btn-voir-plus {
             display: none; margin: 20px auto; padding: 15px 30px; background: #008080; color: white;
             border: 3px solid white; border-radius: 30px; font-family: 'Comic Sans MS', cursive;
             font-weight: bold; cursor: pointer; box-shadow: 0 4px 10px rgba(0,0,0,0.3);
         }
         #btn-voir-plus:hover { background: #006666; transform: scale(1.05); }
+
+        /* AJOUT : STYLE POUR LES INFOS DE LOGISTIQUE GLOBALE */
+        .info-echange { font-size: 0.8em; background: #E0F2F1; color: #00695C; padding: 4px; border-radius: 6px; margin-top: 5px; border: 1px dashed #008080; }
     </style>
 </head>
 <body>
@@ -97,26 +99,26 @@
 
     <div class="phrase-rose">Bienvenue au Jardin ensoleilleur des Dons entiers :</div>
     <div class="phrase-sous">Les talents, les créations, les savoirs, les offrandes...les cadeaux entiers....</div>
-    <div class="phrase-sous">Une pure joie altruiste.</div>
+    <div class="phrase-sous">Une pure joie altruiste, sans frontières.</div>
 
     <div id="jardin-sacre"></div>
 
     <div class="search-box">
-        <h3 style="margin:0 0 10px 0; font-size: 1.1em;">🔍 Chercher une graine de fraternité</h3>
+        <h3 style="margin:0 0 10px 0; font-size: 1.1em;">🔍 Chercher une graine de fraternité mondiale</h3>
         <div class="search-container">
             <div class="search-row">
                 <div class="search-item">
                     <label>Pays</label>
-                    <input type="text" id="searchPays" onkeyup="filtrerAnnonces()" placeholder="Chercher un pays...">
+                    <input type="text" id="searchPays" onkeyup="filtrerAnnonces()" placeholder="Toute la Terre...">
                 </div>
                 <div class="search-item">
                     <label>Ville</label>
-                    <input type="text" id="searchVille" onkeyup="filtrerAnnonces()" placeholder="Chercher une ville...">
+                    <input type="text" id="searchVille" onkeyup="filtrerAnnonces()" placeholder="Chercher une cité...">
                 </div>
             </div>
             <div class="search-item">
                 <label>Quoi? Pourquoi? Pour moi, Pour toi, Pour nous quoi!</label>
-                <input type="text" id="searchKeyword" class="input-large" onkeyup="filtrerAnnonces()" placeholder="Mots clés...">
+                <input type="text" id="searchKeyword" class="input-large" onkeyup="filtrerAnnonces()" placeholder="Mots clés (ex: bois, écoute, pain)...">
             </div>
         </div>
     </div>
@@ -154,7 +156,7 @@
         let toutesLesAnnonces = [];
         let annoncesFiltreesGlobal = [];
         let indexActuel = 0;
-        const TAILLE_PAGE = 50; // Nombre d'annonces par bloc
+        const TAILLE_PAGE = 50; 
         let debounceTimer;
 
         async function chargerAnnonces() {
@@ -163,11 +165,10 @@
                 const data = await response.json();
                 toutesLesAnnonces = data.reverse(); 
                 document.getElementById('chargement').style.display = 'none';
-                executerFiltrage(); // Affichage initial
-            } catch (e) { document.getElementById('chargement').innerText = "Erreur."; }
+                executerFiltrage(); 
+            } catch (e) { document.getElementById('chargement').innerText = "Erreur de connexion au jardin."; }
         }
 
-        // --- DEBOUNCE TECHNIQUE ---
         function filtrerAnnonces() {
             clearTimeout(debounceTimer);
             debounceTimer = setTimeout(() => {
@@ -187,7 +188,6 @@
                 return matchPays && matchVille && matchMot;
             });
 
-            // Mise à jour du compteur de résultats
             const nb = annoncesFiltreesGlobal.length;
             document.querySelector('.registre-titre').innerText = `📖 Registre (${nb} graines trouvées)`;
 
@@ -196,13 +196,11 @@
             chargerPlus();
         }
 
-        // --- FILTRAGE OPTIMISÉ (PAGINATION) ---
         function chargerPlus() {
             const suite = annoncesFiltreesGlobal.slice(indexActuel, indexActuel + TAILLE_PAGE);
             afficherAnnonces(suite);
             indexActuel += TAILLE_PAGE;
 
-            // Afficher le bouton si il reste des résultats
             const btn = document.getElementById('btn-voir-plus');
             btn.style.display = (indexActuel < annoncesFiltreesGlobal.length) ? 'block' : 'none';
         }
@@ -211,15 +209,6 @@
             const clesPrioritaires = ['timestamp', 'Horodateur', 'date', 'Date', 'Time'];
             for (let cle of clesPrioritaires) {
                 if (objet[cle]) return formaterDate(objet[cle]);
-            }
-            for (let cle in objet) {
-                let valeur = objet[cle];
-                if (valeur && (typeof valeur === 'string' || typeof valeur === 'number')) {
-                    let d = new Date(valeur);
-                    if (!isNaN(d.getTime()) && d.getFullYear() > 2000) {
-                        return d.toLocaleDateString('fr-FR');
-                    }
-                }
             }
             return "N/C";
         }
@@ -241,10 +230,15 @@
                 const datePub = extraireDate(ann);
                 const dateVal = ann.validite || "Permanente";
                 
+                // --- INTÉGRATION LOGIQUE INTERNATIONALE ---
+                const portee = ann.portee || "Locale";
+                const transport = ann.logistique || "À définir";
+
                 carte.innerHTML = `
                     <div style="margin-bottom:4px;font-weight:bold;color:#2E7D32;text-align:center;width:100%;">${ann.nom || "Anonyme"}</div>
                     <div style="font-weight:bold;color:#000080;flex-grow:1;overflow:hidden;font-size:0.95em;text-align:left;margin-bottom:6px;width:100%;display:block;">"${ann.message || ""}"</div>
-                    <div style="font-size:0.62em; color:#777; border-top:1px solid #eee; padding-top:2px; line-height:1.1; text-align: left !important; width: 100%; display: table; clear: both;">
+                    <div class="info-echange">📦 ${portee} | 🚚 ${transport}</div>
+                    <div style="font-size:0.62em; color:#777; border-top:1px solid #eee; padding-top:2px; line-height:1.1; text-align: left !important; width: 100%; display: table; clear: both; margin-top:5px;">
                         <span style="display:block; text-align:left;">📅 ${datePub} • ⏳ ${dateVal}</span>
                         <span style="display:block; text-align:left;">📍 ${ann.ville || ""}, ${ann.pays || ""}</span>
                     </div>
@@ -257,9 +251,21 @@
         function ouvrirGrandMessage(ann) {
             const datePub = extraireDate(ann);
             const dateVal = ann.validite || "Permanente";
+            
+            // --- DÉTAILS ÉCHANGES INTERNATIONAUX ---
+            const portee = ann.portee || "Locale";
+            const transport = ann.logistique || "Don à récupérer ou livraison à discuter";
+
             document.getElementById('geant-contenu').innerHTML = `
                 <div style="font-size:1.6em; color:#2E7D32; border-bottom:3px solid #008080; margin-bottom:15px; padding-bottom:10px; font-weight:bold; text-align:center; width:100%;">🌱 L'offrande de ${ann.nom || "Anonyme"}</div>
                 <div style="font-size:1.4em; color:#000080; line-height:1.4; margin:10px 0; font-weight:bold; text-align:left; background:white; padding:15px; border-radius:15px; border-left:8px solid #FF1493; width:100%; box-sizing:border-box;">"${ann.message || ""}"</div>
+                
+                <div style="background:#E0F2F1; border:2px solid #008080; padding:15px; border-radius:15px; margin-bottom:15px; text-align:left;">
+                    <h4 style="margin:0 0 5px 0; color:#00695C;">🌍 Information d'échange international</h4>
+                    <p style="margin:0; font-size:1em;"><strong>Portée :</strong> ${portee}</p>
+                    <p style="margin:0; font-size:1em;"><strong>Logistique :</strong> ${transport}</p>
+                </div>
+
                 <div style="font-size:0.85em; background:#f4fbfb; padding:10px; border-radius:15px; color:#555; text-align:left !important; border:1px solid #d0e8e8; width: 100%; box-sizing: border-box; display:block;">
                     <p style="margin:2px 0; text-align:left !important; display:block;"><strong>📍 Lieu :</strong> ${ann.ville || ""}, ${ann.pays || ""}</p>
                     <p style="margin:2px 0; text-align:left !important; display:block;"><strong>📅 Publication :</strong> ${datePub} | <strong>⏳ Validité :</strong> ${dateVal}</p>
@@ -290,7 +296,7 @@
             const container = document.getElementById('animal-container');
             const corps = document.getElementById('corps-animal');
             const bulle = document.getElementById('bulle-texte');
-            const phrases = ["Un don !", "Fraternité", "Coucou", "Bel esprit"];
+            const phrases = ["Un don !", "Fraternité mondiale", "Pour nous tous", "Semer l'amour"];
             let x = Math.random() * window.innerWidth;
             let y = Math.random() * window.innerHeight;
             setInterval(() => {
