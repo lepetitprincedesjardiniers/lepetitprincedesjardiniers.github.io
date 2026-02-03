@@ -77,11 +77,12 @@
         
         /* ANIMAUX ET BULLES */
         #animal-container { position: fixed; z-index: 900; white-space: nowrap; display: flex; align-items: center; pointer-events: none; flex-direction: row; }
-        #corps-animal { font-size: 50px; order: 1; }
+        #corps-animal { font-size: 28px; order: 1; } /* Taille de l'animal réduite */
         #bulle-texte { 
-            order: 2; background: rgba(255, 255, 255, 0.9); border-radius: 15px; padding: 8px 15px; 
-            font-style: italic; color: #2E7D32; margin-left: 10px; font-weight: bold; border: 2px solid #2E7D32; 
-            opacity: 0; transition: opacity 0.3s; max-width: 250px; white-space: normal; overflow-wrap: break-word;
+            order: 2; background: rgba(255, 255, 255, 0.9); border-radius: 12px; padding: 5px 10px; 
+            font-style: italic; color: #2E7D32; margin-left: 8px; font-weight: bold; border: 1px solid #2E7D32; 
+            opacity: 0; transition: opacity 0.3s; max-width: 180px; font-size: 0.75em; /* Bulle réduite */
+            white-space: normal; overflow-wrap: break-word;
         }
     </style>
 </head>
@@ -143,7 +144,7 @@
     </div>
 
     <div class="copyright-wrapper">
-        <a href="merci-externe.html">© Le Petit Prince des Jardiniers 🌹</a>
+        <a href="transition-extern.html">© Le Petit Prince des Jardiniers 🌹</a>
     </div>
 
     <div id="animal-container">
@@ -182,11 +183,10 @@
                 const dateVal = ann.validite || "Permanente";
                 
                 carte.innerHTML = `
-                    <div style="margin-bottom:8px;font-weight:bold;color:#2E7D32;">${ann.nom || "Anonyme"}</div>
-                    <div style="font-weight:bold;color:#000080;flex-grow:1;overflow:hidden;">"${ann.message || ""}"</div>
-                    <div style="font-size:0.7em; margin-top:10px; color:#666; border-top:1px solid #eee; padding-top:5px;">
-                        📅 Publié: ${datePub}<br>
-                        ⏳ Valide: ${dateVal}<br>
+                    <div style="margin-bottom:6px;font-weight:bold;color:#2E7D32;">${ann.nom || "Anonyme"}</div>
+                    <div style="font-weight:bold;color:#000080;flex-grow:1;overflow:hidden;font-size:0.95em;">"${ann.message || ""}"</div>
+                    <div style="font-size:0.65em; margin-top:8px; color:#777; border-top:1px solid #eee; padding-top:4px; line-height:1.2;">
+                        📅 ${datePub} • ⏳ ${dateVal}<br>
                         📍 ${ann.ville || ""}, ${ann.pays || ""}
                     </div>
                 `;
@@ -212,12 +212,11 @@
             const datePub = ann.date ? new Date(ann.date).toLocaleDateString('fr-FR') : "N/C";
             const dateVal = ann.validite || "Permanente";
             document.getElementById('geant-contenu').innerHTML = `
-                <div style="font-size:1.8em; color:#2E7D32; border-bottom:3px solid #008080; margin-bottom:20px; padding-bottom:15px; font-weight:bold;">🌱 L'offrande de ${ann.nom || "Anonyme"}</div>
-                <div style="font-size:1.5em; color:#000080; line-height:1.5; margin:20px 0; font-weight:bold; text-align:left; background:white; padding:20px; border-radius:15px; border-left:8px solid #FF1493;">"${ann.message || ""}"</div>
-                <div style="font-size:1.1em; background:#E0F2F1; padding:20px; border-radius:20px; color:#333; text-align:left;">
-                    <p><strong>📍 Lieu :</strong> ${ann.ville || ""}, ${ann.pays || ""}</p>
-                    <p><strong>📅 Date de publication :</strong> ${datePub}</p>
-                    <p><strong>⏳ Date de validité :</strong> ${dateVal}</p>
+                <div style="font-size:1.6em; color:#2E7D32; border-bottom:3px solid #008080; margin-bottom:15px; padding-bottom:10px; font-weight:bold;">🌱 L'offrande de ${ann.nom || "Anonyme"}</div>
+                <div style="font-size:1.4em; color:#000080; line-height:1.4; margin:15px 0; font-weight:bold; text-align:left; background:white; padding:15px; border-radius:15px; border-left:8px solid #FF1493;">"${ann.message || ""}"</div>
+                <div style="font-size:0.85em; background:#f4fbfb; padding:12px; border-radius:15px; color:#555; text-align:left; border:1px solid #d0e8e8;">
+                    <p style="margin:4px 0;"><strong>📍 Lieu :</strong> ${ann.ville || ""}, ${ann.pays || ""}</p>
+                    <p style="margin:4px 0;"><strong>📅 Publication :</strong> ${datePub} | <strong>⏳ Validité :</strong> ${dateVal}</p>
                 </div>
             `;
             document.getElementById('fond-sombre').style.display = 'flex';
@@ -245,35 +244,37 @@
             const container = document.getElementById('animal-container');
             const corps = document.getElementById('corps-animal');
             const bulle = document.getElementById('bulle-texte');
-            const phrases = ["Un nouveau don !", "La fraternité rayonne", "Cliquez-moi !", "Quelle belle énergie"];
+            const phrases = ["Un don !", "Fraternité", "Coucou", "Bel esprit"];
             
             let x = Math.random() * window.innerWidth;
             let y = Math.random() * window.innerHeight;
             
             setInterval(() => {
-                x = Math.random() * (window.innerWidth - 100);
-                y = Math.random() * (window.innerHeight - 100);
+                x = Math.random() * (window.innerWidth - 80);
+                y = Math.random() * (window.innerHeight - 80);
                 container.style.transition = "all 4s ease-in-out";
                 container.style.left = x + "px";
                 container.style.top = y + "px";
                 corps.innerHTML = animauxEmojis[Math.floor(Math.random()*animauxEmojis.length)];
                 bulle.innerHTML = phrases[Math.floor(Math.random()*phrases.length)];
                 bulle.style.opacity = 1;
-                setTimeout(() => bulle.style.opacity = 0, 2000);
-            }, 5000);
+                setTimeout(() => bulle.style.opacity = 0, 1500);
+            }, 6000);
 
             corps.style.pointerEvents = "auto";
+            corps.style.cursor = "pointer";
             corps.onclick = (e) => {
-                for(let i=0; i<15; i++) {
+                for(let i=0; i<12; i++) {
                     const spark = document.createElement('div');
                     spark.style.position = 'fixed';
                     spark.style.left = e.clientX + 'px';
                     spark.style.top = e.clientY + 'px';
                     spark.innerHTML = '✨';
                     spark.style.transition = 'all 0.8s';
+                    spark.style.zIndex = '1000';
                     document.body.appendChild(spark);
                     setTimeout(() => {
-                        spark.style.transform = `translate(${(Math.random()-0.5)*200}px, ${(Math.random()-0.5)*200}px) scale(0)`;
+                        spark.style.transform = `translate(${(Math.random()-0.5)*150}px, ${(Math.random()-0.5)*150}px) scale(0)`;
                         setTimeout(() => spark.remove(), 800);
                     }, 10);
                 }
@@ -297,7 +298,7 @@
             creerPluieFleurs();
             animerOiseau();
             decoFixe();
-            document.getElementById('chantOiseaux').play().catch(() => console.log("Son en attente d'interaction"));
+            document.getElementById('chantOiseaux').play().catch(() => {});
         };
     </script>
 
