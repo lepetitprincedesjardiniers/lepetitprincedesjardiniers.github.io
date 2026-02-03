@@ -24,24 +24,14 @@
         .fleur-clonée { position: absolute; font-size: 25px; animation: apparitionFleur 1s ease-out forwards; }
         @keyframes apparitionFleur { 0% { transform: scale(0) rotate(-50deg); opacity: 0; } 100% { transform: scale(1) rotate(0deg); opacity: 1; } }
 
-        /* FLEURS ÉTOILES VOLANTES */
-        .fleur-etoile { position: fixed; pointer-events: none; z-index: 999; font-size: 15px; animation: volEtoile linear infinite; opacity: 0.8; }
-        @keyframes volEtoile {
-            0% { transform: translate(0, 0) rotate(0deg); }
-            25% { transform: translate(100px, 100px) rotate(90deg); }
-            50% { transform: translate(0, 200px) rotate(180deg); }
-            75% { transform: translate(-100px, 100px) rotate(270deg); }
-            100% { transform: translate(0, 0) rotate(360deg); }
-        }
-
         /* MOTEUR DE RECHERCHE */
         .search-box { background: #008080; padding: 12px; margin: 10px auto 10px auto; max-width: 700px; border-radius: 20px; color: white; box-shadow: 0 4px 15px rgba(0,0,0,0.2); position: relative; z-index: 10; }
         .search-container { display: flex; flex-direction: column; gap: 8px; align-items: center; }
+        .search-row { display: flex; gap: 10px; width: 95%; max-width: 550px; justify-content: center; }
         .search-item { display: flex; flex-direction: column; align-items: center; width: 100%; }
-        .search-item label { font-size: 0.9em; margin-bottom: 4px; font-weight: bold; color: #FFFFFF; } /* Texte plus visible */
-        .search-item input { padding: 10px; border-radius: 12px; border: none; outline: none; text-align: center; color: #004D40; font-weight: bold; }
+        .search-item label { font-size: 0.9em; margin-bottom: 4px; font-weight: bold; color: #FFFFFF; }
+        .search-item input { padding: 10px; border-radius: 12px; border: none; outline: none; text-align: center; color: #004D40; font-weight: bold; width: 100%; }
         .input-large { width: 95%; max-width: 550px; }
-        .input-ville { width: 50%; max-width: 250px; }
 
         /* REGISTRE & CARTES */
         .registre-titre { color: #008080; margin: 10px 0 5px 0; font-size: 1.2em; }
@@ -51,7 +41,7 @@
             background: rgba(255, 255, 255, 0.95); border: 3px solid #008080; border-radius: 12px; padding: 12px; 
             box-shadow: 4px 4px 0px #008080; transition: 0.3s; color: #333; text-align: left; cursor: pointer; 
             font-size: 0.85em; height: 140px; overflow-y: auto; display: flex; flex-direction: column;
-            overflow-wrap: break-word; word-break: break-word;
+            overflow-wrap: break-word; word-break: break-word; white-space: pre-wrap; /* MISE A LIGNE AUTOMATIQUE */
         }
         .carte-message:hover { transform: translateY(-5px); box-shadow: 8px 8px 0px #2E7D32; }
 
@@ -60,25 +50,7 @@
         .message-geant { 
             background: #FFFFF0; width: 92%; max-width: 850px; max-height: 85vh; padding: 35px; border-radius: 30px; 
             border: 10px solid #008080; position: relative; text-align: center; overflow-y: auto;
-            overflow-wrap: break-word; word-break: break-word;
-        }
-        .bouton-fermer { position: absolute; top: 10px; right: 15px; background: #FF1493; color: white; border: 4px solid white; border-radius: 50%; width: 40px; height: 40px; cursor: pointer; font-weight: bold; font-size: 20px; z-index: 10; }
-
-        /* COPYRIGHT DISCRET */
-        .copyright-wrapper { 
-            position: fixed; bottom: 5px; left: 50%; transform: translateX(-50%); 
-            background: rgba(255,255,255,0.6); padding: 3px 10px; border-radius: 15px; 
-            z-index: 1000; border: 1px solid rgba(0,128,128,0.3); font-size: 0.65em; 
-            transition: all 0.5s; opacity: 0.8;
-        }
-        
-        /* ANIMAUX ET BULLES */
-        #animal-container { position: fixed; z-index: 900; white-space: nowrap; display: flex; align-items: center; pointer-events: none; flex-direction: row; }
-        #corps-animal { font-size: 50px; order: 1; }
-        #bulle-texte { 
-            order: 2; background: rgba(255, 255, 255, 0.9); border-radius: 15px; padding: 8px 15px; 
-            font-style: italic; color: #2E7D32; margin-left: 10px; font-weight: bold; border: 2px solid #2E7D32; 
-            opacity: 0; transition: opacity 0.3s; max-width: 250px; white-space: normal; overflow-wrap: break-word;
+            overflow-wrap: break-word; word-break: break-word; white-space: pre-wrap;
         }
     </style>
 </head>
@@ -98,8 +70,6 @@
         </table>
     </div>
 
-    <audio id="chantOiseaux" loop><source src="oiseaux.mp3" type="audio/mpeg"></audio>
-
     <h2 style="color:#2E7D32; margin-top: 5px; font-size: 1.4em;">🍃 Le Jardin des Cadeaux Existentiels 🍃</h2>
 
     <div class="phrase-rose">Bienvenue au Jardin ensoleilleur des Dons entiers :</div>
@@ -111,13 +81,19 @@
     <div class="search-box">
         <h3 style="margin:0 0 10px 0; font-size: 1.1em;">🔍 Chercher une graine de fraternité</h3>
         <div class="search-container">
-            <div class="search-item">
-                <label>Tu rayonnes dans quel secteur ?</label>
-                <input type="text" id="searchLoc" class="input-ville" onkeyup="filtrerAnnonces()" placeholder="Pays ou Ville...">
+            <div class="search-row">
+                <div class="search-item">
+                    <label>Ville</label>
+                    <input type="text" id="searchVille" onkeyup="filtrerAnnonces()" placeholder="Quelle ville ?">
+                </div>
+                <div class="search-item">
+                    <label>Pays</label>
+                    <input type="text" id="searchPays" onkeyup="filtrerAnnonces()" placeholder="Quel pays ?">
+                </div>
             </div>
             <div class="search-item">
                 <label>Quoi? Pourquoi? Pour moi, Pour toi, Pour nous quoi!</label>
-                <input type="text" id="searchKeyword" class="input-large" onkeyup="filtrerAnnonces()" placeholder="Quoi? Pourquoi? Pour moi, Pour toi, Pour nous quoi!">
+                <input type="text" id="searchKeyword" class="input-large" onkeyup="filtrerAnnonces()" placeholder="Mots-clés...">
             </div>
         </div>
     </div>
@@ -126,35 +102,9 @@
     <div id="chargement" style="font-weight: bold; color: #008080;">✨ Récolte des messages en cours...</div>
     <div class="mur-reel" id="mur-messages"></div>
 
-    <div id="fond-sombre" onclick="fermerGrandMessage()">
-        <div class="message-geant" onclick="event.stopPropagation()">
-            <button class="bouton-fermer" onclick="fermerGrandMessage()">X</button>
-            <div id="geant-contenu"></div>
-        </div>
-    </div>
-
-    <div id="animal-container">
-        <div id="corps-animal">🕊️</div>
-        <div id="bulle-texte"></div>
-    </div>
-
-    <script type="text/javascript">
-        function googleTranslateElementInit() { new google.translate.TranslateElement({pageLanguage: 'fr'}, 'google_translate_element'); }
-    </script>
-    <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
-
     <script>
         const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxz40XE2KiPXTNZsW-mIg-fm55EivK0r9wzZ5ECFRdEIY53nYH9nLGYRoI71OX93oII/exec"; 
         let toutesLesAnnonces = [];
-
-        const mesPhrases = [
-            "Une fleur vient d'éclore", 
-            "La fraternité grandit...", 
-            "Un cadeau déposé !", 
-            "Paix sur ce jardin"
-        ];
-        const animaux = ['🕊️', '🦋', '🐝', '🐞', '🦜'];
-        const fleurs = ['🌸', '🌼', '🌻', '🌺', '🌷'];
 
         async function chargerAnnonces() {
             try {
@@ -173,19 +123,32 @@
                 const carte = document.createElement('div');
                 carte.className = 'carte-message';
                 carte.onclick = () => ouvrirGrandMessage(ann);
-                // SUPPRESSION DU TRAIT (border-bottom enlevé ci-dessous)
                 carte.innerHTML = `
                     <div style="margin-bottom:8px;padding-bottom:5px;font-weight:bold;color:#2E7D32;">${ann.nom || "Anonyme"}</div>
                     <div style="font-weight:bold;color:#000080;flex-grow:1;">"${ann.message || ""}"</div>
-                    <div style="font-size:0.75em; margin-top:8px; color:#666; font-style:italic;">📍 ${ann.ville || ""}</div>
+                    <div style="font-size:0.75em; margin-top:8px; color:#666; font-style:italic;">📍 ${ann.ville || ""} ${ann.pays ? '('+ann.pays+')' : ''}</div>
                 `;
                 conteneur.appendChild(carte);
             });
         }
 
-        function ouvrirGrandMessage(ann) {
-            const datePropre = ann.date ? new Date(ann.date).toLocaleDateString('fr-FR') : "Récemment";
-            document.getElementById('geant-contenu').innerHTML = `
-                <div style="font-size:1.8em; color:#2E7D32; border-bottom:3px solid #008080; margin-bottom:20px; padding-bottom:15px; font-weight:bold;">🌱 L'offrande de ${ann.nom || "Anonyme"}</div>
-                <div style="font-size:1.5em; color:#000080; line-height:1.5; margin:20px 0; font-weight:bold; text-align:left; background:white; padding:20px; border-radius:15px; border-left:8px solid #FF1493;">"${ann.message || ""}"</div>
-                <div style="font-size:1.1em; background:#E0F2F1; padding:20px; border-radius:20px; color:#333; text-align:left; display:grid; grid-template-columns: 1fr 1
+        function filtrerAnnonces() {
+            const villeVal = document.getElementById('searchVille').value.toLowerCase();
+            const paysVal = document.getElementById('searchPays').value.toLowerCase();
+            const keywordVal = document.getElementById('searchKeyword').value.toLowerCase();
+
+            const resultats = toutesLesAnnonces.filter(ann => {
+                const villeMatch = (ann.ville || "").toLowerCase().includes(villeVal);
+                const paysMatch = (ann.pays || "").toLowerCase().includes(paysVal);
+                const messageMatch = (ann.message || "").toLowerCase().includes(keywordVal) || (ann.nom || "").toLowerCase().includes(keywordVal);
+                
+                return villeMatch && paysMatch && messageMatch;
+            });
+
+            afficherAnnonces(resultats);
+        }
+
+        window.onload = chargerAnnonces;
+    </script>
+</body>
+</html>
