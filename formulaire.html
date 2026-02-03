@@ -22,6 +22,9 @@
         #corps-animal { font-size: 50px; }
         #bulle-texte { background: rgba(255, 255, 255, 0.9); border-radius: 15px; padding: 8px 15px; font-style: italic; color: #2E7D32; margin-right: 10px; font-weight: bold; border: 2px solid #2E7D32; opacity: 0; transition: opacity 0.3s; }
         .pop { transform: translateX(-50%) scale(1.4) !important; }
+        
+        /* Style spécifique pour les nouveaux champs ajoutés */
+        .section-logistique { border-top: 2px dashed #008080; margin-top: 20px; padding-top: 15px; }
     </style>
 </head>
 <body>
@@ -36,7 +39,7 @@
             <td><a href="jardin.html">Le Jardin</a></td>
             <td><a href="impot.html">Impôts Publics</a></td>
             <td><a href="regulation.html">Régulation</a></td>
-            <td><a href="urgence.html">Aide</a></td>
+            <td><a href="aide.html">Aide</a></td>
         </tr>
     </table>
 
@@ -52,54 +55,58 @@
 
             <div class="form-group">
                 <label>Provenance (Monde sans frontières)</label>
-                <span class="sous-label">Choisis dans la liste OU écris ton pays (Obligatoire).</span>
-                
+                <span class="sous-label">Choisis dans la liste OU écris ton pays.</span>
                 <select name="pays_select" id="pays_select" onchange="gererPays('select')">
                     <option value="" selected>--- Choisir dans la liste 🌍 ---</option>
-                    <optgroup label="✨ Les pays sages comme des images">
+                    <optgroup label="✨ Les pays sages">
                         <option value="Pays de la grande gentillesse">Pays de la grande gentillesse</option>
-                        <option value="Pays du paradis">Pays du paradis</option>
-                        <option value="Pays de la haute tendresse">Pays de la haute tendresse</option>
-                        <option value="Pays des coeurs ouverts">Pays des coeurs ouverts</option>
                         <option value="L'astéroïde B 612">L'astéroïde B 612</option>
-                        <option value="Groland">Groland</option>
                         <option value="Le Pays des Merveilles">Le Pays des Merveilles</option>
                     </optgroup>
-                    
                     <optgroup label="Europe">
-                        <option value="Allemagne">Allemagne</option><option value="Belgique">Belgique</option><option value="Espagne">Espagne</option><option value="France">France</option><option value="Italie">Italie</option><option value="Portugal">Portugal</option><option value="Royaume-Uni">Royaume-Uni</option><option value="Suisse">Suisse</option>
+                        <option value="Allemagne">Allemagne</option><option value="Belgique">Belgique</option><option value="Espagne">Espagne</option><option value="France">France</option><option value="Italie">Italie</option><option value="Suisse">Suisse</option>
                     </optgroup>
-
-                    <optgroup label="🌍 Afrique">
-                        <option value="Algérie">Algérie</option><option value="Cameroun">Cameroun</option><option value="Côte d'Ivoire">Côte d'Ivoire</option><option value="Maroc">Maroc</option><option value="Sénégal">Sénégal</option><option value="Tunisie">Tunisie</option>
+                    <optgroup label="Afrique">
+                        <option value="Algérie">Algérie</option><option value="Maroc">Maroc</option><option value="Sénégal">Sénégal</option>
                     </optgroup>
-
-                    <optgroup label="🌎 Amériques">
-                        <option value="Brésil">Brésil</option><option value="Canada">Canada</option><option value="États-Unis">États-Unis</option><option value="Haïti">Haïti</option><option value="Mexique">Mexique</option>
+                    <optgroup label="Amériques">
+                        <option value="Canada">Canada</option><option value="États-Unis">États-Unis</option><option value="Haïti">Haïti</option>
                     </optgroup>
                 </select>
-
-                <input type="text" name="localisation" id="pays_libre" placeholder="Ou écris ici le nom de ton pays..." oninput="gererPays('libre')">
+                <input type="text" name="localisation" id="pays_libre" placeholder="Ou ton pays ici..." oninput="gererPays('libre')">
                 <input type="text" name="ville" placeholder="Ta Ville" required>
-            </div>
-
-            <div class="form-group">
-                <label>Zone d'offrande (Rayon d'action)</label>
-                <select name="rayon" required>
-                    <option value="2km">2 km</option><option value="5km">5 km</option><option value="10km">10 km</option><option value="20km">20 km</option><option value="50km">50 km</option><option value="100km">100 km</option><option value="500km">500 km</option><option value="1000km">1000 km</option><option value="Monde Entier">Le Monde Entier</option><option value="Infini">Rayon Infini</option>
-                </select>
-            </div>
-
-            <div class="form-group">
-                <label>Durée du cadeau existentiel</label>
-                <select name="duree" required>
-                    <option value="1_jour">1 Journée</option><option value="1_semaine">1 Semaine</option><option value="1_mois">1 Mois</option><option value="annuel">Annuel</option><option value="Eternel">Éternel</option>
-                </select>
             </div>
 
             <div class="form-group">
                 <label>Description du Don amoureux</label>
                 <textarea name="message" rows="4" placeholder="Décris ici ton Don amoureux..." required></textarea>
+            </div>
+
+            <div class="section-logistique">
+                <div class="form-group">
+                    <label>Portée de votre semis</label>
+                    <span class="sous-label">Où ce don peut-il fleurir ?</span>
+                    <select name="portee" required>
+                        <option value="Local">Proximité (Cité locale)</option>
+                        <option value="International">Internationale (Flux mondiaux de fraternité)</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>Acheminement du cadeau</label>
+                    <span class="sous-label">Comment le don arrive-t-il à destination ?</span>
+                    <select name="logistique" required>
+                        <option value="Don Entier (J'assure le transport)">Don Entier (J'assure le transport)</option>
+                        <option value="À récupérer sur place">À récupérer sur place</option>
+                        <option value="Besoin d'appui (Travaux Publics)">Besoin d'appui (Travaux Publics)</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group">
+                <label>Durée du cadeau existentiel</label>
+                <select name="duree" required>
+                    <option value="1_jour">1 Journée</option><option value="1_semaine">1 Semaine</option><option value="1_mois">1 Mois</option><option value="annuel">Annuel</option><option value="Eternel">Éternel</option>
+                </select>
             </div>
 
             <button type="submit" class="btn-envoyer" id="btnTexte">ENGENDRER DE LA FRATERNITÉ UNIVERSELLE</button>
@@ -129,10 +136,8 @@
             return true;
         }
 
-        // --- NOUVELLE LOGIQUE D'ENVOI ET REDIRECTION ---
         function envoyerDon(event) {
-            event.preventDefault(); // Bloque la redirection automatique vers Google
-            
+            event.preventDefault(); 
             if (!validerPays()) return;
 
             const bouton = document.getElementById('btnTexte');
@@ -148,15 +153,13 @@
                 mode: 'no-cors',
                 body: data
             }).then(() => {
-                // Redirection forcée vers ta page de remerciement
                 window.location.href = "merci_annonce.html";
             }).catch(() => {
-                // En cas d'erreur, on redirige quand même
                 window.location.href = "merci_annonce.html";
             });
         }
 
-        // --- ANIMATIONS ---
+        // --- ANIMATIONS (CONSERVÉES) ---
         const audio = document.getElementById('chantOiseaux');
         document.addEventListener('click', () => { if(audio.paused) { audio.volume = 0.05; audio.play(); } });
         const mesPhrases = ["Semer un don amoureux...", "Engendrer de la fraternité...", "Prendre soin du jardin..."];
