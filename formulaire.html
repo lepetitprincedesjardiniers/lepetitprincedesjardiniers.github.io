@@ -111,11 +111,11 @@
                 <label>Destination du semis</label>
                 <select name="type" id="main_cat" onchange="updateSubCats()" required>
                     <option value="">-- Domaine d'action --</option>
-                    <option value="SAVOIR">💡 SAVOIRS (Scolaire, Pro, Mentorat, Arts)</option>
-                    <option value="VIE">🏠 VIE CITOYENNE (Hébergement, Espace, Mobilité)</option>
-                    <option value="AIDE">💖 AIDE & HARMONIE (Santé, Urgence, Écoute)</option>
-                    <option value="REGULATION">⚖️ RÉGULATION (Médiation, Aide Administrative)</option>
-                    <option value="IMPOT">📜 TRÉSOR PUBLIC (Chantiers, Bien Commun)</option>
+                    <option value="SAVOIR">💡 SAVOIRS (Danseur, Ingénieur, Mentor, Arts)</option>
+                    <option value="VIE">🏠 VIE CITOYENNE (Mécanicien vélo, Footballeur, Véhicule)</option>
+                    <option value="AIDE">💖 AIDE & HARMONIE (Garde enfant, Santé, Urgence Gaz)</option>
+                    <option value="REGULATION">⚖️ RÉGULATION (Médiateur, Aide Administrative)</option>
+                    <option value="IMPOT">📜 TRÉSOR PUBLIC (Chantiers collectifs, Nature)</option>
                     <option value="AUTRE_CAT">🌈 AUTRE DOMAINE...</option>
                 </select>
                 <div id="extra_cat" class="extra-field">
@@ -173,7 +173,7 @@
 
             <div class="form-group">
                 <label>Description du Don amoureux</label>
-                <textarea name="message" placeholder="Ouvre ton cœur... Détaille ton don ou ton besoin." required></textarea>
+                <textarea name="message" placeholder="Détaille ici : 'Danseur Étoile, j'enseigne la grâce', 'Ouvrier Gaz, je répare bénévolement', 'Je donne ma voiture', 'Ingénieur, je donne des cours de physique'..." required></textarea>
             </div>
 
             <button type="submit" class="btn-envoyer" id="btnTexte">ENGENDRER LA FRATERNITÉ UNIVERSELLE</button>
@@ -194,9 +194,9 @@
         function googleTranslateElementInit() { new google.translate.TranslateElement({pageLanguage: 'fr'}, 'google_translate_element'); }
 
         const tree = {
-            "SAVOIR": ["🌱 Éveil & Soutien Scolaire", "🎓 Études Supérieures", "💼 Mentorat Professionnel", "🎨 Arts, Musique & Cuisine", "AUTRE_SUB"],
-            "VIE": ["🏠 Accueil & Hébergement", "🛠️ Prêt d'espaces (Atelier, Jardin)", "🚗 Mobilité & Aide au transport", "🧹 Aide au quotidien", "AUTRE_SUB"],
-            "AIDE": ["🚑 URGENCE VITALE", "🏥 Santé & Soins", "🌈 Harmonie & Écoute", "🤝 Présence contre la solitude", "AUTRE_SUB"],
+            "SAVOIR": ["🌱 Éveil & Soutien Scolaire (ex: Maths, Physique)", "🎓 Études Supérieures", "💼 Mentorat Professionnel (ex: Ingénieur)", "🎨 Arts, Musique & Cuisine (ex: Danse)", "AUTRE_SUB"],
+            "VIE": ["🏠 Accueil & Hébergement", "🛠️ Prêt d'espaces / Matériel (ex: Vélo, Voiture)", "🚗 Mobilité & Aide au transport (ex: Football/Jeux)", "🧹 Aide au quotidien (ex: Bricolage)", "AUTRE_SUB"],
+            "AIDE": ["🚑 URGENCE VITALE (ex: Dépannage Gaz)", "🏥 Santé & Soins", "🌈 Harmonie & Écoute", "🤝 Présence & Garde (ex: Crèche/Enfants)", "AUTRE_SUB"],
             "REGULATION": ["🕊️ Médiation & Conflits", "⚖️ Aide Administrative", "AUTRE_SUB"],
             "IMPOT": ["🏗️ Travaux de Bien Commun", "🌲 Protection de la Nature", "AUTRE_SUB"]
         };
@@ -238,7 +238,7 @@
 
         function exploserEtoiles(e) {
             exploserParticules(e.pageX, e.pageY, ['⭐', '✨', '🌟']);
-            setTimeout(() => { window.location.href = "transition-externe.html"; }, 1000);
+            setTimeout(() => { window.location.href = "transition_externe.html"; }, 1000);
         }
 
         const phrases = ["Graine de bonheur !", "Fraternité !", "Don précieux !", "Cadeau !"];
@@ -270,20 +270,19 @@
         function messenger() {
             if (state === "FLY") {
                 aniX += 2.5;
-                corps.style.transform = "scaleX(-1)"; // Inversé pour voler vers la droite
+                corps.style.transform = "scaleX(-1)"; 
                 if (Math.abs(aniX - window.innerWidth/2) < 5) {
                     state = "TALK";
                     bulle.innerText = phrases[Math.floor(Math.random()*phrases.length)];
                     bulle.style.opacity = 1;
                     
-                    // --- RAJOUT : LIVRAISON DANS LE CADEAU ---
                     let originalY = targetY;
-                    targetY = window.innerHeight - 80; // Descente vers le cadeau
+                    targetY = window.innerHeight - 80; 
                     setTimeout(() => {
                         exploserParticules(window.innerWidth/2, window.innerHeight - 40, ['🌸', '✨', '🌟', '🍀'], 15);
                         coffre.classList.add('pop');
                         setTimeout(() => {
-                            targetY = originalY; // Remontée
+                            targetY = originalY; 
                             bulle.style.opacity = 0;
                             coffre.classList.remove('pop');
                             state = "EXIT";
