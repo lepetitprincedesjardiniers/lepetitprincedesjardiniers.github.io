@@ -3,109 +3,34 @@
 <head>
     <meta charset="UTF-8">
     <style>
-        /* Design épuré pour s'intégrer parfaitement dans l'iframe de la page Jardin */
-        body { 
-            font-family: 'Comic Sans MS', cursive; 
-            margin: 0; 
-            padding: 10px; 
-            background-color: transparent; /* Pour prendre la couleur de la page parente */
-            color: #000080; 
-        }
-
-        #searchBox { 
-            width: 90%; 
-            padding: 12px; 
-            margin-bottom: 20px; 
-            border: 2px solid #008080; 
-            border-radius: 15px; 
-            font-family: 'Comic Sans MS';
-            font-size: 1em;
-            outline: none;
-        }
-
+        /* Design adapté pour l'iframe du site Le Petit Prince */
+        body { font-family: 'Comic Sans MS', cursive; margin: 0; padding: 10px; background-color: transparent; color: #000080; }
+        #searchBox { width: 95%; padding: 12px; margin-bottom: 20px; border: 2px solid #008080; border-radius: 15px; font-family: 'Comic Sans MS'; outline: none; }
+        
         /* Grille des graines */
-        #flux-conteneur { 
-            display: grid; 
-            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); 
-            gap: 15px; 
-        }
+        #flux-conteneur { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 15px; }
 
         .carte-action { 
-            background: #ffffff; 
-            border: 2px solid #008080; 
-            border-radius: 15px; 
-            padding: 15px; 
-            text-align: left; 
-            box-shadow: 4px 4px 0px #008080; 
-            transition: 0.3s;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            min-height: 180px;
+            background: #ffffff; border: 2px solid #008080; border-radius: 15px; 
+            padding: 15px; text-align: left; box-shadow: 4px 4px 0px #008080; 
+            display: flex; flex-direction: column; justify-content: space-between; min-height: 180px;
         }
-
-        .carte-action:hover { 
-            transform: translateY(-3px); 
-            border-color: #ff1493; 
-            box-shadow: 4px 4px 0px #ff1493;
-        }
-
-        .nom-titre { 
-            color: #E67E22; 
-            font-size: 1em; 
-            font-weight: bold; 
-            display: flex; 
-            justify-content: space-between;
-            margin-bottom: 8px;
-        }
-
-        .badge-loc { 
-            background: #008080; 
-            color: white; 
-            padding: 2px 6px; 
-            border-radius: 6px; 
-            font-size: 0.7em; 
-        }
-
-        .message-texte { 
-            font-size: 0.95em;
-            line-height: 1.4; 
-            color: #333; 
-            font-weight: bold;
-            margin-bottom: 10px;
-        }
-
-        .infos-details { 
-            font-size: 0.75em; 
-            color: #006666; 
-            background: #e0f2f1; 
-            padding: 5px; 
-            border-radius: 5px;
-        }
-
-        .date-signature {
-            font-size: 0.65em;
-            color: #999;
-            margin-top: 8px;
-            text-align: right;
-        }
-
-        #loader { 
-            font-weight: bold; 
-            color: #008080; 
-            padding: 20px; 
-        }
+        .nom-titre { color: #E67E22; font-size: 1em; font-weight: bold; display: flex; justify-content: space-between; margin-bottom: 8px; }
+        .badge-loc { background: #008080; color: white; padding: 2px 6px; border-radius: 6px; font-size: 0.7em; }
+        .message-texte { font-size: 0.95em; line-height: 1.4; color: #333; font-weight: bold; margin-bottom: 10px; }
+        .infos-details { font-size: 0.75em; color: #006666; background: #e0f2f1; padding: 5px; border-radius: 5px; }
+        .date-signature { font-size: 0.65em; color: #999; margin-top: 8px; text-align: right; }
+        #loader { font-weight: bold; color: #008080; padding: 20px; }
     </style>
 </head>
 <body>
 
     <input type="text" id="searchBox" onkeyup="filtrer()" placeholder="🔍 Chercher une ville, un pays, un nom...">
-
     <div id="loader">Récolte des graines en cours... 🌱</div>
     <div id="flux-conteneur"></div>
 
     <script>
-        // TON URL DE SCRIPT GOOGLE
+        // URL de ton script Google (Vérifiée)
         const URL_SERVEUR = "https://script.google.com/macros/s/AKfycbxz40XE2KiPXTNZsW-mIg-fm55EivK0r9wzZ5ECFRdEIY53nYH9nLGYRoI71OX93oII/exec";
 
         async function chargerDonnees() {
@@ -115,17 +40,16 @@
                 document.getElementById('loader').style.display = "none";
                 const conteneur = document.getElementById('flux-conteneur');
                 
-                // On inverse l'ordre pour voir les dernières graines en premier
+                // IMPORTANT : On affiche TOUTES les données sans filtrer sur "impot"
                 const graines = data.reverse(); 
 
                 if(graines.length === 0) {
-                    document.getElementById('loader').innerText = "Le jardin attend ses premières graines... 🌱";
+                    document.getElementById('loader').innerText = "Le jardin est encore vierge. Semez la première graine ! 🌱";
                     return;
                 }
 
                 graines.forEach(item => {
-                    const dateAffichable = item.date ? new Date(item.date).toLocaleDateString('fr-FR') : "N/C";
-                    
+                    const dateAff = item.date ? new Date(item.date).toLocaleDateString('fr-FR') : "N/C";
                     const div = document.createElement('div');
                     div.className = 'carte-action';
                     div.innerHTML = `
@@ -140,13 +64,13 @@
                             <div class="infos-details">
                                 🌍 ${item.pays || ""} | 📏 ${item.rayon || "N/C"} | ⏳ ${item.duree || "N/C"}
                             </div>
-                            <div class="date-signature">Semée le ${dateAffichable}</div>
+                            <div class="date-signature">Semée le ${dateAff}</div>
                         </div>
                     `;
                     conteneur.appendChild(div);
                 });
             } catch (e) {
-                document.getElementById('loader').innerHTML = "⚠️ Connexion au jardin interrompue.";
+                document.getElementById('loader').innerHTML = "⚠️ Impossible de charger le registre. Vérifiez le déploiement du script.";
             }
         }
 
@@ -157,8 +81,6 @@
                 c.style.display = c.innerText.toLowerCase().includes(val) ? "" : "none";
             }
         }
-
-        // Lancement au chargement
         window.onload = chargerDonnees;
     </script>
 </body>
