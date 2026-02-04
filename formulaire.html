@@ -270,17 +270,29 @@
         function messenger() {
             if (state === "FLY") {
                 aniX += 2.5;
-                corps.style.transform = "scaleX(1)"; // Regarde à droite
+                corps.style.transform = "scaleX(-1)"; // Inversé pour voler vers la droite
                 if (Math.abs(aniX - window.innerWidth/2) < 5) {
                     state = "TALK";
                     bulle.innerText = phrases[Math.floor(Math.random()*phrases.length)];
                     bulle.style.opacity = 1;
-                    coffre.classList.add('pop');
-                    setTimeout(() => { if(state === "TALK") { bulle.style.opacity = 0; coffre.classList.remove('pop'); state = "EXIT"; } }, 2500);
+                    
+                    // --- RAJOUT : LIVRAISON DANS LE CADEAU ---
+                    let originalY = targetY;
+                    targetY = window.innerHeight - 80; // Descente vers le cadeau
+                    setTimeout(() => {
+                        exploserParticules(window.innerWidth/2, window.innerHeight - 40, ['🌸', '✨', '🌟', '🍀'], 15);
+                        coffre.classList.add('pop');
+                        setTimeout(() => {
+                            targetY = originalY; // Remontée
+                            bulle.style.opacity = 0;
+                            coffre.classList.remove('pop');
+                            state = "EXIT";
+                        }, 800);
+                    }, 600);
                 }
             } else if (state === "EXIT") {
                 aniX += 3.5;
-                corps.style.transform = "scaleX(1)"; // Toujours à droite pour sortir
+                corps.style.transform = "scaleX(-1)"; 
                 if (aniX > window.innerWidth + 200) {
                     aniX = -200; 
                     corps.innerText = animaux[Math.floor(Math.random()*animaux.length)]; 
@@ -289,11 +301,11 @@
                 }
             } else if (state === "MAGIC") {
                 aniX = window.innerWidth / 2;
-                corps.style.transform = "scaleX(1)";
+                corps.style.transform = "scaleX(-1)";
             }
             
             animalCont.style.left = aniX + 'px';
-            let wave = (state === "MAGIC") ? 0 : Math.sin(aniX/60)*30;
+            let wave = (state === "MAGIC" || state === "TALK") ? 0 : Math.sin(aniX/60)*30;
             animalCont.style.top = (targetY + wave) + 'px';
             requestAnimationFrame(messenger);
         }
