@@ -20,33 +20,28 @@
         input, select, textarea { width: 100%; padding: 12px; margin-bottom: 10px; border: 2px solid #008080; border-radius: 10px; font-family: 'Comic Sans MS'; font-size: 1em; box-sizing: border-box; }
         textarea { min-height: 250px; resize: vertical; background-color: #fffdf0; }
 
-        .extra-field { display: none; animation: fadeIn 0.5s; background: #f0fdf4; padding: 10px; border-radius: 10px; margin-top: -5px; margin-bottom: 10px; border: 1px dashed #008080; }
-        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-
         .btn-envoyer { width: 100%; padding: 25px; background: #E67E22; color: white; border: none; border-radius: 20px; cursor: pointer; font-weight: bold; font-size: 1.2em; box-shadow: 0px 4px 0px #b35900; transition: 0.2s; }
         .btn-envoyer:active { transform: translateY(4px); box-shadow: 0px 0px 0px #b35900; }
+
+        /* BOUTON POMPE À AIDE */
+        .pompe-aide { background: #008080; color: white; border: none; padding: 5px 15px; border-radius: 20px; cursor: pointer; font-size: 0.9em; margin-bottom: 10px; display: inline-flex; align-items: center; gap: 8px; border: 2px solid white; box-shadow: 0 4px 0 #005a5a; }
+        .pompe-aide:hover { background: #00b3b3; }
+
+        /* PANNEAU D'AIDE MODAL */
+        #aide-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); z-index: 2000; overflow-y: auto; padding: 20px 0; }
+        .aide-modal { background: white; width: 90%; max-width: 700px; margin: auto; border-radius: 20px; padding: 25px; text-align: left; border: 5px solid #008080; position: relative; }
+        .close-aide { position: absolute; right: 15px; top: 10px; font-size: 30px; cursor: pointer; color: #E67E22; }
+        .aide-card { background: #f0fdf4; border-left: 5px solid #008080; padding: 15px; margin-bottom: 15px; border-radius: 0 10px 10px 0; }
+        .aide-card h5 { margin: 0 0 10px 0; color: #008080; text-transform: uppercase; font-size: 1.1em; }
+        .aide-card ul { margin: 0; padding-left: 20px; font-size: 0.95em; line-height: 1.5; }
 
         footer { margin: 40px 0 80px 0; }
         .copyright-link { color: #008080; text-decoration: none; font-weight: bold; transition: 0.3s; padding: 10px; cursor: pointer; display: inline-block; position: relative; z-index: 20; }
         
         .particle { position: absolute; pointer-events: none; z-index: 9999; }
-
-        #coffre-magique { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); font-size: 60px; z-index: 800; transition: 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275); cursor: pointer; }
-        
         #animal-container { position: fixed; z-index: 900; display: flex; align-items: center; cursor: pointer; pointer-events: auto; }
         #bulle-texte { background: white; border-radius: 15px; padding: 8px 15px; font-style: italic; color: #2E7D32; border: 2px solid #2E7D32; opacity: 0; transition: 0.3s; font-weight: bold; white-space: nowrap; margin-right: 10px; }
         #corps-animal { font-size: 32px; transition: transform 0.3s; }
-        
-        .pop { transform: translateX(-50%) scale(1.4) !important; }
-        .cadeau-envole { transform: translateX(-50%) translateY(-100vh) rotate(360deg) scale(0) !important; opacity: 0; }
-
-        /* PANNEAU D'AIDE UNIVERSEL */
-        #aide-panneau { position: fixed; right: 10px; top: 80px; width: 260px; background: #008080; color: white; padding: 15px; border-radius: 15px; font-size: 0.85em; text-align: left; box-shadow: -5px 5px 15px rgba(0,0,0,0.2); z-index: 5; border: 2px solid white; line-height: 1.4; }
-        #aide-panneau h4 { margin-top: 0; color: #FFFF00; text-align: center; border-bottom: 2px solid #FFFF00; padding-bottom: 5px; }
-        .aide-section { margin-bottom: 12px; }
-        .aide-titre { font-weight: bold; color: #FFFF00; display: block; margin-bottom: 3px; }
-        
-        @media (max-width: 1250px) { #aide-panneau { position: relative; width: 90%; margin: 20px auto; top: 0; right: 0; } }
     </style>
 </head>
 <body onclick="activerAudio()">
@@ -67,147 +62,106 @@
         </tr>
     </table>
 
-    <div id="aide-panneau">
-        <h4>🌟 Guide des Semailles</h4>
-        <div class="aide-section">
-            <span class="aide-titre">💡 SAVOIRS</span>
-            • <b>Étudiant :</b> Soutien scolaire.<br>
-            • <b>Artiste :</b> Cours de danse/chant.<br>
-            • <b>Ingénieur :</b> Mentorat technique.
-        </div>
-        <div class="aide-section">
-            <span class="aide-titre">🏠 VIE CITOYENNE</span>
-            • <b>Jeune :</b> Prêt vélo/trottinette.<br>
-            • <b>Sportif :</b> Cherche équipe foot.<br>
-            • <b>Ouvrier :</b> Prêt d'outils bricolage.
-        </div>
-        <div class="aide-section">
-            <span class="aide-titre">💖 AIDE & HARMONIE</span>
-            • <b>Malade :</b> Besoin de soins/visite.<br>
-            • <b>Maman :</b> Cherche crèche/garde.<br>
-            • <b>Urgence :</b> Panne de chauffage/gaz.
-        </div>
-        <div class="aide-section">
-            <span class="aide-titre">⚖️ RÉGULATION</span>
-            • <b>Aîné :</b> Aide avec les papiers.<br>
-            • <b>Voisins :</b> Calmer un conflit.
+    <h2 style="color:#E67E22; margin-bottom: 5px;">🌍 Engendrer la Fraternité Universelle</h2>
+    <button class="pompe-aide" onclick="toggleAide()">⛽ Petite pompe à idées (Aide & Exemples)</button>
+
+    <div id="aide-overlay" onclick="toggleAide()">
+        <div class="aide-modal" onclick="event.stopPropagation()">
+            <span class="close-aide" onclick="toggleAide()">&times;</span>
+            <h3 style="text-align:center; color:#E67E22;">🌟 Exemples pour vous inspirer</h3>
+            <p style="font-style: italic; text-align: center; margin-bottom: 20px;">Voici des exemples de ce que vous pouvez semer selon qui vous êtes :</p>
+
+            <div class="aide-card">
+                <h5>👶 Enfants & Jeunes</h5>
+                <ul>
+                    <li><b>Don :</b> Je prête ma collection de BD le week-end (Vie Citoyenne).</li>
+                    <li><b>Don :</b> Je donne mes anciens jouets (Vie Citoyenne).</li>
+                    <li><b>Aide :</b> On cherche un copain pour faire du foot au parc (Loisirs).</li>
+                </ul>
+            </div>
+
+            <div class="aide-card">
+                <h5>👨‍🔧 Ouvriers, Artisans & Ingénieurs</h5>
+                <ul>
+                    <li><b>Ingénieur :</b> J'aide à calculer la solidité d'une charpente (Savoirs).</li>
+                    <li><b>Ouvrier :</b> Je prête ma perceuse pro et donne un coup de main (Vie Citoyenne).</li>
+                    <li><b>Cadre :</b> Je relis des CV et aide pour les entretiens (Savoirs).</li>
+                </ul>
+            </div>
+
+            <div class="aide-card">
+                <h5>🏥 Malades & Aînés</h5>
+                <ul>
+                    <li><b>Aîné :</b> Je raconte l'histoire du quartier aux enfants (Savoirs/Transmission).</li>
+                    <li><b>Malade :</b> Besoin d'une visite 15min pour discuter (Aide & Harmonie).</li>
+                    <li><b>Papy :</b> "Je ne sais pas remplir ce papier CAF" (Régulation/Paperasse).</li>
+                </ul>
+            </div>
+
+            <div class="aide-card">
+                <h5>👥 Aide Collective (Groupe/Asso)</h5>
+                <ul>
+                    <li><b>Collectif :</b> "On cherche un local pour stocker nos outils partagés" (Vie Citoyenne).</li>
+                    <li><b>Groupe :</b> "Nous cherchons un terrain pour un jardin partagé" (Trésor Public).</li>
+                    <li><b>Voisins :</b> "On organise une fête de quartier, besoin de chaises" (Vie Citoyenne).</li>
+                </ul>
+            </div>
+            
+            <p style="text-align: center; color: #008080; font-weight: bold;">⚠️ Si vous hésitez sur la rubrique, choisissez "🌈 AUTRE DOMAINE", les jardiniers s'occuperont de trier votre graine !</p>
         </div>
     </div>
-
-    <h2 style="color:#E67E22;">🌍 Engendrer la Fraternité Universelle</h2>
 
     <div class="form-container">
         <form id="monFormulaire" onsubmit="envoyerDon(event)">
             
             <div class="form-group">
                 <label>Identité amoureuse</label>
-                <input type="text" name="nom" placeholder="Ton Prénom de coeur / Pseudo (Enfant, Pro, Citoyen...)" required>
+                <input type="text" name="nom" placeholder="Ton Prénom / Pseudo (Ex: Papy Jean, Collectif du Parc, Julie...)" required>
             </div>
 
             <div class="form-group">
                 <label>Provenance & Territoire</label>
                 <div style="display: flex; gap: 10px; margin-bottom: 5px;">
-                    <select name="pays_select" id="pays_select" onchange="checkOther(this, 'extra_pays')" style="flex: 1.5;">
-                        <option value="" selected>-- Pays / Royaume --</option>
-                        <optgroup label="✨ Territoires de l'Imaginaire">
-                            <option value="B612">L'astéroïde B 612</option>
-                            <option value="Merveilles">Le Pays des Merveilles</option>
-                            <option value="Utopie">L'Archipel d'Utopie</option>
-                            <option value="Gentillesse">Pays de la grande gentillesse</option>
-                            <option value="AUTRE_PAYS">☁️ Autre lieu imaginaire...</option>
-                        </optgroup>
-                        <optgroup label="🌍 Europe">
-                            <option value="France">France (et Outre-mer)</option><option value="Belgique">Belgique</option><option value="Suisse">Suisse</option><option value="AUTRE_PAYS">Autre pays Europe...</option>
-                        </optgroup>
-                        <optgroup label="🌍 Afrique">
-                            <option value="Maroc">Maroc</option><option value="Algérie">Algérie</option><option value="Sénégal">Sénégal</option><option value="AUTRE_PAYS">Autre pays Afrique...</option>
-                        </optgroup>
-                        <optgroup label="🌍 Amériques">
-                            <option value="Canada">Canada / Québec</option><option value="Haiti">Haïti</option><option value="USA">États-Unis</option><option value="AUTRE_PAYS">Autre pays Amérique...</option>
-                        </optgroup>
-                        <option value="AUTRE_PAYS">🌐 Un pays non listé...</option>
+                    <select name="pays_select" id="pays_select" style="flex: 1.5;">
+                        <option value="France" selected>France (et Outre-mer)</option>
+                        <option value="Belgique">Belgique</option>
+                        <option value="Suisse">Suisse</option>
+                        <option value="Canada">Canada / Québec</option>
+                        <option value="B612">L'astéroïde B 612</option>
+                        <option value="AUTRE">🌐 Autre...</option>
                     </select>
                     <select name="rayon" style="flex: 1;">
                         <option value="0">Sur place</option>
                         <option value="10">Rayon 10 km</option>
-                        <option value="50">Rayon 50 km</option>
                         <option value="National">National</option>
                         <option value="Univers">Universel (Web)</option>
                     </select>
                 </div>
-                <div id="extra_pays" class="extra-field">
-                    <input type="text" name="pays_precision" placeholder="Nom de ton pays secret ou oublié...">
-                </div>
-                <input type="text" name="localisation" placeholder="Ville, Code Postal ou Quartier précis..." required>
+                <input type="text" name="localisation" placeholder="Ville ou Quartier précis..." required>
             </div>
 
             <div class="form-group">
                 <label>Destination du semis</label>
                 <select name="type" id="main_cat" onchange="updateSubCats()" required>
-                    <option value="">-- Domaine d'action --</option>
-                    <option value="SAVOIR">💡 SAVOIRS (Apprendre, Transmettre, Talents)</option>
-                    <option value="VIE">🏠 VIE CITOYENNE (Échanges d'objets, Loisirs, Logement)</option>
-                    <option value="AIDE">💖 AIDE & HARMONIE (Soins, Urgences, Petite enfance)</option>
-                    <option value="REGULATION">⚖️ RÉGULATION (Médiation, Paperasse, Conseils)</option>
-                    <option value="IMPOT">📜 TRÉSOR PUBLIC (Nature, Chantiers pour tous)</option>
-                    <option value="AUTRE_CAT">🌈 AUTRE DOMAINE...</option>
+                    <option value="">-- Choisissez le domaine --</option>
+                    <option value="SAVOIR">💡 SAVOIRS (Cours, Conseils, Mentorat)</option>
+                    <option value="VIE">🏠 VIE CITOYENNE (Prêt d'objets, Loisirs, Local)</option>
+                    <option value="AIDE">💖 AIDE & HARMONIE (Soins, Visite, Garde enfant)</option>
+                    <option value="REGULATION">⚖️ RÉGULATION (Aide administrative, Conflits)</option>
+                    <option value="IMPOT">📜 TRÉSOR PUBLIC (Nature, Chantier collectif)</option>
+                    <option value="AUTRE_CAT">🌈 JE NE SAIS PAS / AUTRE</option>
                 </select>
-                <div id="extra_cat" class="extra-field">
-                    <input type="text" name="cat_precision" placeholder="Précisez ce nouveau domaine...">
-                </div>
             </div>
 
             <div id="sub_cat_group" class="form-group" style="display:none;">
                 <label>Précision de la graine</label>
-                <select name="sousType" id="sub_cat" onchange="checkOther(this, 'extra_sub')"></select>
-                <div id="extra_sub" class="extra-field">
-                    <input type="text" name="sub_precision" placeholder="Décrivez votre spécialité précise...">
-                </div>
+                <select name="sousType" id="sub_cat"></select>
             </div>
 
             <div class="form-group">
-                <label>Cycle de Vie (Durée de validité)</label>
-                <span class="sous-label">Note poétique pour l'automate de gestion</span>
-                <select name="duree_validite" required>
-                    <option value="1">🌱 Un brin d'herbe (1 jour - Urgence)</option>
-                    <option value="7">🌿 Une petite fleur (1 semaine)</option>
-                    <option value="30" selected>🌳 Un buisson (1 mois - Standard)</option>
-                    <option value="90">🌲 Un jeune arbre (3 mois)</option>
-                    <option value="365">🍃 Un chêne séculaire (1 an - Transmission)</option>
-                </select>
-            </div>
-
-            <div class="form-group">
-                <label>Logistique & Acheminement</label>
-                <span class="sous-label">Comment le don voyage-t-il ?</span>
-                <select name="logistique" required>
-                    <optgroup label="🤝 Proximité / Humain">
-                        <option value="Main Propre">Remise en main propre (Lieu public)</option>
-                        <option value="Moi-même">J'assure le transport moi-même</option>
-                        <option value="Récupérer">À récupérer sur place</option>
-                        <option value="Covoit">Covoiturage humain (Je t'emmène)</option>
-                    </optgroup>
-                    <optgroup label="🚚 Route & National">
-                        <option value="Relais">Point Relais (Mondial Relay / Colis Privé)</option>
-                        <option value="Poste">La Poste / Courrier</option>
-                        <option value="Colis-voiturage">Colis-voiturage (Via un voyageur)</option>
-                        <option value="Transporteur">Transporteur Routier (Fret camion)</option>
-                    </optgroup>
-                    <optgroup label="✈️ Grand Large & Rail">
-                        <option value="Avion">Fret Aérien (International)</option>
-                        <option value="Bateau">Fret Maritime (Conteneur / Bateau)</option>
-                        <option value="Train">Fret Ferroviaire (Rail)</option>
-                    </optgroup>
-                    <optgroup label="🚀 Immatériel">
-                        <option value="Numérique">Transfert Numérique / Visio</option>
-                        <option value="Pensée">Ondes de fraternité</option>
-                    </optgroup>
-                </select>
-            </div>
-
-            <div class="form-group">
-                <label>Description du Don amoureux</label>
-                <textarea name="message" placeholder="Détaille ici : 'Papy cherche aide ordi', 'Maman cherche crèche', 'Donne jouets enfant', 'Ingénieur offre mentorat', 'Dépannage gaz urgent'..." required></textarea>
+                <label>Description du Don ou de la Demande</label>
+                <span class="sous-label">Soyez explicite (Ex: "Cherchons local pour aide collective" ou "Je prête ma voiture")</span>
+                <textarea name="message" placeholder="Détaillez ici votre projet, votre don ou votre besoin d'aide..." required></textarea>
             </div>
 
             <button type="submit" class="btn-envoyer" id="btnTexte">ENGENDRER LA FRATERNITÉ UNIVERSELLE</button>
@@ -218,132 +172,53 @@
         <span class="copyright-link" onclick="exploserEtoiles(event)">© 2000 Le petit prince des jardiniers</span>
     </footer>
 
-    <div id="coffre-magique">🎁</div>
-    <div id="animal-container" onclick="animationSpeciale()">
+    <div id="animal-container">
         <div id="bulle-texte"></div>
         <div id="corps-animal">🕊️</div>
     </div>
 
     <script>
-        function googleTranslateElementInit() { new google.translate.TranslateElement({pageLanguage: 'fr'}, 'google_translate_element'); }
+        function toggleAide() {
+            const modal = document.getElementById('aide-overlay');
+            modal.style.display = (modal.style.display === 'block') ? 'none' : 'block';
+        }
 
         const tree = {
-            "SAVOIR": ["🎓 Soutien Scolaire & Études", "🎨 Talents (Danse, Musique, Art)", "💼 Mentorat (Ingénieur, Cadre, Pro)", "AUTRE_SUB"],
-            "VIE": ["🛠️ Prêt de Matériel (Vélo, Outils)", "🏠 Accueil & Logement", "🚗 Sport & Loisirs (Foot, Jeux)", "🧹 Aide Quotidienne (Courses, Ménage)", "AUTRE_SUB"],
-            "AIDE": ["🚑 URGENCE (Gaz, Panne, Fuite)", "🤝 Garde d'enfants / Crèche", "🏥 Santé & Visite aux malades", "🌈 Écoute & Présence", "AUTRE_SUB"],
-            "REGULATION": ["⚖️ Aide Administrative (Papiers)", "🕊️ Médiation & Conseils", "AUTRE_SUB"],
-            "IMPOT": ["🏗️ Chantiers Collectifs", "🌲 Protection de la Nature", "AUTRE_SUB"]
+            "SAVOIR": ["🎓 Soutien Scolaire", "💼 Mentorat Pro", "🎨 Art & Musique", "AUTRE_SUB"],
+            "VIE": ["🛠️ Prêt de matériel", "⚽ Sport & Loisirs", "🏠 Local / Logement", "AUTRE_SUB"],
+            "AIDE": ["🤝 Garde d'enfants", "🏥 Visite / Soins", "🚑 URGENCE GAZ/PANNE", "AUTRE_SUB"],
+            "REGULATION": ["⚖️ Aide administrative", "🕊️ Médiation", "AUTRE_SUB"],
+            "IMPOT": ["🏗️ Chantier collectif", "🌲 Nature", "AUTRE_SUB"],
+            "AUTRE_CAT": ["🌈 Graine surprise"]
         };
 
         function updateSubCats() {
             const cat = document.getElementById('main_cat').value;
             const subGroup = document.getElementById('sub_cat_group');
             const subSelect = document.getElementById('sub_cat');
-            document.getElementById('extra_cat').style.display = (cat === "AUTRE_CAT") ? "block" : "none";
             if (cat && tree[cat]) {
-                subSelect.innerHTML = tree[cat].map(s => `<option value="${s}">${s === 'AUTRE_SUB' ? '🌈 Autre précision...' : s}</option>`).join('');
+                subSelect.innerHTML = tree[cat].map(s => `<option value="${s}">${s}</option>`).join('');
                 subGroup.style.display = 'block';
             } else { subGroup.style.display = 'none'; }
         }
 
-        function checkOther(select, divId) {
-            const extraDiv = document.getElementById(divId);
-            if (select.value.includes("AUTRE")) { extraDiv.style.display = "block"; extraDiv.querySelector('input').focus(); }
-            else { extraDiv.style.display = "none"; }
-        }
-
-        function exploserParticules(x, y, emojis, count = 20) {
-            for (let i = 0; i < count; i++) {
+        function exploserParticules(x, y, emojis) {
+            for (let i = 0; i < 20; i++) {
                 const p = document.createElement('div');
                 p.className = 'particle';
                 p.innerHTML = emojis[Math.floor(Math.random() * emojis.length)];
                 p.style.left = x + 'px'; p.style.top = y + 'px';
-                p.style.fontSize = (Math.random() * 20 + 10) + 'px';
                 document.body.appendChild(p);
                 const angle = Math.random() * Math.PI * 2;
-                const dist = Math.random() * 200 + 50;
-                p.animate([
-                    { transform: 'translate(0,0) scale(1)', opacity: 1 },
-                    { transform: `translate(${Math.cos(angle)*dist}px, ${Math.sin(angle)*dist}px) scale(0) rotate(360deg)`, opacity: 0 }
-                ], { duration: 1500, easing: 'ease-out' });
-                setTimeout(() => p.remove(), 1500);
+                const dist = Math.random() * 150 + 50;
+                p.animate([{ transform: 'translate(0,0)', opacity: 1 }, { transform: `translate(${Math.cos(angle)*dist}px, ${Math.sin(angle)*dist}px)`, opacity: 0 }], { duration: 1000 });
+                setTimeout(() => p.remove(), 1000);
             }
         }
 
         function exploserEtoiles(e) {
-            exploserParticules(e.pageX, e.pageY, ['⭐', '✨', '🌟']);
+            exploserParticules(e.pageX, e.pageY, ['⭐', '✨']);
             setTimeout(() => { window.location.href = "transition_externe.html"; }, 1000);
-        }
-
-        const phrases = ["Graine de bonheur !", "Fraternité !", "Don précieux !", "Cadeau !"];
-        const animaux = ['🕊️', '🦋', '🐝', '🐞', '🦜'];
-        const animalCont = document.getElementById('animal-container');
-        const bulle = document.getElementById('bulle-texte');
-        const corps = document.getElementById('corps-animal');
-        const coffre = document.getElementById('coffre-magique');
-        let aniX = -200, state = "FLY", targetY = 250;
-
-        function animationSpeciale() {
-            if (state === "FLY" || state === "TALK") {
-                state = "MAGIC";
-                bulle.innerText = "Pour toi ! ✨";
-                bulle.style.opacity = 1;
-                targetY = window.innerHeight - 100;
-                setTimeout(() => {
-                    exploserParticules(window.innerWidth/2, window.innerHeight - 50, ['🌸', '🌺', '🌼', '✨', '💝'], 40);
-                    coffre.classList.add('cadeau-envole');
-                    setTimeout(() => {
-                        coffre.classList.remove('cadeau-envole');
-                        state = "EXIT";
-                        targetY = 250;
-                    }, 2000);
-                }, 1000);
-            }
-        }
-
-        function messenger() {
-            if (state === "FLY") {
-                aniX += 2.5;
-                corps.style.transform = "scaleX(-1)"; 
-                if (Math.abs(aniX - window.innerWidth/2) < 5) {
-                    state = "TALK";
-                    bulle.innerText = phrases[Math.floor(Math.random()*phrases.length)];
-                    bulle.style.opacity = 1;
-                    let originalY = targetY;
-                    targetY = window.innerHeight - 80; 
-                    setTimeout(() => {
-                        exploserParticules(window.innerWidth/2, window.innerHeight - 40, ['🌸', '✨', '🌟', '🍀'], 15);
-                        coffre.classList.add('pop');
-                        setTimeout(() => {
-                            targetY = originalY; 
-                            bulle.style.opacity = 0;
-                            coffre.classList.remove('pop');
-                            state = "EXIT";
-                        }, 800);
-                    }, 600);
-                }
-            } else if (state === "EXIT") {
-                aniX += 3.5;
-                corps.style.transform = "scaleX(-1)"; 
-                if (aniX > window.innerWidth + 200) {
-                    aniX = -200; 
-                    corps.innerText = animaux[Math.floor(Math.random()*animaux.length)]; 
-                    state = "FLY";
-                    bulle.style.opacity = 0;
-                }
-            } else if (state === "MAGIC") {
-                aniX = window.innerWidth / 2;
-                corps.style.transform = "scaleX(-1)";
-            }
-            animalCont.style.left = aniX + 'px';
-            let wave = (state === "MAGIC" || state === "TALK") ? 0 : Math.sin(aniX/60)*30;
-            animalCont.style.top = (targetY + wave) + 'px';
-            requestAnimationFrame(messenger);
-        }
-
-        function activerAudio() { 
-            const a = document.getElementById('chantOiseaux');
-            if(a.paused) { a.volume = 0.05; a.play(); }
         }
 
         function envoyerDon(event) {
@@ -354,8 +229,6 @@
             .then(() => { window.location.href = "merci_annonce.html"; })
             .catch(() => { window.location.href = "merci_annonce.html"; });
         }
-        messenger();
     </script>
-    <script src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
 </body>
 </html>
