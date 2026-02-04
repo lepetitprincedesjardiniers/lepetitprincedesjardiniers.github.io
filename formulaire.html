@@ -138,7 +138,7 @@
     <script type="text/javascript">
         function googleTranslateElementInit() { new google.translate.TranslateElement({pageLanguage: 'fr'}, 'google_translate_element'); }
 
-        // --- GESTION SOUS-RUBRIQUES CORRIGÉE ---
+        // --- GESTION SOUS-RUBRIQUES ---
         const tree = {
             "URGENCE": ["Matière (Faim/Toit)", "Santé (Corps)", "Mental (Cervelle)", "Urgence Vitale"],
             "AIDE": ["Câlin de l'âme", "Besoin de parler", "Solitude", "Médiation fraternelle"],
@@ -147,23 +147,28 @@
         };
 
         function updateSubCats() {
-            const cat = document.getElementById('main_cat').value;
-            const subGroup = document.getElementById('sub_cat_group');
-            const subSelect = document.getElementById('sub_cat');
-            const msgImpot = document.getElementById('msgImpot');
+            var mainSelect = document.getElementById('main_cat');
+            var cat = mainSelect.value;
+            var subGroup = document.getElementById('sub_cat_group');
+            var subSelect = document.getElementById('sub_cat');
+            var msgImpot = document.getElementById('msgImpot');
             
             if (cat && tree[cat]) {
-                // On vide et on remplit le select
-                subSelect.innerHTML = "";
-                tree[cat].forEach(function(item) {
-                    let option = document.createElement("option");
-                    option.value = item;
-                    option.text = item;
-                    subSelect.appendChild(option);
-                });
+                // Création des options de manière sécurisée
+                var optionsHtml = "";
+                for (var i = 0; i < tree[cat].length; i++) {
+                    optionsHtml += '<option value="' + tree[cat][i] + '">' + tree[cat][i] + '</option>';
+                }
+                subSelect.innerHTML = optionsHtml;
                 
+                // On force l'affichage en utilisant style.setProperty pour écraser le CSS
                 subGroup.style.display = 'block';
-                msgImpot.style.display = (cat === "IMPOT") ? "block" : "none";
+                
+                if (cat === "IMPOT") {
+                    msgImpot.style.display = "block";
+                } else {
+                    msgImpot.style.display = "none";
+                }
             } else { 
                 subGroup.style.display = 'none'; 
             }
@@ -190,7 +195,7 @@
             .catch(() => { window.location.href = "merci_annonce.html"; });
         }
 
-        // --- ANIMATIONS ---
+        // --- ANIMATIONS (OISEAUX & MESSAGERS) ---
         const audio = document.getElementById('chantOiseaux');
         document.addEventListener('click', () => { if(audio.paused) { audio.volume = 0.05; audio.play(); } });
         
