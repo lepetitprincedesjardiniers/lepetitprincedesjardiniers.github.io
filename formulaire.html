@@ -31,12 +31,34 @@
         
         .particle { position: absolute; pointer-events: none; z-index: 9999; }
 
-        #coffre-magique { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); font-size: 60px; z-index: 800; transition: 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275); cursor: pointer; }
-        #animal-container { position: fixed; z-index: 900; display: flex; align-items: center; cursor: pointer; pointer-events: auto; }
+        /* MAGIE DU CADEAU */
+        #coffre-magique { 
+            position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); 
+            font-size: 60px; z-index: 800; 
+            transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275); 
+            cursor: pointer;
+            border-radius: 50%;
+        }
+        .brillance-faible { box-shadow: 0 0 20px #FFD700; }
+        .brillance-forte { box-shadow: 0 0 50px #FFD700; animation: trembler 0.2s infinite; }
+        
+        @keyframes trembler {
+            0% { transform: translateX(-50%) rotate(0deg); }
+            25% { transform: translateX(-52%) rotate(-2deg); }
+            75% { transform: translateX(-48%) rotate(2deg); }
+            100% { transform: translateX(-50%) rotate(0deg); }
+        }
+
+        .cadeau-envole { 
+            transform: translateX(-50%) translateY(-120vh) scale(2) rotate(720deg) !important; 
+            opacity: 0; 
+            transition: transform 2s ease-in, opacity 2s !important;
+        }
+
+        #animal-container { position: fixed; z-index: 900; display: flex; align-items: center; cursor: pointer; }
         #bulle-texte { background: white; border-radius: 15px; padding: 8px 15px; font-style: italic; color: #2E7D32; border: 2px solid #2E7D32; opacity: 0; transition: 0.3s; font-weight: bold; white-space: nowrap; margin-right: 10px; }
-        #corps-animal { font-size: 40px; transition: transform 0.2s; }
+        #corps-animal { font-size: 45px; transition: transform 0.2s; }
         .pop { transform: translateX(-50%) scale(1.4) !important; }
-        .cadeau-envole { transform: translateX(-50%) translateY(-100vh) rotate(360deg) scale(0) !important; opacity: 0; }
     </style>
 </head>
 <body onclick="activerAudio()">
@@ -61,7 +83,6 @@
 
     <div class="form-container">
         <form id="monFormulaire" onsubmit="envoyerDon(event)">
-            
             <div class="form-group">
                 <label>Identité amoureuse</label>
                 <input type="text" name="nom" placeholder="Ton Prénom de coeur / Pseudo" required>
@@ -82,12 +103,6 @@
                         <optgroup label="🌍 Europe">
                             <option value="France">France (et Outre-mer)</option><option value="Belgique">Belgique</option><option value="Suisse">Suisse</option><option value="AUTRE_PAYS">Autre pays Europe...</option>
                         </optgroup>
-                        <optgroup label="🌍 Afrique">
-                            <option value="Maroc">Maroc</option><option value="Algérie">Algérie</option><option value="Sénégal">Sénégal</option><option value="AUTRE_PAYS">Autre pays Afrique...</option>
-                        </optgroup>
-                        <optgroup label="🌍 Amériques">
-                            <option value="Canada">Canada / Québec</option><option value="Haiti">Haïti</option><option value="USA">États-Unis</option><option value="AUTRE_PAYS">Autre pays Amérique...</option>
-                        </optgroup>
                         <option value="AUTRE_PAYS">🌐 Un pays non listé...</option>
                     </select>
                     <select name="rayon" style="flex: 1;">
@@ -99,78 +114,46 @@
                     </select>
                 </div>
                 <div id="extra_pays" class="extra-field">
-                    <input type="text" name="pays_precision" placeholder="Nom de ton pays secret ou oublié...">
+                    <input type="text" name="pays_precision" placeholder="Nom de ton pays secret...">
                 </div>
-                <input type="text" name="localisation" placeholder="Ville, Code Postal ou Quartier précis..." required>
+                <input type="text" name="localisation" placeholder="Ville, Code Postal ou Quartier..." required>
             </div>
 
             <div class="form-group">
                 <label>Destination du semis</label>
                 <select name="type" id="main_cat" onchange="updateSubCats()" required>
                     <option value="">-- Domaine d'action --</option>
-                    <option value="SAVOIR">💡 SAVOIRS (Scolaire, Pro, Mentorat, Arts)</option>
-                    <option value="VIE">🏠 VIE CITOYENNE (Hébergement, Espace, Mobilité)</option>
-                    <option value="AIDE">💖 AIDE & HARMONIE (Santé, Urgence, Écoute)</option>
-                    <option value="REGULATION">⚖️ RÉGULATION (Médiation, Aide Administrative)</option>
-                    <option value="IMPOT">📜 TRÉSOR PUBLIC (Chantiers, Bien Commun)</option>
-                    <option value="AUTRE_CAT">🌈 AUTRE DOMAINE...</option>
+                    <option value="SAVOIR">💡 SAVOIRS</option>
+                    <option value="VIE">🏠 VIE CITOYENNE</option>
+                    <option value="AIDE">💖 AIDE & HARMONIE</option>
+                    <option value="REGULATION">⚖️ RÉGULATION</option>
+                    <option value="IMPOT">📜 TRÉSOR PUBLIC</option>
                 </select>
-                <div id="extra_cat" class="extra-field">
-                    <input type="text" name="cat_precision" placeholder="Précisez ce nouveau domaine...">
-                </div>
             </div>
 
             <div id="sub_cat_group" class="form-group" style="display:none;">
                 <label>Précision de la graine</label>
                 <select name="sousType" id="sub_cat" onchange="checkOther(this, 'extra_sub')"></select>
                 <div id="extra_sub" class="extra-field">
-                    <input type="text" name="sub_precision" placeholder="Décrivez votre spécialité précise...">
+                    <input type="text" name="sub_precision" placeholder="Détails...">
                 </div>
             </div>
 
             <div class="form-group">
-                <label>Cycle de Vie (Durée de validité)</label>
-                <span class="sous-label">Note poétique pour l'automate de gestion</span>
-                <select name="duree_validite" required>
-                    <option value="1">🌱 Un brin d'herbe (1 jour - Urgence)</option>
-                    <option value="7">🌿 Une petite fleur (1 semaine)</option>
-                    <option value="30" selected>🌳 Un buisson (1 mois - Standard)</option>
-                    <option value="90">🌲 Un jeune arbre (3 mois)</option>
-                    <option value="365">🍃 Un chêne séculaire (1 an - Transmission)</option>
-                </select>
-            </div>
-
-            <div class="form-group">
                 <label>Logistique & Acheminement</label>
-                <span class="sous-label">Comment le don voyage-t-il ?</span>
                 <select name="logistique" required>
-                    <optgroup label="🤝 Proximité / Humain">
-                        <option value="Main Propre">Remise en main propre (Lieu public)</option>
-                        <option value="Moi-même">J'assure le transport moi-même</option>
-                        <option value="Récupérer">À récupérer sur place</option>
-                        <option value="Covoit">Covoiturage humain (Je t'emmène)</option>
-                    </optgroup>
-                    <optgroup label="🚚 Route & National">
-                        <option value="Relais">Point Relais (Mondial Relay / Colis Privé)</option>
-                        <option value="Poste">La Poste / Courrier</option>
-                        <option value="Colis-voiturage">Colis-voiturage (Via un voyageur)</option>
-                        <option value="Transporteur">Transporteur Routier (Fret camion)</option>
-                    </optgroup>
-                    <optgroup label="✈️ Grand Large & Rail">
-                        <option value="Avion">Fret Aérien (International)</option>
-                        <option value="Bateau">Fret Maritime (Conteneur / Bateau)</option>
-                        <option value="Train">Fret Ferroviaire (Rail)</option>
-                    </optgroup>
-                    <optgroup label="🚀 Immatériel">
-                        <option value="Numérique">Transfert Numérique / Visio</option>
-                        <option value="Pensée">Ondes de fraternité</option>
-                    </optgroup>
+                    <option value="Main Propre">Main propre</option>
+                    <option value="Fret Routier">Camion / Route</option>
+                    <option value="Bateau">Bateau / Maritime</option>
+                    <option value="Avion">Avion / Aérien</option>
+                    <option value="Train">Train / Rail</option>
+                    <option value="Numérique">Numérique / Visio</option>
                 </select>
             </div>
 
             <div class="form-group">
                 <label>Description du Don amoureux</label>
-                <textarea name="message" placeholder="Ouvre ton cœur... Détaille ton don ou ton besoin." required></textarea>
+                <textarea name="message" placeholder="Ouvre ton cœur..." required></textarea>
             </div>
 
             <button type="submit" class="btn-envoyer" id="btnTexte">ENGENDRER LA FRATERNITÉ UNIVERSELLE</button>
@@ -182,7 +165,7 @@
     </footer>
 
     <div id="coffre-magique">🎁</div>
-    <div id="animal-container" onclick="animationSpeciale()">
+    <div id="animal-container">
         <div id="bulle-texte"></div>
         <div id="corps-animal">🕊️</div>
     </div>
@@ -191,78 +174,55 @@
         function googleTranslateElementInit() { new google.translate.TranslateElement({pageLanguage: 'fr'}, 'google_translate_element'); }
 
         const tree = {
-            "SAVOIR": ["🌱 Éveil & Soutien Scolaire", "🎓 Études Supérieures", "💼 Mentorat Professionnel", "🎨 Arts, Musique & Cuisine", "AUTRE_SUB"],
-            "VIE": ["🏠 Accueil & Hébergement", "🛠️ Prêt d'espaces (Atelier, Jardin)", "🚗 Mobilité & Aide au transport", "🧹 Aide au quotidien", "AUTRE_SUB"],
-            "AIDE": ["🚑 URGENCE VITALE", "🏥 Santé & Soins", "🌈 Harmonie & Écoute", "🤝 Présence contre la solitude", "AUTRE_SUB"],
-            "REGULATION": ["🕊️ Médiation & Conflits", "⚖️ Aide Administrative", "AUTRE_SUB"],
-            "IMPOT": ["🏗️ Travaux de Bien Commun", "🌲 Protection de la Nature", "AUTRE_SUB"]
+            "SAVOIR": ["🌱 Scolaire", "🎓 Études", "💼 Mentorat", "🎨 Arts", "AUTRE_SUB"],
+            "VIE": ["🏠 Hébergement", "🛠️ Espaces", "🚗 Mobilité", "AUTRE_SUB"],
+            "AIDE": ["🚑 URGENCE", "🏥 Santé", "🌈 Écoute", "AUTRE_SUB"],
+            "REGULATION": ["🕊️ Médiation", "⚖️ Admin", "AUTRE_SUB"],
+            "IMPOT": ["🏗️ Travaux Publics", "🌲 Nature", "AUTRE_SUB"]
         };
 
         function updateSubCats() {
             const cat = document.getElementById('main_cat').value;
             const subGroup = document.getElementById('sub_cat_group');
             const subSelect = document.getElementById('sub_cat');
-            document.getElementById('extra_cat').style.display = (cat === "AUTRE_CAT") ? "block" : "none";
             if (cat && tree[cat]) {
-                subSelect.innerHTML = tree[cat].map(s => `<option value="${s}">${s === 'AUTRE_SUB' ? '🌈 Autre précision...' : s}</option>`).join('');
+                subSelect.innerHTML = tree[cat].map(s => `<option value="${s}">${s === 'AUTRE_SUB' ? '🌈 Autre...' : s}</option>`).join('');
                 subGroup.style.display = 'block';
             } else { subGroup.style.display = 'none'; }
         }
 
         function checkOther(select, divId) {
             const extraDiv = document.getElementById(divId);
-            if (select.value.includes("AUTRE")) { extraDiv.style.display = "block"; extraDiv.querySelector('input').focus(); }
-            else { extraDiv.style.display = "none"; }
+            extraDiv.style.display = (select.value.includes("AUTRE")) ? "block" : "none";
         }
 
-        // --- MAGIE & EFFETS ---
+        // --- MAGIE & ANIMAUX ---
+        let messageCount = 0;
+        const animaux = ['🕊️', '🦋', '🐝', '🐞', '🦜', '🦉', '🦩', '🦅', '🦢'];
+        const phrases = ["Graine de fraternité !", "Je sème un espoir...", "Pour ton jardin...", "Un don s'est envolé !", "Chut... ça pousse !"];
+        
+        const animalCont = document.getElementById('animal-container');
+        const bulle = document.getElementById('bulle-texte');
+        const corps = document.getElementById('corps-animal');
+        const coffre = document.getElementById('coffre-magique');
+
+        let aniX = -200, state = "FLY", currentY = 250;
+
         function exploserParticules(x, y, emojis, count = 20) {
             for (let i = 0; i < count; i++) {
                 const p = document.createElement('div');
                 p.className = 'particle';
                 p.innerHTML = emojis[Math.floor(Math.random() * emojis.length)];
                 p.style.left = x + 'px'; p.style.top = y + 'px';
-                p.style.fontSize = (Math.random() * 20 + 10) + 'px';
+                p.style.fontSize = (Math.random() * 20 + 15) + 'px';
                 document.body.appendChild(p);
                 const angle = Math.random() * Math.PI * 2;
-                const dist = Math.random() * 200 + 50;
+                const dist = Math.random() * 250 + 50;
                 p.animate([
                     { transform: 'translate(0,0) scale(1)', opacity: 1 },
                     { transform: `translate(${Math.cos(angle)*dist}px, ${Math.sin(angle)*dist}px) scale(0) rotate(360deg)`, opacity: 0 }
-                ], { duration: 1500, easing: 'ease-out' });
+                ], { duration: 1500 });
                 setTimeout(() => p.remove(), 1500);
-            }
-        }
-
-        function exploserEtoiles(e) {
-            exploserParticules(e.pageX, e.pageY, ['⭐', '✨', '🌟']);
-            setTimeout(() => { window.location.href = "transition-externe.html"; }, 1000);
-        }
-
-        const phrases = ["Graine de bonheur !", "La fraternité arrive !", "Un don précieux !", "Altruisme ! Cadeau !"];
-        const animaux = ['🕊️', '🦋', '🐝', '🐞', '🦜'];
-        const animalCont = document.getElementById('animal-container');
-        const bulle = document.getElementById('bulle-texte');
-        const corps = document.getElementById('corps-animal');
-        const coffre = document.getElementById('coffre-magique');
-        let aniX = -200, state = "FLY", targetY = 250;
-
-        function animationSpeciale() {
-            if (state === "FLY" || state === "TALK") {
-                state = "MAGIC";
-                bulle.innerText = "Pour toi ! ✨";
-                bulle.style.opacity = 1;
-                // L'oiseau descend vers le cadeau
-                targetY = window.innerHeight - 100;
-                setTimeout(() => {
-                    exploserParticules(window.innerWidth/2, window.innerHeight - 50, ['🌸', '🌺', '🌼', '✨', '💝'], 40);
-                    coffre.classList.add('cadeau-envole');
-                    setTimeout(() => {
-                        coffre.classList.remove('cadeau-envole');
-                        state = "EXIT";
-                        targetY = 250;
-                    }, 2000);
-                }, 1000);
             }
         }
 
@@ -270,31 +230,63 @@
             if (state === "FLY") {
                 aniX += 2;
                 if (Math.abs(aniX - window.innerWidth/2) < 5) {
-                    state = "TALK";
+                    state = "DELIVER";
                     bulle.innerText = phrases[Math.floor(Math.random()*phrases.length)];
                     bulle.style.opacity = 1;
-                    coffre.classList.add('pop');
-                    setTimeout(() => { if(state === "TALK") { bulle.style.opacity = 0; coffre.classList.remove('pop'); state = "EXIT"; } }, 3000);
                 }
-            } else if (state === "EXIT") {
+            } 
+            else if (state === "DELIVER") {
+                let cibleY = window.innerHeight - 120;
+                currentY += (cibleY - currentY) * 0.05;
+                if (Math.abs(currentY - cibleY) < 5) {
+                    messageCount++;
+                    gererCadeau();
+                    state = "WAIT";
+                    setTimeout(() => { bulle.style.opacity = 0; state = "ASCEND"; }, 2000);
+                }
+            }
+            else if (state === "ASCEND") {
+                currentY += (250 - currentY) * 0.05;
+                if (Math.abs(currentY - 250) < 5) state = "EXIT";
+            }
+            else if (state === "EXIT") {
                 aniX += 3;
                 if (aniX > window.innerWidth + 200) {
-                    aniX = -200; 
-                    corps.innerText = animaux[Math.floor(Math.random()*animaux.length)]; 
+                    aniX = -200;
+                    corps.innerText = animaux[Math.floor(Math.random()*animaux.length)];
                     state = "FLY";
-                    bulle.style.opacity = 0;
                 }
-            } else if (state === "MAGIC") {
-                aniX = window.innerWidth / 2;
             }
-            
+
             animalCont.style.left = aniX + 'px';
-            // Inversion de l'oiseau selon le sens
+            animalCont.style.top = (currentY + (state==="FLY"||state==="EXIT" ? Math.sin(aniX/60)*30 : 0)) + 'px';
             corps.style.transform = (state === "EXIT") ? "scaleX(-1)" : "scaleX(1)";
-            
-            let wave = (state === "MAGIC") ? 0 : Math.sin(aniX/60)*30;
-            animalCont.style.top = (targetY + wave) + 'px';
             requestAnimationFrame(messenger);
+        }
+
+        function gererCadeau() {
+            exploserParticules(window.innerWidth/2, window.innerHeight - 50, ['✨', '💖', '⭐'], 10);
+            
+            if (messageCount === 1) {
+                coffre.classList.add('brillance-faible');
+            } else if (messageCount === 2) {
+                coffre.classList.remove('brillance-faible');
+                coffre.classList.add('brillance-forte');
+            } else if (messageCount >= 3) {
+                coffre.classList.add('cadeau-envole');
+                setTimeout(() => {
+                    exploserParticules(window.innerWidth/2, window.innerHeight/3, ['🌸', '🌺', '🌼', '✨', '🌍', '💝'], 60);
+                    setTimeout(() => {
+                        coffre.classList.remove('cadeau-envole', 'brillance-forte');
+                        messageCount = 0;
+                    }, 1000);
+                }, 1500);
+            }
+        }
+
+        function exploserEtoiles(e) {
+            exploserParticules(e.pageX, e.pageY, ['⭐', '✨', '🌟'], 25);
+            setTimeout(() => { window.location.href = "transition_externe.html"; }, 1000);
         }
 
         function activerAudio() { 
