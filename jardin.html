@@ -4,27 +4,33 @@
     <meta charset="UTF-8">
     <title>Le Jardin de la Fraternité - Registre</title>
     <style>
-        /* TON STYLE EXACT */
+        /* --- TON STYLE ORIGINAL --- */
         body { font-family: 'Comic Sans MS', cursive; text-align: center; margin: 0; padding: 0; background-color: #FFFF00; color: #000080; overflow-x: hidden; min-height: 100vh; padding-bottom: 80px; }
         .top-bar { position: relative; width: 100%; min-height: 40px; background: rgba(255,255,255,0.3); padding: 5px 0; }
         .menu-table { margin: 5px auto; border-radius: 10px; background-color: #008080; border-collapse: collapse; }
         .menu-table td { padding: 8px 15px; border: 1px solid #FFFFFF; }
         .menu-table a { text-decoration: none; color: #FFFFFF; font-weight: bold; font-size: 0.85em; }
+        
         .phrase-rose { color: #ff1493; font-weight: bold; font-size: 1.1em; text-shadow: 1px 1px 2px #ff69b4; animation: eclat 1.5s infinite alternate; margin-top: 5px; }
         @keyframes eclat { from { opacity: 0.7; } to { opacity: 1; } }
         
         #jardin-sacre { position: relative; height: 100px; width: 100%; overflow: hidden; background: rgba(255,255,255,0.1); margin-top: 5px; }
         .fleur-clonée { position: absolute; font-size: 25px; animation: apparitionFleur 1s ease-out forwards; }
-        @keyframes apparitionFleur { 0% { transform: scale(0) rotate(-50deg); opacity: 0; } 100% { transform: scale(1) rotate(0deg); opacity: 1; } }
+        @keyframes apparitionFleur { 0% { transform: scale(0); opacity: 0; } 100% { transform: scale(1); opacity: 1; } }
 
-        /* ANIMATION OISEAU REPARÉE (Ajout de transition) */
+        /* ANIMATION OISEAU FLUIDE */
         #animal-container { position: fixed; z-index: 900; white-space: nowrap; display: flex; align-items: center; pointer-events: none; transition: all 5s ease-in-out; }
-        #corps-animal { font-size: 30px; }
+        #corps-animal { font-size: 35px; }
 
-        .mur-reel { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 15px; padding: 10px; max-width: 1200px; margin: 0 auto; }
-        .carte-message { background: white; border: 3px solid #008080; border-radius: 12px; padding: 12px; min-height: 200px; text-align: left; cursor: pointer; }
+        /* GRILLE D'ANNONCES */
+        .mur-reel { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 15px; padding: 15px; max-width: 1200px; margin: 0 auto; }
+        .carte-message { 
+            background: white; border: 3px solid #008080; border-radius: 12px; padding: 15px; 
+            min-height: 200px; text-align: left; box-shadow: 4px 4px 0px #008080; 
+            display: flex; flex-direction: column;
+        }
         
-        .copyright-wrapper { position: fixed; bottom: 5px; left: 50%; transform: translateX(-50%); background: rgba(255,255,255,0.7); padding: 5px 15px; border-radius: 15px; border: 2px solid #ff1493; }
+        .copyright-wrapper { position: fixed; bottom: 5px; left: 50%; transform: translateX(-50%); background: rgba(255,255,255,0.8); padding: 5px 15px; border-radius: 15px; border: 2px solid #ff1493; z-index: 1000; }
         .copyright-wrapper a { text-decoration: none; color: #ff1493; font-weight: bold; }
     </style>
 </head>
@@ -47,7 +53,7 @@
     <div class="phrase-rose">Bienvenue au Jardin ensoleilleur des Dons entiers</div>
     <div id="jardin-sacre"></div>
 
-    <div id="chargement">✨ Récolte en cours...</div>
+    <div id="chargement" style="margin:20px; font-weight:bold;">✨ Récolte des messages en cours...</div>
     <div class="mur-reel" id="mur-messages"></div>
 
     <div class="copyright-wrapper">
@@ -72,34 +78,43 @@
                 const carte = document.createElement('div');
                 carte.className = 'carte-message';
                 
-                // --- ICI LE COEUR DU PROBLEME ---
-                // On affiche la colonne "sub_precision" qui contient ton texte
-                const monTexte = ann.sub_precision || ann.localisation || "Annonce sans texte";
+                // --- ON UTILISE LE NOM "message" COMME DANS TON FORMULAIRE ---
+                const texteAnnonce = ann.message || ann.sub_precision || "Graine de fraternité en cours de pousse...";
                 
                 carte.innerHTML = `
-                    <div style="font-weight:bold;color:#2E7D32;">${ann.nom || "Anonyme"}</div>
-                    <div style="margin-top:10px; color:#000080;">"${monTexte}"</div>
-                    <div style="font-size:0.7em; margin-top:15px; color:#666;">
-                        📍 ${ann.localisation || ""} | ${ann.pays_select || ""}<br>
-                        ⏳ ${ann.duree_validite || ""}
+                    <div style="font-weight:bold;color:#2E7D32;border-bottom:1px solid #008080;padding-bottom:5px;">
+                        ${ann.nom || "Jardinier Anonyme"}
+                    </div>
+                    <div style="margin-top:10px; color:#000080; flex-grow:1; font-style:italic;">
+                        "${texteAnnonce}"
+                    </div>
+                    <div style="font-size:0.75em; margin-top:15px; color:#666; background:#f0fdf4; padding:5px; border-radius:5px;">
+                        📍 ${ann.localisation || "Terre"}<br>
+                        ⏳ Temps : ${ann.duree_validite || "Permanent"}
                     </div>
                 `;
                 conteneur.appendChild(carte);
             });
-        } catch (e) { console.log("Erreur"); }
+        } catch (e) {
+            document.getElementById('chargement').innerText = "Le jardin se repose... (Erreur de chargement)";
+        }
     }
 
     function initAnims() {
-        // Animation oiseau
+        // Animation de l'oiseau (il vole doucement maintenant)
         const animal = document.getElementById('animal-container');
+        const emojis = ['🕊️', '🦋', '🐝', '🦜'];
         setInterval(() => {
-            animal.style.left = Math.random() * (window.innerWidth - 100) + 'px';
-            animal.style.top = Math.random() * (window.innerHeight - 100) + 'px';
+            const x = Math.random() * (window.innerWidth - 100);
+            const y = Math.random() * (window.innerHeight - 100);
+            animal.style.left = x + 'px';
+            animal.style.top = y + 'px';
+            document.getElementById('corps-animal').innerHTML = emojis[Math.floor(Math.random()*emojis.length)];
         }, 5000);
 
-        // Fleurs
+        // Petites fleurs dans le bandeau
         const j = document.getElementById('jardin-sacre');
-        for(let i=0; i<15; i++) {
+        for(let i=0; i<12; i++) {
             const f = document.createElement('div'); f.className = 'fleur-clonée';
             f.innerHTML = '🌸'; f.style.left = Math.random()*95 + '%'; f.style.top = Math.random()*60 + 'px';
             j.appendChild(f);
