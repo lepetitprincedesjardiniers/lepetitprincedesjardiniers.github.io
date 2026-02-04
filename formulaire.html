@@ -12,11 +12,9 @@
         .menu-table td:hover { background-color: #00b3b3; }
         .menu-table a { text-decoration: none; color: #FFFFFF; font-weight: bold; font-size: 0.85em; }
 
-        /* STYLE DE LA PETITE POMPE À CLIQUER */
         .guide-trigger { color: #008080; font-size: 0.9em; cursor: pointer; text-decoration: underline; font-weight: bold; display: inline-block; margin-bottom: 15px; transition: 0.3s; }
         .guide-trigger:hover { color: #E67E22; transform: scale(1.1); }
 
-        /* FENÊTRE MODALE DU GUIDE */
         #aide-panneau { 
             display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); 
             width: 90%; max-width: 400px; background: #008080; color: white; padding: 20px; 
@@ -27,7 +25,6 @@
         .aide-section { margin-bottom: 12px; text-align: left; }
         .aide-titre { font-weight: bold; color: #FFFF00; display: block; margin-bottom: 3px; }
 
-        /* Overlay pour fermer au clic ailleurs */
         #overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.3); z-index: 1999; }
 
         .form-container { background: white; padding: 30px; border-radius: 20px; display: inline-block; margin-top: 10px; box-shadow: 0px 10px 20px rgba(0,0,0,0.1); width: 95%; max-width: 800px; margin-bottom: 180px; position: relative; z-index: 10; }
@@ -36,10 +33,7 @@
         .sous-label { font-size: 0.75em; color: #006666; margin-bottom: 5px; display: block; font-style: italic; }
         
         input, select, textarea { width: 100%; padding: 12px; margin-bottom: 10px; border: 2px solid #008080; border-radius: 10px; font-family: 'Comic Sans MS'; font-size: 1em; box-sizing: border-box; }
-        textarea { min-height: 250px; resize: vertical; background-color: #fffdf0; }
-
-        .manifeste-don { background: #fdf2f2; border-radius: 15px; padding: 15px; margin-bottom: 15px; border: 2px solid #ffcccc; font-size: 0.9em; line-height: 1.5; color: #c0392b; }
-        .manifeste-don b { color: #e67e22; }
+        textarea { min-height: 350px; resize: vertical; background-color: #fffdf0; }
 
         .extra-field { display: none; animation: fadeIn 0.5s; background: #f0fdf4; padding: 10px; border-radius: 10px; margin-top: -5px; margin-bottom: 10px; border: 1px dashed #008080; }
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
@@ -55,8 +49,6 @@
         #animal-container { position: fixed; z-index: 900; display: flex; align-items: center; cursor: pointer; pointer-events: auto; }
         #bulle-texte { background: white; border-radius: 15px; padding: 8px 15px; font-style: italic; color: #2E7D32; border: 2px solid #2E7D32; opacity: 0; transition: 0.3s; font-weight: bold; white-space: nowrap; margin-right: 10px; }
         #corps-animal { font-size: 32px; transition: transform 0.3s; display: inline-block; }
-        .pop { transform: translateX(-50%) scale(1.4) !important; }
-        .cadeau-envole { transform: translateX(-50%) translateY(-100vh) rotate(360deg) scale(0) !important; opacity: 0; }
     </style>
 </head>
 <body onclick="activerAudio()">
@@ -151,13 +143,6 @@
                         </optgroup>
                         <option value="AUTRE_PAYS">🌐 Un pays secret...</option>
                     </select>
-                    <select name="rayon" style="flex: 1;">
-                        <option value="0">Sur place</option>
-                        <option value="10">Rayon 10 km</option>
-                        <option value="50">Rayon 50 km</option>
-                        <option value="National">National</option>
-                        <option value="Univers">Universel (Web)</option>
-                    </select>
                 </div>
                 <div id="extra_pays" class="extra-field">
                     <input type="text" name="pays_precision" placeholder="Nom de ton pays secret...">
@@ -178,6 +163,20 @@
                 </select>
             </div>
 
+            <div class="form-group">
+                <label>Rayon d'action</label>
+                <select name="rayon_action">
+                    <option value="sur place">sur place</option>
+                    <option value="rayon 10 km">rayon 10 km</option>
+                    <option value="rayon 50 km">rayon 50 km</option>
+                    <option value="national">national</option>
+                    <option value="international">international</option>
+                    <option value="extra terrestre">extra terrestre</option>
+                    <option value="universel">universel</option>
+                    <option value="infinie">infinie</option>
+                </select>
+            </div>
+
             <div id="sub_cat_group" class="form-group" style="display:none;">
                 <label>Précision de la graine</label>
                 <select name="sousType" id="sub_cat" onchange="checkOther(this, 'extra_sub')"></select>
@@ -188,24 +187,29 @@
 
             <div class="form-group">
                 <label>Cycle de Vie (Durée de validité)</label>
-                <select name="duree_validite" required>
+                <select name="duree_validite" onchange="checkOther(this, 'extra_cycle')" required>
                     <option value="1">🌱 Un jour (Urgence)</option>
                     <option value="7">🌿 Une semaine</option>
                     <option value="30" selected>🌳 Un mois (Standard)</option>
                     <option value="90">🌲 Trois mois</option>
                     <option value="365">🍃 Un an (Transmission)</option>
+                    <option value="AUTRE">Autres</option>
                 </select>
+                <div id="extra_cycle" class="extra-field">
+                    <input type="text" name="cycle_precision" placeholder="Indiquez ici la durée spécifique...">
+                </div>
             </div>
 
             <div class="form-group">
                 <label>Logistique & Acheminement (Mis à jour)</label>
                 <span class="sous-label">Comment le don voyage-t-il ?</span>
-                <select name="logistique" required>
+                <select name="logistique" onchange="checkOther(this, 'extra_log')" required>
                     <optgroup label="🤝 Humain & Proximité">
                         <option value="Main Propre">Remise en main propre (Lieu public)</option>
                         <option value="Moi-même">J'assure le transport moi-même</option>
                         <option value="Récupérer">À récupérer sur place</option>
                         <option value="Covoit">Covoiturage humain (Je t'emmène)</option>
+                        <option value="AUTRE">autres</option>
                     </optgroup>
                     <optgroup label="🚚 Expédition & Route">
                         <option value="Relais">Point Relais (Mondial Relay / Colis Privé)</option>
@@ -219,15 +223,28 @@
                         <option value="Pensée">Ondes de fraternité</option>
                     </optgroup>
                 </select>
+                <div id="extra_log" class="extra-field">
+                    <input type="text" name="log_precision" placeholder="Détaillez votre option logistique...">
+                </div>
             </div>
 
             <div class="form-group">
                 <label>Description du Don amoureux</label>
-                <div class="manifeste-don">
-                    ✨ <b>Ici, on transforme les talents en actes de fraternité.</b><br>
-                    🕊️ Tout s'offre sans compter. C'est la richesse du don qui crée la paix.
-                </div>
-                <textarea name="message" placeholder="Détaille ici ton offre ou ton besoin..." required></textarea>
+                <textarea name="message" placeholder="Décris ici ton offre ou ton besoin...
+
+Ici, on transforme les talents en actes de fraternité. Tout s'offre sans compter. C'est la richesse du don qui crée la paix. Le système est conçu pour transformer des métiers ou des objets en actes de fraternité.
+
+Demander un service est un don en soi, car cela permet à l'autre de cultiver sa propre générosité. Ici, on sème des graines de générosité pour récolter de l'altruisme.
+
+Attention : zone de gratuité absolue pour cadeau réellement efficace.
+La meilleure justice est encore le pardon.
+Cadeaux sans détour, cadeaux sans demande de retour.
+Regardez la fraternité s'épanouir au gré des dons du monde entier...
+
+Les Graines Semées au Jardin
+Chaque don est une fleur qui ne se fane jamais.
+Registre de la Fraternité
+Le jardin arrose les fleurs..." required></textarea>
             </div>
 
             <button type="submit" class="btn-envoyer" id="btnTexte">ENGENDRER LA FRATERNITÉ UNIVERSELLE</button>
@@ -276,7 +293,11 @@
 
         function checkOther(select, divId) {
             const extraDiv = document.getElementById(divId);
-            extraDiv.style.display = select.value.includes("AUTRE") ? "block" : "none";
+            if (select.value === "AUTRE") {
+                extraDiv.style.display = "block";
+            } else {
+                extraDiv.style.display = "none";
+            }
         }
 
         function exploserParticules(x, y, emojis, count = 20) {
@@ -303,12 +324,9 @@
             setTimeout(() => { window.location.href = href; }, 800);
         }
 
-        // Animation de l'oiseau
         const phrases = ["Graine de bonheur !", "Fraternité !", "Cadeau !"];
-        const animaux = ['🕊️', '🦋', '🐝', '🐞'];
         const animalCont = document.getElementById('animal-container');
         const bulle = document.getElementById('bulle-texte');
-        const corps = document.getElementById('corps-animal');
         const coffre = document.getElementById('coffre-magique');
         let aniX = -200, state = "FLY", targetY = 250;
 
@@ -363,4 +381,4 @@
     </script>
     <script src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
 </body>
-</html
+</html>
