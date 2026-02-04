@@ -7,18 +7,20 @@
         body { font-family: 'Comic Sans MS', cursive; text-align: center; margin: 0; padding: 0; background-color: #FFFF00; color: #000080; overflow-x: hidden; min-height: 100vh; }
         #google_translate_element { position: absolute; top: 5px; left: 5px; z-index: 1000; opacity: 0.7; transform: scale(0.8); }
         
-        .menu-table { margin: 20px auto; border-radius: 10px; background-color: #008080; border-collapse: collapse; margin-left: auto; margin-right: auto;}
+        /* MENU */
+        .menu-table { margin: 20px auto; border-radius: 10px; background-color: #008080; border-collapse: collapse; }
         .menu-table td { padding: 10px 15px; border: 1px solid #FFFFFF; transition: 0.3s; }
         .menu-table td:hover { background-color: #00b3b3; }
         .menu-table a { text-decoration: none; color: #FFFFFF; font-weight: bold; font-size: 0.85em; }
 
+        /* FORMULAIRE */
         .form-container { background: white; padding: 30px; border-radius: 20px; display: inline-block; margin-top: 10px; box-shadow: 0px 10px 20px rgba(0,0,0,0.1); width: 95%; max-width: 800px; margin-bottom: 180px; position: relative; z-index: 10; }
         .form-group { text-align: left; margin: 15px 20px; }
         label { font-weight: bold; color: #008080; display: block; margin-bottom: 5px; }
         .sous-label { font-size: 0.75em; color: #006666; margin-bottom: 5px; display: block; font-style: italic; }
         
         input, select, textarea { width: 100%; padding: 12px; margin-bottom: 10px; border: 2px solid #008080; border-radius: 10px; font-family: 'Comic Sans MS'; font-size: 1em; box-sizing: border-box; }
-        textarea { min-height: 250px; resize: vertical; background-color: #fffdf0; }
+        textarea { min-height: 200px; resize: vertical; background-color: #fffdf0; }
 
         .extra-field { display: none; animation: fadeIn 0.5s; background: #f0fdf4; padding: 10px; border-radius: 10px; margin-top: -5px; margin-bottom: 10px; border: 1px dashed #008080; }
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
@@ -26,39 +28,19 @@
         .btn-envoyer { width: 100%; padding: 25px; background: #E67E22; color: white; border: none; border-radius: 20px; cursor: pointer; font-weight: bold; font-size: 1.2em; box-shadow: 0px 4px 0px #b35900; transition: 0.2s; }
         .btn-envoyer:active { transform: translateY(4px); box-shadow: 0px 0px 0px #b35900; }
 
-        footer { margin: 40px 0 80px 0; }
-        .copyright-link { color: #008080; text-decoration: none; font-weight: bold; transition: 0.3s; padding: 10px; cursor: pointer; display: inline-block; position: relative; z-index: 20; }
-        
-        .particle { position: absolute; pointer-events: none; z-index: 9999; }
-
-        /* MAGIE DU CADEAU */
-        #coffre-magique { 
-            position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); 
-            font-size: 60px; z-index: 800; 
-            transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275); 
-            cursor: pointer;
-            border-radius: 50%;
-        }
-        .brillance-faible { box-shadow: 0 0 25px #FFD700; }
-        .brillance-forte { box-shadow: 0 0 60px #FFD700; animation: trembler 0.2s infinite; }
-        
-        @keyframes trembler {
-            0% { transform: translateX(-50%) rotate(0deg); }
-            25% { transform: translateX(-52%) rotate(-2deg); }
-            75% { transform: translateX(-48%) rotate(2deg); }
-            100% { transform: translateX(-50%) rotate(0deg); }
-        }
-
-        .cadeau-envole { 
-            transform: translateX(-50%) translateY(-120vh) scale(2) rotate(720deg) !important; 
-            opacity: 0; 
-            transition: transform 2s ease-in, opacity 2s !important;
-        }
+        /* MAGIE & ANIMATIONS */
+        #coffre-magique { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); font-size: 60px; z-index: 800; transition: 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275); cursor: pointer; }
+        .brillance-faible { filter: drop-shadow(0 0 10px gold); }
+        .brillance-forte { filter: drop-shadow(0 0 30px gold); animation: trembler 0.2s infinite; }
+        @keyframes trembler { 0% { transform: translateX(-50%) rotate(0); } 25% { transform: translateX(-51%) rotate(-2deg); } 75% { transform: translateX(-49%) rotate(2deg); } }
+        .cadeau-envole { transform: translateX(-50%) translateY(-120vh) scale(0) rotate(720deg) !important; opacity: 0; transition: 2s ease-in !important; }
 
         #animal-container { position: fixed; z-index: 900; display: flex; align-items: center; cursor: pointer; }
         #bulle-texte { background: white; border-radius: 15px; padding: 8px 15px; font-style: italic; color: #2E7D32; border: 2px solid #2E7D32; opacity: 0; transition: 0.3s; font-weight: bold; white-space: nowrap; margin-right: 10px; }
-        #corps-animal { font-size: 45px; transition: transform 0.2s; }
-        .pop { transform: translateX(-50%) scale(1.4) !important; }
+        #corps-animal { font-size: 45px; }
+        .particle { position: absolute; pointer-events: none; z-index: 9999; }
+        
+        .copyright-link { color: #008080; text-decoration: none; font-weight: bold; cursor: pointer; padding: 10px; display: inline-block; position: relative; z-index: 20; }
     </style>
 </head>
 <body onclick="activerAudio()">
@@ -83,6 +65,7 @@
 
     <div class="form-container">
         <form id="monFormulaire" onsubmit="envoyerDon(event)">
+            
             <div class="form-group">
                 <label>Identité amoureuse</label>
                 <input type="text" name="nom" placeholder="Ton Prénom de coeur / Pseudo" required>
@@ -97,11 +80,19 @@
                             <option value="B612">L'astéroïde B 612</option>
                             <option value="Merveilles">Le Pays des Merveilles</option>
                             <option value="Utopie">L'Archipel d'Utopie</option>
-                            <option value="Gentillesse">Pays de la grande gentillesse</option>
                             <option value="AUTRE_PAYS">☁️ Autre lieu imaginaire...</option>
                         </optgroup>
                         <optgroup label="🌍 Europe">
-                            <option value="France">France (et Outre-mer)</option><option value="Belgique">Belgique</option><option value="Suisse">Suisse</option><option value="AUTRE_PAYS">Autre pays Europe...</option>
+                            <option value="France">France (et Outre-mer)</option>
+                            <option value="Belgique">Belgique</option>
+                            <option value="Suisse">Suisse</option>
+                            <option value="Luxembourg">Luxembourg</option>
+                        </optgroup>
+                        <optgroup label="🌍 Afrique">
+                            <option value="Maroc">Maroc</option><option value="Algérie">Algérie</option><option value="Tunisie">Tunisie</option><option value="Sénégal">Sénégal</option><option value="AUTRE_PAYS">Autre Afrique...</option>
+                        </optgroup>
+                        <optgroup label="🌍 Amériques">
+                            <option value="Canada">Canada / Québec</option><option value="Haiti">Haïti</option><option value="USA">USA</option><option value="AUTRE_PAYS">Autre Amérique...</option>
                         </optgroup>
                         <option value="AUTRE_PAYS">🌐 Un pays non listé...</option>
                     </select>
@@ -116,18 +107,19 @@
                 <div id="extra_pays" class="extra-field">
                     <input type="text" name="pays_precision" placeholder="Nom de ton pays secret...">
                 </div>
-                <input type="text" name="localisation" placeholder="Ville, Code Postal ou Quartier..." required>
+                <input type="text" name="localisation" placeholder="Ville, Code Postal ou Quartier précis..." required>
             </div>
 
             <div class="form-group">
                 <label>Destination du semis</label>
                 <select name="type" id="main_cat" onchange="updateSubCats()" required>
                     <option value="">-- Domaine d'action --</option>
-                    <option value="SAVOIR">💡 SAVOIRS</option>
-                    <option value="VIE">🏠 VIE CITOYENNE</option>
-                    <option value="AIDE">💖 AIDE & HARMONIE</option>
-                    <option value="REGULATION">⚖️ RÉGULATION</option>
-                    <option value="IMPOT">📜 TRÉSOR PUBLIC</option>
+                    <option value="SAVOIR">💡 SAVOIRS (Scolaire, Arts, Pro)</option>
+                    <option value="VIE">🏠 VIE CITOYENNE (Hébergement, Mobilité)</option>
+                    <option value="AIDE">💖 AIDE & HARMONIE (Santé, Écoute)</option>
+                    <option value="REGULATION">⚖️ RÉGULATION (Médiation, Admin)</option>
+                    <option value="IMPOT">📜 TRÉSOR PUBLIC (Nature, Chantiers)</option>
+                    <option value="AUTRE_CAT">🌈 AUTRE DOMAINE...</option>
                 </select>
             </div>
 
@@ -135,25 +127,36 @@
                 <label>Précision de la graine</label>
                 <select name="sousType" id="sub_cat" onchange="checkOther(this, 'extra_sub')"></select>
                 <div id="extra_sub" class="extra-field">
-                    <input type="text" name="sub_precision" placeholder="Détails...">
+                    <input type="text" name="sub_precision" placeholder="Détails de la graine...">
                 </div>
+            </div>
+
+            <div class="form-group">
+                <label>Cycle de Vie (Durée)</label>
+                <select name="duree_validite">
+                    <option value="1">🌱 Un brin d'herbe (1 jour)</option>
+                    <option value="7">🌿 Une petite fleur (1 semaine)</option>
+                    <option value="30" selected>🌳 Un buisson (1 mois)</option>
+                    <option value="365">🍃 Un chêne (1 an)</option>
+                </select>
             </div>
 
             <div class="form-group">
                 <label>Logistique & Acheminement</label>
                 <select name="logistique" required>
                     <option value="Main Propre">Main propre</option>
-                    <option value="Fret Routier">Camion / Route</option>
-                    <option value="Bateau">Bateau / Maritime</option>
-                    <option value="Avion">Avion / Aérien</option>
-                    <option value="Train">Train / Rail</option>
-                    <option value="Numérique">Numérique / Visio</option>
+                    <option value="Route">Camion / Route</option>
+                    <option value="Rail">Train / Rail</option>
+                    <option value="Mer">Bateau / Maritime</option>
+                    <option value="Air">Avion / Aérien</option>
+                    <option value="Web">Numérique / Visio</option>
+                    <option value="Ondes">Ondes de fraternité</option>
                 </select>
             </div>
 
             <div class="form-group">
                 <label>Description du Don amoureux</label>
-                <textarea name="message" placeholder="Ouvre ton cœur..." required></textarea>
+                <textarea name="message" placeholder="Détaille ton don ou ton besoin avec amour..." required></textarea>
             </div>
 
             <button type="submit" class="btn-envoyer" id="btnTexte">ENGENDRER LA FRATERNITÉ UNIVERSELLE</button>
@@ -174,11 +177,11 @@
         function googleTranslateElementInit() { new google.translate.TranslateElement({pageLanguage: 'fr'}, 'google_translate_element'); }
 
         const tree = {
-            "SAVOIR": ["🌱 Scolaire", "🎓 Études", "💼 Mentorat", "🎨 Arts", "AUTRE_SUB"],
-            "VIE": ["🏠 Hébergement", "🛠️ Espaces", "🚗 Mobilité", "AUTRE_SUB"],
-            "AIDE": ["🚑 URGENCE", "🏥 Santé", "🌈 Écoute", "AUTRE_SUB"],
-            "REGULATION": ["🕊️ Médiation", "⚖️ Admin", "AUTRE_SUB"],
-            "IMPOT": ["🏗️ Travaux Publics", "🌲 Nature", "AUTRE_SUB"]
+            "SAVOIR": ["🌱 Scolaire", "🎓 Études", "💼 Mentorat", "🎨 Arts & Cuisine", "AUTRE_SUB"],
+            "VIE": ["🏠 Hébergement", "🛠️ Espaces / Ateliers", "🚗 Mobilité", "AUTRE_SUB"],
+            "AIDE": ["🚑 URGENCE", "🏥 Santé", "🌈 Écoute / Harmonie", "AUTRE_SUB"],
+            "REGULATION": ["🕊️ Médiation", "⚖️ Aide Admin", "AUTRE_SUB"],
+            "IMPOT": ["🏗️ Travaux Publics", "🌲 Nature / Forêts", "AUTRE_SUB"]
         };
 
         function updateSubCats() {
@@ -196,32 +199,26 @@
             extraDiv.style.display = (select.value.includes("AUTRE")) ? "block" : "none";
         }
 
-        // --- MAGIE & ANIMAUX ---
-        let messageCount = 0;
-        const animaux = ['🕊️', '🦋', '🐝', '🐞', '🦜', '🦉', '🦩', '🦅', '🦢'];
-        const phrases = ["Graine de fraternité !", "Je sème un espoir...", "Pour ton jardin...", "Un don s'est envolé !"];
-        
-        const animalCont = document.getElementById('animal-container');
+        // --- ANIMATIONS ---
+        let count = 0;
+        const animaux = ['🕊️', '🦋', '🐝', '🐞', '🦜', '🦉'];
+        const phrases = ["Don reçu !", "Fraternité !", "C'est semé !", "Merci !"];
+        const aniCont = document.getElementById('animal-container');
         const bulle = document.getElementById('bulle-texte');
         const corps = document.getElementById('corps-animal');
         const coffre = document.getElementById('coffre-magique');
-
         let aniX = -200, state = "FLY", currentY = 250;
 
-        function exploserParticules(x, y, emojis, count = 20) {
-            for (let i = 0; i < count; i++) {
+        function exploserParticules(x, y, emojis, num = 20) {
+            for (let i = 0; i < num; i++) {
                 const p = document.createElement('div');
-                p.className = 'particle';
-                p.innerHTML = emojis[Math.floor(Math.random() * emojis.length)];
+                p.className = 'particle'; p.innerHTML = emojis[Math.floor(Math.random() * emojis.length)];
                 p.style.left = x + 'px'; p.style.top = y + 'px';
                 p.style.fontSize = (Math.random() * 20 + 15) + 'px';
                 document.body.appendChild(p);
                 const angle = Math.random() * Math.PI * 2;
-                const dist = Math.random() * 250 + 50;
-                p.animate([
-                    { transform: 'translate(0,0) scale(1)', opacity: 1 },
-                    { transform: `translate(${Math.cos(angle)*dist}px, ${Math.sin(angle)*dist}px) scale(0) rotate(360deg)`, opacity: 0 }
-                ], { duration: 1500 });
+                const dist = Math.random() * 200 + 50;
+                p.animate([{ transform: 'translate(0,0) scale(1)', opacity: 1 }, { transform: `translate(${Math.cos(angle)*dist}px, ${Math.sin(angle)*dist}px) scale(0)`, opacity: 0 }], { duration: 1500 });
                 setTimeout(() => p.remove(), 1500);
             }
         }
@@ -229,70 +226,38 @@
         function messenger() {
             if (state === "FLY") {
                 aniX += 2;
-                if (Math.abs(aniX - window.innerWidth/2) < 5) {
-                    state = "DELIVER";
-                    bulle.innerText = phrases[Math.floor(Math.random()*phrases.length)];
-                    bulle.style.opacity = 1;
+                if (Math.abs(aniX - window.innerWidth/2) < 5) state = "DELIVER";
+            } else if (state === "DELIVER") {
+                currentY += (window.innerHeight - 100 - currentY) * 0.05;
+                if (Math.abs(currentY - (window.innerHeight - 100)) < 5) {
+                    count++;
+                    bulle.innerText = phrases[Math.floor(Math.random()*phrases.length)]; bulle.style.opacity = 1;
+                    exploserParticules(window.innerWidth/2, window.innerHeight-50, ['✨','💖']);
+                    if(count==1) coffre.classList.add('brillance-faible');
+                    if(count==2) { coffre.classList.remove('brillance-faible'); coffre.classList.add('brillance-forte'); }
+                    if(count>=3) { 
+                        coffre.classList.add('cadeau-envole');
+                        setTimeout(() => { exploserParticules(window.innerWidth/2, window.innerHeight/3, ['🌸','🌼','✨'], 60); count=0; coffre.classList.remove('cadeau-envole','brillance-forte'); }, 2000);
+                    }
+                    state = "WAIT"; setTimeout(() => { bulle.style.opacity = 0; state = "ASCEND"; }, 1500);
                 }
-            } 
-            else if (state === "DELIVER") {
-                let cibleY = window.innerHeight - 120;
-                currentY += (cibleY - currentY) * 0.05;
-                if (Math.abs(currentY - cibleY) < 5) {
-                    messageCount++;
-                    gererCadeau();
-                    state = "WAIT";
-                    setTimeout(() => { bulle.style.opacity = 0; state = "ASCEND"; }, 2000);
-                }
-            }
-            else if (state === "ASCEND") {
+            } else if (state === "ASCEND") {
                 currentY += (250 - currentY) * 0.05;
                 if (Math.abs(currentY - 250) < 5) state = "EXIT";
-            }
-            else if (state === "EXIT") {
+            } else if (state === "EXIT") {
                 aniX += 3;
-                if (aniX > window.innerWidth + 200) {
-                    aniX = -200;
-                    corps.innerText = animaux[Math.floor(Math.random()*animaux.length)];
-                    state = "FLY";
-                }
+                if (aniX > window.innerWidth + 200) { aniX = -200; corps.innerText = animaux[Math.floor(Math.random()*animaux.length)]; state = "FLY"; }
             }
-
-            animalCont.style.left = aniX + 'px';
-            animalCont.style.top = (currentY + (state==="FLY"||state==="EXIT" ? Math.sin(aniX/60)*30 : 0)) + 'px';
-            corps.style.transform = (state === "EXIT") ? "scaleX(-1)" : "scaleX(1)";
+            aniCont.style.left = aniX + 'px'; aniCont.style.top = (currentY + Math.sin(aniX/50)*20) + 'px';
             requestAnimationFrame(messenger);
         }
 
-        function gererCadeau() {
-            exploserParticules(window.innerWidth/2, window.innerHeight - 50, ['✨', '💖', '⭐'], 12);
-            
-            if (messageCount === 1) {
-                coffre.classList.add('brillance-faible');
-            } else if (messageCount === 2) {
-                coffre.classList.remove('brillance-faible');
-                coffre.classList.add('brillance-forte');
-            } else if (messageCount >= 3) {
-                coffre.classList.add('cadeau-envole');
-                setTimeout(() => {
-                    exploserParticules(window.innerWidth/2, window.innerHeight/3, ['🌸', '🌺', '🌼', '✨', '🌍', '💝', '🕊️'], 65);
-                    setTimeout(() => {
-                        coffre.classList.remove('cadeau-envole', 'brillance-forte');
-                        messageCount = 0;
-                    }, 1000);
-                }, 1500);
-            }
-        }
-
         function exploserEtoiles(e) {
-            exploserParticules(e.pageX, e.pageY, ['⭐', '✨', '🌟'], 30);
+            exploserParticules(e.pageX, e.pageY, ['⭐', '✨', '🌟'], 25);
             setTimeout(() => { window.location.href = "transition_externe.html"; }, 1000);
         }
 
-        function activerAudio() { 
-            const a = document.getElementById('chantOiseaux');
-            if(a.paused) { a.volume = 0.05; a.play(); }
-        }
+        function activerAudio() { const a = document.getElementById('chantOiseaux'); if(a.paused) { a.volume = 0.05; a.play(); } }
 
         function envoyerDon(event) {
             event.preventDefault();
