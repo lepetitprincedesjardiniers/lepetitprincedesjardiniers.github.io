@@ -4,46 +4,54 @@
     <meta charset="UTF-8">
     <title>Le Jardin de la Fraternité - Registre</title>
     <style>
-        /* --- STYLE CONSERVÉ --- */
-        body { font-family: 'Comic Sans MS', cursive; text-align: center; margin: 0; padding: 0; background-color: #FFFF00; color: #000080; overflow-x: hidden; min-height: 100vh; padding-bottom: 80px; }
+        /* --- STYLE DE BASE --- */
+        body { font-family: 'Comic Sans MS', cursive; text-align: center; margin: 0; padding: 0; background-color: #FFFF00; color: #000080; min-height: 100vh; padding-bottom: 80px; }
         .top-bar { position: relative; width: 100%; min-height: 40px; background: rgba(255,255,255,0.3); padding: 5px 0; }
         #google_translate_element { position: absolute; left: 10px; top: 10px; transform: scale(0.8); transform-origin: top left; }
+        
         .menu-table { margin: 5px auto; border-radius: 10px; background-color: #008080; border-collapse: collapse; }
         .menu-table td { padding: 8px 15px; border: 1px solid #FFFFFF; }
         .menu-table a { text-decoration: none; color: #FFFFFF; font-weight: bold; font-size: 0.85em; }
-        .phrase-rose { color: #ff1493; font-weight: bold; font-size: 1.1em; text-shadow: 1px 1px 2px #ff69b4; animation: eclat 1.5s infinite alternate; margin-top: 5px; }
-        @keyframes eclat { from { opacity: 0.7; } to { opacity: 1; } }
+        
+        .phrase-rose { color: #ff1493; font-weight: bold; font-size: 1.1em; text-shadow: 1px 1px 2px #ff69b4; margin-top: 5px; }
         .phrase-sous { color: #000080; font-weight: bold; margin: 1px 0; font-size: 0.9em; }
+
+        /* --- MOTEUR DE RECHERCHE --- */
+        .search-box { background: #008080; padding: 15px; margin: 10px auto; max-width: 750px; border-radius: 25px; color: white; box-shadow: 0 8px 20px rgba(0,0,0,0.2); border: 3px solid #fff; }
+        .search-container { display: flex; flex-direction: column; gap: 10px; align-items: center; }
+        .search-main-input { width: 90%; padding: 12px; border-radius: 15px; border: none; font-size: 1em; text-align: center; font-weight: bold; color: #004D40; }
         
-        #jardin-sacre { position: relative; height: 100px; width: 100%; overflow: hidden; background: rgba(255,255,255,0.1); margin-top: 5px; }
-        .fleur-clonée { position: absolute; font-size: 25px; animation: apparitionFleur 1s ease-out forwards; }
-        @keyframes apparitionFleur { 0% { transform: scale(0) rotate(-50deg); opacity: 0; } 100% { transform: scale(1) rotate(0deg); opacity: 1; } }
+        .search-row { display: flex; gap: 10px; width: 90%; justify-content: center; }
+        .search-item { display: flex; flex-direction: column; width: 45%; }
+        .search-item input { padding: 8px; border-radius: 10px; border: none; text-align: center; }
+        
+        .btn-group { display: flex; gap: 8px; flex-wrap: wrap; justify-content: center; margin-top: 10px; }
+        .btn-filtre-rapide { background: rgba(255,255,255,0.2); border: 1px solid white; color: white; padding: 6px 14px; border-radius: 20px; cursor: pointer; font-family: 'Comic Sans MS'; transition: 0.3s; }
+        .btn-filtre-rapide:hover { background: white; color: #008080; }
+        .btn-reset { background: #ff1493 !important; }
 
-        .search-box { background: #008080; padding: 12px; margin: 10px auto; max-width: 700px; border-radius: 20px; color: white; box-shadow: 0 4px 15px rgba(0,0,0,0.2); }
-        .search-container { display: flex; flex-direction: column; gap: 8px; align-items: center; }
-        .search-row { display: flex; gap: 10px; width: 90%; }
-        .search-item { display: flex; flex-direction: column; width: 100%; }
-        .search-item input { padding: 8px; border-radius: 10px; border: none; text-align: center; font-family: 'Comic Sans MS'; }
-
-        .mur-reel { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 15px; padding: 15px; max-width: 1200px; margin: 0 auto; }
+        /* --- CARTES DES ANNONCES --- */
+        .mur-reel { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 15px; padding: 20px; max-width: 1200px; margin: 0 auto; }
         .carte-message { 
-            background: white; border: 3px solid #008080; border-radius: 15px; padding: 12px; 
-            box-shadow: 5px 5px 0px #008080; transition: 0.3s; text-align: left; cursor: pointer;
-            display: flex; flex-direction: column; min-height: 250px;
+            background: white; border: 3px solid #008080; border-radius: 15px; padding: 15px; 
+            box-shadow: 5px 5px 0px #008080; transition: 0.3s; color: #333; text-align: left; 
+            display: flex; flex-direction: column; height: 230px; cursor: pointer;
         }
-        .carte-message:hover { transform: translateY(-5px); border-color: #ff1493; }
+        .carte-message:hover { transform: scale(1.02); border-color: #ff1493; }
+        .nom-prenom { color: #2E7D32; font-weight: bold; font-size: 1.1em; border-bottom: 1px solid #eee; margin-bottom: 5px; }
+        .texte-annonce { flex-grow: 1; font-style: italic; color: #000080; overflow-y: auto; font-size: 0.9em; margin: 5px 0; }
         
-        /* STYLE POUR LES PRÉCISIONS EN BAS */
-        .details-bas { 
-            margin-top: auto; padding-top: 10px; border-top: 1px dashed #ccc; 
-            font-size: 0.75em; color: #555; line-height: 1.4;
-        }
-        .badge-type { background: #E0F2F1; color: #00695C; padding: 2px 6px; border-radius: 4px; font-weight: bold; font-size: 0.9em; margin-bottom: 5px; display: inline-block; }
+        .info-echange { font-size: 0.75em; background: #E0F2F1; color: #00695C; padding: 5px; border-radius: 6px; margin: 5px 0; font-weight: bold; border: 1px dashed #008080; }
+        .details-bas { font-size: 0.65em; color: #666; line-height: 1.2; }
 
-        .copyright-wrapper { position: fixed; bottom: 5px; left: 50%; transform: translateX(-50%); background: rgba(255,255,255,0.7); padding: 5px 15px; border-radius: 15px; border: 2px solid #ff1493; z-index: 1000; }
-        .copyright-wrapper a { text-decoration: none; color: #ff1493; font-weight: bold; }
+        /* --- MODALE --- */
+        #fond-sombre { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); z-index: 2000; justify-content: center; align-items: center; }
+        .message-geant { background: #FFFFF0; width: 90%; max-width: 600px; padding: 30px; border-radius: 25px; border: 8px solid #008080; position: relative; }
+        .bouton-fermer { position: absolute; top: 10px; right: 10px; background: #FF1493; color: white; border: none; border-radius: 50%; width: 30px; height: 30px; cursor: pointer; }
 
-        #animal-container { position: fixed; z-index: 900; pointer-events: none; transition: all 5s ease-in-out; font-size: 30px; }
+        /* --- ANIMATIONS --- */
+        #animal-container { position: fixed; z-index: 900; pointer-events: none; display: flex; align-items: center; }
+        #bulle-texte { background: white; border: 1px solid #2E7D32; padding: 5px; border-radius: 10px; font-size: 0.7em; opacity: 0; }
     </style>
 </head>
 <body>
@@ -62,117 +70,159 @@
         </table>
     </div>
 
-    <h2 style="color:#2E7D32;">🍃 Le Jardin de la Fraternité 🍃</h2>
-    <div class="phrase-rose">Bienvenue au Jardin ensoleilleur des Dons entiers :</div>
-    <div class="phrase-sous">Les talents, les créations, les savoirs, les offrandes...</div>
-
-    <div id="jardin-sacre"></div>
+    <h2 style="color:#2E7D32; margin: 10px 0;">🍃 Le Jardin des Cadeaux Existentiels 🍃</h2>
+    <div class="phrase-rose">Bienvenue au Jardin des Dons entiers</div>
+    <div class="phrase-sous">Talents, savoirs, objets et entraide mondiale.</div>
 
     <div class="search-box">
         <div class="search-container">
+            <input type="text" id="searchKeyword" class="search-main-input" onkeyup="filtrerAnnonces()" placeholder="🔍 Que cherchez-vous ? (ex: bois, écoute, aide...)">
             <div class="search-row">
-                <div class="search-item"><label>Pays</label><input type="text" id="searchPays" onkeyup="filtrer()"></div>
-                <div class="search-item"><label>Ville</label><input type="text" id="searchVille" onkeyup="filtrer()"></div>
+                <div class="search-item">
+                    <input type="text" id="searchPays" onkeyup="filtrerAnnonces()" placeholder="📍 Pays">
+                </div>
+                <div class="search-item">
+                    <input type="text" id="searchVille" onkeyup="filtrerAnnonces()" placeholder="🏙️ Ville">
+                </div>
             </div>
-            <div style="width:90%"><label>Rechercher un mot-clé</label><br>
-            <input type="text" id="searchKeyword" style="width:100%; padding:8px; border-radius:10px; border:none;" onkeyup="filtrer()" placeholder="Ex: musique, potager, aide..."></div>
+            <div class="btn-group">
+                <button class="btn-filtre-rapide" onclick="rechercheRapide('Savoir')">🎓 Savoirs</button>
+                <button class="btn-filtre-rapide" onclick="rechercheRapide('Objet')">📦 Objets</button>
+                <button class="btn-filtre-rapide" onclick="rechercheRapide('Aide')">🤝 Entraide</button>
+                <button class="btn-filtre-rapide" onclick="rechercheRapide('International')">🌍 International</button>
+                <button class="btn-filtre-rapide btn-reset" onclick="resetRecherche()">🔄 Tout voir</button>
+            </div>
         </div>
     </div>
 
-    <div id="chargement">✨ Récolte des messages en cours...</div>
+    <h3 id="titre-registre" style="color: #008080;">📖 Registre de la Fraternité</h3>
+    <div id="chargement">✨ Récolte des graines en cours...</div>
     <div class="mur-reel" id="mur-messages"></div>
+    <button id="btn-voir-plus" style="display:none; margin: 20px auto; padding: 10px 20px;" onclick="chargerPlus()">Voir plus... 🌱</button>
 
-    <div class="copyright-wrapper">
-        <a href="transition-externe.html">© Le Petit Prince des Jardiniers 🌹</a>
+    <div id="fond-sombre" onclick="fermerGrandMessage()">
+        <div class="message-geant" onclick="event.stopPropagation()">
+            <button class="bouton-fermer" onclick="fermerGrandMessage()">X</button>
+            <div id="geant-contenu"></div>
+        </div>
     </div>
 
-    <div id="animal-container">🕊️</div>
+    <div id="animal-container">
+        <div id="corps-animal" style="font-size: 30px;">🕊️</div>
+        <div id="bulle-texte"></div>
+    </div>
 
-<script>
-    const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxz40XE2KiPXTNZsW-mIg-fm55EivK0r9wzZ5ECFRdEIY53nYH9nLGYRoI71OX93oII/exec"; 
-    let toutesLesAnnonces = [];
+    <script>
+        const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxz40XE2KiPXTNZsW-mIg-fm55EivK0r9wzZ5ECFRdEIY53nYH9nLGYRoI71OX93oII/exec"; 
+        let toutesLesAnnonces = [];
+        let annoncesFiltreesGlobal = [];
+        let indexActuel = 0;
+        const TAILLE_PAGE = 30;
 
-    // --- FONCTION POUR TROUVER LE TEXTE QUEL QUE SOIT LE NOM DE LA COLONNE ---
-    function trouverLeTexte(ann) {
-        return ann.sub_precision || ann.message || ann.offre || ann.description || ann.Message || "Graine de fraternité sans texte";
-    }
+        async function chargerAnnonces() {
+            try {
+                const response = await fetch(SCRIPT_URL);
+                const data = await response.json();
+                toutesLesAnnonces = data.reverse();
+                document.getElementById('chargement').style.display = 'none';
+                executerFiltrage();
+            } catch (e) {
+                document.getElementById('chargement').innerText = "Erreur de chargement.";
+            }
+        }
 
-    async function chargerAnnonces() {
-        try {
-            const response = await fetch(SCRIPT_URL);
-            const data = await response.json();
-            toutesLesAnnonces = data.reverse();
-            document.getElementById('chargement').style.display = 'none';
-            afficher(toutesLesAnnonces);
-        } catch (e) { document.getElementById('chargement').innerText = "Erreur de connexion au jardin."; }
-    }
+        function filtrerAnnonces() {
+            executerFiltrage();
+        }
 
-    function afficher(liste) {
-        const conteneur = document.getElementById('mur-messages');
-        conteneur.innerHTML = '';
-        liste.forEach(ann => {
-            const carte = document.createElement('div');
-            carte.className = 'carte-message';
+        function rechercheRapide(tag) {
+            resetRecherche(false);
+            document.getElementById('searchKeyword').value = tag;
+            executerFiltrage();
+        }
+
+        function resetRecherche(update = true) {
+            document.getElementById('searchKeyword').value = "";
+            document.getElementById('searchPays').value = "";
+            document.getElementById('searchVille').value = "";
+            if(update) executerFiltrage();
+        }
+
+        function executerFiltrage() {
+            const pays = document.getElementById('searchPays').value.toLowerCase();
+            const ville = document.getElementById('searchVille').value.toLowerCase();
+            const mot = document.getElementById('searchKeyword').value.toLowerCase();
+
+            annoncesFiltreesGlobal = toutesLesAnnonces.filter(ann => {
+                const contenu = (ann.message + " " + ann.rubrique + " " + ann.nom).toLowerCase();
+                return (ann.pays || "").toLowerCase().includes(pays) &&
+                       (ann.ville || "").toLowerCase().includes(ville) &&
+                       contenu.includes(mot);
+            });
             
-            const texteAnnonce = trouverLeTexte(ann);
-            
-            carte.innerHTML = `
-                <div style="font-weight:bold;color:#2E7D32;font-size:1.1em;">${ann.nom || "Anonyme"}</div>
-                <div class="badge-type">${ann.rubrique || "Don Entier"}</div>
-                
-                <div style="color:#000080; font-weight:bold; font-style:italic; margin: 10px 0;">
-                    "${texteAnnonce}"
+            indexActuel = 0;
+            document.getElementById('mur-messages').innerHTML = '';
+            document.getElementById('titre-registre').innerText = `📖 Registre (${annoncesFiltreesGlobal.length} graines)`;
+            chargerPlus();
+        }
+
+        function chargerPlus() {
+            const suite = annoncesFiltreesGlobal.slice(indexActuel, indexActuel + TAILLE_PAGE);
+            const conteneur = document.getElementById('mur-messages');
+
+            suite.forEach(ann => {
+                const datePub = ann.Horodateur ? new Date(ann.Horodateur).toLocaleDateString('fr-FR') : "N/C";
+                const carte = document.createElement('div');
+                carte.className = 'carte-message';
+                carte.onclick = () => ouvrirGrandMessage(ann);
+                carte.innerHTML = `
+                    <div class="nom-prenom">${ann.nom || "Anonyme"}</div>
+                    <div class="texte-annonce">"${ann.message || ""}"</div>
+                    <div class="info-echange">🌍 ${ann.portee || "Locale"} | 🚚 ${ann.logistique || "N/A"}</div>
+                    <div class="details-bas">
+                        📅 Publié le : ${datePub}<br>
+                        ⏳ Validité : ${ann.validite || "Permanente"}<br>
+                        📍 ${ann.ville || ""}, ${ann.pays || ""}
+                    </div>
+                `;
+                conteneur.appendChild(carte);
+            });
+
+            indexActuel += TAILLE_PAGE;
+            document.getElementById('btn-voir-plus').style.display = (indexActuel < annoncesFiltreesGlobal.length) ? 'block' : 'none';
+        }
+
+        function ouvrirGrandMessage(ann) {
+            const datePub = ann.Horodateur ? new Date(ann.Horodateur).toLocaleDateString('fr-FR') : "N/C";
+            document.getElementById('geant-contenu').innerHTML = `
+                <h2 style="color:#2E7D32;">🌱 Offrande de ${ann.nom}</h2>
+                <div style="background:white; padding:20px; border-radius:15px; border-left:10px solid #FF1493; font-size:1.2em; color:#000080; margin-bottom:15px;">
+                    "${ann.message}"
                 </div>
-
-                <div class="details-bas">
-                    📅 <b>Date :</b> ${ann.timestamp || "Récemment"}<br>
-                    ⏳ <b>Validité :</b> ${ann.duree_validite || "Permanente"}<br>
-                    🌍 <b>Pays :</b> ${ann.pays_select || ann.pays || "Terre"}<br>
-                    📍 <b>Lieu :</b> ${ann.localisation || ann.ville || "Partout"}<br>
-                    🚀 <b>Rayon :</b> ${ann.rayon_action || "Local"}
+                <div style="text-align:left; background:#E0F2F1; padding:15px; border-radius:10px;">
+                    <strong>Rubrique :</strong> ${ann.rubrique || "N/C"}<br>
+                    <strong>Lieu :</strong> ${ann.ville}, ${ann.pays}<br>
+                    <strong>Transport :</strong> ${ann.logistique || "À discuter"}<br>
+                    <strong>Validité :</strong> ${ann.validite || "Permanente"}<br>
+                    <small>Posté le : ${datePub}</small>
                 </div>
             `;
-            conteneur.appendChild(carte);
-        });
-    }
-
-    function filtrer() {
-        const p = document.getElementById('searchPays').value.toLowerCase();
-        const v = document.getElementById('searchVille').value.toLowerCase();
-        const k = document.getElementById('searchKeyword').value.toLowerCase();
-
-        const filtres = toutesLesAnnonces.filter(ann => {
-            const texte = JSON.stringify(ann).toLowerCase();
-            const matchPays = texte.includes(p);
-            const matchVille = texte.includes(v);
-            const matchKey = texte.includes(k);
-            return matchPays && matchVille && matchKey;
-        });
-        afficher(filtres);
-    }
-
-    function initAnims() {
-        const animal = document.getElementById('animal-container');
-        setInterval(() => {
-            animal.style.left = Math.random() * (window.innerWidth - 100) + 'px';
-            animal.style.top = Math.random() * (window.innerHeight - 100) + 'px';
-        }, 5000);
-
-        const j = document.getElementById('jardin-sacre');
-        for(let i=0; i<15; i++) {
-            const f = document.createElement('div'); f.className = 'fleur-clonée';
-            f.innerHTML = '🌸'; f.style.left = Math.random()*95 + '%'; f.style.top = Math.random()*60 + 'px';
-            j.appendChild(f);
+            document.getElementById('fond-sombre').style.display = 'flex';
         }
-    }
 
-    window.onload = () => { chargerAnnonces(); initAnims(); };
-</script>
+        function fermerGrandMessage() { document.getElementById('fond-sombre').style.display = 'none'; }
 
-<script type="text/javascript">
-    function googleTranslateElementInit() { new google.translate.TranslateElement({pageLanguage: 'fr'}, 'google_translate_element'); }
-</script>
-<script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+        // Animation de l'oiseau
+        setInterval(() => {
+            const container = document.getElementById('animal-container');
+            const x = Math.random() * (window.innerWidth - 100);
+            const y = Math.random() * (window.innerHeight - 100);
+            container.style.transition = "all 5s ease-in-out";
+            container.style.left = x + "px";
+            container.style.top = y + "px";
+        }, 6000);
 
+        window.onload = chargerAnnonces;
+    </script>
 </body>
 </html>
