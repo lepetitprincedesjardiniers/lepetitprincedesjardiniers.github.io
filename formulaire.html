@@ -25,7 +25,7 @@
         .copyright-link { color: #008080; text-decoration: none; font-weight: bold; transition: all 0.3s ease; padding: 8px; border-radius: 8px; }
         .copyright-link:hover { color: #E67E22; background: rgba(255, 255, 255, 0.8); box-shadow: 0 4px 8px rgba(0,0,0,0.1); transform: scale(1.1); }
 
-        /* --- Éléments animés --- */
+        /* --- Animations --- */
         #coffre-magique { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); font-size: 60px; z-index: 800; transition: transform 0.3s; }
         #animal-container { position: fixed; z-index: 900; white-space: nowrap; display: flex; align-items: center; pointer-events: none; }
         #corps-animal { font-size: 50px; }
@@ -126,19 +126,19 @@
                         </optgroup>
                         <optgroup label="🚚 Route & National">
                             <option value="Poste">La Poste / Courrier</option>
-                            <option value="Relais">Point Relais (Mondial Relay / Colis...)</option>
-                            <option value="Transporteur">Transporteur Routier (Camion / Palette)</option>
-                            <option value="Covoit">Colis-voiturage (Covoitureur volontaire)</option>
+                            <option value="Relais">Point Relais</option>
+                            <option value="Transporteur">Transporteur Routier</option>
+                            <option value="Covoit">Colis-voiturage</option>
                         </optgroup>
                         <optgroup label="✈️ Air & Mer (International)">
-                            <option value="Avion">Fret Aérien (Avion Cargo)</option>
-                            <option value="Bateau">Fret Maritime (Conteneur)</option>
-                            <option value="Rail">Fret Ferroviaire (Train Cargo)</option>
+                            <option value="Avion">Fret Aérien</option>
+                            <option value="Bateau">Fret Maritime</option>
+                            <option value="Rail">Fret Ferroviaire</option>
                         </optgroup>
                         <optgroup label="🤝 Proximité / Main à Main">
                             <option value="Don Entier (J'assure)">Don Entier (J'assure le transport)</option>
-                            <option value="À récupérer">À récupérer sur place (Le bénéficiaire vient)</option>
-                            <option value="Rencontre">Remise en main propre (Lieu public)</option>
+                            <option value="À récupérer">À récupérer sur place</option>
+                            <option value="Rencontre">Remise en main propre</option>
                         </optgroup>
                     </select>
                 </div>
@@ -155,9 +155,100 @@
 
             <div class="form-group">
                 <label>Description du Don amoureux</label>
-                <textarea name="message" rows="4" placeholder="Décris ici ton Don (ex: Ma charpente vacille...)" required></textarea>
+                <textarea name="message" rows="4" placeholder="Décris ici ton Don..." required></textarea>
             </div>
 
             <button type="submit" class="btn-envoyer" id="btnTexte">ENGENDRER DE LA FRATERNITÉ UNIVERSELLE</button>
         </form>
     </div>
+
+    <footer>
+        <a href="transition_externe.html" class="copyright-link">C opyrtih 2000 le petit prince des jardiniers</a>
+    </footer>
+
+    <div id="coffre-magique">🎁</div>
+    <div id="animal-container"><div id="bulle-texte"></div><div id="corps-animal">🕊️</div></div>
+
+    <script type="text/javascript">
+        function googleTranslateElementInit() { new google.translate.TranslateElement({pageLanguage: 'fr'}, 'google_translate_element'); }
+
+        const tree = {
+            "URGENCE": ["Matière (Faim/Toit)", "Santé (Corps)", "Mental (Cervelle)", "Urgence Vitale"],
+            "AIDE": ["Câlin de l'âme", "Besoin de parler", "Solitude", "Médiation fraternelle"],
+            "SAVOIR": ["Technique (Code/Brico)", "Nature (Jardin/Pain)", "Esprit (Arts/Philo)"],
+            "IMPOT": ["Voirie/Routes", "Administration", "Entretien Nature", "Soutien Technique"],
+            "REGULATION": ["Médiation de conflits", "Aide au Droit", "Gestion de l'équilibre", "Conseil de Paix"]
+        };
+
+        function updateSubCats() {
+            const cat = document.getElementById('main_cat').value;
+            const subGroup = document.getElementById('sub_cat_group');
+            const subSelect = document.getElementById('sub_cat');
+            const msgImpot = document.getElementById('msgImpot');
+            if (cat && tree[cat]) {
+                subSelect.innerHTML = tree[cat].map(s => `<option value="${s}">${s}</option>`).join('');
+                subGroup.style.display = 'block';
+                msgImpot.style.display = (cat === "IMPOT") ? "block" : "none";
+            } else { subGroup.style.display = 'none'; }
+        }
+
+        function gererPays(source) {
+            const select = document.getElementById('pays_select');
+            const libre = document.getElementById('pays_libre');
+            if (source === 'select' && select.value !== "") { libre.value = ""; }
+            else if (source === 'libre' && libre.value.trim() !== "") { select.selectedIndex = 0; }
+        }
+
+        function envoyerDon(event) {
+            event.preventDefault();
+            const bouton = document.getElementById('btnTexte');
+            bouton.innerText = "Semailles en cours... 🌱";
+            const data = new FormData(document.getElementById('monFormulaire'));
+            const url = "https://script.google.com/macros/s/AKfycbxz40XE2KiPXTNZsW-mIg-fm55EivK0r9wzZ5ECFRdEIY53nYH9nLGYRoI71OX93oII/exec";
+            fetch(url, { method: 'POST', mode: 'no-cors', body: data })
+            .then(() => { window.location.href = "merci_annonce.html"; })
+            .catch(() => { window.location.href = "merci_annonce.html"; });
+        }
+
+        const audio = document.getElementById('chantOiseaux');
+        document.addEventListener('click', () => { if(audio.paused) { audio.volume = 0.05; audio.play(); } });
+        const mesPhrases = ["Semer un don amoureux...", "Engendrer de la fraternité...", "Prendre soin du jardin..."];
+        const animaux = ['🕊️', '🦋', '🐝', '🐞', '🦜'];
+        const animalCont = document.getElementById('animal-container');
+        const bulle = document.getElementById('bulle-texte');
+        const corps = document.getElementById('corps-animal');
+        const coffre = document.getElementById('coffre-magique');
+        let aniX = -200, aniY = 200, targetX, targetY, state = "APPROACHING";
+
+        function startNewMessenger() {
+            bulle.innerText = mesPhrases[Math.floor(Math.random() * mesPhrases.length)];
+            corps.innerText = animaux[Math.floor(Math.random() * animaux.length)];
+            aniX = -200; aniY = 200;
+            targetX = window.innerWidth / 2; targetY = window.innerHeight - 110;
+            state = "APPROACHING";
+        }
+
+        function loop() {
+            if (state === "APPROACHING") {
+                aniX += (targetX - aniX) * 0.015; aniY += (targetY - aniY) * 0.015;
+                bulle.style.opacity = "1";
+                if (Math.sqrt(Math.pow(targetX-aniX,2)+Math.pow(targetY-aniY,2)) < 60) {
+                    state = "DEPOSITING"; coffre.classList.add('pop');
+                    setTimeout(() => { 
+                        bulle.style.opacity = "0"; coffre.classList.remove('pop'); state = "LEAVING"; 
+                        targetX = window.innerWidth + 500; targetY = 200; 
+                    }, 2500);
+                }
+            } else if (state === "LEAVING") {
+                aniX += (targetX - aniX) * 0.02; aniY += (targetY - aniY) * 0.02;
+                if (Math.abs(aniX - targetX) < 100) startNewMessenger();
+            }
+            animalCont.style.left = aniX + "px"; animalCont.style.top = aniY + "px";
+            corps.style.transform = (aniX < targetX) ? "scaleX(-1)" : "scaleX(1)";
+            requestAnimationFrame(loop);
+        }
+        startNewMessenger(); loop();
+    </script>
+    <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+</body>
+</html>
