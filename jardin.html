@@ -4,39 +4,48 @@
     <meta charset="UTF-8">
     <title>Le Jardin de la Fraternité - Registre</title>
     <style>
-        /* --- STYLE CONSERVÉ --- */
+        /* --- STYLE ORIGINAL CONSERVÉ --- */
         body { font-family: 'Comic Sans MS', cursive; text-align: center; margin: 0; padding: 0; background-color: #FFFF00; color: #000080; overflow-x: hidden; min-height: 100vh; padding-bottom: 80px; }
         .top-bar { position: relative; width: 100%; min-height: 40px; background: rgba(255,255,255,0.3); padding: 5px 0; }
         .menu-table { margin: 5px auto; border-radius: 10px; background-color: #008080; border-collapse: collapse; }
         .menu-table td { padding: 8px 15px; border: 1px solid #FFFFFF; }
         .menu-table a { text-decoration: none; color: #FFFFFF; font-weight: bold; font-size: 0.85em; }
+        .menu-table td:hover { background-color: #006666; }
         
         .phrase-rose { color: #ff1493; font-weight: bold; font-size: 1.1em; text-shadow: 1px 1px 2px #ff69b4; animation: eclat 1.5s infinite alternate; margin-top: 5px; }
         @keyframes eclat { from { opacity: 0.7; } to { opacity: 1; } }
         
         #jardin-sacre { position: relative; height: 100px; width: 100%; overflow: hidden; background: rgba(255,255,255,0.1); margin-top: 5px; }
         .fleur-clonée { position: absolute; font-size: 25px; animation: apparitionFleur 1s ease-out forwards; }
-        
-        /* ANIMATION FLUIDE DE L'OISEAU */
-        #animal-container { position: fixed; z-index: 900; white-space: nowrap; display: flex; align-items: center; pointer-events: none; transition: all 5s ease-in-out; }
-        #corps-animal { font-size: 35px; }
+        @keyframes apparitionFleur { 0% { transform: scale(0) rotate(-50deg); opacity: 0; } 100% { transform: scale(1) rotate(0deg); opacity: 1; } }
 
-        .search-box { background: #008080; padding: 12px; margin: 10px auto 10px auto; max-width: 700px; border-radius: 20px; color: white; box-shadow: 0 4px 15px rgba(0,0,0,0.2); }
+        /* ANIMATION DE L'OISEAU */
+        #animal-container { position: fixed; z-index: 900; white-space: nowrap; display: flex; align-items: center; pointer-events: none; transition: all 5s ease-in-out; }
+        #corps-animal { font-size: 30px; }
+
+        .search-box { background: #008080; padding: 12px; margin: 10px auto 10px auto; max-width: 700px; border-radius: 20px; color: white; box-shadow: 0 4px 15px rgba(0,0,0,0.2); position: relative; z-index: 10; }
         .search-container { display: flex; flex-direction: column; gap: 8px; align-items: center; }
         .quick-filters { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; margin-top: 10px; }
-        .btn-filtre { background: rgba(255,255,255,0.2); border: 1px solid white; color: white; padding: 5px 12px; border-radius: 15px; cursor: pointer; font-size: 0.8em; }
+        .btn-filtre { background: rgba(255,255,255,0.2); border: 1px solid white; color: white; padding: 5px 12px; border-radius: 15px; cursor: pointer; font-size: 0.8em; font-family: 'Comic Sans MS'; transition: 0.3s; }
+        .btn-filtre:hover { background: white; color: #008080; }
 
-        .mur-reel { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 15px; padding: 10px; max-width: 1200px; margin: 0 auto; }
-        .carte-message { background: white; border: 3px solid #008080; border-radius: 12px; padding: 12px; min-height: 220px; display: flex; flex-direction: column; text-align: left; cursor: pointer; transition: 0.3s; }
+        .mur-reel { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 15px; padding: 10px; max-width: 1200px; margin: 0 auto 20px auto; }
+        .carte-message { 
+            background: rgba(255, 255, 255, 0.95); border: 3px solid #008080; border-radius: 12px; padding: 12px; 
+            box-shadow: 4px 4px 0px #008080; transition: 0.3s; color: #333; text-align: left; cursor: pointer; 
+            font-size: 0.85em; min-height: 220px; display: flex; flex-direction: column;
+            overflow-wrap: break-word; word-break: break-word; white-space: pre-wrap;
+        }
         .carte-message:hover { transform: scale(1.05); border-color: #ff1493; }
-        
+
         .info-echange { font-size: 0.8em; background: #E0F2F1; color: #00695C; padding: 4px; border-radius: 6px; margin-top: 5px; border: 1px dashed #008080; }
         
         .copyright-wrapper { position: fixed; bottom: 5px; left: 50%; transform: translateX(-50%); background: rgba(255,255,255,0.7); padding: 5px 15px; border-radius: 15px; z-index: 1000; border: 2px solid #ff1493; font-size: 0.8em; }
         .copyright-wrapper a { text-decoration: none; color: #ff1493; font-weight: bold; }
 
         #fond-sombre { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); z-index: 2000; justify-content: center; align-items: center; }
-        .message-geant { background: #FFFFF0; width: 90%; max-width: 800px; padding: 30px; border-radius: 25px; border: 8px solid #008080; position: relative; }
+        .message-geant { background: #FFFFF0; width: 92%; max-width: 850px; padding: 35px; border-radius: 30px; border: 10px solid #008080; position: relative; text-align: center; }
+        .bouton-fermer { position: absolute; top: 10px; right: 15px; background: #FF1493; color: white; border: 4px solid white; border-radius: 50%; width: 40px; height: 40px; cursor: pointer; font-weight: bold; }
     </style>
 </head>
 <body>
@@ -54,13 +63,14 @@
         </table>
     </div>
 
-    <h2 style="color:#2E7D32;">🍃 Le Jardin de la Fraternité 🍃</h2>
-    <div class="phrase-rose">Bienvenue au Jardin ensoleilleur des Dons entiers :</div>
+    <h2 style="color:#2E7D32; margin-top: 5px;">🍃 Le Jardin de la Fraternité 🍃</h2>
+    <div class="phrase-rose">Bienvenue au Jardin ensoleilleur des Dons entiers</div>
+    
     <div id="jardin-sacre"></div>
 
     <div class="search-box">
         <div class="search-container">
-            <input type="text" id="searchKeyword" style="padding:10px; width:80%; border-radius:10px; border:none;" placeholder="Chercher un mot (ex: bois, aide)..." onkeyup="filtrerAnnonces()">
+            <input type="text" id="searchKeyword" style="padding:10px; width:85%; border-radius:10px; border:none;" placeholder="🔍 Chercher une graine (ex: bois, écoute)..." onkeyup="filtrerAnnonces()">
             <div class="quick-filters">
                 <button class="btn-filtre" onclick="filtreRapide('savoir')">🎓 savoirs</button>
                 <button class="btn-filtre" onclick="filtreRapide('vie citoyenne')">🏛️ vie citoyenne</button>
@@ -77,6 +87,7 @@
 
     <div id="fond-sombre" onclick="this.style.display='none'">
         <div class="message-geant" onclick="event.stopPropagation()">
+            <button class="bouton-fermer" onclick="document.getElementById('fond-sombre').style.display='none'">X</button>
             <div id="geant-contenu"></div>
         </div>
     </div>
@@ -93,18 +104,14 @@
     const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxz40XE2KiPXTNZsW-mIg-fm55EivK0r9wzZ5ECFRdEIY53nYH9nLGYRoI71OX93oII/exec"; 
     let toutesLesAnnonces = [];
 
-    // FONCTION CRUCIALE : Elle fouille TOUTES les colonnes pour trouver le message
-    function extraireTexte(ann) {
-        return ann.message || ann.offre || ann.description || ann.Message || ann.Offre || "Graine de fraternité";
-    }
-
     async function chargerAnnonces() {
         try {
             const response = await fetch(SCRIPT_URL);
-            toutesLesAnnonces = (await response.json()).reverse();
+            const data = await response.json();
+            toutesLesAnnonces = data.reverse();
             document.getElementById('chargement').style.display = 'none';
             afficherAnnonces(toutesLesAnnonces);
-        } catch (e) { document.getElementById('chargement').innerText = "Erreur de chargement."; }
+        } catch (e) { document.getElementById('chargement').innerText = "Erreur de connexion."; }
     }
 
     function afficherAnnonces(annonces) {
@@ -115,13 +122,18 @@
             carte.className = 'carte-message';
             carte.onclick = () => ouvrirGrandMessage(ann);
             
+            // On utilise "sub_precision" comme texte principal
+            const messageTexte = ann.sub_precision || ann.message || "Graine de fraternité";
+            const paysAffiche = (ann.pays_select === "AUTRE_PAYS" && ann.pays_precision) ? ann.pays_precision : (ann.pays_select || "");
+
             carte.innerHTML = `
                 <div style="font-weight:bold;color:#2E7D32;text-align:center;">${ann.nom || "Anonyme"}</div>
-                <div style="flex-grow:1; color:#000080; font-weight:bold; margin-top:10px;">"${extraireTexte(ann)}"</div>
-                <div class="info-echange">🌱 ${ann.sousType || ann.sub_precision || "Don entier"}</div>
-                <div style="font-size:0.65em; color:#777; margin-top:10px; border-top:1px solid #eee;">
-                    📍 ${ann.ville || ann.localisation || "Terre"}, ${ann.pays || ""}<br>
-                    ⏳ ${ann.duree_validite || "Permanente"} | 📅 ${ann.timestamp || ""}
+                <div style="font-weight:bold;color:#000080;flex-grow:1;margin-top:10px;">"${messageTexte}"</div>
+                <div class="info-echange">🌱 ${ann.sousType || "Don"}</div>
+                <div style="font-size:0.65em; color:#777; border-top:1px solid #eee; margin-top:10px; padding-top:5px;">
+                    📍 ${ann.localisation || ""}, ${paysAffiche}<br>
+                    ⏳ ${ann.duree_validite || "Permanente"}<br>
+                    📅 ${ann.Horodateur || "N/C"}
                 </div>
             `;
             conteneur.appendChild(carte);
@@ -129,42 +141,61 @@
     }
 
     function ouvrirGrandMessage(ann) {
+        const paysAffiche = (ann.pays_select === "AUTRE_PAYS" && ann.pays_precision) ? ann.pays_precision : (ann.pays_select || "");
         document.getElementById('geant-contenu').innerHTML = `
-            <h2 style="color:#2E7D32;">${ann.nom || "Anonyme"}</h2>
-            <p style="font-size:1.4em;">"${extraireTexte(ann)}"</p>
-            <p>📍 ${ann.ville || ""} | ⏳ ${ann.duree_validite || ""}</p>
+            <h2 style="color:#2E7D32;">🌱 ${ann.nom || "Anonyme"}</h2>
+            <div style="font-size:1.4em; color:#000080; margin:20px 0;">"${ann.sub_precision || ""}"</div>
+            <div style="text-align:left; background:#f9f9f9; padding:15px; border-radius:10px;">
+                <b>📍 Lieu :</b> ${ann.localisation || ""}, ${paysAffiche}<br>
+                <b>⏳ Durée :</b> ${ann.duree_validite || ""}<br>
+                <b>🌍 Rayon :</b> ${ann.rayon_action || ""}<br>
+                <b>📦 Logistique :</b> ${ann.logistique || ""}
+            </div>
         `;
         document.getElementById('fond-sombre').style.display = 'flex';
     }
 
     function initAnims() {
         const animal = document.getElementById('animal-container');
-        const emojis = ['🕊️', '🦋', '🐝', '🦜'];
+        const emojis = ['🕊️', '🦋', '🐝', '🐞', '🦜'];
         setInterval(() => {
-            const x = Math.random() * (window.innerWidth - 100);
-            const y = Math.random() * (window.innerHeight - 100);
+            const x = Math.random() * (window.innerWidth - 80);
+            const y = Math.random() * (window.innerHeight - 80);
             animal.style.left = x + 'px';
             animal.style.top = y + 'px';
             document.getElementById('corps-animal').innerHTML = emojis[Math.floor(Math.random()*emojis.length)];
         }, 5000);
 
         const j = document.getElementById('jardin-sacre');
+        const fls = ['🌸', '🌼', '🌻', '🌺', '🌷'];
         for(let i=0; i<15; i++) {
             const f = document.createElement('div'); f.className = 'fleur-clonée';
-            f.innerHTML = '🌸'; f.style.left = Math.random()*95 + '%'; f.style.top = Math.random()*60 + 'px';
+            f.innerHTML = fls[Math.floor(Math.random()*fls.length)];
+            f.style.left = Math.random()*95 + '%'; f.style.top = Math.random()*60 + 'px';
             j.appendChild(f);
         }
     }
 
-    function filtreRapide(v) {
-        const f = toutesLesAnnonces.filter(ann => (ann.rubrique || "").toLowerCase().includes(v));
-        afficherAnnonces(f);
-    }
-    function resetFiltres() { afficherAnnonces(toutesLesAnnonces); }
     function filtrerAnnonces() {
         const mot = document.getElementById('searchKeyword').value.toLowerCase();
-        const f = toutesLesAnnonces.filter(ann => extraireTexte(ann).toLowerCase().includes(mot));
+        const f = toutesLesAnnonces.filter(ann => 
+            (ann.sub_precision || "").toLowerCase().includes(mot) || 
+            (ann.nom || "").toLowerCase().includes(mot)
+        );
         afficherAnnonces(f);
+    }
+
+    function filtreRapide(val) {
+        const f = toutesLesAnnonces.filter(ann => 
+            (ann.type || "").toLowerCase().includes(val) || 
+            (ann.sousType || "").toLowerCase().includes(val)
+        );
+        afficherAnnonces(f);
+    }
+
+    function resetFiltres() { 
+        document.getElementById('searchKeyword').value = '';
+        afficherAnnonces(toutesLesAnnonces); 
     }
 
     window.onload = () => { chargerAnnonces(); initAnims(); };
