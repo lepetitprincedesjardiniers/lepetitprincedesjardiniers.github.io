@@ -48,7 +48,7 @@
         #coffre-magique { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); font-size: 60px; z-index: 800; transition: 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275); cursor: pointer; }
         #animal-container { position: fixed; z-index: 900; display: flex; align-items: center; cursor: pointer; pointer-events: auto; }
         #bulle-texte { background: white; border-radius: 15px; padding: 8px 15px; font-style: italic; color: #2E7D32; border: 2px solid #2E7D32; opacity: 0; transition: 0.3s; font-weight: bold; white-space: nowrap; margin-right: 10px; }
-        #corps-animal { font-size: 32px; transition: transform 0.3s; display: inline-block; }
+        #corps-animal { font-size: 38px; transition: transform 0.3s; display: inline-block; }
     </style>
 </head>
 <body onclick="activerAudio()">
@@ -128,6 +128,19 @@
                             <option value="Suisse">Suisse</option>
                             <option value="Luxembourg">Luxembourg</option>
                             <option value="Monaco">Monaco</option>
+                            <option value="Allemagne">Allemagne</option>
+                            <option value="Italie">Italie</option>
+                            <option value="Espagne">Espagne</option>
+                            <option value="Royaume-Uni">Royaume-Uni</option>
+                        </optgroup>
+                        <optgroup label="🌍 Asie & Russie">
+                            <option value="Russie">Russie</option>
+                            <option value="Chine">Chine</option>
+                            <option value="Japon">Japon</option>
+                            <option value="Inde">Inde</option>
+                            <option value="Vietnam">Vietnam</option>
+                            <option value="Thaïlande">Thaïlande</option>
+                            <option value="Corée">Corée</option>
                         </optgroup>
                         <optgroup label="🌍 Afrique">
                             <option value="Algérie">Algérie</option>
@@ -135,11 +148,16 @@
                             <option value="Sénégal">Sénégal</option>
                             <option value="Tunisie">Tunisie</option>
                             <option value="Côte d'Ivoire">Côte d'Ivoire</option>
+                            <option value="Congo">Congo</option>
+                            <option value="Madagascar">Madagascar</option>
                         </optgroup>
                         <optgroup label="🌍 Amériques & Océanie">
                             <option value="Canada">Canada / Québec</option>
                             <option value="Haïti">Haïti</option>
                             <option value="USA">États-Unis</option>
+                            <option value="Brésil">Brésil</option>
+                            <option value="Argentine">Argentine</option>
+                            <option value="Australie">Australie</option>
                         </optgroup>
                         <option value="AUTRE_PAYS">🌐 Un pays secret...</option>
                     </select>
@@ -256,9 +274,9 @@ Le jardin arrose les fleurs..." required></textarea>
     </footer>
 
     <div id="coffre-magique">🎁</div>
-    <div id="animal-container" onclick="animationSpeciale()">
+    <div id="animal-container">
         <div id="bulle-texte"></div>
-        <div id="corps-animal">🕊️</div>
+        <div id="corps-animal" onclick="exploserAnimal(event)">🕊️</div>
     </div>
 
     <script>
@@ -293,11 +311,7 @@ Le jardin arrose les fleurs..." required></textarea>
 
         function checkOther(select, divId) {
             const extraDiv = document.getElementById(divId);
-            if (select.value === "AUTRE") {
-                extraDiv.style.display = "block";
-            } else {
-                extraDiv.style.display = "none";
-            }
+            extraDiv.style.display = (select.value === "AUTRE" || select.value === "AUTRE_PAYS") ? "block" : "none";
         }
 
         function exploserParticules(x, y, emojis, count = 20) {
@@ -324,43 +338,63 @@ Le jardin arrose les fleurs..." required></textarea>
             setTimeout(() => { window.location.href = href; }, 800);
         }
 
+        // --- NOUVEAUX EFFETS ---
         const phrases = ["Graine de bonheur !", "Fraternité !", "Cadeau !"];
         const animalCont = document.getElementById('animal-container');
+        const corpsAnimal = document.getElementById('corps-animal');
         const bulle = document.getElementById('bulle-texte');
         const coffre = document.getElementById('coffre-magique');
-        let aniX = -200, state = "FLY", targetY = 250;
+        
+        let aniX = -200, state = "FLY", targetY = 250, direction = 1;
+        let depotCompteur = 0;
+        let isDead = false;
 
-        function animationSpeciale() {
-            state = "MAGIC";
-            bulle.innerText = "Pour toi ! ✨";
-            bulle.style.opacity = 1;
-            targetY = window.innerHeight - 100;
-            setTimeout(() => {
-                exploserParticules(window.innerWidth/2, window.innerHeight - 50, ['🌸', '✨', '💝'], 30);
-                coffre.classList.add('cadeau-envole');
-                setTimeout(() => {
-                    coffre.classList.remove('cadeau-envole');
-                    state = "EXIT";
-                    targetY = 250;
-                }, 2000);
-            }, 1000);
+        function exploserAnimal(e) {
+            e.stopPropagation();
+            exploserParticules(e.pageX, e.pageY, ['⭐', '✨', '🌟', '✨'], 30);
+            isDead = true;
+            animalCont.style.opacity = "0";
+            setTimeout(() => { 
+                isDead = false; 
+                animalCont.style.opacity = "1";
+                aniX = -200; 
+            }, 3000);
         }
 
         function messenger() {
-            if (state === "FLY") {
-                aniX += 2;
-                if (Math.abs(aniX - window.innerWidth/2) < 5) {
-                    state = "TALK";
-                    bulle.innerText = phrases[Math.floor(Math.random()*phrases.length)];
-                    bulle.style.opacity = 1;
-                    setTimeout(() => { bulle.style.opacity = 0; state = "EXIT"; }, 2000);
+            if (!isDead) {
+                if (state === "FLY") {
+                    aniX += 2 * direction;
+                    corpsAnimal.style.transform = direction === 1 ? "scaleX(1)" : "scaleX(-1)";
+                    
+                    // Si on arrive au centre
+                    if (Math.abs(aniX - window.innerWidth/2) < 5) {
+                        state = "TALK";
+                        depotCompteur++;
+                        bulle.innerText = phrases[Math.floor(Math.random()*phrases.length)] + " (Dépôt " + depotCompteur + ")";
+                        bulle.style.opacity = 1;
+                        
+                        // Si 3 dépôts, explosion du cadeau en fleurs
+                        if (depotCompteur >= 3) {
+                            setTimeout(() => {
+                                exploserParticules(window.innerWidth/2, window.innerHeight - 50, ['🌸', '🌺', '🌻', '🌼', '🌷'], 40);
+                                depotCompteur = 0;
+                            }, 500);
+                        }
+
+                        setTimeout(() => { bulle.style.opacity = 0; state = "EXIT"; }, 1500);
+                    }
+                } else if (state === "EXIT") {
+                    aniX += 3 * direction;
+                    if (aniX > window.innerWidth + 200 || aniX < -200) { 
+                        direction = direction === 1 ? 1 : 1; // Toujours de gauche à droite pour cet exemple, ou inverser
+                        aniX = -200; 
+                        state = "FLY"; 
+                    }
                 }
-            } else if (state === "EXIT") {
-                aniX += 3;
-                if (aniX > window.innerWidth + 200) { aniX = -200; state = "FLY"; }
+                animalCont.style.left = aniX + 'px';
+                animalCont.style.top = (targetY + Math.sin(aniX/60)*30) + 'px';
             }
-            animalCont.style.left = aniX + 'px';
-            animalCont.style.top = (targetY + Math.sin(aniX/60)*30) + 'px';
             requestAnimationFrame(messenger);
         }
 
