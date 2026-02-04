@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <title>Le Jardin de la Fraternité - Registre</title>
     <style>
-        /* --- STYLE DE BASE (INTÉGRALEMENT CONSERVÉ) --- */
+        /* --- STYLE DE BASE --- */
         body { font-family: 'Comic Sans MS', cursive; text-align: center; margin: 0; padding: 0; background-color: #FFFF00; color: #000080; overflow-x: hidden; min-height: 100vh; padding-bottom: 80px; }
         .top-bar { position: relative; width: 100%; min-height: 40px; background: rgba(255,255,255,0.3); padding: 5px 0; }
         #google_translate_element { position: absolute; left: 10px; top: 10px; transform: scale(0.8); transform-origin: top left; }
@@ -18,14 +18,8 @@
         #jardin-sacre { position: relative; height: 100px; width: 100%; overflow: hidden; background: rgba(255,255,255,0.1); margin-top: 5px; }
         .fleur-clonée { position: absolute; font-size: 25px; animation: apparitionFleur 1s ease-out forwards; }
         @keyframes apparitionFleur { 0% { transform: scale(0) rotate(-50deg); opacity: 0; } 100% { transform: scale(1) rotate(0deg); opacity: 1; } }
-        .fleur-etoile { position: fixed; pointer-events: none; z-index: 999; font-size: 15px; animation: volEtoile linear infinite; opacity: 0.8; }
-        @keyframes volEtoile {
-            0% { transform: translate(0, 0) rotate(0deg); }
-            25% { transform: translate(100px, 100px) rotate(90deg); }
-            50% { transform: translate(0, 200px) rotate(180deg); }
-            75% { transform: translate(-100px, 100px) rotate(270deg); }
-            100% { transform: translate(0, 0) rotate(360deg); }
-        }
+        
+        /* --- RECHERCHE --- */
         .search-box { background: #008080; padding: 12px; margin: 10px auto 10px auto; max-width: 700px; border-radius: 20px; color: white; box-shadow: 0 4px 15px rgba(0,0,0,0.2); position: relative; z-index: 10; }
         .search-container { display: flex; flex-direction: column; gap: 8px; align-items: center; }
         .search-row { display: flex; gap: 10px; width: 100%; justify-content: center; }
@@ -33,52 +27,36 @@
         .search-item label { font-size: 0.9em; margin-bottom: 4px; font-weight: bold; color: #FFFFFF; }
         .search-item input { padding: 10px; border-radius: 12px; border: none; outline: none; text-align: center; color: #004D40; font-weight: bold; width: 90%; }
         .input-large { width: 95% !important; max-width: 550px; }
-        
         .quick-filters { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; margin-top: 10px; }
         .btn-filtre { background: rgba(255,255,255,0.2); border: 1px solid white; color: white; padding: 5px 12px; border-radius: 15px; cursor: pointer; font-size: 0.8em; font-family: 'Comic Sans MS'; transition: 0.3s; }
         .btn-filtre:hover { background: white; color: #008080; }
 
+        /* --- MUR DE MESSAGES --- */
         .registre-titre { color: #008080; margin: 10px 0 5px 0; font-size: 1.2em; }
-        .mur-reel { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 15px; padding: 10px; max-width: 1200px; margin: 0 auto 20px auto; }
+        .mur-reel { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 15px; padding: 10px; max-width: 1200px; margin: 0 auto 20px auto; }
         .carte-message { 
             background: rgba(255, 255, 255, 0.95); border: 3px solid #008080; border-radius: 12px; padding: 12px; 
             box-shadow: 4px 4px 0px #008080; transition: 0.3s; color: #333; text-align: left; cursor: pointer; 
-            font-size: 0.85em; height: 210px; overflow-y: auto; display: flex; flex-direction: column;
+            font-size: 0.85em; min-height: 220px; display: flex; flex-direction: column;
             overflow-wrap: break-word; word-break: break-word; white-space: pre-wrap;
         }
-        .carte-message:hover { transform: scale(1.05); box-shadow: 0px 10px 20px rgba(0,0,0,0.2); border-color: #ff1493; }
+        .carte-message:hover { transform: scale(1.02); box-shadow: 0px 10px 20px rgba(0,0,0,0.2); border-color: #ff1493; }
+        .info-echange { font-size: 0.8em; background: #E0F2F1; color: #00695C; padding: 5px; border-radius: 6px; margin: 8px 0; border: 1px dashed #008080; }
+        .details-bas { font-size: 0.65em; color: #555; border-top: 1px solid #ddd; padding-top: 6px; margin-top: auto; line-height: 1.4; }
+
+        /* --- MODALE --- */
         #fond-sombre { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); z-index: 2000; justify-content: center; align-items: center; }
         .message-geant { 
-            background: #FFFFF0; width: 92%; max-width: 850px; max-height: 85vh; padding: 35px; border-radius: 30px; 
-            border: 10px solid #008080; position: relative; text-align: center; overflow-y: auto;
-            overflow-wrap: break-word; word-break: break-word; white-space: pre-wrap;
+            background: #FFFFF0; width: 92%; max-width: 800px; max-height: 85vh; padding: 30px; border-radius: 30px; 
+            border: 8px solid #008080; position: relative; text-align: center; overflow-y: auto;
+            white-space: pre-wrap;
         }
-        .bouton-fermer { position: absolute; top: 10px; right: 15px; background: #FF1493; color: white; border: 4px solid white; border-radius: 50%; width: 40px; height: 40px; cursor: pointer; font-weight: bold; font-size: 20px; z-index: 10; }
-        .copyright-wrapper { 
-            position: fixed; bottom: 5px; left: 50%; transform: translateX(-50%); 
-            background: rgba(255,255,255,0.7); padding: 5px 15px; border-radius: 15px; 
-            z-index: 1000; border: 2px solid #ff1493; font-size: 0.8em; 
-            transition: all 0.5s; opacity: 0.9;
-        }
+        .bouton-fermer { position: absolute; top: 10px; right: 15px; background: #FF1493; color: white; border: 3px solid white; border-radius: 50%; width: 35px; height: 35px; cursor: pointer; font-weight: bold; }
+        
+        #animal-container { position: fixed; z-index: 900; pointer-events: none; display: flex; align-items: center; }
+        #corps-animal { font-size: 25px; }
+        .copyright-wrapper { position: fixed; bottom: 5px; left: 50%; transform: translateX(-50%); background: rgba(255,255,255,0.7); padding: 5px 15px; border-radius: 15px; z-index: 1000; border: 1px solid #ff1493; font-size: 0.7em; }
         .copyright-wrapper a { text-decoration: none; color: #ff1493; font-weight: bold; }
-        .copyright-wrapper:hover { background: #ff1493; }
-        .copyright-wrapper:hover a { color: white; }
-        #animal-container { position: fixed; z-index: 900; white-space: nowrap; display: flex; align-items: center; pointer-events: none; flex-direction: row; }
-        #corps-animal { font-size: 28px; order: 1; }
-        #bulle-texte { 
-            order: 2; background: rgba(255, 255, 255, 0.9); border-radius: 12px; padding: 5px 10px; 
-            font-style: italic; color: #2E7D32; margin-left: 8px; font-weight: bold; border: 1px solid #2E7D32; 
-            opacity: 0; transition: opacity 0.3s; max-width: 180px; font-size: 0.75em; 
-            white-space: normal; overflow-wrap: break-word;
-        }
-        #btn-voir-plus {
-            display: none; margin: 20px auto; padding: 15px 30px; background: #008080; color: white;
-            border: 3px solid white; border-radius: 30px; font-family: 'Comic Sans MS', cursive;
-            font-weight: bold; cursor: pointer; box-shadow: 0 4px 10px rgba(0,0,0,0.3);
-        }
-        #btn-voir-plus:hover { background: #006666; transform: scale(1.05); }
-
-        .info-echange { font-size: 0.8em; background: #E0F2F1; color: #00695C; padding: 4px; border-radius: 6px; margin-top: 5px; border: 1px dashed #008080; }
     </style>
 </head>
 <body>
@@ -99,49 +77,35 @@
 
     <audio id="chantOiseaux" loop><source src="oiseaux.mp3" type="audio/mpeg"></audio>
 
-    <h2 style="color:#2E7D32; margin-top: 5px; font-size: 1.4em;">🍃 Le Jardin de la Fraternité 🍃</h2>
-
-    <div class="phrase-rose">Bienvenue au Jardin ensoleilleur des Dons entiers :</div>
-    <div class="phrase-sous">Les talents, les créations, les savoirs, les offrandes...les cadeaux entiers....</div>
-    <div class="phrase-sous">Une pure joie altruiste, sans frontières.</div>
+    <h2 style="color:#2E7D32; margin: 10px 0; font-size: 1.4em;">🍃 Le Jardin de la Fraternité 🍃</h2>
+    <div class="phrase-rose">Bienvenue au Jardin ensoleilleur des Dons entiers</div>
+    <div class="phrase-sous">Les talents, les créations, les savoirs... les cadeaux entiers...</div>
 
     <div id="jardin-sacre"></div>
 
     <div class="search-box">
-        <h3 style="margin:0 0 10px 0; font-size: 1.1em;">🔍 Chercher une graine de fraternité mondiale</h3>
         <div class="search-container">
             <div class="search-row">
-                <div class="search-item">
-                    <label>Pays</label>
-                    <input type="text" id="searchPays" onkeyup="filtrerAnnonces()" placeholder="Toute la Terre...">
-                </div>
-                <div class="search-item">
-                    <label>Ville</label>
-                    <input type="text" id="searchVille" onkeyup="filtrerAnnonces()" placeholder="Chercher une cité...">
-                </div>
+                <div class="search-item"><label>Pays</label><input type="text" id="searchPays" onkeyup="filtrerAnnonces()" placeholder="Terre..."></div>
+                <div class="search-item"><label>Ville / Lieu</label><input type="text" id="searchVille" onkeyup="filtrerAnnonces()" placeholder="Cité..."></div>
             </div>
             <div class="search-item">
-                <label>Quoi? Pourquoi? Pour moi, Pour toi, Pour nous quoi!</label>
-                <input type="text" id="searchKeyword" class="input-large" onkeyup="filtrerAnnonces()" placeholder="Mots clés (ex: bois, écoute, pain)...">
+                <label>Quoi ? (Mots clés)</label>
+                <input type="text" id="searchKeyword" class="input-large" onkeyup="filtrerAnnonces()" placeholder="Ex: bois, musique, aide...">
             </div>
-            
             <div class="quick-filters">
                 <button class="btn-filtre" onclick="filtreRapide('savoir')">🎓 savoirs</button>
-                <button class="btn-filtre" onclick="filtreRapide('vie citoyenne')">🏛️ vie citoyenne</button>
-                <button class="btn-filtre" onclick="filtreRapide('aide et harmonie')">🕊️ aide et harmonie</button>
-                <button class="btn-filtre" onclick="filtreRapide('régulation')">⚖️ régulation</button>
-                <button class="btn-filtre" onclick="filtreRapide('impôt')">💰 "impôt" trésor public</button>
+                <button class="btn-filtre" onclick="filtreRapide('vie citoyenne')">🏛️ citoyenneté</button>
+                <button class="btn-filtre" onclick="filtreRapide('aide et harmonie')">🕊️ harmonie</button>
                 <button class="btn-filtre" style="background:#ff1493" onclick="resetFiltres()">🔄 Tout voir</button>
             </div>
         </div>
     </div>
 
     <h3 class="registre-titre">📖 Registre de la Fraternité</h3>
-    <div id="chargement" style="font-weight: bold; color: #008080;">✨ Récolte des messages en cours...</div>
-    
+    <div id="chargement" style="font-weight: bold; color: #008080;">✨ Récolte des graines en cours...</div>
     <div class="mur-reel" id="mur-messages"></div>
-    
-    <button id="btn-voir-plus" onclick="chargerPlus()">Voir plus de graines... 🌱</button>
+    <button id="btn-voir-plus" style="display:none; margin: 20px auto; padding: 10px 20px; background: #008080; color: white; border-radius: 20px; cursor: pointer;" onclick="chargerPlus()">Voir plus de graines... 🌱</button>
 
     <div id="fond-sombre" onclick="fermerGrandMessage()">
         <div class="message-geant" onclick="event.stopPropagation()">
@@ -150,169 +114,134 @@
         </div>
     </div>
 
-    <div class="copyright-wrapper">
-        <a href="transition-externe.html">© Le Petit Prince des Jardiniers 🌹</a>
-    </div>
-
-    <div id="animal-container">
-        <div id="corps-animal">🕊️</div>
-        <div id="bulle-texte"></div>
-    </div>
+    <div class="copyright-wrapper"><a href="#">© Le Petit Prince des Jardiniers 🌹</a></div>
+    <div id="animal-container"><div id="corps-animal">🕊️</div></div>
 
     <script type="text/javascript">
         function googleTranslateElementInit() { new google.translate.TranslateElement({pageLanguage: 'fr'}, 'google_translate_element'); }
     </script>
     <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
 
-   <script>
-    const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxz40XE2KiPXTNZsW-mIg-fm55EivK0r9wzZ5ECFRdEIY53nYH9nLGYRoI71OX93oII/exec"; 
-    let toutesLesAnnonces = [];
-    let annoncesFiltreesGlobal = [];
-    let indexActuel = 0;
-    const TAILLE_PAGE = 50; 
-    let debounceTimer;
-    let rubriqueFiltre = "";
+    <script>
+        const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxz40XE2KiPXTNZsW-mIg-fm55EivK0r9wzZ5ECFRdEIY53nYH9nLGYRoI71OX93oII/exec"; 
+        let toutesLesAnnonces = [];
+        let annoncesFiltreesGlobal = [];
+        let indexActuel = 0;
+        const TAILLE_PAGE = 50;
+        let rubriqueFiltre = "";
 
-    async function chargerAnnonces() {
-        try {
-            const response = await fetch(SCRIPT_URL);
-            const data = await response.json();
-            toutesLesAnnonces = data.reverse(); 
-            document.getElementById('chargement').style.display = 'none';
-            executerFiltrage(); 
-        } catch (e) { document.getElementById('chargement').innerText = "Erreur de connexion au jardin."; }
-    }
-
-    function filtreRapide(valeur) {
-        rubriqueFiltre = valeur;
-        document.getElementById('searchKeyword').value = ''; 
-        executerFiltrage();
-    }
-
-    function resetFiltres() {
-        rubriqueFiltre = "";
-        document.getElementById('searchKeyword').value = '';
-        document.getElementById('searchPays').value = '';
-        document.getElementById('searchVille').value = '';
-        executerFiltrage();
-    }
-
-    function filtrerAnnonces() {
-        rubriqueFiltre = ""; 
-        clearTimeout(debounceTimer);
-        debounceTimer = setTimeout(() => {
-            executerFiltrage();
-        }, 300);
-    }
-
-    function executerFiltrage() {
-        const pays = document.getElementById('searchPays').value.toLowerCase().trim();
-        const ville = document.getElementById('searchVille').value.toLowerCase().trim();
-        const mot = document.getElementById('searchKeyword').value.toLowerCase().trim();
-
-        annoncesFiltreesGlobal = toutesLesAnnonces.filter(ann => {
-            const matchPays = (ann.pays || "").toLowerCase().includes(pays) || (ann.pays_precision || "").toLowerCase().includes(pays);
-            const matchVille = (ann.ville || "").toLowerCase().includes(ville) || (ann.localisation || "").toLowerCase().includes(ville);
-            const matchRubrique = rubriqueFiltre === "" || (ann.rubrique || "").toLowerCase().includes(rubriqueFiltre);
-            const matchMot = (ann.message || "").toLowerCase().includes(mot) || (ann.nom || "").toLowerCase().includes(mot) || (ann.sub_precision || "").toLowerCase().includes(mot);
-            
-            return matchPays && matchVille && matchRubrique && matchMot;
-        });
-
-        document.querySelector('.registre-titre').innerText = `📖 Registre (${annoncesFiltreesGlobal.length} graines trouvées)`;
-        indexActuel = 0;
-        document.getElementById('mur-messages').innerHTML = '';
-        chargerPlus();
-    }
-
-    function chargerPlus() {
-        const suite = annoncesFiltreesGlobal.slice(indexActuel, indexActuel + TAILLE_PAGE);
-        afficherAnnonces(suite);
-        indexActuel += TAILLE_PAGE;
-        document.getElementById('btn-voir-plus').style.display = (indexActuel < annoncesFiltreesGlobal.length) ? 'block' : 'none';
-    }
-
-    function extraireDate(objet) {
-        const clesPrioritaires = ['timestamp', 'Horodateur', 'date', 'Date', 'Time'];
-        for (let cle of clesPrioritaires) {
-            if (objet[cle]) {
-                let d = new Date(objet[cle]);
-                return isNaN(d.getTime()) ? "N/C" : d.toLocaleDateString('fr-FR');
-            }
+        async function chargerAnnonces() {
+            try {
+                const response = await fetch(SCRIPT_URL);
+                const data = await response.json();
+                toutesLesAnnonces = data.reverse(); 
+                document.getElementById('chargement').style.display = 'none';
+                executerFiltrage(); 
+            } catch (e) { document.getElementById('chargement').innerText = "Erreur de connexion au jardin."; }
         }
-        return "N/C";
-    }
 
-    // --- FONCTION MODIFIÉE POUR AFFICHER LES PRÉCISIONS ---
-    function afficherAnnonces(annonces) {
-        const conteneur = document.getElementById('mur-messages');
-        annonces.forEach(ann => {
-            const carte = document.createElement('div');
-            carte.className = 'carte-message';
-            carte.onclick = () => ouvrirGrandMessage(ann);
-            
-            // Logique d'affichage des précisions
-            const affichagePays = (ann.pays === "AUTRE_PAYS" && ann.pays_precision) ? ann.pays_precision : (ann.pays || "");
-            const affichageSousType = (ann.sousType === "AUTRE_SUB" && ann.sub_precision) ? ann.sub_precision : (ann.sousType || "");
-            const affichageDuree = (ann.duree_validite === "AUTRE" && ann.cycle_precision) ? ann.cycle_precision : (ann.duree_validite || "Permanente");
+        function filtreRapide(valeur) { rubriqueFiltre = valeur; executerFiltrage(); }
+        function resetFiltres() { rubriqueFiltre = ""; document.querySelectorAll('input').forEach(i => i.value = ""); executerFiltrage(); }
+        function filtrerAnnonces() { executerFiltrage(); }
 
-            carte.innerHTML = `
-                <div style="margin-bottom:4px;font-weight:bold;color:#2E7D32;text-align:center;">${ann.nom || "Anonyme"}</div>
-                <div style="font-weight:bold;color:#000080;flex-grow:1;overflow:hidden;font-size:0.95em;">"${ann.message || ""}"</div>
-                <div class="info-echange">🌱 ${affichageSousType}</div>
-                <div style="font-size:0.62em; color:#777; border-top:1px solid #eee; padding-top:2px; margin-top:5px;">
-                    <span>📅 ${extraireDate(ann)} • ⏳ ${affichageDuree}</span><br>
-                    <span>📍 ${(ann.localisation || ann.ville || "")}, ${affichagePays}</span>
+        function executerFiltrage() {
+            const pays = document.getElementById('searchPays').value.toLowerCase().trim();
+            const ville = document.getElementById('searchVille').value.toLowerCase().trim();
+            const mot = document.getElementById('searchKeyword').value.toLowerCase().trim();
+
+            annoncesFiltreesGlobal = toutesLesAnnonces.filter(ann => {
+                const txt = (ann.message || ann.offre || "").toLowerCase();
+                const nom = (ann.nom || "").toLowerCase();
+                const loc = (ann.localisation || ann.ville || "").toLowerCase();
+                const p = (ann.pays || ann.pays_precision || "").toLowerCase();
+                const rub = (ann.rubrique || "").toLowerCase();
+
+                return (p.includes(pays)) && (loc.includes(ville)) && (rub.includes(rubriqueFiltre)) && (txt.includes(mot) || nom.includes(mot));
+            });
+
+            document.querySelector('.registre-titre').innerText = `📖 Registre (${annoncesFiltreesGlobal.length} graines)`;
+            indexActuel = 0;
+            document.getElementById('mur-messages').innerHTML = '';
+            chargerPlus();
+        }
+
+        function chargerPlus() {
+            const suite = annoncesFiltreesGlobal.slice(indexActuel, indexActuel + TAILLE_PAGE);
+            afficherAnnonces(suite);
+            indexActuel += TAILLE_PAGE;
+            document.getElementById('btn-voir-plus').style.display = (indexActuel < annoncesFiltreesGlobal.length) ? 'block' : 'none';
+        }
+
+        function helperAffichage(val, prec) {
+            if (val === "AUTRE" || val === "AUTRE_PAYS" || val === "AUTRE_SUB") return prec || val;
+            return val || "";
+        }
+
+        function afficherAnnonces(annonces) {
+            const conteneur = document.getElementById('mur-messages');
+            annonces.forEach(ann => {
+                const carte = document.createElement('div');
+                carte.className = 'carte-message';
+                carte.onclick = () => ouvrirGrandMessage(ann);
+                
+                // On récupère le texte du message (offre)
+                const messageTexte = ann.message || ann.offre || "Pas de description";
+                const paysFinal = helperAffichage(ann.pays, ann.pays_precision);
+                const dureeFinal = helperAffichage(ann.duree_validite, ann.cycle_precision);
+                const locFinal = ann.localisation || ann.ville || "N/C";
+
+                carte.innerHTML = `
+                    <div style="font-weight:bold;color:#2E7D32;text-align:center;border-bottom:1px solid #eee;margin-bottom:8px;">${ann.nom || "Anonyme"}</div>
+                    <div style="font-weight:bold;color:#000080;flex-grow:1;font-size:0.95em;">"${messageTexte}"</div>
+                    <div class="info-echange">🌱 ${ann.rubrique || "Graine"}</div>
+                    <div class="details-bas">
+                        <b>📍 Lieu :</b> ${locFinal}, ${paysFinal}<br>
+                        <b>⏳ Durée :</b> ${dureeFinal}<br>
+                        <b>🌍 Rayon :</b> ${ann.rayon_action || "Local"}<br>
+                        <b>📅 Posté le :</b> ${new Date(ann.timestamp || ann.Horodateur).toLocaleDateString('fr-FR')}
+                    </div>
+                `;
+                conteneur.appendChild(carte);
+            });
+        }
+
+        function ouvrirGrandMessage(ann) {
+            const paysFinal = helperAffichage(ann.pays, ann.pays_precision);
+            const subFinal = helperAffichage(ann.sousType, ann.sub_precision);
+            const logFinal = helperAffichage(ann.logistique, ann.log_precision);
+            const dureeFinal = helperAffichage(ann.duree_validite, ann.cycle_precision);
+
+            document.getElementById('geant-contenu').innerHTML = `
+                <div style="font-size:1.5em; color:#2E7D32; border-bottom:3px solid #008080; margin-bottom:15px; font-weight:bold;">🌱 Offrande de ${ann.nom || "Anonyme"}</div>
+                <div style="font-size:1.3em; color:#000080; background:white; padding:20px; border-radius:15px; border-left:8px solid #FF1493; margin-bottom:20px; text-align:left;">"${ann.message || ann.offre || ""}"</div>
+                
+                <div style="background:#E0F2F1; border:2px solid #008080; padding:15px; border-radius:15px; text-align:left; font-size:0.9em;">
+                    <b>🌿 Nature :</b> ${ann.rubrique} (${subFinal})<br>
+                    <b>📍 Localisation :</b> ${ann.localisation || ann.ville || "N/C"} (${paysFinal})<br>
+                    <b>🌍 Rayon d'action :</b> ${ann.rayon_action || "Non spécifié"}<br>
+                    <b>⏳ Validité :</b> ${dureeFinal}<br>
+                    <b>🚚 Logistique :</b> ${logFinal}<br>
+                    <b>📅 Date :</b> ${new Date(ann.timestamp || ann.Horodateur).toLocaleString('fr-FR')}
                 </div>
             `;
-            conteneur.appendChild(carte);
-        });
-    }
-
-    // --- VUE EN GRAND MODIFIÉE AUSSI ---
-    function ouvrirGrandMessage(ann) {
-        const affichagePays = (ann.pays === "AUTRE_PAYS" && ann.pays_precision) ? ann.pays_precision : (ann.pays || "");
-        const affichageSousType = (ann.sousType === "AUTRE_SUB" && ann.sub_precision) ? ann.sub_precision : (ann.sousType || "");
-        const affichageLogistique = (ann.logistique === "AUTRE" && ann.log_precision) ? ann.log_precision : (ann.logistique || "À discuter");
-        const affichageDuree = (ann.duree_validite === "AUTRE" && ann.cycle_precision) ? ann.cycle_precision : (ann.duree_validite || "Permanente");
-
-        document.getElementById('geant-contenu').innerHTML = `
-            <div style="font-size:1.6em; color:#2E7D32; border-bottom:3px solid #008080; margin-bottom:15px; font-weight:bold;">🌱 L'offrande de ${ann.nom || "Anonyme"}</div>
-            <div style="font-size:1.4em; color:#000080; background:white; padding:15px; border-radius:15px; border-left:8px solid #FF1493;">"${ann.message || ""}"</div>
-            <div style="background:#E0F2F1; border:2px solid #008080; padding:15px; border-radius:15px; margin:15px 0; text-align:left;">
-                <strong>Graine :</strong> ${affichageSousType}<br>
-                <strong>Rayon :</strong> ${ann.rayon_action || "Local"}<br>
-                <strong>Logistique :</strong> ${affichageLogistique}
-            </div>
-            <div style="font-size:0.85em; text-align:left;">
-                📍 ${(ann.localisation || ann.ville || "")}, ${affichagePays}<br>
-                📅 ${extraireDate(ann)} | ⏳ ${affichageDuree}
-            </div>
-        `;
-        document.getElementById('fond-sombre').style.display = 'flex';
-    }
-
-    function fermerGrandMessage() { document.getElementById('fond-sombre').style.display = 'none'; }
-
-    function initAnims() {
-        const anims = ['🕊️', '🦋', '🐝', '🐞', '🦜'];
-        const fls = ['🌸', '🌼', '🌻', '🌺', '🌷'];
-        const container = document.getElementById('animal-container');
-        setInterval(() => {
-            container.style.left = Math.random() * (window.innerWidth - 80) + "px";
-            container.style.top = Math.random() * (window.innerHeight - 80) + "px";
-            document.getElementById('corps-animal').innerHTML = anims[Math.floor(Math.random()*anims.length)];
-        }, 6000);
-        const j = document.getElementById('jardin-sacre');
-        for(let i=0; i<15; i++) {
-            const f = document.createElement('div'); f.className = 'fleur-clonée';
-            f.innerHTML = fls[Math.floor(Math.random()*fls.length)];
-            f.style.left = Math.random()*95 + '%'; f.style.top = Math.random()*60 + 'px';
-            j.appendChild(f);
+            document.getElementById('fond-sombre').style.display = 'flex';
         }
-    }
 
-    window.onload = () => { chargerAnnonces(); initAnims(); document.getElementById('chantOiseaux').play().catch(()=>{}); };
-</script>
+        function fermerGrandMessage() { document.getElementById('fond-sombre').style.display = 'none'; }
+
+        // --- ANIMATIONS ---
+        function initAnims() {
+            const j = document.getElementById('jardin-sacre');
+            const fls = ['🌸', '🌼', '🌻', '🌺', '🌷'];
+            for(let i=0; i<15; i++) {
+                const f = document.createElement('div'); f.className = 'fleur-clonée';
+                f.innerHTML = fls[Math.floor(Math.random()*fls.length)];
+                f.style.left = Math.random()*95 + '%'; f.style.top = Math.random()*60 + 'px';
+                j.appendChild(f);
+            }
+        }
+
+        window.onload = () => { chargerAnnonces(); initAnims(); document.getElementById('chantOiseaux').play().catch(()=>{}); };
+    </script>
 </body>
 </html>
