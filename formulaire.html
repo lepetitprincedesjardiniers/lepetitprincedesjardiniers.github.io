@@ -39,8 +39,8 @@
             cursor: pointer;
             border-radius: 50%;
         }
-        .brillance-faible { box-shadow: 0 0 20px #FFD700; }
-        .brillance-forte { box-shadow: 0 0 50px #FFD700; animation: trembler 0.2s infinite; }
+        .brillance-faible { box-shadow: 0 0 25px #FFD700; }
+        .brillance-forte { box-shadow: 0 0 60px #FFD700; animation: trembler 0.2s infinite; }
         
         @keyframes trembler {
             0% { transform: translateX(-50%) rotate(0deg); }
@@ -199,7 +199,7 @@
         // --- MAGIE & ANIMAUX ---
         let messageCount = 0;
         const animaux = ['🕊️', '🦋', '🐝', '🐞', '🦜', '🦉', '🦩', '🦅', '🦢'];
-        const phrases = ["Graine de fraternité !", "Je sème un espoir...", "Pour ton jardin...", "Un don s'est envolé !", "Chut... ça pousse !"];
+        const phrases = ["Graine de fraternité !", "Je sème un espoir...", "Pour ton jardin...", "Un don s'est envolé !"];
         
         const animalCont = document.getElementById('animal-container');
         const bulle = document.getElementById('bulle-texte');
@@ -265,7 +265,7 @@
         }
 
         function gererCadeau() {
-            exploserParticules(window.innerWidth/2, window.innerHeight - 50, ['✨', '💖', '⭐'], 10);
+            exploserParticules(window.innerWidth/2, window.innerHeight - 50, ['✨', '💖', '⭐'], 12);
             
             if (messageCount === 1) {
                 coffre.classList.add('brillance-faible');
@@ -275,7 +275,7 @@
             } else if (messageCount >= 3) {
                 coffre.classList.add('cadeau-envole');
                 setTimeout(() => {
-                    exploserParticules(window.innerWidth/2, window.innerHeight/3, ['🌸', '🌺', '🌼', '✨', '🌍', '💝'], 60);
+                    exploserParticules(window.innerWidth/2, window.innerHeight/3, ['🌸', '🌺', '🌼', '✨', '🌍', '💝', '🕊️'], 65);
                     setTimeout(() => {
                         coffre.classList.remove('cadeau-envole', 'brillance-forte');
                         messageCount = 0;
@@ -285,7 +285,7 @@
         }
 
         function exploserEtoiles(e) {
-            exploserParticules(e.pageX, e.pageY, ['⭐', '✨', '🌟'], 25);
+            exploserParticules(e.pageX, e.pageY, ['⭐', '✨', '🌟'], 30);
             setTimeout(() => { window.location.href = "transition_externe.html"; }, 1000);
         }
 
