@@ -2,7 +2,7 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <title>Le Trésor Public - Accueil</title>
+    <title>La Fraternité du Palais Nature - Accueil</title>
 
     <script type="text/javascript">
         function googleTranslateElementInit() {
@@ -14,13 +14,10 @@
     <style>
         body { 
             font-family: 'Comic Sans MS', cursive; text-align: center; margin: 0; padding: 0; 
-            background: radial-gradient(circle at center, #1b2735 0%, #090a0f 100%);
             background: radial-gradient(circle at center, #1b2735 0%, #000000 100%);
             color: #ffffff; overflow-x: hidden; min-height: 100vh; position: relative;
         }
 
-        /* STYLE TRADUCTEUR (ORIGINAL) */
-        /* STYLE TRADUCTEUR */
         #google_translate_element { 
             position: absolute; top: 10px; left: 10px; z-index: 3000; 
             opacity: 0.6; transform: scale(0.85); transition: 0.3s;
@@ -39,63 +36,56 @@
         .soleil-cadre h1 { font-size: 0.9em; color: #333; line-height: 1.1; margin: 0; padding: 10px; }
         .soleil-cadre:hover { background: linear-gradient(45deg, #ff0000, #ff7f00, #ffff00, #00ff00, #0000ff); box-shadow: 0 0 50px white; transform: scale(1.1) rotate(360deg); }
 
-        /* LA TERRE QUI TOURNE */
         .terre-don { 
-            width: 350px; height: 350px; margin: 40px auto; border-radius: 50%; 
+            width: 320px; height: 320px; margin: 30px auto; border-radius: 50%; 
             background-image: url('https://upload.wikimedia.org/wikipedia/commons/thumb/c/c3/Solarsystemscope_texture_2k_earth_daymap.jpg/1200px-Solarsystemscope_texture_2k_earth_daymap.jpg'); 
             background-size: cover; display: flex; align-items: center; justify-content: center; 
             text-decoration: none; color: white; box-shadow: inset -30px -30px 60px rgba(0,0,0,0.9); 
             animation: rotationTerre 40s linear infinite; position: relative; z-index: 5; transition: transform 1.5s;
         }
-        .terre-don:hover { transform: scale(1.05); }
-        .texte-semis { font-family: 'Georgia', serif; font-style: italic; font-weight: bold; letter-spacing: 2px; text-shadow: 2px 2px 10px black; font-size: 1.4em; padding: 20px; }
+        .texte-semis { font-family: 'Georgia', serif; font-style: italic; font-weight: bold; text-shadow: 2px 2px 10px black; font-size: 1.2em; padding: 20px; }
         @keyframes rotationTerre { from { background-position: 0 0; } to { background-position: 1000px 0; } }
 
-        /* Rubriques (Tailles respectées) */
-        .bulles-grid { display: flex; justify-content: center; gap: 20px; flex-wrap: wrap; padding: 20px; position: relative; z-index: 5; align-items: flex-start; }
-        .nuage, .cadre-aide { background: #e0f7fa; border: 3px solid #008080; border-radius: 50px; padding: 20px; width: 320px; color: #000080; transition: 0.4s; text-decoration: none; display: block; }
-        .nuage:hover, .cadre-aide:hover { transform: translateY(-10px); }
+        /* GRILLE CENTRÉE */
+        .bulles-grid { 
+            display: flex; justify-content: center; align-items: center; 
+            gap: 30px; flex-wrap: wrap; padding: 40px 20px; position: relative; z-index: 5; 
+        }
+        
+        .nuage, .cadre-aide { background: #e0f7fa; border: 3px solid #008080; border-radius: 50px; padding: 25px; width: 300px; color: #000080; transition: 0.4s; text-decoration: none; }
+        .nuage:hover, .cadre-aide:hover { transform: translateY(-10px); box-shadow: 0 10px 20px rgba(255,255,255,0.2); }
 
         .phrases-impots { font-size: 0.8em; color: #d32f2f; font-weight: bold; margin: 8px 0; }
-        .liste-exemples-discrets { font-size: 0.65em; text-align: left; color: rgba(0, 102, 102, 0.8); font-style: italic; list-style: none; padding-left: 15px; margin-top: 10px; border-top: 1px dashed #008080; padding-top: 5px; }
+        .liste-exemples-discrets { font-size: 0.65em; text-align: left; color: rgba(0, 102, 102, 0.8); font-style: italic; list-style: none; padding-left: 10px; margin-top: 10px; border-top: 1px dashed #008080; padding-top: 5px; }
 
-        .etoile-justice { background: #E6E6FA; border: 3px solid #9370DB; width: 300px; min-height: 250px; clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%); display: flex; flex-direction: column; align-items: center; justify-content: center; text-decoration: none; color: #333; transition: 0.8s; padding: 20px; }
-        .etoile-justice:hover { clip-path: circle(50% at 50% 50%); transform: scale(1.1); background: #d1c4e9; }
+        .etoile-justice { background: #E6E6FA; border: 3px solid #9370DB; width: 280px; min-height: 250px; clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%); display: flex; flex-direction: column; align-items: center; justify-content: center; text-decoration: none; color: #333; transition: 0.8s; }
+        .rond-savoir { background: #FFF9C4; border: 3px solid #FFB300; width: 160px; height: 160px; border-radius: 50%; display: flex; flex-direction: column; align-items: center; justify-content: center; text-decoration: none; color: #795548; transition: 0.6s; margin-top: 20px; }
 
-        /* NOUVEAU : Rubrique Savoirs en rond */
-        .rond-savoir { background: #FFF9C4; border: 3px solid #FFB300; width: 180px; height: 180px; border-radius: 50%; display: flex; flex-direction: column; align-items: center; justify-content: center; text-decoration: none; color: #795548; transition: 0.6s; margin-top: 20px; }
-        .rond-savoir:hover { transform: scale(1.1); background: #FFEB3B; }
-
-        .lien-rose { color: #ff1493 !important; font-weight: bold; text-decoration: none; }
-        /* LIENS SÉPARÉS DANS L'AIDE */
-        .lien-separé { display: inline-block; padding: 10px 15px; border-radius: 20px; text-decoration: none; font-weight: bold; transition: 0.3s; margin: 5px; }
+        .lien-separé { display: inline-block; padding: 10px 15px; border-radius: 20px; text-decoration: none; font-weight: bold; transition: 0.3s; margin: 5px; font-size: 0.85em; }
         .lien-urgence { background: #ff1493; color: white; border: 2px solid white; }
-        .lien-urgence:hover { background: #c71585; transform: scale(1.1); }
         .lien-ecoute { background: #9370DB; color: white; border: 2px solid white; }
-        .lien-ecoute:hover { background: #6a5acd; transform: scale(1.1); }
 
-        /* Étoiles (Original) */
-        /* Étoiles */
-        .star { position: fixed; color: white; z-index: -1; text-shadow: 0 0 8px white; animation: twinkle var(--duration) infinite ease-in-out, moveStar var(--move-duration) linear infinite; user-select: none; }
+        .star { position: fixed; color: white; z-index: -1; animation: twinkle var(--duration) infinite ease-in-out, moveStar var(--move-duration) linear infinite; }
         @keyframes twinkle { 0%, 100% { opacity: 0.2; transform: scale(0.7); } 50% { opacity: 1; transform: scale(1.2); } }
         @keyframes moveStar { from { transform: translateX(-10vw); } to { transform: translateX(110vw); } }
 
-        #btn-son { position: fixed; top: 20px; right: 20px; z-index: 1000; background: none; border: none; color: white; cursor: pointer; font-size: 40px; filter: drop-shadow(0 0 5px white); }
         #btn-son { position: fixed; top: 20px; right: 20px; z-index: 1000; background: none; border: none; color: white; cursor: pointer; font-size: 40px; }
-        #coffre-magique { position: fixed; font-size: 55px; z-index: 8; filter: drop-shadow(0 0 15px gold); cursor: pointer; }
-        .particule { position: fixed; pointer-events: none; z-index: 1000; font-size: 24px; }
+        #coffre-magique { position: fixed; font-size: 55px; z-index: 8; cursor: pointer; transition: 4s ease-in-out; }
         .oiseau-volant { position: fixed; font-size: 40px; z-index: 7; transition: transform 6s linear; pointer-events: none; }
-        .message-volant { position: fixed; background: rgba(255,255,255,0.9); color: #2E7D32; padding: 5px 12px; border-radius: 20px; font-weight: bold; border: 1px solid #4CAF50; z-index: 9; transition: all 1.8s ease-in; white-space: nowrap; }
-        .lien-copyright { display: inline-block; color: rgba(255,255,255,0.6); text-decoration: none; font-weight: bold; transition: 0.4s; padding: 15px; position: relative; z-index: 200; }
-        .lien-copyright:hover { color: #fffce0; text-shadow: 0 0 15px #fff, 0 0 25px #f0e68c; transform: scale(1.1); }
+        .message-volant { position: fixed; background: rgba(255,255,255,0.9); color: #2E7D32; padding: 5px 12px; border-radius: 20px; font-weight: bold; z-index: 9; transition: all 1.8s ease-in; }
+
+        footer { padding: 40px 0; }
+        .lien-copyright { color: rgba(255,255,255,0.5); text-decoration: none; font-weight: bold; transition: 0.3s; }
+        .lien-copyright:hover { color: #f0e68c; text-shadow: 0 0 10px #fff; }
     </style>
 </head>
 <body>
 
     <div id="google_translate_element"></div>
+    <button id="btn-son" onclick="toggleSon()">🕊️</button>
 
     <div class="header-container">
-        <div class="titre-fraternite">La fraternité du palais nature</div>
+        <div class="titre-fraternite">La Fraternité du Palais Nature</div>
         <table class="menu-table">
             <tr>
                 <td><a href="index.html">Accueil</a></td>
@@ -110,9 +100,7 @@
         </table>
     </div>
 
-    <button id="btn-son" onclick="toggleSon()">🕊️</button>
-
-    <a href="jardin.html" class="soleil-cadre"><h1>Le Trésor Public du jardin</h1></a>
+    <a href="jardin.html" class="soleil-cadre"><h1>Le Trésor Public du Jardin</h1></a>
 
     <a href="jardin.html" class="terre-don">
         <div class="texte-semis"><b>ESPACE DU SEMIS DE DON ENTIER</b></div>
@@ -121,21 +109,18 @@
     <div class="bulles-grid">
         <a href="impot.html" class="nuage">
             <h3 style="margin:0;">📜 Impôts Publics</h3>
-            <p style="font-size: 0.8em; font-weight: bold;">Travaux publics en participation libre.</p>
+            <p style="font-size: 0.85em; font-weight: bold;">Travaux en participation libre.</p>
             <div class="phrases-impots">Motivation indispensable.<br>Attention : Travaux ingrats.</div>
             <ul class="liste-exemples-discrets">
-                <li>ex: réfection des routes, aide administrative, entretien des espaces verts, soutien technique collectif.</li>
+                <li>ex: réfection des routes, aide administrative, entretien des espaces verts.</li>
             </ul>
-            <p style="font-size: 0.8em; font-weight: bold;">Travaux en participation libre.</p>
         </a>
 
         <div style="display: flex; flex-direction: column; align-items: center;">
             <a href="regulation.html" class="etoile-justice">
                 <h3 style="margin:0;">⚖️ Régulation</h3>
                 <p style="font-size:0.8em;">Médiation et harmonie citoyenne.</p>
-                <p style="font-size:0.8em;">Harmonie citoyenne.</p>
             </a>
-            
             <a href="savoirs.html" class="rond-savoir">
                 <h3 style="margin:0;">💡 Savoirs</h3>
                 <p style="font-size:0.7em;">Transmission & Éclosion</p>
@@ -143,15 +128,10 @@
         </div>
 
         <div class="cadre-aide">
-            <h3 style="margin:0;">❤️ Aide & Écoute</h3>
-            <p style="font-size:0.8em;">Besoins vitaux ou oreille attentive.</p>
-            <div style="margin-top:10px;">
-                <a href="aide.html" class="lien-rose">Urgences</a> | <a href="aide.html" class="lien-rose">Écoute</a>
             <h3 style="margin:0;">🆘 Urgence & Détresse</h3>
-            <p style="font-size:0.75em; font-style: italic;">L'Étoile de la Main Tendue & Le Câlin de l'Âme</p>
-            
+            <p style="font-size:0.75em; font-style: italic; margin-top:5px;">L'Étoile de la Main Tendue</p>
             <div style="margin-top:15px; display: flex; flex-direction: column; gap: 10px;">
-                <a href="urgence.html" class="lien-separé lien-urgence">🏥 Urgences (Corps & Santé)</a>
+                <a href="urgence.html" class="lien-separé lien-urgence">🏥 Urgences (Santé)</a>
                 <a href="aide.html" class="lien-separé lien-ecoute">💖 Écoute (Câlin de l'Âme)</a>
             </div>
         </div>
@@ -161,12 +141,9 @@
 
     <footer>
         <a href="transition-externe.html" class="lien-copyright">© 2000 le petit prince des jardiniers</a>
-        <a href="transition-externe.html" style="display: inline-block; color: rgba(255,255,255,0.6); text-decoration: none; padding: 20px;">© 2000 le petit prince des jardiniers</a>
     </footer>
 
     <script>
-        // ÉTOILES DÉRIVANTES
-        // ÉTOILES
         function createStar() {
             let s = document.createElement('div'); s.className = 'star';
             s.innerHTML = ['✦','★','✶','✧'][Math.floor(Math.random()*4)];
@@ -177,48 +154,33 @@
         }
         for(let i=0; i<80; i++) createStar();
 
-        // SON
-        // SON & CADEAU (Codes originaux conservés)
         let audio = new Audio('oiseaux.mp3'); audio.loop = true; let enLecture = false;
         function toggleSon() {
-            const btn = document.getElementById('btn-son');
-            if (!enLecture) { audio.play().catch(e=>{}); btn.classList.add('actif'); enLecture = true; } 
-            else { audio.pause(); btn.classList.remove('actif'); enLecture = false; }
-            if (!enLecture) { audio.play().catch(e=>{}); btn.innerHTML = "🎶"; enLecture = true; } 
-            else { audio.pause(); btn.innerHTML = "🕊️"; enLecture = false; }
+            if (!enLecture) { audio.play().catch(e=>{}); document.getElementById('btn-son').innerHTML = "🎶"; enLecture = true; } 
+            else { audio.pause(); document.getElementById('btn-son').innerHTML = "🕊️"; enLecture = false; }
         }
 
-        // CADEAU MOBILE
         const coffre = document.getElementById('coffre-magique');
         let cX = 100, cY = 100;
         function move() {
             cX = Math.random()*(window.innerWidth-100); cY = Math.random()*(window.innerHeight-100);
             coffre.style.left = cX+'px'; coffre.style.top = cY+'px';
-            coffre.style.transition = "all 4s ease-in-out";
         }
         setInterval(move, 4000); move();
 
-        // EXPLOSION
         function exploserCadeau() {
-            const els = ['🌸', '✨', '🌻', '🍀', '🌟', '❤️'];
-            for(let i=0; i<30; i++) {
-                const p = document.createElement('div'); p.className = 'particule';
+            const els = ['🌸', '✨', '🌻', '🌟', '❤️'];
             for(let i=0; i<20; i++) {
                 const p = document.createElement('div');
                 p.style.position = 'fixed'; p.style.left = cX+'px'; p.style.top = cY+'px';
                 p.innerHTML = els[Math.floor(Math.random()*els.length)];
-                p.style.left = cX+'px'; p.style.top = cY+'px';
                 document.body.appendChild(p);
-                const a = Math.random()*Math.PI*2, d = Math.random()*200+50;
-                p.animate([{transform:'scale(1)', opacity:1}, {transform:`translate(${Math.cos(a)*d}px, ${Math.sin(a)*d}px) scale(0)`, opacity:0}], {duration:1500});
-                setTimeout(() => p.remove(), 1500);
                 const a = Math.random()*Math.PI*2, d = Math.random()*150+50;
                 p.animate([{transform:'scale(1)', opacity:1}, {transform:`translate(${Math.cos(a)*d}px, ${Math.sin(a)*d}px) scale(0)`, opacity:0}], {duration:1000});
                 setTimeout(() => p.remove(), 1000);
             }
         }
 
-        // MESSAGERS (ORIGINAL - STRICTEMENT CONSERVÉ)
         function creerMessager() {
             const a = document.createElement('div'); a.className = 'oiseau-volant'; 
             a.innerHTML = ['🕊️', '🦋', '🐝'][Math.floor(Math.random()*3)];
@@ -228,15 +190,6 @@
             a.style.transform = fromLeft ? 'scaleX(1)' : 'scaleX(-1)';
             document.body.appendChild(a);
             setTimeout(() => a.style.transform += fromLeft ? ' translateX(120vw)' : ' translateX(-120vw)', 100);
-            setTimeout(() => {
-                const m = document.createElement('div'); m.className = 'message-volant'; 
-                m.innerHTML = ["PAIX 🕊️", "AMOUR ❤️", "JOIE 🌟"][Math.floor(Math.random()*3)];
-                const r = a.getBoundingClientRect();
-                m.style.left = r.left+'px'; m.style.top = r.top+'px';
-                document.body.appendChild(m);
-                setTimeout(() => { m.style.left = cX+'px'; m.style.top = cY+'px'; m.style.opacity = '0'; }, 100);
-                setTimeout(() => { exploserCadeau(); m.remove(); }, 1800);
-            }, 2500);
             setTimeout(() => a.remove(), 7000);
         }
         setInterval(creerMessager, 6000);
