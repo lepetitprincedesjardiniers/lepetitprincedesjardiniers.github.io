@@ -7,38 +7,29 @@
         body { font-family: 'Comic Sans MS', cursive; text-align: center; margin: 0; padding: 0; background-color: #FFFF00; color: #000080; overflow-x: hidden; min-height: 100vh; }
         #google_translate_element { position: absolute; top: 5px; left: 5px; z-index: 1000; opacity: 0.7; transform: scale(0.8); }
         
-        /* Menu */
         .menu-table { margin: 20px auto; border-radius: 10px; background-color: #008080; border-collapse: collapse; margin-left: auto; margin-right: auto;}
         .menu-table td { padding: 10px 15px; border: 1px solid #FFFFFF; transition: 0.3s; }
         .menu-table td:hover { background-color: #00b3b3; }
         .menu-table a { text-decoration: none; color: #FFFFFF; font-weight: bold; font-size: 0.85em; }
 
-        /* Formulaire */
-        .form-container { background: white; padding: 30px; border-radius: 20px; display: inline-block; margin-top: 10px; box-shadow: 0px 10px 20px rgba(0,0,0,0.1); width: 90%; max-width: 700px; margin-bottom: 180px; position: relative; z-index: 10; }
+        .form-container { background: white; padding: 30px; border-radius: 20px; display: inline-block; margin-top: 10px; box-shadow: 0px 10px 20px rgba(0,0,0,0.1); width: 95%; max-width: 750px; margin-bottom: 180px; position: relative; z-index: 10; }
         .form-group { text-align: left; margin: 15px 20px; }
-        label { font-weight: bold; color: #008080; display: block; margin-bottom: 5px; font-size: 1.1em; }
-        .sous-label { font-size: 0.8em; color: #006666; margin-bottom: 5px; display: block; font-style: italic; }
+        label { font-weight: bold; color: #008080; display: block; margin-bottom: 5px; }
+        .sous-label { font-size: 0.75em; color: #006666; margin-bottom: 5px; display: block; font-style: italic; }
         
-        input, select { width: 100%; padding: 12px; margin-bottom: 5px; border: 2px solid #008080; border-radius: 10px; font-family: 'Comic Sans MS'; font-size: 1em; box-sizing: border-box; }
-        
-        /* Cases Texte Spacieuses */
-        textarea { width: 100%; padding: 12px; border: 2px solid #008080; border-radius: 10px; font-family: 'Comic Sans MS'; font-size: 1em; min-height: 280px; resize: vertical; box-sizing: border-box; background-color: #f9f9f9; }
-        .input-mini { height: 45px !important; }
+        input, select, textarea { width: 100%; padding: 12px; margin-bottom: 10px; border: 2px solid #008080; border-radius: 10px; font-family: 'Comic Sans MS'; font-size: 1em; box-sizing: border-box; }
+        textarea { min-height: 280px; resize: vertical; background-color: #fffdf0; }
 
-        .btn-envoyer { width: 100%; padding: 25px; background: #E67E22; color: white; border: none; border-radius: 20px; cursor: pointer; font-weight: bold; font-size: 1.2em; box-shadow: 0px 5px 0px #b35900; transition: 0.1s; margin-top: 20px; }
+        .btn-envoyer { width: 100%; padding: 25px; background: #E67E22; color: white; border: none; border-radius: 20px; cursor: pointer; font-weight: bold; font-size: 1.2em; box-shadow: 0px 4px 0px #b35900; }
         .btn-envoyer:active { transform: translateY(4px); box-shadow: 0px 0px 0px #b35900; }
 
-        /* Copyright & Étoiles */
-        footer { margin: 40px 0 100px 0; }
-        .copyright-link { color: #008080; text-decoration: none; font-weight: bold; transition: all 0.3s ease; padding: 12px; border-radius: 8px; cursor: pointer; display: inline-block; position: relative; }
-        .copyright-link:hover { color: #E67E22; background: rgba(255, 255, 255, 0.9); transform: scale(1.15); }
-        .star { position: absolute; pointer-events: none; color: #FFD700; font-size: 24px; z-index: 9999; filter: drop-shadow(0 0 5px gold); }
+        footer { margin: 40px 0 80px 0; }
+        .copyright-link { color: #008080; text-decoration: none; font-weight: bold; transition: 0.3s; padding: 10px; cursor: pointer; display: inline-block; position: relative; }
+        .star { position: absolute; pointer-events: none; color: #FFD700; font-size: 24px; z-index: 9999; }
 
-        /* Animations */
-        #coffre-magique { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); font-size: 60px; z-index: 800; transition: transform 0.3s; }
+        #coffre-magique { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); font-size: 60px; z-index: 800; transition: 0.3s; }
         #animal-container { position: fixed; z-index: 900; display: flex; align-items: center; pointer-events: none; }
-        #corps-animal { font-size: 50px; }
-        #bulle-texte { background: white; border-radius: 15px; padding: 10px 18px; font-style: italic; color: #2E7D32; margin-right: 10px; font-weight: bold; border: 2px solid #2E7D32; opacity: 0; transition: 0.3s; box-shadow: 4px 4px 15px rgba(0,0,0,0.1); }
+        #bulle-texte { background: white; border-radius: 15px; padding: 8px 15px; font-style: italic; color: #2E7D32; border: 2px solid #2E7D32; opacity: 0; transition: 0.3s; font-weight: bold; }
         .pop { transform: translateX(-50%) scale(1.4) !important; }
     </style>
 </head>
@@ -50,93 +41,99 @@
     <table class="menu-table">
         <tr>
             <td><a href="index.html">Accueil</a></td>
-            <td><a href="formulaire.html">Semer un Don</a></td>
+            <td><a href="formulaire.html">Semer</a></td>
             <td><a href="jardin.html">Le Jardin</a></td>
             <td><a href="impot.html">Impôts Publics</a></td>
             <td><a href="regulation.html">Régulation</a></td>
-            <td><a href="aide.html">Aide, Santé & Urgences</a></td>
-            <td><a href="savoirs.html">Savoirs & Études</a></td>
+            <td><a href="aide.html">Aide & Harmonie</a></td>
+            <td><a href="savoirs.html">Savoirs</a></td>
             <td><a href="vie.html">Vie Citoyenne</a></td>
         </tr>
     </table>
 
-    <h2 style="color:#E67E22;">🌍 Semer un Don pour l'Humanité</h2>
+    <h2 style="color:#E67E22;">🌍 Engendrer la Fraternité Universelle</h2>
 
     <div class="form-container">
         <form id="monFormulaire" onsubmit="envoyerDon(event)">
-
+            
             <div class="form-group">
                 <label>Identité amoureuse</label>
-                <input type="text" name="nom" placeholder="Ton Prénom de coeur ou Pseudo" required>
+                <input type="text" name="nom" placeholder="Ton Prénom de coeur / Pseudo" required>
             </div>
 
             <div class="form-group">
-                <label>Lieu de floraison (Provenance)</label>
-                <select name="pays_select" id="pays_select" onchange="gererPays('select')">
-                    <option value="" selected>--- Sélectionner ton Pays ---</option>
-                    <optgroup label="✨ Territoires de l'Esprit">
-                        <option value="Pays de la grande gentillesse">Pays de la grande gentillesse</option>
-                        <option value="L'astéroïde B 612">L'astéroïde B 612</option>
-                    </optgroup>
-                    <optgroup label="Monde Moderne">
+                <label>Zone Géographique & Rayon d'action</label>
+                <span class="sous-label">Où la graine doit-elle pousser ?</span>
+                <div style="display: flex; gap: 10px;">
+                    <select name="pays_select" id="pays_select" onchange="gererPays('select')" style="flex: 1;">
+                        <option value="" selected>-- Pays --</option>
                         <option value="France">France</option><option value="Belgique">Belgique</option><option value="Suisse">Suisse</option><option value="Canada">Canada</option>
-                    </optgroup>
-                </select>
-                <input type="text" name="localisation" id="pays_libre" placeholder="Ou saisis ton pays librement..." oninput="gererPays('libre')">
+                        <option value="B612">L'astéroïde B 612</option>
+                    </select>
+                    <select name="rayon" style="flex: 1;">
+                        <option value="0">Rayon : Sur place uniquement</option>
+                        <option value="10">Rayon : 10 km</option>
+                        <option value="50">Rayon : 50 km</option>
+                        <option value="100">Rayon : 100 km</option>
+                        <option value="National">Rayon : National</option>
+                        <option value="Monde">Rayon : Monde Entier (Numérique)</option>
+                    </select>
+                </div>
+                <input type="text" name="localisation" id="pays_libre" placeholder="Ville, Code Postal ou Quartier précis..." oninput="gererPays('libre')" required>
             </div>
 
             <div class="form-group">
-                <label>Nature du semis (Catégorie)</label>
+                <label>Domaine du Don</label>
                 <select name="type" id="main_cat" onchange="updateSubCats()" required>
-                    <option value="">-- Quel domaine souhaites-tu offrir ? --</option>
-                    <option value="AIDE">🚑 AIDE & SANTÉ (Urgences, Soin, Écoute)</option>
-                    <option value="SAVOIR">💡 SAVOIRS & ÉTUDES (Scolaire, Pro, Tech, Philo)</option>
-                    <option value="VIE">🏠 VIE CITOYENNE (Lieux, Mobilité, Culture)</option>
-                    <option value="REGULATION">⚖️ RÉGULATION (Conflits, Droit, Équilibre)</option>
-                    <option value="IMPOT">📜 TRÉSOR PUBLIC (Infrastructures, Travaux)</option>
+                    <option value="">-- Que souhaites-tu offrir ? --</option>
+                    <option value="SAVOIR">💡 SAVOIRS (Apprendre, Transmettre, Perfectionner)</option>
+                    <option value="VIE">🏠 VIE CITOYENNE (Espaces, Partages, Mobilité)</option>
+                    <option value="AIDE">💖 AIDE & HARMONIE (Santé, Écoute, Matière)</option>
+                    <option value="REGULATION">⚖️ RÉGULATION (Équilibre, Médiation, Aide Vie)</option>
+                    <option value="IMPOT">📜 TRÉSOR PUBLIC (Travaux, Bien Commun)</option>
                 </select>
             </div>
 
             <div id="sub_cat_group" class="form-group" style="display:none;">
-                <label>Précision du don</label>
+                <label>Nature précise</label>
                 <select name="sousType" id="sub_cat"></select>
             </div>
 
             <div class="form-group">
-                <label>Ton expertise / Expérience</label>
-                <span class="sous-label">Pour rassurer les jardiniers (ex: Diplôme, 10 ans de pratique, passionné...)</span>
-                <input type="text" name="expertise" placeholder="Qu'est-ce qui valide ton don ?" class="input-mini">
+                <label>Durée de validité de l'annonce</label>
+                <span class="sous-label">L'annonce s'effacera automatiquement après ce délai</span>
+                <select name="duree_validite" required>
+                    <option value="1">1 Jour (Urgence immédiate)</option>
+                    <option value="7">1 Semaine</option>
+                    <option value="30" selected>1 Mois (Standard)</option>
+                    <option value="90">3 Mois (Savoirs / Transmission)</option>
+                    <option value="365">1 An (Projet long terme)</option>
+                </select>
             </div>
 
             <div class="form-group">
-                <label>Acheminement & Logistique</label>
-                <span class="sous-label">Priorité au contact humain direct</span>
+                <label>Logistique & Acheminement</label>
                 <select name="logistique" required>
-                    <option value="">-- Comment le don voyage-t-il ? --</option>
-                    <optgroup label="🤝 Direct & Proximité">
-                        <option value="Rencontre">Remise en main propre (Lieu public)</option>
-                        <option value="Covoiturage">Covoiturage humain (Je t'emmène / Je viens)</option>
-                        <option value="Lieu">Mise à disposition d'un lieu</option>
+                    <optgroup label="🤝 Proximité">
+                        <option value="Direct">Main à main / Rencontre</option>
+                        <option value="Accueil">Je reçois chez moi</option>
+                        <option value="Voyage">Je me déplace chez toi</option>
                     </optgroup>
-                    <optgroup label="🚚 Logistique Classique">
-                        <option value="Relais">Point Relais</option>
-                        <option value="Poste">La Poste</option>
-                        <option value="Colis-voiturage">Colis-voiturage (Via un voyageur)</option>
-                    </optgroup>
-                    <optgroup label="🚀 Numérique & Esprit">
-                        <option value="Visio">Vidéo-conférence / Appel</option>
-                        <option value="Email">E-mail / Fichier numérique</option>
-                        <option value="Ondes">Pensée & Méditation</option>
+                    <optgroup label="🚚 Distance">
+                        <option value="Relais">Envoi (Relais/Poste)</option>
+                        <option value="Numérique">À distance (Visio/Web/Téléphone)</option>
                     </optgroup>
                 </select>
             </div>
 
             <div class="form-group">
-                <label>Description détaillée du Don amoureux</label>
-                <textarea name="message" placeholder="Détaille ici ton offre. S'il s'agit de savoirs, précise le niveau (débutant, expert). S'il s'agit d'aide, précise tes disponibilités..." required></textarea>
+                <label>Description du Don (Ton message au monde)</label>
+                <textarea name="message" placeholder="Décris ici ton don avec précision. 
+Exemple Savoir : 'Je transmets mon expérience de 20 ans en menuiserie, tous niveaux.'
+Exemple Vie : 'Je prête mon garage pour de l'auto-réparation le samedi.'" required></textarea>
             </div>
 
-            <button type="submit" class="btn-envoyer" id="btnTexte">ENGENDRER LA FRATERNITÉ UNIVERSELLE</button>
+            <button type="submit" class="btn-envoyer" id="btnTexte">SEMER CETTE GRAINE DE FRATERNITÉ</button>
         </form>
     </div>
 
@@ -147,40 +144,40 @@
     <div id="coffre-magique">🎁</div>
     <div id="animal-container"><div id="bulle-texte"></div><div id="corps-animal">🕊️</div></div>
 
-    <script type="text/javascript">
+    <script>
         function googleTranslateElementInit() { new google.translate.TranslateElement({pageLanguage: 'fr'}, 'google_translate_element'); }
 
         const tree = {
-            "AIDE": [
-                "🚑 URGENCE VITALE (Faim, Toit)", 
-                "🏥 SANTÉ (Soin infirmier, Premiers secours)", 
-                "🧠 ÉCOUTE PSY (Soutien, Solitude)", 
-                "🍎 BIEN-ÊTRE (Nutrition, Yoga, Relaxation)",
-                "🧑‍🤝‍🧑 ACCOMPAGNEMENT (Visite aux aînés)"
-            ],
             "SAVOIR": [
-                "📚 SCOLAIRE (Primaire, Collège, Lycée)", 
-                "🎓 SUPÉRIEUR (Université, Prépa)", 
-                "💻 NUMÉRIQUE (Code, IA, Bureautique)", 
-                "🛠️ PROFESSIONNEL (Mentorat, Métiers)",
-                "🎨 ARTS & PHILO (Musique, Dessin, Pensée)",
-                "🌱 NATURE (Permaculture, Botanique)"
+                "🌱 Éveil & Soutien Scolaire (Tous âges)",
+                "💼 Transmission d'expérience métier (Mentorat)",
+                "🚀 Perfectionnement expert (Tech, Science, Artisanat)",
+                "🎨 Arts & Loisirs créatifs (Musique, Dessin, Cuisine)",
+                "🧠 Savoirs de vie & Philosophie (Sagesse, Expérience)",
+                "💻 Numérique & IA (Apprendre l'outil moderne)"
             ],
             "VIE": [
-                "🚗 MOBILITÉ (Covoiturage, Prêt de vélo)", 
-                "🏠 ESPACES (Chambre d'amis, Atelier partagé)", 
-                "🎭 CULTURE (Places données, Ateliers créatifs)", 
-                "🧹 SERVICE (Ménage solidaire, Courses)"
+                "🏠 Accueil & Hébergement (Chambre d'amis, Urgence)",
+                "🛠️ Prêt d'espaces (Atelier, Jardin, Stockage)",
+                "🚗 Mobilité & Transport (Covoiturage humain, Prêt vélo)",
+                "🎉 Culture & Loisirs (Organisation de sorties, Fêtes)",
+                "🧹 Aide à la vie quotidienne (Courses, Bricolage)"
+            ],
+            "AIDE": [
+                "🚑 URGENCE VITALE (Alimentaire, Toit immédiat)",
+                "🏥 Santé & Soins (Soin du corps, Hygiène)",
+                "🌈 Harmonie & Écoute (Psy, Soutien moral, Bien-être)",
+                "🤝 Présence & Visites (Lutter contre la solitude)"
             ],
             "REGULATION": [
-                "⚖️ DROIT (Conseils juridiques)", 
-                "🕊️ MÉDIATION (Conflits de voisinage/famille)", 
-                "📋 ADMIN (Aide aux papiers complexes)"
+                "🕊️ Médiation de vie (Conflits de voisinage/famille)",
+                "⚖️ Aide aux épreuves (Conseils administratifs et humains)",
+                "🌍 Équilibre & Orientation (Aide aux choix de vie)"
             ],
             "IMPOT": [
-                "🏗️ TRAVAUX PUBLICS (Réparation chemins, Voirie)", 
-                "🌲 ENVIRONNEMENT (Nettoyage forêt/plage)", 
-                "🛠️ TECHNIQUE (Maintenance serveurs/outils)"
+                "🏗️ Chantier Commun (Entretien des biens publics)",
+                "🌲 Environnement (Protection de la nature locale)",
+                "⚙️ Maintenance Technique (Outils et réseaux partagés)"
             ]
         };
 
@@ -197,73 +194,66 @@
         function gererPays(source) {
             const select = document.getElementById('pays_select');
             const libre = document.getElementById('pays_libre');
-            if (source === 'select' && select.value !== "") { libre.value = ""; }
-            else if (source === 'libre' && libre.value.trim() !== "") { select.selectedIndex = 0; }
+            if (source === 'select' && select.value !== "") select.value = select.value;
+            else if (source === 'libre' && libre.value.trim() !== "") { /* On garde les deux si besoin */ }
         }
 
         function exploserEtoiles(e) {
             for (let i = 0; i < 25; i++) {
                 const star = document.createElement('div');
-                star.className = 'star';
-                star.innerHTML = i % 2 === 0 ? '⭐' : '✨';
-                star.style.left = e.pageX + 'px';
-                star.style.top = e.pageY + 'px';
+                star.className = 'star'; star.innerHTML = '⭐';
+                star.style.left = e.pageX + 'px'; star.style.top = e.pageY + 'px';
                 document.body.appendChild(star);
                 const angle = Math.random() * Math.PI * 2;
-                const dist = Math.random() * 180 + 50;
+                const dist = Math.random() * 160 + 40;
                 star.animate([
-                    { transform: 'translate(0, 0) scale(1) rotate(0deg)', opacity: 1 },
-                    { transform: `translate(${Math.cos(angle)*dist}px, ${Math.sin(angle)*dist}px) scale(0) rotate(720deg)`, opacity: 0 }
-                ], { duration: 1200, easing: 'ease-out' });
-                setTimeout(() => star.remove(), 1200);
+                    { transform: 'translate(0,0) scale(1)', opacity: 1 },
+                    { transform: `translate(${Math.cos(angle)*dist}px, ${Math.sin(angle)*dist}px) scale(0) rotate(360deg)`, opacity: 0 }
+                ], { duration: 1000 });
+                setTimeout(() => star.remove(), 1000);
             }
-            setTimeout(() => { window.location.href = "transition_externe.html"; }, 1000);
+            setTimeout(() => { window.location.href = "transition_externe.html"; }, 800);
         }
 
         function envoyerDon(event) {
             event.preventDefault();
-            document.getElementById('btnTexte').innerText = "Semailles Citoyennes en cours... 🌱";
+            document.getElementById('btnTexte').innerText = "Semailles en cours... 🌱";
             const data = new FormData(document.getElementById('monFormulaire'));
             fetch("https://script.google.com/macros/s/AKfycbxz40XE2KiPXTNZsW-mIg-fm55EivK0r9wzZ5ECFRdEIY53nYH9nLGYRoI71OX93oII/exec", { method: 'POST', mode: 'no-cors', body: data })
             .then(() => { window.location.href = "merci_annonce.html"; })
             .catch(() => { window.location.href = "merci_annonce.html"; });
         }
 
-        // --- ANIMATIONS ---
-        const phrases = ["Soutenir les études d'un jeune...", "Offrir un savoir pro...", "Guérir par le don...", "Partager son toit...", "Construire ensemble."];
+        // --- Animations Messagers ---
+        const phrases = ["Graine de savoir semée...", "Le jardin s'agrandit !", "Merci pour cette fraternité.", "La solidarité est en route..."];
         const animaux = ['🕊️', '🦋', '🐝', '🦜'];
         const animalCont = document.getElementById('animal-container');
         const bulle = document.getElementById('bulle-texte');
         const corps = document.getElementById('corps-animal');
         const coffre = document.getElementById('coffre-magique');
-        let aniX = -200, aniY = 300, targetX, targetY, state = "APPROACHING";
+        let aniX = -200, aniY = 250, targetX, state = "FLY";
 
-        function startNewMessenger() {
-            bulle.innerText = phrases[Math.floor(Math.random() * phrases.length)];
-            corps.innerText = animaux[Math.floor(Math.random() * animaux.length)];
-            aniX = -200; aniY = Math.random() * 400 + 100;
-            targetX = window.innerWidth / 2; targetY = window.innerHeight - 110;
-            state = "APPROACHING";
-        }
-
-        function loop() {
-            if (state === "APPROACHING") {
-                aniX += (targetX - aniX) * 0.012; aniY += (targetY - aniY) * 0.012;
-                bulle.style.opacity = "1";
-                if (Math.sqrt(Math.pow(targetX-aniX,2)+Math.pow(targetY-aniY,2)) < 50) {
-                    state = "DEPOSITING"; coffre.classList.add('pop');
-                    setTimeout(() => { 
-                        bulle.style.opacity = "0"; coffre.classList.remove('pop'); state = "LEAVING"; 
-                        targetX = window.innerWidth + 500; targetY = 200; 
-                    }, 3000);
+        function messenger() {
+            if (state === "FLY") {
+                aniX += 2.5;
+                if (Math.abs(aniX - window.innerWidth/2) < 5) {
+                    state = "TALK";
+                    bulle.innerText = phrases[Math.floor(Math.random()*phrases.length)];
+                    bulle.style.opacity = 1;
+                    coffre.classList.add('pop');
+                    setTimeout(() => { bulle.style.opacity = 0; coffre.classList.remove('pop'); state = "EXIT"; }, 3000);
                 }
-            } else if (state === "LEAVING") {
-                aniX += (targetX - aniX) * 0.02; aniY += (targetY - aniY) * 0.02;
-                if (aniX > window.innerWidth + 100) startNewMessenger();
+            } else if (state === "EXIT") {
+                aniX += 3;
+                if (aniX > window.innerWidth + 200) {
+                    aniX = -200; 
+                    corps.innerText = animaux[Math.floor(Math.random()*animaux.length)];
+                    state = "FLY";
+                }
             }
-            animalCont.style.left = aniX + "px"; animalCont.style.top = aniY + "px";
-            corps.style.transform = (aniX < targetX) ? "scaleX(-1)" : "scaleX(1)";
-            requestAnimationFrame(loop);
+            animalCont.style.left = aniX + 'px';
+            animalCont.style.top = (aniY + Math.sin(aniX/60)*30) + 'px';
+            requestAnimationFrame(messenger);
         }
 
         document.addEventListener('click', () => { 
@@ -271,7 +261,7 @@
             if(a.paused) { a.volume = 0.05; a.play(); }
         });
 
-        startNewMessenger(); loop();
+        messenger();
     </script>
     <script src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
 </body>
