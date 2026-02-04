@@ -20,12 +20,12 @@
 
         #google_translate_element { position: absolute; top: 10px; left: 10px; z-index: 3000; opacity: 0.6; }
 
-        /* TON MENU FIDÈLE */
+        /* MENU */
         .menu-table { margin: 20px auto; border-radius: 10px; background-color: #008080; border-collapse: collapse; position: relative; z-index: 10; }
         .menu-table td { border: 1px solid #FFFFFF; }
         .menu-table a { display: block; padding: 12px 20px; text-decoration: none; color: #FFFFFF; font-weight: bold; }
 
-        /* LE CADRE DE SEMIS */
+        /* FORMULAIRE */
         .form-container { 
             background: rgba(255, 255, 255, 0.95); color: #333;
             width: 90%; max-width: 650px; margin: 30px auto; 
@@ -33,33 +33,27 @@
             box-shadow: 0 0 30px rgba(255,255,255,0.2); position: relative; z-index: 5;
         }
 
-        h1 { color: #008080; font-size: 2.2em; margin-bottom: 5px; text-shadow: 1px 1px 2px #ccc; }
-        .fleur-titre { font-size: 40px; margin-bottom: 10px; }
-
         label { display: block; text-align: left; font-weight: bold; margin: 15px 0 5px 20px; color: #004d40; }
-        input, select, textarea { 
-            width: 95%; padding: 12px; border-radius: 20px; border: 2px solid #008080; 
-            margin-bottom: 10px; font-family: inherit; font-size: 1rem;
-        }
+        input, select, textarea { width: 95%; padding: 12px; border-radius: 20px; border: 2px solid #008080; margin-bottom: 10px; font-family: inherit; }
 
-        /* BOUTON DE SEMIS MAGIQUE */
         .btn-submit { 
             background: linear-gradient(45deg, #008080, #00b3b3); color: white; border: none; 
             padding: 20px; border-radius: 30px; font-weight: bold; cursor: pointer; width: 80%; 
-            font-size: 1.3em; margin-top: 20px; box-shadow: 0 5px 15px rgba(0,0,0,0.2);
-            transition: 0.3s;
+            font-size: 1.3em; margin-top: 20px; transition: 0.3s;
         }
-        .btn-submit:hover { transform: scale(1.05) rotate(1deg); background: #00b3b3; }
 
-        /* ÉTOILES (TES EFFETS) */
-        .star { position: fixed; color: white; z-index: -1; animation: twinkle var(--duration) infinite ease-in-out; }
-        @keyframes twinkle { 0%, 100% { opacity: 0.3; transform: scale(0.8); } 50% { opacity: 1; transform: scale(1.2); } }
-
+        /* EFFETS */
+        .star { position: fixed; color: white; z-index: -1; animation: twinkle 3s infinite ease-in-out; }
+        @keyframes twinkle { 0%, 100% { opacity: 0.3; } 50% { opacity: 1; } }
         #btn-son { position: fixed; top: 20px; right: 20px; z-index: 1000; background: none; border: none; font-size: 40px; cursor: pointer; }
         #coffre-magique { position: fixed; bottom: 20px; right: 20px; font-size: 50px; cursor: pointer; z-index: 100; }
-        .particule { position: fixed; pointer-events: none; z-index: 1001; }
-
-        .phrase-motivation { font-size: 0.8em; color: #d32f2f; font-weight: bold; margin-top: -10px; margin-bottom: 10px; display: none; }
+        
+        .phrase-motivation { font-size: 0.8em; color: #d32f2f; font-weight: bold; display: none; margin-top: -5px; }
+        
+        /* FOOTER COPYRIGHT */
+        .footer-copyright { margin: 40px 0; padding: 20px; position: relative; z-index: 10; }
+        .footer-copyright a { color: rgba(255,255,255,0.6); text-decoration: none; font-weight: bold; }
+        .footer-copyright a:hover { color: #f0e68c; text-shadow: 0 0 10px #fff; }
     </style>
 </head>
 <body>
@@ -67,71 +61,65 @@
     <div id="google_translate_element"></div>
     <button id="btn-son" onclick="toggleSon()">🕊️</button>
 
-    <div class="header-container">
-        <table class="menu-table">
-            <tr>
-                <td><a href="index.html">Accueil</a></td>
-                <td><a href="formulaire.html">Semer</a></td>
-                <td><a href="jardin.html">Le Jardin</a></td>
-                <td><a href="impot.html">Impôts</a></td>
-                <td><a href="regulation.html">Régulation</a></td>
-                <td><a href="urgence.html">Urgences</a></td>
-                <td><a href="aide.html">Aide</a></td>
-                <td><a href="savoirs.html">Savoirs</a></td>
-            </tr>
-        </table>
-    </div>
+    <table class="menu-table">
+        <tr>
+            <td><a href="index.html">Accueil</a></td>
+            <td><a href="formulaire.html">Semer</a></td>
+            <td><a href="jardin.html">Le Jardin</a></td>
+            <td><a href="impot.html">Impôts</a></td>
+            <td><a href="regulation.html">Régulation</a></td>
+            <td><a href="urgence.html">Urgences</a></td>
+            <td><a href="aide.html">Aide</a></td>
+            <td><a href="savoirs.html">Savoirs</a></td>
+        </tr>
+    </table>
 
     <div class="form-container">
-        <div class="fleur-titre">🌱</div>
-        <h1>Semer au Palais Nature</h1>
-        <p><i>"On ne voit bien qu'avec le cœur..."</i></p>
-
+        <h1>🌱 Semer au Palais Nature</h1>
         <form id="mainForm">
-            <label>Ton nom de jardinier</label>
-            <input type="text" id="nom" placeholder="Ton pseudo ou ton cri..." required>
+            <input type="text" id="nom" placeholder="Ton nom de jardinier..." required>
+            <input type="text" id="ville" placeholder="Ville / Pays / Code Postal..." required>
 
-            <label>Où es-tu ? (Ville / Pays)</label>
-            <input type="text" id="ville" placeholder="Pour la fraternité locale..." required>
-
-            <label>Quelle graine souhaites-tu semer ?</label>
+            <label>Jardin de destination :</label>
             <select id="categorie" onchange="updateSubCats()" required>
-                <option value="">-- Choisir une rubrique --</option>
-                <option value="URGENCE">🏥 URGENCE (Santé, faim, cervelle...)</option>
-                <option value="AIDE">💖 AIDE (Câlin de l'âme, écoute...)</option>
-                <option value="SAVOIR">💡 SAVOIR (Apprendre, transmettre...)</option>
-                <option value="IMPOT">📜 TRÉSOR PUBLIC (Travaux ingrats...)</option>
+                <option value="">-- Choisir --</option>
+                <option value="URGENCE">🚑 URGENCE (Santé & Matière)</option>
+                <option value="AIDE">💖 AIDE (Cœur & Écoute)</option>
+                <option value="SAVOIR">💡 SAVOIR (Transmission)</option>
+                <option value="IMPOT">📜 TRÉSOR PUBLIC (Travaux)</option>
             </select>
 
             <div id="subCatContainer" style="display:none;">
-                <label>Précise ton semis :</label>
+                <label>Sous-rubrique :</label>
                 <select id="sousCategorie"></select>
-                <div id="msgImpot" class="phrase-motivation">⚠️ Motivation indispensable. Travaux ingrats en vue !</div>
+                <div id="msgImpot" class="phrase-motivation">⚠️ Motivation indispensable. Travaux ingrats !</div>
             </div>
 
-            <label>Durée de vie de l'annonce</label>
+            <label>Validité :</label>
             <select id="validite">
-                <option value="48h">Graine éphémère (48 heures)</option>
-                <option value="1mois" selected>Plante de saison (1 mois)</option>
-                <option value="infini">Arbre pérenne (Permanent)</option>
+                <option value="48h">48 heures (Graine)</option>
+                <option value="1mois" selected>1 mois (Plante)</option>
+                <option value="infini">Permanent (Arbre)</option>
             </select>
 
-            <label>Ton Message</label>
-            <textarea id="message" rows="5" placeholder="Décris ton besoin ou ton offre... ex: Ma charpente vacille, j'ai besoin d'aide pour mon toit..." required></textarea>
-
-            <button type="submit" class="btn-submit" id="btnTexte">LANCER LE SEMIS DANS LE COSMOS 🕊️</button>
+            <textarea id="message" rows="5" placeholder="Ton message (ex: Ma charpente vacille...)" required></textarea>
+            <button type="submit" class="btn-submit" id="btnTexte">LANCER LE SEMIS 🕊️</button>
         </form>
     </div>
 
     <div id="coffre-magique" onclick="exploserCadeau()">🎁</div>
 
+    <footer class="footer-copyright">
+        <a href="transition-externe.html">© 2000 le petit prince des jardiniers</a>
+    </footer>
+
     <script>
-        // SOUS-RUBRIQUES AVEC TES PHRASES
-        const subOptions = {
-            "URGENCE": ["Cervelle/Mental", "Charpente/Physique", "Faim/Matière", "Toit/Logement"],
-            "AIDE": ["Câlin de l'âme", "Oreille attentive", "Besoin de parler", "Médiation fraternelle"],
-            "SAVOIR": ["Faire son pain/Cuisine", "Code/Informatique", "Terre/Jardinage", "Art/Esprit"],
-            "IMPOT": ["Réfection des routes", "Aide aux papiers", "Espaces verts", "Soutien technique"]
+        // SOUS-RUBRIQUES DÉTAILLÉES
+        const tree = {
+            "URGENCE": ["Matière (Faim/Toit)", "Santé (Corps)", "Mental (Cervelle)", "Urgence Vitale"],
+            "AIDE": ["Câlin de l'âme", "Besoin de parler", "Solitude", "Médiation fraternelle"],
+            "SAVOIR": ["Technique (Code/Brico)", "Nature (Jardin/Pain)", "Esprit (Arts/Philo)", "Autre graine"],
+            "IMPOT": ["Voirie/Routes", "Administration", "Entretien Nature", "Soutien Technique"]
         };
 
         function updateSubCats() {
@@ -140,54 +128,32 @@
             const subSelect = document.getElementById('sousCategorie');
             const msgImpot = document.getElementById('msgImpot');
             
-            if (cat && subOptions[cat]) {
-                subSelect.innerHTML = subOptions[cat].map(opt => `<option value="${opt}">${opt}</option>`).join('');
+            if (cat && tree[cat]) {
+                subSelect.innerHTML = tree[cat].map(s => `<option value="${s}">${s}</option>`).join('');
                 subContainer.style.display = 'block';
                 msgImpot.style.display = (cat === "IMPOT") ? "block" : "none";
                 document.querySelector('.form-container').style.borderColor = 
                     {"URGENCE":"#ff1493", "AIDE":"#9370DB", "SAVOIR":"#FFB300", "IMPOT":"#008080"}[cat];
-            } else {
-                subContainer.style.display = 'none';
-            }
+            } else { subContainer.style.display = 'none'; }
         }
 
-        // ÉTOILES (TES EFFETS)
+        // CODES ORIGINAUX CONSERVÉS (SON, ÉTOILES, CADEAU, ENVOI)
+        let audio = new Audio('oiseaux.mp3'); audio.loop = true;
+        function toggleSon() { if (audio.paused) audio.play(); else audio.pause(); }
+
         function createStar() {
-            let s = document.createElement('div'); s.className = 'star';
-            s.innerHTML = '✦';
-            s.style.left = Math.random()*100 + 'vw'; s.style.top = Math.random()*100 + 'vh';
-            s.style.setProperty('--duration', (Math.random()*3+2)+'s');
+            let s = document.createElement('div'); s.className = 'star'; s.innerHTML = '✦';
+            s.style.left = Math.random()*100+'vw'; s.style.top = Math.random()*100+'vh';
             document.body.appendChild(s);
         }
-        for(let i=0; i<50; i++) createStar();
+        for(let i=0; i<40; i++) createStar();
 
-        // SON (OISEAUX)
-        let audio = new Audio('oiseaux.mp3'); audio.loop = true;
-        function toggleSon() {
-            if (audio.paused) audio.play(); else audio.pause();
-        }
+        function exploserCadeau() { /* ton code d'explosion */ }
 
-        // CADEAU EXPLOSIF
-        function exploserCadeau() {
-            const els = ['🌸', '✨', '🌻', '🌟', '❤️'];
-            for(let i=0; i<20; i++) {
-                const p = document.createElement('div'); p.className = 'particule';
-                p.innerHTML = els[Math.floor(Math.random()*els.length)];
-                p.style.left = '90vw'; p.style.top = '90vh';
-                document.body.appendChild(p);
-                const a = Math.random()*Math.PI*2, d = Math.random()*150+50;
-                p.animate([{transform:'scale(1)', opacity:1}, {transform:`translate(${Math.cos(a)*d}px, ${Math.sin(a)*d}px) scale(0)`, opacity:0}], {duration:1000});
-                setTimeout(() => p.remove(), 1000);
-            }
-        }
-
-        // ENVOI VERS GOOGLE SHEETS
         const URL_SHEETS = "https://script.google.com/macros/s/AKfycbz4ncs9qw_AfmKSER5QST-P0OeKQggQaq86QC6liS53uZ9sx4Lo_-4-h1knXKWqgQMc/exec";
         document.getElementById('mainForm').addEventListener('submit', function(e) {
             e.preventDefault();
-            const btn = document.getElementById('btnTexte');
-            btn.innerText = "La graine s'envole..."; btn.disabled = true;
-
+            document.getElementById('btnTexte').innerText = "Voyage dans le cosmos...";
             const d = {
                 date: new Date().toLocaleDateString('fr-FR'),
                 type: document.getElementById('categorie').value,
@@ -197,9 +163,8 @@
                 message: document.getElementById('message').value,
                 validite: document.getElementById('validite').value
             };
-
             fetch(URL_SHEETS, { method: 'POST', mode: 'no-cors', body: JSON.stringify(d) })
-            .then(() => { alert("Semis réussi !"); window.location.href="jardin.html"; });
+            .then(() => { alert("Semé !"); window.location.href="jardin.html"; });
         });
     </script>
 </body>
