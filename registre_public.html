@@ -2,83 +2,110 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <title>Le Grand Registre - Le Petit Prince des Jardiniers</title>
     <style>
-        body { font-family: 'Comic Sans MS', cursive; text-align: center; margin: 0; padding: 0; background-color: #FFFF00; color: #000080; min-height: 100vh; }
-        
-        /* Traducteur */
-        .header-tools { display: flex; justify-content: flex-start; padding: 5px; background: rgba(255,255,255,0.3); }
-        #google_translate_element { transform: scale(0.8); transform-origin: top left; opacity: 0.7; }
-
-        /* Menu */
-        .menu-table { margin: 15px auto; background-color: #008080; border-collapse: collapse; border-radius: 10px; overflow: hidden; }
-        .menu-table td { padding: 10px 18px; border: 1px solid #FFFFFF; transition: 0.3s; }
-        .menu-table td:hover { background: #2e7d32; }
-        .menu-table a { text-decoration: none; color: #FFFFFF; font-weight: bold; }
-
-        .container { background: white; padding: 30px; border-radius: 20px; display: inline-block; margin-top: 10px; box-shadow: 0px 10px 20px rgba(0,0,0,0.1); width: 90%; max-width: 850px; margin-bottom: 50px; border: 3px solid #008080; color: #004d40; }
-
-        #searchBox { width: 80%; padding: 12px; margin-bottom: 20px; border: 2px solid #008080; border-radius: 15px; font-family: 'Comic Sans MS'; }
-
-        /* Cartes d'annonces */
-        .carte-action { 
-            background: #f9f9f9; border: 2px solid #008080; border-radius: 15px; 
-            padding: 20px; margin: 15px 0; text-align: left; 
-            box-shadow: 4px 4px 0px #008080; transition: 0.3s;
+        /* Design épuré pour s'intégrer parfaitement dans l'iframe de la page Jardin */
+        body { 
+            font-family: 'Comic Sans MS', cursive; 
+            margin: 0; 
+            padding: 10px; 
+            background-color: transparent; /* Pour prendre la couleur de la page parente */
+            color: #000080; 
         }
-        .carte-action:hover { transform: scale(1.01); }
 
-        .nom-titre { color: #E67E22; font-size: 1.1em; font-weight: bold; display: flex; justify-content: space-between; align-items: center; }
-        .badge-loc { background: #008080; color: white; padding: 3px 8px; border-radius: 8px; font-size: 0.75em; }
-        .info-duree { font-size: 0.8em; color: #2e7d32; font-weight: bold; }
+        #searchBox { 
+            width: 90%; 
+            padding: 12px; 
+            margin-bottom: 20px; 
+            border: 2px solid #008080; 
+            border-radius: 15px; 
+            font-family: 'Comic Sans MS';
+            font-size: 1em;
+            outline: none;
+        }
 
-        /* Copyright */
-        .copyright { margin: 40px 0; font-size: 0.9em; }
-        .copyright a { color: #E67E22; text-decoration: none; font-weight: bold; padding: 5px 10px; transition: all 0.4s ease; display: inline-block; }
-        .copyright a:hover { background: #E67E22; color: white; transform: scale(1.2) rotate(-2deg); }
+        /* Grille des graines */
+        #flux-conteneur { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); 
+            gap: 15px; 
+        }
 
-        #loader { font-style: italic; color: #008080; margin-top: 20px; }
+        .carte-action { 
+            background: #ffffff; 
+            border: 2px solid #008080; 
+            border-radius: 15px; 
+            padding: 15px; 
+            text-align: left; 
+            box-shadow: 4px 4px 0px #008080; 
+            transition: 0.3s;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            min-height: 180px;
+        }
+
+        .carte-action:hover { 
+            transform: translateY(-3px); 
+            border-color: #ff1493; 
+            box-shadow: 4px 4px 0px #ff1493;
+        }
+
+        .nom-titre { 
+            color: #E67E22; 
+            font-size: 1em; 
+            font-weight: bold; 
+            display: flex; 
+            justify-content: space-between;
+            margin-bottom: 8px;
+        }
+
+        .badge-loc { 
+            background: #008080; 
+            color: white; 
+            padding: 2px 6px; 
+            border-radius: 6px; 
+            font-size: 0.7em; 
+        }
+
+        .message-texte { 
+            font-size: 0.95em;
+            line-height: 1.4; 
+            color: #333; 
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .infos-details { 
+            font-size: 0.75em; 
+            color: #006666; 
+            background: #e0f2f1; 
+            padding: 5px; 
+            border-radius: 5px;
+        }
+
+        .date-signature {
+            font-size: 0.65em;
+            color: #999;
+            margin-top: 8px;
+            text-align: right;
+        }
+
+        #loader { 
+            font-weight: bold; 
+            color: #008080; 
+            padding: 20px; 
+        }
     </style>
 </head>
 <body>
 
-    <div class="header-tools">
-        <div id="google_translate_element"></div>
-    </div>
+    <input type="text" id="searchBox" onkeyup="filtrer()" placeholder="🔍 Chercher une ville, un pays, un nom...">
 
-    <audio id="snd-pop" src="https://www.soundjay.com/buttons/sounds/button-37.mp3"></audio>
-
-    <script>
-        function googleTranslateElementInit() { new google.translate.TranslateElement({pageLanguage: 'fr', layout: google.translate.TranslateElement.InlineLayout.SIMPLE}, 'google_translate_element'); }
-        function playPop() { document.getElementById('snd-pop').play().catch(()=>{}); }
-    </script>
-    <script src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
-
-    <table class="menu-table">
-        <tr>
-            <td><a href="index.html" onmouseover="playPop()">Accueil</a></td>
-            <td><a href="formulaire.html" onmouseover="playPop()">Semer</a></td>
-            <td><a href="jardin.html" onmouseover="playPop()">Le Jardin</a></td>
-            <td><a href="impot.html" onmouseover="playPop()">Impôt Public</a></td>
-            <td><a href="registre_public.html" onmouseover="playPop()">Le Registre</a></td>
-        </tr>
-    </table>
-
-    <h2 style="color:#004d40;">📖 Registre des Graines de Fraternité</h2>
-    
-    <div class="container">
-        <input type="text" id="searchBox" onkeyup="filtrer()" placeholder="🔍 Chercher une ville, un pays, un nom, un message...">
-        
-        <div id="loader">Consultation des archives en cours... 🌿</div>
-        <div id="flux-conteneur"></div>
-    </div>
-
-    <div class="copyright">
-        © 2000 <a href="transition-externe.html">Le Petit Prince des Jardiniers</a>
-    </div>
+    <div id="loader">Récolte des graines en cours... 🌱</div>
+    <div id="flux-conteneur"></div>
 
     <script>
-        // Utilisation de TON URL de script
+        // TON URL DE SCRIPT GOOGLE
         const URL_SERVEUR = "https://script.google.com/macros/s/AKfycbxz40XE2KiPXTNZsW-mIg-fm55EivK0r9wzZ5ECFRdEIY53nYH9nLGYRoI71OX93oII/exec";
 
         async function chargerDonnees() {
@@ -88,37 +115,38 @@
                 document.getElementById('loader').style.display = "none";
                 const conteneur = document.getElementById('flux-conteneur');
                 
-                // On affiche TOUTES les données (plus besoin de filtre "impot")
-                const actions = data.reverse(); 
+                // On inverse l'ordre pour voir les dernières graines en premier
+                const graines = data.reverse(); 
 
-                if(actions.length === 0) {
-                    document.getElementById('loader').innerText = "Le jardin est vide pour le moment... 🌱";
-                    document.getElementById('loader').style.display = "block";
+                if(graines.length === 0) {
+                    document.getElementById('loader').innerText = "Le jardin attend ses premières graines... 🌱";
                     return;
                 }
 
-                actions.forEach(item => {
-                    // Calcul de la date lisible
-                    let dateGraine = item.date ? new Date(item.date).toLocaleDateString('fr-FR') : "Inconnue";
+                graines.forEach(item => {
+                    const dateAffichable = item.date ? new Date(item.date).toLocaleDateString('fr-FR') : "N/C";
                     
                     const div = document.createElement('div');
                     div.className = 'carte-action';
                     div.innerHTML = `
-                        <div class="nom-titre">
-                            <span>👤 ${item.nom || "Anonyme"}</span>
-                            <span class="badge-loc">📍 ${item.ville || ""}, ${item.pays || ""}</span>
+                        <div>
+                            <div class="nom-titre">
+                                <span>👤 ${item.nom || "Anonyme"}</span>
+                                <span class="badge-loc">📍 ${item.ville || ""}</span>
+                            </div>
+                            <div class="message-texte">"${item.message || ""}"</div>
                         </div>
-                        <div style="margin: 10px 0; font-size: 0.85em;">
-                            <span class="info-duree">⏳ Durée : ${item.duree || "N/C"}</span> | 
-                            <span style="color:#008080;">📏 Rayon : ${item.rayon || "N/C"}</span>
+                        <div>
+                            <div class="infos-details">
+                                🌍 ${item.pays || ""} | 📏 ${item.rayon || "N/C"} | ⏳ ${item.duree || "N/C"}
+                            </div>
+                            <div class="date-signature">Semée le ${dateAffichable}</div>
                         </div>
-                        <p style="margin: 10px 0; line-height: 1.4; color: #333; font-weight: bold;">"${item.message || ""}"</p>
-                        <small style="color: #666;">Semée le ${dateGraine}</small>
                     `;
                     conteneur.appendChild(div);
                 });
             } catch (e) {
-                document.getElementById('loader').innerHTML = "⚠️ Impossible de lire le registre.<br><small>Assurez-vous d'avoir bien publié votre script Google Sheets en 'Nouvelle Version'.</small>";
+                document.getElementById('loader').innerHTML = "⚠️ Connexion au jardin interrompue.";
             }
         }
 
@@ -130,7 +158,8 @@
             }
         }
 
-        chargerDonnees();
+        // Lancement au chargement
+        window.onload = chargerDonnees;
     </script>
 </body>
 </html>
