@@ -138,7 +138,7 @@
     <script type="text/javascript">
         function googleTranslateElementInit() { new google.translate.TranslateElement({pageLanguage: 'fr'}, 'google_translate_element'); }
 
-        // --- GESTION SOUS-RUBRIQUES ---
+        // --- GESTION SOUS-RUBRIQUES CORRIGÉE ---
         const tree = {
             "URGENCE": ["Matière (Faim/Toit)", "Santé (Corps)", "Mental (Cervelle)", "Urgence Vitale"],
             "AIDE": ["Câlin de l'âme", "Besoin de parler", "Solitude", "Médiation fraternelle"],
@@ -153,10 +153,20 @@
             const msgImpot = document.getElementById('msgImpot');
             
             if (cat && tree[cat]) {
-                subSelect.innerHTML = tree[cat].map(s => `<option value="${s}">${s}</option>`).join('');
+                // On vide et on remplit le select
+                subSelect.innerHTML = "";
+                tree[cat].forEach(function(item) {
+                    let option = document.createElement("option");
+                    option.value = item;
+                    option.text = item;
+                    subSelect.appendChild(option);
+                });
+                
                 subGroup.style.display = 'block';
                 msgImpot.style.display = (cat === "IMPOT") ? "block" : "none";
-            } else { subGroup.style.display = 'none'; }
+            } else { 
+                subGroup.style.display = 'none'; 
+            }
         }
 
         function gererPays(source) {
@@ -173,7 +183,6 @@
             
             const form = document.getElementById('monFormulaire');
             const data = new FormData(form);
-            // URL de ton Script Google
             const url = "https://script.google.com/macros/s/AKfycbxz40XE2KiPXTNZsW-mIg-fm55EivK0r9wzZ5ECFRdEIY53nYH9nLGYRoI71OX93oII/exec";
 
             fetch(url, { method: 'POST', mode: 'no-cors', body: data })
@@ -181,7 +190,7 @@
             .catch(() => { window.location.href = "merci_annonce.html"; });
         }
 
-        // --- ANIMATIONS (OISEAUX & MESSAGERS) ---
+        // --- ANIMATIONS ---
         const audio = document.getElementById('chantOiseaux');
         document.addEventListener('click', () => { if(audio.paused) { audio.volume = 0.05; audio.play(); } });
         
