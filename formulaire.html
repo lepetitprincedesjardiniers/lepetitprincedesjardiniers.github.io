@@ -7,39 +7,42 @@
         body { font-family: 'Comic Sans MS', cursive; text-align: center; margin: 0; padding: 0; background-color: #FFFF00; color: #000080; overflow-x: hidden; min-height: 100vh; }
         #google_translate_element { position: absolute; top: 5px; left: 5px; z-index: 1000; opacity: 0.7; transform: scale(0.8); }
         
-        .menu-table { margin: 20px auto; border-radius: 10px; background-color: #008080; border-collapse: collapse; }
+        /* Menu */
+        .menu-table { margin: 20px auto; border-radius: 10px; background-color: #008080; border-collapse: collapse; margin-left: auto; margin-right: auto;}
         .menu-table td { padding: 10px 15px; border: 1px solid #FFFFFF; transition: 0.3s; }
         .menu-table td:hover { background-color: #00b3b3; }
         .menu-table a { text-decoration: none; color: #FFFFFF; font-weight: bold; font-size: 0.9em; }
 
+        /* Formulaire */
         .form-container { background: white; padding: 30px; border-radius: 20px; display: inline-block; margin-top: 10px; box-shadow: 0px 10px 20px rgba(0,0,0,0.1); width: 90%; max-width: 600px; margin-bottom: 180px; position: relative; z-index: 10; }
         .form-group { text-align: left; margin: 10px 20px; }
         label { font-weight: bold; color: #008080; display: block; margin-bottom: 5px; }
         .sous-label { font-size: 0.75em; color: #006666; margin-bottom: 5px; display: block; font-style: italic; }
+        input, select { width: 100%; padding: 12px; margin-bottom: 15px; border: 2px solid #008080; border-radius: 10px; font-family: 'Comic Sans MS'; font-size: 1em; box-sizing: border-box; }
         
-        input, select { width: 100%; padding: 12px; margin-bottom: 15px; border: 2px solid #008080; border-radius: 10px; font-family: 'Comic Sans MS'; }
-        textarea { width: 100%; padding: 12px; border: 2px solid #008080; border-radius: 10px; font-family: 'Comic Sans MS'; min-height: 180px; resize: vertical; }
+        /* Case Description Agrandie */
+        textarea { width: 100%; padding: 12px; border: 2px solid #008080; border-radius: 10px; font-family: 'Comic Sans MS'; font-size: 1em; min-height: 250px; resize: vertical; box-sizing: border-box; }
 
         .btn-envoyer { width: 100%; padding: 20px; background: #E67E22; color: white; border: none; border-radius: 20px; cursor: pointer; font-weight: bold; font-size: 1.1em; box-shadow: 0px 4px 0px #b35900; transition: 0.1s; }
         .btn-envoyer:active { transform: translateY(4px); box-shadow: 0px 0px 0px #b35900; }
 
-        /* --- Style du Copyright & Explosion --- */
-        footer { margin: 40px 0 20px 0; }
-        .copyright-link { 
-            color: #008080; text-decoration: none; font-weight: bold; padding: 12px; border-radius: 10px; 
-            transition: all 0.3s; cursor: pointer; display: inline-block; position: relative;
-        }
-        .copyright-link:hover { background: #008080; color: #FFFF00; box-shadow: 0 0 15px #008080; transform: scale(1.1); }
-        .star { position: absolute; pointer-events: none; color: #E67E22; font-size: 20px; z-index: 1000; }
+        /* Copyright & Étoiles */
+        footer { margin: 40px 0 80px 0; }
+        .copyright-link { color: #008080; text-decoration: none; font-weight: bold; transition: all 0.3s ease; padding: 10px; border-radius: 8px; cursor: pointer; display: inline-block; position: relative; }
+        .copyright-link:hover { color: #E67E22; background: rgba(255, 255, 255, 0.8); transform: scale(1.1); }
+        .star { position: absolute; pointer-events: none; color: #FFD700; font-size: 24px; z-index: 9999; filter: drop-shadow(0 0 5px gold); }
 
+        /* Animations Animaux & Coffre */
         #coffre-magique { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); font-size: 60px; z-index: 800; transition: transform 0.3s; }
-        #animal-container { position: fixed; z-index: 900; display: flex; align-items: center; pointer-events: none; }
-        #bulle-texte { background: white; border-radius: 15px; padding: 8px 15px; font-style: italic; color: #2E7D32; border: 2px solid #2E7D32; opacity: 0; }
+        #animal-container { position: fixed; z-index: 900; white-space: nowrap; display: flex; align-items: center; pointer-events: none; }
+        #corps-animal { font-size: 50px; }
+        #bulle-texte { background: white; border-radius: 15px; padding: 8px 15px; font-style: italic; color: #2E7D32; margin-right: 10px; font-weight: bold; border: 2px solid #2E7D32; opacity: 0; transition: opacity 0.3s; box-shadow: 2px 2px 10px rgba(0,0,0,0.1); }
         .pop { transform: translateX(-50%) scale(1.4) !important; }
     </style>
 </head>
 <body>
 
+    <audio id="chantOiseaux" loop><source src="oiseaux.mp3" type="audio/mpeg"></audio>
     <div id="google_translate_element"></div>
 
     <table class="menu-table">
@@ -58,6 +61,7 @@
 
     <div class="form-container">
         <form id="monFormulaire" onsubmit="envoyerDon(event)">
+
             <div class="form-group">
                 <label>Identité amoureuse</label>
                 <input type="text" name="nom" placeholder="Ton Prénom de coeur" required>
@@ -67,48 +71,53 @@
                 <label>Provenance</label>
                 <select name="pays_select" id="pays_select" onchange="gererPays('select')">
                     <option value="" selected>--- Choisir ton Pays 🌍 ---</option>
-                    <optgroup label="Europe">
-                        <option value="France">France</option><option value="Belgique">Belgique</option><option value="Suisse">Suisse</option>
+                    <optgroup label="✨ Pays Sages">
+                        <option value="Pays de la grande gentillesse">Pays de la grande gentillesse</option>
+                        <option value="L'astéroïde B 612">L'astéroïde B 612</option>
+                        <option value="Le Pays des Merveilles">Le Pays des Merveilles</option>
                     </optgroup>
-                    <option value="Pays de la grande gentillesse">✨ Pays de la grande gentillesse</option>
+                    <optgroup label="Monde">
+                        <option value="France">France</option><option value="Belgique">Belgique</option><option value="Suisse">Suisse</option><option value="Canada">Canada</option><option value="Maroc">Maroc</option><option value="Algérie">Algérie</option><option value="Sénégal">Sénégal</option>
+                    </optgroup>
                 </select>
-                <input type="text" name="localisation" id="pays_libre" placeholder="Ou tape ton pays ici..." oninput="gererPays('libre')">
+                <input type="text" name="localisation" id="pays_libre" placeholder="Ou écris ton pays ici..." oninput="gererPays('libre')">
             </div>
 
             <div class="form-group">
-                <label>Destination du semis</label>
+                <label>Destination du semis (Rubrique)</label>
                 <select name="type" id="main_cat" onchange="updateSubCats()" required>
-                    <option value="">-- Quel Jardin ? --</option>
+                    <option value="">-- Vers quel jardin ? --</option>
                     <option value="AIDE">💖 AIDE & URGENCES (Cœur, Santé, Matière)</option>
                     <option value="SAVOIR">💡 SAVOIR (Transmission)</option>
-                    <option value="REGULATION">⚖️ RÉGULATION (Équilibre)</option>
+                    <option value="REGULATION">⚖️ RÉGULATION (Conflits & Équilibre)</option>
                     <option value="IMPOT">📜 TRÉSOR PUBLIC (Travaux)</option>
                 </select>
             </div>
 
             <div id="sub_cat_group" class="form-group" style="display:none;">
-                <label>Précision</label>
+                <label>Précision du semis</label>
                 <select name="sousType" id="sub_cat"></select>
             </div>
 
             <div class="form-group">
                 <label>Acheminement & Logistique</label>
+                <span class="sous-label">Priorité à la proximité et au contact direct</span>
                 <select name="logistique" required>
-                    <option value="">-- Comment ça arrive ? --</option>
-                    <optgroup label="🤝 Proximité (Prioritaire)">
+                    <option value="">-- Comment ça voyage ? --</option>
+                    <optgroup label="🤝 Proximité / Main à Main (Prioritaire)">
                         <option value="Rencontre">Remise en main propre (Lieu public)</option>
-                        <option value="Don Entier">J'assure le transport entièrement</option>
-                        <option value="À récupérer">À récupérer chez moi (Le bénéficiaire vient)</option>
+                        <option value="Don Entier">J'assure le transport moi-même</option>
+                        <option value="À récupérer">À récupérer sur place (Le bénéficiaire vient)</option>
                     </optgroup>
                     <optgroup label="🚚 National & Route">
                         <option value="Relais">Point Relais (Simple & Rapide)</option>
                         <option value="Poste">La Poste / Courrier</option>
-                        <option value="Covoit">Colis-voiturage (Covoiturage de colis)</option>
+                        <option value="Covoit">Colis-voiturage (Via un voyageur)</option>
                         <option value="Transporteur">Transporteur Routier (Camion)</option>
                     </optgroup>
-                    <optgroup label="✈️ Grand Large (International)">
+                    <optgroup label="✈️ International (Grand Large)">
                         <option value="Avion">Fret Aérien</option>
-                        <option value="Bateau">Fret Maritime</option>
+                        <option value="Bateau">Fret Maritime (Conteneur)</option>
                         <option value="Rail">Fret Ferroviaire (Train)</option>
                     </optgroup>
                     <optgroup label="🚀 Immatériel">
@@ -120,7 +129,7 @@
 
             <div class="form-group">
                 <label>Description du Don amoureux</label>
-                <textarea name="message" placeholder="Ouvre ton cœur ici... Décris ton don en détails." required></textarea>
+                <textarea name="message" placeholder="Ouvre ton cœur ici... Décris ton don. Plus il y a de détails, plus la graine est forte !" required></textarea>
             </div>
 
             <button type="submit" class="btn-envoyer" id="btnTexte">ENGENDRER DE LA FRATERNITÉ UNIVERSELLE</button>
@@ -128,22 +137,20 @@
     </div>
 
     <footer>
-        <div id="copyright-container">
-            <span class="copyright-link" onclick="exploserEtPartir(event)">© 2000 Le petit prince des jardiniers</span>
-        </div>
+        <span class="copyright-link" onclick="exploserEtoiles(event)">© 2000 Le petit prince des jardiniers</span>
     </footer>
 
     <div id="coffre-magique">🎁</div>
     <div id="animal-container"><div id="bulle-texte"></div><div id="corps-animal">🕊️</div></div>
 
-    <script>
+    <script type="text/javascript">
         function googleTranslateElementInit() { new google.translate.TranslateElement({pageLanguage: 'fr'}, 'google_translate_element'); }
 
         const tree = {
-            "AIDE": ["🚑 URGENCE VITALE", "Matière (Faim/Toit)", "Santé (Corps)", "Câlin de l'âme", "Besoin de parler"],
+            "AIDE": ["🚑 URGENCE VITALE", "Matière (Faim/Toit)", "Santé (Corps)", "Câlin de l'âme", "Besoin de parler", "Aide juridique d'urgence"],
             "SAVOIR": ["Technique (Code/Brico)", "Nature (Jardin/Pain)", "Esprit (Arts/Philo)"],
             "REGULATION": ["Médiation de conflits", "Aide au Droit", "Gestion de l'équilibre"],
-            "IMPOT": ["Voirie/Routes", "Entretien Nature", "Soutien Technique"]
+            "IMPOT": ["Voirie/Routes", "Administration", "Entretien Nature", "Soutien Technique"]
         };
 
         function updateSubCats() {
@@ -159,50 +166,83 @@
         function gererPays(source) {
             const select = document.getElementById('pays_select');
             const libre = document.getElementById('pays_libre');
-            if (source === 'select') libre.value = ""; else select.selectedIndex = 0;
+            if (source === 'select' && select.value !== "") { libre.value = ""; }
+            else if (source === 'libre' && libre.value.trim() !== "") { select.selectedIndex = 0; }
         }
 
         // --- EFFET EXPLOSION D'ÉTOILES ---
-        function exploserEtPartir(e) {
-            for (let i = 0; i < 15; i++) {
+        function exploserEtoiles(e) {
+            for (let i = 0; i < 20; i++) {
                 const star = document.createElement('div');
                 star.className = 'star';
                 star.innerHTML = '⭐';
                 star.style.left = e.pageX + 'px';
                 star.style.top = e.pageY + 'px';
                 document.body.appendChild(star);
-                
                 const angle = Math.random() * Math.PI * 2;
-                const dist = Math.random() * 100 + 50;
-                
+                const dist = Math.random() * 150 + 50;
                 star.animate([
                     { transform: 'translate(0, 0) scale(1)', opacity: 1 },
-                    { transform: `translate(${Math.cos(angle)*dist}px, ${Math.sin(angle)*dist}px) scale(0)`, opacity: 0 }
-                ], { duration: 800, easing: 'ease-out' });
-                
-                setTimeout(() => star.remove(), 800);
+                    { transform: `translate(${Math.cos(angle)*dist}px, ${Math.sin(angle)*dist}px) scale(0) rotate(360deg)`, opacity: 0 }
+                ], { duration: 1000, easing: 'ease-out' });
+                setTimeout(() => star.remove(), 1000);
             }
-            setTimeout(() => { window.location.href = "transition_externe.html"; }, 600);
+            setTimeout(() => { window.location.href = "transition_externe.html"; }, 800);
         }
 
         function envoyerDon(event) {
             event.preventDefault();
             document.getElementById('btnTexte').innerText = "Semailles en cours... 🌱";
-            setTimeout(() => { window.location.href = "merci_annonce.html"; }, 1500);
+            const data = new FormData(document.getElementById('monFormulaire'));
+            fetch("https://script.google.com/macros/s/AKfycbxz40XE2KiPXTNZsW-mIg-fm55EivK0r9wzZ5ECFRdEIY53nYH9nLGYRoI71OX93oII/exec", { method: 'POST', mode: 'no-cors', body: data })
+            .then(() => { window.location.href = "merci_annonce.html"; })
+            .catch(() => { window.location.href = "merci_annonce.html"; });
         }
 
-        // Animation de l'oiseau (simplifiée pour l'exemple)
+        // --- GESTION ANIMATIONS MESSAGERS ---
+        const mesPhrases = ["Semer un don amoureux...", "Engendrer de la fraternité...", "La graine devient arbre...", "Prendre soin du jardin..."];
+        const animaux = ['🕊️', '🦋', '🐝', '🐞', '🦜'];
         const animalCont = document.getElementById('animal-container');
-        let x = -100;
-        function fly() {
-            x += 2;
-            animalCont.style.left = x + 'px';
-            animalCont.style.top = (200 + Math.sin(x/50)*50) + 'px';
-            if (x > window.innerWidth) x = -100;
-            requestAnimationFrame(fly);
+        const bulle = document.getElementById('bulle-texte');
+        const corps = document.getElementById('corps-animal');
+        const coffre = document.getElementById('coffre-magique');
+        let aniX = -200, aniY = 200, targetX, targetY, state = "APPROACHING";
+
+        function startNewMessenger() {
+            bulle.innerText = mesPhrases[Math.floor(Math.random() * mesPhrases.length)];
+            corps.innerText = animaux[Math.floor(Math.random() * animaux.length)];
+            aniX = -200; aniY = 300;
+            targetX = window.innerWidth / 2; targetY = window.innerHeight - 110;
+            state = "APPROACHING";
         }
-        fly();
+
+        function loop() {
+            if (state === "APPROACHING") {
+                aniX += (targetX - aniX) * 0.015; aniY += (targetY - aniY) * 0.015;
+                bulle.style.opacity = "1";
+                if (Math.sqrt(Math.pow(targetX-aniX,2)+Math.pow(targetY-aniY,2)) < 60) {
+                    state = "DEPOSITING"; coffre.classList.add('pop');
+                    setTimeout(() => { 
+                        bulle.style.opacity = "0"; coffre.classList.remove('pop'); state = "LEAVING"; 
+                        targetX = window.innerWidth + 500; targetY = 200; 
+                    }, 2500);
+                }
+            } else if (state === "LEAVING") {
+                aniX += (targetX - aniX) * 0.02; aniY += (targetY - aniY) * 0.02;
+                if (Math.abs(aniX - targetX) < 100) startNewMessenger();
+            }
+            animalCont.style.left = aniX + "px"; animalCont.style.top = aniY + "px";
+            corps.style.transform = (aniX < targetX) ? "scaleX(-1)" : "scaleX(1)";
+            requestAnimationFrame(loop);
+        }
+
+        document.addEventListener('click', () => { 
+            const a = document.getElementById('chantOiseaux');
+            if(a.paused) { a.volume = 0.05; a.play(); }
+        });
+
+        startNewMessenger(); loop();
     </script>
-    <script src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+    <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
 </body>
 </html>
