@@ -27,16 +27,19 @@
         .btn-envoyer:active { transform: translateY(4px); box-shadow: 0px 0px 0px #b35900; }
 
         footer { margin: 40px 0 80px 0; }
-        .copyright-link { color: #008080; text-decoration: none; font-weight: bold; transition: 0.3s; padding: 10px; cursor: pointer; display: inline-block; position: relative; }
-        .star { position: absolute; pointer-events: none; color: #FFD700; font-size: 24px; z-index: 9999; }
+        .copyright-link { color: #008080; text-decoration: none; font-weight: bold; transition: 0.3s; padding: 10px; cursor: pointer; display: inline-block; position: relative; z-index: 20; }
+        
+        .particle { position: absolute; pointer-events: none; z-index: 9999; }
 
-        #coffre-magique { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); font-size: 60px; z-index: 800; transition: 0.3s; }
-        #animal-container { position: fixed; z-index: 900; display: flex; align-items: center; pointer-events: none; }
-        #bulle-texte { background: white; border-radius: 15px; padding: 8px 15px; font-style: italic; color: #2E7D32; border: 2px solid #2E7D32; opacity: 0; transition: 0.3s; font-weight: bold; }
+        #coffre-magique { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); font-size: 60px; z-index: 800; transition: 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275); cursor: pointer; }
+        #animal-container { position: fixed; z-index: 900; display: flex; align-items: center; cursor: pointer; pointer-events: auto; }
+        #bulle-texte { background: white; border-radius: 15px; padding: 8px 15px; font-style: italic; color: #2E7D32; border: 2px solid #2E7D32; opacity: 0; transition: 0.3s; font-weight: bold; white-space: nowrap; margin-right: 10px; }
+        #corps-animal { font-size: 40px; transition: transform 0.2s; }
         .pop { transform: translateX(-50%) scale(1.4) !important; }
+        .cadeau-envole { transform: translateX(-50%) translateY(-100vh) rotate(360deg) scale(0) !important; opacity: 0; }
     </style>
 </head>
-<body>
+<body onclick="activerAudio()">
 
     <audio id="chantOiseaux" loop><source src="oiseaux.mp3" type="audio/mpeg"></audio>
     <div id="google_translate_element"></div>
@@ -167,7 +170,7 @@
 
             <div class="form-group">
                 <label>Description du Don amoureux</label>
-                <textarea name="message" placeholder="Ouvre ton cœur... Détaille ton don ou ton besoin. Plus la graine est décrite, plus elle fleurira vite !" required></textarea>
+                <textarea name="message" placeholder="Ouvre ton cœur... Détaille ton don ou ton besoin." required></textarea>
             </div>
 
             <button type="submit" class="btn-envoyer" id="btnTexte">ENGENDRER LA FRATERNITÉ UNIVERSELLE</button>
@@ -179,7 +182,10 @@
     </footer>
 
     <div id="coffre-magique">🎁</div>
-    <div id="animal-container"><div id="bulle-texte"></div><div id="corps-animal">🕊️</div></div>
+    <div id="animal-container" onclick="animationSpeciale()">
+        <div id="bulle-texte"></div>
+        <div id="corps-animal">🕊️</div>
+    </div>
 
     <script>
         function googleTranslateElementInit() { new google.translate.TranslateElement({pageLanguage: 'fr'}, 'google_translate_element'); }
@@ -209,21 +215,91 @@
             else { extraDiv.style.display = "none"; }
         }
 
-        function exploserEtoiles(e) {
-            for (let i = 0; i < 25; i++) {
-                const star = document.createElement('div');
-                star.className = 'star'; star.innerHTML = '⭐';
-                star.style.left = e.pageX + 'px'; star.style.top = e.pageY + 'px';
-                document.body.appendChild(star);
+        // --- MAGIE & EFFETS ---
+        function exploserParticules(x, y, emojis, count = 20) {
+            for (let i = 0; i < count; i++) {
+                const p = document.createElement('div');
+                p.className = 'particle';
+                p.innerHTML = emojis[Math.floor(Math.random() * emojis.length)];
+                p.style.left = x + 'px'; p.style.top = y + 'px';
+                p.style.fontSize = (Math.random() * 20 + 10) + 'px';
+                document.body.appendChild(p);
                 const angle = Math.random() * Math.PI * 2;
-                const dist = Math.random() * 160 + 40;
-                star.animate([
+                const dist = Math.random() * 200 + 50;
+                p.animate([
                     { transform: 'translate(0,0) scale(1)', opacity: 1 },
                     { transform: `translate(${Math.cos(angle)*dist}px, ${Math.sin(angle)*dist}px) scale(0) rotate(360deg)`, opacity: 0 }
-                ], { duration: 1000 });
-                setTimeout(() => star.remove(), 1000);
+                ], { duration: 1500, easing: 'ease-out' });
+                setTimeout(() => p.remove(), 1500);
             }
-            setTimeout(() => { window.location.href = "transition_externe.html"; }, 800);
+        }
+
+        function exploserEtoiles(e) {
+            exploserParticules(e.pageX, e.pageY, ['⭐', '✨', '🌟']);
+            setTimeout(() => { window.location.href = "transition_externe.html"; }, 1000);
+        }
+
+        const phrases = ["Graine de bonheur !", "La fraternité arrive !", "Un don précieux !", "Toc toc ! Cadeau !"];
+        const animaux = ['🕊️', '🦋', '🐝', '🐞', '🦜'];
+        const animalCont = document.getElementById('animal-container');
+        const bulle = document.getElementById('bulle-texte');
+        const corps = document.getElementById('corps-animal');
+        const coffre = document.getElementById('coffre-magique');
+        let aniX = -200, state = "FLY", targetY = 250;
+
+        function animationSpeciale() {
+            if (state === "FLY" || state === "TALK") {
+                state = "MAGIC";
+                bulle.innerText = "Pour toi ! ✨";
+                bulle.style.opacity = 1;
+                // L'oiseau descend vers le cadeau
+                targetY = window.innerHeight - 100;
+                setTimeout(() => {
+                    exploserParticules(window.innerWidth/2, window.innerHeight - 50, ['🌸', '🌺', '🌼', '✨', '💝'], 40);
+                    coffre.classList.add('cadeau-envole');
+                    setTimeout(() => {
+                        coffre.classList.remove('cadeau-envole');
+                        state = "EXIT";
+                        targetY = 250;
+                    }, 2000);
+                }, 1000);
+            }
+        }
+
+        function messenger() {
+            if (state === "FLY") {
+                aniX += 2;
+                if (Math.abs(aniX - window.innerWidth/2) < 5) {
+                    state = "TALK";
+                    bulle.innerText = phrases[Math.floor(Math.random()*phrases.length)];
+                    bulle.style.opacity = 1;
+                    coffre.classList.add('pop');
+                    setTimeout(() => { if(state === "TALK") { bulle.style.opacity = 0; coffre.classList.remove('pop'); state = "EXIT"; } }, 3000);
+                }
+            } else if (state === "EXIT") {
+                aniX += 3;
+                if (aniX > window.innerWidth + 200) {
+                    aniX = -200; 
+                    corps.innerText = animaux[Math.floor(Math.random()*animaux.length)]; 
+                    state = "FLY";
+                    bulle.style.opacity = 0;
+                }
+            } else if (state === "MAGIC") {
+                aniX = window.innerWidth / 2;
+            }
+            
+            animalCont.style.left = aniX + 'px';
+            // Inversion de l'oiseau selon le sens
+            corps.style.transform = (state === "EXIT") ? "scaleX(-1)" : "scaleX(1)";
+            
+            let wave = (state === "MAGIC") ? 0 : Math.sin(aniX/60)*30;
+            animalCont.style.top = (targetY + wave) + 'px';
+            requestAnimationFrame(messenger);
+        }
+
+        function activerAudio() { 
+            const a = document.getElementById('chantOiseaux');
+            if(a.paused) { a.volume = 0.05; a.play(); }
         }
 
         function envoyerDon(event) {
@@ -234,40 +310,6 @@
             .then(() => { window.location.href = "merci_annonce.html"; })
             .catch(() => { window.location.href = "merci_annonce.html"; });
         }
-
-        const phrases = ["Semer un don...", "La fraternité grandit.", "Un jardinier a posté !", "Graine reçue..."];
-        const animaux = ['🕊️', '🦋', '🐝', '🐞', '🦜'];
-        const animalCont = document.getElementById('animal-container');
-        const bulle = document.getElementById('bulle-texte');
-        const corps = document.getElementById('corps-animal');
-        const coffre = document.getElementById('coffre-magique');
-        let aniX = -200, state = "FLY";
-
-        function messenger() {
-            if (state === "FLY") {
-                aniX += 2;
-                if (Math.abs(aniX - window.innerWidth/2) < 5) {
-                    state = "TALK";
-                    bulle.innerText = phrases[Math.floor(Math.random()*phrases.length)];
-                    bulle.style.opacity = 1;
-                    coffre.classList.add('pop');
-                    setTimeout(() => { bulle.style.opacity = 0; coffre.classList.remove('pop'); state = "EXIT"; }, 3000);
-                }
-            } else if (state === "EXIT") {
-                aniX += 2.5;
-                if (aniX > window.innerWidth + 200) {
-                    aniX = -200; corps.innerText = animaux[Math.floor(Math.random()*animaux.length)]; state = "FLY";
-                }
-            }
-            animalCont.style.left = aniX + 'px';
-            animalCont.style.top = (250 + Math.sin(aniX/60)*30) + 'px';
-            requestAnimationFrame(messenger);
-        }
-
-        document.addEventListener('click', () => { 
-            const a = document.getElementById('chantOiseaux');
-            if(a.paused) { a.volume = 0.05; a.play(); }
-        });
 
         messenger();
     </script>
