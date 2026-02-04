@@ -7,10 +7,28 @@
         body { font-family: 'Comic Sans MS', cursive; text-align: center; margin: 0; padding: 0; background-color: #FFFF00; color: #000080; overflow-x: hidden; min-height: 100vh; }
         #google_translate_element { position: absolute; top: 5px; left: 5px; z-index: 1000; opacity: 0.7; transform: scale(0.8); }
         
-        .menu-table { margin: 20px auto; border-radius: 10px; background-color: #008080; border-collapse: collapse; margin-left: auto; margin-right: auto;}
+        .menu-table { margin: 20px auto 5px auto; border-radius: 10px; background-color: #008080; border-collapse: collapse; margin-left: auto; margin-right: auto;}
         .menu-table td { padding: 10px 15px; border: 1px solid #FFFFFF; transition: 0.3s; }
         .menu-table td:hover { background-color: #00b3b3; }
         .menu-table a { text-decoration: none; color: #FFFFFF; font-weight: bold; font-size: 0.85em; }
+
+        /* STYLE DE LA PETITE POMPE À CLIQUER */
+        .guide-trigger { color: #008080; font-size: 0.9em; cursor: pointer; text-decoration: underline; font-weight: bold; display: inline-block; margin-bottom: 15px; transition: 0.3s; }
+        .guide-trigger:hover { color: #E67E22; transform: scale(1.1); }
+
+        /* FENÊTRE MODALE DU GUIDE */
+        #aide-panneau { 
+            display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); 
+            width: 90%; max-width: 400px; background: #008080; color: white; padding: 20px; 
+            border-radius: 20px; box-shadow: 0px 0px 50px rgba(0,0,0,0.5); z-index: 2000; border: 4px solid #FFFF00;
+        }
+        #aide-panneau h4 { margin-top: 0; color: #FFFF00; text-align: center; border-bottom: 2px solid #FFFF00; padding-bottom: 5px; }
+        .close-modal { position: absolute; top: 10px; right: 15px; cursor: pointer; font-size: 1.5em; font-weight: bold; color: #FFFF00; }
+        .aide-section { margin-bottom: 12px; text-align: left; }
+        .aide-titre { font-weight: bold; color: #FFFF00; display: block; margin-bottom: 3px; }
+
+        /* Overlay pour fermer au clic ailleurs */
+        #overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.3); z-index: 1999; }
 
         .form-container { background: white; padding: 30px; border-radius: 20px; display: inline-block; margin-top: 10px; box-shadow: 0px 10px 20px rgba(0,0,0,0.1); width: 95%; max-width: 800px; margin-bottom: 180px; position: relative; z-index: 10; }
         .form-group { text-align: left; margin: 15px 20px; }
@@ -20,7 +38,6 @@
         input, select, textarea { width: 100%; padding: 12px; margin-bottom: 10px; border: 2px solid #008080; border-radius: 10px; font-family: 'Comic Sans MS'; font-size: 1em; box-sizing: border-box; }
         textarea { min-height: 250px; resize: vertical; background-color: #fffdf0; }
 
-        /* MANIFESTE PHILOSOPHIQUE AJOUTÉ */
         .manifeste-don { background: #fdf2f2; border-radius: 15px; padding: 15px; margin-bottom: 15px; border: 2px solid #ffcccc; font-size: 0.9em; line-height: 1.5; color: #c0392b; }
         .manifeste-don b { color: #e67e22; }
 
@@ -34,22 +51,12 @@
         .copyright-link { color: #008080; text-decoration: none; font-weight: bold; transition: 0.3s; padding: 10px; cursor: pointer; display: inline-block; position: relative; z-index: 20; }
         
         .particle { position: absolute; pointer-events: none; z-index: 9999; }
-
         #coffre-magique { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); font-size: 60px; z-index: 800; transition: 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275); cursor: pointer; }
-        
         #animal-container { position: fixed; z-index: 900; display: flex; align-items: center; cursor: pointer; pointer-events: auto; }
         #bulle-texte { background: white; border-radius: 15px; padding: 8px 15px; font-style: italic; color: #2E7D32; border: 2px solid #2E7D32; opacity: 0; transition: 0.3s; font-weight: bold; white-space: nowrap; margin-right: 10px; }
         #corps-animal { font-size: 32px; transition: transform 0.3s; display: inline-block; }
-        
         .pop { transform: translateX(-50%) scale(1.4) !important; }
         .cadeau-envole { transform: translateX(-50%) translateY(-100vh) rotate(360deg) scale(0) !important; opacity: 0; }
-
-        #aide-panneau { position: fixed; right: 10px; top: 80px; width: 260px; background: #008080; color: white; padding: 15px; border-radius: 15px; font-size: 0.85em; text-align: left; box-shadow: -5px 5px 15px rgba(0,0,0,0.2); z-index: 5; border: 2px solid white; line-height: 1.4; }
-        #aide-panneau h4 { margin-top: 0; color: #FFFF00; text-align: center; border-bottom: 2px solid #FFFF00; padding-bottom: 5px; }
-        .aide-section { margin-bottom: 12px; }
-        .aide-titre { font-weight: bold; color: #FFFF00; display: block; margin-bottom: 3px; }
-        
-        @media (max-width: 1250px) { #aide-panneau { position: relative; width: 90%; margin: 20px auto; top: 0; right: 0; } }
     </style>
 </head>
 <body onclick="activerAudio()">
@@ -70,7 +77,11 @@
         </tr>
     </table>
 
+    <div class="guide-trigger" onclick="toggleGuide(event)">🌱 Ouvrir le Guide des Semailles</div>
+
+    <div id="overlay" onclick="toggleGuide(event)"></div>
     <div id="aide-panneau">
+        <span class="close-modal" onclick="toggleGuide(event)">×</span>
         <h4>🌟 Guide des Semailles</h4>
         <div class="aide-section">
             <span class="aide-titre">💡 SAVOIRS</span>
@@ -128,29 +139,17 @@
                         </optgroup>
                         <optgroup label="🌍 Afrique">
                             <option value="Algérie">Algérie</option>
-                            <option value="Bénin">Bénin</option>
-                            <option value="Burkina Faso">Burkina Faso</option>
-                            <option value="Cameroun">Cameroun</option>
-                            <option value="Congo">Congo</option>
-                            <option value="Côte d'Ivoire">Côte d'Ivoire</option>
-                            <option value="Gabon">Gabon</option>
-                            <option value="Guinée">Guinée</option>
-                            <option value="Madagascar">Madagascar</option>
-                            <option value="Mali">Mali</option>
                             <option value="Maroc">Maroc</option>
-                            <option value="Niger">Niger</option>
                             <option value="Sénégal">Sénégal</option>
-                            <option value="Togo">Togo</option>
                             <option value="Tunisie">Tunisie</option>
+                            <option value="Côte d'Ivoire">Côte d'Ivoire</option>
                         </optgroup>
                         <optgroup label="🌍 Amériques & Océanie">
                             <option value="Canada">Canada / Québec</option>
                             <option value="Haïti">Haïti</option>
-                            <option value="Polynésie">Polynésie</option>
-                            <option value="Vanuatu">Vanuatu</option>
                             <option value="USA">États-Unis</option>
                         </optgroup>
-                        <option value="AUTRE_PAYS">🌐 Un pays secret ou non listé...</option>
+                        <option value="AUTRE_PAYS">🌐 Un pays secret...</option>
                     </select>
                     <select name="rayon" style="flex: 1;">
                         <option value="0">Sur place</option>
@@ -161,7 +160,7 @@
                     </select>
                 </div>
                 <div id="extra_pays" class="extra-field">
-                    <input type="text" name="pays_precision" placeholder="Nom de ton pays secret ou oublié...">
+                    <input type="text" name="pays_precision" placeholder="Nom de ton pays secret...">
                 </div>
                 <input type="text" name="localisation" placeholder="Ville, Code Postal ou Quartier précis..." required>
             </div>
@@ -189,50 +188,46 @@
 
             <div class="form-group">
                 <label>Cycle de Vie (Durée de validité)</label>
-                <span class="sous-label">Note poétique pour l'automate de gestion</span>
                 <select name="duree_validite" required>
-                    <option value="1">🌱 Un brin d'herbe (1 jour - Urgence)</option>
-                    <option value="7">🌿 Une petite fleur (1 semaine)</option>
-                    <option value="30" selected>🌳 Un buisson (1 mois - Standard)</option>
-                    <option value="90">🌲 Un jeune arbre (3 mois)</option>
-                    <option value="365">🍃 Un chêne séculaire (1 an - Transmission)</option>
+                    <option value="1">🌱 Un jour (Urgence)</option>
+                    <option value="7">🌿 Une semaine</option>
+                    <option value="30" selected>🌳 Un mois (Standard)</option>
+                    <option value="90">🌲 Trois mois</option>
+                    <option value="365">🍃 Un an (Transmission)</option>
                 </select>
             </div>
 
             <div class="form-group">
-                <label>Logistique & Acheminement</label>
+                <label>Logistique & Acheminement (Mis à jour)</label>
                 <span class="sous-label">Comment le don voyage-t-il ?</span>
                 <select name="logistique" required>
-                    <optgroup label="🤝 Proximité / Humain">
+                    <optgroup label="🤝 Humain & Proximité">
                         <option value="Main Propre">Remise en main propre (Lieu public)</option>
                         <option value="Moi-même">J'assure le transport moi-même</option>
                         <option value="Récupérer">À récupérer sur place</option>
                         <option value="Covoit">Covoiturage humain (Je t'emmène)</option>
                     </optgroup>
-                    <optgroup label="🚚 Route & National">
+                    <optgroup label="🚚 Expédition & Route">
                         <option value="Relais">Point Relais (Mondial Relay / Colis Privé)</option>
                         <option value="Poste">La Poste / Courrier</option>
                         <option value="Colis-voiturage">Colis-voiturage (Via un voyageur)</option>
-                        <option value="Transporteur">Transporteur Routier (Fret camion)</option>
+                        <option value="Transporteur">Fret Camion / Logistique lourde</option>
                     </optgroup>
                     <optgroup label="🚀 Immatériel">
                         <option value="Numérique">Transfert Numérique / Visio</option>
+                        <option value="Téléphone">Appel téléphonique / Soutien oral</option>
                         <option value="Pensée">Ondes de fraternité</option>
                     </optgroup>
                 </select>
             </div>
 
             <div class="form-group">
-                <label>Description du Don amoureux (Offre ou Demande)</label>
-                
+                <label>Description du Don amoureux</label>
                 <div class="manifeste-don">
-                    ✨ <b>Le système est conçu pour transformer des métiers ou des objets en actes de fraternité.</b><br>
-                    Demander un service est aussi un don en soi, car cela permet à l'autre de cultiver sa propre générosité.<br><br>
-                    🕊️ <i>Gratuité & Altruisme :</i> Ici, rien ne s'achète, tout s'offre sans compter.<br>
-                    💎 <i>Richesse collective :</i> C'est par ces cadeaux pluriels que l'on engendre la paix et la sécurité conviviale.
+                    ✨ <b>Ici, on transforme les talents en actes de fraternité.</b><br>
+                    🕊️ Tout s'offre sans compter. C'est la richesse du don qui crée la paix.
                 </div>
-
-                <textarea name="message" placeholder="Détaille ici ton offre ou ton besoin : 'Papy cherche aide ordi', 'Maman cherche crèche', 'Donne jouets', 'Ingénieur offre mentorat'..." required></textarea>
+                <textarea name="message" placeholder="Détaille ici ton offre ou ton besoin..." required></textarea>
             </div>
 
             <button type="submit" class="btn-envoyer" id="btnTexte">ENGENDRER LA FRATERNITÉ UNIVERSELLE</button>
@@ -240,7 +235,7 @@
     </div>
 
     <footer>
-        <span class="copyright-link" onclick="exploserEtoiles(event)">© 2000 Le petit prince des jardiniers</span>
+        <a href="transition_externe.html" class="copyright-link" onclick="exploserEtoiles(event)">© 2000 Le petit prince des jardiniers</a>
     </footer>
 
     <div id="coffre-magique">🎁</div>
@@ -250,14 +245,23 @@
     </div>
 
     <script>
+        function toggleGuide(e) {
+            e.stopPropagation();
+            const guide = document.getElementById('aide-panneau');
+            const overlay = document.getElementById('overlay');
+            const isVisible = guide.style.display === 'block';
+            guide.style.display = isVisible ? 'none' : 'block';
+            overlay.style.display = isVisible ? 'none' : 'block';
+        }
+
         function googleTranslateElementInit() { new google.translate.TranslateElement({pageLanguage: 'fr'}, 'google_translate_element'); }
 
         const tree = {
-            "SAVOIR": ["🎓 Soutien Scolaire & Études", "🎨 Talents (Danse, Musique, Art)", "💼 Mentorat (Ingénieur, Cadre, Pro)", "AUTRE_SUB"],
-            "VIE": ["🛠️ Prêt de Matériel (Vélo, Outils)", "🏠 Accueil & Logement", "🚗 Sport & Loisirs (Foot, Jeux)", "🧹 Aide Quotidienne (Courses, Ménage)", "AUTRE_SUB"],
-            "AIDE": ["🚑 URGENCE (Gaz, Panne, Fuite)", "🤝 Garde d'enfants / Crèche", "🏥 Santé & Visite aux malades", "🌈 Écoute & Présence", "AUTRE_SUB"],
-            "REGULATION": ["⚖️ Aide Administrative (Papiers)", "🕊️ Médiation & Conseils", "AUTRE_SUB"],
-            "IMPOT": ["🏗️ Chantiers Collectifs", "🌲 Protection de la Nature", "AUTRE_SUB"]
+            "SAVOIR": ["🎓 Soutien Scolaire", "🎨 Talents (Art, Musique)", "💼 Mentorat Pro", "AUTRE_SUB"],
+            "VIE": ["🛠️ Prêt de Matériel", "🏠 Accueil & Logement", "🚗 Sport & Loisirs", "AUTRE_SUB"],
+            "AIDE": ["🚑 URGENCE", "🤝 Garde d'enfants", "🏥 Santé & Visites", "AUTRE_SUB"],
+            "REGULATION": ["⚖️ Aide Administrative", "🕊️ Médiation", "AUTRE_SUB"],
+            "IMPOT": ["🏗️ Chantiers Collectifs", "🌲 Nature", "AUTRE_SUB"]
         };
 
         function updateSubCats() {
@@ -265,15 +269,14 @@
             const subGroup = document.getElementById('sub_cat_group');
             const subSelect = document.getElementById('sub_cat');
             if (cat && tree[cat]) {
-                subSelect.innerHTML = tree[cat].map(s => `<option value="${s}">${s === 'AUTRE_SUB' ? '🌈 Autre précision...' : s}</option>`).join('');
+                subSelect.innerHTML = tree[cat].map(s => `<option value="${s}">${s === 'AUTRE_SUB' ? '🌈 Autre...' : s}</option>`).join('');
                 subGroup.style.display = 'block';
             } else { subGroup.style.display = 'none'; }
         }
 
         function checkOther(select, divId) {
             const extraDiv = document.getElementById(divId);
-            if (select.value.includes("AUTRE")) { extraDiv.style.display = "block"; }
-            else { extraDiv.style.display = "none"; }
+            extraDiv.style.display = select.value.includes("AUTRE") ? "block" : "none";
         }
 
         function exploserParticules(x, y, emojis, count = 20) {
@@ -294,12 +297,15 @@
         }
 
         function exploserEtoiles(e) {
+            e.preventDefault();
             exploserParticules(e.pageX, e.pageY, ['⭐', '✨', '🌟']);
-            setTimeout(() => { window.location.href = "transition_externe.html"; }, 1000);
+            const href = e.currentTarget.getAttribute('href');
+            setTimeout(() => { window.location.href = href; }, 800);
         }
 
-        const phrases = ["Graine de bonheur !", "Fraternité !", "Don précieux !", "Cadeau !"];
-        const animaux = ['🕊️', '🦋', '🐝', '🐞', '🦜'];
+        // Animation de l'oiseau
+        const phrases = ["Graine de bonheur !", "Fraternité !", "Cadeau !"];
+        const animaux = ['🕊️', '🦋', '🐝', '🐞'];
         const animalCont = document.getElementById('animal-container');
         const bulle = document.getElementById('bulle-texte');
         const corps = document.getElementById('corps-animal');
@@ -307,57 +313,36 @@
         let aniX = -200, state = "FLY", targetY = 250;
 
         function animationSpeciale() {
-            if (state === "FLY" || state === "TALK") {
-                state = "MAGIC";
-                bulle.innerText = "Pour toi ! ✨";
-                bulle.style.opacity = 1;
-                targetY = window.innerHeight - 100;
+            state = "MAGIC";
+            bulle.innerText = "Pour toi ! ✨";
+            bulle.style.opacity = 1;
+            targetY = window.innerHeight - 100;
+            setTimeout(() => {
+                exploserParticules(window.innerWidth/2, window.innerHeight - 50, ['🌸', '✨', '💝'], 30);
+                coffre.classList.add('cadeau-envole');
                 setTimeout(() => {
-                    exploserParticules(window.innerWidth/2, window.innerHeight - 50, ['🌸', '🌺', '🌼', '✨', '💝'], 40);
-                    coffre.classList.add('cadeau-envole');
-                    setTimeout(() => {
-                        coffre.classList.remove('cadeau-envole');
-                        state = "EXIT";
-                        targetY = 250;
-                    }, 2000);
-                }, 1000);
-            }
+                    coffre.classList.remove('cadeau-envole');
+                    state = "EXIT";
+                    targetY = 250;
+                }, 2000);
+            }, 1000);
         }
 
         function messenger() {
             if (state === "FLY") {
-                aniX += 2.5;
-                corps.style.transform = "scaleX(1)"; // OISEAU ORIENTÉ VERS L'AVANT
+                aniX += 2;
                 if (Math.abs(aniX - window.innerWidth/2) < 5) {
                     state = "TALK";
                     bulle.innerText = phrases[Math.floor(Math.random()*phrases.length)];
                     bulle.style.opacity = 1;
-                    let originalY = targetY;
-                    targetY = window.innerHeight - 80; 
-                    setTimeout(() => {
-                        exploserParticules(window.innerWidth/2, window.innerHeight - 40, ['🌸', '✨', '🌟', '🍀'], 15);
-                        coffre.classList.add('pop');
-                        setTimeout(() => {
-                            targetY = originalY; 
-                            bulle.style.opacity = 0;
-                            coffre.classList.remove('pop');
-                            state = "EXIT";
-                        }, 800);
-                    }, 600);
+                    setTimeout(() => { bulle.style.opacity = 0; state = "EXIT"; }, 2000);
                 }
             } else if (state === "EXIT") {
-                aniX += 3.5;
-                corps.style.transform = "scaleX(1)"; 
-                if (aniX > window.innerWidth + 200) {
-                    aniX = -200; 
-                    corps.innerText = animaux[Math.floor(Math.random()*animaux.length)]; 
-                    state = "FLY";
-                    bulle.style.opacity = 0;
-                }
+                aniX += 3;
+                if (aniX > window.innerWidth + 200) { aniX = -200; state = "FLY"; }
             }
             animalCont.style.left = aniX + 'px';
-            let wave = (state === "MAGIC" || state === "TALK") ? 0 : Math.sin(aniX/60)*30;
-            animalCont.style.top = (targetY + wave) + 'px';
+            animalCont.style.top = (targetY + Math.sin(aniX/60)*30) + 'px';
             requestAnimationFrame(messenger);
         }
 
@@ -378,4 +363,4 @@
     </script>
     <script src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
 </body>
-</html>
+</html
