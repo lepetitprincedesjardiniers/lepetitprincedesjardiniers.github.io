@@ -22,8 +22,13 @@
         #corps-animal { font-size: 50px; }
         #bulle-texte { background: rgba(255, 255, 255, 0.9); border-radius: 15px; padding: 8px 15px; font-style: italic; color: #2E7D32; margin-right: 10px; font-weight: bold; border: 2px solid #2E7D32; opacity: 0; transition: opacity 0.3s; }
         .pop { transform: translateX(-50%) scale(1.4) !important; }
-        .section-logistique { border-top: 2px dashed #008080; margin-top: 20px; padding-top: 15px; background: #f9f9f9; border-radius: 15px; }
+        .section-logistique { border-top: 2px dashed #008080; margin-top: 20px; padding-top: 15px; }
         .msg-alerte { color: #d32f2f; font-size: 0.8em; font-weight: bold; display: none; margin-bottom: 10px; }
+
+        /* --- Style du Copyright --- */
+        .copyright-footer { margin-top: 30px; margin-bottom: 50px; font-size: 0.9em; }
+        .copyright-footer a { color: #008080; text-decoration: none; transition: color 0.3s, text-shadow 0.3s; font-weight: bold; }
+        .copyright-footer a:hover { color: #E67E22; text-shadow: 1px 1px 2px rgba(0,0,0,0.2); }
     </style>
 </head>
 <body>
@@ -36,7 +41,7 @@
             <td><a href="index.html">Accueil</a></td>
             <td><a href="formulaire.html">Semer</a></td>
             <td><a href="jardin.html">Le Jardin</a></td>
-            <td><a href="impot.html">Trésor Public</a></td>
+            <td><a href="impot.html">Impôts Publics</a></td>
             <td><a href="regulation.html">Régulation</a></td>
             <td><a href="urgence.html">Urgences</a></td>
             <td><a href="aide.html">Aide</a></td>
@@ -56,24 +61,22 @@
 
             <div class="form-group">
                 <label>Provenance (Monde sans frontières)</label>
+                <span class="sous-label">Choisis dans la liste OU écris ton pays.</span>
                 <select name="pays_select" id="pays_select" onchange="gererPays('select')">
                     <option value="" selected>--- Choisir dans la liste 🌍 ---</option>
                     <optgroup label="✨ Les pays sages">
-                        <option value="L'astéroïde B 612">L'astéroïde B 612</option>
                         <option value="Pays de la grande gentillesse">Pays de la grande gentillesse</option>
+                        <option value="L'astéroïde B 612">L'astéroïde B 612</option>
                         <option value="Le Pays des Merveilles">Le Pays des Merveilles</option>
                     </optgroup>
                     <optgroup label="Europe">
-                        <option value="Allemagne">Allemagne</option><option value="Belgique">Belgique</option><option value="Espagne">Espagne</option><option value="France">France</option><option value="Italie">Italie</option><option value="Luxembourg">Luxembourg</option><option value="Portugal">Portugal</option><option value="Suisse">Suisse</option>
+                        <option value="Belgique">Belgique</option><option value="France">France</option><option value="Suisse">Suisse</option>
                     </optgroup>
                     <optgroup label="Afrique">
-                        <option value="Algérie">Algérie</option><option value="Bénin">Bénin</option><option value="Cameroun">Cameroun</option><option value="Côte d'Ivoire">Côte d'Ivoire</option><option value="Gabon">Gabon</option><option value="Maroc">Maroc</option><option value="Sénégal">Sénégal</option><option value="Tunisie">Tunisie</option>
+                        <option value="Algérie">Algérie</option><option value="Maroc">Maroc</option><option value="Sénégal">Sénégal</option>
                     </optgroup>
                     <optgroup label="Amériques">
-                        <option value="Argentine">Argentine</option><option value="Brésil">Brésil</option><option value="Canada">Canada</option><option value="Colombie">Colombie</option><option value="États-Unis">États-Unis</option><option value="Haïti">Haïti</option><option value="Mexique">Mexique</option>
-                    </optgroup>
-                    <optgroup label="Asie & Océanie">
-                        <option value="Australie">Australie</option><option value="Chine">Chine</option><option value="Inde">Inde</option><option value="Japon">Japon</option><option value="Liban">Liban</option><option value="Vietnam">Vietnam</option>
+                        <option value="Canada">Canada</option><option value="Haïti">Haïti</option>
                     </optgroup>
                 </select>
                 <input type="text" name="localisation" id="pays_libre" placeholder="Ou ton pays ici..." oninput="gererPays('libre')">
@@ -81,49 +84,36 @@
             </div>
 
             <div class="form-group">
-                <label>Urgence du Semis (Priorité)</label>
-                <select name="priorite" required>
-                    <option value="Graine de Patience">🌱 Graine de Patience (Projet à long terme)</option>
-                    <option value="Feu de Joie" selected>🔥 Feu de Joie (Vie quotidienne & Animation)</option>
-                    <option value="Cri du Coeur">🚨 Cri du Cœur (Action immédiate requise)</option>
-                </select>
-            </div>
-
-            <div class="form-group">
                 <label>Destination du semis (Rubrique)</label>
                 <select name="type" id="main_cat" onchange="updateSubCats()" required>
                     <option value="">-- Vers quel jardin ? --</option>
-                    <option value="IMPOT">📜 TRÉSOR PUBLIC (Bien Commun & Infrastructures)</option>
-                    <option value="REGULATION">⚖️ RÉGULATION (Équilibre & Justice Fraternelle)</option>
-                    <option value="URGENCE">🚑 URGENCE & DÉTRESSE (Survie & Matière)</option>
-                    <option value="SAVOIR">💡 SAVOIR (Transmission & Arts)</option>
+                    <option value="URGENCE">🚑 URGENCE (Santé & Matière)</option>
+                    <option value="AIDE">💖 AIDE (Cœur & Écoute)</option>
+                    <option value="SAVOIR">💡 SAVOIR (Transmission)</option>
+                    <option value="IMPOT">📜 TRÉSOR PUBLIC (Travaux)</option>
                 </select>
             </div>
 
             <div id="sub_cat_group" class="form-group" style="display:none;">
-                <label>Précision du semis (Sous-rubrique)</label>
+                <label>Précision du semis</label>
                 <select name="sousType" id="sub_cat"></select>
-                <div id="msgImpot" class="msg-alerte">NB: Les dons au Trésor Public servent aux travaux visibles par tous.</div>
+                <div id="msgImpot" class="msg-alerte">⚠️ Motivation indispensable. Travaux ingrats !</div>
             </div>
 
             <div class="form-group">
                 <label>Zone d'offrande (Rayon d'action)</label>
-                <select name="rayon" id="rayon_select" onchange="updateLogistique()" required>
-                    <option value="Local">Local (Ma ville / 10km)</option>
-                    <option value="National">National (Mon pays)</option>
-                    <option value="Monde Entier" selected>Monde Entier (International)</option>
-                    <option value="Infini">Rayon Infini (Cosmique)</option>
+                <select name="rayon" required>
+                    <option value="10km">10 km</option><option value="100km">100 km</option><option value="Monde Entier">Le Monde Entier</option><option value="Infini">Rayon Infini</option>
                 </select>
             </div>
 
             <div class="section-logistique">
                 <div class="form-group">
-                    <label>Acheminement du cadeau (Logistique)</label>
-                    <select name="logistique" id="logistique_select" required>
+                    <label>Acheminement du cadeau</label>
+                    <span class="sous-label">Comment le don arrive-t-il ?</span>
+                    <select name="logistique" required>
                         <option value="Don Entier (J'assure)">Don Entier (J'assure le transport)</option>
                         <option value="À récupérer">À récupérer sur place</option>
-                        <option value="Numérique">Transfert Numérique (Email/Web)</option>
-                        <option value="Postal">Envoi Postal / Colis</option>
                     </select>
                 </div>
 
@@ -139,11 +129,15 @@
 
             <div class="form-group">
                 <label>Description du Don amoureux</label>
-                <textarea name="message" rows="4" placeholder="Décris ici ton Don avec précision..." required></textarea>
+                <textarea name="message" rows="4" placeholder="Décris ici ton Don (ex: Ma charpente vacille...)" required></textarea>
             </div>
 
             <button type="submit" class="btn-envoyer" id="btnTexte">ENGENDRER DE LA FRATERNITÉ UNIVERSELLE</button>
         </form>
+
+        <div class="copyright-footer">
+            <a href="transition_externe.html">Copyright 2000 Le Petit Prince des Jardiniers</a>
+        </div>
     </div>
 
     <div id="coffre-magique">🎁</div>
@@ -153,10 +147,10 @@
         function googleTranslateElementInit() { new google.translate.TranslateElement({pageLanguage: 'fr'}, 'google_translate_element'); }
 
         const tree = {
-            "IMPOT": ["Voirie & Chemins", "Bâtiments Communs", "Entretien Nature", "Outils partagés", "Administration du village"],
-            "REGULATION": ["Médiation de conflit", "Aide juridique", "Gestion des ressources", "Équilibre social", "Paperasse & Droit"],
-            "URGENCE": ["Faim (Alimentaire)", "Toit (Hébergement)", "Santé (Corps)", "Détresse (Mental)", "Urgence Vitale"],
-            "SAVOIR": ["Technique (Brico/Code)", "Terre (Jardin/Pain)", "Esprit (Arts/Philo)", "Éducation & Lecture"]
+            "URGENCE": ["Matière (Faim/Toit)", "Santé (Corps)", "Mental (Cervelle)", "Urgence Vitale"],
+            "AIDE": ["Câlin de l'âme", "Besoin de parler", "Solitude", "Médiation fraternelle"],
+            "SAVOIR": ["Technique (Code/Brico)", "Nature (Jardin/Pain)", "Esprit (Arts/Philo)"],
+            "IMPOT": ["Voirie/Routes", "Administration", "Entretien Nature", "Soutien Technique"]
         };
 
         function updateSubCats() {
@@ -172,24 +166,6 @@
             } else { subGroup.style.display = 'none'; }
         }
 
-        function updateLogistique() {
-            const rayon = document.getElementById('rayon_select').value;
-            const logSelect = document.getElementById('logistique_select');
-            if (rayon === "Monde Entier" || rayon === "Infini") {
-                logSelect.innerHTML = `
-                    <option value="Numérique">Transfert Numérique (Internet)</option>
-                    <option value="Postal International">Envoi Postal International</option>
-                    <option value="Conseil">Don Immatériel (Conseil/Savoir)</option>
-                `;
-            } else {
-                logSelect.innerHTML = `
-                    <option value="Main à main">Main à main (Rencontre)</option>
-                    <option value="À récupérer">À récupérer chez moi</option>
-                    <option value="J'assure">J'assure le transport local</option>
-                `;
-            }
-        }
-
         function gererPays(source) {
             const select = document.getElementById('pays_select');
             const libre = document.getElementById('pays_libre');
@@ -199,15 +175,20 @@
 
         function envoyerDon(event) {
             event.preventDefault();
-            document.getElementById('btnTexte').innerText = "Semailles en cours... 🌱";
-            const data = new FormData(document.getElementById('monFormulaire'));
-            fetch("https://script.google.com/macros/s/AKfycbxz40XE2KiPXTNZsW-mIg-fm55EivK0r9wzZ5ECFRdEIY53nYH9nLGYRoI71OX93oII/exec", 
-            { method: 'POST', mode: 'no-cors', body: data })
+            const bouton = document.getElementById('btnTexte');
+            bouton.innerText = "Semailles en cours... 🌱";
+            const form = document.getElementById('monFormulaire');
+            const data = new FormData(form);
+            const url = "https://script.google.com/macros/s/AKfycbxz40XE2KiPXTNZsW-mIg-fm55EivK0r9wzZ5ECFRdEIY53nYH9nLGYRoI71OX93oII/exec";
+
+            fetch(url, { method: 'POST', mode: 'no-cors', body: data })
             .then(() => { window.location.href = "merci_annonce.html"; })
             .catch(() => { window.location.href = "merci_annonce.html"; });
         }
 
-        // --- ANIMATIONS ORIGINALES CONSERVÉES ---
+        const audio = document.getElementById('chantOiseaux');
+        document.addEventListener('click', () => { if(audio.paused) { audio.volume = 0.05; audio.play(); } });
+        
         const mesPhrases = ["Semer un don amoureux...", "Engendrer de la fraternité...", "Prendre soin du jardin..."];
         const animaux = ['🕊️', '🦋', '🐝', '🐞', '🦜'];
         const animalCont = document.getElementById('animal-container');
