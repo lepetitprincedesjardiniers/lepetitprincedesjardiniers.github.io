@@ -4,32 +4,52 @@
     <meta charset="UTF-8">
     <title>Le Jardin de la Fraternité - Registre</title>
     <style>
-        /* TON STYLE EXACT CONSERVÉ */
+        /* --- STYLE CONSERVÉ ET ANIMATIONS FLUIDES --- */
         body { font-family: 'Comic Sans MS', cursive; text-align: center; margin: 0; padding: 0; background-color: #FFFF00; color: #000080; overflow-x: hidden; min-height: 100vh; padding-bottom: 80px; }
         .top-bar { position: relative; width: 100%; min-height: 40px; background: rgba(255,255,255,0.3); padding: 5px 0; }
         .menu-table { margin: 5px auto; border-radius: 10px; background-color: #008080; border-collapse: collapse; }
-        .menu-table td { padding: 8px 15px; border: 1px solid #FFFFFF; }
+        .menu-table td { padding: 8px 15px; border: 1px solid #FFFFFF; transition: 0.3s; }
+        .menu-table td:hover { background-color: #006666; }
         .menu-table a { text-decoration: none; color: #FFFFFF; font-weight: bold; font-size: 0.85em; }
+        
         .phrase-rose { color: #ff1493; font-weight: bold; font-size: 1.1em; text-shadow: 1px 1px 2px #ff69b4; animation: eclat 1.5s infinite alternate; margin-top: 5px; }
         @keyframes eclat { from { opacity: 0.7; } to { opacity: 1; } }
+        .phrase-sous { color: #000080; font-weight: bold; margin: 1px 0; font-size: 0.9em; }
         
         #jardin-sacre { position: relative; height: 100px; width: 100%; overflow: hidden; background: rgba(255,255,255,0.1); margin-top: 5px; }
         .fleur-clonée { position: absolute; font-size: 25px; animation: apparitionFleur 1s ease-out forwards; }
         @keyframes apparitionFleur { 0% { transform: scale(0) rotate(-50deg); opacity: 0; } 100% { transform: scale(1) rotate(0deg); opacity: 1; } }
-
-        /* MOTEUR DE RECHERCHE INTEGRÉ DISCRETEMENT */
-        .search-box { margin: 15px auto; width: 80%; max-width: 400px; }
-        .search-box input { width: 100%; padding: 10px; border-radius: 20px; border: 2px solid #008080; font-family: 'Comic Sans MS'; outline: none; }
-
-        /* ANIMATION OISEAU REPARÉE */
-        #animal-container { position: fixed; z-index: 900; white-space: nowrap; display: flex; align-items: center; pointer-events: none; transition: all 5s ease-in-out; }
-        #corps-animal { font-size: 30px; }
-
-        .mur-reel { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 15px; padding: 10px; max-width: 1200px; margin: 0 auto; }
-        .carte-message { background: white; border: 3px solid #008080; border-radius: 12px; padding: 12px; min-height: 200px; text-align: left; cursor: pointer; transition: 0.3s; }
-        .carte-message:hover { transform: scale(1.02); box-shadow: 0 5px 15px rgba(0,0,0,0.1); }
         
-        .copyright-wrapper { position: fixed; bottom: 5px; left: 50%; transform: translateX(-50%); background: rgba(255,255,255,0.7); padding: 5px 15px; border-radius: 15px; border: 2px solid #ff1493; }
+        #animal-container { position: fixed; z-index: 900; white-space: nowrap; display: flex; align-items: center; pointer-events: none; transition: all 5s ease-in-out; }
+        #corps-animal { font-size: 35px; }
+        
+        /* RECHERCHE */
+        .search-box { background: #008080; padding: 12px; margin: 10px auto; max-width: 700px; border-radius: 20px; color: white; box-shadow: 0 4px 15px rgba(0,0,0,0.2); }
+        .search-container { display: flex; flex-direction: column; gap: 8px; align-items: center; }
+        .search-row { display: flex; gap: 10px; width: 100%; justify-content: center; }
+        .search-item { display: flex; flex-direction: column; align-items: center; width: 100%; }
+        .search-item label { font-size: 0.8em; margin-bottom: 2px; }
+        .search-item input { padding: 8px; border-radius: 10px; border: none; width: 90%; text-align: center; font-family: 'Comic Sans MS'; }
+        
+        .quick-filters { display: flex; flex-wrap: wrap; gap: 5px; justify-content: center; margin-top: 10px; }
+        .btn-filtre { background: rgba(255,255,255,0.2); border: 1px solid white; color: white; padding: 4px 10px; border-radius: 15px; cursor: pointer; font-size: 0.75em; font-family: 'Comic Sans MS'; }
+        .btn-filtre:hover { background: white; color: #008080; }
+
+        /* CARTES */
+        .mur-reel { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 15px; padding: 15px; max-width: 1200px; margin: 0 auto; }
+        .carte-message { 
+            background: white; border: 3px solid #008080; border-radius: 12px; padding: 12px; 
+            box-shadow: 4px 4px 0px #008080; transition: 0.3s; text-align: left; cursor: pointer; 
+            min-height: 200px; display: flex; flex-direction: column;
+        }
+        .carte-message:hover { transform: scale(1.03); }
+
+        /* MODALE (MESSAGE GÉANT) */
+        #fond-sombre { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); z-index: 2000; justify-content: center; align-items: center; }
+        .message-geant { background: #FFFFF0; width: 90%; max-width: 600px; padding: 30px; border-radius: 25px; border: 8px solid #008080; position: relative; }
+        .bouton-fermer { position: absolute; top: -15px; right: -15px; background: #FF1493; color: white; border: 3px solid white; border-radius: 50%; width: 40px; height: 40px; cursor: pointer; font-weight: bold; }
+
+        .copyright-wrapper { position: fixed; bottom: 5px; left: 50%; transform: translateX(-50%); background: rgba(255,255,255,0.8); padding: 5px 15px; border-radius: 15px; border: 2px solid #ff1493; font-size: 0.8em; }
         .copyright-wrapper a { text-decoration: none; color: #ff1493; font-weight: bold; }
     </style>
 </head>
@@ -41,28 +61,49 @@
                 <td><a href="index.html">Accueil</a></td>
                 <td><a href="formulaire.html">Semer</a></td>
                 <td><a href="jardin.html">Le Jardin</a></td>
-                <td><a href="impots.html">Impôts Publics</a></td>
+                <td><a href="impots.html">Impôts</a></td>
                 <td><a href="regulation.html">Régulation</a></td>
                 <td><a href="aide.html">Aide</a></td>
             </tr>
         </table>
     </div>
 
-    <h2 style="color:#2E7D32;">🍃 Le Jardin de la Fraternité 🍃</h2>
-    <div class="phrase-rose">Bienvenue au Jardin ensoleilleur des Dons entiers</div>
-    
-    <div class="search-box">
-        <input type="text" id="moteur" placeholder="🔍 Chercher une ville ou un don..." onkeyup="filtrer()">
-    </div>
+    <h2 style="color:#2E7D32; margin: 10px 0;">🍃 Le Jardin de la Fraternité 🍃</h2>
+    <div class="phrase-rose">Bienvenue au Jardin ensoleilleur des Dons entiers :</div>
+    <div class="phrase-sous">Les talents, les créations, les savoirs, les offrandes...</div>
 
     <div id="jardin-sacre"></div>
+
+    <div class="search-box">
+        <div class="search-container">
+            <div class="search-row">
+                <div class="search-item"><label>Pays</label><input type="text" id="searchPays" onkeyup="filtrerAnnonces()"></div>
+                <div class="search-item"><label>Ville</label><input type="text" id="searchVille" onkeyup="filtrerAnnonces()"></div>
+            </div>
+            <div class="search-item">
+                <label>Mots clés</label>
+                <input type="text" id="searchKeyword" style="width: 95%;" onkeyup="filtrerAnnonces()" placeholder="Que cherchez-vous ?">
+            </div>
+            <div class="quick-filters">
+                <button class="btn-filtre" onclick="filtreRapide('savoir')">🎓 Savoirs</button>
+                <button class="btn-filtre" onclick="filtreRapide('vie citoyenne')">🏛️ Citoyenneté</button>
+                <button class="btn-filtre" onclick="filtreRapide('harmonie')">🕊️ Harmonie</button>
+                <button class="btn-filtre" onclick="resetFiltres()">🔄 Tout voir</button>
+            </div>
+        </div>
+    </div>
 
     <div id="chargement">✨ Récolte en cours...</div>
     <div class="mur-reel" id="mur-messages"></div>
 
-    <div class="copyright-wrapper">
-        <a href="transition-externe.html">© Le Petit Prince des Jardiniers 🌹</a>
+    <div id="fond-sombre" onclick="fermerGrandMessage()">
+        <div class="message-geant" onclick="event.stopPropagation()">
+            <button class="bouton-fermer" onclick="fermerGrandMessage()">X</button>
+            <div id="geant-contenu"></div>
+        </div>
     </div>
+
+    <div class="copyright-wrapper"><a href="transition-externe.html">© Le Petit Prince des Jardiniers 🌹</a></div>
 
     <div id="animal-container">
         <div id="corps-animal">🕊️</div>
@@ -70,48 +111,82 @@
 
 <script>
     const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxz40XE2KiPXTNZsW-mIg-fm55EivK0r9wzZ5ECFRdEIY53nYH9nLGYRoI71OX93oII/exec"; 
-    let baseDonnees = [];
+    let toutesAnnonces = [];
 
     async function chargerAnnonces() {
         try {
             const response = await fetch(SCRIPT_URL);
             const data = await response.json();
-            baseDonnees = data.reverse();
+            toutesAnnonces = data.reverse();
             document.getElementById('chargement').style.display = 'none';
-            afficher(baseDonnees);
-        } catch (e) { console.log("Erreur"); }
+            afficher(toutesAnnonces);
+        } catch (e) { console.error("Erreur de chargement"); }
     }
 
     function afficher(liste) {
         const conteneur = document.getElementById('mur-messages');
         conteneur.innerHTML = '';
-        
         liste.forEach(ann => {
+            // CORRECTION : On cherche dans 'sub_precision' ou 'message'
+            const msg = ann.sub_precision || ann.message || ann.localisation || "...";
             const carte = document.createElement('div');
             carte.className = 'carte-message';
-            
-            // PRIORITÉ : On cherche "message", sinon "sub_precision", sinon "localisation"
-            const monTexte = ann.message || ann.sub_precision || ann.localisation || "Graine de fraternité";
-            
+            carte.onclick = () => ouvrirGrandMessage(ann);
             carte.innerHTML = `
-                <div style="font-weight:bold;color:#2E7D32;">👤 ${ann.nom || "Anonyme"}</div>
-                <div style="margin-top:10px; color:#000080; font-style:italic;">"${monTexte}"</div>
-                <div style="font-size:0.75em; margin-top:15px; color:#666; border-top:1px dashed #ccc; padding-top:5px;">
-                    📍 ${ann.localisation || ""} | ${ann.pays_select || ""}<br>
-                    ⏳ ${ann.duree_validite || ""}
+                <div style="font-weight:bold;color:#2E7D32;border-bottom:1px solid #eee;margin-bottom:8px;">👤 ${ann.nom || "Anonyme"}</div>
+                <div style="flex-grow:1;font-style:italic;">"${msg.substring(0, 100)}${msg.length > 100 ? '...' : ''}"</div>
+                <div style="font-size:0.7em;color:#666;margin-top:10px;">
+                    📍 ${ann.localisation || ""} (${ann.pays_select || ""})<br>
+                    ⏳ ${ann.duree_validite || "Permanente"}
                 </div>
             `;
             conteneur.appendChild(carte);
         });
     }
 
-    function filtrer() {
-        const mot = document.getElementById('moteur').value.toLowerCase();
-        const resultat = baseDonnees.filter(ann => 
-            JSON.stringify(ann).toLowerCase().includes(mot)
-        );
+    function filtrerAnnonces() {
+        const pays = document.getElementById('searchPays').value.toLowerCase();
+        const ville = document.getElementById('searchVille').value.toLowerCase();
+        const key = document.getElementById('searchKeyword').value.toLowerCase();
+
+        const resultat = toutesAnnonces.filter(ann => {
+            const matchPays = (ann.pays_select || "").toLowerCase().includes(pays);
+            const matchVille = (ann.localisation || "").toLowerCase().includes(ville);
+            const matchKey = JSON.stringify(ann).toLowerCase().includes(key);
+            return matchPays && matchVille && matchKey;
+        });
         afficher(resultat);
     }
+
+    function filtreRapide(mot) {
+        document.getElementById('searchKeyword').value = mot;
+        filtrerAnnonces();
+    }
+
+    function resetFiltres() {
+        document.getElementById('searchPays').value = '';
+        document.getElementById('searchVille').value = '';
+        document.getElementById('searchKeyword').value = '';
+        afficher(toutesAnnonces);
+    }
+
+    function ouvrirGrandMessage(ann) {
+        const msg = ann.sub_precision || ann.message || "Graine de fraternité";
+        document.getElementById('geant-contenu').innerHTML = `
+            <h2 style="color:#008080;">${ann.nom || "Anonyme"}</h2>
+            <p style="font-size:1.2em; color:#000080;">"${msg}"</p>
+            <hr>
+            <p style="text-align:left; font-size:0.9em;">
+                <b>Lieu :</b> ${ann.localisation} (${ann.pays_select})<br>
+                <b>Type :</b> ${ann.type} - ${ann.sousType}<br>
+                <b>Logistique :</b> ${ann.logistique}<br>
+                <b>Validité :</b> ${ann.duree_validite}
+            </p>
+        `;
+        document.getElementById('fond-sombre').style.display = 'flex';
+    }
+
+    function fermerGrandMessage() { document.getElementById('fond-sombre').style.display = 'none'; }
 
     function initAnims() {
         const animal = document.getElementById('animal-container');
