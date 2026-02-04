@@ -2,181 +2,226 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <title>Le Trésor Public - Accueil</title>
-    
-    <script type="text/javascript">
-        function googleTranslateElementInit() {
-            new google.translate.TranslateElement({pageLanguage: 'fr'}, 'google_translate_element');
-        }
-    </script>
-    <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
-
+    <title>Semer un Don - Le Petit Prince des Jardiniers</title>
     <style>
-        body { 
-            font-family: 'Comic Sans MS', cursive; text-align: center; margin: 0; padding: 0; 
-            background: radial-gradient(circle at center, #1b2735 0%, #000000 100%);
-            color: #ffffff; overflow-x: hidden; min-height: 100vh; position: relative;
-        }
-
-        /* STYLE TRADUCTEUR */
-        #google_translate_element { 
-            position: absolute; top: 10px; left: 10px; z-index: 3000; 
-            opacity: 0.6; transform: scale(0.85); transition: 0.3s;
-        }
-        #google_translate_element:hover { opacity: 1; }
-
-        .header-container { position: relative; padding-top: 20px; z-index: 100; }
-        .titre-fraternite { display: block; font-size: 2em; letter-spacing: 3px; color: #f0e68c; text-shadow: 0 0 15px rgba(255,230,140,0.5); font-weight: bold; margin-bottom: 10px; }
-        
-        .menu-table { margin: 10px auto; border-radius: 10px; background-color: #008080; border-collapse: collapse; position: relative; z-index: 10; }
-        .menu-table td { border: 1px solid #FFFFFF; transition: 0.3s; }
+        body { font-family: 'Comic Sans MS', cursive; text-align: center; margin: 0; padding: 0; background-color: #FFFF00; color: #000080; overflow-x: hidden; min-height: 100vh; }
+        #google_translate_element { position: absolute; top: 5px; left: 5px; z-index: 1000; opacity: 0.7; transform: scale(0.8); }
+        .menu-table { margin: 20px auto; border-radius: 10px; background-color: #008080; border-collapse: collapse; margin-left: auto; margin-right: auto;}
+        .menu-table td { padding: 10px 15px; border: 1px solid #FFFFFF; transition: 0.3s; }
         .menu-table td:hover { background-color: #00b3b3; }
-        .menu-table a { display: block; padding: 12px 20px; text-decoration: none; color: #FFFFFF; font-weight: bold; }
-
-        .soleil-cadre { width: 140px; height: 140px; background: #FFD700; border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 0 25px #FFA500; margin: 20px auto; position: relative; z-index: 20; transition: 0.8s; text-decoration: none; }
-        .soleil-cadre h1 { font-size: 0.9em; color: #333; line-height: 1.1; margin: 0; padding: 10px; }
-        .soleil-cadre:hover { background: linear-gradient(45deg, #ff0000, #ff7f00, #ffff00, #00ff00, #0000ff); box-shadow: 0 0 50px white; transform: scale(1.1) rotate(360deg); }
-
-        .terre-don { 
-            width: 350px; height: 350px; margin: 40px auto; border-radius: 50%; 
-            background-image: url('https://upload.wikimedia.org/wikipedia/commons/thumb/c/c3/Solarsystemscope_texture_2k_earth_daymap.jpg/1200px-Solarsystemscope_texture_2k_earth_daymap.jpg'); 
-            background-size: cover; display: flex; align-items: center; justify-content: center; 
-            text-decoration: none; color: white; box-shadow: inset -30px -30px 60px rgba(0,0,0,0.9); 
-            animation: rotationTerre 40s linear infinite; position: relative; z-index: 5; transition: transform 1.5s;
-        }
-        .terre-don:hover { transform: scale(1.05); }
-        .texte-semis { font-family: 'Georgia', serif; font-style: italic; font-weight: bold; letter-spacing: 2px; text-shadow: 2px 2px 10px black; font-size: 1.4em; padding: 20px; }
-        @keyframes rotationTerre { from { background-position: 0 0; } to { background-position: 1000px 0; } }
-
-        .bulles-grid { display: flex; justify-content: center; gap: 20px; flex-wrap: wrap; padding: 20px; position: relative; z-index: 5; align-items: flex-start; }
-        .nuage, .cadre-aide { background: #e0f7fa; border: 3px solid #008080; border-radius: 50px; padding: 20px; width: 320px; color: #000080; transition: 0.4s; text-decoration: none; display: block; }
-        .nuage:hover, .cadre-aide:hover { transform: translateY(-10px); }
-
-        .etoile-justice { background: #E6E6FA; border: 3px solid #9370DB; width: 300px; min-height: 250px; clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%); display: flex; flex-direction: column; align-items: center; justify-content: center; text-decoration: none; color: #333; transition: 0.8s; padding: 20px; }
-        .etoile-justice:hover { clip-path: circle(50% at 50% 50%); transform: scale(1.1); background: #d1c4e9; }
-
-        .rond-savoir { background: #FFF9C4; border: 3px solid #FFB300; width: 180px; height: 180px; border-radius: 50%; display: flex; flex-direction: column; align-items: center; justify-content: center; text-decoration: none; color: #795548; transition: 0.6s; margin-top: 20px; }
-        .rond-savoir:hover { transform: scale(1.1); background: #FFEB3B; }
-
-        /* LIENS SÉPARÉS DANS L'AIDE */
-        .lien-separé { display: inline-block; padding: 10px 15px; border-radius: 20px; text-decoration: none; font-weight: bold; transition: 0.3s; margin: 5px; }
-        .lien-urgence { background: #ff1493; color: white; border: 2px solid white; }
-        .lien-urgence:hover { background: #c71585; transform: scale(1.1); }
-        .lien-ecoute { background: #9370DB; color: white; border: 2px solid white; }
-        .lien-ecoute:hover { background: #6a5acd; transform: scale(1.1); }
+        .menu-table a { text-decoration: none; color: #FFFFFF; font-weight: bold; font-size: 0.9em; }
+        .form-container { background: white; padding: 30px; border-radius: 20px; display: inline-block; margin-top: 10px; box-shadow: 0px 10px 20px rgba(0,0,0,0.1); width: 90%; max-width: 550px; margin-bottom: 180px; position: relative; z-index: 10; }
+        .form-group { text-align: left; margin: 10px 20px; }
+        label { font-weight: bold; color: #008080; display: block; margin-bottom: 5px; }
+        .sous-label { font-size: 0.75em; color: #006666; margin-bottom: 5px; display: block; font-style: italic; }
+        input, textarea, select { width: 100%; padding: 12px; margin-bottom: 15px; border: 2px solid #008080; border-radius: 10px; font-family: 'Comic Sans MS'; font-size: 1em; box-sizing: border-box; background-color: #fcfcfc; }
+        .btn-envoyer { width: 100%; padding: 20px; background: #E67E22; color: white; border: none; border-radius: 20px; cursor: pointer; font-weight: bold; font-size: 1.1em; box-shadow: 0px 4px 0px #b35900; transition: 0.1s; }
+        .btn-envoyer:active { transform: translateY(4px); box-shadow: 0px 0px 0px #b35900; }
+        #coffre-magique { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); font-size: 60px; z-index: 800; transition: transform 0.3s; }
+        #animal-container { position: fixed; z-index: 900; white-space: nowrap; display: flex; align-items: center; pointer-events: none; }
+        #corps-animal { font-size: 50px; }
+        #bulle-texte { background: rgba(255, 255, 255, 0.9); border-radius: 15px; padding: 8px 15px; font-style: italic; color: #2E7D32; margin-right: 10px; font-weight: bold; border: 2px solid #2E7D32; opacity: 0; transition: opacity 0.3s; }
+        .pop { transform: translateX(-50%) scale(1.4) !important; }
         
-        /* Étoiles */
-        .star { position: fixed; color: white; z-index: -1; text-shadow: 0 0 8px white; animation: twinkle var(--duration) infinite ease-in-out, moveStar var(--move-duration) linear infinite; user-select: none; }
-        @keyframes twinkle { 0%, 100% { opacity: 0.2; transform: scale(0.7); } 50% { opacity: 1; transform: scale(1.2); } }
-        @keyframes moveStar { from { transform: translateX(-10vw); } to { transform: translateX(110vw); } }
-
-        #btn-son { position: fixed; top: 20px; right: 20px; z-index: 1000; background: none; border: none; color: white; cursor: pointer; font-size: 40px; }
-        #coffre-magique { position: fixed; font-size: 55px; z-index: 8; filter: drop-shadow(0 0 15px gold); cursor: pointer; }
+        .section-logistique { border-top: 2px dashed #008080; margin-top: 20px; padding-top: 15px; }
+        .msg-alerte { color: #d32f2f; font-size: 0.8em; font-weight: bold; display: none; margin-bottom: 10px; }
     </style>
 </head>
 <body>
 
+    <audio id="chantOiseaux" loop><source src="oiseaux.mp3" type="audio/mpeg"></audio>
     <div id="google_translate_element"></div>
 
-    <div class="header-container">
-        <div class="titre-fraternite">La fraternité du palais nature</div>
-        <table class="menu-table">
-            <tr>
-                <td><a href="index.html">Accueil</a></td>
-                <td><a href="formulaire.html">Semer</a></td>
-                <td><a href="jardin.html">Le Jardin</a></td>
-                <td><a href="impot.html">Impôts Publics</a></td>
-                <td><a href="regulation.html">Régulation</a></td>
-                <td><a href="urgence.html">Urgences</a></td>
-                <td><a href="aide.html">Aide</a></td>
-                <td><a href="savoirs.html">Savoirs</a></td>
-            </tr>
-        </table>
-    </div>
+    <table class="menu-table">
+        <tr>
+            <td><a href="index.html">Accueil</a></td>
+            <td><a href="formulaire.html">Semer</a></td>
+            <td><a href="jardin.html">Le Jardin</a></td>
+            <td><a href="impot.html">Impôts Publics</a></td>
+            <td><a href="regulation.html">Régulation</a></td>
+            <td><a href="urgence.html">Urgences</a></td>
+            <td><a href="aide.html">Aide</a></td>
+            <td><a href="savoirs.html">Savoirs</a></td>
+        </tr>
+    </table>
 
-    <button id="btn-son" onclick="toggleSon()">🕊️</button>
+    <h2 style="color:#E67E22;">🌟 Semer un Don - Le Petit Prince des Jardiniers</h2>
 
-    <a href="jardin.html" class="soleil-cadre"><h1>Le Trésor Public du jardin</h1></a>
+    <div class="form-container">
+        <form id="monFormulaire" onsubmit="envoyerDon(event)">
 
-    <a href="jardin.html" class="terre-don">
-        <div class="texte-semis"><b>ESPACE DU SEMIS DE DON ENTIER</b></div>
-    </a>
-
-    <div class="bulles-grid">
-        <a href="impot.html" class="nuage">
-            <h3 style="margin:0;">📜 Impôts Publics</h3>
-            <p style="font-size: 0.8em; font-weight: bold;">Travaux en participation libre.</p>
-        </a>
-
-        <div style="display: flex; flex-direction: column; align-items: center;">
-            <a href="regulation.html" class="etoile-justice">
-                <h3 style="margin:0;">⚖️ Régulation</h3>
-                <p style="font-size:0.8em;">Harmonie citoyenne.</p>
-            </a>
-            <a href="savoirs.html" class="rond-savoir">
-                <h3 style="margin:0;">💡 Savoirs</h3>
-                <p style="font-size:0.7em;">Transmission & Éclosion</p>
-            </a>
-        </div>
-
-        <div class="cadre-aide">
-            <h3 style="margin:0;">🆘 Urgence & Détresse</h3>
-            <p style="font-size:0.75em; font-style: italic;">L'Étoile de la Main Tendue & Le Câlin de l'Âme</p>
-            
-            <div style="margin-top:15px; display: flex; flex-direction: column; gap: 10px;">
-                <a href="urgence.html" class="lien-separé lien-urgence">🏥 Urgences (Corps & Santé)</a>
-                <a href="aide.html" class="lien-separé lien-ecoute">💖 Écoute (Câlin de l'Âme)</a>
+            <div class="form-group">
+                <label>Identité amoureuse</label>
+                <input type="text" name="nom" placeholder="Ton Prénom de coeur" required>
             </div>
-        </div>
+
+            <div class="form-group">
+                <label>Provenance (Monde sans frontières)</label>
+                <span class="sous-label">Choisis dans la liste OU écris ton pays.</span>
+                <select name="pays_select" id="pays_select" onchange="gererPays('select')">
+                    <option value="" selected>--- Choisir dans la liste 🌍 ---</option>
+                    <optgroup label="✨ Les pays sages">
+                        <option value="Pays de la grande gentillesse">Pays de la grande gentillesse</option>
+                        <option value="L'astéroïde B 612">L'astéroïde B 612</option>
+                        <option value="Le Pays des Merveilles">Le Pays des Merveilles</option>
+                    </optgroup>
+                    <optgroup label="Europe">
+                        <option value="Belgique">Belgique</option><option value="France">France</option><option value="Suisse">Suisse</option>
+                    </optgroup>
+                    <optgroup label="Afrique">
+                        <option value="Algérie">Algérie</option><option value="Maroc">Maroc</option><option value="Sénégal">Sénégal</option>
+                    </optgroup>
+                    <optgroup label="Amériques">
+                        <option value="Canada">Canada</option><option value="Haïti">Haïti</option>
+                    </optgroup>
+                </select>
+                <input type="text" name="localisation" id="pays_libre" placeholder="Ou ton pays ici..." oninput="gererPays('libre')">
+                <input type="text" name="ville" placeholder="Ta Ville" required>
+            </div>
+
+            <div class="form-group">
+                <label>Destination du semis (Rubrique)</label>
+                <select name="type" id="main_cat" onchange="updateSubCats()" required>
+                    <option value="">-- Vers quel jardin ? --</option>
+                    <option value="URGENCE">🚑 URGENCE (Santé & Matière)</option>
+                    <option value="AIDE">💖 AIDE (Cœur & Écoute)</option>
+                    <option value="SAVOIR">💡 SAVOIR (Transmission)</option>
+                    <option value="IMPOT">📜 TRÉSOR PUBLIC (Travaux)</option>
+                </select>
+            </div>
+
+            <div id="sub_cat_group" class="form-group" style="display:none;">
+                <label>Précision du semis</label>
+                <select name="sousType" id="sub_cat"></select>
+                <div id="msgImpot" class="msg-alerte">⚠️ Motivation indispensable. Travaux ingrats !</div>
+            </div>
+
+            <div class="form-group">
+                <label>Zone d'offrande (Rayon d'action)</label>
+                <select name="rayon" required>
+                    <option value="10km">10 km</option><option value="100km">100 km</option><option value="Monde Entier">Le Monde Entier</option><option value="Infini">Rayon Infini</option>
+                </select>
+            </div>
+
+            <div class="section-logistique">
+                <div class="form-group">
+                    <label>Acheminement du cadeau</label>
+                    <span class="sous-label">Comment le don arrive-t-il ?</span>
+                    <select name="logistique" required>
+                        <option value="Don Entier (J'assure)">Don Entier (J'assure le transport)</option>
+                        <option value="À récupérer">À récupérer sur place</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>Durée de vie de la graine</label>
+                    <select name="validite" required>
+                        <option value="48h">48 heures (Éphémère)</option>
+                        <option value="1_mois" selected>1 Mois (Plante)</option>
+                        <option value="Eternel">Éternel (Arbre)</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>Description du Don amoureux</label>
+                <textarea name="message" rows="4" placeholder="Décris ici ton Don (ex: Ma charpente vacille...)" required></textarea>
+            </div>
+
+            <button type="submit" class="btn-envoyer" id="btnTexte">ENGENDRER DE LA FRATERNITÉ UNIVERSELLE</button>
+        </form>
     </div>
 
-    <div id="coffre-magique" onclick="exploserCadeau()">🎁</div>
+    <div id="coffre-magique">🎁</div>
+    <div id="animal-container"><div id="bulle-texte"></div><div id="corps-animal">🕊️</div></div>
 
-    <footer>
-        <a href="transition-externe.html" style="display: inline-block; color: rgba(255,255,255,0.6); text-decoration: none; padding: 20px;">© 2000 le petit prince des jardiniers</a>
-    </footer>
+    <script type="text/javascript">
+        function googleTranslateElementInit() { new google.translate.TranslateElement({pageLanguage: 'fr'}, 'google_translate_element'); }
 
-    <script>
-        // ÉTOILES
-        function createStar() {
-            let s = document.createElement('div'); s.className = 'star';
-            s.innerHTML = ['✦','★','✶','✧'][Math.floor(Math.random()*4)];
-            s.style.left = Math.random()*100 + 'vw'; s.style.top = Math.random()*100 + 'vh';
-            s.style.setProperty('--duration', (Math.random()*3+2)+'s');
-            s.style.setProperty('--move-duration', (Math.random()*60+40)+'s');
-            document.body.appendChild(s);
+        // --- GESTION SOUS-RUBRIQUES ---
+        const tree = {
+            "URGENCE": ["Matière (Faim/Toit)", "Santé (Corps)", "Mental (Cervelle)", "Urgence Vitale"],
+            "AIDE": ["Câlin de l'âme", "Besoin de parler", "Solitude", "Médiation fraternelle"],
+            "SAVOIR": ["Technique (Code/Brico)", "Nature (Jardin/Pain)", "Esprit (Arts/Philo)"],
+            "IMPOT": ["Voirie/Routes", "Administration", "Entretien Nature", "Soutien Technique"]
+        };
+
+        function updateSubCats() {
+            const cat = document.getElementById('main_cat').value;
+            const subGroup = document.getElementById('sub_cat_group');
+            const subSelect = document.getElementById('sub_cat');
+            const msgImpot = document.getElementById('msgImpot');
+            
+            if (cat && tree[cat]) {
+                subSelect.innerHTML = tree[cat].map(s => `<option value="${s}">${s}</option>`).join('');
+                subGroup.style.display = 'block';
+                msgImpot.style.display = (cat === "IMPOT") ? "block" : "none";
+            } else { subGroup.style.display = 'none'; }
         }
-        for(let i=0; i<80; i++) createStar();
 
-        // SON & CADEAU (Codes originaux conservés)
-        let audio = new Audio('oiseaux.mp3'); audio.loop = true; let enLecture = false;
-        function toggleSon() {
-            const btn = document.getElementById('btn-son');
-            if (!enLecture) { audio.play().catch(e=>{}); btn.innerHTML = "🎶"; enLecture = true; } 
-            else { audio.pause(); btn.innerHTML = "🕊️"; enLecture = false; }
+        function gererPays(source) {
+            const select = document.getElementById('pays_select');
+            const libre = document.getElementById('pays_libre');
+            if (source === 'select' && select.value !== "") { libre.value = ""; }
+            else if (source === 'libre' && libre.value.trim() !== "") { select.selectedIndex = 0; }
         }
 
+        function envoyerDon(event) {
+            event.preventDefault();
+            const bouton = document.getElementById('btnTexte');
+            bouton.innerText = "Semailles en cours... 🌱";
+            
+            const form = document.getElementById('monFormulaire');
+            const data = new FormData(form);
+            // URL de ton Script Google
+            const url = "https://script.google.com/macros/s/AKfycbxz40XE2KiPXTNZsW-mIg-fm55EivK0r9wzZ5ECFRdEIY53nYH9nLGYRoI71OX93oII/exec";
+
+            fetch(url, { method: 'POST', mode: 'no-cors', body: data })
+            .then(() => { window.location.href = "merci_annonce.html"; })
+            .catch(() => { window.location.href = "merci_annonce.html"; });
+        }
+
+        // --- ANIMATIONS (OISEAUX & MESSAGERS) ---
+        const audio = document.getElementById('chantOiseaux');
+        document.addEventListener('click', () => { if(audio.paused) { audio.volume = 0.05; audio.play(); } });
+        
+        const mesPhrases = ["Semer un don amoureux...", "Engendrer de la fraternité...", "Prendre soin du jardin..."];
+        const animaux = ['🕊️', '🦋', '🐝', '🐞', '🦜'];
+        const animalCont = document.getElementById('animal-container');
+        const bulle = document.getElementById('bulle-texte');
+        const corps = document.getElementById('corps-animal');
         const coffre = document.getElementById('coffre-magique');
-        let cX = 100, cY = 100;
-        function move() {
-            cX = Math.random()*(window.innerWidth-100); cY = Math.random()*(window.innerHeight-100);
-            coffre.style.left = cX+'px'; coffre.style.top = cY+'px';
-            coffre.style.transition = "all 4s ease-in-out";
-        }
-        setInterval(move, 4000); move();
+        let aniX = -200, aniY = 200, targetX, targetY, state = "APPROACHING";
 
-        function exploserCadeau() {
-            const els = ['🌸', '✨', '🌻', '🍀', '🌟', '❤️'];
-            for(let i=0; i<20; i++) {
-                const p = document.createElement('div');
-                p.style.position = 'fixed'; p.style.left = cX+'px'; p.style.top = cY+'px';
-                p.innerHTML = els[Math.floor(Math.random()*els.length)];
-                document.body.appendChild(p);
-                const a = Math.random()*Math.PI*2, d = Math.random()*150+50;
-                p.animate([{transform:'scale(1)', opacity:1}, {transform:`translate(${Math.cos(a)*d}px, ${Math.sin(a)*d}px) scale(0)`, opacity:0}], {duration:1000});
-                setTimeout(() => p.remove(), 1000);
-            }
+        function startNewMessenger() {
+            bulle.innerText = mesPhrases[Math.floor(Math.random() * mesPhrases.length)];
+            corps.innerText = animaux[Math.floor(Math.random() * animaux.length)];
+            aniX = -200; aniY = 200;
+            targetX = window.innerWidth / 2; targetY = window.innerHeight - 110;
+            state = "APPROACHING";
         }
+
+        function loop() {
+            if (state === "APPROACHING") {
+                aniX += (targetX - aniX) * 0.015; aniY += (targetY - aniY) * 0.015;
+                bulle.style.opacity = "1";
+                if (Math.sqrt(Math.pow(targetX-aniX,2)+Math.pow(targetY-aniY,2)) < 60) {
+                    state = "DEPOSITING"; coffre.classList.add('pop');
+                    setTimeout(() => { 
+                        bulle.style.opacity = "0"; coffre.classList.remove('pop'); state = "LEAVING"; 
+                        targetX = window.innerWidth + 500; targetY = 200; 
+                    }, 2500);
+                }
+            } else if (state === "LEAVING") {
+                aniX += (targetX - aniX) * 0.02; aniY += (targetY - aniY) * 0.02;
+                if (Math.abs(aniX - targetX) < 100) startNewMessenger();
+            }
+            animalCont.style.left = aniX + "px"; animalCont.style.top = aniY + "px";
+            corps.style.transform = (aniX < targetX) ? "scaleX(-1)" : "scaleX(1)";
+            requestAnimationFrame(loop);
+        }
+        startNewMessenger(); loop();
     </script>
+    <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
 </body>
 </html>
