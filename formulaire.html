@@ -22,7 +22,6 @@
         #corps-animal { font-size: 50px; }
         #bulle-texte { background: rgba(255, 255, 255, 0.9); border-radius: 15px; padding: 8px 15px; font-style: italic; color: #2E7D32; margin-right: 10px; font-weight: bold; border: 2px solid #2E7D32; opacity: 0; transition: opacity 0.3s; }
         .pop { transform: translateX(-50%) scale(1.4) !important; }
-        
         .section-logistique { border-top: 2px dashed #008080; margin-top: 20px; padding-top: 15px; }
         .msg-alerte { color: #d32f2f; font-size: 0.8em; font-weight: bold; display: none; margin-bottom: 10px; }
     </style>
@@ -57,23 +56,12 @@
 
             <div class="form-group">
                 <label>Provenance (Monde sans frontières)</label>
-                <span class="sous-label">Choisis dans la liste OU écris ton pays.</span>
                 <select name="pays_select" id="pays_select" onchange="gererPays('select')">
                     <option value="" selected>--- Choisir dans la liste 🌍 ---</option>
-                    <optgroup label="✨ Les pays sages">
-                        <option value="Pays de la grande gentillesse">Pays de la grande gentillesse</option>
-                        <option value="L'astéroïde B 612">L'astéroïde B 612</option>
-                        <option value="Le Pays des Merveilles">Le Pays des Merveilles</option>
-                    </optgroup>
                     <optgroup label="Europe">
                         <option value="Belgique">Belgique</option><option value="France">France</option><option value="Suisse">Suisse</option>
                     </optgroup>
-                    <optgroup label="Afrique">
-                        <option value="Algérie">Algérie</option><option value="Maroc">Maroc</option><option value="Sénégal">Sénégal</option>
-                    </optgroup>
-                    <optgroup label="Amériques">
-                        <option value="Canada">Canada</option><option value="Haïti">Haïti</option>
-                    </optgroup>
+                    <option value="L'astéroïde B 612">L'astéroïde B 612</option>
                 </select>
                 <input type="text" name="localisation" id="pays_libre" placeholder="Ou ton pays ici..." oninput="gererPays('libre')">
                 <input type="text" name="ville" placeholder="Ta Ville" required>
@@ -90,7 +78,7 @@
                 </select>
             </div>
 
-            <div id="sub_cat_group" class="form-group" style="display:none;">
+            <div id="sub_cat_group" class="form-group" style="display:none; background: #f9f9f9; padding: 10px; border-radius: 10px; border: 1px solid #008080;">
                 <label>Précision du semis</label>
                 <select name="sousType" id="sub_cat"></select>
                 <div id="msgImpot" class="msg-alerte">⚠️ Motivation indispensable. Travaux ingrats !</div>
@@ -99,33 +87,13 @@
             <div class="form-group">
                 <label>Zone d'offrande (Rayon d'action)</label>
                 <select name="rayon" required>
-                    <option value="10km">10 km</option><option value="100km">100 km</option><option value="Monde Entier">Le Monde Entier</option><option value="Infini">Rayon Infini</option>
+                    <option value="10km">10 km</option><option value="100km">100 km</option><option value="Monde Entier">Le Monde Entier</option>
                 </select>
-            </div>
-
-            <div class="section-logistique">
-                <div class="form-group">
-                    <label>Acheminement du cadeau</label>
-                    <span class="sous-label">Comment le don arrive-t-il ?</span>
-                    <select name="logistique" required>
-                        <option value="Don Entier (J'assure)">Don Entier (J'assure le transport)</option>
-                        <option value="À récupérer">À récupérer sur place</option>
-                    </select>
-                </div>
-
-                <div class="form-group">
-                    <label>Durée de vie de la graine</label>
-                    <select name="validite" required>
-                        <option value="48h">48 heures (Éphémère)</option>
-                        <option value="1_mois" selected>1 Mois (Plante)</option>
-                        <option value="Eternel">Éternel (Arbre)</option>
-                    </select>
-                </div>
             </div>
 
             <div class="form-group">
                 <label>Description du Don amoureux</label>
-                <textarea name="message" rows="4" placeholder="Décris ici ton Don (ex: Ma charpente vacille...)" required></textarea>
+                <textarea name="message" rows="4" placeholder="Décris ici ton Don..." required></textarea>
             </div>
 
             <button type="submit" class="btn-envoyer" id="btnTexte">ENGENDRER DE LA FRATERNITÉ UNIVERSELLE</button>
@@ -138,7 +106,6 @@
     <script type="text/javascript">
         function googleTranslateElementInit() { new google.translate.TranslateElement({pageLanguage: 'fr'}, 'google_translate_element'); }
 
-        // --- GESTION SOUS-RUBRIQUES ---
         const tree = {
             "URGENCE": ["Matière (Faim/Toit)", "Santé (Corps)", "Mental (Cervelle)", "Urgence Vitale"],
             "AIDE": ["Câlin de l'âme", "Besoin de parler", "Solitude", "Médiation fraternelle"],
@@ -147,30 +114,30 @@
         };
 
         function updateSubCats() {
-            var mainSelect = document.getElementById('main_cat');
-            var cat = mainSelect.value;
-            var subGroup = document.getElementById('sub_cat_group');
-            var subSelect = document.getElementById('sub_cat');
-            var msgImpot = document.getElementById('msgImpot');
-            
-            if (cat && tree[cat]) {
-                // Création des options de manière sécurisée
-                var optionsHtml = "";
-                for (var i = 0; i < tree[cat].length; i++) {
-                    optionsHtml += '<option value="' + tree[cat][i] + '">' + tree[cat][i] + '</option>';
-                }
-                subSelect.innerHTML = optionsHtml;
+            try {
+                const cat = document.getElementById('main_cat').value;
+                const subGroup = document.getElementById('sub_cat_group');
+                const subSelect = document.getElementById('sub_cat');
+                const msgImpot = document.getElementById('msgImpot');
                 
-                // On force l'affichage en utilisant style.setProperty pour écraser le CSS
-                subGroup.style.display = 'block';
-                
-                if (cat === "IMPOT") {
-                    msgImpot.style.display = "block";
+                if (cat && tree[cat]) {
+                    // On vide et on remplit proprement
+                    subSelect.options.length = 0; 
+                    tree[cat].forEach(function(texte) {
+                        var opt = document.createElement('option');
+                        opt.value = texte;
+                        opt.innerHTML = texte;
+                        subSelect.appendChild(opt);
+                    });
+                    
+                    subGroup.style.display = 'block'; // ON FORCE L'AFFICHAGE
+                    msgImpot.style.display = (cat === "IMPOT") ? "block" : "none";
+                    console.log("Affichage de la sous-rubrique pour : " + cat);
                 } else {
-                    msgImpot.style.display = "none";
+                    subGroup.style.display = 'none';
                 }
-            } else { 
-                subGroup.style.display = 'none'; 
+            } catch (e) {
+                console.error("Erreur script : ", e);
             }
         }
 
@@ -183,58 +150,33 @@
 
         function envoyerDon(event) {
             event.preventDefault();
-            const bouton = document.getElementById('btnTexte');
-            bouton.innerText = "Semailles en cours... 🌱";
-            
-            const form = document.getElementById('monFormulaire');
-            const data = new FormData(form);
-            const url = "https://script.google.com/macros/s/AKfycbxz40XE2KiPXTNZsW-mIg-fm55EivK0r9wzZ5ECFRdEIY53nYH9nLGYRoI71OX93oII/exec";
-
-            fetch(url, { method: 'POST', mode: 'no-cors', body: data })
+            document.getElementById('btnTexte').innerText = "Semailles en cours... 🌱";
+            const data = new FormData(document.getElementById('monFormulaire'));
+            fetch("https://script.google.com/macros/s/AKfycbxz40XE2KiPXTNZsW-mIg-fm55EivK0r9wzZ5ECFRdEIY53nYH9nLGYRoI71OX93oII/exec", 
+            { method: 'POST', mode: 'no-cors', body: data })
             .then(() => { window.location.href = "merci_annonce.html"; })
             .catch(() => { window.location.href = "merci_annonce.html"; });
         }
 
-        // --- ANIMATIONS (OISEAUX & MESSAGERS) ---
+        // --- ANIMATIONS ---
         const audio = document.getElementById('chantOiseaux');
-        document.addEventListener('click', () => { if(audio.paused) { audio.volume = 0.05; audio.play(); } });
+        document.addEventListener('click', () => { if(audio && audio.paused) { audio.volume = 0.05; audio.play(); } });
         
-        const mesPhrases = ["Semer un don amoureux...", "Engendrer de la fraternité...", "Prendre soin du jardin..."];
-        const animaux = ['🕊️', '🦋', '🐝', '🐞', '🦜'];
-        const animalCont = document.getElementById('animal-container');
-        const bulle = document.getElementById('bulle-texte');
-        const corps = document.getElementById('corps-animal');
-        const coffre = document.getElementById('coffre-magique');
-        let aniX = -200, aniY = 200, targetX, targetY, state = "APPROACHING";
-
-        function startNewMessenger() {
-            bulle.innerText = mesPhrases[Math.floor(Math.random() * mesPhrases.length)];
-            corps.innerText = animaux[Math.floor(Math.random() * animaux.length)];
-            aniX = -200; aniY = 200;
-            targetX = window.innerWidth / 2; targetY = window.innerHeight - 110;
-            state = "APPROACHING";
-        }
-
+        let aniX = -200, aniY = 200, state = "APPROACHING";
         function loop() {
+            const animalCont = document.getElementById('animal-container');
+            if(!animalCont) return;
             if (state === "APPROACHING") {
-                aniX += (targetX - aniX) * 0.015; aniY += (targetY - aniY) * 0.015;
-                bulle.style.opacity = "1";
-                if (Math.sqrt(Math.pow(targetX-aniX,2)+Math.pow(targetY-aniY,2)) < 60) {
-                    state = "DEPOSITING"; coffre.classList.add('pop');
-                    setTimeout(() => { 
-                        bulle.style.opacity = "0"; coffre.classList.remove('pop'); state = "LEAVING"; 
-                        targetX = window.innerWidth + 500; targetY = 200; 
-                    }, 2500);
-                }
-            } else if (state === "LEAVING") {
-                aniX += (targetX - aniX) * 0.02; aniY += (targetY - aniY) * 0.02;
-                if (Math.abs(aniX - targetX) < 100) startNewMessenger();
+                aniX += (window.innerWidth/2 - aniX) * 0.015;
+                if (aniX > window.innerWidth/2 - 10) state = "LEAVING";
+            } else {
+                aniX += 2;
+                if (aniX > window.innerWidth + 200) aniX = -200;
             }
-            animalCont.style.left = aniX + "px"; animalCont.style.top = aniY + "px";
-            corps.style.transform = (aniX < targetX) ? "scaleX(-1)" : "scaleX(1)";
+            animalCont.style.left = aniX + "px";
             requestAnimationFrame(loop);
         }
-        startNewMessenger(); loop();
+        loop();
     </script>
     <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
 </body>
