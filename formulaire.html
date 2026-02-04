@@ -48,7 +48,7 @@
         #coffre-magique { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); font-size: 60px; z-index: 800; transition: 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275); cursor: pointer; }
         #animal-container { position: fixed; z-index: 900; display: flex; align-items: center; cursor: pointer; pointer-events: auto; }
         #bulle-texte { background: white; border-radius: 15px; padding: 8px 15px; font-style: italic; color: #2E7D32; border: 2px solid #2E7D32; opacity: 0; transition: 0.3s; font-weight: bold; white-space: nowrap; margin-right: 10px; }
-        #corps-animal { font-size: 38px; transition: transform 0.3s; display: inline-block; }
+        #corps-animal { font-size: 38px; transition: transform 0.3s; display: inline-block; transform: scaleX(-1); } /* Par défaut tête vers la droite */
     </style>
 </head>
 <body onclick="activerAudio()">
@@ -131,16 +131,25 @@
                             <option value="Allemagne">Allemagne</option>
                             <option value="Italie">Italie</option>
                             <option value="Espagne">Espagne</option>
+                            <option value="Portugal">Portugal</option>
                             <option value="Royaume-Uni">Royaume-Uni</option>
                         </optgroup>
-                        <optgroup label="🌍 Asie & Russie">
-                            <option value="Russie">Russie</option>
-                            <option value="Chine">Chine</option>
-                            <option value="Japon">Japon</option>
-                            <option value="Inde">Inde</option>
-                            <option value="Vietnam">Vietnam</option>
-                            <option value="Thaïlande">Thaïlande</option>
-                            <option value="Corée">Corée</option>
+                        <optgroup label="❄️ Pays Nordiques">
+                            <option value="Suede">Suède</option>
+                            <option value="Norvege">Norvège</option>
+                            <option value="Danemark">Danemark</option>
+                            <option value="Finlande">Finlande</option>
+                            <option value="Islande">Islande</option>
+                        </optgroup>
+                        <optgroup label="🔍 Petits Pays & Territoires">
+                            <option value="Andorre">Andorre</option>
+                            <option value="Liechtenstein">Liechtenstein</option>
+                            <option value="Malte">Malte</option>
+                            <option value="Saint-Marin">Saint-Marin</option>
+                            <option value="Vatican">Vatican</option>
+                            <option value="Guyane">Guyane Française</option>
+                            <option value="Polynesie">Polynésie</option>
+                            <option value="Nouvelle-Caledonie">Nouvelle-Calédonie</option>
                         </optgroup>
                         <optgroup label="🌍 Afrique">
                             <option value="Algérie">Algérie</option>
@@ -149,7 +158,15 @@
                             <option value="Tunisie">Tunisie</option>
                             <option value="Côte d'Ivoire">Côte d'Ivoire</option>
                             <option value="Congo">Congo</option>
+                            <option value="Mali">Mali</option>
                             <option value="Madagascar">Madagascar</option>
+                        </optgroup>
+                        <optgroup label="🌏 Asie">
+                            <option value="Chine">Chine</option>
+                            <option value="Japon">Japon</option>
+                            <option value="Inde">Inde</option>
+                            <option value="Vietnam">Vietnam</option>
+                            <option value="Liban">Liban</option>
                         </optgroup>
                         <optgroup label="🌍 Amériques & Océanie">
                             <option value="Canada">Canada / Québec</option>
@@ -206,12 +223,12 @@
             <div class="form-group">
                 <label>Cycle de Vie (Durée de validité)</label>
                 <select name="duree_validite" onchange="checkOther(this, 'extra_cycle')" required>
-                    <option value="1">🌱 Un jour (Urgence)</option>
-                    <option value="7">🌿 Une semaine</option>
-                    <option value="30" selected>🌳 Un mois (Standard)</option>
-                    <option value="90">🌲 Trois mois</option>
-                    <option value="365">🍃 Un an (Transmission)</option>
-                    <option value="AUTRE">Autres</option>
+                    <option value="1">🌱 Un jour (Une herbe sauvage)</option>
+                    <option value="7">🌸 Une semaine (Une fleur des champs)</option>
+                    <option value="30" selected>🌿 Un mois (Un bel arbuste)</option>
+                    <option value="90">🌳 Trois mois (Un chêne robuste)</option>
+                    <option value="365">🌲 Un an (Une forêt éternelle)</option>
+                    <option value="AUTRE">Autres durées...</option>
                 </select>
                 <div id="extra_cycle" class="extra-field">
                     <input type="text" name="cycle_precision" placeholder="Indiquez ici la durée spécifique...">
@@ -219,7 +236,7 @@
             </div>
 
             <div class="form-group">
-                <label>Logistique & Acheminement (Mis à jour)</label>
+                <label>Logistique & Acheminement</label>
                 <span class="sous-label">Comment le don voyage-t-il ?</span>
                 <select name="logistique" onchange="checkOther(this, 'extra_log')" required>
                     <optgroup label="🤝 Humain & Proximité">
@@ -276,7 +293,7 @@ Le jardin arrose les fleurs..." required></textarea>
     <div id="coffre-magique">🎁</div>
     <div id="animal-container">
         <div id="bulle-texte"></div>
-        <div id="corps-animal" onclick="exploserAnimal(event)">🕊️</div>
+        <div id="corps-animal" onclick="animalExplode()">🕊️</div>
     </div>
 
     <script>
@@ -338,26 +355,29 @@ Le jardin arrose les fleurs..." required></textarea>
             setTimeout(() => { window.location.href = href; }, 800);
         }
 
-        // --- NOUVEAUX EFFETS ---
-        const phrases = ["Graine de bonheur !", "Fraternité !", "Cadeau !"];
+        // --- ANIMATIONS MAGIQUES ---
         const animalCont = document.getElementById('animal-container');
-        const corpsAnimal = document.getElementById('corps-animal');
+        const animalEmoji = document.getElementById('corps-animal');
         const bulle = document.getElementById('bulle-texte');
         const coffre = document.getElementById('coffre-magique');
         
-        let aniX = -200, state = "FLY", targetY = 250, direction = 1;
-        let depotCompteur = 0;
+        let aniX = -200, state = "FLY", targetY = 250, dropCount = 0;
         let isDead = false;
+        let direction = 1; // 1 = droite, -1 = gauche
 
-        function exploserAnimal(e) {
-            e.stopPropagation();
-            exploserParticules(e.pageX, e.pageY, ['⭐', '✨', '🌟', '✨'], 30);
+        function animalExplode() {
+            if(isDead) return;
             isDead = true;
-            animalCont.style.opacity = "0";
+            const rect = animalEmoji.getBoundingClientRect();
+            exploserParticules(rect.left + 20, rect.top + 20, ['⭐', '✨', '🌟'], 40);
+            animalEmoji.style.opacity = 0;
+            bulle.style.opacity = 0;
             setTimeout(() => { 
+                animalEmoji.style.opacity = 1; 
                 isDead = false; 
-                animalCont.style.opacity = "1";
                 aniX = -200; 
+                direction = 1;
+                state = "FLY";
             }, 3000);
         }
 
@@ -365,20 +385,24 @@ Le jardin arrose les fleurs..." required></textarea>
             if (!isDead) {
                 if (state === "FLY") {
                     aniX += 2 * direction;
-                    corpsAnimal.style.transform = direction === 1 ? "scaleX(1)" : "scaleX(-1)";
                     
-                    // Si on arrive au centre
+                    // Retournement de l'image selon la direction (tête vers l'avant)
+                    animalEmoji.style.transform = direction === 1 ? "scaleX(-1)" : "scaleX(1)";
+                    
+                    // Atteinte du milieu pour dépôt
                     if (Math.abs(aniX - window.innerWidth/2) < 5) {
-                        state = "TALK";
-                        depotCompteur++;
-                        bulle.innerText = phrases[Math.floor(Math.random()*phrases.length)] + " (Dépôt " + depotCompteur + ")";
+                        state = "DROP";
+                        dropCount++;
+                        bulle.innerText = "Nouveau message... 💌";
                         bulle.style.opacity = 1;
                         
-                        // Si 3 dépôts, explosion du cadeau en fleurs
-                        if (depotCompteur >= 3) {
+                        coffre.style.transform = "translateX(-50%) scale(1.3)";
+                        setTimeout(() => coffre.style.transform = "translateX(-50%) scale(1)", 400);
+
+                        if(dropCount >= 3) {
                             setTimeout(() => {
-                                exploserParticules(window.innerWidth/2, window.innerHeight - 50, ['🌸', '🌺', '🌻', '🌼', '🌷'], 40);
-                                depotCompteur = 0;
+                                exploserParticules(window.innerWidth/2, window.innerHeight - 50, ['🌸', '🌺', '🌻', '🌼', '🌷'], 60);
+                                dropCount = 0;
                             }, 500);
                         }
 
@@ -387,13 +411,15 @@ Le jardin arrose les fleurs..." required></textarea>
                 } else if (state === "EXIT") {
                     aniX += 3 * direction;
                     if (aniX > window.innerWidth + 200 || aniX < -200) { 
-                        direction = direction === 1 ? 1 : 1; // Toujours de gauche à droite pour cet exemple, ou inverser
-                        aniX = -200; 
+                        // Change de sens aléatoirement pour le prochain passage
+                        direction = Math.random() > 0.5 ? 1 : -1;
+                        aniX = direction === 1 ? -200 : window.innerWidth + 200;
                         state = "FLY"; 
                     }
                 }
+
                 animalCont.style.left = aniX + 'px';
-                animalCont.style.top = (targetY + Math.sin(aniX/60)*30) + 'px';
+                animalCont.style.top = (targetY + Math.sin(aniX/60)*40) + 'px';
             }
             requestAnimationFrame(messenger);
         }
@@ -411,6 +437,7 @@ Le jardin arrose les fleurs..." required></textarea>
             .then(() => { window.location.href = "merci_annonce.html"; })
             .catch(() => { window.location.href = "merci_annonce.html"; });
         }
+
         messenger();
     </script>
     <script src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
