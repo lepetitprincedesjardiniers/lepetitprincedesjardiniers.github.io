@@ -33,13 +33,20 @@
 
         #coffre-magique { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); font-size: 60px; z-index: 800; transition: 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275); cursor: pointer; }
         
-        /* CORRECTIONS OISEAUX */
         #animal-container { position: fixed; z-index: 900; display: flex; align-items: center; cursor: pointer; pointer-events: auto; }
         #bulle-texte { background: white; border-radius: 15px; padding: 8px 15px; font-style: italic; color: #2E7D32; border: 2px solid #2E7D32; opacity: 0; transition: 0.3s; font-weight: bold; white-space: nowrap; margin-right: 10px; }
-        #corps-animal { font-size: 32px; transition: transform 0.3s; } /* Taille réduite */
+        #corps-animal { font-size: 32px; transition: transform 0.3s; }
         
         .pop { transform: translateX(-50%) scale(1.4) !important; }
         .cadeau-envole { transform: translateX(-50%) translateY(-100vh) rotate(360deg) scale(0) !important; opacity: 0; }
+
+        /* PANNEAU D'AIDE UNIVERSEL */
+        #aide-panneau { position: fixed; right: 10px; top: 80px; width: 260px; background: #008080; color: white; padding: 15px; border-radius: 15px; font-size: 0.85em; text-align: left; box-shadow: -5px 5px 15px rgba(0,0,0,0.2); z-index: 5; border: 2px solid white; line-height: 1.4; }
+        #aide-panneau h4 { margin-top: 0; color: #FFFF00; text-align: center; border-bottom: 2px solid #FFFF00; padding-bottom: 5px; }
+        .aide-section { margin-bottom: 12px; }
+        .aide-titre { font-weight: bold; color: #FFFF00; display: block; margin-bottom: 3px; }
+        
+        @media (max-width: 1250px) { #aide-panneau { position: relative; width: 90%; margin: 20px auto; top: 0; right: 0; } }
     </style>
 </head>
 <body onclick="activerAudio()">
@@ -60,6 +67,33 @@
         </tr>
     </table>
 
+    <div id="aide-panneau">
+        <h4>🌟 Guide des Semailles</h4>
+        <div class="aide-section">
+            <span class="aide-titre">💡 SAVOIRS</span>
+            • <b>Étudiant :</b> Soutien scolaire.<br>
+            • <b>Artiste :</b> Cours de danse/chant.<br>
+            • <b>Ingénieur :</b> Mentorat technique.
+        </div>
+        <div class="aide-section">
+            <span class="aide-titre">🏠 VIE CITOYENNE</span>
+            • <b>Jeune :</b> Prêt vélo/trottinette.<br>
+            • <b>Sportif :</b> Cherche équipe foot.<br>
+            • <b>Ouvrier :</b> Prêt d'outils bricolage.
+        </div>
+        <div class="aide-section">
+            <span class="aide-titre">💖 AIDE & HARMONIE</span>
+            • <b>Malade :</b> Besoin de soins/visite.<br>
+            • <b>Maman :</b> Cherche crèche/garde.<br>
+            • <b>Urgence :</b> Panne de chauffage/gaz.
+        </div>
+        <div class="aide-section">
+            <span class="aide-titre">⚖️ RÉGULATION</span>
+            • <b>Aîné :</b> Aide avec les papiers.<br>
+            • <b>Voisins :</b> Calmer un conflit.
+        </div>
+    </div>
+
     <h2 style="color:#E67E22;">🌍 Engendrer la Fraternité Universelle</h2>
 
     <div class="form-container">
@@ -67,7 +101,7 @@
             
             <div class="form-group">
                 <label>Identité amoureuse</label>
-                <input type="text" name="nom" placeholder="Ton Prénom de coeur / Pseudo" required>
+                <input type="text" name="nom" placeholder="Ton Prénom de coeur / Pseudo (Enfant, Pro, Citoyen...)" required>
             </div>
 
             <div class="form-group">
@@ -111,11 +145,11 @@
                 <label>Destination du semis</label>
                 <select name="type" id="main_cat" onchange="updateSubCats()" required>
                     <option value="">-- Domaine d'action --</option>
-                    <option value="SAVOIR">💡 SAVOIRS (Danseur, Ingénieur, Mentor, Arts)</option>
-                    <option value="VIE">🏠 VIE CITOYENNE (Mécanicien vélo, Footballeur, Véhicule)</option>
-                    <option value="AIDE">💖 AIDE & HARMONIE (Garde enfant, Santé, Urgence Gaz)</option>
-                    <option value="REGULATION">⚖️ RÉGULATION (Médiateur, Aide Administrative)</option>
-                    <option value="IMPOT">📜 TRÉSOR PUBLIC (Chantiers collectifs, Nature)</option>
+                    <option value="SAVOIR">💡 SAVOIRS (Apprendre, Transmettre, Talents)</option>
+                    <option value="VIE">🏠 VIE CITOYENNE (Échanges d'objets, Loisirs, Logement)</option>
+                    <option value="AIDE">💖 AIDE & HARMONIE (Soins, Urgences, Petite enfance)</option>
+                    <option value="REGULATION">⚖️ RÉGULATION (Médiation, Paperasse, Conseils)</option>
+                    <option value="IMPOT">📜 TRÉSOR PUBLIC (Nature, Chantiers pour tous)</option>
                     <option value="AUTRE_CAT">🌈 AUTRE DOMAINE...</option>
                 </select>
                 <div id="extra_cat" class="extra-field">
@@ -173,7 +207,7 @@
 
             <div class="form-group">
                 <label>Description du Don amoureux</label>
-                <textarea name="message" placeholder="Détaille ici : 'Danseur Étoile, j'enseigne la grâce', 'Ouvrier Gaz, je répare bénévolement', 'Je donne ma voiture', 'Ingénieur, je donne des cours de physique'..." required></textarea>
+                <textarea name="message" placeholder="Détaille ici : 'Papy cherche aide ordi', 'Maman cherche crèche', 'Donne jouets enfant', 'Ingénieur offre mentorat', 'Dépannage gaz urgent'..." required></textarea>
             </div>
 
             <button type="submit" class="btn-envoyer" id="btnTexte">ENGENDRER LA FRATERNITÉ UNIVERSELLE</button>
@@ -194,11 +228,11 @@
         function googleTranslateElementInit() { new google.translate.TranslateElement({pageLanguage: 'fr'}, 'google_translate_element'); }
 
         const tree = {
-            "SAVOIR": ["🌱 Éveil & Soutien Scolaire (ex: Maths, Physique)", "🎓 Études Supérieures", "💼 Mentorat Professionnel (ex: Ingénieur)", "🎨 Arts, Musique & Cuisine (ex: Danse)", "AUTRE_SUB"],
-            "VIE": ["🏠 Accueil & Hébergement", "🛠️ Prêt d'espaces / Matériel (ex: Vélo, Voiture)", "🚗 Mobilité & Aide au transport (ex: Football/Jeux)", "🧹 Aide au quotidien (ex: Bricolage)", "AUTRE_SUB"],
-            "AIDE": ["🚑 URGENCE VITALE (ex: Dépannage Gaz)", "🏥 Santé & Soins", "🌈 Harmonie & Écoute", "🤝 Présence & Garde (ex: Crèche/Enfants)", "AUTRE_SUB"],
-            "REGULATION": ["🕊️ Médiation & Conflits", "⚖️ Aide Administrative", "AUTRE_SUB"],
-            "IMPOT": ["🏗️ Travaux de Bien Commun", "🌲 Protection de la Nature", "AUTRE_SUB"]
+            "SAVOIR": ["🎓 Soutien Scolaire & Études", "🎨 Talents (Danse, Musique, Art)", "💼 Mentorat (Ingénieur, Cadre, Pro)", "AUTRE_SUB"],
+            "VIE": ["🛠️ Prêt de Matériel (Vélo, Outils)", "🏠 Accueil & Logement", "🚗 Sport & Loisirs (Foot, Jeux)", "🧹 Aide Quotidienne (Courses, Ménage)", "AUTRE_SUB"],
+            "AIDE": ["🚑 URGENCE (Gaz, Panne, Fuite)", "🤝 Garde d'enfants / Crèche", "🏥 Santé & Visite aux malades", "🌈 Écoute & Présence", "AUTRE_SUB"],
+            "REGULATION": ["⚖️ Aide Administrative (Papiers)", "🕊️ Médiation & Conseils", "AUTRE_SUB"],
+            "IMPOT": ["🏗️ Chantiers Collectifs", "🌲 Protection de la Nature", "AUTRE_SUB"]
         };
 
         function updateSubCats() {
@@ -275,7 +309,6 @@
                     state = "TALK";
                     bulle.innerText = phrases[Math.floor(Math.random()*phrases.length)];
                     bulle.style.opacity = 1;
-                    
                     let originalY = targetY;
                     targetY = window.innerHeight - 80; 
                     setTimeout(() => {
@@ -302,7 +335,6 @@
                 aniX = window.innerWidth / 2;
                 corps.style.transform = "scaleX(-1)";
             }
-            
             animalCont.style.left = aniX + 'px';
             let wave = (state === "MAGIC" || state === "TALK") ? 0 : Math.sin(aniX/60)*30;
             animalCont.style.top = (targetY + wave) + 'px';
@@ -322,7 +354,6 @@
             .then(() => { window.location.href = "merci_annonce.html"; })
             .catch(() => { window.location.href = "merci_annonce.html"; });
         }
-
         messenger();
     </script>
     <script src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
