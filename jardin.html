@@ -8,8 +8,8 @@
         body { font-family: 'Comic Sans MS', cursive; text-align: center; margin: 0; padding: 0; background-color: #FFFF00; color: #000080; min-height: 100vh; padding-bottom: 80px; transition: background 0.3s, color 0.3s; }
         .top-bar { position: relative; width: 100%; min-height: 50px; background: rgba(255,255,255,0.3); padding: 5px 0; display: flex; justify-content: center; align-items: center; }
         
-        /* TRADUCTEUR DÉPLACÉ EN HAUT A DROITE */
-        #google_translate_element { position: absolute; right: 50px; top: 10px; z-index: 1000; transform: scale(0.8); transform-origin: top right; }
+        /* TRADUCTEUR REMIS EN HAUT A GAUCHE ET BIEN VISIBLE */
+        #google_translate_element { position: absolute; left: 10px; top: 10px; z-index: 2000; transform: scale(0.85); transform-origin: top left; }
 
         .menu-table { margin: 5px auto; border-radius: 10px; background-color: #008080; border-collapse: collapse; }
         .menu-table td { padding: 8px 15px; border: 1px solid #FFFFFF; }
@@ -84,7 +84,7 @@
 
     <div class="search-box">
         <div class="search-container">
-            <input type="text" id="searchKeyword" class="search-main-input" onkeyup="executerFiltrage()" placeholder="🔍 Mots-clés...">
+            <input type="text" id="searchKeyword" class="search-main-input" onkeyup="executerFiltrage()" placeholder="🔍 Recherche par la première lettre de l'annonce...">
             <div class="search-row">
                 <div class="search-item"><input type="text" id="searchPays" onkeyup="executerFiltrage()" placeholder="📍 Pays"></div>
                 <div class="search-item"><input type="text" id="searchVille" onkeyup="executerFiltrage()" placeholder="🏙️ Ville"></div>
@@ -156,7 +156,11 @@
             const filtrées = toutesLesAnnonces.filter(ann => {
                 const matchP = pi === "" || (ann.pays_select || "").toLowerCase().startsWith(pi);
                 const matchV = vi === "" || (ann.localisation || "").toLowerCase().startsWith(vi);
-                const matchM = (ann.message || "").toLowerCase().includes(mi) || (ann.nom || "").toLowerCase().includes(mi);
+                
+                // NOUVELLE LOGIQUE : Recherche par le début de l'annonce (startsWith)
+                const texteMsg = (ann.message || "").toLowerCase();
+                const matchM = mi === "" || texteMsg.startsWith(mi);
+                
                 let matchT = true;
                 if (filtreTypeActuel !== "") {
                     const c = mappingBoutons[filtreTypeActuel];
