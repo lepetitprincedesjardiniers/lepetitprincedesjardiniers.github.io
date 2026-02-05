@@ -164,8 +164,8 @@
     <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
 
     <script>
-        // LIEN VÉRIFIÉ ET MIS À JOUR
-        const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxz40XE2KiPXTNZsW-mIg-fm55EivK0r9wzZ5ECFRdEIY53nYH9nLGYRoI71OX93oII/exec"; 
+        // --- CONFIGURATION OPTIMISÉE GITHUB ---
+        const SCRIPT_URL = "annonces.json"; 
         
         let toutesLesAnnonces = [];
         let annoncesFiltreesGlobal = [];
@@ -190,16 +190,24 @@
 
         async function chargerAnnonces() {
             try {
-                const response = await fetch(SCRIPT_URL);
+                // On ajoute un timestamp (?v=...) pour forcer le navigateur à charger les nouveautés
+                const response = await fetch(SCRIPT_URL + "?v=" + new Date().getTime());
                 const data = await response.json();
                 
-                // Sécurité : On vérifie que les données sont bien un tableau
-                toutesLesAnnonces = Array.isArray(data) ? data.reverse() : [];
+                // TRI : Les plus récentes en premier (selon l'Horodateur)
+                if (Array.isArray(data)) {
+                    toutesLesAnnonces = data.sort((a, b) => {
+                        return new Date(b.Horodateur) - new Date(a.Horodateur);
+                    });
+                } else {
+                    toutesLesAnnonces = [];
+                }
                 
                 document.getElementById('chargement').style.display = 'none';
                 executerFiltrage();
             } catch (e) {
-                document.getElementById('chargement').innerText = "Erreur de connexion au jardin. Vérifiez votre connexion.";
+                console.error("Erreur de chargement JSON:", e);
+                document.getElementById('chargement').innerText = "✨ Le jardin se prépare... Revenez dans une minute !";
             }
         }
 
