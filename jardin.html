@@ -6,20 +6,19 @@
     <style>
         /* --- STYLE DE BASE --- */
         body { font-family: 'Comic Sans MS', cursive; text-align: center; margin: 0; padding: 0; background-color: #FFFF00; color: #000080; min-height: 100vh; padding-bottom: 80px; transition: background 0.3s, color 0.3s; }
-        .top-bar { position: relative; width: 100%; min-height: 40px; background: rgba(255,255,255,0.3); padding: 5px 0; display: flex; justify-content: center; align-items: center; }
+        .top-bar { position: relative; width: 100%; min-height: 50px; background: rgba(255,255,255,0.3); padding: 5px 0; display: flex; justify-content: center; align-items: center; }
         
-        #google_translate_element { position: absolute; left: 10px; top: 10px; transform: scale(0.8); transform-origin: top left; }
+        /* TRADUCTEUR EN HAUT A GAUCHE */
+        #google_translate_element { position: absolute; left: 10px; top: 10px; z-index: 1000; transform: scale(0.8); transform-origin: top left; }
 
         .menu-table { margin: 5px auto; border-radius: 10px; background-color: #008080; border-collapse: collapse; }
         .menu-table td { padding: 8px 15px; border: 1px solid #FFFFFF; }
         .menu-table a { text-decoration: none; color: #FFFFFF; font-weight: bold; font-size: 0.85em; }
 
-        /* LANTERNE TRES PETITE A DROITE */
         #btn-mode { position: absolute; right: 10px; background: #444; color: #FFD700; border: 1px solid #222; border-radius: 5px; cursor: pointer; font-size: 14px; padding: 2px 5px; }
 
         .phrase-rose { color: #ff1493; font-weight: bold; font-size: 1.1em; text-shadow: 1px 1px 2px #ff69b4; margin-top: 5px; }
         .phrase-sous { color: #000080; font-weight: bold; margin: 1px 0; font-size: 0.9em; }
-        .phrase-etoiles { font-style: italic; color: #2E7D32; font-size: 0.9em; margin: 25px auto; max-width: 800px; line-height: 1.4; padding: 0 10px; }
 
         /* --- MOTEUR DE RECHERCHE --- */
         .search-box { background: #008080; padding: 15px; margin: 10px auto; max-width: 95%; width: 1100px; border-radius: 25px; color: white; box-shadow: 0 8px 20px rgba(0,0,0,0.2); border: 3px solid #fff; }
@@ -36,24 +35,27 @@
         .mur-reel { display: grid; grid-template-columns: repeat(5, minmax(150px, 1fr)); gap: 10px; padding: 10px; max-width: 98vw; margin: 0 auto; }
         @media (max-width: 768px) { .mur-reel { grid-template-columns: repeat(2, 1fr); } }
 
-        /* TAILLE CARTES & TEXTES */
-        .carte-message { background: white; border: 2px solid #008080; border-radius: 10px; padding: 8px; box-shadow: 3px 3px 0px #008080; display: flex; flex-direction: column; height: 290px; cursor: pointer; position: relative; overflow: hidden; text-align: left; }
+        /* CARTES ET SCROLLBARS */
+        .carte-message { background: white; border: 2px solid #008080; border-radius: 10px; padding: 8px; box-shadow: 3px 3px 0px #008080; display: flex; flex-direction: column; height: 300px; cursor: pointer; position: relative; overflow: hidden; text-align: left; }
         .nom-prenom { color: #2E7D32; font-weight: bold; font-size: 0.8em; border-bottom: 1px solid #eee; margin-bottom: 3px; }
         .rubrique-tag { font-size: 0.55em; background: #ff1493; color: white; padding: 1px 4px; border-radius: 5px; position: absolute; top: 5px; right: 5px; }
-        .texte-annonce { flex-grow: 1; font-style: italic; color: #000080; overflow-y: auto; font-size: 0.7em; margin: 3px 0; line-height: 1.1; padding-right: 5px; }
+        
+        /* RETOUR DE LA SCROLLBAR VERTICALE */
+        .texte-annonce { flex-grow: 1; font-style: italic; color: #000080; overflow-y: auto; font-size: 0.75em; margin: 5px 0; line-height: 1.2; padding-right: 5px; scrollbar-width: thin; }
+        .texte-annonce::-webkit-scrollbar { width: 4px; }
+        .texte-annonce::-webkit-scrollbar-thumb { background: #008080; border-radius: 10px; }
 
-        .btn-arrosage { background: #E1F5FE; border: 1px solid #00BFFF; border-radius: 8px; color: #0277BD; font-size: 0.75em; padding: 4px; cursor: pointer; margin: 4px 0; font-family: 'Comic Sans MS'; font-weight: bold; width: 100%; }
-        .details-bas { font-size: 0.75em; color: #444; line-height: 1.2; border-top: 1px solid #eee; padding-top: 4px; background: white; margin-top: auto; }
+        .btn-arrosage { background: #E1F5FE; border: 1px solid #00BFFF; border-radius: 8px; color: #0277BD; font-size: 0.75em; padding: 5px; cursor: pointer; margin: 4px 0; font-weight: bold; width: 100%; }
+        .details-bas { font-size: 0.75em; color: #444; line-height: 1.3; border-top: 1px solid #eee; padding-top: 5px; background: white; }
 
-        /* GRAND MESSAGE */
-        #fond-sombre { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); z-index: 2000; justify-content: center; align-items: center; }
-        .message-geant { background: #FFFFF0; width: 95%; max-width: 800px; padding: 25px; border-radius: 25px; border: 8px solid #008080; position: relative; max-height: 75vh; overflow-y: auto; }
-        .bouton-fermer { position: absolute; top: 15px; right: 15px; background: #FF1493; color: white; border: 2px solid white; border-radius: 50%; width: 40px; height: 40px; cursor: pointer; }
-
-        /* EFFET NUIT & ETOILES */
+        /* FOND SOMBRE ET ETOILES */
         body.dark-mode { background-color: #0a0a1a; color: #e0e0e0; }
         .star { position: fixed; background: white; border-radius: 50%; opacity: 0; pointer-events: none; animation: twinkle var(--d) infinite; }
-        @keyframes twinkle { 0%, 100% { opacity: 0.2; } 50% { opacity: 1; } }
+        @keyframes twinkle { 0%, 100% { opacity: 0.3; } 50% { opacity: 1; } }
+        
+        #fond-sombre { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); z-index: 2000; justify-content: center; align-items: center; }
+        .message-geant { background: #FFFFF0; width: 95%; max-width: 800px; padding: 25px; border-radius: 25px; border: 8px solid #008080; position: relative; max-height: 80vh; overflow-y: auto; }
+        .bouton-fermer { position: absolute; top: 15px; right: 15px; background: #FF1493; color: white; border-radius: 50%; width: 40px; height: 40px; cursor: pointer; border: 2px solid white; font-weight: bold; }
         
         .fleur-pluie { position: fixed; pointer-events: none; font-size: 20px; z-index: 9999; animation: monter 3s linear forwards; }
         @keyframes monter { 0% { transform: translateY(0); opacity: 1; } 100% { transform: translateY(-100vh); opacity: 0; } }
@@ -74,7 +76,7 @@
                 <td><a href="aide.html">Aide</a></td>
             </tr>
         </table>
-        <button id="btn-mode" onclick="basculerModeSombre()" title="Nuit">🏮</button>
+        <button id="btn-mode" onclick="basculerModeSombre()">🏮</button>
     </div>
 
     <h2 style="color:#2E7D32; margin: 10px 0;">🍃 Le Jardin des Cadeaux Existentiels 🍃</h2>
@@ -91,7 +93,7 @@
             <div class="btn-group">
                 <button class="btn-filtre-rapide" onclick="rechercheRapide('Savoir', this)">🎓 Savoir</button>
                 <button class="btn-filtre-rapide" onclick="rechercheRapide('Citoyenne', this)">🏛️ Vie Citoyenne</button>
-                <button class="btn-filtra-rapide" onclick="rechercheRapide('Harmonie', this)">🤝 Aide & Harmonie</button>
+                <button class="btn-filtre-rapide" onclick="rechercheRapide('Harmonie', this)">🤝 Aide & Harmonie</button>
                 <button class="btn-filtre-rapide" onclick="rechercheRapide('Régulation', this)">⚖️ Régulation</button>
                 <button class="btn-filtre-rapide" onclick="rechercheRapide('Trésor', this)">💰 Trésor Public</button>
                 <button class="btn-filtre-rapide" onclick="rechercheRapide('Autre', this)">✨ Autre domaine</button>
@@ -103,7 +105,7 @@
     <h3 id="titre-registre" style="color: #008080;">📖 Registre de la Fraternité</h3>
     <div id="mur-messages" class="mur-reel"></div>
 
-    <div class="phrase-etoiles" id="phrase-petit-prince"></div>
+    <div class="phrase-etoiles" id="phrase-petit-prince" style="font-style: italic; color: #2E7D32; margin: 20px;"></div>
 
     <div id="fond-sombre" onclick="fermerGrandMessage()">
         <div class="message-geant" onclick="event.stopPropagation()">
@@ -121,7 +123,7 @@
     <script>
         const SCRIPT_URL = "annonces.json";
         const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbxz40XE2KiPXTNZsW-mIg-fm55EivK0r9wzZ5ECFRdEIY53nYH9nLGYRoI71OX93oII/exec";
-        let toutesLesAnnonces = [], annoncesFiltreesGlobal = [], indexActuel = 0, filtreTypeActuel = "";
+        let toutesLesAnnonces = [], filtreTypeActuel = "";
         const mappingBoutons = { "Savoir": "SAVOIR", "Citoyenne": "VIE", "Harmonie": ["AIDE", "URGENCE"], "Régulation": "REGULATION", "Trésor": "IMPOT", "Autre": "AUTRE_CAT" };
         const nomBoutonAffiche = { "SAVOIR": "Savoir", "VIE": "Vie Citoyenne", "AIDE": "Aide & Harmonie", "URGENCE": "Aide & Harmonie", "REGULATION": "Régulation", "IMPOT": "Trésor Public", "AUTRE_CAT": "Autre domaine" };
 
@@ -130,7 +132,7 @@
         function basculerModeSombre() {
             document.body.classList.toggle('dark-mode');
             if (document.body.classList.contains('dark-mode')) {
-                for(let i=0; i<50; i++) {
+                for(let i=0; i<60; i++) {
                     let s = document.createElement('div'); s.className = 'star';
                     s.style.left = Math.random()*100+'vw'; s.style.top = Math.random()*100+'vh';
                     s.style.width = s.style.height = Math.random()*3+'px';
@@ -141,12 +143,10 @@
         }
 
         async function chargerAnnonces() {
-            try {
-                const response = await fetch(SCRIPT_URL + "?v=" + new Date().getTime());
-                toutesLesAnnonces = await response.json();
-                document.getElementById('phrase-petit-prince').innerHTML = `✨ Aujourd'hui, le Petit Prince a aidé <b>0</b> fleurs fatiguées à rejoindre les étoiles pour laisser la place aux nouvelles pousses du monde entier...<br>Les annonces expirées ont rejoint une autre dimension.`;
-                executerFiltrage();
-            } catch (e) { console.log("Erreur chargement"); }
+            const response = await fetch(SCRIPT_URL + "?v=" + Date.now());
+            toutesLesAnnonces = await response.json();
+            document.getElementById('phrase-petit-prince').innerHTML = `✨ Aujourd'hui, le Petit Prince a aidé <b>0</b> fleurs fatiguées à rejoindre les étoiles pour laisser la place aux nouvelles pousses du monde entier...`;
+            executerFiltrage();
         }
 
         function executerFiltrage() {
@@ -154,7 +154,7 @@
             const vi = document.getElementById('searchVille').value.toLowerCase();
             const mi = document.getElementById('searchKeyword').value.toLowerCase();
 
-            annoncesFiltreesGlobal = toutesLesAnnonces.filter(ann => {
+            const filtrées = toutesLesAnnonces.filter(ann => {
                 const matchP = pi === "" || (ann.pays_select || "").toLowerCase().startsWith(pi);
                 const matchV = vi === "" || (ann.localisation || "").toLowerCase().startsWith(vi);
                 const matchM = (ann.message || "").toLowerCase().includes(mi) || (ann.nom || "").toLowerCase().includes(mi);
@@ -165,13 +165,10 @@
                 }
                 return matchP && matchV && matchM && matchT;
             });
-            render();
-        }
 
-        function render() {
             const cont = document.getElementById('mur-messages');
             cont.innerHTML = "";
-            annoncesFiltreesGlobal.forEach(ann => {
+            filtrées.forEach(ann => {
                 const d = document.createElement('div');
                 d.className = 'carte-message';
                 d.onclick = () => ouvrirGrandMessage(ann);
@@ -193,7 +190,7 @@
 
         async function arroser(e, id, btn) {
             e.stopPropagation();
-            btn.innerHTML = "Merci ! la pluie arrose cet annonce 24h";
+            btn.innerHTML = "Merci ! la pluie arrose cette annonce 24h";
             btn.style.background = "#C8E6C9";
             const fd = new URLSearchParams(); fd.append('action', 'arroser'); fd.append('id', id);
             fetch(WEB_APP_URL, { method: 'POST', mode: 'no-cors', body: fd });
@@ -201,13 +198,13 @@
 
         function ouvrirGrandMessage(ann) {
             document.getElementById('geant-contenu').innerHTML = `
-                <div style="font-size:1.8em; color:#2E7D32; font-weight:bold; border-bottom:3px solid #008080; margin-bottom:20px; padding-bottom:10px;">🌱 Offrande de ${ann.nom || "Anonyme"}</div>
-                <div style="background:white; padding:30px; border-radius:15px; border-left:10px solid #FF1493; font-size:1.5em; color:#000080; text-align:left; margin-bottom:20px; line-height:1.6;">"${ann.message}"</div>
-                <div style="text-align:left; background:#E0F2F1; padding:25px; border-radius:10px; font-size:1.1em; border: 1px solid #008080;">
-                    <strong>📍 Localisation :</strong> ${ann.localisation || "Non précisée"}<br>
+                <div style="font-size:1.8em; color:#2E7D32; font-weight:bold; border-bottom:3px solid #008080; margin-bottom:20px;">🌱 Offrande de ${ann.nom || "Anonyme"}</div>
+                <div style="background:white; padding:25px; border-radius:15px; border-left:10px solid #FF1493; font-size:1.4em; color:#000080; text-align:left; margin-bottom:20px;">"${ann.message}"</div>
+                <div style="text-align:left; background:#E0F2F1; padding:20px; border-radius:10px; font-size:1.1em;">
+                    <strong>📍 Localisation :</strong> ${ann.localisation || "N/C"}<br>
                     <strong>📍 Pays :</strong> ${ann.pays_select || "N/C"}<br>
                     <strong>🌍 Portée :</strong> ${ann.portee || "Locale"}<br>
-                    <strong>🚚 Logistique :</strong> ${ann.logistique || "À définir"}<br>
+                    <strong>🚚 Logistique :</strong> ${ann.logistique || "Main Propre"}
                 </div>
             `;
             document.getElementById('fond-sombre').style.display = 'flex';
@@ -228,7 +225,7 @@
 
         function fermerGrandMessage() { document.getElementById('fond-sombre').style.display = 'none'; }
         function creerFleur(e) {
-            if (Math.random() > 0.1) return;
+            if (Math.random() > 0.05) return;
             const f = document.createElement('div'); f.className = 'fleur-pluie'; f.innerText = '🌸';
             f.style.left = e.clientX + 'px'; f.style.top = e.clientY + 'px';
             document.body.appendChild(f); setTimeout(() => f.remove(), 3000);
