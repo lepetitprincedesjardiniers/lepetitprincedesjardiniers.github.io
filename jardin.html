@@ -8,14 +8,14 @@
         body { font-family: 'Comic Sans MS', cursive; text-align: center; margin: 0; padding: 0; background-color: #FFFF00; color: #000080; min-height: 100vh; padding-bottom: 80px; transition: background 0.3s, color 0.3s; }
         .top-bar { position: relative; width: 100%; min-height: 50px; background: rgba(255,255,255,0.3); padding: 5px 0; display: flex; justify-content: center; align-items: center; }
         
-        /* TRADUCTEUR EN HAUT A GAUCHE */
-        #google_translate_element { position: absolute; left: 10px; top: 10px; z-index: 1000; transform: scale(0.8); transform-origin: top left; }
+        /* TRADUCTEUR DÉPLACÉ EN HAUT A DROITE */
+        #google_translate_element { position: absolute; right: 50px; top: 10px; z-index: 1000; transform: scale(0.8); transform-origin: top right; }
 
         .menu-table { margin: 5px auto; border-radius: 10px; background-color: #008080; border-collapse: collapse; }
         .menu-table td { padding: 8px 15px; border: 1px solid #FFFFFF; }
         .menu-table a { text-decoration: none; color: #FFFFFF; font-weight: bold; font-size: 0.85em; }
 
-        #btn-mode { position: absolute; right: 10px; background: #444; color: #FFD700; border: 1px solid #222; border-radius: 5px; cursor: pointer; font-size: 14px; padding: 2px 5px; }
+        #btn-mode { position: absolute; right: 10px; top: 10px; background: #444; color: #FFD700; border: 1px solid #222; border-radius: 5px; cursor: pointer; font-size: 14px; padding: 2px 5px; z-index: 1001; }
 
         .phrase-rose { color: #ff1493; font-weight: bold; font-size: 1.1em; text-shadow: 1px 1px 2px #ff69b4; margin-top: 5px; }
         .phrase-sous { color: #000080; font-weight: bold; margin: 1px 0; font-size: 0.9em; }
@@ -40,7 +40,6 @@
         .nom-prenom { color: #2E7D32; font-weight: bold; font-size: 0.8em; border-bottom: 1px solid #eee; margin-bottom: 3px; }
         .rubrique-tag { font-size: 0.55em; background: #ff1493; color: white; padding: 1px 4px; border-radius: 5px; position: absolute; top: 5px; right: 5px; }
         
-        /* RETOUR DE LA SCROLLBAR VERTICALE */
         .texte-annonce { flex-grow: 1; font-style: italic; color: #000080; overflow-y: auto; font-size: 0.75em; margin: 5px 0; line-height: 1.2; padding-right: 5px; scrollbar-width: thin; }
         .texte-annonce::-webkit-scrollbar { width: 4px; }
         .texte-annonce::-webkit-scrollbar-thumb { background: #008080; border-radius: 10px; }
@@ -85,10 +84,10 @@
 
     <div class="search-box">
         <div class="search-container">
-            <input type="text" id="searchKeyword" class="search-main-input" onkeyup="filtrerAnnonces()" placeholder="🔍 Mots-clés...">
+            <input type="text" id="searchKeyword" class="search-main-input" onkeyup="executerFiltrage()" placeholder="🔍 Mots-clés...">
             <div class="search-row">
-                <div class="search-item"><input type="text" id="searchPays" onkeyup="filtrerAnnonces()" placeholder="📍 Pays"></div>
-                <div class="search-item"><input type="text" id="searchVille" onkeyup="filtrerAnnonces()" placeholder="🏙️ Ville"></div>
+                <div class="search-item"><input type="text" id="searchPays" onkeyup="executerFiltrage()" placeholder="📍 Pays"></div>
+                <div class="search-item"><input type="text" id="searchVille" onkeyup="executerFiltrage()" placeholder="🏙️ Ville"></div>
             </div>
             <div class="btn-group">
                 <button class="btn-filtre-rapide" onclick="rechercheRapide('Savoir', this)">🎓 Savoir</button>
