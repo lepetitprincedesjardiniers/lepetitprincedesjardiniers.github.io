@@ -16,11 +16,11 @@
         .phrase-rose { color: #ff1493; font-weight: bold; font-size: 1.1em; text-shadow: 1px 1px 2px #ff69b4; margin-top: 5px; }
         .phrase-sous { color: #000080; font-weight: bold; margin: 1px 0; font-size: 0.9em; }
 
-        /* --- NOUVEAUTÉ : PHRASE DES ÉTOILES --- */
-        .phrase-etoiles { font-style: italic; color: #2E7D32; font-size: 0.85em; margin: 5px auto; max-width: 600px; line-height: 1.2; }
+        /* --- PHRASE DES ÉTOILES --- */
+        .phrase-etoiles { font-style: italic; color: #2E7D32; font-size: 0.9em; margin: 30px auto; max-width: 700px; line-height: 1.4; }
 
         /* --- MOTEUR DE RECHERCHE --- */
-        .search-box { background: #008080; padding: 15px; margin: 10px auto; max-width: 850px; border-radius: 25px; color: white; box-shadow: 0 8px 20px rgba(0,0,0,0.2); border: 3px solid #fff; }
+        .search-box { background: #008080; padding: 15px; margin: 10px auto; max-width: 95%; width: 1100px; border-radius: 25px; color: white; box-shadow: 0 8px 20px rgba(0,0,0,0.2); border: 3px solid #fff; }
         .search-container { display: flex; flex-direction: column; gap: 10px; align-items: center; }
         .search-main-input { width: 90%; padding: 12px; border-radius: 15px; border: none; font-size: 1em; text-align: center; font-weight: bold; color: #004D40; }
         
@@ -34,48 +34,39 @@
         .btn-filtre-rapide.actif { background: #fff !important; color: #008080 !important; font-weight: bold; box-shadow: 0 0 10px white; transform: scale(1.05); }
         .btn-reset { background: #ff1493 !important; border-color: #ff1493 !important; }
 
-        /* --- CARTES DES ANNONCES --- */
-        .mur-reel { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 15px; padding: 20px; max-width: 1250px; margin: 0 auto; }
+        /* --- CARTES DES ANNONCES (AJUSTÉ POUR 5 COLONNES SUR PC) --- */
+        .mur-reel { 
+            display: grid; 
+            grid-template-columns: repeat(5, 1fr); /* 5 colonnes par défaut */
+            gap: 12px; 
+            padding: 15px; 
+            max-width: 1400px; 
+            margin: 0 auto; 
+        }
+
         .carte-message { 
-            background: white; border: 3px solid #008080; border-radius: 15px; padding: 15px; 
-            box-shadow: 5px 5px 0px #008080; transition: 0.3s; color: #333; text-align: left; 
-            display: flex; flex-direction: column; height: 300px; cursor: pointer; position: relative;
+            background: white; border: 2px solid #008080; border-radius: 12px; padding: 12px; 
+            box-shadow: 4px 4px 0px #008080; transition: 0.3s; color: #333; text-align: left; 
+            display: flex; flex-direction: column; height: 340px; cursor: pointer; position: relative;
             overflow-wrap: break-word;
         }
-        .carte-message:hover { transform: scale(1.02); border-color: #ff1493; }
-        .nom-prenom { color: #2E7D32; font-weight: bold; font-size: 1.1em; border-bottom: 2px solid #f0f0f0; padding-bottom: 3px; margin-bottom: 5px; }
-        .rubrique-tag { font-size: 0.7em; background: #ff1493; color: white; padding: 2px 8px; border-radius: 10px; position: absolute; top: 15px; right: 15px; }
-        .texte-annonce { flex-grow: 1; font-style: italic; color: #000080; overflow-y: auto; font-size: 0.95em; margin: 8px 0; line-height: 1.3; overflow-wrap: break-word; }
+
+        /* --- ADAPTATION MOBILE / TABLETTE --- */
+        @media (max-width: 1200px) { .mur-reel { grid-template-columns: repeat(3, 1fr); } }
+        @media (max-width: 800px) { .mur-reel { grid-template-columns: repeat(2, 1fr); } }
+        @media (max-width: 500px) { .mur-reel { grid-template-columns: 1fr; } }
+
+        .nom-prenom { color: #2E7D32; font-weight: bold; font-size: 1em; border-bottom: 2px solid #f0f0f0; padding-bottom: 3px; margin-bottom: 5px; }
+        .rubrique-tag { font-size: 0.65em; background: #ff1493; color: white; padding: 2px 6px; border-radius: 8px; position: absolute; top: 10px; right: 10px; }
+        .texte-annonce { flex-grow: 1; font-style: italic; color: #000080; overflow-y: auto; font-size: 0.85em; margin: 5px 0; line-height: 1.2; overflow-wrap: break-word; }
         
-        /* --- NOUVEAUTÉ : BOUTON ARROSER --- */
-       .btn-arrosage { 
-            background: #E1F5FE; 
-            border: 1px solid #00BFFF; 
-            border-radius: 12px; 
-            color: #0277BD; 
-            font-size: 0.75em; 
-            padding: 3px 8px; 
-            cursor: pointer; 
-            align-self: flex-end; /* Aligné à droite */
-            margin: 5px 0; 
-            transition: 0.2s; 
-            font-family: 'Comic Sans MS', cursive;
-        }
+        .btn-arrosage { background: #E1F5FE; border: 1px solid #00BFFF; border-radius: 12px; color: #0277BD; font-size: 0.7em; padding: 2px 6px; cursor: pointer; align-self: flex-end; margin: 3px 0; transition: 0.2s; font-family: 'Comic Sans MS', cursive; }
         .btn-arrosage:hover { background: #00BFFF; color: white; }
-        .compteur-eau { font-weight: bold; margin-left: 5px; color: #0277BD; }
+        .compteur-eau { font-weight: bold; margin-left: 3px; color: #0277BD; }
 
-        .info-echange { font-size: 0.75em; background: #E0F2F1; color: #00695C; padding: 6px; border-radius: 8px; margin: 5px 0; font-weight: bold; border: 1px dashed #008080; }
-        .details-bas { font-size: 0.68em; color: #555; line-height: 1.3; border-top: 1px solid #eee; padding-top: 5px; }
+        .info-echange { font-size: 0.7em; background: #E0F2F1; color: #00695C; padding: 4px; border-radius: 6px; margin: 3px 0; font-weight: bold; border: 1px dashed #008080; }
+        .details-bas { font-size: 0.65em; color: #555; line-height: 1.2; border-top: 1px solid #eee; padding-top: 4px; }
 
-        /* (Reste du style inchangé) */
-        .texte-annonce::-webkit-scrollbar, .message-geant::-webkit-scrollbar { width: 10px; }
-        .texte-annonce::-webkit-scrollbar-track, .message-geant::-webkit-scrollbar-track { background: #f1f1f1; border-radius: 10px; }
-        .texte-annonce::-webkit-scrollbar-thumb, .message-geant::-webkit-scrollbar-thumb { background: #008080; border-radius: 10px; border: 2px solid #f1f1f1; }
-        #fond-sombre { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); z-index: 2000; justify-content: center; align-items: center; }
-        .message-geant { background: #FFFFF0; width: 90%; max-width: 1000px; padding: 40px; border-radius: 30px; border: 10px solid #008080; position: relative; max-height: 85vh; overflow-y: auto; overflow-x: hidden; word-wrap: break-word; white-space: normal; }
-        .bouton-fermer { position: absolute; top: 15px; right: 15px; background: #FF1493; color: white; border: 3px solid white; border-radius: 50%; width: 40px; height: 40px; cursor: pointer; font-weight: bold; z-index: 10; }
-        #animal-container { position: fixed; z-index: 900; pointer-events: none; display: flex; align-items: center; }
-        #bulle-texte { background: white; border: 1px solid #2E7D32; padding: 5px; border-radius: 10px; font-size: 0.7em; opacity: 0; }
         .footer-copyright { margin: 20px 0; padding: 20px; position: relative; }
         .copyright-link { color: #008080; text-decoration: none; font-weight: bold; font-size: 0.9em; position: relative; z-index: 5; }
         .fleur-pluie { position: fixed; pointer-events: none; font-size: 20px; z-index: 9999; animation: monter 3s linear forwards; }
@@ -102,17 +93,13 @@
     <div class="phrase-rose">Bienvenue au Jardin des Dons entiers</div>
     <div class="phrase-sous">Talents, savoirs, objets et fraternité.</div>
     
-    <div class="phrase-etoiles">✨ Aujourd'hui, le Petit Prince a aidé quelques fleurs fatiguées à rejoindre les étoiles pour laisser la place aux nouvelles pousses du monde entier...
-                                  <div  Les annonces expirées ont rejoint une autre dimension</div> </div>
     <div class="search-box">
         <div class="search-container">
             <input type="text" id="searchKeyword" class="search-main-input" onkeyup="filtrerAnnonces()" placeholder="🔍 Mots-clés (ex: pain, bois, peinture...)">
-            
             <div class="search-row">
                 <div class="search-item"><input type="text" id="searchPays" onkeyup="filtrerAnnonces()" placeholder="📍 Pays"></div>
                 <div class="search-item"><input type="text" id="searchVille" onkeyup="filtrerAnnonces()" placeholder="🏙️ Ville"></div>
             </div>
-
             <div class="btn-group">
                 <button class="btn-filtre-rapide" onclick="rechercheRapide('Savoir', this)">🎓 Savoir</button>
                 <button class="btn-filtre-rapide" onclick="rechercheRapide('Citoyenne', this)">🏛️ Vie Citoyenne</button>
@@ -130,248 +117,19 @@
     <div class="mur-reel" id="mur-messages"></div>
     <button id="btn-voir-plus" style="display:none; margin: 20px auto; padding: 12px 25px; background:#008080; color:white; border-radius:20px; cursor:pointer;" onclick="chargerPlus()">Voir plus de graines... 🌱</button>
 
-    <div id="fond-sombre" onclick="fermerGrandMessage()">
-        <div class="message-geant" onclick="event.stopPropagation()">
-            <button class="bouton-fermer" onclick="fermerGrandMessage()">X</button>
-            <div id="geant-contenu"></div>
-        </div>
-    </div>
-
-    <div id="animal-container">
-        <div id="corps-animal" style="font-size: 30px;">🕊️</div>
-        <div id="bulle-texte"></div>
+    <div class="phrase-etoiles">
+        ✨ Aujourd'hui, le Petit Prince a aidé quelques fleurs fatiguées à rejoindre les étoiles pour laisser la place aux nouvelles pousses du monde entier...
+        <br>Les annonces expirées ont rejoint une autre dimension.
     </div>
 
     <div class="footer-copyright">
-        <a href="#" class="copyright-link" onmousemove="creerFleur(event)">© 2000 Le petit prince des jardiniers</a>
+        <a href="merci.html" class="copyright-link" onmousemove="creerFleur(event)">© 2000 Le petit prince des jardiniers</a>
     </div>
-
-    <script type="text/javascript">
-        function googleTranslateElementInit() {
-            new google.translate.TranslateElement({pageLanguage: 'fr'}, 'google_translate_element');
-        }
-        
-        function creerFleur(e) {
-            if (Math.random() > 0.1) return;
-            const fleurs = ['🌸', '🌼', '🌺', '🌻', '🌷', '🍃'];
-            const f = document.createElement('div');
-            f.className = 'fleur-pluie';
-            f.innerText = fleurs[Math.floor(Math.random() * fleurs.length)];
-            f.style.left = e.clientX + 'px';
-            f.style.top = e.clientY + 'px';
-            document.body.appendChild(f);
-            setTimeout(() => f.remove(), 3000);
-        }
-    </script>
-    <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
 
     <script>
-        // --- CONFIGURATION ---
-        const SCRIPT_URL = "annonces.json"; 
-        const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbxz40XE2KiPXTNZsW-mIg-fm55EivK0r9wzZ5ECFRdEIY53nYH9nLGYRoI71OX93oII/exec";
-        
-        let toutesLesAnnonces = [];
-        let annoncesFiltreesGlobal = [];
-        let indexActuel = 0;
-        const TAILLE_PAGE = 20; 
-        let filtreTypeActuel = "";
-
-        const mappingBoutons = {
-            "Savoir": "SAVOIR",
-            "Citoyenne": "VIE",
-            "Harmonie": ["AIDE", "URGENCE"],
-            "Régulation": "REGULATION",
-            "Trésor": "IMPOT",
-            "Autre": "AUTRE_CAT"
-        };
-
-        const nomBoutonAffiche = {
-            "SAVOIR": "Savoir", "VIE": "Vie Citoyenne", "AIDE": "Aide & Harmonie",
-            "URGENCE": "Aide & Harmonie", "REGULATION": "Régulation", 
-            "IMPOT": "Trésor Public", "AUTRE_CAT": "Autre domaine"
-        };
-
-        async function chargerAnnonces() {
-            try {
-                const response = await fetch(SCRIPT_URL + "?v=" + new Date().getTime());
-                const data = await response.json();
-                
-                if (Array.isArray(data)) {
-                    toutesLesAnnonces = data.sort((a, b) => new Date(b.Horodateur) - new Date(a.Horodateur));
-                } else {
-                    toutesLesAnnonces = [];
-                }
-                
-                document.getElementById('chargement').style.display = 'none';
-                executerFiltrage();
-            } catch (e) {
-                console.error("Erreur de chargement JSON:", e);
-                document.getElementById('chargement').innerText = "✨ Le jardin se prépare... Revenez dans une minute !";
-            }
-        }
-
-        // --- NOUVEAUTÉ : FONCTION ARROSER ---
-        async function arroserGraine(horodateur, bouton) {
-    event.stopPropagation(); 
-    
-    // 1. Changement immédiat : on montre que l'action est lancée
-    bouton.innerHTML = `⏳ Préparation de l'eau...`;
-    bouton.style.background = "#FFD180"; 
-    bouton.disabled = true; 
-    
-    try {
-        // 2. Envoi discret au Google Sheets
-        const formData = new URLSearchParams();
-        formData.append('action', 'arroser');
-        formData.append('id', horodateur);
-
-        await fetch(WEB_APP_URL, {
-            method: 'POST',
-            mode: 'no-cors', 
-            body: formData
-        });
-        
-        // 3. Le message final que tu souhaites
-        setTimeout(() => {
-            bouton.innerHTML = `💧 Arrosage prolongé durant 24h...`;
-            bouton.style.background = "#E1F5FE"; // Bleu très clair comme de l'eau
-            bouton.style.color = "#0277BD";
-            bouton.style.border = "1px solid #81D4FA";
-            // On laisse le bouton désactivé pour confirmer que c'est "en cours"
-        }, 800);
-
-    } catch (e) {
-        console.error("Erreur d'arrosage :", e);
-        bouton.innerHTML = `❌ Oups, le seau est percé...`;
-        bouton.disabled = false;
-    }
-}
-
-        function filtrerAnnonces() { executerFiltrage(); }
-
-        function rechercheRapide(tag, elem) {
-            const boutons = document.querySelectorAll('.btn-filtre-rapide');
-            boutons.forEach(b => b.classList.remove('actif'));
-            if (filtreTypeActuel === tag) { filtreTypeActuel = ""; } 
-            else { filtreTypeActuel = tag; elem.classList.add('actif'); }
-            executerFiltrage();
-        }
-
-        function resetRecherche(update = true) {
-            document.getElementById('searchKeyword').value = "";
-            document.getElementById('searchPays').value = "";
-            document.getElementById('searchVille').value = "";
-            filtreTypeActuel = ""; 
-            document.querySelectorAll('.btn-filtre-rapide').forEach(b => b.classList.remove('actif'));
-            if(update) executerFiltrage();
-        }
-
-        function executerFiltrage() {
-            const paysInput = document.getElementById('searchPays').value.toLowerCase();
-            const villeInput = document.getElementById('searchVille').value.toLowerCase();
-            const motInput = document.getElementById('searchKeyword').value.toLowerCase();
-
-            annoncesFiltreesGlobal = toutesLesAnnonces.filter(ann => {
-                const typeDansBD = (ann.type || "").toUpperCase();
-                let matchType = true;
-                if (filtreTypeActuel !== "") {
-                    const cible = mappingBoutons[filtreTypeActuel];
-                    matchType = Array.isArray(cible) ? cible.includes(typeDansBD) : (typeDansBD === cible);
-                }
-                const matchMots = (ann.message || "").toLowerCase().includes(motInput) || (ann.nom || "").toLowerCase().includes(motInput);
-                const matchGeo = (ann.pays_select || "").toLowerCase().includes(paysInput) && (ann.localisation || "").toLowerCase().includes(villeInput);
-                return matchType && matchMots && matchGeo;
-            });
-            
-            indexActuel = 0;
-            document.getElementById('mur-messages').innerHTML = '';
-            document.getElementById('titre-registre').innerText = `📖 Registre (${annoncesFiltreesGlobal.length} graines trouvées)`;
-            chargerPlus();
-        }
-
-        function chargerPlus() {
-            const fin = Math.min(indexActuel + TAILLE_PAGE, annoncesFiltreesGlobal.length);
-            const suite = annoncesFiltreesGlobal.slice(indexActuel, fin);
-            const conteneur = document.getElementById('mur-messages');
-            const fragment = document.createDocumentFragment();
-
-            suite.forEach(ann => {
-                const datePub = ann.Horodateur ? new Date(ann.Horodateur).toLocaleDateString('fr-FR') : "N/C";
-                const labelType = nomBoutonAffiche[ann.type] || ann.type || "Général";
-                
-                // Récupération du nombre d'arrosages (colonne M)
-                const nbVotes = ann.votes_arrosage || 0;
-
-                const carte = document.createElement('div');
-                carte.className = 'carte-message';
-                carte.onclick = () => ouvrirGrandMessage(ann);
-                
-           carte.innerHTML = `
-    <div class="nom-prenom">${ann.nom || "Anonyme"}</div>
-    <div class="rubrique-tag">${labelType}</div>
-    <div class="texte-annonce">"${ann.message || ""}"</div>
-    <div class="info-echange">📦 ${ann.portee || "Locale"} | 🚚 ${ann.logistique || "N/A"}</div>
-    
-    <div class="details-bas">
-        📍 ${ann.localisation || "Ville non précisée"}, ${ann.pays_select || ann.pays_precision || "Monde"}<br>
-        ⏳ Validité : ${ann.duree_validite || "Permanente"}<br>
-        
-        <button class="btn-arrosage" onclick="arroserGraine('${ann.Horodateur}', this)">
-            💧 <span class="compteur-eau">${nbVotes}</span> arrosage(s)
-        </button>
-        <br>
-        📅 Posté le : ${datePub}
-    </div>
-                `;
-                fragment.appendChild(carte);
-            });
-
-            conteneur.appendChild(fragment);
-            indexActuel = fin;
-            
-            const btn = document.getElementById('btn-voir-plus');
-            if (indexActuel < annoncesFiltreesGlobal.length) {
-                btn.style.display = 'block';
-            } else {
-                btn.style.display = 'none';
-            }
-        }
-
-        function ouvrirGrandMessage(ann) {
-            const datePub = ann.Horodateur ? new Date(ann.Horodateur).toLocaleDateString('fr-FR') : "N/C";
-            const labelType = nomBoutonAffiche[ann.type] || ann.type || "N/C";
-            document.getElementById('geant-contenu').innerHTML = `
-                <div style="font-size:1.6em; color:#2E7D32; font-weight:bold; border-bottom:3px solid #008080; margin-bottom:15px; padding-bottom:10px;">
-                    🌱 L'offrande de ${ann.nom || "Anonyme"}
-                </div>
-                <div style="background:white; padding:25px; border-radius:15px; border-left:10px solid #FF1493; font-size:1.4em; color:#000080; margin:15px 0; text-align:left; line-height:1.6; overflow-wrap: break-word;">
-                    "${ann.message || ""}"
-                </div>
-                <div style="text-align:left; background:#E0F2F1; padding:20px; border-radius:15px; border:1px solid #008080; color:#004D40; font-size:1.1em;">
-                    <strong>📂 Rubrique :</strong> ${labelType}<br>
-                    <strong>📍 Géographie :</strong> ${ann.localisation || ""}, ${ann.pays_select || ann.pays_precision || ""}<br>
-                    <strong>🌍 Portée :</strong> ${ann.portee || "Locale"}<br>
-                    <strong>🚚 Logistique :</strong> ${ann.logistique || "À définir"}<br>
-                    <strong>⏳ Validité :</strong> ${ann.duree_validite || "Permanente"}<br>
-                    <hr style="border:0; border-top:1px solid #008080; margin:10px 0;">
-                    <small>📅 Publication : ${datePub}</small>
-                </div>
-            `;
-            document.getElementById('fond-sombre').style.display = 'flex';
-        }
-
-        function fermerGrandMessage() { document.getElementById('fond-sombre').style.display = 'none'; }
-
-        setInterval(() => {
-            const container = document.getElementById('animal-container');
-            const x = Math.random() * (window.innerWidth - 100);
-            const y = Math.random() * (window.innerHeight - 100);
-            container.style.transition = "all 5s ease-in-out";
-            container.style.left = x + "px";
-            container.style.top = y + "px";
-        }, 6000);
-
-        window.onload = chargerAnnonces;
+        // Place ici tes fonctions JavaScript (chargerAnnonces, arroserGraine, chargerPlus, etc.)
+        // N'oublie pas de garder la fonction chargerPlus avec le nouveau mappage : ann.localisation
     </script>
+
 </body>
 </html>
