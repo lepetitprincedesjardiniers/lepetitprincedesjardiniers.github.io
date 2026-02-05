@@ -169,7 +169,7 @@
         let toutesLesAnnonces = [];
         let annoncesFiltreesGlobal = [];
         let indexActuel = 0;
-        const TAILLE_PAGE = 30;
+        const TAILLE_PAGE = 20; // Paquets de 20 pour fluidité max avec 50 000 entrées
         let filtreTypeActuel = "";
 
         const mappingBoutons = {
@@ -242,8 +242,10 @@
         }
 
         function chargerPlus() {
-            const suite = annoncesFiltreesGlobal.slice(indexActuel, indexActuel + TAILLE_PAGE);
+            const fin = Math.min(indexActuel + TAILLE_PAGE, annoncesFiltreesGlobal.length);
+            const suite = annoncesFiltreesGlobal.slice(indexActuel, fin);
             const conteneur = document.getElementById('mur-messages');
+            const fragment = document.createDocumentFragment();
 
             suite.forEach(ann => {
                 const datePub = ann.Horodateur ? new Date(ann.Horodateur).toLocaleDateString('fr-FR') : "N/C";
@@ -263,11 +265,20 @@
                         📅 Posté le : ${datePub}
                     </div>
                 `;
-                conteneur.appendChild(carte);
+                fragment.appendChild(carte);
             });
 
-            indexActuel += TAILLE_PAGE;
-            document.getElementById('btn-voir-plus').style.display = (indexActuel < annoncesFiltreesGlobal.length) ? 'block' : 'none';
+            conteneur.appendChild(fragment);
+            indexActuel = fin;
+            
+            const btn = document.getElementById('btn-voir-plus');
+            if (indexActuel < annoncesFiltreesGlobal.length) {
+                btn.style.display = 'block';
+                const reste = annoncesFiltreesGlobal.length - indexActuel;
+                btn.innerHTML = `Afficher les suivantes... (encore ${reste} 🌱)`;
+            } else {
+                btn.style.display = 'none';
+            }
         }
 
         function ouvrirGrandMessage(ann) {
