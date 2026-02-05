@@ -453,7 +453,7 @@ Le jardin arrose les fleurs..." required></textarea>
         const data = new FormData(form);
         
         const queryString = new URLSearchParams(data).toString();
-        const url = "https://script.google.com/macros/s/AKfycbxz40XE2KiPXTNZsW-mIg-fm55EivK0r9wzZ5ECFRdEIY53nYH9nLGYRoI71OX93oII/exec?" + queryString;
+        const url = "https://script.google.com/macros/s/AKfycbxz40XE2KiPXTNZsW-mIg-fm55EivK0r9wzZ5ECFRdEIY53nYH9nLGYRoI71OX93oII/exec" + queryString;
 
         fetch(url, { method: 'POST', mode: 'no-cors' })
         .then(() => { window.location.href = "merci_annonce.html"; })
