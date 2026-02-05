@@ -279,7 +279,7 @@
                     matchType = Array.isArray(cible) ? cible.includes(typeDansBD) : (typeDansBD === cible);
                 }
                 const matchMots = (ann.message || "").toLowerCase().includes(motInput) || (ann.nom || "").toLowerCase().includes(motInput);
-                const matchGeo = (ann.pays_select || "").toLowerCase().includes(paysInput) && (ann.pays_precision || "").toLowerCase().includes(villeInput);
+                const matchGeo = (ann.pays_select || "").toLowerCase().includes(paysInput) && (ann.localisation || "").toLowerCase().includes(villeInput);
                 return matchType && matchMots && matchGeo;
             });
             
