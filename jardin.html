@@ -34,56 +34,35 @@
         .btn-filtre-rapide.actif { background: #fff !important; color: #008080 !important; font-weight: bold; box-shadow: 0 0 10px white; transform: scale(1.05); }
         .btn-reset { background: #ff1493 !important; border-color: #ff1493 !important; }
 
-        /* --- GRILLE : Ajustée --- */
-        .mur-reel { 
-            display: grid; 
-            grid-template-columns: repeat(5, minmax(150px, 1fr)); 
-            gap: 10px; 
-            padding: 10px; 
-            max-width: 98vw; 
-            margin: 0 auto; 
-        }
-
+        /* --- GRILLE --- */
+        .mur-reel { display: grid; grid-template-columns: repeat(5, minmax(150px, 1fr)); gap: 10px; padding: 10px; max-width: 98vw; margin: 0 auto; }
         @media (max-width: 768px) { .mur-reel { grid-template-columns: repeat(2, 1fr); } }
         @media (max-width: 480px) { .mur-reel { grid-template-columns: 1fr; } }
 
         /* TAILLE MINI-CARTES */
-        .carte-message { 
-            background: white; border: 2px solid #008080; border-radius: 10px; padding: 8px; 
-            box-shadow: 3px 3px 0px #008080; transition: 0.3s; color: #333; text-align: left; 
-            display: flex; flex-direction: column; height: 210px; cursor: pointer; position: relative;
-            overflow: hidden;
-        }
+        .carte-message { background: white; border: 2px solid #008080; border-radius: 10px; padding: 8px; box-shadow: 3px 3px 0px #008080; transition: 0.3s; color: #333; text-align: left; display: flex; flex-direction: column; height: 210px; cursor: pointer; position: relative; overflow: hidden; }
         .carte-message:hover { transform: translateY(-3px); border-color: #ff1493; }
 
         .nom-prenom { color: #2E7D32; font-weight: bold; font-size: 0.8em; border-bottom: 1px solid #eee; margin-bottom: 3px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
         .rubrique-tag { font-size: 0.5em; background: #ff1493; color: white; padding: 1px 4px; border-radius: 5px; position: absolute; top: 5px; right: 5px; }
         
-        .texte-annonce { 
-            flex-grow: 1; 
-            font-style: italic; 
-            color: #000080; 
-            overflow-y: auto; 
-            font-size: 0.75em; 
-            margin: 3px 0; 
-            line-height: 1.1; 
-            padding-right: 5px; 
-            overflow-wrap: break-word; 
-            white-space: pre-wrap; 
-        }
+        .texte-annonce { flex-grow: 1; font-style: italic; color: #000080; overflow-y: auto; font-size: 0.75em; margin: 3px 0; line-height: 1.1; padding-right: 8px; overflow-wrap: break-word; white-space: pre-wrap; }
 
         .btn-arrosage { position: relative; background: #E1F5FE; border: 1px solid #00BFFF; border-radius: 8px; color: #0277BD; font-size: 0.65em; padding: 2px 5px; cursor: pointer; margin: 4px 0; font-family: 'Comic Sans MS'; font-weight: bold; overflow: hidden; }
         .compteur-eau { font-weight: bold; margin-left: 2px; }
 
         .info-echange { font-size: 0.6em; background: #E0F2F1; color: #00695C; padding: 2px; border-radius: 4px; margin: 2px 0; font-weight: bold; white-space: nowrap; overflow: hidden; }
-        .details-bas { font-size: 0.55em; color: #555; line-height: 1.2; border-top: 1px solid #eee; padding-top: 2px; }
+        
+        /* Fix barre défilement sur les détails du bas */
+        .details-bas { font-size: 0.55em; color: #555; line-height: 1.2; border-top: 1px solid #eee; padding-top: 2px; background: white; z-index: 2; position: relative; margin-top: auto; }
 
         #fond-sombre { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); z-index: 2000; justify-content: center; align-items: center; }
-        .message-geant { 
-            background: #FFFFF0; width: 90%; max-width: 650px; padding: 30px; border-radius: 25px; border: 8px solid #008080; position: relative; max-height: 85vh; overflow-y: auto; 
-        }
+        
+        /* GRANDE CARTE : Largeur augmentée, Hauteur réduite */
+        .message-geant { background: #FFFFF0; width: 95%; max-width: 800px; padding: 25px; border-radius: 25px; border: 8px solid #008080; position: relative; max-height: 75vh; overflow-y: auto; }
+        
         #geant-contenu { white-space: pre-wrap; }
-        .bouton-fermer { position: absolute; top: 15px; right: 15px; background: #FF1493; color: white; border: 2px solid white; border-radius: 50%; width: 40px; height: 40px; cursor: pointer; font-weight: bold; font-size: 1.2em; }
+        .bouton-fermer { position: absolute; top: 15px; right: 15px; background: #FF1493; color: white; border: 2px solid white; border-radius: 50%; width: 40px; height: 40px; cursor: pointer; font-weight: bold; font-size: 1.2em; z-index: 10; }
         
         #animal-container { position: fixed; z-index: 900; pointer-events: none; display: flex; align-items: center; }
         #bulle-texte { background: white; border: 1px solid #2E7D32; padding: 5px; border-radius: 10px; font-size: 0.7em; opacity: 0; }
@@ -92,9 +71,9 @@
         .fleur-pluie { position: fixed; pointer-events: none; font-size: 20px; z-index: 9999; animation: monter 3s linear forwards; }
         @keyframes monter { 0% { transform: translateY(0) rotate(0deg); opacity: 1; } 100% { transform: translateY(-100vh) rotate(360deg); opacity: 0; } }
 
-        /* --- AJOUTS RÉCENTS --- */
+        /* --- AJOUTS RÉCENTS & DARK MODE --- */
         body.dark-mode { background-color: #1a1a2e; color: #e0e0e0; }
-        body.dark-mode .carte-message { background: #16213e; border-color: #0f3460; color: #fff; }
+        body.dark-mode .carte-message, body.dark-mode .details-bas { background: #16213e; border-color: #0f3460; color: #fff; }
         body.dark-mode .texte-annonce { color: #add8e6; }
         body.dark-mode .message-geant { background: #1a1a2e; color: white; border-color: #ff1493; }
         body.dark-mode .phrase-sous { color: #e0e0e0; }
@@ -102,13 +81,24 @@
         .goutte { position: absolute; color: #00BFFF; font-size: 20px; animation: tomber 0.8s ease-in forwards; pointer-events: none; }
         @keyframes tomber { 0% { transform: translateY(-30px); opacity: 1; } 100% { transform: translateY(30px); opacity: 0; } }
 
-        #btn-mode { position: fixed; bottom: 20px; right: 20px; z-index: 3000; padding: 10px; border-radius: 50%; border: none; cursor: pointer; background: #008080; color: white; font-size: 1.2em; box-shadow: 0 4px 10px rgba(0,0,0,0.3); }
-        #compteur-global { font-weight: bold; color: #ff1493; margin-bottom: 10px; display: block; }
+        /* BOUTON LANTERNE */
+        #btn-mode { 
+            position: fixed; bottom: 20px; right: 20px; z-index: 3000; 
+            width: 50px; height: 60px; border: none; cursor: pointer; 
+            background: #444; color: #FFD700; font-size: 25px; 
+            border-radius: 10px 10px 5px 5px;
+            box-shadow: 0 0 15px rgba(255, 215, 0, 0.3);
+            display: flex; align-items: center; justify-content: center;
+            transition: 0.3s; padding: 0;
+            border-top: 5px solid #222;
+        }
+        #btn-mode::before { content: ""; position: absolute; top: -10px; width: 20px; height: 10px; border: 3px solid #222; border-bottom: none; border-radius: 10px 10px 0 0; }
+        body.dark-mode #btn-mode { background: #FFD700; color: #444; box-shadow: 0 0 25px #FFD700; }
     </style>
 </head>
 <body>
 
-    <button id="btn-mode" onclick="basculerModeSombre()">🌓</button>
+    <button id="btn-mode" onclick="basculerModeSombre()" title="Allumer la lanterne">🏮</button>
 
     <div class="top-bar">
         <div id="google_translate_element"></div>
@@ -148,7 +138,6 @@
     </div>
 
     <h3 id="titre-registre" style="color: #008080;">📖 Registre de la Fraternité</h3>
-    <span id="compteur-global"></span>
     <div id="chargement">✨ Récolte des graines en cours...</div>
     <div class="mur-reel" id="mur-messages"></div>
     <button id="btn-voir-plus" style="display:none; margin: 20px auto; padding: 12px 25px; background:#008080; color:white; border-radius:20px; cursor:pointer;" onclick="chargerPlus()">Voir plus de graines... 🌱</button>
@@ -213,14 +202,12 @@
             "IMPOT": "Trésor Public", "AUTRE_CAT": "Autre domaine"
         };
 
-        // --- NOUVELLES FONCTIONS ---
         function basculerModeSombre() {
             document.body.classList.toggle('dark-mode');
         }
 
         function masquerTel(texte) {
             if (!texte) return "";
-            // Masque les numéros de téléphone (format générique)
             return texte.replace(/(\d{2})(\d{2})(\d{2})(\d{2})(\d{2})/g, '$1 $2 ** ** **')
                         .replace(/(\+\d{2})(\d)/g, '$1 *');
         }
@@ -231,11 +218,6 @@
                 const data = await response.json();
                 toutesLesAnnonces = Array.isArray(data) ? data.sort((a, b) => new Date(b.Horodateur) - new Date(a.Horodateur)) : [];
                 document.getElementById('chargement').style.display = 'none';
-                
-                // Calcul compteur global
-                const totalArrosage = toutesLesAnnonces.reduce((sum, ann) => sum + (ann.votes_arrosage || 0), 0);
-                document.getElementById('compteur-global').innerText = `💧 ${totalArrosage} arrosages collectifs dans le jardin`;
-                
                 executerFiltrage();
             } catch (e) {
                 document.getElementById('chargement').innerText = "✨ Le jardin se prépare...";
@@ -244,15 +226,12 @@
 
         async function arroserGraine(horodateur, bouton) {
             event.stopPropagation();
-            
-            // Animation goutte
             const g = document.createElement('span');
             g.className = 'goutte';
             g.innerHTML = '💧';
             g.style.left = '50%';
             bouton.appendChild(g);
             setTimeout(() => g.remove(), 800);
-
             bouton.innerHTML = `⏳...`;
             bouton.disabled = true; 
             try {
@@ -298,10 +277,8 @@
                     matchType = Array.isArray(cible) ? cible.includes(typeDansBD) : (typeDansBD === cible);
                 }
                 const matchMots = (ann.message || "").toLowerCase().includes(motInput) || (ann.nom || "").toLowerCase().includes(motInput);
-                
                 const matchPays = (ann.pays_select || "").toLowerCase().includes(paysInput) || (ann.pays_precision || "").toLowerCase().includes(paysInput);
                 const matchVille = (ann.localisation || "").toLowerCase().includes(villeInput);
-                
                 return matchType && matchMots && matchPays && matchVille;
             });
 
@@ -319,7 +296,6 @@
             suite.forEach(ann => {
                 const labelType = nomBoutonAffiche[ann.type] || ann.type || "Général";
                 const nbVotes = ann.votes_arrosage || 0;
-                // Logique demandée : soit pays_select, soit pays_precision
                 const paysAffiche = ann.pays_select || ann.pays_precision || "N/C";
 
                 let texteValidite = "Permanente";
@@ -368,7 +344,6 @@
         function ouvrirGrandMessage(ann) {
             const datePub = ann.Horodateur ? new Date(ann.Horodateur).toLocaleDateString('fr-FR') : "N/C";
             const paysAffiche = ann.pays_select || ann.pays_precision || "N/C";
-            
             document.getElementById('geant-contenu').innerHTML = `
                 <div style="font-size:1.8em; color:#2E7D32; font-weight:bold; border-bottom:3px solid #008080; margin-bottom:20px; padding-bottom:10px;">🌱 Offrande de ${ann.nom || "Anonyme"}</div>
                 <div style="background:white; padding:30px; border-radius:15px; border-left:10px solid #FF1493; font-size:1.5em; color:#000080; text-align:left; margin-bottom:20px; line-height:1.6;">"${masquerTel(ann.message) || ""}"</div>
