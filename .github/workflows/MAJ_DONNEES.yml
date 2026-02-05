@@ -1,24 +1,24 @@
-name: Mise à jour des données du Jardin
+name: Mise à jour automatique du Jardin
 on:
   repository_dispatch:
     types: [sheet_updated]
-  workflow_dispatch: # Permet de le lancer manuellement pour tester
+  workflow_dispatch: # Pour pouvoir le lancer à la main si besoin
 
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - name: Récupération du code
+      - name: Récupération du code du site
         uses: actions/checkout@v3
 
-      - name: Téléchargement des 50 000 annonces
+      - name: Téléchargement des données depuis Google Sheets
         run: |
           curl -L "https://script.google.com/macros/s/AKfycbxz40XE2KiPXTNZsW-mIg-fm55EivK0r9wzZ5ECFRdEIY53nYH9nLGYRoI71OX93oII/exec" -o annonces.json
 
-      - name: Publication sur GitHub Pages
+      - name: Mise à jour du fichier sur le site
         run: |
-          git config --global user.name 'Robot Jardin'
+          git config --global user.name 'Robot-Jardinier'
           git config --global user.email 'robot@jardin.com'
           git add annonces.json
-          git commit -m "🌱 Mise à jour des annonces" || echo "Pas de changements"
+          git commit -m "🌱 Maj auto des annonces" || echo "Aucun changement"
           git push
