@@ -59,7 +59,19 @@
 
         .nom-prenom { color: #2E7D32; font-weight: bold; font-size: 0.8em; border-bottom: 1px solid #eee; margin-bottom: 3px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
         .rubrique-tag { font-size: 0.5em; background: #ff1493; color: white; padding: 1px 4px; border-radius: 5px; position: absolute; top: 5px; right: 5px; }
-        .texte-annonce { flex-grow: 1; font-style: italic; color: #000080; overflow-y: auto; font-size: 0.75em; margin: 3px 0; line-height: 1.1; overflow-wrap: break-word; }
+        
+        /* AJOUT : Retour à la ligne et barre de défilement */
+        .texte-annonce { 
+            flex-grow: 1; 
+            font-style: italic; 
+            color: #000080; 
+            overflow-y: auto; 
+            font-size: 0.75em; 
+            margin: 3px 0; 
+            line-height: 1.1; 
+            overflow-wrap: break-word; 
+            white-space: pre-wrap; 
+        }
 
         .btn-arrosage { background: #E1F5FE; border: 1px solid #00BFFF; border-radius: 8px; color: #0277BD; font-size: 0.6em; padding: 1px 4px; cursor: pointer; }
         .compteur-eau { font-weight: bold; margin-left: 2px; }
@@ -68,7 +80,15 @@
         .details-bas { font-size: 0.55em; color: #555; line-height: 1; border-top: 1px solid #eee; padding-top: 2px; }
 
         #fond-sombre { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); z-index: 2000; justify-content: center; align-items: center; }
-        .message-geant { background: #FFFFF0; width: 95%; max-width: 1000px; padding: 40px; border-radius: 25px; border: 8px solid #008080; position: relative; max-height: 90vh; overflow-y: auto; }
+        
+        /* AJOUT : Défilement pour grand format */
+        .message-geant { 
+            background: #FFFFF0; width: 95%; max-width: 1000px; padding: 40px; border-radius: 25px; border: 8px solid #008080; position: relative; max-height: 90vh; overflow-y: auto; 
+        }
+        
+        /* AJOUT : Retour à la ligne pour le contenu géant */
+        #geant-contenu { white-space: pre-wrap; }
+
         .bouton-fermer { position: absolute; top: 15px; right: 15px; background: #FF1493; color: white; border: 2px solid white; border-radius: 50%; width: 40px; height: 40px; cursor: pointer; font-weight: bold; font-size: 1.2em; }
         
         #animal-container { position: fixed; z-index: 900; pointer-events: none; display: flex; align-items: center; }
@@ -243,7 +263,6 @@
                 }
                 const matchMots = (ann.message || "").toLowerCase().includes(motInput) || (ann.nom || "").toLowerCase().includes(motInput);
                 
-                // LOGIQUE DE RECHERCHE CORRIGÉE
                 const matchPays = (ann.pays_select || "").toLowerCase().includes(paysInput) || (ann.pays_precision || "").toLowerCase().includes(paysInput);
                 const matchVille = (ann.localisation || "").toLowerCase().includes(villeInput);
                 
@@ -262,9 +281,9 @@
             const conteneur = document.getElementById('mur-messages');
 
             suite.forEach(ann => {
-                const datePub = ann.Horodateur ? new Date(ann.Horodateur).toLocaleDateString('fr-FR') : "N/C";
                 const labelType = nomBoutonAffiche[ann.type] || ann.type || "Général";
                 const nbVotes = ann.votes_arrosage || 0;
+                const paysComplet = `${ann.pays_select || ""} ${ann.pays_precision || ""}`.trim();
 
                 const carte = document.createElement('div');
                 carte.className = 'carte-message';
@@ -275,8 +294,8 @@
                     <div class="texte-annonce">"${ann.message || ""}"</div>
                     <div class="info-echange">📦 ${ann.portee || "Locale"}</div>
                     <div class="details-bas">
-                        📍 ${ann.localisation || "Ville N/C"}<br>
-                        💧 <span class="compteur-eau">${nbVotes}</span> | 📅 ${datePub}
+                        📍 ${ann.localisation || "Ville N/C"} (${paysComplet || "Pays N/C"})<br>
+                        💧 <span class="compteur-eau">${nbVotes}</span> | ⏳ ${ann.duree_validite || "Permanente"}
                     </div>
                 `;
                 conteneur.appendChild(carte);
