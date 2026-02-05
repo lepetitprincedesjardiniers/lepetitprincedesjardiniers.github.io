@@ -285,6 +285,19 @@
                 const nbVotes = ann.votes_arrosage || 0;
                 const paysComplet = `${ann.pays_select || ""} ${ann.pays_precision || ""}`.trim();
 
+                // Calcul de la durée restante
+                let texteValidite = "Permanente";
+                if (ann.Horodateur && ann.duree_validite) {
+                    const datePub = new Date(ann.Horodateur);
+                    const joursMatch = ann.duree_validite.match(/\d+/);
+                    if (joursMatch) {
+                        const joursTotal = parseInt(joursMatch[0]);
+                        const dateExp = new Date(datePub.getTime() + (joursTotal * 24 * 60 * 60 * 1000));
+                        const reste = Math.ceil((dateExp - new Date()) / (1000 * 60 * 60 * 24));
+                        texteValidite = reste > 0 ? reste + "j restant(s)" : "Expire bientôt";
+                    }
+                }
+
                 const carte = document.createElement('div');
                 carte.className = 'carte-message';
                 carte.onclick = () => ouvrirGrandMessage(ann);
@@ -294,8 +307,8 @@
                     <div class="texte-annonce">"${ann.message || ""}"</div>
                     <div class="info-echange">📦 ${ann.portee || "Locale"}</div>
                     <div class="details-bas">
-                        📍 ${ann.localisation || "Ville N/C"} (${paysComplet || "Pays N/C"})<br>
-                        💧 <span class="compteur-eau">${nbVotes}</span> | ⏳ ${ann.duree_validite || "Permanente"}
+                        📍 ${ann.localisation || "N/C"} (${paysComplet || "N/C"})<br>
+                        💧 <span class="compteur-eau">${nbVotes}</span> | ⏳ ${texteValidite}
                     </div>
                 `;
                 conteneur.appendChild(carte);
@@ -314,7 +327,7 @@
                     <strong>📍 Pays (C/D) :</strong> ${ann.pays_select || ""} ${ann.pays_precision || ""}<br>
                     <strong>🌍 Portée :</strong> ${ann.portee || "Locale"}<br>
                     <strong>🚚 Logistique :</strong> ${ann.logistique || "À définir"}<br>
-                    <strong>⏳ Validité :</strong> ${ann.duree_validite || "Permanente"}<br>
+                    <strong>⏳ Temps restant :</strong> ${calculerRestant(ann.Horodateur, ann.duree_validite)}<br>
                     <hr style="border:0; border-top:1px solid #008080; margin:15px 0;">
                     <small>📅 Publication : ${datePub} | 🆔 ${ann.Horodateur}</small>
                 </div>
