@@ -28,10 +28,7 @@
         .btn-group { display: flex; gap: 8px; flex-wrap: wrap; justify-content: center; margin-top: 10px; }
         .btn-filtre-rapide { background: rgba(255,255,255,0.2); border: 1px solid white; color: white; padding: 6px 12px; border-radius: 20px; cursor: pointer; font-family: 'Comic Sans MS'; font-size: 0.8em; transition: 0.3s; }
         .btn-filtre-rapide:hover { background: white; color: #008080; }
-        
-        /* MODIFICATION : Style du bouton actif */
         .btn-filtre-rapide.actif { background: #fff !important; color: #008080 !important; font-weight: bold; box-shadow: 0 0 10px white; transform: scale(1.05); }
-        
         .btn-reset { background: #ff1493 !important; border-color: #ff1493 !important; }
 
         /* --- CARTES DES ANNONCES --- */
@@ -122,7 +119,7 @@
         let annoncesFiltreesGlobal = [];
         let indexActuel = 0;
         const TAILLE_PAGE = 30;
-        let filtreTypeActuel = ""; // MODIFICATION : Stockage du filtre de type
+        let filtreTypeActuel = ""; 
 
         async function chargerAnnonces() {
             try {
@@ -138,7 +135,6 @@
 
         function filtrerAnnonces() { executerFiltrage(); }
 
-        // MODIFICATION : Gestion de l'état actif et filtrage ciblé
         function rechercheRapide(tag, elem) {
             const boutons = document.querySelectorAll('.btn-filtre-rapide');
             boutons.forEach(b => b.classList.remove('actif'));
@@ -156,21 +152,21 @@
             document.getElementById('searchKeyword').value = "";
             document.getElementById('searchPays').value = "";
             document.getElementById('searchVille').value = "";
-            filtreTypeActuel = ""; // Reset du filtre type
+            filtreTypeActuel = ""; 
             document.querySelectorAll('.btn-filtre-rapide').forEach(b => b.classList.remove('actif'));
             if(update) executerFiltrage();
         }
 
         function executerFiltrage() {
-            const pays = document.getElementById('searchPays').value.toLowerCase();
-            const ville = document.getElementById('searchVille').value.toLowerCase();
-            const mot = document.getElementById('searchKeyword').value.toLowerCase();
+            const paysInput = document.getElementById('searchPays').value.toLowerCase();
+            const villeInput = document.getElementById('searchVille').value.toLowerCase();
+            const motInput = document.getElementById('searchKeyword').value.toLowerCase();
 
             annoncesFiltreesGlobal = toutesLesAnnonces.filter(ann => {
-                // MODIFICATION : Recherche ciblée par type (colonne 'rubrique') et mot-clé
-                const matchType = filtreTypeActuel === "" || (ann.rubrique || "").toLowerCase().includes(filtreTypeActuel.toLowerCase());
-                const matchMots = (ann.message || "").toLowerCase().includes(mot) || (ann.nom || "").toLowerCase().includes(mot);
-                const matchGeo = (ann.pays || "").toLowerCase().includes(pays) && (ann.ville || "").toLowerCase().includes(ville);
+                // MODIFICATION : Utilisation de vos colonnes exactes (type, pays_select, pays_precision)
+                const matchType = filtreTypeActuel === "" || (ann.type || "").toLowerCase().includes(filtreTypeActuel.toLowerCase());
+                const matchMots = (ann.message || "").toLowerCase().includes(motInput) || (ann.nom || "").toLowerCase().includes(motInput);
+                const matchGeo = (ann.pays_select || "").toLowerCase().includes(paysInput) && (ann.pays_precision || "").toLowerCase().includes(villeInput);
                 
                 return matchType && matchMots && matchGeo;
             });
@@ -191,14 +187,15 @@
                 carte.className = 'carte-message';
                 carte.onclick = () => ouvrirGrandMessage(ann);
                 
+                // MODIFICATION : Mapping des colonnes pays_precision, pays_select et type
                 carte.innerHTML = `
                     <div class="nom-prenom">${ann.nom || "Anonyme"}</div>
-                    <div class="rubrique-tag">${ann.rubrique || "Divers"}</div>
+                    <div class="rubrique-tag">${ann.type || "Général"}</div>
                     <div class="texte-annonce">"${ann.message || ""}"</div>
                     <div class="info-echange">📦 ${ann.portee || "Locale"} | 🚚 ${ann.logistique || "N/A"}</div>
                     <div class="details-bas">
-                        📍 ${ann.ville || "Monde"}, ${ann.pays || ""}<br>
-                        ⏳ Validité : ${ann.validite || "Permanente"}<br>
+                        📍 ${ann.pays_precision || "Partout"}, ${ann.pays_select || ""}<br>
+                        ⏳ Validité : ${ann.duree_validite || "Permanente"}<br>
                         📅 Posté le : ${datePub}
                     </div>
                 `;
@@ -219,11 +216,11 @@
                     "${ann.message || ""}"
                 </div>
                 <div style="text-align:left; background:#E0F2F1; padding:15px; border-radius:15px; border:1px solid #008080; color:#004D40;">
-                    <strong>📂 Rubrique :</strong> ${ann.rubrique || "N/C"}<br>
-                    <strong>📍 Géographie :</strong> ${ann.ville || ""}, ${ann.pays || ""}<br>
+                    <strong>📂 Rubrique :</strong> ${ann.type || "N/C"}<br>
+                    <strong>📍 Géographie :</strong> ${ann.pays_precision || ""}, ${ann.pays_select || ""}<br>
                     <strong>🌍 Portée :</strong> ${ann.portee || "Locale"}<br>
                     <strong>🚚 Logistique :</strong> ${ann.logistique || "À définir"}<br>
-                    <strong>⏳ Validité :</strong> ${ann.validite || "Permanente"}<br>
+                    <strong>⏳ Validité :</strong> ${ann.duree_validite || "Permanente"}<br>
                     <hr style="border:0; border-top:1px solid #008080; margin:10px 0;">
                     <small>📅 Publication : ${datePub}</small>
                 </div>
