@@ -16,6 +16,9 @@
         .phrase-rose { color: #ff1493; font-weight: bold; font-size: 1.1em; text-shadow: 1px 1px 2px #ff69b4; margin-top: 5px; }
         .phrase-sous { color: #000080; font-weight: bold; margin: 1px 0; font-size: 0.9em; }
 
+        /* --- NOUVEAUTÉ : PHRASE DES ÉTOILES --- */
+        .phrase-etoiles { font-style: italic; color: #2E7D32; font-size: 0.85em; margin: 5px auto; max-width: 600px; line-height: 1.2; }
+
         /* --- MOTEUR DE RECHERCHE --- */
         .search-box { background: #008080; padding: 15px; margin: 10px auto; max-width: 850px; border-radius: 25px; color: white; box-shadow: 0 8px 20px rgba(0,0,0,0.2); border: 3px solid #fff; }
         .search-container { display: flex; flex-direction: column; gap: 10px; align-items: center; }
@@ -36,7 +39,7 @@
         .carte-message { 
             background: white; border: 3px solid #008080; border-radius: 15px; padding: 15px; 
             box-shadow: 5px 5px 0px #008080; transition: 0.3s; color: #333; text-align: left; 
-            display: flex; flex-direction: column; height: 260px; cursor: pointer; position: relative;
+            display: flex; flex-direction: column; height: 300px; cursor: pointer; position: relative;
             overflow-wrap: break-word;
         }
         .carte-message:hover { transform: scale(1.02); border-color: #ff1493; }
@@ -44,42 +47,26 @@
         .rubrique-tag { font-size: 0.7em; background: #ff1493; color: white; padding: 2px 8px; border-radius: 10px; position: absolute; top: 15px; right: 15px; }
         .texte-annonce { flex-grow: 1; font-style: italic; color: #000080; overflow-y: auto; font-size: 0.95em; margin: 8px 0; line-height: 1.3; overflow-wrap: break-word; }
         
-        .texte-annonce::-webkit-scrollbar, .message-geant::-webkit-scrollbar { width: 10px; }
-        .texte-annonce::-webkit-scrollbar-track, .message-geant::-webkit-scrollbar-track { background: #f1f1f1; border-radius: 10px; }
-        .texte-annonce::-webkit-scrollbar-thumb, .message-geant::-webkit-scrollbar-thumb { background: #008080; border-radius: 10px; border: 2px solid #f1f1f1; }
+        /* --- NOUVEAUTÉ : BOUTON ARROSER --- */
+        .btn-arrosage { background: #E1F5FE; border: 1px solid #00BFFF; border-radius: 15px; color: #0277BD; font-size: 0.8em; padding: 4px 10px; cursor: pointer; align-self: center; margin-bottom: 5px; transition: 0.2s; }
+        .btn-arrosage:hover { background: #00BFFF; color: white; transform: scale(1.1); }
 
         .info-echange { font-size: 0.75em; background: #E0F2F1; color: #00695C; padding: 6px; border-radius: 8px; margin: 5px 0; font-weight: bold; border: 1px dashed #008080; }
         .details-bas { font-size: 0.68em; color: #555; line-height: 1.3; border-top: 1px solid #eee; padding-top: 5px; }
 
-        /* --- MODALE AGRANDIE --- */
+        /* (Reste du style inchangé) */
+        .texte-annonce::-webkit-scrollbar, .message-geant::-webkit-scrollbar { width: 10px; }
+        .texte-annonce::-webkit-scrollbar-track, .message-geant::-webkit-scrollbar-track { background: #f1f1f1; border-radius: 10px; }
+        .texte-annonce::-webkit-scrollbar-thumb, .message-geant::-webkit-scrollbar-thumb { background: #008080; border-radius: 10px; border: 2px solid #f1f1f1; }
         #fond-sombre { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); z-index: 2000; justify-content: center; align-items: center; }
-        .message-geant { 
-            background: #FFFFF0; 
-            width: 90%; 
-            max-width: 1000px; 
-            padding: 40px; 
-            border-radius: 30px; 
-            border: 10px solid #008080; 
-            position: relative; 
-            max-height: 85vh; 
-            overflow-y: auto; 
-            overflow-x: hidden; 
-            word-wrap: break-word; 
-            white-space: normal;
-        }
+        .message-geant { background: #FFFFF0; width: 90%; max-width: 1000px; padding: 40px; border-radius: 30px; border: 10px solid #008080; position: relative; max-height: 85vh; overflow-y: auto; overflow-x: hidden; word-wrap: break-word; white-space: normal; }
         .bouton-fermer { position: absolute; top: 15px; right: 15px; background: #FF1493; color: white; border: 3px solid white; border-radius: 50%; width: 40px; height: 40px; cursor: pointer; font-weight: bold; z-index: 10; }
-
         #animal-container { position: fixed; z-index: 900; pointer-events: none; display: flex; align-items: center; }
         #bulle-texte { background: white; border: 1px solid #2E7D32; padding: 5px; border-radius: 10px; font-size: 0.7em; opacity: 0; }
-
-        /* --- COPYRIGHT & EFFET FLEURS --- */
         .footer-copyright { margin: 20px 0; padding: 20px; position: relative; }
         .copyright-link { color: #008080; text-decoration: none; font-weight: bold; font-size: 0.9em; position: relative; z-index: 5; }
         .fleur-pluie { position: fixed; pointer-events: none; font-size: 20px; z-index: 9999; animation: monter 3s linear forwards; }
-        @keyframes monter {
-            0% { transform: translateY(0) rotate(0deg); opacity: 1; }
-            100% { transform: translateY(-100vh) rotate(360deg); opacity: 0; }
-        }
+        @keyframes monter { 0% { transform: translateY(0) rotate(0deg); opacity: 1; } 100% { transform: translateY(-100vh) rotate(360deg); opacity: 0; } }
     </style>
 </head>
 <body>
@@ -101,6 +88,8 @@
     <h2 style="color:#2E7D32; margin: 10px 0;">🍃 Le Jardin des Cadeaux Existentiels 🍃</h2>
     <div class="phrase-rose">Bienvenue au Jardin des Dons entiers</div>
     <div class="phrase-sous">Talents, savoirs, objets et fraternité.</div>
+    
+    <div class="phrase-etoiles">✨ Aujourd'hui, le Petit Prince a aidé quelques fleurs fatiguées à rejoindre les étoiles pour laisser la place aux nouvelles pousses du monde entier...</div>
 
     <div class="search-box">
         <div class="search-container">
@@ -164,8 +153,9 @@
     <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
 
     <script>
-        // --- CONFIGURATION OPTIMISÉE GITHUB ---
+        // --- CONFIGURATION ---
         const SCRIPT_URL = "annonces.json"; 
+        const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbxz40XE2KiPXTNZsW-mIg-fm55EivK0r9wzZ5ECFRdEIY53nYH9nLGYRoI71OX93oII/exec";
         
         let toutesLesAnnonces = [];
         let annoncesFiltreesGlobal = [];
@@ -190,15 +180,11 @@
 
         async function chargerAnnonces() {
             try {
-                // On ajoute un timestamp (?v=...) pour forcer le navigateur à charger les nouveautés
                 const response = await fetch(SCRIPT_URL + "?v=" + new Date().getTime());
                 const data = await response.json();
                 
-                // TRI : Les plus récentes en premier (selon l'Horodateur)
                 if (Array.isArray(data)) {
-                    toutesLesAnnonces = data.sort((a, b) => {
-                        return new Date(b.Horodateur) - new Date(a.Horodateur);
-                    });
+                    toutesLesAnnonces = data.sort((a, b) => new Date(b.Horodateur) - new Date(a.Horodateur));
                 } else {
                     toutesLesAnnonces = [];
                 }
@@ -208,6 +194,29 @@
             } catch (e) {
                 console.error("Erreur de chargement JSON:", e);
                 document.getElementById('chargement').innerText = "✨ Le jardin se prépare... Revenez dans une minute !";
+            }
+        }
+
+        // --- NOUVEAUTÉ : FONCTION ARROSER ---
+        async function arroserGraine(horodateur, bouton) {
+            event.stopPropagation(); // Empêche d'ouvrir la modale au clic
+            bouton.innerText = "💧 Arrosage...";
+            bouton.disabled = true;
+            
+            try {
+                // Envoi d'une requête au script Google pour incrémenter le compteur
+                await fetch(WEB_APP_URL, {
+                    method: 'POST',
+                    mode: 'no-cors',
+                    headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+                    body: `action=arroser&id=${encodeURIComponent(horodateur)}`
+                });
+                
+                bouton.innerText = "✨ Merci !";
+                bouton.style.background = "#C8E6C9";
+            } catch (e) {
+                bouton.innerText = "💧 Erreur";
+                bouton.disabled = false;
             }
         }
 
@@ -270,6 +279,7 @@
                     <div class="nom-prenom">${ann.nom || "Anonyme"}</div>
                     <div class="rubrique-tag">${labelType}</div>
                     <div class="texte-annonce">"${ann.message || ""}"</div>
+                    <button class="btn-arrosage" onclick="arroserGraine('${ann.Horodateur}', this)">💧 Arroser cette graine</button>
                     <div class="info-echange">📦 ${ann.portee || "Locale"} | 🚚 ${ann.logistique || "N/A"}</div>
                     <div class="details-bas">
                         📍 ${ann.pays_precision || "Partout"}, ${ann.pays_select || ""}<br>
