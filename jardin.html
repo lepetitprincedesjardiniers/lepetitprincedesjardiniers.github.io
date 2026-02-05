@@ -212,12 +212,20 @@
 
         // --- NOUVEAUTÉ : FONCTION ARROSER ---
         async function arroserGraine(horodateur, bouton) {
-            event.stopPropagation(); // Empêche d'ouvrir la modale au clic
-            bouton.innerText = "💧 Arrosage...";
-            bouton.disabled = true;
+            event.stopPropagation(); 
+            
+            // On récupère la zone du chiffre
+            const spanCompteur = bouton.querySelector('.compteur-eau');
+            let nbActuel = parseInt(spanCompteur.innerText) || 0;
+            
+            // Mise à jour visuelle immédiate (côté utilisateur)
+            nbActuel++;
+            spanCompteur.innerText = nbActuel;
+            bouton.style.background = "#00BFFF";
+            bouton.style.color = "white";
             
             try {
-                // Envoi d'une requête au script Google pour incrémenter le compteur
+                // Envoi à la base de données (Google Sheets)
                 await fetch(WEB_APP_URL, {
                     method: 'POST',
                     mode: 'no-cors',
@@ -225,11 +233,17 @@
                     body: `action=arroser&id=${encodeURIComponent(horodateur)}`
                 });
                 
-                bouton.innerText = "✨ Merci !";
-                bouton.style.background = "#C8E6C9";
+                // Confirmation douce
+                setTimeout(() => {
+                    bouton.innerHTML = `💧 ${nbActuel} ✨ Merci !`;
+                    bouton.disabled = true;
+                    bouton.style.background = "#C8E6C9";
+                    bouton.style.color = "#2E7D32";
+                }, 600);
+
             } catch (e) {
+                console.error("Erreur d'arrosage :", e);
                 bouton.innerText = "💧 Erreur";
-                bouton.disabled = false;
             }
         }
 
@@ -284,6 +298,10 @@
             suite.forEach(ann => {
                 const datePub = ann.Horodateur ? new Date(ann.Horodateur).toLocaleDateString('fr-FR') : "N/C";
                 const labelType = nomBoutonAffiche[ann.type] || ann.type || "Général";
+                
+                // Récupération du nombre d'arrosages (colonne M)
+                const nbVotes = ann.votes_arrosage || 0;
+
                 const carte = document.createElement('div');
                 carte.className = 'carte-message';
                 carte.onclick = () => ouvrirGrandMessage(ann);
@@ -292,11 +310,16 @@
                     <div class="nom-prenom">${ann.nom || "Anonyme"}</div>
                     <div class="rubrique-tag">${labelType}</div>
                     <div class="texte-annonce">"${ann.message || ""}"</div>
-                    <button class="btn-arrosage" onclick="arroserGraine('${ann.Horodateur}', this)">💧 Arroser cette graine</button>
                     <div class="info-echange">📦 ${ann.portee || "Locale"} | 🚚 ${ann.logistique || "N/A"}</div>
+                    
                     <div class="details-bas">
                         📍 ${ann.pays_precision || "Partout"}, ${ann.pays_select || ""}<br>
                         ⏳ Validité : ${ann.duree_validite || "Permanente"}<br>
+                        
+                        <button class="btn-arrosage" onclick="arroserGraine('${ann.Horodateur}', this)">
+                           💧 <span class="compteur-eau">${nbVotes}</span> arrosage(s)
+                        </button>
+                        <br>
                         📅 Posté le : ${datePub}
                     </div>
                 `;
@@ -309,11 +332,10 @@
             const btn = document.getElementById('btn-voir-plus');
             if (indexActuel < annoncesFiltreesGlobal.length) {
                 btn.style.display = 'block';
-                const reste = annoncesFiltreesGlobal.length - indexActuel;
-                btn.innerHTML = `Afficher les suivantes... (encore ${reste} 🌱)`;
             } else {
                 btn.style.display = 'none';
             }
+        }
         }
 
         function ouvrirGrandMessage(ann) {
