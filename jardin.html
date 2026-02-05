@@ -306,22 +306,22 @@
                 carte.className = 'carte-message';
                 carte.onclick = () => ouvrirGrandMessage(ann);
                 
-                carte.innerHTML = `
-                    <div class="nom-prenom">${ann.nom || "Anonyme"}</div>
-                    <div class="rubrique-tag">${labelType}</div>
-                    <div class="texte-annonce">"${ann.message || ""}"</div>
-                    <div class="info-echange">📦 ${ann.portee || "Locale"} | 🚚 ${ann.logistique || "N/A"}</div>
-                    
-                    <div class="details-bas">
-                        📍 ${ann.pays_precision || "Partout"}, ${ann.pays_select || ""}<br>
-                        ⏳ Validité : ${ann.duree_validite || "Permanente"}<br>
-                        
-                        <button class="btn-arrosage" onclick="arroserGraine('${ann.Horodateur}', this)">
-                           💧 <span class="compteur-eau">${nbVotes}</span> arrosage(s)
-                        </button>
-                        <br>
-                        📅 Posté le : ${datePub}
-                    </div>
+           carte.innerHTML = `
+    <div class="nom-prenom">${ann.nom || "Anonyme"}</div>
+    <div class="rubrique-tag">${labelType}</div>
+    <div class="texte-annonce">"${ann.message || ""}"</div>
+    <div class="info-echange">📦 ${ann.portee || "Locale"} | 🚚 ${ann.logistique || "N/A"}</div>
+    
+    <div class="details-bas">
+        📍 ${ann.localisation || "Ville non précisée"}, ${ann.pays_select || ann.pays_precision || "Monde"}<br>
+        ⏳ Validité : ${ann.duree_validite || "Permanente"}<br>
+        
+        <button class="btn-arrosage" onclick="arroserGraine('${ann.Horodateur}', this)">
+            💧 <span class="compteur-eau">${nbVotes}</span> arrosage(s)
+        </button>
+        <br>
+        📅 Posté le : ${datePub}
+    </div>
                 `;
                 fragment.appendChild(carte);
             });
@@ -349,7 +349,7 @@
                 </div>
                 <div style="text-align:left; background:#E0F2F1; padding:20px; border-radius:15px; border:1px solid #008080; color:#004D40; font-size:1.1em;">
                     <strong>📂 Rubrique :</strong> ${labelType}<br>
-                    <strong>📍 Géographie :</strong> ${ann.pays_precision || ""}, ${ann.pays_select || ""}<br>
+                    <strong>📍 Géographie :</strong> ${ann.localisation || ""}, ${ann.pays_select || ann.pays_precision || ""}<br>
                     <strong>🌍 Portée :</strong> ${ann.portee || "Locale"}<br>
                     <strong>🚚 Logistique :</strong> ${ann.logistique || "À définir"}<br>
                     <strong>⏳ Validité :</strong> ${ann.duree_validite || "Permanente"}<br>
