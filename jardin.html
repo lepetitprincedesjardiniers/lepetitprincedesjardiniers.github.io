@@ -212,40 +212,43 @@
 
         // --- NOUVEAUTÉ : FONCTION ARROSER ---
         async function arroserGraine(horodateur, bouton) {
-            event.stopPropagation(); 
-            
-            // On récupère la zone du chiffre
-            const spanCompteur = bouton.querySelector('.compteur-eau');
-            let nbActuel = parseInt(spanCompteur.innerText) || 0;
-            
-            // Mise à jour visuelle immédiate (côté utilisateur)
-            nbActuel++;
-            spanCompteur.innerText = nbActuel;
-            bouton.style.background = "#00BFFF";
-            bouton.style.color = "white";
-            
-            try {
-                // Envoi à la base de données (Google Sheets)
-                await fetch(WEB_APP_URL, {
-                    method: 'POST',
-                    mode: 'no-cors',
-                    headers: {'Content-Type': 'application/x-www-form-urlencoded'},
-                    body: `action=arroser&id=${encodeURIComponent(horodateur)}`
-                });
-                
-                // Confirmation douce
-                setTimeout(() => {
-                    bouton.innerHTML = `💧 ${nbActuel} ✨ Merci !`;
-                    bouton.disabled = true;
-                    bouton.style.background = "#C8E6C9";
-                    bouton.style.color = "#2E7D32";
-                }, 600);
+    event.stopPropagation(); 
+    
+    const spanCompteur = bouton.querySelector('.compteur-eau');
+    let nbActuel = parseInt(spanCompteur.innerText) || 0;
+    
+    // 1. Effet visuel immédiat
+    nbActuel++;
+    spanCompteur.innerText = nbActuel;
+    bouton.style.background = "#00BFFF";
+    bouton.style.color = "white";
 
-            } catch (e) {
-                console.error("Erreur d'arrosage :", e);
-                bouton.innerText = "💧 Erreur";
-            }
-        }
+    // 2. Préparation des données pour Google Sheets
+    const formData = new URLSearchParams();
+    formData.append('action', 'arroser');
+    formData.append('id', horodateur);
+
+    try {
+        // 3. Envoi réel
+        await fetch(WEB_APP_URL, {
+            method: 'POST',
+            mode: 'no-cors', // Obligatoire pour Google Apps Script
+            body: formData
+        });
+        
+        // On affiche un petit succès
+        setTimeout(() => {
+            bouton.innerHTML = `💧 ${nbActuel} ✨ Envoyé !`;
+            bouton.disabled = true;
+            bouton.style.background = "#C8E6C9";
+            bouton.style.color = "#2E7D32";
+        }, 500);
+
+    } catch (e) {
+        console.error("Erreur d'arrosage :", e);
+        bouton.innerText = "💧 Erreur réseau";
+    }
+}
 
         function filtrerAnnonces() { executerFiltrage(); }
 
