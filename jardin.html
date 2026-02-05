@@ -34,53 +34,45 @@
         .btn-filtre-rapide.actif { background: #fff !important; color: #008080 !important; font-weight: bold; box-shadow: 0 0 10px white; transform: scale(1.05); }
         .btn-reset { background: #ff1493 !important; border-color: #ff1493 !important; }
 
-        /* --- GRILLE : 5 COLONNES PC --- */
+        /* --- GRILLE : 5 COLONNES FIXES --- */
         .mur-reel { 
             display: grid; 
-            grid-template-columns: repeat(5, 1fr); 
-            gap: 12px; 
-            padding: 15px; 
-            max-width: 1600px; 
+            grid-template-columns: repeat(5, minmax(0, 1fr)); /* Force 5 colonnes égales */
+            gap: 10px; 
+            padding: 10px; 
+            max-width: 98vw; /* Largeur max 98% de l'écran */
             margin: 0 auto; 
         }
 
-        @media (max-width: 1300px) { .mur-reel { grid-template-columns: repeat(4, 1fr); } }
-        @media (max-width: 1000px) { .mur-reel { grid-template-columns: repeat(3, 1fr); } }
+        /* Adaptation pour mobile seulement */
         @media (max-width: 768px) { .mur-reel { grid-template-columns: repeat(2, 1fr); } }
         @media (max-width: 480px) { .mur-reel { grid-template-columns: 1fr; } }
 
-        /* TAILLE MINI-CARTES RÉDUITE */
+        /* TAILLE MINI-CARTES TRÈS RÉDUITE (env 5 par hauteur) */
         .carte-message { 
-            background: white; border: 2px solid #008080; border-radius: 12px; padding: 12px; 
-            box-shadow: 4px 4px 0px #008080; transition: 0.3s; color: #333; text-align: left; 
-            display: flex; flex-direction: column; height: 280px; cursor: pointer; position: relative;
-            overflow-wrap: break-word;
+            background: white; border: 2px solid #008080; border-radius: 10px; padding: 8px; 
+            box-shadow: 3px 3px 0px #008080; transition: 0.3s; color: #333; text-align: left; 
+            display: flex; flex-direction: column; height: 180px; cursor: pointer; position: relative;
+            overflow: hidden;
         }
         .carte-message:hover { transform: translateY(-3px); border-color: #ff1493; }
 
-        .nom-prenom { color: #2E7D32; font-weight: bold; font-size: 0.9em; border-bottom: 2px solid #f0f0f0; padding-bottom: 3px; margin-bottom: 5px; }
-        .rubrique-tag { font-size: 0.6em; background: #ff1493; color: white; padding: 2px 6px; border-radius: 8px; position: absolute; top: 10px; right: 10px; }
-        .texte-annonce { flex-grow: 1; font-style: italic; color: #000080; overflow-y: auto; font-size: 0.8em; margin: 5px 0; line-height: 1.2; overflow-wrap: break-word; }
+        .nom-prenom { color: #2E7D32; font-weight: bold; font-size: 0.8em; border-bottom: 1px solid #eee; margin-bottom: 3px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .rubrique-tag { font-size: 0.5em; background: #ff1493; color: white; padding: 1px 4px; border-radius: 5px; position: absolute; top: 5px; right: 5px; }
+        .texte-annonce { flex-grow: 1; font-style: italic; color: #000080; overflow-y: auto; font-size: 0.75em; margin: 3px 0; line-height: 1.1; overflow-wrap: break-word; }
 
-        .btn-arrosage { background: #E1F5FE; border: 1px solid #00BFFF; border-radius: 12px; color: #0277BD; font-size: 0.7em; padding: 2px 6px; cursor: pointer; align-self: flex-end; margin: 3px 0; transition: 0.2s; font-family: 'Comic Sans MS', cursive; }
-        .btn-arrosage:hover { background: #00BFFF; color: white; }
-        .compteur-eau { font-weight: bold; margin-left: 3px; color: #0277BD; }
+        .btn-arrosage { background: #E1F5FE; border: 1px solid #00BFFF; border-radius: 8px; color: #0277BD; font-size: 0.6em; padding: 1px 4px; cursor: pointer; }
+        .compteur-eau { font-weight: bold; margin-left: 2px; }
 
-        .info-echange { font-size: 0.65em; background: #E0F2F1; color: #00695C; padding: 4px; border-radius: 6px; margin: 3px 0; font-weight: bold; border: 1px dashed #008080; }
-        .details-bas { font-size: 0.6em; color: #555; line-height: 1.2; border-top: 1px solid #eee; padding-top: 4px; }
+        .info-echange { font-size: 0.6em; background: #E0F2F1; color: #00695C; padding: 2px; border-radius: 4px; margin: 2px 0; font-weight: bold; white-space: nowrap; overflow: hidden; }
+        .details-bas { font-size: 0.55em; color: #555; line-height: 1; border-top: 1px solid #eee; padding-top: 2px; }
 
-        .texte-annonce::-webkit-scrollbar { width: 4px; }
-        .texte-annonce::-webkit-scrollbar-thumb { background: #008080; border-radius: 10px; }
-        
         #fond-sombre { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); z-index: 2000; justify-content: center; align-items: center; }
-        
-        /* CARTE GÉANTE AGRANDIE */
         .message-geant { background: #FFFFF0; width: 95%; max-width: 1000px; padding: 40px; border-radius: 25px; border: 8px solid #008080; position: relative; max-height: 90vh; overflow-y: auto; }
         .bouton-fermer { position: absolute; top: 15px; right: 15px; background: #FF1493; color: white; border: 2px solid white; border-radius: 50%; width: 40px; height: 40px; cursor: pointer; font-weight: bold; font-size: 1.2em; }
         
         #animal-container { position: fixed; z-index: 900; pointer-events: none; display: flex; align-items: center; }
         #bulle-texte { background: white; border: 1px solid #2E7D32; padding: 5px; border-radius: 10px; font-size: 0.7em; opacity: 0; }
-        
         .footer-copyright { margin: 20px 0; padding: 20px; position: relative; }
         .copyright-link { color: #008080; text-decoration: none; font-weight: bold; font-size: 0.9em; position: relative; z-index: 5; }
         .fleur-pluie { position: fixed; pointer-events: none; font-size: 20px; z-index: 9999; animation: monter 3s linear forwards; }
@@ -117,7 +109,7 @@
             <div class="btn-group">
                 <button class="btn-filtre-rapide" onclick="rechercheRapide('Savoir', this)">🎓 Savoir</button>
                 <button class="btn-filtre-rapide" onclick="rechercheRapide('Citoyenne', this)">🏛️ Vie Citoyenne</button>
-                <button class="btn-filtre-rapide" onclick="rechercheRapide('Harmonie', this)">🤝 Aide & Harmonie</button>
+                <button class="btn-filtra-rapide" onclick="rechercheRapide('Harmonie', this)">🤝 Aide & Harmonie</button>
                 <button class="btn-filtre-rapide" onclick="rechercheRapide('Régulation', this)">⚖️ Régulation</button>
                 <button class="btn-filtre-rapide" onclick="rechercheRapide('Trésor', this)">💰 Trésor Public</button>
                 <button class="btn-filtre-rapide" onclick="rechercheRapide('Autre', this)">✨ Autre domaine</button>
@@ -281,13 +273,10 @@
                     <div class="nom-prenom">${ann.nom || "Anonyme"}</div>
                     <div class="rubrique-tag">${labelType}</div>
                     <div class="texte-annonce">"${ann.message || ""}"</div>
-                    <div class="info-echange">📦 ${ann.portee || "Locale"} | 🚚 ${ann.logistique || "N/A"}</div>
+                    <div class="info-echange">📦 ${ann.portee || "Locale"}</div>
                     <div class="details-bas">
-                        📍 ${ann.localisation || "Ville N/C"}, ${ann.pays_select || "Monde"}<br>
-                        ⏳ ${ann.duree_validite || "Permanente"}<br>
-                        <button class="btn-arrosage" onclick="arroserGraine('${ann.Horodateur}', this)">
-                            💧 <span class="compteur-eau">${nbVotes}</span>
-                        </button> 📅 ${datePub}
+                        📍 ${ann.localisation || "Ville N/C"}<br>
+                        💧 <span class="compteur-eau">${nbVotes}</span> | 📅 ${datePub}
                     </div>
                 `;
                 conteneur.appendChild(carte);
