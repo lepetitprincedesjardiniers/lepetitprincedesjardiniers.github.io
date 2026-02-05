@@ -44,16 +44,34 @@
         .rubrique-tag { font-size: 0.7em; background: #ff1493; color: white; padding: 2px 8px; border-radius: 10px; position: absolute; top: 15px; right: 15px; }
         .texte-annonce { flex-grow: 1; font-style: italic; color: #000080; overflow-y: auto; font-size: 0.95em; margin: 8px 0; line-height: 1.3; overflow-wrap: break-word; }
         
+        /* Barre de défilement stylisée pour les cartes et la modale */
+        .texte-annonce::-webkit-scrollbar, .message-geant::-webkit-scrollbar { width: 8px; }
+        .texte-annonce::-webkit-scrollbar-track, .message-geant::-webkit-scrollbar-track { background: #f1f1f1; border-radius: 10px; }
+        .texte-annonce::-webkit-scrollbar-thumb, .message-geant::-webkit-scrollbar-thumb { background: #008080; border-radius: 10px; }
+
         .info-echange { font-size: 0.75em; background: #E0F2F1; color: #00695C; padding: 6px; border-radius: 8px; margin: 5px 0; font-weight: bold; border: 1px dashed #008080; }
         .details-bas { font-size: 0.68em; color: #555; line-height: 1.3; border-top: 1px solid #eee; padding-top: 5px; }
 
-        /* --- MODALE --- */
+        /* --- MODALE AGRANDIE --- */
         #fond-sombre { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); z-index: 2000; justify-content: center; align-items: center; }
-        .message-geant { background: #FFFFF0; width: 92%; max-width: 750px; padding: 30px; border-radius: 30px; border: 10px solid #008080; position: relative; max-height: 90vh; overflow-y: auto; }
-        .bouton-fermer { position: absolute; top: 15px; right: 15px; background: #FF1493; color: white; border: 3px solid white; border-radius: 50%; width: 40px; height: 40px; cursor: pointer; font-weight: bold; }
+        .message-geant { 
+            background: #FFFFF0; width: 95%; max-width: 900px; padding: 40px; border-radius: 30px; 
+            border: 10px solid #008080; position: relative; max-height: 85vh; overflow-y: auto; 
+            overflow-x: hidden; word-wrap: break-word; /* FORCER RETOUR LIGNE */
+        }
+        .bouton-fermer { position: absolute; top: 15px; right: 15px; background: #FF1493; color: white; border: 3px solid white; border-radius: 50%; width: 40px; height: 40px; cursor: pointer; font-weight: bold; z-index: 10; }
 
         #animal-container { position: fixed; z-index: 900; pointer-events: none; display: flex; align-items: center; }
         #bulle-texte { background: white; border: 1px solid #2E7D32; padding: 5px; border-radius: 10px; font-size: 0.7em; opacity: 0; }
+
+        /* --- COPYRIGHT & EFFET FLEURS --- */
+        .footer-copyright { margin: 20px 0; padding: 20px; position: relative; }
+        .copyright-link { color: #008080; text-decoration: none; font-weight: bold; font-size: 0.9em; position: relative; z-index: 5; }
+        .fleur-pluie { position: fixed; pointer-events: none; font-size: 20px; z-index: 9999; animation: monter 3s linear forwards; }
+        @keyframes monter {
+            0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(-100vh) rotate(360deg); opacity: 0; }
+        }
     </style>
 </head>
 <body>
@@ -114,9 +132,26 @@
         <div id="bulle-texte"></div>
     </div>
 
+    <div class="footer-copyright">
+        <a href="#" class="copyright-link" onmousemove="creerFleur(event)">© 2000 Le petit prince des jardiniers</a>
+    </div>
+
     <script type="text/javascript">
         function googleTranslateElementInit() {
             new google.translate.TranslateElement({pageLanguage: 'fr'}, 'google_translate_element');
+        }
+        
+        // Effet pluie de fleurs vers le haut
+        function creerFleur(e) {
+            if (Math.random() > 0.1) return;
+            const fleurs = ['🌸', '🌼', '🌺', '🌻', '🌷', '🍃'];
+            const f = document.createElement('div');
+            f.className = 'fleur-pluie';
+            f.innerText = fleurs[Math.floor(Math.random() * fleurs.length)];
+            f.style.left = e.clientX + 'px';
+            f.style.top = e.clientY + 'px';
+            document.body.appendChild(f);
+            setTimeout(() => f.remove(), 3000);
         }
     </script>
     <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
@@ -232,13 +267,13 @@
             const datePub = ann.Horodateur ? new Date(ann.Horodateur).toLocaleDateString('fr-FR') : "N/C";
             const labelType = nomBoutonAffiche[ann.type] || ann.type || "N/C";
             document.getElementById('geant-contenu').innerHTML = `
-                <div style="font-size:1.4em; color:#2E7D32; font-weight:bold; border-bottom:3px solid #008080; margin-bottom:15px; padding-bottom:10px;">
+                <div style="font-size:1.6em; color:#2E7D32; font-weight:bold; border-bottom:3px solid #008080; margin-bottom:15px; padding-bottom:10px;">
                     🌱 L'offrande de ${ann.nom || "Anonyme"}
                 </div>
-                <div style="background:white; padding:25px; border-radius:15px; border-left:10px solid #FF1493; font-size:1.3em; color:#000080; margin:15px 0; text-align:left; line-height:1.5; overflow-wrap: break-word;">
+                <div style="background:white; padding:25px; border-radius:15px; border-left:10px solid #FF1493; font-size:1.4em; color:#000080; margin:15px 0; text-align:left; line-height:1.6; overflow-wrap: break-word;">
                     "${ann.message || ""}"
                 </div>
-                <div style="text-align:left; background:#E0F2F1; padding:15px; border-radius:15px; border:1px solid #008080; color:#004D40;">
+                <div style="text-align:left; background:#E0F2F1; padding:20px; border-radius:15px; border:1px solid #008080; color:#004D40; font-size:1.1em;">
                     <strong>📂 Rubrique :</strong> ${labelType}<br>
                     <strong>📍 Géographie :</strong> ${ann.pays_precision || ""}, ${ann.pays_select || ""}<br>
                     <strong>🌍 Portée :</strong> ${ann.portee || "Locale"}<br>
