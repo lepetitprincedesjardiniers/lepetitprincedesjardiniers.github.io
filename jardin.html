@@ -34,25 +34,24 @@
         .btn-filtre-rapide.actif { background: #fff !important; color: #008080 !important; font-weight: bold; box-shadow: 0 0 10px white; transform: scale(1.05); }
         .btn-reset { background: #ff1493 !important; border-color: #ff1493 !important; }
 
-        /* --- GRILLE : 5 COLONNES FIXES --- */
+        /* --- GRILLE : Ajustée --- */
         .mur-reel { 
             display: grid; 
-            grid-template-columns: repeat(5, minmax(0, 1fr)); /* Force 5 colonnes égales */
+            grid-template-columns: repeat(5, minmax(150px, 1fr)); /* Largeur minimale pour éviter que ce soit trop large */
             gap: 10px; 
             padding: 10px; 
-            max-width: 98vw; /* Largeur max 98% de l'écran */
+            max-width: 98vw; 
             margin: 0 auto; 
         }
 
-        /* Adaptation pour mobile seulement */
         @media (max-width: 768px) { .mur-reel { grid-template-columns: repeat(2, 1fr); } }
         @media (max-width: 480px) { .mur-reel { grid-template-columns: 1fr; } }
 
-        /* TAILLE MINI-CARTES TRÈS RÉDUITE (env 5 par hauteur) */
+        /* TAILLE MINI-CARTES : Hauteur augmentée pour loger le bouton */
         .carte-message { 
             background: white; border: 2px solid #008080; border-radius: 10px; padding: 8px; 
             box-shadow: 3px 3px 0px #008080; transition: 0.3s; color: #333; text-align: left; 
-            display: flex; flex-direction: column; height: 180px; cursor: pointer; position: relative;
+            display: flex; flex-direction: column; height: 210px; cursor: pointer; position: relative;
             overflow: hidden;
         }
         .carte-message:hover { transform: translateY(-3px); border-color: #ff1493; }
@@ -60,7 +59,6 @@
         .nom-prenom { color: #2E7D32; font-weight: bold; font-size: 0.8em; border-bottom: 1px solid #eee; margin-bottom: 3px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
         .rubrique-tag { font-size: 0.5em; background: #ff1493; color: white; padding: 1px 4px; border-radius: 5px; position: absolute; top: 5px; right: 5px; }
         
-        /* AJOUT : Retour à la ligne et barre de défilement */
         .texte-annonce { 
             flex-grow: 1; 
             font-style: italic; 
@@ -69,24 +67,24 @@
             font-size: 0.75em; 
             margin: 3px 0; 
             line-height: 1.1; 
+            padding-right: 5px; /* Évite d'être masqué par la barre de défilement */
             overflow-wrap: break-word; 
             white-space: pre-wrap; 
         }
 
-        .btn-arrosage { background: #E1F5FE; border: 1px solid #00BFFF; border-radius: 8px; color: #0277BD; font-size: 0.6em; padding: 1px 4px; cursor: pointer; }
+        .btn-arrosage { background: #E1F5FE; border: 1px solid #00BFFF; border-radius: 8px; color: #0277BD; font-size: 0.65em; padding: 2px 5px; cursor: pointer; margin: 4px 0; font-family: 'Comic Sans MS'; font-weight: bold; }
         .compteur-eau { font-weight: bold; margin-left: 2px; }
 
         .info-echange { font-size: 0.6em; background: #E0F2F1; color: #00695C; padding: 2px; border-radius: 4px; margin: 2px 0; font-weight: bold; white-space: nowrap; overflow: hidden; }
-        .details-bas { font-size: 0.55em; color: #555; line-height: 1; border-top: 1px solid #eee; padding-top: 2px; }
+        .details-bas { font-size: 0.55em; color: #555; line-height: 1.2; border-top: 1px solid #eee; padding-top: 2px; }
 
         #fond-sombre { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); z-index: 2000; justify-content: center; align-items: center; }
         
-        /* AJOUT : Défilement pour grand format */
+        /* Message Géant : Taille réduite */
         .message-geant { 
-            background: #FFFFF0; width: 95%; max-width: 1000px; padding: 40px; border-radius: 25px; border: 8px solid #008080; position: relative; max-height: 90vh; overflow-y: auto; 
+            background: #FFFFF0; width: 90%; max-width: 650px; padding: 30px; border-radius: 25px; border: 8px solid #008080; position: relative; max-height: 85vh; overflow-y: auto; 
         }
         
-        /* AJOUT : Retour à la ligne pour le contenu géant */
         #geant-contenu { white-space: pre-wrap; }
 
         .bouton-fermer { position: absolute; top: 15px; right: 15px; background: #FF1493; color: white; border: 2px solid white; border-radius: 50%; width: 40px; height: 40px; cursor: pointer; font-weight: bold; font-size: 1.2em; }
@@ -306,15 +304,28 @@
                     <div class="rubrique-tag">${labelType}</div>
                     <div class="texte-annonce">"${ann.message || ""}"</div>
                     <div class="info-echange">📦 ${ann.portee || "Locale"}</div>
+                    <button class="btn-arrosage" onclick="arroserGraine('${ann.Horodateur}', this)">💧 Arroser (<span class="compteur-eau">${nbVotes}</span>)</button>
                     <div class="details-bas">
                         📍 ${ann.localisation || "N/C"} (${paysComplet || "N/C"})<br>
-                        💧 <span class="compteur-eau">${nbVotes}</span> | ⏳ ${texteValidite}
+                        ⏳ ${texteValidite}
                     </div>
                 `;
                 conteneur.appendChild(carte);
             });
             indexActuel = fin;
             document.getElementById('btn-voir-plus').style.display = (indexActuel < annoncesFiltreesGlobal.length) ? 'block' : 'none';
+        }
+
+        // Fonction utilitaire pour le temps restant dans la grande carte
+        function calculerRestant(horodateur, duree) {
+            if (!horodateur || !duree) return "N/C";
+            const datePub = new Date(horodateur);
+            const joursMatch = duree.match(/\d+/);
+            if (!joursMatch) return duree;
+            const joursTotal = parseInt(joursMatch[0]);
+            const dateExp = new Date(datePub.getTime() + (joursTotal * 24 * 60 * 60 * 1000));
+            const reste = Math.ceil((dateExp - new Date()) / (1000 * 60 * 60 * 24));
+            return reste > 0 ? reste + " jour(s)" : "Expire bientôt";
         }
 
         function ouvrirGrandMessage(ann) {
@@ -339,6 +350,7 @@
 
         setInterval(() => {
             const container = document.getElementById('animal-container');
+            if(!container) return;
             const x = Math.random() * (window.innerWidth - 100);
             const y = Math.random() * (window.innerHeight - 100);
             container.style.transition = "all 5s ease-in-out";
