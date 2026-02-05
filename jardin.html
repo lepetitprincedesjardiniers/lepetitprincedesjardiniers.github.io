@@ -214,39 +214,36 @@
         async function arroserGraine(horodateur, bouton) {
     event.stopPropagation(); 
     
-    const spanCompteur = bouton.querySelector('.compteur-eau');
-    let nbActuel = parseInt(spanCompteur.innerText) || 0;
+    // 1. Changement immédiat : on montre que l'action est lancée
+    bouton.innerHTML = `⏳ Préparation de l'eau...`;
+    bouton.style.background = "#FFD180"; 
+    bouton.disabled = true; 
     
-    // 1. Effet visuel immédiat
-    nbActuel++;
-    spanCompteur.innerText = nbActuel;
-    bouton.style.background = "#00BFFF";
-    bouton.style.color = "white";
-
-    // 2. Préparation des données pour Google Sheets
-    const formData = new URLSearchParams();
-    formData.append('action', 'arroser');
-    formData.append('id', horodateur);
-
     try {
-        // 3. Envoi réel
+        // 2. Envoi discret au Google Sheets
+        const formData = new URLSearchParams();
+        formData.append('action', 'arroser');
+        formData.append('id', horodateur);
+
         await fetch(WEB_APP_URL, {
             method: 'POST',
-            mode: 'no-cors', // Obligatoire pour Google Apps Script
+            mode: 'no-cors', 
             body: formData
         });
         
-        // On affiche un petit succès
+        // 3. Le message final que tu souhaites
         setTimeout(() => {
-            bouton.innerHTML = `💧 ${nbActuel} ✨ Envoyé !`;
-            bouton.disabled = true;
-            bouton.style.background = "#C8E6C9";
-            bouton.style.color = "#2E7D32";
-        }, 500);
+            bouton.innerHTML = `💧 Arrosage prolongé durant 24h...`;
+            bouton.style.background = "#E1F5FE"; // Bleu très clair comme de l'eau
+            bouton.style.color = "#0277BD";
+            bouton.style.border = "1px solid #81D4FA";
+            // On laisse le bouton désactivé pour confirmer que c'est "en cours"
+        }, 800);
 
     } catch (e) {
         console.error("Erreur d'arrosage :", e);
-        bouton.innerText = "💧 Erreur réseau";
+        bouton.innerHTML = `❌ Oups, le seau est percé...`;
+        bouton.disabled = false;
     }
 }
 
