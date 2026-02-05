@@ -5,7 +5,7 @@
     <title>Le Jardin de la Fraternité - Registre</title>
     <style>
         /* --- STYLE DE BASE --- */
-        body { font-family: 'Comic Sans MS', cursive; text-align: center; margin: 0; padding: 0; background-color: #FFFF00; color: #000080; min-height: 100vh; padding-bottom: 80px; }
+        body { font-family: 'Comic Sans MS', cursive; text-align: center; margin: 0; padding: 0; background-color: #FFFF00; color: #000080; min-height: 100vh; padding-bottom: 80px; transition: background 0.3s, color 0.3s; }
         .top-bar { position: relative; width: 100%; min-height: 40px; background: rgba(255,255,255,0.3); padding: 5px 0; }
         #google_translate_element { position: absolute; left: 10px; top: 10px; transform: scale(0.8); transform-origin: top left; }
 
@@ -37,7 +37,7 @@
         /* --- GRILLE : Ajustée --- */
         .mur-reel { 
             display: grid; 
-            grid-template-columns: repeat(5, minmax(150px, 1fr)); /* Largeur minimale pour éviter que ce soit trop large */
+            grid-template-columns: repeat(5, minmax(150px, 1fr)); 
             gap: 10px; 
             padding: 10px; 
             max-width: 98vw; 
@@ -47,7 +47,7 @@
         @media (max-width: 768px) { .mur-reel { grid-template-columns: repeat(2, 1fr); } }
         @media (max-width: 480px) { .mur-reel { grid-template-columns: 1fr; } }
 
-        /* TAILLE MINI-CARTES : Hauteur augmentée pour loger le bouton */
+        /* TAILLE MINI-CARTES */
         .carte-message { 
             background: white; border: 2px solid #008080; border-radius: 10px; padding: 8px; 
             box-shadow: 3px 3px 0px #008080; transition: 0.3s; color: #333; text-align: left; 
@@ -67,26 +67,22 @@
             font-size: 0.75em; 
             margin: 3px 0; 
             line-height: 1.1; 
-            padding-right: 5px; /* Évite d'être masqué par la barre de défilement */
+            padding-right: 5px; 
             overflow-wrap: break-word; 
             white-space: pre-wrap; 
         }
 
-        .btn-arrosage { background: #E1F5FE; border: 1px solid #00BFFF; border-radius: 8px; color: #0277BD; font-size: 0.65em; padding: 2px 5px; cursor: pointer; margin: 4px 0; font-family: 'Comic Sans MS'; font-weight: bold; }
+        .btn-arrosage { position: relative; background: #E1F5FE; border: 1px solid #00BFFF; border-radius: 8px; color: #0277BD; font-size: 0.65em; padding: 2px 5px; cursor: pointer; margin: 4px 0; font-family: 'Comic Sans MS'; font-weight: bold; overflow: hidden; }
         .compteur-eau { font-weight: bold; margin-left: 2px; }
 
         .info-echange { font-size: 0.6em; background: #E0F2F1; color: #00695C; padding: 2px; border-radius: 4px; margin: 2px 0; font-weight: bold; white-space: nowrap; overflow: hidden; }
         .details-bas { font-size: 0.55em; color: #555; line-height: 1.2; border-top: 1px solid #eee; padding-top: 2px; }
 
         #fond-sombre { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); z-index: 2000; justify-content: center; align-items: center; }
-        
-        /* Message Géant : Taille réduite */
         .message-geant { 
             background: #FFFFF0; width: 90%; max-width: 650px; padding: 30px; border-radius: 25px; border: 8px solid #008080; position: relative; max-height: 85vh; overflow-y: auto; 
         }
-        
         #geant-contenu { white-space: pre-wrap; }
-
         .bouton-fermer { position: absolute; top: 15px; right: 15px; background: #FF1493; color: white; border: 2px solid white; border-radius: 50%; width: 40px; height: 40px; cursor: pointer; font-weight: bold; font-size: 1.2em; }
         
         #animal-container { position: fixed; z-index: 900; pointer-events: none; display: flex; align-items: center; }
@@ -95,9 +91,24 @@
         .copyright-link { color: #008080; text-decoration: none; font-weight: bold; font-size: 0.9em; position: relative; z-index: 5; }
         .fleur-pluie { position: fixed; pointer-events: none; font-size: 20px; z-index: 9999; animation: monter 3s linear forwards; }
         @keyframes monter { 0% { transform: translateY(0) rotate(0deg); opacity: 1; } 100% { transform: translateY(-100vh) rotate(360deg); opacity: 0; } }
+
+        /* --- AJOUTS RÉCENTS --- */
+        body.dark-mode { background-color: #1a1a2e; color: #e0e0e0; }
+        body.dark-mode .carte-message { background: #16213e; border-color: #0f3460; color: #fff; }
+        body.dark-mode .texte-annonce { color: #add8e6; }
+        body.dark-mode .message-geant { background: #1a1a2e; color: white; border-color: #ff1493; }
+        body.dark-mode .phrase-sous { color: #e0e0e0; }
+        
+        .goutte { position: absolute; color: #00BFFF; font-size: 20px; animation: tomber 0.8s ease-in forwards; pointer-events: none; }
+        @keyframes tomber { 0% { transform: translateY(-30px); opacity: 1; } 100% { transform: translateY(30px); opacity: 0; } }
+
+        #btn-mode { position: fixed; bottom: 20px; right: 20px; z-index: 3000; padding: 10px; border-radius: 50%; border: none; cursor: pointer; background: #008080; color: white; font-size: 1.2em; box-shadow: 0 4px 10px rgba(0,0,0,0.3); }
+        #compteur-global { font-weight: bold; color: #ff1493; margin-bottom: 10px; display: block; }
     </style>
 </head>
 <body>
+
+    <button id="btn-mode" onclick="basculerModeSombre()">🌓</button>
 
     <div class="top-bar">
         <div id="google_translate_element"></div>
@@ -137,6 +148,7 @@
     </div>
 
     <h3 id="titre-registre" style="color: #008080;">📖 Registre de la Fraternité</h3>
+    <span id="compteur-global"></span>
     <div id="chargement">✨ Récolte des graines en cours...</div>
     <div class="mur-reel" id="mur-messages"></div>
     <button id="btn-voir-plus" style="display:none; margin: 20px auto; padding: 12px 25px; background:#008080; color:white; border-radius:20px; cursor:pointer;" onclick="chargerPlus()">Voir plus de graines... 🌱</button>
@@ -201,12 +213,29 @@
             "IMPOT": "Trésor Public", "AUTRE_CAT": "Autre domaine"
         };
 
+        // --- NOUVELLES FONCTIONS ---
+        function basculerModeSombre() {
+            document.body.classList.toggle('dark-mode');
+        }
+
+        function masquerTel(texte) {
+            if (!texte) return "";
+            // Masque les numéros de téléphone (format générique)
+            return texte.replace(/(\d{2})(\d{2})(\d{2})(\d{2})(\d{2})/g, '$1 $2 ** ** **')
+                        .replace(/(\+\d{2})(\d)/g, '$1 *');
+        }
+
         async function chargerAnnonces() {
             try {
                 const response = await fetch(SCRIPT_URL + "?v=" + new Date().getTime());
                 const data = await response.json();
                 toutesLesAnnonces = Array.isArray(data) ? data.sort((a, b) => new Date(b.Horodateur) - new Date(a.Horodateur)) : [];
                 document.getElementById('chargement').style.display = 'none';
+                
+                // Calcul compteur global
+                const totalArrosage = toutesLesAnnonces.reduce((sum, ann) => sum + (ann.votes_arrosage || 0), 0);
+                document.getElementById('compteur-global').innerText = `💧 ${totalArrosage} arrosages collectifs dans le jardin`;
+                
                 executerFiltrage();
             } catch (e) {
                 document.getElementById('chargement').innerText = "✨ Le jardin se prépare...";
@@ -214,7 +243,16 @@
         }
 
         async function arroserGraine(horodateur, bouton) {
-            event.stopPropagation(); 
+            event.stopPropagation();
+            
+            // Animation goutte
+            const g = document.createElement('span');
+            g.className = 'goutte';
+            g.innerHTML = '💧';
+            g.style.left = '50%';
+            bouton.appendChild(g);
+            setTimeout(() => g.remove(), 800);
+
             bouton.innerHTML = `⏳...`;
             bouton.disabled = true; 
             try {
@@ -223,8 +261,8 @@
                 formData.append('id', horodateur);
                 await fetch(WEB_APP_URL, { method: 'POST', mode: 'no-cors', body: formData });
                 setTimeout(() => {
-                    bouton.innerHTML = `💧 Arrosé 24h`;
-                    bouton.style.background = "#E1F5FE";
+                    bouton.innerHTML = `💧 Arrosé !`;
+                    bouton.style.background = "#C8E6C9";
                 }, 800);
             } catch (e) { bouton.disabled = false; }
         }
@@ -281,9 +319,9 @@
             suite.forEach(ann => {
                 const labelType = nomBoutonAffiche[ann.type] || ann.type || "Général";
                 const nbVotes = ann.votes_arrosage || 0;
-                const paysComplet = `${ann.pays_select || ""} ${ann.pays_precision || ""}`.trim();
+                // Logique demandée : soit pays_select, soit pays_precision
+                const paysAffiche = ann.pays_select || ann.pays_precision || "N/C";
 
-                // Calcul de la durée restante
                 let texteValidite = "Permanente";
                 if (ann.Horodateur && ann.duree_validite) {
                     const datePub = new Date(ann.Horodateur);
@@ -302,11 +340,11 @@
                 carte.innerHTML = `
                     <div class="nom-prenom">${ann.nom || "Anonyme"}</div>
                     <div class="rubrique-tag">${labelType}</div>
-                    <div class="texte-annonce">"${ann.message || ""}"</div>
+                    <div class="texte-annonce">"${masquerTel(ann.message) || ""}"</div>
                     <div class="info-echange">📦 ${ann.portee || "Locale"}</div>
                     <button class="btn-arrosage" onclick="arroserGraine('${ann.Horodateur}', this)">💧 Arroser (<span class="compteur-eau">${nbVotes}</span>)</button>
                     <div class="details-bas">
-                        📍 ${ann.localisation || "N/C"} (${paysComplet || "N/C"})<br>
+                        📍 ${ann.localisation || "N/C"} (${paysAffiche})<br>
                         ⏳ ${texteValidite}
                     </div>
                 `;
@@ -316,7 +354,6 @@
             document.getElementById('btn-voir-plus').style.display = (indexActuel < annoncesFiltreesGlobal.length) ? 'block' : 'none';
         }
 
-        // Fonction utilitaire pour le temps restant dans la grande carte
         function calculerRestant(horodateur, duree) {
             if (!horodateur || !duree) return "N/C";
             const datePub = new Date(horodateur);
@@ -330,12 +367,14 @@
 
         function ouvrirGrandMessage(ann) {
             const datePub = ann.Horodateur ? new Date(ann.Horodateur).toLocaleDateString('fr-FR') : "N/C";
+            const paysAffiche = ann.pays_select || ann.pays_precision || "N/C";
+            
             document.getElementById('geant-contenu').innerHTML = `
                 <div style="font-size:1.8em; color:#2E7D32; font-weight:bold; border-bottom:3px solid #008080; margin-bottom:20px; padding-bottom:10px;">🌱 Offrande de ${ann.nom || "Anonyme"}</div>
-                <div style="background:white; padding:30px; border-radius:15px; border-left:10px solid #FF1493; font-size:1.5em; color:#000080; text-align:left; margin-bottom:20px; line-height:1.6;">"${ann.message || ""}"</div>
+                <div style="background:white; padding:30px; border-radius:15px; border-left:10px solid #FF1493; font-size:1.5em; color:#000080; text-align:left; margin-bottom:20px; line-height:1.6;">"${masquerTel(ann.message) || ""}"</div>
                 <div style="text-align:left; background:#E0F2F1; padding:25px; border-radius:10px; font-size:1.1em; border: 1px solid #008080;">
                     <strong>📍 Localisation (E) :</strong> ${ann.localisation || "Non précisée"}<br>
-                    <strong>📍 Pays (C/D) :</strong> ${ann.pays_select || ""} ${ann.pays_precision || ""}<br>
+                    <strong>📍 Pays (C/D) :</strong> ${paysAffiche}<br>
                     <strong>🌍 Portée :</strong> ${ann.portee || "Locale"}<br>
                     <strong>🚚 Logistique :</strong> ${ann.logistique || "À définir"}<br>
                     <strong>⏳ Temps restant :</strong> ${calculerRestant(ann.Horodateur, ann.duree_validite)}<br>
