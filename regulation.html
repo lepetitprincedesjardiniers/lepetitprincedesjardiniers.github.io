@@ -81,13 +81,13 @@
 
         /* --- MODALE GRAND MESSAGE --- */
         #fond-sombre { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); z-index: 2000; justify-content: center; align-items: center; }
-        .message-geant { background: #F1F8E9; width: 95%; max-width: 800px; padding: 25px; border-radius: 25px; border: 6px solid #008080; position: relative; max-height: 80vh; overflow-y: auto; color: #004d40; text-align: left; box-shadow: 0 10px 30px rgba(0,128,128,0.4); }
+        .message-geant { background: #F1F8E9; width: 95%; max-width: 800px; padding: 25px; border-radius: 25px; border: 6px solid #008080; position: relative; max-height: 85vh; overflow-y: auto; color: #004d40; text-align: left; box-shadow: 0 10px 30px rgba(0,128,128,0.4); }
         .bouton-fermer { position: absolute; top: 15px; right: 15px; background: #008080; color: white; border-radius: 50%; width: 40px; height: 40px; cursor: pointer; border: 2px solid white; font-weight: bold; font-size: 1.1em; display: flex; align-items: center; justify-content: center; }
     </style>
 </head>
 <body>
 
-    <!-- Effets sonores : Pop au survol + Son de Gong à la soumission -->
+    <!-- Effets sonores : Pop au survol + Son de Gong bref et discret à la soumission -->
     <audio id="snd-pop" src="https://assets.mixkit.co/active_storage/sfx/2571/2571-preview.mp3" preload="auto"></audio>
     <audio id="snd-gong" src="https://assets.mixkit.co/active_storage/sfx/2658/2658-preview.mp3" preload="auto"></audio>
 
@@ -151,6 +151,7 @@
     <script>
         const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbxxToz22V88elCCjxLqjRtsb5iBIC156cbBFRIlTsju2SwOj9yNnKqzAwFITXMg_wij/exec";
         let globalData = [];
+        let annonceActive = null;
 
         function googleTranslateElementInit() { 
             new google.translate.TranslateElement({pageLanguage: 'fr'}, 'google_translate_element'); 
@@ -166,6 +167,11 @@
             const gong = document.getElementById('snd-gong');
             gong.currentTime = 0;
             gong.play().catch(()=>{});
+            // Arrête le son après 1 seconde pour qu'il reste bref et discret
+            setTimeout(() => {
+                gong.pause();
+                gong.currentTime = 0;
+            }, 1000);
         }
 
         async function envoyerConflit(event) {
@@ -189,7 +195,7 @@
                 });
 
                 setTimeout(() => {
-                    alert("Ton dossier a été déposé avec succès. 🕊️");
+                    alert("Ton dossier a été déposé avec succès. 🕊️️");
                     form.reset();
                     chargerConflits();
                 }, 1500);
@@ -216,12 +222,18 @@
 
                 const conflits = globalData.filter(d => d.type === "REGULATION");
 
+                if (annonceActive) {
+                    const toujoursExiste = conflits.find(c => c.Horodateur === annonceActive.Horodateur && c.nom === annonceActive.nom);
+                    if (!toujoursExiste) {
+                        fermerGrandMessage();
+                    }
+                }
+
                 if (conflits.length === 0) {
                     flux.innerHTML = `<div style="grid-column: span 5; padding: 20px; font-weight: bold; background: white; border-radius: 10px; color: #008080;">Aucun dossier en cours pour l'instant... 🕊️</div>`;
                     return;
                 }
 
-                // Inversion pour afficher les derniers messages en premier
                 conflits.reverse();
 
                 conflits.forEach(c => {
@@ -247,16 +259,15 @@
         }
 
         function ouvrirGrandMessage(ann) {
-            // Recherche des réponses associées à ce message
+            annonceActive = ann;
+
             const reponses = globalData.filter(d => d.type === "REPONSE_REGULATION" && d.localisation === ("Ref:" + (ann.Horodateur || ann.nom)));
-            reponses.reverse(); // Les avis les plus récents de la communauté en premier
+            reponses.reverse();
 
             let htmlReponses = "";
             if (reponses.length > 0) {
                 htmlReponses += `<h4 style="color: #00695c; margin-top: 15px; margin-bottom: 8px;">💬 Réponses de la communauté (${reponses.length}) :</h4>`;
-                
-                // Conteneur avec hauteur maximale et barre de défilement sécurisée pour des milliers de réponses
-                htmlReponses += `<div style="max-height: 200px; overflow-y: auto; border: 2px solid #008080; border-radius: 10px; padding: 10px; background: #ffffff;">`;
+                htmlReponses += `<div style="max-height: 180px; overflow-y: auto; border: 2px solid #008080; border-radius: 10px; padding: 10px; background: #ffffff;">`;
                 
                 reponses.forEach(r => {
                     htmlReponses += `
@@ -273,8 +284,11 @@
 
             document.getElementById('geant-contenu').innerHTML = `
                 <div style="font-size:1.6em; color:#00695c; font-weight:bold; border-bottom:3px solid #008080; margin-bottom:15px; padding-bottom:5px;">⚖️ Dossier de ${ann.nom || "Anonyme"}</div>
-                <div style="background:white; padding:20px; border-radius:15px; border-left:8px solid #008080; font-size:1.2em; color:#333; text-align:left; margin-bottom:15px; box-shadow: inset 0 2px 5px rgba(0,0,0,0.05);">"${ann.message}"</div>
-                <div style="text-align:left; background:#E0F2F1; padding:12px; border-radius:10px; font-size:0.95em; color:#004d40; margin-bottom:15px;">
+                
+                <!-- Zone de texte scrollable pour les annonces longues -->
+                <div style="background:white; padding:15px; border-radius:15px; border-left:8px solid #008080; font-size:1.1em; color:#333; text-align:left; margin-bottom:15px; max-height: 200px; overflow-y: auto; box-shadow: inset 0 2px 5px rgba(0,0,0,0.05); word-break: break-word;">"${ann.message}"</div>
+                
+                <div style="text-align:left; background:#E0F2F1; padding:10px; border-radius:10px; font-size:0.9em; color:#004d40; margin-bottom:15px;">
                     <strong>📍 Localisation :</strong> ${ann.localisation || "N/C"}<br>
                     <strong>⏳ Durée de validité :</strong> ${ann.duree_validite || "30"} jours<br>
                     <strong>📅 Date :</strong> ${ann.Horodateur || ann.date || "N/C"}
@@ -284,12 +298,12 @@
                     ${htmlReponses}
                 </div>
 
-                <!-- Formulaire de réponse directe -->
-                <div style="margin-top: 20px; background: white; padding: 15px; border-radius: 12px; border: 2px dashed #008080;">
-                    <h4 style="margin-top: 0; color: #00695c;">🌿 Apporter une réponse délicate :</h4>
+                <!-- Formulaire de réponse directe (toujours visible) -->
+                <div style="margin-top: 15px; background: white; padding: 15px; border-radius: 12px; border: 2px dashed #008080;">
+                    <h4 style="margin-top: 0; color: #00695c; margin-bottom: 8px;">🌿 Apporter une réponse délicate :</h4>
                     <form id="formReponse" onsubmit="envoyerReponse(event, '${ann.Horodateur || ann.nom}')">
                         <input type="text" id="repNom" placeholder="Votre nom ou pseudo..." required style="margin-bottom: 8px;">
-                        <textarea id="repMessage" rows="3" placeholder="Rédigez votre réponse bienveillante ici..." required style="margin-bottom: 8px;"></textarea>
+                        <textarea id="repMessage" rows="2" placeholder="Rédigez votre réponse bienveillante ici..." required style="margin-bottom: 8px;"></textarea>
                         <button type="submit" style="background: #008080; color: white; border: none; padding: 10px 20px; border-radius: 10px; font-weight: bold; cursor: pointer; width: 100%;">Envoyer ma réponse 🕊️</button>
                     </form>
                 </div>
@@ -321,7 +335,6 @@
                 alert("Votre réponse pleine de sagesse a été transmise ! 🕊️");
                 document.getElementById('formReponse').reset();
                 
-                // Recharge les données pour afficher instantanément la nouvelle réponse
                 const response = await fetch(WEB_APP_URL + "?v=" + Date.now());
                 globalData = await response.json();
                 
@@ -338,6 +351,7 @@
         }
 
         function fermerGrandMessage() { 
+            annonceActive = null;
             document.getElementById('fond-sombre').style.display = 'none'; 
         }
 
