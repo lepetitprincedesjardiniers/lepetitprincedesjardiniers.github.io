@@ -4,19 +4,21 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ministère de l'honnêteté | Journal de l'actualité et de la vérité</title>
-    <!-- Tailwind CSS CDN -->
+    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- PapaParse pour lire le Google Sheet en CSV -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
     <script>
         tailwind.config = {
             theme: {
                 extend: {
                     colors: {
                         joy: {
-                            dark: '#1e1b4b',     // Bleu nuit profond et élégant
-                            orange: '#f97316',   // Orange chaleureux et dynamique
-                            gold: '#f59e0b',     // Or solaire / Jaune éclatant
-                            bg: '#fffbf5',       // Fond ambré très doux et chaleureux
+                            dark: '#1e1b4b',
+                            orange: '#f97316',
+                            gold: '#f59e0b',
+                            bg: '#fffbf5',
                         }
                     }
                 }
@@ -30,7 +32,6 @@
     <header class="sticky top-0 z-50 bg-joy-bg/90 backdrop-blur-md border-b border-orange-100 shadow-sm">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between items-center h-20">
-                <!-- Logo & Titre -->
                 <div class="flex items-center space-x-3">
                     <div class="bg-gradient-to-br from-joy-gold to-joy-orange text-white p-2.5 rounded-xl shadow-md">
                         <i class="fa-solid fa-scale-balanced text-xl"></i>
@@ -40,8 +41,6 @@
                         <h1 class="text-xl sm:text-2xl font-black tracking-tight text-joy-dark">Ministère de l'honnêteté</h1>
                     </div>
                 </div>
-
-                <!-- Navigation -->
                 <nav class="hidden md:flex items-center space-x-8 text-sm font-semibold text-gray-700">
                     <a href="#articles" class="hover:text-joy-orange transition">Articles</a>
                     <a href="#videos" class="hover:text-joy-orange transition">Vidéos</a>
@@ -50,8 +49,6 @@
                         <i class="fa-solid fa-arrow-left text-xs"></i> Site principal
                     </a>
                 </nav>
-
-                <!-- Bouton d'appel à l'action -->
                 <div class="flex items-center">
                     <a href="#videos" class="bg-joy-orange text-white px-4 py-2.5 rounded-xl text-sm font-bold hover:bg-orange-600 transition shadow-md shadow-orange-500/20">
                         <i class="fa-solid fa-play mr-1"></i> Vidéos
@@ -61,46 +58,12 @@
         </div>
     </header>
 
-    <!-- Section "À la une" (Chaleureuse & Colorée) -->
-    <section class="py-12 lg:py-16 bg-gradient-to-br from-joy-dark via-indigo-950 to-orange-950 text-white relative overflow-hidden">
-        <!-- Éléments décoratifs lumineux -->
+    <!-- Section "À la une" dynamique -->
+    <section id="alaune-container" class="py-12 lg:py-16 bg-gradient-to-br from-joy-dark via-indigo-950 to-orange-950 text-white relative overflow-hidden">
         <div class="absolute -top-24 -right-24 w-96 h-96 bg-joy-orange/20 rounded-full blur-3xl pointer-events-none"></div>
-        <div class="absolute -bottom-24 -left-24 w-96 h-96 bg-joy-gold/10 rounded-full blur-3xl pointer-events-none"></div>
-
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-                <div class="space-y-6">
-                    <span class="inline-flex items-center gap-2 bg-joy-gold/20 text-joy-gold border border-joy-gold/30 px-3.5 py-1.5 rounded-full text-xs font-black uppercase tracking-wider">
-                        <i class="fa-solid fa-bolt"></i> À la une • Enquête exclusive
-                    </span>
-                    <h2 class="text-3xl sm:text-4xl lg:text-5xl font-extrabold leading-tight tracking-tight text-white">
-                        La vérité derrière les grands flux d'information contemporains.
-                    </h2>
-                    <p class="text-amber-100/80 text-lg leading-relaxed">
-                        Bienvenue au Ministère de l'honnêteté. Ici, pas de langue de bois : nous décryptons les faits avec passion, clarté et transparence pour éclairer votre regard sur l'actualité.
-                    </p>
-                    <div class="flex flex-wrap gap-4 pt-2">
-                        <a href="#articles" class="bg-joy-gold text-joy-dark px-6 py-3.5 rounded-xl font-black hover:bg-amber-400 transition shadow-lg shadow-amber-500/20">
-                            Lire l'enquête
-                        </a>
-                        <a href="#videos" class="border border-white/30 text-white px-6 py-3.5 rounded-xl font-bold hover:bg-white/10 transition">
-                            Voir le reportage vidéo
-                        </a>
-                    </div>
-                </div>
-                <div class="relative rounded-2xl overflow-hidden shadow-2xl border border-white/10 bg-gray-900">
-                    <div class="w-full h-80 sm:h-96 bg-gradient-to-br from-indigo-900 to-amber-900/60 flex flex-col items-center justify-center relative p-6 text-center">
-                        <div class="absolute inset-0 bg-black/30 z-10"></div>
-                        <div class="w-16 h-16 bg-joy-orange text-white rounded-2xl flex items-center justify-center shadow-xl z-20 mb-4 animate-pulse">
-                            <i class="fa-solid fa-play text-2xl ml-1"></i>
-                        </div>
-                        <div class="absolute bottom-6 left-6 right-6 z-20 space-y-2 text-left">
-                            <span class="text-xs text-joy-gold font-bold uppercase tracking-wider">Vidéo exclusive • 18 min</span>
-                            <h3 class="text-xl font-bold text-white leading-snug">Comment l'information est façonnée : Plongée au cœur des récits médiatiques</h3>
-                        </div>
-                    </div>
-                </div>
-            </div>
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10" id="alaune-content">
+            <!-- Chargement dynamique -->
+            <div class="text-center py-12 text-amber-200">Chargement de l'actualité...</div>
         </div>
     </section>
 
@@ -114,88 +77,12 @@
                     <span class="text-xs uppercase tracking-widest font-extrabold text-joy-orange block">Publications récentes</span>
                     <h2 class="text-3xl font-extrabold text-joy-dark">Articles & Décryptages</h2>
                 </div>
-                <span class="text-sm text-gray-500 hidden sm:block font-medium">Mis à jour régulièrement</span>
+                <span class="text-sm text-gray-500 hidden sm:block font-medium">Géré via Google Sheets</span>
             </div>
 
-            <!-- Grille des articles -->
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                <!-- Article 1 -->
-                <article class="bg-white rounded-3xl border border-orange-100 overflow-hidden shadow-sm hover:shadow-xl hover:-translate-y-1 transition duration-300 flex flex-col justify-between">
-                    <div>
-                        <div class="h-48 bg-gradient-to-br from-amber-100 to-orange-100 flex items-center justify-center text-joy-orange">
-                            <i class="fa-solid fa-newspaper text-4xl"></i>
-                        </div>
-                        <div class="p-6 space-y-3">
-                            <div class="flex items-center justify-between text-xs font-bold">
-                                <span class="bg-amber-100 text-amber-800 px-3 py-1 rounded-full">Politique</span>
-                                <span class="text-gray-400 font-normal">Il y a 2 jours</span>
-                            </div>
-                            <h3 class="text-xl font-extrabold text-gray-900 leading-snug">
-                                Transparence publique : Où en sommes-nous vraiment ?
-                            </h3>
-                            <p class="text-gray-600 text-sm leading-relaxed">
-                                Analyse critique des promesses de transparence institutionnelle et des zones d'ombre persistantes.
-                            </p>
-                        </div>
-                    </div>
-                    <div class="p-6 pt-0">
-                        <a href="#" class="text-joy-orange font-bold text-sm hover:underline inline-flex items-center gap-1.5">
-                            Lire l'article complet <i class="fa-solid fa-arrow-right text-xs"></i>
-                        </a>
-                    </div>
-                </article>
-
-                <!-- Article 2 -->
-                <article class="bg-white rounded-3xl border border-orange-100 overflow-hidden shadow-sm hover:shadow-xl hover:-translate-y-1 transition duration-300 flex flex-col justify-between">
-                    <div>
-                        <div class="h-48 bg-gradient-to-br from-blue-100 to-indigo-100 flex items-center justify-center text-indigo-600">
-                            <i class="fa-solid fa-laptop-code text-4xl"></i>
-                        </div>
-                        <div class="p-6 space-y-3">
-                            <div class="flex items-center justify-between text-xs font-bold">
-                                <span class="bg-blue-100 text-blue-800 px-3 py-1 rounded-full">Technologie</span>
-                                <span class="text-gray-400 font-normal">Il y a 4 jours</span>
-                            </div>
-                            <h3 class="text-xl font-extrabold text-gray-900 leading-snug">
-                                Algorithmes et vérité : Qui décide de ce que vous voyez ?
-                            </h3>
-                            <p class="text-gray-600 text-sm leading-relaxed">
-                                Comment les plateformes numériques modifient notre perception de l'actualité au quotidien.
-                            </p>
-                        </div>
-                    </div>
-                    <div class="p-6 pt-0">
-                        <a href="#" class="text-joy-orange font-bold text-sm hover:underline inline-flex items-center gap-1.5">
-                            Lire l'article complet <i class="fa-solid fa-arrow-right text-xs"></i>
-                        </a>
-                    </div>
-                </article>
-
-                <!-- Article 3 -->
-                <article class="bg-white rounded-3xl border border-orange-100 overflow-hidden shadow-sm hover:shadow-xl hover:-translate-y-1 transition duration-300 flex flex-col justify-between">
-                    <div>
-                        <div class="h-48 bg-gradient-to-br from-orange-100 to-rose-100 flex items-center justify-center text-rose-600">
-                            <i class="fa-solid fa-globe text-4xl"></i>
-                        </div>
-                        <div class="p-6 space-y-3">
-                            <div class="flex items-center justify-between text-xs font-bold">
-                                <span class="bg-rose-100 text-rose-800 px-3 py-1 rounded-full">Société</span>
-                                <span class="text-gray-400 font-normal">Il y a 1 semaine</span>
-                            </div>
-                            <h3 class="text-xl font-extrabold text-gray-900 leading-snug">
-                                La quête de sens dans l'actualité contemporaine
-                            </h3>
-                            <p class="text-gray-600 text-sm leading-relaxed">
-                                Pourquoi le public se tourne massivement vers les médias indépendants en quête de repères factuels.
-                            </p>
-                        </div>
-                    </div>
-                    <div class="p-6 pt-0">
-                        <a href="#" class="text-joy-orange font-bold text-sm hover:underline inline-flex items-center gap-1.5">
-                            Lire l'article complet <i class="fa-solid fa-arrow-right text-xs"></i>
-                        </a>
-                    </div>
-                </article>
+            <!-- Grille des articles dynamique -->
+            <div id="articles-grid" class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- Les articles injectés par JavaScript apparaîtront ici -->
             </div>
         </section>
 
@@ -211,36 +98,8 @@
                 </a>
             </div>
 
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                <!-- Carte Vidéo 1 -->
-                <div class="space-y-4 group cursor-pointer">
-                    <div class="bg-joy-dark rounded-2xl overflow-hidden relative shadow-lg aspect-video flex items-center justify-center">
-                        <div class="absolute inset-0 bg-gradient-to-tr from-indigo-950 to-orange-950 opacity-90 group-hover:scale-105 transition duration-500"></div>
-                        <div class="w-16 h-16 bg-joy-orange rounded-full flex items-center justify-center text-white shadow-xl z-10 group-hover:scale-110 transition">
-                            <i class="fa-solid fa-play ml-1 text-lg"></i>
-                        </div>
-                        <span class="absolute bottom-4 left-4 z-10 text-xs font-bold text-amber-300 bg-black/40 px-3 py-1 rounded-lg backdrop-blur-sm">Épisode #04</span>
-                    </div>
-                    <div>
-                        <h3 class="text-lg font-extrabold text-gray-900 group-hover:text-joy-orange transition">La vérité sur les coulisses de l'actualité politique</h3>
-                        <p class="text-gray-600 text-sm mt-1">Un décryptage sans langue de bois des mécanismes de communication.</p>
-                    </div>
-                </div>
-
-                <!-- Carte Vidéo 2 -->
-                <div class="space-y-4 group cursor-pointer">
-                    <div class="bg-joy-dark rounded-2xl overflow-hidden relative shadow-lg aspect-video flex items-center justify-center">
-                        <div class="absolute inset-0 bg-gradient-to-tr from-indigo-950 to-orange-950 opacity-90 group-hover:scale-105 transition duration-500"></div>
-                        <div class="w-16 h-16 bg-joy-orange rounded-full flex items-center justify-center text-white shadow-xl z-10 group-hover:scale-110 transition">
-                            <i class="fa-solid fa-play ml-1 text-lg"></i>
-                        </div>
-                        <span class="absolute bottom-4 left-4 z-10 text-xs font-bold text-amber-300 bg-black/40 px-3 py-1 rounded-lg backdrop-blur-sm">Épisode #03</span>
-                    </div>
-                    <div>
-                        <h3 class="text-lg font-extrabold text-gray-900 group-hover:text-joy-orange transition">Fact-checking : Démêler le vrai du faux de la semaine</h3>
-                        <p class="text-gray-600 text-sm mt-1">Analyse détaillée des affirmations virales passées au crible des faits.</p>
-                    </div>
-                </div>
+            <div id="videos-grid" class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <!-- Les vidéos injectées par JavaScript apparaîtront ici -->
             </div>
         </section>
 
@@ -251,7 +110,7 @@
             </div>
             <h2 class="text-2xl sm:text-3xl font-extrabold text-joy-dark">Notre engagement envers vous</h2>
             <p class="text-gray-700 leading-relaxed text-base sm:text-lg">
-                Le <strong>Ministère de l'honnêteté</strong> est un espace d'information libre et vibrant, conçu pour les citoyens qui exigent de la rigueur, de la joie de débattre et de la transparence. Chaque article et chaque vidéo sont pensés pour vous donner les clés de compréhension de notre époque.
+                Le <strong>Ministère de l'honnêteté</strong> est piloté en temps réel depuis nos outils de travail partagés pour vous garantir une information vive, transparente et rigoureuse.
             </p>
         </section>
 
@@ -274,7 +133,7 @@
                 </div>
             </div>
             <div class="flex flex-col sm:flex-row justify-between items-center gap-4 pt-8 text-xs text-indigo-300">
-                <p>&copy; 2026 Ministère de l'honnêteté. Propulsé par GitHub Pages.</p>
+                <p>&copy; 2026 Ministère de l'honnêteté. Propulsé par GitHub Pages & Google Sheets.</p>
                 <div class="flex space-x-6">
                     <a href="index.html" class="hover:text-white transition">Retour au site principal</a>
                 </div>
@@ -282,5 +141,110 @@
         </div>
     </footer>
 
+    <!-- Script de liaison Google Sheets -->
+    <script>
+        // URL d'export CSV de votre Google Sheets
+        const sheetID = "1jJZm_WSIMgM5r-Y5zTSrC8FUiLhRN-dOcPnIcSyTpSI";
+        const gid = "1714630626";
+        const csvUrl = `https://docs.google.com/spreadsheets/d/${sheetID}/export?format=csv&gid=${gid}`;
+
+        Papa.parse(csvUrl, {
+            download: true,
+            header: true,
+            complete: function(results) {
+                const data = results.data;
+                
+                let alauneHTML = '';
+                let articlesHTML = '';
+                let videosHTML = '';
+
+                data.forEach(row => {
+                    const pos = (row.position || "").trim().toLowerCase();
+                    const titre = row.titre || "";
+                    const desc = row.description || "";
+                    const lien = row.lien || "#";
+                    const cat = row.categorie || "Général";
+                    const date = row.date || "";
+
+                    if (!titre) return; // Ignore les lignes vides
+
+                    if (pos === 'alaune-article') {
+                        alauneHTML = `
+                            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                                <div class="space-y-6">
+                                    <span class="inline-flex items-center gap-2 bg-joy-gold/20 text-joy-gold border border-joy-gold/30 px-3.5 py-1.5 rounded-full text-xs font-black uppercase tracking-wider">
+                                        <i class="fa-solid fa-bolt"></i> À la une • Enquête exclusive
+                                    </span>
+                                    <h2 class="text-3xl sm:text-4xl lg:text-5xl font-extrabold leading-tight tracking-tight text-white">
+                                        ${titre}
+                                    </h2>
+                                    <p class="text-amber-100/80 text-lg leading-relaxed">
+                                        ${desc}
+                                    </p>
+                                    <div class="flex flex-wrap gap-4 pt-2">
+                                        <a href="${lien}" target="_blank" class="bg-joy-gold text-joy-dark px-6 py-3.5 rounded-xl font-black hover:bg-amber-400 transition shadow-lg shadow-amber-500/20">
+                                            Lire l'enquête <i class="fa-solid fa-arrow-right ml-1 text-xs"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="relative rounded-2xl overflow-hidden shadow-2xl border border-white/10 bg-gray-900 p-8 flex flex-col justify-center min-h-[300px]">
+                                    <span class="text-xs text-joy-gold font-bold uppercase tracking-wider mb-2">${cat}</span>
+                                    <h3 class="text-2xl font-bold text-white mb-4">${titre}</h3>
+                                    <p class="text-gray-300 text-sm">${desc}</p>
+                                </div>
+                            </div>
+                        `;
+                    } else if (pos === 'article') {
+                        articlesHTML += `
+                            <article class="bg-white rounded-3xl border border-orange-100 overflow-hidden shadow-sm hover:shadow-xl hover:-translate-y-1 transition duration-300 flex flex-col justify-between">
+                                <div>
+                                    <div class="h-48 bg-gradient-to-br from-amber-100 to-orange-100 flex items-center justify-center text-joy-orange">
+                                        <i class="fa-solid fa-newspaper text-4xl"></i>
+                                    </div>
+                                    <div class="p-6 space-y-3">
+                                        <div class="flex items-center justify-between text-xs font-bold">
+                                            <span class="bg-amber-100 text-amber-800 px-3 py-1 rounded-full">${cat}</span>
+                                            <span class="text-gray-400 font-normal">${date}</span>
+                                        </div>
+                                        <h3 class="text-xl font-extrabold text-gray-900 leading-snug">
+                                            ${titre}
+                                        </h3>
+                                        <p class="text-gray-600 text-sm leading-relaxed">
+                                            ${desc}
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="p-6 pt-0">
+                                    <a href="${lien}" target="_blank" class="text-joy-orange font-bold text-sm hover:underline inline-flex items-center gap-1.5">
+                                        Lire l'article complet <i class="fa-solid fa-arrow-right text-xs"></i>
+                                    </a>
+                                </div>
+                            </article>
+                        `;
+                    } else if (pos === 'video' || pos === 'alaune-video') {
+                        videosHTML += `
+                            <div class="space-y-4 group">
+                                <div class="bg-joy-dark rounded-2xl overflow-hidden relative shadow-lg aspect-video flex items-center justify-center">
+                                    <div class="absolute inset-0 bg-gradient-to-tr from-indigo-950 to-orange-950 opacity-90 group-hover:scale-105 transition duration-500"></div>
+                                    <a href="${lien}" target="_blank" class="w-16 h-16 bg-joy-orange rounded-full flex items-center justify-center text-white shadow-xl z-10 group-hover:scale-110 transition">
+                                        <i class="fa-solid fa-play ml-1 text-lg"></i>
+                                    </a>
+                                    <span class="absolute bottom-4 left-4 z-10 text-xs font-bold text-amber-300 bg-black/40 px-3 py-1 rounded-lg backdrop-blur-sm">${cat}</span>
+                                </div>
+                                <div>
+                                    <h3 class="text-lg font-extrabold text-gray-900 group-hover:text-joy-orange transition">${titre}</h3>
+                                    <p class="text-gray-600 text-sm mt-1">${desc}</p>
+                                </div>
+                            </div>
+                        `;
+                    }
+                });
+
+                if (alauneHTML) document.getElementById('alaune-content').innerHTML = alauneHTML;
+                if (articlesHTML) document.getElementById('articles-grid').innerHTML = articlesHTML;
+                if (videosHTML) document.getElementById('videos-grid').innerHTML = videosHTML;
+            }
+        });
+    </script>
 </body>
 </html>
