@@ -150,6 +150,7 @@
     <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
     <script>
         const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbxxToz22V88elCCjxLqjRtsb5iBIC156cbBFRIlTsju2SwOj9yNnKqzAwFITXMg_wij/exec";
+        let globalData = [];
 
         function googleTranslateElementInit() { 
             new google.translate.TranslateElement({pageLanguage: 'fr'}, 'google_translate_element'); 
@@ -169,7 +170,7 @@
 
         async function envoyerConflit(event) {
             event.preventDefault();
-            playGong(); // Joue le son de gong à la soumission
+            playGong();
 
             const btn = document.getElementById('btnEnvoi');
             const texteInitial = btn.innerText;
@@ -207,16 +208,16 @@
         async function chargerConflits() {
             try {
                 const response = await fetch(WEB_APP_URL + "?v=" + Date.now());
-                const data = await response.json();
+                globalData = await response.json();
                 
                 document.getElementById('chargement').style.display = 'none';
                 const flux = document.getElementById('flux-conflits');
                 flux.innerHTML = "";
 
-                const conflits = data.filter(d => d.type === "REGULATION");
+                const conflits = globalData.filter(d => d.type === "REGULATION");
 
                 if (conflits.length === 0) {
-                    flux.innerHTML = `<div style="grid-column: span 5; padding: 20px; font-weight: bold; background: white; border-radius: 10px; color: #008080;">Aucun dossier en cours pour l'instant... 🕊️️</div>`;
+                    flux.innerHTML = `<div style="grid-column: span 5; padding: 20px; font-weight: bold; background: white; border-radius: 10px; color: #008080;">Aucun dossier en cours pour l'instant... 🕊️</div>`;
                     return;
                 }
 
@@ -246,16 +247,94 @@
         }
 
         function ouvrirGrandMessage(ann) {
+            // Recherche des réponses associées à ce message
+            const reponses = globalData.filter(d => d.type === "REPONSE_REGULATION" && d.localisation === ("Ref:" + (ann.Horodateur || ann.nom)));
+            reponses.reverse(); // Les avis les plus récents de la communauté en premier
+
+            let htmlReponses = "";
+            if (reponses.length > 0) {
+                htmlReponses += `<h4 style="color: #00695c; margin-top: 15px; margin-bottom: 8px;">💬 Réponses de la communauté (${reponses.length}) :</h4>`;
+                
+                // Conteneur avec hauteur maximale et barre de défilement sécurisée pour des milliers de réponses
+                htmlReponses += `<div style="max-height: 200px; overflow-y: auto; border: 2px solid #008080; border-radius: 10px; padding: 10px; background: #ffffff;">`;
+                
+                reponses.forEach(r => {
+                    htmlReponses += `
+                        <div style="background: #E8F5E9; border-left: 4px solid #2e7d32; padding: 8px 10px; margin-bottom: 8px; border-radius: 6px; font-size: 0.9em; text-align: left; color: #004d40;">
+                            <strong>🕊️ ${r.nom || "Un sage"} :</strong> ${r.message}
+                            <div style="font-size: 0.7em; color: #555; margin-top: 3px;">📅 ${r.Horodateur || 'Récemment'}</div>
+                        </div>
+                    `;
+                });
+                htmlReponses += `</div>`;
+            } else {
+                htmlReponses += `<p style="font-style: italic; color: #555; margin-top: 15px;">Aucune réponse pour l'instant. Soyez le premier à apporter votre sagesse ! 🌿</p>`;
+            }
+
             document.getElementById('geant-contenu').innerHTML = `
-                <div style="font-size:1.6em; color:#00695c; font-weight:bold; border-bottom:3px solid #008080; margin-bottom:20px; padding-bottom:5px;">⚖️ Dossier de ${ann.nom || "Anonyme"}</div>
-                <div style="background:white; padding:20px; border-radius:15px; border-left:8px solid #008080; font-size:1.2em; color:#333; text-align:left; margin-bottom:20px; box-shadow: inset 0 2px 5px rgba(0,0,0,0.05);">"${ann.message}"</div>
-                <div style="text-align:left; background:#E0F2F1; padding:15px; border-radius:10px; font-size:1em; color:#004d40;">
+                <div style="font-size:1.6em; color:#00695c; font-weight:bold; border-bottom:3px solid #008080; margin-bottom:15px; padding-bottom:5px;">⚖️ Dossier de ${ann.nom || "Anonyme"}</div>
+                <div style="background:white; padding:20px; border-radius:15px; border-left:8px solid #008080; font-size:1.2em; color:#333; text-align:left; margin-bottom:15px; box-shadow: inset 0 2px 5px rgba(0,0,0,0.05);">"${ann.message}"</div>
+                <div style="text-align:left; background:#E0F2F1; padding:12px; border-radius:10px; font-size:0.95em; color:#004d40; margin-bottom:15px;">
                     <strong>📍 Localisation :</strong> ${ann.localisation || "N/C"}<br>
                     <strong>⏳ Durée de validité :</strong> ${ann.duree_validite || "30"} jours<br>
                     <strong>📅 Date :</strong> ${ann.Horodateur || ann.date || "N/C"}
                 </div>
+
+                <div id="section-reponses">
+                    ${htmlReponses}
+                </div>
+
+                <!-- Formulaire de réponse directe -->
+                <div style="margin-top: 20px; background: white; padding: 15px; border-radius: 12px; border: 2px dashed #008080;">
+                    <h4 style="margin-top: 0; color: #00695c;">🌿 Apporter une réponse délicate :</h4>
+                    <form id="formReponse" onsubmit="envoyerReponse(event, '${ann.Horodateur || ann.nom}')">
+                        <input type="text" id="repNom" placeholder="Votre nom ou pseudo..." required style="margin-bottom: 8px;">
+                        <textarea id="repMessage" rows="3" placeholder="Rédigez votre réponse bienveillante ici..." required style="margin-bottom: 8px;"></textarea>
+                        <button type="submit" style="background: #008080; color: white; border: none; padding: 10px 20px; border-radius: 10px; font-weight: bold; cursor: pointer; width: 100%;">Envoyer ma réponse 🕊️</button>
+                    </form>
+                </div>
             `;
             document.getElementById('fond-sombre').style.display = 'flex';
+        }
+
+        async function envoyerReponse(event, refId) {
+            event.preventDefault();
+            playGong();
+
+            const nomRep = document.getElementById('repNom').value;
+            const msgRep = document.getElementById('repMessage').value;
+
+            const formData = new URLSearchParams();
+            formData.append('type', 'REPONSE_REGULATION');
+            formData.append('nom', nomRep);
+            formData.append('localisation', 'Ref:' + refId);
+            formData.append('message', msgRep);
+            formData.append('duree_validite', '30');
+
+            try {
+                await fetch(WEB_APP_URL, {
+                    method: 'POST',
+                    mode: 'no-cors',
+                    body: formData
+                });
+
+                alert("Votre réponse pleine de sagesse a été transmise ! 🕊️");
+                document.getElementById('formReponse').reset();
+                
+                // Recharge les données pour afficher instantanément la nouvelle réponse
+                const response = await fetch(WEB_APP_URL + "?v=" + Date.now());
+                globalData = await response.json();
+                
+                const annonceActuelle = globalData.find(d => (d.Horodateur === refId || d.nom === refId));
+                if (annonceActuelle) {
+                    ouvrirGrandMessage(annonceActuelle);
+                }
+                chargerConflits();
+
+            } catch (err) {
+                console.error(err);
+                alert("Erreur lors de l'envoi de la réponse.");
+            }
         }
 
         function fermerGrandMessage() { 
