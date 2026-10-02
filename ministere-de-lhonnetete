@@ -1,1 +1,285 @@
+<!DOCTYPE html>
+<html lang="fr" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ministère de l'honnêteté | Journal de l'actualité et de la vérité</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        editorial: {
+                            dark: '#111827',
+                            red: '#dc2626',
+                            gold: '#d97706',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-gray-50 text-gray-900 font-sans antialiased">
 
+    <!-- En-tête / Navigation -->
+    <header class="sticky top-0 z-50 bg-white/90 backdrop-blur-md border-b border-gray-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-20">
+                <!-- Logo & Titre -->
+                <div class="flex items-center space-x-3">
+                    <div class="bg-editorial-dark text-white p-2.5 rounded-lg shadow-md">
+                        <i class="fa-solid fa-scale-balanced text-xl"></i>
+                    </div>
+                    <div>
+                        <span class="text-xs uppercase tracking-widest font-semibold text-editorial-red block">Média indépendant</span>
+                        <h1 class="text-xl sm:text-2xl font-black tracking-tight text-editorial-dark">Ministère de l'honnêteté</h1>
+                    </div>
+                </div>
+
+                <!-- Navigation -->
+                <nav class="hidden md:flex items-center space-x-8 text-sm font-medium">
+                    <a href="#articles" class="hover:text-editorial-red transition">Articles</a>
+                    <a href="#videos" class="hover:text-editorial-red transition">Vidéos</a>
+                    <a href="#apropos" class="hover:text-editorial-red transition">Notre Mission</a>
+                    <a href="https://lepetitprincedesjardiniers.github.io/" class="text-gray-500 hover:text-gray-900 transition flex items-center gap-1">
+                        <i class="fa-solid fa-arrow-left text-xs"></i> Site principal
+                    </a>
+                </nav>
+
+                <!-- Bouton d'appel à l'action -->
+                <div class="flex items-center">
+                    <a href="#videos" class="bg-editorial-red text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-red-700 transition shadow-sm">
+                        <i class="fa-solid fa-play mr-1"></i> Vidéos
+                    </a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Section "À la une" -->
+    <section class="py-12 lg:py-16 bg-editorial-dark text-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                <div class="space-y-6">
+                    <span class="inline-block bg-editorial-red/20 text-editorial-red border border-editorial-red/30 px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider">
+                        À la une • Enquête exclusive
+                    </span>
+                    <h2 class="text-3xl sm:text-4xl lg:text-5xl font-extrabold leading-tight tracking-tight">
+                        La vérité derrière les grands flux d'information contemporains.
+                    </h2>
+                    <p class="text-gray-300 text-lg leading-relaxed">
+                        Bienvenue au Ministère de l'honnêteté. Ici, pas de langue de bois ni de compromis éditorial. Nous décryptons les faits, vérifions les sources et exposons la réalité en toute transparence.
+                    </p>
+                    <div class="flex flex-wrap gap-4 pt-2">
+                        <a href="#articles" class="bg-white text-editorial-dark px-6 py-3 rounded-lg font-bold hover:bg-gray-100 transition shadow">
+                            Lire l'enquête
+                        </a>
+                        <a href="#videos" class="border border-gray-600 px-6 py-3 rounded-lg font-bold hover:bg-gray-800 transition">
+                            Voir le reportage vidéo
+                        </a>
+                    </div>
+                </div>
+                <div class="relative rounded-2xl overflow-hidden shadow-2xl border border-gray-800 bg-gray-900">
+                    <div class="w-full h-80 sm:h-96 bg-gray-800 flex flex-col items-center justify-center relative p-6 text-center">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent z-10"></div>
+                        <i class="fa-solid fa-video text-5xl text-gray-600 z-0 mb-3"></i>
+                        <div class="absolute bottom-6 left-6 right-6 z-20 space-y-2 text-left">
+                            <span class="text-xs text-editorial-red font-bold uppercase">Vidéo exclusive • 18 min</span>
+                            <h3 class="text-xl font-bold text-white">Comment l'information est façonnée : Plongée au cœur des récits médiatiques</h3>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contenu Principal -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 space-y-20">
+
+        <!-- Section Articles -->
+        <section id="articles" class="space-y-8">
+            <div class="flex justify-between items-end border-b border-gray-200 pb-4">
+                <div>
+                    <span class="text-xs uppercase tracking-widest font-semibold text-editorial-red block">Publications récentes</span>
+                    <h2 class="text-3xl font-extrabold text-gray-900">Articles & Décryptages</h2>
+                </div>
+                <span class="text-sm text-gray-500 hidden sm:block">Mis à jour régulièrement</span>
+            </div>
+
+            <!-- Grille des articles -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- Article 1 -->
+                <article class="bg-white rounded-2xl border border-gray-200 overflow-hidden shadow-sm hover:shadow-md transition flex flex-col justify-between">
+                    <div>
+                        <div class="h-48 bg-gray-100 flex items-center justify-center text-gray-400">
+                            <i class="fa-solid fa-newspaper text-4xl"></i>
+                        </div>
+                        <div class="p-6 space-y-3">
+                            <div class="flex items-center justify-between text-xs text-gray-500">
+                                <span class="bg-red-50 text-editorial-red font-semibold px-2.5 py-0.5 rounded">Politique</span>
+                                <span>Il y a 2 jours</span>
+                            </div>
+                            <h3 class="text-xl font-bold text-gray-900 leading-snug">
+                                Transparence publique : Où en sommes-nous vraiment ?
+                            </h3>
+                            <p class="text-gray-600 text-sm leading-relaxed">
+                                Analyse critique des promesses de transparence institutionnelle et des zones d'ombre persistantes.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="p-6 pt-0">
+                        <a href="#" class="text-editorial-red font-semibold text-sm hover:underline inline-flex items-center gap-1">
+                            Lire l'article complet <i class="fa-solid fa-arrow-right text-xs"></i>
+                        </a>
+                    </div>
+                </article>
+
+                <!-- Article 2 -->
+                <article class="bg-white rounded-2xl border border-gray-200 overflow-hidden shadow-sm hover:shadow-md transition flex flex-col justify-between">
+                    <div>
+                        <div class="h-48 bg-gray-100 flex items-center justify-center text-gray-400">
+                            <i class="fa-solid fa-laptop-code text-4xl"></i>
+                        </div>
+                        <div class="p-6 space-y-3">
+                            <div class="flex items-center justify-between text-xs text-gray-500">
+                                <span class="bg-blue-50 text-blue-600 font-semibold px-2.5 py-0.5 rounded">Technologie</span>
+                                <span>Il y a 4 jours</span>
+                            </div>
+                            <h3 class="text-xl font-bold text-gray-900 leading-snug">
+                                Algorithmes et vérité : Qui décide de ce que vous voyez ?
+                            </h3>
+                            <p class="text-gray-600 text-sm leading-relaxed">
+                                Comment les plateformes numériques modifient notre perception de l'actualité au quotidien.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="p-6 pt-0">
+                        <a href="#" class="text-editorial-red font-semibold text-sm hover:underline inline-flex items-center gap-1">
+                            Lire l'article complet <i class="fa-solid fa-arrow-right text-xs"></i>
+                        </a>
+                    </div>
+                </article>
+
+                <!-- Article 3 -->
+                <article class="bg-white rounded-2xl border border-gray-200 overflow-hidden shadow-sm hover:shadow-md transition flex flex-col justify-between">
+                    <div>
+                        <div class="h-48 bg-gray-100 flex items-center justify-center text-gray-400">
+                            <i class="fa-solid fa-globe text-4xl"></i>
+                        </div>
+                        <div class="p-6 space-y-3">
+                            <div class="flex items-center justify-between text-xs text-gray-500">
+                                <span class="bg-amber-50 text-amber-600 font-semibold px-2.5 py-0.5 rounded">Société</span>
+                                <span>Il y a 1 semaine</span>
+                            </div>
+                            <h3 class="text-xl font-bold text-gray-900 leading-snug">
+                                La quête de sens dans l'actualité contemporaine
+                            </h3>
+                            <p class="text-gray-600 text-sm leading-relaxed">
+                                Pourquoi le public se tourne massivement vers les médias indépendants en quête de repères factuels.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="p-6 pt-0">
+                        <a href="#" class="text-editorial-red font-semibold text-sm hover:underline inline-flex items-center gap-1">
+                            Lire l'article complet <i class="fa-solid fa-arrow-right text-xs"></i>
+                        </a>
+                    </div>
+                </article>
+            </div>
+        </section>
+
+        <!-- Section Vidéos & Liens -->
+        <section id="videos" class="space-y-8 bg-white p-8 sm:p-12 rounded-3xl border border-gray-200 shadow-sm">
+            <div class="flex flex-col sm:flex-row justify-between items-start sm:items-end gap-4 border-b border-gray-100 pb-4">
+                <div>
+                    <span class="text-xs uppercase tracking-widest font-semibold text-editorial-red block">Format multimédia</span>
+                    <h2 class="text-3xl font-extrabold text-gray-900">Vidéos & Reportages</h2>
+                </div>
+                <a href="https://youtube.com" target="_blank" class="text-sm font-semibold text-gray-700 hover:text-editorial-red transition flex items-center gap-2">
+                    <i class="fa-brands fa-youtube text-red-600 text-lg"></i> Chaîne vidéo
+                </a>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <!-- Carte Vidéo 1 -->
+                <div class="space-y-4">
+                    <div class="bg-gray-900 rounded-xl overflow-hidden relative shadow-md">
+                        <div class="w-full h-56 bg-gray-900 flex flex-col items-center justify-center text-white relative group cursor-pointer">
+                            <div class="absolute inset-0 bg-black/40 group-hover:bg-black/20 transition"></div>
+                            <div class="w-14 h-14 bg-editorial-red rounded-full flex items-center justify-center shadow-lg z-10 group-hover:scale-110 transition">
+                                <i class="fa-solid fa-play text-white ml-1"></i>
+                            </div>
+                            <span class="mt-3 z-10 text-xs font-medium">Lien vers la vidéo</span>
+                        </div>
+                    </div>
+                    <div>
+                        <span class="text-xs text-gray-500 font-semibold">Épisode #04</span>
+                        <h3 class="text-lg font-bold text-gray-900 mt-1">La vérité sur les coulisses de l'actualité politique</h3>
+                        <p class="text-gray-600 text-sm mt-1">Un décryptage sans langue de bois des mécanismes de communication.</p>
+                    </div>
+                </div>
+
+                <!-- Carte Vidéo 2 -->
+                <div class="space-y-4">
+                    <div class="bg-gray-900 rounded-xl overflow-hidden relative shadow-md">
+                        <div class="w-full h-56 bg-gray-900 flex flex-col items-center justify-center text-white relative group cursor-pointer">
+                            <div class="absolute inset-0 bg-black/40 group-hover:bg-black/20 transition"></div>
+                            <div class="w-14 h-14 bg-editorial-red rounded-full flex items-center justify-center shadow-lg z-10 group-hover:scale-110 transition">
+                                <i class="fa-solid fa-play text-white ml-1"></i>
+                            </div>
+                            <span class="mt-3 z-10 text-xs font-medium">Lien vers la vidéo</span>
+                        </div>
+                    </div>
+                    <div>
+                        <span class="text-xs text-gray-500 font-semibold">Épisode #03</span>
+                        <h3 class="text-lg font-bold text-gray-900 mt-1">Fact-checking : Démêler le vrai du faux de la semaine</h3>
+                        <p class="text-gray-600 text-sm mt-1">Analyse détaillée des affirmations virales passées au crible des faits.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section Notre Mission -->
+        <section id="apropos" class="max-w-3xl mx-auto text-center space-y-6 py-8">
+            <div class="w-12 h-12 bg-editorial-red/10 text-editorial-red rounded-full flex items-center justify-center mx-auto">
+                <i class="fa-solid fa-shield-halved text-xl"></i>
+            </div>
+            <h2 class="text-2xl sm:text-3xl font-extrabold text-gray-900">Notre engagement envers vous</h2>
+            <p class="text-gray-600 leading-relaxed text-base sm:text-lg">
+                Le <strong>Ministère de l'honnêteté</strong> est un espace d'information libre, conçu pour les citoyens qui exigent de la rigueur et de la transparence. Chaque article et chaque vidéo sont pensés pour vous donner les clés de compréhension de notre époque.
+            </p>
+        </section>
+
+    </main>
+
+    <!-- Pied de page -->
+    <footer class="bg-editorial-dark text-white border-t border-gray-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+            <div class="flex flex-col md:flex-row justify-between items-center gap-6 border-b border-gray-800 pb-8">
+                <div class="flex items-center space-x-3">
+                    <div class="bg-editorial-red text-white p-2 rounded-lg">
+                        <i class="fa-solid fa-scale-balanced text-lg"></i>
+                    </div>
+                    <span class="font-black text-lg tracking-tight">Ministère de l'honnêteté</span>
+                </div>
+                <div class="flex space-x-6 text-gray-400">
+                    <a href="#" class="hover:text-white transition"><i class="fa-brands fa-x-twitter text-xl"></i></a>
+                    <a href="#" class="hover:text-white transition"><i class="fa-brands fa-youtube text-xl"></i></a>
+                    <a href="#" class="hover:text-white transition"><i class="fa-brands fa-instagram text-xl"></i></a>
+                </div>
+            </div>
+            <div class="flex flex-col sm:flex-row justify-between items-center gap-4 pt-8 text-xs text-gray-500">
+                <p>&copy; 2026 Ministère de l'honnêteté. Propulsé par GitHub Pages.</p>
+                <div class="flex space-x-6">
+                    <a href="https://lepetitprincedesjardiniers.github.io/" class="hover:text-gray-400 transition">Retour au site principal</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+</body>
+</html>
