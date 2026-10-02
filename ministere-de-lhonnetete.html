@@ -1,32 +1,18 @@
 <!DOCTYPE html>
 <html lang="fr" class="scroll-smooth">
-<html lang="fr">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Ministère de l'honnêteté | Journal de l'actualité et de la vérité</title>
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- PapaParse pour lire le Google Sheet en CSV -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        joy: {
-                            dark: '#1e1b4b',   // Bleu nuit profond et élégant
-                            orange: '#f97316',   // Orange chaleureux et dynamique
-                            gold: '#f59e0b',     // Or solaire / Jaune éclatant
-                            bg: '#fffbf5',       // Fond ambré très doux et chaleureux
-                        }
-                    }
-                }
+@@ -25,6 +25,16 @@
             }
         }
     </script>
     <style>
+        /* Correctifs universels pour garantir un rendu 100% fluide sur mobile et desktop */
         html, body {
             max-width: 100% !important;
             overflow-x: hidden !important;
@@ -34,411 +20,112 @@
         .iframe-container {
             -webkit-overflow-scrolling: touch;
         }
-        /* Personnalisation élégante de la barre de défilement pour la description */
-        .custom-scroll::-webkit-scrollbar {
-            width: 6px;
-        }
-        .custom-scroll::-webkit-scrollbar-track {
-            background: #ffedd5;
-            border-radius: 8px;
-        }
-        .custom-scroll::-webkit-scrollbar-thumb {
-            background: #f97316;
-            border-radius: 8px;
-        }
     </style>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Médiathèque - Style Éditorial</title>
-  <style>
-    /* --- Style Global & Grille --- */
-    body {
-      background-color: #121212;
-      color: #f1f1f1;
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-      margin: 0;
-      padding: 40px 20px;
-    }
-
-    .media-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-      gap: 24px;
-      max-width: 1200px;
-      margin: 0 auto;
-    }
-
-    /* --- Carte Vidéo --- */
-    .video-card {
-      background: #1e1e1e;
-      border-radius: 10px;
-      overflow: hidden;
-      display: flex;
-      flex-direction: column;
-      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
-      transition: transform 0.2s ease, box-shadow 0.2s ease;
-    }
-
-    .video-card:hover {
-      transform: translateY(-4px);
-      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.6);
-    }
-
-    /* --- 1. Titre en haut --- */
-    .video-title {
-      font-size: 16px;
-      font-weight: 600;
-      line-height: 1.4;
-      margin: 0;
-      padding: 16px 16px 12px 16px;
-      color: #ffffff;
-    }
-
-    /* --- 2. Visuel / Vignette de la vidéo --- */
-    .video-thumbnail {
-      position: relative;
-      width: 100%;
-      height: 180px;
-      background-size: cover;
-      background-position: center;
-      background-color: #2a2a2a; /* Fallback si l'image met du temps à charger */
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-
-    /* Bouton de lecture élégant */
-    .play-btn {
-      background: rgba(0, 0, 0, 0.7);
-      border: 2px solid #ffffff;
-      color: #ffffff;
-      font-size: 18px;
-      width: 50px;
-      height: 50px;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-      transition: background 0.2s, transform 0.2s;
-      padding-left: 3px; /* Décale légèrement le triangle pour le centrer optiquement */
-    }
-
-    .video-thumbnail:hover .play-btn {
-      background: #e50914; /* Touche rouge style média/streaming */
-      border-color: #e50914;
-      transform: scale(1.1);
-    }
-
-    /* --- 3. Description avec flèche discrète --- */
-    .description-container {
-      padding: 12px 16px;
-      border-top: 1px solid rgba(255, 255, 255, 0.08);
-      background: #181818;
-    }
-
-    .toggle-desc-btn {
-      background: none;
-      border: none;
-      color: #888;
-      cursor: pointer;
-      width: 100%;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      padding: 4px;
-      transition: color 0.2s;
-    }
-
-    .toggle-desc-btn:hover {
-      color: #ffffff;
-    }
-
-    /* Flèche minimaliste */
-    .arrow-icon {
-      display: inline-block;
-      font-size: 12px;
-      transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    }
-
-    /* Contenu de la description masqué par défaut */
-    .description-content {
-      max-height: 0;
-      overflow: hidden;
-      transition: max-height 0.35s ease, opacity 0.3s ease, margin-top 0.3s ease;
-      opacity: 0;
-      font-size: 13px;
-      color: #b0b0b0;
-      line-height: 1.5;
-      margin-top: 0;
-    }
-
-    /* État actif (ouvert) */
-    .description-container.active .arrow-icon {
-      transform: rotate(180deg);
-    }
-
-    .description-container.active .description-content {
-      max-height: 200px; /* Hauteur maximale estimée de la description */
-      opacity: 1;
-      margin-top: 8px;
-    }
-  </style>
 </head>
 <body class="bg-joy-bg text-gray-900 font-sans antialiased">
 
-    <!-- En-tête / Navigation -->
-    <header class="sticky top-0 z-50 bg-joy-bg/90 backdrop-blur-md border-b border-orange-100 shadow-sm">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+@@ -34,16 +44,16 @@
             <div class="flex justify-between items-center h-20">
+                <!-- Logo & Titre -->
                 <div class="flex items-center space-x-3">
+                    <div class="bg-gradient-to-br from-joy-gold to-joy-orange text-white p-2.5 rounded-xl shadow-md">
                     <div class="bg-gradient-to-br from-joy-gold to-joy-orange text-white p-2.5 rounded-xl shadow-md shrink-0">
                         <i class="fa-solid fa-scale-balanced text-xl"></i>
                     </div>
                     <div>
+                        <span class="text-xs uppercase tracking-widest font-extrabold text-joy-orange block">Média indépendant</span>
+                        <h1 class="text-xl sm:text-2xl font-black tracking-tight text-joy-dark">Ministère de l'honnêteté</h1>
                         <span class="text-[10px] sm:text-xs uppercase tracking-widest font-extrabold text-joy-orange block">Média indépendant</span>
                         <h1 class="text-lg sm:text-2xl font-black tracking-tight text-joy-dark truncate max-w-[200px] sm:max-w-none">Ministère de l'honnêteté</h1>
                     </div>
                 </div>
 
+                <!-- Navigation -->
+                <!-- Navigation Desktop -->
                 <nav class="hidden md:flex items-center space-x-8 text-sm font-semibold text-gray-700">
                     <a href="#articles" class="hover:text-joy-orange transition">Articles</a>
                     <a href="#videos" class="hover:text-joy-orange transition">Vidéos</a>
-                    <a href="#apropos" class="hover:text-joy-orange transition">Notre Mission</a>
-                    <a href="https://lepetitprincedesjardiniers.github.io/index.html" class="text-joy-orange hover:text-orange-600 transition flex items-center gap-1.5 font-bold text-xs bg-orange-50 px-3.5 py-2 rounded-xl border border-orange-200">
-                        <i class="fa-solid fa-arrow-left text-xs"></i> Petites Annonces Citoyennes
-                    </a>
-                </nav>
+@@ -55,7 +65,7 @@
 
+                <!-- Bouton d'appel à l'action -->
                 <div class="flex items-center">
+                    <a href="#videos" class="bg-joy-orange text-white px-4 py-2.5 rounded-xl text-sm font-bold hover:bg-orange-600 transition shadow-md shadow-orange-500/20">
                     <a href="#videos" class="bg-joy-orange text-white px-3.5 py-2 sm:px-4 sm:py-2.5 rounded-xl text-xs sm:text-sm font-bold hover:bg-orange-600 transition shadow-md shadow-orange-500/20">
                         <i class="fa-solid fa-play mr-1"></i> Vidéos
                     </a>
                 </div>
-            </div>
-        </div>
-    </header>
-
-    <!-- Section "À la une" -->
-    <section id="alaune-container" class="py-12 lg:py-16 bg-gradient-to-br from-joy-dark via-indigo-950 to-orange-950 text-white relative overflow-hidden">
-        <div class="absolute -top-24 -right-24 w-96 h-96 bg-joy-orange/20 rounded-full blur-3xl pointer-events-none"></div>
-        <div class="absolute -bottom-24 -left-24 w-96 h-96 bg-joy-gold/10 rounded-full blur-3xl pointer-events-none"></div>
-
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10" id="alaune-content">
-            <div class="text-center py-12 text-amber-200">Chargement de l'actualité...</div>
-        </div>
-    </section>
-
-    <!-- Contenu Principal -->
-    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 space-y-20">
-
-        <!-- Section Articles -->
-        <section id="articles" class="space-y-8">
-            <div class="flex flex-col sm:flex-row justify-between items-start sm:items-end gap-4 border-b border-orange-200 pb-4">
-                <div>
-                    <span class="text-xs uppercase tracking-widest font-extrabold text-joy-orange block">Publications récentes</span>
-                    <h2 class="text-3xl font-extrabold text-joy-dark">Articles & Décryptages</h2>
-                </div>
-                <div class="w-full sm:w-80">
-                    <div class="relative">
-                        <span class="absolute inset-y-0 left-0 flex items-center pl-3.5 pointer-events-none text-gray-400">
-                            <i class="fa-solid fa-search"></i>
-                        </span>
-                        <input type="text" id="search-input" oninput="filterArticles()" placeholder="Rechercher par titre, sujet..." class="w-full pl-10 pr-4 py-2.5 bg-white border border-orange-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-joy-orange shadow-sm transition">
-                    </div>
-                </div>
+@@ -95,7 +105,7 @@
             </div>
 
-            <div id="articles-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"></div>
-
-            <div id="load-more-container" class="text-center pt-6 hidden">
-                <button onclick="showMoreArticles()" class="bg-orange-50 hover:bg-joy-orange hover:text-white text-joy-orange font-bold text-sm px-6 py-3 rounded-xl transition border border-orange-200 shadow-sm cursor-pointer inline-flex items-center gap-2">
-                    <span>Charger plus d'articles</span> <i class="fa-solid fa-chevron-down text-xs"></i>
-                </button>
+            <!-- Grille des articles dynamique -->
+            <div id="articles-grid" class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div id="articles-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Les articles injectés par JavaScript apparaîtront ici -->
             </div>
+
+@@ -108,7 +118,7 @@
         </section>
 
-        <!-- Section Vidéos -->
+        <!-- Section Vidéos & Liens -->
+        <section id="videos" class="space-y-8 bg-white p-8 sm:p-12 rounded-3xl border border-orange-100 shadow-md">
         <section id="videos" class="space-y-8 bg-white p-6 sm:p-12 rounded-3xl border border-orange-100 shadow-md">
             <div class="flex flex-col sm:flex-row justify-between items-start sm:items-end gap-4 border-b border-orange-100 pb-4">
                 <div>
                     <span class="text-xs uppercase tracking-widest font-extrabold text-joy-orange block">Format multimédia</span>
-                    <h2 class="text-3xl font-extrabold text-joy-dark">Vidéos & Reportages</h2>
-                </div>
-                <a href="https://www.youtube.com/@lepetitploucdesjardiniers" target="_blank" class="text-sm font-bold text-gray-700 hover:text-joy-orange transition flex items-center gap-2 bg-orange-50 px-4 py-2 rounded-xl">
-                    <i class="fa-brands fa-youtube text-red-600 text-lg"></i> Chaîne vidéo
-                </a>
-            </div>
-
-            <div id="videos-grid" class="grid grid-cols-1 md:grid-cols-2 gap-8"></div>
+@@ -125,7 +135,7 @@
         </section>
 
         <!-- Section Notre Mission -->
+        <section id="apropos" class="max-w-3xl mx-auto text-center space-y-6 py-8 bg-gradient-to-r from-amber-100/50 via-orange-100/30 to-amber-100/50 p-8 rounded-3xl border border-orange-200/50">
         <section id="apropos" class="max-w-3xl mx-auto text-center space-y-6 py-8 bg-gradient-to-r from-amber-100/50 via-orange-100/30 to-amber-100/50 p-6 sm:p-8 rounded-3xl border border-orange-200/50">
             <div class="w-14 h-14 bg-joy-orange text-white rounded-2xl flex items-center justify-center mx-auto shadow-lg shadow-orange-500/20">
                 <i class="fa-solid fa-shield-halved text-2xl"></i>
             </div>
-            <h2 class="text-2xl sm:text-3xl font-extrabold text-joy-dark">Notre engagement envers vous</h2>
-            <p class="text-gray-700 leading-relaxed text-base sm:text-lg">
-                Le <strong>Ministère de l'honnêteté</strong> est un espace d'information libre et vibrant, conçu pour les citoyens qui exigent de la rigueur, de la joie de débattre et de la transparence. Chaque article et chaque vidéo sont pensés pour vous donner les clés de compréhension de notre époque.
-            </p>
-        </section>
-
+@@ -138,23 +148,23 @@
     </main>
 
-    <!-- Fenêtre Popup (Modal) unique pour Articles et Vidéos -->
+    <!-- Fenêtre Popup (Modal) pour afficher le Google Doc ou la Vidéo -->
+    <div id="content-modal" class="fixed inset-0 z-50 hidden bg-black/70 backdrop-blur-sm flex items-center justify-center p-4 sm:p-6">
+        <div class="bg-white w-full max-w-4xl h-[85vh] rounded-3xl shadow-2xl overflow-hidden flex flex-col relative border border-orange-200">
+            <div class="bg-joy-dark text-white px-6 py-4 flex justify-between items-center">
+                <h3 id="modal-title" class="font-bold text-lg truncate pr-4">Titre de l'article</h3>
     <div id="content-modal" class="fixed inset-0 z-50 hidden bg-black/70 backdrop-blur-sm flex items-center justify-center p-2 sm:p-6">
         <div class="bg-white w-full max-w-4xl h-[90vh] sm:h-[85vh] rounded-3xl shadow-2xl overflow-hidden flex flex-col relative border border-orange-200">
-            
-            <!-- En-tête général de la modale -->
             <div class="bg-joy-dark text-white px-4 sm:px-6 py-4 flex justify-between items-center shrink-0">
-                <h3 id="modal-header-title" class="font-bold text-base sm:text-lg truncate pr-4">Média</h3>
+                <h3 id="modal-title" class="font-bold text-base sm:text-lg truncate pr-4">Titre de l'article</h3>
                 <button onclick="closeModal()" class="text-gray-300 hover:text-white text-xl font-bold w-10 h-10 rounded-full bg-white/10 flex items-center justify-center transition shrink-0 cursor-pointer">
                     <i class="fa-solid fa-xmark"></i>
                 </button>
             </div>
-            
-            <!-- Vue 1 : Conteneur pour Google Doc / Article -->
-            <div id="doc-view-container" class="flex-1 bg-gray-50 relative iframe-container overflow-hidden hidden">
+            <div class="flex-1 bg-gray-50 relative">
+            <div class="flex-1 bg-gray-50 relative iframe-container overflow-hidden">
                 <iframe id="modal-iframe" src="" class="w-full h-full border-0"></iframe>
             </div>
-
-            <!-- Vue 2 : Conteneur pour Vidéo (Titre en haut, Lecteur vidéo, Description longue défilante) -->
-            <div id="video-view-container" class="flex-1 flex flex-col bg-white p-6 sm:p-8 space-y-5 overflow-y-auto hidden">
-                
-                <!-- 1. Titre et métadonnées en haut -->
-                <div class="space-y-2 shrink-0">
-                    <div class="flex items-center justify-between text-xs font-bold">
-                        <span id="modal-video-cat" class="bg-amber-100 text-amber-800 px-3 py-1 rounded-full uppercase tracking-wider">Catégorie</span>
-                        <span id="modal-video-date" class="text-gray-400 font-normal">Date</span>
-                    </div>
-                    <h4 id="modal-video-title" class="text-xl sm:text-2xl font-extrabold text-joy-dark leading-snug"></h4>
-                </div>
-
-                <!-- 2. Lecteur vidéo avec icône de lecture intégrée -->
-                <div id="video-player-wrapper" class="w-full aspect-video bg-gray-900 rounded-2xl overflow-hidden relative shadow-lg group cursor-pointer shrink-0" onclick="playYouTubeVideo()">
-                    <div id="video-poster" class="absolute inset-0 bg-gradient-to-tr from-indigo-950 via-joy-dark to-orange-950 flex flex-col items-center justify-center p-6 text-center">
-                        <div class="w-16 h-16 bg-joy-orange text-white rounded-full flex items-center justify-center shadow-xl group-hover:scale-110 transition duration-300 mb-3">
-                            <i class="fa-solid fa-play text-xl ml-1"></i>
-                        </div>
-                        <span class="text-white font-extrabold text-base sm:text-lg">Lancer la lecture de la vidéo</span>
-                        <span class="text-amber-200/80 text-xs mt-1">Lecture directe sur place (Ministère de l'honnêteté)</span>
-                    </div>
-                    <div id="video-iframe-container" class="absolute inset-0 hidden"></div>
-                </div>
-
-                <!-- 3. Zone de description défilante (parfaite pour les textes longs contenant auteurs, hashtags, etc.) -->
-                <div class="space-y-2 flex-1 flex flex-col">
-                    <h5 class="text-xs uppercase font-extrabold tracking-wider text-joy-orange flex items-center gap-1.5 shrink-0">
-                        <i class="fa-solid fa-align-left"></i> Description & Informations :
-                    </h5>
-                    <!-- Conteneur avec défilement vertical (custom-scroll) -->
-                    <div class="flex-1 min-h-[140px] max-h-64 overflow-y-auto custom-scroll bg-orange-50/50 p-4 sm:p-5 rounded-2xl border border-orange-100">
-                        <div id="modal-video-desc" class="text-gray-700 text-sm sm:text-base leading-relaxed whitespace-pre-line"></div>
-                    </div>
-                </div>
-
-                <!-- 4. Lien de secours vers YouTube en bas -->
-                <div class="pt-3 border-t border-gray-100 flex justify-between items-center text-xs text-gray-400 shrink-0">
-                    <span>&copy; 2026 Ministère de l'honnêteté</span>
-                    <a id="modal-youtube-link" href="" target="_blank" class="text-red-600 hover:text-red-700 font-bold inline-flex items-center gap-1.5">
-                        <i class="fa-brands fa-youtube"></i> Voir sur YouTube
-                    </a>
-                </div>
-
-            </div>
-<body>
-
-  <div class="media-grid">
-
-    <!-- Carte 1 -->
-    <div class="video-card">
-      <h3 class="video-title">Les coulisses de la transition énergétique en Europe</h3>
-      <div class="video-thumbnail" style="background-image: url('https://picsum.photos/seed/video1/600/400');">
-        <button class="play-btn" aria-label="Lire la vidéo">▶</button>
-      </div>
-      <div class="description-container">
-        <button class="toggle-desc-btn" aria-label="Afficher la description">
-          <span class="arrow-icon">▼</span>
-        </button>
-        <div class="description-content">
-          Une analyse approfondie des nouveaux défis industriels et des investissements verts menés dans les capitales européennes cette année.
         </div>
-      </div>
     </div>
 
-    <!-- Modale Courrier des lecteurs -->
+    <!-- Fenêtre Popup (Modal) pour le Courrier des lecteurs -->
     <div id="courrier-modal" class="fixed inset-0 z-50 hidden bg-black/70 backdrop-blur-sm flex items-center justify-center p-4 sm:p-6">
+        <div class="bg-white w-full max-w-lg rounded-3xl shadow-2xl overflow-hidden flex flex-col relative border border-orange-200 p-8 text-center space-y-6">
         <div class="bg-white w-full max-w-lg rounded-3xl shadow-2xl overflow-hidden flex flex-col relative border border-orange-200 p-6 sm:p-8 text-center space-y-6">
             <button onclick="closeCourrierModal()" class="absolute top-4 right-4 text-gray-400 hover:text-gray-700 text-xl font-bold w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center transition cursor-pointer">
                 <i class="fa-solid fa-xmark"></i>
             </button>
-            <div class="w-16 h-16 bg-joy-orange text-white rounded-2xl flex items-center justify-center mx-auto shadow-lg shadow-orange-500/20">
-                <i class="fa-solid fa-envelope-open-text text-2xl"></i>
-            </div>
-            <h3 class="text-2xl font-extrabold text-joy-dark">Courrier des lecteurs</h3>
-            <p class="text-gray-800 text-lg font-semibold leading-relaxed">
-                Ne perds pas ton temps sur ton ordi, <span class="text-joy-orange underline decoration-wavy">va discuter dans ton quartier !</span>
-            </p>
-            <p class="text-gray-500 text-sm italic">(Rien ne vaut un vrai ébat public).</p>
-            <div>
-                <button onclick="closeCourrierModal()" class="bg-joy-orange text-white font-bold text-sm px-6 py-3 rounded-xl hover:bg-orange-600 transition shadow-md shadow-orange-500/20 cursor-pointer">
-                    J'ai compris, j'y vais ! 🌳
-                </button>
-            </div>
-    <!-- Carte 2 -->
-    <div class="video-card">
-      <h3 class="video-title">Intelligence artificielle : Vers un nouveau paradigme économique ?</h3>
-      <div class="video-thumbnail" style="background-image: url('https://picsum.photos/seed/video2/600/400');">
-        <button class="play-btn" aria-label="Lire la vidéo">▶</button>
-      </div>
-      <div class="description-container">
-        <button class="toggle-desc-btn" aria-label="Afficher la description">
-          <span class="arrow-icon">▼</span>
-        </button>
-        <div class="description-content">
-          Experts et chercheurs décryptent l'impact de l'automatisation avancée sur le marché du travail mondial et les prévisions à dix ans.
-        </div>
-      </div>
-    </div>
+@@ -178,7 +188,7 @@
 
-    <!-- Modale Contact -->
+    <!-- Fenêtre Popup (Modal) pour la Page Contact -->
     <div id="contact-modal" class="fixed inset-0 z-50 hidden bg-black/70 backdrop-blur-sm flex items-center justify-center p-4 sm:p-6">
+        <div class="bg-white w-full max-w-lg rounded-3xl shadow-2xl overflow-hidden flex flex-col relative border border-orange-200 p-8 text-center space-y-6">
         <div class="bg-white w-full max-w-lg rounded-3xl shadow-2xl overflow-hidden flex flex-col relative border border-orange-200 p-6 sm:p-8 text-center space-y-6">
             <button onclick="closeContactModal()" class="absolute top-4 right-4 text-gray-400 hover:text-gray-700 text-xl font-bold w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center transition cursor-pointer">
                 <i class="fa-solid fa-xmark"></i>
             </button>
-            <div class="w-16 h-16 bg-joy-orange text-white rounded-2xl flex items-center justify-center mx-auto shadow-lg shadow-orange-500/20">
-                <i class="fa-solid fa-user-secret text-2xl"></i>
-            </div>
-            <h3 class="text-2xl font-extrabold text-joy-dark">Contact</h3>
-            <p class="text-gray-800 text-lg font-semibold leading-relaxed">
-                Je ne parle pas aux inconnu(es) <span class="text-joy-orange block mt-2">mais si tu me rencontres, sois gentille avec nous !</span>
-            </p>
-            <div>
-                <button onclick="closeContactModal()" class="bg-joy-orange text-white font-bold text-sm px-6 py-3 rounded-xl hover:bg-orange-600 transition shadow-md shadow-orange-500/20 cursor-pointer">
-                    Promis ! 🤝
-                </button>
-            </div>
-    <!-- Carte 3 -->
-    <div class="video-card">
-      <h3 class="video-title">Géopolitique des océans : Les routes maritimes sous tension</h3>
-      <div class="video-thumbnail" style="background-image: url('https://picsum.photos/seed/video3/600/400');">
-        <button class="play-btn" aria-label="Lire la vidéo">▶</button>
-      </div>
-      <div class="description-container">
-        <button class="toggle-desc-btn" aria-label="Afficher la description">
-          <span class="arrow-icon">▼</span>
-        </button>
-        <div class="description-content">
-          Reportage exclusif sur la sécurisation des détroits clés et la compétition stratégique croissante entre les grandes puissances navales.
-        </div>
-      </div>
-    </div>
-
+@@ -200,22 +210,22 @@
     <!-- Pied de page -->
     <footer class="bg-joy-dark text-white border-t border-indigo-900">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+            <div class="flex flex-col md:flex-row justify-between items-center gap-6 border-b border-indigo-900 pb-8">
+                <div class="flex items-center space-x-3">
             <div class="flex flex-col md:flex-row justify-between items-center gap-6 border-b border-indigo-900 pb-8 text-center md:text-left">
                 <div class="flex items-center space-x-3 justify-center">
                     <div class="bg-joy-orange text-white p-2.5 rounded-xl">
@@ -446,296 +133,48 @@
                     </div>
                     <span class="font-black text-lg tracking-tight">Ministère de l'honnêteté</span>
                 </div>
+                <div class="flex space-x-6 text-amber-300">
                 <div class="flex space-x-6 text-amber-300 justify-center">
                     <a href="#" class="hover:text-white transition text-xl"><i class="fa-brands fa-x-twitter"></i></a>
                     <a href="https://www.youtube.com/@lepetitploucdesjardiniers" target="_blank" class="hover:text-white transition text-xl"><i class="fa-brands fa-youtube"></i></a>
                     <a href="#" class="hover:text-white transition text-xl"><i class="fa-brands fa-instagram"></i></a>
                 </div>
             </div>
+            <div class="flex flex-col sm:flex-row justify-between items-center gap-4 pt-8 text-xs text-indigo-300">
             <div class="flex flex-col sm:flex-row justify-between items-center gap-4 pt-8 text-xs text-indigo-300 text-center sm:text-left">
                 <p>&copy; 2026 Ministère de l'honnêteté. Propulsé par LePetitPloucsDesJardiniers</p>
+                <div class="flex items-center space-x-6">
                 <div class="flex flex-wrap justify-center items-center gap-4 sm:space-x-6">
                     <button onclick="openContactModal(event)" class="text-amber-300 hover:text-white transition font-bold cursor-pointer bg-transparent border-0 p-0 inline-flex items-center gap-1.5">
                         <i class="fa-solid fa-address-book"></i> Contact
                     </button>
-                    <button onclick="openCourrierModal(event)" class="text-amber-300 hover:text-white transition font-bold cursor-pointer bg-transparent border-0 p-0 inline-flex items-center gap-1.5">
-                        <i class="fa-solid fa-envelope"></i> Courrier des lecteurs
-                    </button>
-                    <a href="https://lepetitprincedesjardiniers.github.io/index.html" class="hover:text-white transition font-bold">Retour aux Petites Annonces Citoyennes</a>
-                </div>
-            </div>
-        </div>
-    </footer>
-
-    <!-- Script de liaison Google Sheets, Recherche & Modales -->
-    <script>
-        const sheetID = "1jJZm_WSIMgM5r-Y5zTSrC8FUiLhRN-dOcPnIcSyTpSI";
-        const gid = "1311533436";
-        const csvUrl = `https://docs.google.com/spreadsheets/d/${sheetID}/export?format=csv&gid=${gid}`;
-
-        let allArticles = []; 
-        let allVideos = [];
-        let displayedLimit = 9; 
-        let currentVideoUrl = '';
-
-        function getEmbedUrl(url, isVideo = false) {
-            if (!url) return '';
-            if (url.includes('docs.google.com/document/d/')) {
-                const match = url.match(/\/document\/d\/([a-zA-Z0-9-_]+)/);
-                return match ? `https://docs.google.com/document/d/${match[1]}/preview` : url;
-            }
-            if (url.includes('youtube.com/watch?v=')) {
-                try {
-                    const urlObj = new URL(url);
-                    const videoId = urlObj.searchParams.get('v');
-                    return videoId ? `https://www.youtube.com/embed/${videoId}?autoplay=1` : url;
-                } catch(e) {}
-            }
-            if (url.includes('youtu.be/')) {
-                const parts = url.split('youtu.be/');
-                if (parts[1]) {
-                    const videoId = parts[1].split('?')[0];
-                    return `https://www.youtube.com/embed/${videoId}?autoplay=1`;
-                }
-            }
-            return url;
-        }
-
-        function openArticleByIndex(index) {
-            const art = allArticles[index];
-            if (art) openDocModal(art.titre, art.lien);
-        }
-
-        function openVideoByIndex(index) {
-            const vid = allVideos[index];
-            if (vid) openVideoModal(vid);
-        }
-
-        function openDocModal(title, url) {
-            const modal = document.getElementById('content-modal');
-            const headerTitle = document.getElementById('modal-header-title');
-            const docView = document.getElementById('doc-view-container');
-            const videoView = document.getElementById('video-view-container');
-            const iframe = document.getElementById('modal-iframe');
-            
-            headerTitle.textContent = title;
-            videoView.classList.add('hidden');
-            docView.classList.remove('hidden');
-            iframe.src = getEmbedUrl(url);
-
-            modal.classList.remove('hidden');
-            document.body.style.overflow = 'hidden';
-        }
-
-        function openVideoModal(vid) {
-            const modal = document.getElementById('content-modal');
-            const headerTitle = document.getElementById('modal-header-title');
-            const docView = document.getElementById('doc-view-container');
-            const videoView = document.getElementById('video-view-container');
-            
-            headerTitle.textContent = vid.titre;
-            docView.classList.add('hidden');
-            videoView.classList.remove('hidden');
-
-            currentVideoUrl = vid.lien;
-
-            // Remplissage des éléments simples depuis les colonnes standards du Google Sheet
-            document.getElementById('modal-video-title').textContent = vid.titre;
-            document.getElementById('modal-video-cat').textContent = vid.categorie || 'Vidéo';
-            document.getElementById('modal-video-date').textContent = vid.date;
-            document.getElementById('modal-video-desc').textContent = vid.description || "Aucune description disponible.";
-            document.getElementById('modal-youtube-link').href = vid.lien;
-
-            // Réinitialisation du lecteur (affiche le poster avec l'icône de lecture)
-            document.getElementById('video-poster').classList.remove('hidden');
-            const iframeContainer = document.getElementById('video-iframe-container');
-            iframeContainer.classList.add('hidden');
-            iframeContainer.innerHTML = '';
-
-            modal.classList.remove('hidden');
-            document.body.style.overflow = 'hidden';
-        }
-
-        function playYouTubeVideo() {
-            const poster = document.getElementById('video-poster');
-            const iframeContainer = document.getElementById('video-iframe-container');
-            
-            poster.classList.add('hidden');
-            iframeContainer.classList.remove('hidden');
-            
-            const embedUrl = getEmbedUrl(currentVideoUrl, true);
-            iframeContainer.innerHTML = `<iframe src="${embedUrl}" class="w-full h-full border-0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`;
-        }
-
-        function closeModal() {
-            const modal = document.getElementById('content-modal');
-            const iframe = document.getElementById('modal-iframe');
-            const iframeContainer = document.getElementById('video-iframe-container');
-            
-            modal.classList.add('hidden');
-            iframe.src = '';
-            if (iframeContainer) iframeContainer.innerHTML = ''; // Coupe proprement la vidéo à la fermeture
-            document.body.style.overflow = 'auto';
-        }
-
-        function openCourrierModal(e) {
-            if (e) e.preventDefault();
-            document.getElementById('courrier-modal').classList.remove('hidden');
-            document.body.style.overflow = 'hidden';
-        }
-
-        function closeCourrierModal() {
-            document.getElementById('courrier-modal').classList.add('hidden');
-            document.body.style.overflow = 'auto';
-        }
-
-        function openContactModal(e) {
-            if (e) e.preventDefault();
-            document.getElementById('contact-modal').classList.remove('hidden');
-            document.body.style.overflow = 'hidden';
-        }
-
-        function closeContactModal() {
-            document.getElementById('contact-modal').classList.add('hidden');
-            document.body.style.overflow = 'auto';
-        }
-
-        document.getElementById('content-modal').addEventListener('click', function(e) {
-            if (e.target === this) closeModal();
-        });
-        document.getElementById('courrier-modal').addEventListener('click', function(e) {
-            if (e.target === this) closeCourrierModal();
-        });
-        document.getElementById('contact-modal').addEventListener('click', function(e) {
-            if (e.target === this) closeContactModal();
-        });
-
-        function renderArticles() {
-            const grid = document.getElementById('articles-grid');
-            const searchInput = document.getElementById('search-input');
-            const loadMoreContainer = document.getElementById('load-more-container');
-            
-            const query = searchInput ? searchInput.value.toLowerCase().trim() : "";
-
-            const filtered = allArticles.filter(item => {
-                return item.titre.toLowerCase().includes(query) || 
-                       item.description.toLowerCase().includes(query) || 
-                       item.categorie.toLowerCase().includes(query);
-            });
-
-            const limit = query ? filtered.length : displayedLimit;
+@@ -350,7 +360,7 @@
             const articlesToDisplay = filtered.slice(0, limit);
 
             if (filtered.length === 0) {
+                grid.innerHTML = `<div class="col-span-3 text-center py-12 text-gray-500 font-medium">Aucun article trouvé pour "${query}".</div>`;
                 grid.innerHTML = `<div class="col-span-full text-center py-12 text-gray-500 font-medium">Aucun article trouvé pour "${query}".</div>`;
                 loadMoreContainer.classList.add('hidden');
                 return;
             }
-
-            let html = '';
-            articlesToDisplay.forEach(art => {
-                const realIndex = allArticles.findIndex(a => a.titre === art.titre && a.date === art.date);
-                html += `
-                    <article class="bg-white rounded-3xl border border-orange-100 overflow-hidden shadow-sm hover:shadow-xl hover:-translate-y-1 transition duration-300 flex flex-col justify-between">
-                        <div>
-                            <div class="h-48 bg-gradient-to-br from-amber-100 to-orange-100 flex items-center justify-center text-joy-orange">
+@@ -365,9 +375,9 @@
                                 <i class="fa-solid fa-newspaper text-4xl"></i>
                             </div>
                             <div class="p-6 space-y-3">
+                                <div class="flex items-center justify-between text-xs font-bold">
+                                    <span class="bg-amber-100 text-amber-800 px-3 py-1 rounded-full">${art.categorie}</span>
+                                    <span class="text-gray-400 font-normal">${art.date}</span>
                                 <div class="flex items-center justify-between text-xs font-bold gap-2">
                                     <span class="bg-amber-100 text-amber-800 px-3 py-1 rounded-full truncate">${art.categorie}</span>
                                     <span class="text-gray-400 font-normal shrink-0">${art.date}</span>
                                 </div>
                                 <h3 class="text-xl font-extrabold text-gray-900 leading-snug">
                                     ${art.titre}
-                                </h3>
-                                <p class="text-gray-600 text-sm leading-relaxed line-clamp-3">
-                                    ${art.description}
-                                </p>
-                            </div>
-                        </div>
-                        <div class="p-6 pt-0">
-                            <button onclick="openArticleByIndex(${realIndex})" class="text-joy-orange font-bold text-sm hover:underline inline-flex items-center gap-1.5 cursor-pointer bg-transparent border-0 p-0">
-                                Lire l'article complet <i class="fa-solid fa-arrow-right text-xs"></i>
-                            </button>
-                        </div>
-                    </article>
-                `;
-            });
-
-            grid.innerHTML = html;
-
-            if (!query && displayedLimit < filtered.length) {
-                loadMoreContainer.classList.remove('hidden');
-            } else {
-                loadMoreContainer.classList.add('hidden');
-            }
-        }
-
-        function renderVideos() {
-            const grid = document.getElementById('videos-grid');
-            let html = '';
-            allVideos.forEach((vid, index) => {
-                html += `
-                    <div class="space-y-4 group cursor-pointer" onclick="openVideoByIndex(${index})">
-                        <div class="bg-joy-dark rounded-2xl overflow-hidden relative shadow-lg aspect-video flex items-center justify-center">
-                            <div class="absolute inset-0 bg-gradient-to-tr from-indigo-950 to-orange-950 opacity-90 group-hover:scale-105 transition duration-500"></div>
-                            <div class="absolute inset-0 flex items-center justify-center">
-                                <div class="w-14 h-14 bg-joy-orange text-white rounded-full flex items-center justify-center shadow-lg group-hover:scale-110 transition duration-300">
-                                    <i class="fa-solid fa-play ml-1"></i>
-                                </div>
-                            </div>
-                            <div class="absolute bottom-4 left-4 right-4 text-white z-10">
-                                <span class="text-xs font-bold text-joy-gold uppercase tracking-wider">${vid.categorie}</span>
-                                <h4 class="text-base sm:text-lg font-bold leading-snug line-clamp-2">${vid.titre}</h4>
-                            </div>
-                        </div>
-                        <p class="text-gray-600 text-sm leading-relaxed line-clamp-2">${vid.description}</p>
-                    </div>
-                `;
-            });
-            grid.innerHTML = html || '<div class="col-span-full text-center py-12 text-gray-500">Aucune vidéo trouvée.</div>';
-        }
-
-        function filterArticles() {
-            renderArticles();
-        }
-
-        function showMoreArticles() {
-            displayedLimit += 9;
-            renderArticles();
-        }
-
-        Papa.parse(csvUrl, {
-            download: true,
-            header: true,
-            complete: function(results) {
-                const data = results.data;
-                
-                let alauneHTML = '';
-                allArticles = []; 
-                allVideos = [];
-
-                data.forEach(row => {
-                    const cleanRow = {};
-                    Object.keys(row).forEach(key => {
-                        const cleanKey = key.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").trim();
-                        cleanRow[cleanKey] = row[key];
-                    });
-
-                    const pos = (cleanRow.position || "").trim().toLowerCase();
-                    const titre = cleanRow.titre || "";
-                    const desc = cleanRow.description || "";
-                    const lien = cleanRow.lien || "#";
-                    const cat = cleanRow.categorie || "Général";
-                    const date = cleanRow.date || "";
-
-                    if (!titre) return; 
-  </div>
+@@ -434,15 +444,15 @@
 
                     if (pos === 'alaune-article') {
-                        const safeTitle = titre.replace(/'/g, "\\'").replace(/"/g, '&quot;');
                         alauneHTML = `
+                            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
                             <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center">
                                 <div class="space-y-6">
                                     <span class="inline-flex items-center gap-2 bg-joy-gold/20 text-joy-gold border border-joy-gold/30 px-3.5 py-1.5 rounded-full text-xs font-black uppercase tracking-wider">
@@ -744,44 +183,59 @@
                                     <h2 class="text-3xl sm:text-4xl lg:text-5xl font-extrabold leading-tight tracking-tight text-white">
                                         ${titre}
                                     </h2>
+                                    <p class="text-amber-100/80 text-lg leading-relaxed">
                                     <p class="text-amber-100/80 text-base sm:text-lg leading-relaxed">
                                         ${desc}
                                     </p>
                                     <div class="flex flex-wrap gap-4 pt-2">
-                                        <button onclick="openDocModal('${safeTitle}', '${lien}')" class="bg-joy-gold text-joy-dark px-6 py-3.5 rounded-xl font-black hover:bg-amber-400 transition shadow-lg shadow-amber-500/20 inline-flex items-center gap-2 cursor-pointer">
-                                            Lire l'enquête <i class="fa-solid fa-arrow-right text-xs"></i>
+@@ -451,10 +461,10 @@
                                         </button>
                                     </div>
                                 </div>
-                                <div class="relative rounded-2xl overflow-hidden shadow-2xl border border-white/10 bg-gray-900 p-6 sm:p-8 flex flex-col justify-center min-h-[250px] sm:min-h-[300px] cursor-pointer group" onclick="openDocModal('${safeTitle}', '${lien}')">
+                                <div class="relative rounded-2xl overflow-hidden shadow-2xl border border-white/10 bg-gray-900 p-8 flex flex-col justify-center min-h-[300px] cursor-pointer" onclick="openModal('${safeTitle}', '${lien}')">
+                                <div class="relative rounded-2xl overflow-hidden shadow-2xl border border-white/10 bg-gray-900 p-6 sm:p-8 flex flex-col justify-center min-h-[250px] sm:min-h-[300px] cursor-pointer group" onclick="openModal('${safeTitle}', '${lien}')">
                                     <span class="text-xs text-joy-gold font-bold uppercase tracking-wider mb-2">${cat}</span>
+                                    <h3 class="text-2xl font-bold text-white mb-4">${titre}</h3>
+                                    <p class="text-gray-300 text-sm">${desc}</p>
                                     <h3 class="text-xl sm:text-2xl font-bold text-white mb-4 group-hover:text-amber-200 transition">${titre}</h3>
                                     <p class="text-gray-300 text-sm line-clamp-3">${desc}</p>
                                     <span class="mt-4 text-xs text-amber-300 font-bold flex items-center gap-1">Cliquez pour lire l'article <i class="fa-solid fa-external-link-alt"></i></span>
                                 </div>
                             </div>
+@@ -466,27 +476,27 @@
+                            <div class="space-y-4 group cursor-pointer" onclick="openModal('${safeTitle}', '${lien}')">
+                                <div class="bg-joy-dark rounded-2xl overflow-hidden relative shadow-lg aspect-video flex items-center justify-center">
+                                    <div class="absolute inset-0 bg-gradient-to-tr from-indigo-950 to-orange-950 opacity-90 group-hover:scale-105 transition duration-500"></div>
+                                    <div class="w-16 h-16 bg-joy-orange rounded-full flex items-center justify-center text-white shadow-xl z-10 group-hover:scale-110 transition">
+                                        <i class="fa-solid fa-play ml-1 text-lg"></i>
+                                    <div class="absolute inset-0 flex items-center justify-center">
+                                        <div class="w-14 h-14 bg-joy-orange text-white rounded-full flex items-center justify-center shadow-lg group-hover:scale-110 transition duration-300">
+                                            <i class="fa-solid fa-play ml-1"></i>
+                                        </div>
+                                    </div>
+                                    <div class="absolute bottom-4 left-4 right-4 text-white z-10">
+                                        <span class="text-xs font-bold text-joy-gold uppercase tracking-wider">${cat}</span>
+                                        <h4 class="text-base sm:text-lg font-bold leading-snug line-clamp-2">${titre}</h4>
+                                    </div>
+                                    <span class="absolute bottom-4 left-4 z-10 text-xs font-bold text-amber-300 bg-black/40 px-3 py-1 rounded-lg backdrop-blur-sm">${cat}</span>
+                                </div>
+                                <div>
+                                    <h3 class="text-lg font-extrabold text-gray-900 group-hover:text-joy-orange transition">${titre}</h3>
+                                    <p class="text-gray-600 text-sm mt-1">${desc}</p>
+                                    <span class="text-xs text-gray-400 font-medium">${date}</span>
+                                </div>
+                                <p class="text-gray-600 text-sm leading-relaxed line-clamp-2">${desc}</p>
+                            </div>
                         `;
-                    } else if (pos === 'alaune-video') {
-                        allVideos.unshift({ titre, description: desc, lien, categorie: cat, date });
-                    } else if (pos === 'article') {
-                        allArticles.push({ titre, description: desc, lien, categorie: cat, date });
-                    } else if (pos === 'video') {
-                        allVideos.push({ titre, description: desc, lien, categorie: cat, date });
                     }
                 });
-  <script>
-    // Script gérant l'ouverture et la fermeture fluides des descriptions au clic sur la flèche
-    document.querySelectorAll('.toggle-desc-btn').forEach(button => {
-      button.addEventListener('click', () => {
-        const container = button.closest('.description-container');
-        container.classList.toggle('active');
-      });
-    });
-  </script>
 
+                if (alauneHTML) document.getElementById('alaune-content').innerHTML = alauneHTML;
+                if (videosHTML) document.getElementById('videos-grid').innerHTML = videosHTML;
+                
                 document.getElementById('alaune-content').innerHTML = alauneHTML || '<div class="text-center py-12 text-amber-200">Aucune actualité "À la une" trouvée.</div>';
+                document.getElementById('videos-grid').innerHTML = videosHTML || '<div class="col-span-full text-center py-12 text-gray-500">Aucune vidéo trouvée.</div>';
                 renderArticles();
-                renderVideos();
             }
         });
     </script>
