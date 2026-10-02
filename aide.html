@@ -2,182 +2,181 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Aide & Écoute - Le Câlin de l'Âme</title>
+    <title>AIDE & ÉCOUTE - Le Câlin de l'Âme</title>
     <style>
-        body {
-            font-family: 'Comic Sans MS', cursive, sans-serif;
-            background: linear-gradient(135deg, #f5f7fa, #c3cfe2);
-            color: #333;
-            margin: 0;
-            padding: 20px;
+        body { 
+            font-family: 'Comic Sans MS', cursive; text-align: center; margin: 0; padding: 0; 
+            background: radial-gradient(circle at center, #1a0a2e 0%, #000000 100%);
+            color: #ffffff; overflow-x: hidden; min-height: 100vh; padding-bottom: 80px;
         }
-        header {
-            text-align: center;
-            margin-bottom: 30px;
+
+        .menu-table { margin: 10px auto; border-radius: 10px; background-color: #008080; border-collapse: collapse; position: relative; z-index: 10; }
+        .menu-table td { border: 1px solid #FFFFFF; }
+        .menu-table a { display: block; padding: 8px 15px; text-decoration: none; color: #FFFFFF; font-weight: bold; font-size: 0.85em; }
+
+        .coeur { font-size: 60px; margin: 15px; animation: float 3s infinite ease-in-out; filter: drop-shadow(0 0 15px #9370DB); }
+        @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
+
+        .form-container { 
+            background: #F3E5F5; border: 4px solid #9370DB; border-radius: 25px; 
+            width: 90%; max-width: 600px; margin: 20px auto; padding: 20px; color: #4a148c; text-align: left;
+            box-shadow: 0 8px 20px rgba(147,112,219,0.4);
         }
-        h1 {
-            color: #5a4b81;
-        }
-        .container {
-            max-width: 800px;
-            margin: 0 auto;
-            background: white;
-            padding: 25px;
-            border-radius: 15px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-        }
-        form {
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-            margin-bottom: 30px;
-        }
-        input, textarea {
-            padding: 12px;
-            border: 2px solid #ddd;
-            border-radius: 8px;
-            font-family: inherit;
-            font-size: 1rem;
-        }
-        button {
-            padding: 12px;
-            background-color: #7b68ee;
-            color: white;
-            border: none;
-            border-radius: 8px;
-            font-size: 1rem;
-            cursor: pointer;
-            transition: background 0.3s;
-        }
-        button:hover {
-            background-color: #6a5acd;
-        }
-        .mur-reel {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-            gap: 15px;
-        }
-        .carte-message {
-            background: #fdfbf7;
-            border: 2px dashed #b19cd9;
-            padding: 15px;
-            border-radius: 10px;
-            cursor: pointer;
-            transition: transform 0.2s;
-        }
-        .carte-message:hover {
-            transform: scale(1.02);
-        }
-        /* Modale */
-        #fond-sombre {
-            display: none;
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.5);
-            justify-content: center;
-            align-items: center;
-        }
-        .modale-contenu {
-            background: white;
-            padding: 30px;
-            border-radius: 12px;
-            max-width: 500px;
-            width: 90%;
-        }
+        .form-container label { font-size: 0.9em; font-weight: bold; display: block; margin-top: 8px; color: #4a148c; }
+        input, textarea { width: 100%; padding: 10px; margin: 5px 0 10px 0; border-radius: 10px; border: 2px solid #9370DB; box-sizing: border-box; font-family: inherit; background: #fff; color: #333; }
+        .btn-envoi { background: #9370DB; color: white; border: none; padding: 12px; border-radius: 20px; font-weight: bold; cursor: pointer; width: 100%; font-size: 1.1em; font-family: inherit; margin-top: 10px; }
+        .btn-envoi:hover { background: #7B68EE; }
+
+        /* --- GRILLE ET CARTES MINIATURES --- */
+        .mur-reel { display: grid; grid-template-columns: repeat(5, minmax(150px, 1fr)); gap: 10px; padding: 10px; max-width: 98vw; margin: 0 auto; }
+        @media (max-width: 768px) { .mur-reel { grid-template-columns: repeat(2, 1fr); } }
+
+        .carte-message { background: white; border: 2px solid #9370DB; border-radius: 12px; padding: 10px; box-shadow: 0 4px 10px rgba(147,112,219,0.3); display: flex; flex-direction: column; height: 260px; cursor: pointer; position: relative; overflow: hidden; text-align: left; color: #333; transition: transform 0.2s; }
+        .carte-message:hover { transform: translateY(-3px); box-shadow: 0 6px 15px rgba(147,112,219,0.5); }
+        .nom-prenom { color: #4a148c; font-weight: bold; font-size: 0.85em; border-bottom: 1px solid #eee; margin-bottom: 4px; padding-bottom: 2px; }
+        .rubrique-tag { font-size: 0.55em; background: #9370DB; color: white; padding: 1px 5px; border-radius: 5px; position: absolute; top: 8px; right: 8px; }
+        .texte-annonce { flex-grow: 1; font-style: italic; color: #333; overflow-y: auto; font-size: 0.75em; margin: 5px 0; line-height: 1.3; padding-right: 5px; }
+        .details-bas { font-size: 0.7em; color: #666; line-height: 1.3; border-top: 1px solid #eee; padding-top: 5px; background: white; }
+
+        /* --- MODALE GRAND MESSAGE --- */
+        #fond-sombre { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); z-index: 2000; justify-content: center; align-items: center; }
+        .message-geant { background: #F3E5F5; width: 95%; max-width: 800px; padding: 25px; border-radius: 25px; border: 6px solid #9370DB; position: relative; max-height: 80vh; overflow-y: auto; color: #4a148c; text-align: left; box-shadow: 0 10px 30px rgba(147,112,219,0.6); }
+        .bouton-fermer { position: absolute; top: 15px; right: 15px; background: #9370DB; color: white; border-radius: 50%; width: 40px; height: 40px; cursor: pointer; border: 2px solid white; font-weight: bold; font-size: 1.1em; display: flex; align-items: center; justify-content: center; }
     </style>
 </head>
 <body>
 
-    <header>
-        <h1>🌹 Le Câlin de l'Âme</h1>
-        <p>Déposez un mot doux, une écoute, un éclat d'étoile...</p>
-    </header>
+    <table class="menu-table">
+        <tr>
+            <td><a href="index.html">Accueil</a></td>
+            <td><a href="formulaire.html">Semer</a></td>
+            <td><a href="jardin.html">Le Jardin</a></td>
+            <td><a href="impots.html">Impôts</a></td>
+            <td><a href="impot.html">Impôts</a></td>
+            <td><a href="regulation.html">Régulation</a></td>
+            <td><a href="aide.html">Aide</a></td>
+        </tr>
+    </table>
 
-    <div class="container">
-        <!-- Formulaire d'envoi relié à la fonction universelle -->
-        <form id="form-aide" onsubmit="envoyerFormulaireGoogleScript(event, 'VOTRE_URL_GOOGLE_APPS_SCRIPT_AIDE', chargerMessages)">
-            <input type="text" name="nom" placeholder="Votre nom ou pseudo" required>
-            <textarea name="message" rows="4" placeholder="Votre message de soutien..." required></textarea>
-            <button type="submit">Envoyer mon cœur 💖</button>
+    <div class="coeur">💖</div>
+    <h1>Aide & Écoute</h1>
+    <p><i>Le Câlin de l'Âme : Le cri du cœur.</i></p>
+
+    <div class="form-container">
+        <form id="aideForm" onsubmit="envoyerAide(event)">
+            <input type="hidden" name="type" value="AIDE">
+            <input type="hidden" name="localisation" value="Espace Cœur">
+
+            <label>👤 Ton petit nom :</label>
+            <input type="text" name="nom" required placeholder="Ex: Âme douce">
+
+            <label>⏳ Durée de validité (en jours) :</label>
+            <input type="number" name="duree_validite" value="30" min="1" required>
+
+            <label>💬 Mon cœur est lourd, je cherche une oreille :</label>
+            <textarea name="message" rows="4" required placeholder="Écris ton message pour un câlin de l'âme..."></textarea>
+
+            <button type="submit" class="btn-envoi">DÉPOSER MON CŒUR 🕊️</button>
         </form>
-
-        <h2>Les cœurs à écouter</h2>
-        <div class="mur-reel" id="mur-messages">
-            <!-- Les messages s'afficheront ici -->
-        </div>
     </div>
 
-    <!-- Modale d'affichage -->
-    <div id="fond-sombre" onclick="fermerModale(event)">
-        <div class="modale-contenu" onclick="event.stopPropagation()">
-            <h3 id="modale-titre"></h3>
-            <p id="modale-texte"></p>
-            <button onclick="fermerModaleDirect()">Fermer</button>
+    <div style="max-width: 95vw; margin: 40px auto; padding: 10px;">
+        <h2 style="color: #D8BFD8; margin-bottom: 20px;">🌸 Les Cœurs à Écouter</h2>
+        <div id="flux-aide" class="mur-reel"><p style="grid-column: span 5; color: #fff;">Appel de la douceur...</p></div>
+    </div>
+
+    <!-- Modale Grand Message -->
+    <div id="fond-sombre" onclick="fermerGrandMessage()">
+        <div class="message-geant" onclick="event.stopPropagation()">
+            <button class="bouton-fermer" onclick="fermerGrandMessage()">X</button>
+            <div id="geant-contenu"></div>
         </div>
     </div>
 
     <script>
-        // Fonction d'envoi universelle (commune aux deux pages)
-        async function envoyerFormulaireGoogleScript(event, urlScript, callbackSuccess) {
+        const URL = "https://script.google.com/macros/s/AKfycbz4ncs9qw_AfmKSER5QST-P0OeKQggQaq86QC6liS53uZ9sx4Lo_-4-h1knXKWqgQMc/exec";
+
+        async function envoyerAide(event) {
             event.preventDefault();
-            const form = event.target;
-            const submitBtn = form.querySelector('button[type="submit"]');
-            const texteInitial = submitBtn ? submitBtn.innerText : 'Envoyer';
-            
-            if (submitBtn) {
-                submitBtn.innerText = 'Envoi en cours...';
-                submitBtn.disabled = true;
-            }
+            const btn = event.target.querySelector('button');
+            btn.innerText = "Le message s'envole..."; 
+            btn.disabled = true;
+
+            const form = document.getElementById('aideForm');
+            const formData = new FormData(form);
+            const urlParams = new URLSearchParams(formData);
 
             try {
-                const formData = new FormData(form);
-                const data = Object.fromEntries(formData.entries());
-                data.dateSoumission = new Date().toISOString();
-
-                await fetch(urlScript, {
-                    method: 'POST',
-                    mode: 'no-cors',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(data)
+                await fetch(URL, { 
+                    method: 'POST', 
+                    mode: 'no-cors', 
+                    body: urlParams 
                 });
-
-                alert('✨ Votre message a bien été envoyé avec succès !');
+                alert("Message déposé avec douceur."); 
                 form.reset();
-
-                if (typeof callbackSuccess === 'function') {
-                    callbackSuccess();
-                }
-            } catch (error) {
-                console.error('Erreur :', error);
-                alert('Une erreur est survenue lors de l\'envoi.');
+                chargerAide();
+            } catch (err) {
+                console.error(err);
+                alert("Erreur lors de l'envoi.");
             } finally {
-                if (submitBtn) {
-                    submitBtn.innerText = texteInitial;
-                    submitBtn.disabled = false;
-                }
+                btn.innerText = "DÉPOSER MON CŒUR 🕊️";
+                btn.disabled = false;
             }
         }
 
-        function chargerMessages() {
-            // Espace pour votre logique de récupération GET des données si nécessaire
+        async function chargerAide() {
+            try {
+                const response = await fetch(URL + "?v=" + Date.now());
+                const data = await response.json();
+
+                const f = document.getElementById('flux-aide'); 
+                f.innerHTML = "";
+                const annonces = data.filter(i => i.type === "AIDE" || i.type === "Urgence").reverse();
+
+                if (annonces.length === 0) {
+                    f.innerHTML = `<div style="grid-column: span 5; padding: 20px; font-weight: bold; background: #2a1045; border-radius: 10px; color: #fff;">Aucun cœur à écouter pour l'instant... 💖</div>`;
+                    return;
+                }
+
+                annonces.forEach(i => {
+                    const d = document.createElement('div');
+                    d.className = 'carte-message';
+                    d.onclick = () => ouvrirGrandMessage(i);
+                    d.innerHTML = `
+                        <div class="nom-prenom">${i.nom || "Anonyme"}</div>
+                        <div class="rubrique-tag">Câlin de l'Âme</div>
+                        <div class="texte-annonce">"${i.message}"</div>
+                        <div class="details-bas">
+                            📅 Date : ${i.Horodateur || i.date || 'N/C'}<br>
+                            ⏳ Validité : ${i.duree_validite || '30'} jours
+                        </div>
+                    `;
+                    f.appendChild(d);
+                });
+            } catch (err) {
+                console.error(err);
+                document.getElementById('flux-aide').innerHTML = `<p style="grid-column: span 5; color: #ff9999;">Impossible de charger les cœurs... 🕊️</p>`;
+            }
         }
 
-        function ouvrirModale(nom, message) {
-            document.getElementById('modale-titre').innerText = "De : " + nom;
-            document.getElementById('modale-texte').innerText = message;
+        function ouvrirGrandMessage(ann) {
+            document.getElementById('geant-contenu').innerHTML = `
+                <div style="font-size:1.6em; color:#4a148c; font-weight:bold; border-bottom:3px solid #9370DB; margin-bottom:20px; padding-bottom:5px;">💖 Cœur de ${ann.nom || "Anonyme"}</div>
+                <div style="background:white; padding:20px; border-radius:15px; border-left:8px solid #9370DB; font-size:1.2em; color:#333; text-align:left; margin-bottom:20px; box-shadow: inset 0 2px 5px rgba(0,0,0,0.05);">"${ann.message}"</div>
+                <div style="text-align:left; background:#E1BEE7; padding:15px; border-radius:10px; font-size:1em; color:#4a148c;">
+                    <strong>📍 Localisation :</strong> ${ann.localisation || "Espace Cœur"}<br>
+                    <strong>⏳ Durée de validité :</strong> ${ann.duree_validite || "30"} jours<br>
+                    <strong>📅 Date :</strong> ${ann.Horodateur || ann.date || "N/C"}
+                </div>
+            `;
             document.getElementById('fond-sombre').style.display = 'flex';
         }
 
-        function fermerModaleDirect() {
-            document.getElementById('fond-sombre').style.display = 'none';
+        function fermerGrandMessage() { 
+            document.getElementById('fond-sombre').style.display = 'none'; 
         }
 
-        function fermerModale(e) {
-            if (e.target.id === 'fond-sombre') {
-                fermerModaleDirect();
-            }
-        }
+        window.onload = chargerAide;
     </script>
 </body>
 </html>
