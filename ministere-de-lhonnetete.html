@@ -2,14 +2,10 @@
 <html lang="fr" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewpo<!DOCTYPE html>
-<html lang="fr" class="scroll-smooth">
-<head>
-    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ministère de l'honnêteté | Journal de l'actualité et de la vérité</title>
-    <!-- Tailwind CSS -->
-    <script src="https://tailwindcss.com"></script>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <!-- PapaParse pour lire le Google Sheet en CSV -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
@@ -19,10 +15,10 @@
                 extend: {
                     colors: {
                         joy: {
-                            dark: '#1e1b4b',
-                            orange: '#f97316',
-                            gold: '#f59e0b',
-                            bg: '#fffbf5',
+                            dark: '#1e1b4b',   // Bleu nuit profond et élégant
+                            orange: '#f97316',   // Orange chaleureux et dynamique
+                            gold: '#f59e0b',     // Or solaire / Jaune éclatant
+                            bg: '#fffbf5',       // Fond ambré très doux et chaleureux
                         }
                     }
                 }
@@ -36,6 +32,7 @@
     <header class="sticky top-0 z-50 bg-joy-bg/90 backdrop-blur-md border-b border-orange-100 shadow-sm">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between items-center h-20">
+                <!-- Logo & Titre -->
                 <div class="flex items-center space-x-3">
                     <div class="bg-gradient-to-br from-joy-gold to-joy-orange text-white p-2.5 rounded-xl shadow-md">
                         <i class="fa-solid fa-scale-balanced text-xl"></i>
@@ -45,11 +42,18 @@
                         <h1 class="text-xl sm:text-2xl font-black tracking-tight text-joy-dark">Ministère de l'honnêteté</h1>
                     </div>
                 </div>
+
+                <!-- Navigation -->
                 <nav class="hidden md:flex items-center space-x-8 text-sm font-semibold text-gray-700">
                     <a href="#articles" class="hover:text-joy-orange transition">Articles</a>
                     <a href="#videos" class="hover:text-joy-orange transition">Vidéos</a>
                     <a href="#apropos" class="hover:text-joy-orange transition">Notre Mission</a>
+                    <a href="index.html" class="text-gray-400 hover:text-gray-900 transition flex items-center gap-1 font-normal">
+                        <i class="fa-solid fa-arrow-left text-xs"></i> Site principal
+                    </a>
                 </nav>
+
+                <!-- Bouton d'appel à l'action -->
                 <div class="flex items-center">
                     <a href="#videos" class="bg-joy-orange text-white px-4 py-2.5 rounded-xl text-sm font-bold hover:bg-orange-600 transition shadow-md shadow-orange-500/20">
                         <i class="fa-solid fa-play mr-1"></i> Vidéos
@@ -62,6 +66,8 @@
     <!-- Section "À la une" dynamique -->
     <section id="alaune-container" class="py-12 lg:py-16 bg-gradient-to-br from-joy-dark via-indigo-950 to-orange-950 text-white relative overflow-hidden">
         <div class="absolute -top-24 -right-24 w-96 h-96 bg-joy-orange/20 rounded-full blur-3xl pointer-events-none"></div>
+        <div class="absolute -bottom-24 -left-24 w-96 h-96 bg-joy-gold/10 rounded-full blur-3xl pointer-events-none"></div>
+
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10" id="alaune-content">
             <div class="text-center py-12 text-amber-200">Chargement de l'actualité...</div>
         </div>
@@ -77,12 +83,12 @@
                     <span class="text-xs uppercase tracking-widest font-extrabold text-joy-orange block">Publications récentes</span>
                     <h2 class="text-3xl font-extrabold text-joy-dark">Articles & Décryptages</h2>
                 </div>
-                <span class="text-sm text-gray-500 hidden sm:block font-medium">Mis à jour en direct</span>
+                <span class="text-sm text-gray-500 hidden sm:block font-medium">Géré via Google Sheets</span>
             </div>
 
             <!-- Grille des articles dynamique -->
             <div id="articles-grid" class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                <!-- Injecté par JavaScript -->
+                <!-- Les articles injectés par JavaScript apparaîtront ici -->
             </div>
         </section>
 
@@ -93,10 +99,13 @@
                     <span class="text-xs uppercase tracking-widest font-extrabold text-joy-orange block">Format multimédia</span>
                     <h2 class="text-3xl font-extrabold text-joy-dark">Vidéos & Reportages</h2>
                 </div>
+                <a href="https://youtube.com" target="_blank" class="text-sm font-bold text-gray-700 hover:text-joy-orange transition flex items-center gap-2 bg-orange-50 px-4 py-2 rounded-xl">
+                    <i class="fa-brands fa-youtube text-red-600 text-lg"></i> Chaîne vidéo
+                </a>
             </div>
 
             <div id="videos-grid" class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                <!-- Injecté par JavaScript -->
+                <!-- Les vidéos injectées par JavaScript apparaîtront ici -->
             </div>
         </section>
 
@@ -107,13 +116,13 @@
             </div>
             <h2 class="text-2xl sm:text-3xl font-extrabold text-joy-dark">Notre engagement envers vous</h2>
             <p class="text-gray-700 leading-relaxed text-base sm:text-lg">
-                Le <strong>Ministère de l'honnêteté</strong> est piloté en temps réel depuis nos bases de données sécurisées pour vous garantir une information transparente et rigoureuse.
+                Le <strong>Ministère de l'honnêteté</strong> est un espace d'information libre et vibrant, conçu pour les citoyens qui exigent de la rigueur, de la joie de débattre et de la transparence. Chaque article et chaque vidéo sont pensés pour vous donner les clés de compréhension de notre époque.
             </p>
         </section>
 
     </main>
 
-    <!-- Fenêtre Popup (Modal) pour afficher le Google Doc ou la Vidéo -->
+    <!-- Fenêtre Popup (Modal) pour afficher le Google Doc ou la Vidéo sans quitter la page -->
     <div id="content-modal" class="fixed inset-0 z-50 hidden bg-black/70 backdrop-blur-sm flex items-center justify-center p-4 sm:p-6">
         <div class="bg-white w-full max-w-4xl h-[85vh] rounded-3xl shadow-2xl overflow-hidden flex flex-col relative border border-orange-200">
             <div class="bg-joy-dark text-white px-6 py-4 flex justify-between items-center">
@@ -138,20 +147,28 @@
                     </div>
                     <span class="font-black text-lg tracking-tight">Ministère de l'honnêteté</span>
                 </div>
+                <div class="flex space-x-6 text-amber-300">
+                    <a href="#" class="hover:text-white transition text-xl"><i class="fa-brands fa-x-twitter"></i></a>
+                    <a href="#" class="hover:text-white transition text-xl"><i class="fa-brands fa-youtube"></i></a>
+                    <a href="#" class="hover:text-white transition text-xl"><i class="fa-brands fa-instagram"></i></a>
+                </div>
             </div>
             <div class="flex flex-col sm:flex-row justify-between items-center gap-4 pt-8 text-xs text-indigo-300">
-                <p>&copy; 2026 Ministère de l'honnêteté. Tous droits réservés.</p>
+                <p>&copy; 2026 Ministère de l'honnêteté. Propulsé par GitHub Pages & Google Sheets.</p>
+                <div class="flex space-x-6">
+                    <a href="index.html" class="hover:text-white transition">Retour au site principal</a>
+                </div>
             </div>
         </div>
     </footer>
 
-    <!-- Script JavaScript -->
+    <!-- Script de liaison Google Sheets & Gestion de la Popup -->
     <script>
         const sheetID = "1jJZm_WSIMgM5r-Y5zTSrC8FUiLhRN-dOcPnIcSyTpSI";
         const gid = "1311533436";
         const csvUrl = `https://docs.google.com/spreadsheets/d/${sheetID}/export?format=csv&gid=${gid}`;
 
-        // Fonction pour transformer un lien normal (Google Doc ou YouTube) en lien intégrable dans la popup
+        // Transforme un lien normal (Google Doc ou YouTube) en lien intégrable dans la popup
         function getEmbedUrl(url) {
             if (!url) return '';
             
@@ -211,7 +228,7 @@
             }
         });
 
-        // Lecture des données du Google Sheet
+        // Lecture des données du Google Sheet via PapaParse
         Papa.parse(csvUrl, {
             download: true,
             header: true,
@@ -236,7 +253,7 @@
                     const cat = cleanRow.categorie || "Général";
                     const date = cleanRow.date || "";
 
-                    if (!titre) return;
+                    if (!titre) return; // Ignore les lignes vides
 
                     // Sécurisation du titre pour le JS
                     const safeTitle = titre.replace(/'/g, "\\'").replace(/"/g, '&quot;');
@@ -270,27 +287,27 @@
                         `;
                     } else if (pos === 'article') {
                         articlesHTML += `
-                            <article class="bg-white rounded-3xl border-2 border-orange-100 overflow-hidden shadow-md hover:shadow-2xl hover:border-orange-300 hover:-translate-y-1.5 transition duration-300 flex flex-col justify-between">
+                            <article class="bg-white rounded-3xl border border-orange-100 overflow-hidden shadow-sm hover:shadow-xl hover:-translate-y-1 transition duration-300 flex flex-col justify-between">
                                 <div>
-                                    <div class="h-32 bg-gradient-to-br from-amber-100 to-orange-100 flex items-center justify-center text-joy-orange">
-                                        <i class="fa-solid fa-newspaper text-3xl"></i>
+                                    <div class="h-48 bg-gradient-to-br from-amber-100 to-orange-100 flex items-center justify-center text-joy-orange">
+                                        <i class="fa-solid fa-newspaper text-4xl"></i>
                                     </div>
                                     <div class="p-6 space-y-3">
                                         <div class="flex items-center justify-between text-xs font-bold">
                                             <span class="bg-amber-100 text-amber-800 px-3 py-1 rounded-full">${cat}</span>
-                                            <span class="text-gray-400 font-medium">${date}</span>
+                                            <span class="text-gray-400 font-normal">${date}</span>
                                         </div>
                                         <h3 class="text-xl font-extrabold text-gray-900 leading-snug">
                                             ${titre}
                                         </h3>
-                                        <p class="text-gray-600 text-sm leading-relaxed line-clamp-3">
+                                        <p class="text-gray-600 text-sm leading-relaxed">
                                             ${desc}
                                         </p>
                                     </div>
                                 </div>
                                 <div class="p-6 pt-0">
-                                    <button onclick="openModal('${safeTitle}', '${lien}')" class="w-full bg-orange-50 hover:bg-joy-orange hover:text-white text-joy-orange font-bold text-sm py-3 px-4 rounded-xl transition flex items-center justify-center gap-2 border border-orange-200 cursor-pointer">
-                                        <span>Lire l'article complet</span> <i class="fa-solid fa-arrow-right text-xs"></i>
+                                    <button onclick="openModal('${safeTitle}', '${lien}')" class="text-joy-orange font-bold text-sm hover:underline inline-flex items-center gap-1.5 cursor-pointer bg-transparent border-0 p-0">
+                                        Lire l'article complet <i class="fa-solid fa-arrow-right text-xs"></i>
                                     </button>
                                 </div>
                             </article>
@@ -308,321 +325,7 @@
                                 <div>
                                     <h3 class="text-lg font-extrabold text-gray-900 group-hover:text-joy-orange transition">${titre}</h3>
                                     <p class="text-gray-600 text-sm mt-1">${desc}</p>
-                                </div>
-                            </div>
-                        `;
-                    }
-                });
-
-                if (alauneHTML) document.getElementById('alaune-content').innerHTML = alauneHTML;
-                if (articlesHTML) document.getElementById('articles-grid').innerHTML = articlesHTML;
-                if (videosHTML) document.getElementById('videos-grid').innerHTML = videosHTML;
-            }
-        });
-    </script>
-</body>
-</html>rt" content="width=device-width, initial-scale=1.0">
-    <title>Ministère de l'honnêteté | Journal de l'actualité et de la vérité</title>
-    <!-- Tailwind CSS -->
-    <script src="https://tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- PapaParse pour lire le Google Sheet en CSV -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        joy: {
-                            dark: '#1e1b4b',
-                            orange: '#f97316',
-                            gold: '#f59e0b',
-                            bg: '#fffbf5',
-                        }
-                    }
-                }
-            }
-        }
-    </script>
-</head>
-<body class="bg-joy-bg text-gray-900 font-sans antialiased">
-
-    <!-- En-tête / Navigation -->
-    <header class="sticky top-0 z-50 bg-joy-bg/90 backdrop-blur-md border-b border-orange-100 shadow-sm">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex justify-between items-center h-20">
-                <div class="flex items-center space-x-3">
-                    <div class="bg-gradient-to-br from-joy-gold to-joy-orange text-white p-2.5 rounded-xl shadow-md">
-                        <i class="fa-solid fa-scale-balanced text-xl"></i>
-                    </div>
-                    <div>
-                        <span class="text-xs uppercase tracking-widest font-extrabold text-joy-orange block">Média indépendant</span>
-                        <h1 class="text-xl sm:text-2xl font-black tracking-tight text-joy-dark">Ministère de l'honnêteté</h1>
-                    </div>
-                </div>
-                <nav class="hidden md:flex items-center space-x-8 text-sm font-semibold text-gray-700">
-                    <a href="#articles" class="hover:text-joy-orange transition">Articles</a>
-                    <a href="#videos" class="hover:text-joy-orange transition">Vidéos</a>
-                    <a href="#apropos" class="hover:text-joy-orange transition">Notre Mission</a>
-                </nav>
-                <div class="flex items-center">
-                    <a href="#videos" class="bg-joy-orange text-white px-4 py-2.5 rounded-xl text-sm font-bold hover:bg-orange-600 transition shadow-md shadow-orange-500/20">
-                        <i class="fa-solid fa-play mr-1"></i> Vidéos
-                    </a>
-                </div>
-            </div>
-        </div>
-    </header>
-
-    <!-- Section "À la une" dynamique -->
-    <section id="alaune-container" class="py-12 lg:py-16 bg-gradient-to-br from-joy-dark via-indigo-950 to-orange-950 text-white relative overflow-hidden">
-        <div class="absolute -top-24 -right-24 w-96 h-96 bg-joy-orange/20 rounded-full blur-3xl pointer-events-none"></div>
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10" id="alaune-content">
-            <div class="text-center py-12 text-amber-200">Chargement de l'actualité...</div>
-        </div>
-    </section>
-
-    <!-- Contenu Principal -->
-    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 space-y-20">
-
-        <!-- Section Articles -->
-        <section id="articles" class="space-y-8">
-            <div class="flex justify-between items-end border-b border-orange-200 pb-4">
-                <div>
-                    <span class="text-xs uppercase tracking-widest font-extrabold text-joy-orange block">Publications récentes</span>
-                    <h2 class="text-3xl font-extrabold text-joy-dark">Articles & Décryptages</h2>
-                </div>
-                <span class="text-sm text-gray-500 hidden sm:block font-medium">Mis à jour en direct</span>
-            </div>
-
-            <!-- Grille des articles dynamique -->
-            <div id="articles-grid" class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                <!-- Injecté par JavaScript -->
-            </div>
-        </section>
-
-        <!-- Section Vidéos & Liens -->
-        <section id="videos" class="space-y-8 bg-white p-8 sm:p-12 rounded-3xl border border-orange-100 shadow-md">
-            <div class="flex flex-col sm:flex-row justify-between items-start sm:items-end gap-4 border-b border-orange-100 pb-4">
-                <div>
-                    <span class="text-xs uppercase tracking-widest font-extrabold text-joy-orange block">Format multimédia</span>
-                    <h2 class="text-3xl font-extrabold text-joy-dark">Vidéos & Reportages</h2>
-                </div>
-            </div>
-
-            <div id="videos-grid" class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                <!-- Injecté par JavaScript -->
-            </div>
-        </section>
-
-        <!-- Section Notre Mission -->
-        <section id="apropos" class="max-w-3xl mx-auto text-center space-y-6 py-8 bg-gradient-to-r from-amber-100/50 via-orange-100/30 to-amber-100/50 p-8 rounded-3xl border border-orange-200/50">
-            <div class="w-14 h-14 bg-joy-orange text-white rounded-2xl flex items-center justify-center mx-auto shadow-lg shadow-orange-500/20">
-                <i class="fa-solid fa-shield-halved text-2xl"></i>
-            </div>
-            <h2 class="text-2xl sm:text-3xl font-extrabold text-joy-dark">Notre engagement envers vous</h2>
-            <p class="text-gray-700 leading-relaxed text-base sm:text-lg">
-                Le <strong>Ministère de l'honnêteté</strong> est piloté en temps réel depuis nos bases de données sécurisées pour vous garantir une information transparente et rigoureuse.
-            </p>
-        </section>
-
-    </main>
-
-    <!-- Fenêtre Popup (Modal) pour afficher le Google Doc ou la Vidéo -->
-    <div id="content-modal" class="fixed inset-0 z-50 hidden bg-black/70 backdrop-blur-sm flex items-center justify-center p-4 sm:p-6">
-        <div class="bg-white w-full max-w-4xl h-[85vh] rounded-3xl shadow-2xl overflow-hidden flex flex-col relative border border-orange-200">
-            <div class="bg-joy-dark text-white px-6 py-4 flex justify-between items-center">
-                <h3 id="modal-title" class="font-bold text-lg truncate pr-4">Titre de l'article</h3>
-                <button onclick="closeModal()" class="text-gray-300 hover:text-white text-xl font-bold w-10 h-10 rounded-full bg-white/10 flex items-center justify-center transition shrink-0">
-                    <i class="fa-solid fa-xmark"></i>
-                </button>
-            </div>
-            <div class="flex-1 bg-gray-50 relative">
-                <iframe id="modal-iframe" src="" class="w-full h-full border-0"></iframe>
-            </div>
-        </div>
-    </div>
-
-    <!-- Pied de page -->
-    <footer class="bg-joy-dark text-white border-t border-indigo-900">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-            <div class="flex flex-col md:flex-row justify-between items-center gap-6 border-b border-indigo-900 pb-8">
-                <div class="flex items-center space-x-3">
-                    <div class="bg-joy-orange text-white p-2.5 rounded-xl">
-                        <i class="fa-solid fa-scale-balanced text-lg"></i>
-                    </div>
-                    <span class="font-black text-lg tracking-tight">Ministère de l'honnêteté</span>
-                </div>
-            </div>
-            <div class="flex flex-col sm:flex-row justify-between items-center gap-4 pt-8 text-xs text-indigo-300">
-                <p>&copy; 2026 Ministère de l'honnêteté. Tous droits réservés.</p>
-            </div>
-        </div>
-    </footer>
-
-    <!-- Script JavaScript -->
-    <script>
-        const sheetID = "1jJZm_WSIMgM5r-Y5zTSrC8FUiLhRN-dOcPnIcSyTpSI";
-        const gid = "1311533436";
-        const csvUrl = `https://docs.google.com/spreadsheets/d/${sheetID}/export?format=csv&gid=${gid}`;
-
-        // Fonction pour transformer un lien normal (Google Doc ou YouTube) en lien intégrable dans la popup
-        function getEmbedUrl(url) {
-            if (!url) return '';
-            
-            // Si c'est un Google Doc
-            if (url.includes('docs.google.com/document/d/')) {
-                const match = url.match(/\/document\/d\/([a-zA-Z0-9-_]+)/);
-                return match ? `https://docs.google.com/document/d/${match[1]}/preview` : url;
-            }
-            
-            // Si c'est un lien YouTube standard (watch?v=...)
-            if (url.includes('youtube.com/watch?v=')) {
-                try {
-                    const urlObj = new URL(url);
-                    const videoId = urlObj.searchParams.get('v');
-                    return videoId ? `https://www.youtube.com/embed/${videoId}?autoplay=1` : url;
-                } catch(e) {}
-            }
-            
-            // Si c'est un lien YouTube court (youtu.be/...)
-            if (url.includes('youtu.be/')) {
-                const parts = url.split('youtu.be/');
-                if (parts[1]) {
-                    const videoId = parts[1].split('?')[0];
-                    return `https://www.youtube.com/embed/${videoId}?autoplay=1`;
-                }
-            }
-            
-            return url;
-        }
-
-        // Ouvrir la modale
-        function openModal(title, url) {
-            const modal = document.getElementById('content-modal');
-            const modalTitle = document.getElementById('modal-title');
-            const iframe = document.getElementById('modal-iframe');
-            
-            modalTitle.textContent = title;
-            iframe.src = getEmbedUrl(url);
-            modal.classList.remove('hidden');
-            document.body.style.overflow = 'hidden'; // Empêche le fond de défiler
-        }
-
-        // Fermer la modale
-        function closeModal() {
-            const modal = document.getElementById('content-modal');
-            const iframe = document.getElementById('modal-iframe');
-            
-            modal.classList.add('hidden');
-            iframe.src = ''; // Coupe la vidéo ou décharge le doc
-            document.body.style.overflow = 'auto';
-        }
-
-        // Fermer la modale en cliquant en dehors de la boîte blanche
-        document.getElementById('content-modal').addEventListener('click', function(e) {
-            if (e.target === this) {
-                closeModal();
-            }
-        });
-
-        // Lecture des données du Google Sheet
-        Papa.parse(csvUrl, {
-            download: true,
-            header: true,
-            complete: function(results) {
-                const data = results.data;
-                
-                let alauneHTML = '';
-                let articlesHTML = '';
-                let videosHTML = '';
-
-                data.forEach(row => {
-                    const cleanRow = {};
-                    Object.keys(row).forEach(key => {
-                        const cleanKey = key.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").trim();
-                        cleanRow[cleanKey] = row[key];
-                    });
-
-                    const pos = (cleanRow.position || "").trim().toLowerCase();
-                    const titre = cleanRow.titre || "";
-                    const desc = cleanRow.description || "";
-                    const lien = cleanRow.lien || "#";
-                    const cat = cleanRow.categorie || "Général";
-                    const date = cleanRow.date || "";
-
-                    if (!titre) return;
-
-                    // Sécurisation du titre pour éviter les bugs de guillemets dans le JS
-                    const safeTitle = titre.replace(/'/g, "\\'").replace(/"/g, '&quot;');
-
-                    if (pos === 'alaune-article') {
-                        alauneHTML = `
-                            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-                                <div class="space-y-6">
-                                    <span class="inline-flex items-center gap-2 bg-joy-gold/20 text-joy-gold border border-joy-gold/30 px-3.5 py-1.5 rounded-full text-xs font-black uppercase tracking-wider">
-                                        <i class="fa-solid fa-bolt"></i> À la une • Enquête exclusive
-                                    </span>
-                                    <h2 class="text-3xl sm:text-4xl lg:text-5xl font-extrabold leading-tight tracking-tight text-white">
-                                        ${titre}
-                                    </h2>
-                                    <p class="text-amber-100/80 text-lg leading-relaxed">
-                                        ${desc}
-                                    </p>
-                                    <div class="flex flex-wrap gap-4 pt-2">
-                                        <button onclick="openModal('${safeTitle}', '${lien}')" class="bg-joy-gold text-joy-dark px-6 py-3.5 rounded-xl font-black hover:bg-amber-400 transition shadow-lg shadow-amber-500/20 inline-flex items-center gap-2 cursor-pointer">
-                                            Lire l'enquête <i class="fa-solid fa-arrow-right text-xs"></i>
-                                        </button>
-                                    </div>
-                                </div>
-                                <div class="relative rounded-2xl overflow-hidden shadow-2xl border border-white/10 bg-gray-900 p-8 flex flex-col justify-center min-h-[300px] cursor-pointer" onclick="openModal('${safeTitle}', '${lien}')">
-                                    <span class="text-xs text-joy-gold font-bold uppercase tracking-wider mb-2">${cat}</span>
-                                    <h3 class="text-2xl font-bold text-white mb-4">${titre}</h3>
-                                    <p class="text-gray-300 text-sm">${desc}</p>
-                                    <span class="mt-4 text-xs text-amber-300 font-bold flex items-center gap-1">Cliquez pour lire l'article <i class="fa-solid fa-external-link-alt"></i></span>
-                                </div>
-                            </div>
-                        `;
-                    } else if (pos === 'article') {
-                        articlesHTML += `
-                            <article class="bg-white rounded-3xl border-2 border-orange-100 overflow-hidden shadow-md hover:shadow-2xl hover:border-orange-300 hover:-translate-y-1.5 transition duration-300 flex flex-col justify-between">
-                                <div>
-                                    <div class="h-32 bg-gradient-to-br from-amber-100 to-orange-100 flex items-center justify-center text-joy-orange">
-                                        <i class="fa-solid fa-newspaper text-3xl"></i>
-                                    </div>
-                                    <div class="p-6 space-y-3">
-                                        <div class="flex items-center justify-between text-xs font-bold">
-                                            <span class="bg-amber-100 text-amber-800 px-3 py-1 rounded-full">${cat}</span>
-                                            <span class="text-gray-400 font-medium">${date}</span>
-                                        </div>
-                                        <h3 class="text-xl font-extrabold text-gray-900 leading-snug">
-                                            ${titre}
-                                        </h3>
-                                        <p class="text-gray-600 text-sm leading-relaxed line-clamp-3">
-                                            ${desc}
-                                        </p>
-                                    </div>
-                                </div>
-                                <div class="p-6 pt-0">
-                                    <button onclick="openModal('${safeTitle}', '${lien}')" class="w-full bg-orange-50 hover:bg-joy-orange hover:text-white text-joy-orange font-bold text-sm py-3 px-4 rounded-xl transition flex items-center justify-center gap-2 border border-orange-200 cursor-pointer">
-                                        <span>Lire l'article complet</span> <i class="fa-solid fa-arrow-right text-xs"></i>
-                                    </button>
-                                </div>
-                            </article>
-                        `;
-                    } else if (pos === 'video' || pos === 'alaune-video') {
-                        videosHTML += `
-                            <div class="space-y-4 group cursor-pointer" onclick="openModal('${safeTitle}', '${lien}')">
-                                <div class="bg-joy-dark rounded-2xl overflow-hidden relative shadow-lg aspect-video flex items-center justify-center">
-                                    <div class="absolute inset-0 bg-gradient-to-tr from-indigo-950 to-orange-950 opacity-90 group-hover:scale-105 transition duration-500"></div>
-                                    <div class="w-16 h-16 bg-joy-orange rounded-full flex items-center justify-center text-white shadow-xl z-10 group-hover:scale-110 transition">
-                                        <i class="fa-solid fa-play ml-1 text-lg"></i>
-                                    </div>
-                                    <span class="absolute bottom-4 left-4 z-10 text-xs font-bold text-amber-300 bg-black/40 px-3 py-1 rounded-lg backdrop-blur-sm">${cat}</span>
-                                </div>
-                                <div>
-                                    <h3 class="text-lg font-extrabold text-gray-900 group-hover:text-joy-orange transition">${titre}</h3>
-                                    <p class="text-gray-600 text-sm mt-1">${desc}</p>
+                                    <span class="text-xs text-gray-400 font-medium">${date}</span>
                                 </div>
                             </div>
                         `;
