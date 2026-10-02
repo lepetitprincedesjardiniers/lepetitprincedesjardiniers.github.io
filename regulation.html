@@ -5,13 +5,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Régulation Citoyenne - Le Petit Prince</title>
     <style>
+        * { box-sizing: border-box; }
         body { 
             font-family: 'Comic Sans MS', cursive; 
             text-align: center; 
             margin: 0; 
             padding: 0; 
             background-color: #E8F5E9; /* Vert tendre */
-            color: #004d40; /* Texte vert foncé harmonieux */
+            color: #004d40; 
             padding-bottom: 80px; 
         }
 
@@ -48,15 +49,13 @@
         input, textarea, select { 
             width: 100%; padding: 10px; margin: 5px 0 10px 0; 
             border-radius: 10px; border: 2px solid #008080; 
-            box-sizing: border-box; font-family: inherit; 
-            background: #fafafa; color: #333;
+            background: #fafafa; color: #333; font-family: inherit;
         }
         .btn-envoi { 
             background: #008080; color: white; border: none; 
             padding: 12px; border-radius: 20px; 
             font-weight: bold; cursor: pointer; font-size: 1.1em; 
-            width: 100%; margin-top: 10px; 
-            font-family: inherit;
+            width: 100%; margin-top: 10px; font-family: inherit;
         }
         .btn-envoi:hover { background: #2e7d32; }
 
@@ -64,30 +63,29 @@
             width: 90%; max-width: 650px; padding: 10px; 
             margin: 20px auto; border-radius: 25px; 
             border: 2px solid #008080; display: block;
-            font-family: inherit;
-            background: #ffffff;
+            background: #ffffff; font-family: inherit;
         }
 
-        /* --- GRILLE ET CARTES MINIATURES --- */
+        /* --- GRILLE ET CARTES MINIATURES STABLES --- */
         .mur-reel { display: grid; grid-template-columns: repeat(5, minmax(150px, 1fr)); gap: 10px; padding: 10px; max-width: 98vw; margin: 0 auto; }
         @media (max-width: 768px) { .mur-reel { grid-template-columns: repeat(2, 1fr); } }
 
-        .carte-message { background: white; border: 2px solid #008080; border-radius: 12px; padding: 8px; box-shadow: 3px 3px 0px #008080; display: flex; flex-direction: column; height: 280px; cursor: pointer; position: relative; overflow: hidden; text-align: left; color: #333; transition: transform 0.2s; }
+        .carte-message { background: white; border: 2px solid #008080; border-radius: 12px; padding: 10px; box-shadow: 3px 3px 0px #008080; display: flex; flex-direction: column; height: 280px; cursor: pointer; position: relative; text-align: left; color: #333; transition: transform 0.2s; }
         .carte-message:hover { transform: translateY(-3px); }
-        .nom-prenom { color: #2e7d32; font-weight: bold; font-size: 0.8em; border-bottom: 1px solid #eee; margin-bottom: 3px; }
-        .rubrique-tag { font-size: 0.55em; background: #008080; color: white; padding: 1px 4px; border-radius: 5px; position: absolute; top: 5px; right: 5px; }
-        .texte-annonce { flex-grow: 1; font-style: italic; color: #004d40; overflow-y: auto; font-size: 0.75em; margin: 5px 0; line-height: 1.2; padding-right: 5px; }
+        .nom-prenom { color: #2e7d32; font-weight: bold; font-size: 0.85em; border-bottom: 1px solid #eee; margin-bottom: 4px; padding-bottom: 2px; }
+        .rubrique-tag { font-size: 0.55em; background: #008080; color: white; padding: 1px 4px; border-radius: 5px; position: absolute; top: 8px; right: 8px; }
+        .texte-annonce { flex-grow: 1; font-style: italic; color: #004d40; overflow-y: auto; font-size: 0.75em; margin: 5px 0; line-height: 1.3; padding-right: 4px; }
         .details-bas { font-size: 0.7em; color: #666; line-height: 1.3; border-top: 1px solid #eee; padding-top: 5px; background: white; }
 
-        /* --- MODALE GRAND MESSAGE --- */
+        /* --- MODALE GRAND MESSAGE STABLE --- */
         #fond-sombre { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); z-index: 2000; justify-content: center; align-items: center; }
-        .message-geant { background: #F1F8E9; width: 95%; max-width: 800px; padding: 25px; border-radius: 25px; border: 6px solid #008080; position: relative; max-height: 85vh; overflow-y: auto; color: #004d40; text-align: left; box-shadow: 0 10px 30px rgba(0,128,128,0.4); }
+        .message-geant { background: #F1F8E9; width: 95%; max-width: 750px; padding: 25px; border-radius: 25px; border: 6px solid #008080; position: relative; max-height: 90vh; overflow-y: auto; color: #004d40; text-align: left; box-shadow: 0 10px 30px rgba(0,128,128,0.4); }
         .bouton-fermer { position: absolute; top: 15px; right: 15px; background: #008080; color: white; border-radius: 50%; width: 40px; height: 40px; cursor: pointer; border: 2px solid white; font-weight: bold; font-size: 1.1em; display: flex; align-items: center; justify-content: center; }
     </style>
 </head>
 <body>
 
-    <!-- Effets sonores : Pop au survol + Son de Gong bref et discret à la soumission -->
+    <!-- Effet sonore : Gong bref et discret -->
     <audio id="snd-pop" src="https://assets.mixkit.co/active_storage/sfx/2571/2571-preview.mp3" preload="auto"></audio>
     <audio id="snd-gong" src="https://assets.mixkit.co/active_storage/sfx/2658/2658-preview.mp3" preload="auto"></audio>
 
@@ -106,7 +104,7 @@
         </tr>
     </table>
 
-    <h2 style="color:#00695c; margin: 10px 0;">⚖️ Zone de Régulation Citoyenne ⚖️</h2>
+    <h2 style="color:#00695c; margin: 10px 0;">⚖️️ Zone de Régulation Citoyenne ⚖️</h2>
     <div class="phrase-rose">Expose ton conflit avec sincérité. La communauté répondra avec délicatesse.</div>
 
     <div class="etoile-form">
@@ -151,7 +149,7 @@
     <script>
         const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbxxToz22V88elCCjxLqjRtsb5iBIC156cbBFRIlTsju2SwOj9yNnKqzAwFITXMg_wij/exec";
         let globalData = [];
-        let annonceActive = null;
+        let annonceActiveId = null;
 
         function googleTranslateElementInit() { 
             new google.translate.TranslateElement({pageLanguage: 'fr'}, 'google_translate_element'); 
@@ -167,11 +165,10 @@
             const gong = document.getElementById('snd-gong');
             gong.currentTime = 0;
             gong.play().catch(()=>{});
-            // Arrête le son après 1 seconde pour qu'il reste bref et discret
             setTimeout(() => {
                 gong.pause();
                 gong.currentTime = 0;
-            }, 1000);
+            }, 800); // Gong bref et discret
         }
 
         async function envoyerConflit(event) {
@@ -195,10 +192,10 @@
                 });
 
                 setTimeout(() => {
-                    alert("Ton dossier a été déposé avec succès. 🕊️️");
+                    alert("Ton dossier a été déposé avec succès. 🕊️");
                     form.reset();
                     chargerConflits();
-                }, 1500);
+                }, 1000);
 
             } catch (err) {
                 console.error(err);
@@ -207,7 +204,7 @@
                 setTimeout(() => {
                     btn.innerText = texteInitial;
                     btn.disabled = false;
-                }, 1500);
+                }, 1000);
             }
         }
 
@@ -222,8 +219,9 @@
 
                 const conflits = globalData.filter(d => d.type === "REGULATION");
 
-                if (annonceActive) {
-                    const toujoursExiste = conflits.find(c => c.Horodateur === annonceActive.Horodateur && c.nom === annonceActive.nom);
+                // Ferme la modale si l'annonce active a expiré
+                if (annonceActiveId) {
+                    const toujoursExiste = conflits.find(c => (c.Horodateur || c.nom) === annonceActiveId);
                     if (!toujoursExiste) {
                         fermerGrandMessage();
                     }
@@ -237,6 +235,7 @@
                 conflits.reverse();
 
                 conflits.forEach(c => {
+                    const idUnique = c.Horodateur || c.nom;
                     const d = document.createElement('div');
                     d.className = 'carte-message';
                     d.onclick = () => ouvrirGrandMessage(c);
@@ -259,15 +258,15 @@
         }
 
         function ouvrirGrandMessage(ann) {
-            annonceActive = ann;
+            annonceActiveId = ann.Horodateur || ann.nom;
 
-            const reponses = globalData.filter(d => d.type === "REPONSE_REGULATION" && d.localisation === ("Ref:" + (ann.Horodateur || ann.nom)));
+            const reponses = globalData.filter(d => d.type === "REPONSE_REGULATION" && d.localisation === ("Ref:" + annonceActiveId));
             reponses.reverse();
 
             let htmlReponses = "";
             if (reponses.length > 0) {
                 htmlReponses += `<h4 style="color: #00695c; margin-top: 15px; margin-bottom: 8px;">💬 Réponses de la communauté (${reponses.length}) :</h4>`;
-                htmlReponses += `<div style="max-height: 180px; overflow-y: auto; border: 2px solid #008080; border-radius: 10px; padding: 10px; background: #ffffff;">`;
+                htmlReponses += `<div style="max-height: 160px; overflow-y: auto; border: 2px solid #008080; border-radius: 10px; padding: 10px; background: #ffffff;">`;
                 
                 reponses.forEach(r => {
                     htmlReponses += `
@@ -283,12 +282,12 @@
             }
 
             document.getElementById('geant-contenu').innerHTML = `
-                <div style="font-size:1.6em; color:#00695c; font-weight:bold; border-bottom:3px solid #008080; margin-bottom:15px; padding-bottom:5px;">⚖️ Dossier de ${ann.nom || "Anonyme"}</div>
+                <div style="font-size:1.5em; color:#00695c; font-weight:bold; border-bottom:3px solid #008080; margin-bottom:12px; padding-bottom:5px;">⚖️ Dossier de ${ann.nom || "Anonyme"}</div>
                 
-                <!-- Zone de texte scrollable pour les annonces longues -->
-                <div style="background:white; padding:15px; border-radius:15px; border-left:8px solid #008080; font-size:1.1em; color:#333; text-align:left; margin-bottom:15px; max-height: 200px; overflow-y: auto; box-shadow: inset 0 2px 5px rgba(0,0,0,0.05); word-break: break-word;">"${ann.message}"</div>
+                <!-- Message principal avec scroll interne si trop long -->
+                <div style="background:white; padding:15px; border-radius:12px; border-left:8px solid #008080; font-size:1.05em; color:#333; text-align:left; margin-bottom:12px; max-height: 160px; overflow-y: auto; box-shadow: inset 0 2px 5px rgba(0,0,0,0.05); word-break: break-word;">"${ann.message}"</div>
                 
-                <div style="text-align:left; background:#E0F2F1; padding:10px; border-radius:10px; font-size:0.9em; color:#004d40; margin-bottom:15px;">
+                <div style="text-align:left; background:#E0F2F1; padding:10px; border-radius:8px; font-size:0.9em; color:#004d40; margin-bottom:12px;">
                     <strong>📍 Localisation :</strong> ${ann.localisation || "N/C"}<br>
                     <strong>⏳ Durée de validité :</strong> ${ann.duree_validite || "30"} jours<br>
                     <strong>📅 Date :</strong> ${ann.Horodateur || ann.date || "N/C"}
@@ -298,13 +297,13 @@
                     ${htmlReponses}
                 </div>
 
-                <!-- Formulaire de réponse directe (toujours visible) -->
-                <div style="margin-top: 15px; background: white; padding: 15px; border-radius: 12px; border: 2px dashed #008080;">
-                    <h4 style="margin-top: 0; color: #00695c; margin-bottom: 8px;">🌿 Apporter une réponse délicate :</h4>
-                    <form id="formReponse" onsubmit="envoyerReponse(event, '${ann.Horodateur || ann.nom}')">
-                        <input type="text" id="repNom" placeholder="Votre nom ou pseudo..." required style="margin-bottom: 8px;">
-                        <textarea id="repMessage" rows="2" placeholder="Rédigez votre réponse bienveillante ici..." required style="margin-bottom: 8px;"></textarea>
-                        <button type="submit" style="background: #008080; color: white; border: none; padding: 10px 20px; border-radius: 10px; font-weight: bold; cursor: pointer; width: 100%;">Envoyer ma réponse 🕊️</button>
+                <!-- Formulaire de réponse directe toujours accessible -->
+                <div style="margin-top: 15px; background: white; padding: 12px; border-radius: 10px; border: 2px dashed #008080;">
+                    <h4 style="margin-top: 0; color: #00695c; margin-bottom: 6px; font-size: 1em;">🌿 Apporter une réponse délicate :</h4>
+                    <form id="formReponse" onsubmit="envoyerReponse(event, '${annonceActiveId}')">
+                        <input type="text" id="repNom" placeholder="Votre nom ou pseudo..." required style="margin-bottom: 6px; padding: 8px;">
+                        <textarea id="repMessage" rows="2" placeholder="Rédigez votre réponse bienveillante ici..." required style="margin-bottom: 6px; padding: 8px;"></textarea>
+                        <button type="submit" style="background: #008080; color: white; border: none; padding: 8px 15px; border-radius: 8px; font-weight: bold; cursor: pointer; width: 100%;">Envoyer ma réponse 🕊️</button>
                     </form>
                 </div>
             `;
@@ -333,12 +332,12 @@
                 });
 
                 alert("Votre réponse pleine de sagesse a été transmise ! 🕊️");
-                document.getElementById('formReponse').reset();
                 
+                // Actualisation discrète des données en arrière-plan sans fermer la modale brusquement
                 const response = await fetch(WEB_APP_URL + "?v=" + Date.now());
                 globalData = await response.json();
                 
-                const annonceActuelle = globalData.find(d => (d.Horodateur === refId || d.nom === refId));
+                const annonceActuelle = globalData.find(d => (d.Horodateur || d.nom) === refId);
                 if (annonceActuelle) {
                     ouvrirGrandMessage(annonceActuelle);
                 }
@@ -351,7 +350,7 @@
         }
 
         function fermerGrandMessage() { 
-            annonceActive = null;
+            annonceActiveId = null;
             document.getElementById('fond-sombre').style.display = 'none'; 
         }
 
