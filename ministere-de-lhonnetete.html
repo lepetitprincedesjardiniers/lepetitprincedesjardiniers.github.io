@@ -1,147 +1,4 @@
-<!DOCTYPE html>
-<html lang="fr" class="scroll-smooth">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ministère de l'honnêteté | Journal de l'actualité et de la vérité</title>
-    <!-- Tailwind CSS -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- PapaParse pour lire le Google Sheet en CSV -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        joy: {
-                            dark: '#1e1b4b',
-                            orange: '#f97316',
-                            gold: '#f59e0b',
-                            bg: '#fffbf5',
-                        }
-                    }
-                }
-            }
-        }
-    </script>
-</head>
-<body class="bg-joy-bg text-gray-900 font-sans antialiased">
-
-    <!-- En-tête / Navigation -->
-    <header class="sticky top-0 z-50 bg-joy-bg/90 backdrop-blur-md border-b border-orange-100 shadow-sm">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex justify-between items-center h-20">
-                <div class="flex items-center space-x-3">
-                    <div class="bg-gradient-to-br from-joy-gold to-joy-orange text-white p-2.5 rounded-xl shadow-md">
-                        <i class="fa-solid fa-scale-balanced text-xl"></i>
-                    </div>
-                    <div>
-                        <span class="text-xs uppercase tracking-widest font-extrabold text-joy-orange block">Média indépendant</span>
-                        <h1 class="text-xl sm:text-2xl font-black tracking-tight text-joy-dark">Ministère de l'honnêteté</h1>
-                    </div>
-                </div>
-                <nav class="hidden md:flex items-center space-x-8 text-sm font-semibold text-gray-700">
-                    <a href="#articles" class="hover:text-joy-orange transition">Articles</a>
-                    <a href="#videos" class="hover:text-joy-orange transition">Vidéos</a>
-                    <a href="#apropos" class="hover:text-joy-orange transition">Notre Mission</a>
-                    <a href="index.html" class="text-gray-400 hover:text-gray-900 transition flex items-center gap-1 font-normal">
-                        <i class="fa-solid fa-arrow-left text-xs"></i> Site principal
-                    </a>
-                </nav>
-                <div class="flex items-center">
-                    <a href="#videos" class="bg-joy-orange text-white px-4 py-2.5 rounded-xl text-sm font-bold hover:bg-orange-600 transition shadow-md shadow-orange-500/20">
-                        <i class="fa-solid fa-play mr-1"></i> Vidéos
-                    </a>
-                </div>
-            </div>
-        </div>
-    </header>
-
-    <!-- Section "À la une" dynamique -->
-    <section id="alaune-container" class="py-12 lg:py-16 bg-gradient-to-br from-joy-dark via-indigo-950 to-orange-950 text-white relative overflow-hidden">
-        <div class="absolute -top-24 -right-24 w-96 h-96 bg-joy-orange/20 rounded-full blur-3xl pointer-events-none"></div>
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10" id="alaune-content">
-            <!-- Chargement dynamique -->
-            <div class="text-center py-12 text-amber-200">Chargement de l'actualité...</div>
-        </div>
-    </section>
-
-    <!-- Contenu Principal -->
-    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 space-y-20">
-
-        <!-- Section Articles -->
-        <section id="articles" class="space-y-8">
-            <div class="flex justify-between items-end border-b border-orange-200 pb-4">
-                <div>
-                    <span class="text-xs uppercase tracking-widest font-extrabold text-joy-orange block">Publications récentes</span>
-                    <h2 class="text-3xl font-extrabold text-joy-dark">Articles & Décryptages</h2>
-                </div>
-                <span class="text-sm text-gray-500 hidden sm:block font-medium">Géré via Google Sheets</span>
-            </div>
-
-            <!-- Grille des articles dynamique -->
-            <div id="articles-grid" class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                <!-- Les articles injectés par JavaScript apparaîtront ici -->
-            </div>
-        </section>
-
-        <!-- Section Vidéos & Liens -->
-        <section id="videos" class="space-y-8 bg-white p-8 sm:p-12 rounded-3xl border border-orange-100 shadow-md">
-            <div class="flex flex-col sm:flex-row justify-between items-start sm:items-end gap-4 border-b border-orange-100 pb-4">
-                <div>
-                    <span class="text-xs uppercase tracking-widest font-extrabold text-joy-orange block">Format multimédia</span>
-                    <h2 class="text-3xl font-extrabold text-joy-dark">Vidéos & Reportages</h2>
-                </div>
-                <a href="https://youtube.com" target="_blank" class="text-sm font-bold text-gray-700 hover:text-joy-orange transition flex items-center gap-2 bg-orange-50 px-4 py-2 rounded-xl">
-                    <i class="fa-brands fa-youtube text-red-600 text-lg"></i> Chaîne vidéo
-                </a>
-            </div>
-
-            <div id="videos-grid" class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                <!-- Les vidéos injectées par JavaScript apparaîtront ici -->
-            </div>
-        </section>
-
-        <!-- Section Notre Mission -->
-        <section id="apropos" class="max-w-3xl mx-auto text-center space-y-6 py-8 bg-gradient-to-r from-amber-100/50 via-orange-100/30 to-amber-100/50 p-8 rounded-3xl border border-orange-200/50">
-            <div class="w-14 h-14 bg-joy-orange text-white rounded-2xl flex items-center justify-center mx-auto shadow-lg shadow-orange-500/20">
-                <i class="fa-solid fa-shield-halved text-2xl"></i>
-            </div>
-            <h2 class="text-2xl sm:text-3xl font-extrabold text-joy-dark">Notre engagement envers vous</h2>
-            <p class="text-gray-700 leading-relaxed text-base sm:text-lg">
-                Le <strong>Ministère de l'honnêteté</strong> est piloté en temps réel depuis nos outils de travail partagés pour vous garantir une information vive, transparente et rigoureuse.
-            </p>
-        </section>
-
-    </main>
-
-    <!-- Pied de page -->
-    <footer class="bg-joy-dark text-white border-t border-indigo-900">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-            <div class="flex flex-col md:flex-row justify-between items-center gap-6 border-b border-indigo-900 pb-8">
-                <div class="flex items-center space-x-3">
-                    <div class="bg-joy-orange text-white p-2.5 rounded-xl">
-                        <i class="fa-solid fa-scale-balanced text-lg"></i>
-                    </div>
-                    <span class="font-black text-lg tracking-tight">Ministère de l'honnêteté</span>
-                </div>
-                <div class="flex space-x-6 text-amber-300">
-                    <a href="#" class="hover:text-white transition text-xl"><i class="fa-brands fa-x-twitter"></i></a>
-                    <a href="#" class="hover:text-white transition text-xl"><i class="fa-brands fa-youtube"></i></a>
-                    <a href="#" class="hover:text-white transition text-xl"><i class="fa-brands fa-instagram"></i></a>
-                </div>
-            </div>
-            <div class="flex flex-col sm:flex-row justify-between items-center gap-4 pt-8 text-xs text-indigo-300">
-                <p>&copy; 2026 Ministère de l'honnêteté. Propulsé par GitHub Pages & Google Sheets.</p>
-                <div class="flex space-x-6">
-                    <a href="index.html" class="hover:text-white transition">Retour au site principal</a>
-                </div>
-            </div>
-        </div>
-    </footer>
-
-    <!-- Script de liaison Google Sheets (Avec gestion automatique des dates) -->
+<!-- Script de liaison Google Sheets (Ultra-robuste) -->
     <script>
         const sheetID = "1jJZm_WSIMgM5r-Y5zTSrC8FUiLhRN-dOcPnIcSyTpSI";
         const gid = "1311533436";
@@ -158,12 +15,21 @@
                 let videosHTML = '';
 
                 data.forEach(row => {
-                    const pos = (row.position || "").trim().toLowerCase();
-                    const titre = row.titre || "";
-                    const desc = row.description || "";
-                    const lien = row.lien || "#";
-                    const cat = row.categorie || "Général";
-                    const date = row.date || ""; // Récupère la date générée automatiquement par le script Sheets
+                    // Normalise les clés (ignore les majuscules et les accents du tableau Google Sheets)
+                    const cleanRow = {};
+                    Object.keys(row).forEach(key => {
+                        const cleanKey = key.toLowerCase()
+                            .normalize("NFD").replace(/[\u0300-\u036f]/g, "")
+                            .trim();
+                        cleanRow[cleanKey] = row[key];
+                    });
+
+                    const pos = (cleanRow.position || "").trim().toLowerCase();
+                    const titre = cleanRow.titre || "";
+                    const desc = cleanRow.description || "";
+                    const lien = cleanRow.lien || "#";
+                    const cat = cleanRow.categorie || "Général";
+                    const date = cleanRow.date || "";
 
                     if (!titre) return; // Ignore les lignes vides
 
@@ -239,11 +105,15 @@
                     }
                 });
 
-                if (alauneHTML) document.getElementById('alaune-content').innerHTML = alauneHTML;
+                // Si aucune donnée n'a été trouvée ou si les blocs restent vides
+                if (alauneHTML) {
+                    document.getElementById('alaune-content').innerHTML = alauneHTML;
+                } else {
+                    document.getElementById('alaune-content').innerHTML = '<div class="text-center py-12 text-amber-200">Aucun article "À la une" trouvé dans le tableau.</div>';
+                }
+
                 if (articlesHTML) document.getElementById('articles-grid').innerHTML = articlesHTML;
                 if (videosHTML) document.getElementById('videos-grid').innerHTML = videosHTML;
             }
         });
     </script>
-</body>
-</html>
