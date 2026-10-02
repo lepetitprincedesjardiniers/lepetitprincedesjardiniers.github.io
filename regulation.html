@@ -28,7 +28,7 @@
             overflow: hidden; 
         }
         .menu-table td { padding: 10px 15px; border: 1px solid #FFFFFF; }
-        .menu-table a { text-decoration: none; color: #FFFFFF; font-weight: bold; }
+        .menu-table td a { text-decoration: none; color: #FFFFFF; font-weight: bold; display: block; }
         .menu-table td:hover { background-color: #00b3b3; }
 
         .phrase-rose { color: #d81b60; font-weight: bold; font-size: 1.1em; text-shadow: 1px 1px 2px #f8bbd0; margin-top: 5px; }
@@ -77,10 +77,53 @@
         .texte-annonce { flex-grow: 1; font-style: italic; color: #004d40; overflow-y: auto; font-size: 0.75em; margin: 5px 0; line-height: 1.3; padding-right: 4px; }
         .details-bas { font-size: 0.7em; color: #666; line-height: 1.3; border-top: 1px solid #eee; padding-top: 5px; background: white; }
 
-        /* --- MODALE GRAND MESSAGE --- */
-        #fond-sombre { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); z-index: 2000; justify-content: center; align-items: center; }
-        .message-geant { background: #F1F8E9; width: 95%; max-width: 750px; padding: 25px; border-radius: 25px; border: 6px solid #008080; position: relative; max-height: 90vh; overflow-y: auto; color: #004d40; text-align: left; box-shadow: 0 10px 30px rgba(0,128,128,0.4); }
-        .bouton-fermer { position: absolute; top: 15px; right: 15px; background: #008080; color: white; border-radius: 50%; width: 40px; height: 40px; cursor: pointer; border: 2px solid white; font-weight: bold; font-size: 1.1em; display: flex; align-items: center; justify-content: center; }
+        /* --- MODALE GRAND MESSAGE STABLE --- */
+        #fond-sombre { 
+            display: none; 
+            position: fixed; 
+            top: 0; 
+            left: 0; 
+            width: 100vw; 
+            height: 100vh; 
+            background: rgba(0,0,0,0.85); 
+            z-index: 9999; 
+            justify-content: center; 
+            align-items: center; 
+            overflow: hidden;
+        }
+        .message-geant { 
+            background: #F1F8E9; 
+            width: 90%; 
+            max-width: 700px; 
+            max-height: 85vh; 
+            padding: 25px; 
+            border-radius: 25px; 
+            border: 6px solid #008080; 
+            position: relative; 
+            overflow-y: auto; 
+            color: #004d40; 
+            text-align: left; 
+            box-shadow: 0 10px 30px rgba(0,128,128,0.6); 
+        }
+        .bouton-fermer { 
+            position: absolute; 
+            top: 15px; 
+            right: 15px; 
+            background: #008080; 
+            color: white; 
+            border-radius: 50%; 
+            width: 40px; 
+            height: 40px; 
+            cursor: pointer; 
+            border: 2px solid white; 
+            font-weight: bold; 
+            font-size: 1.1em; 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            z-index: 10;
+        }
+        .bouton-fermer:hover { background: #005f5f; }
     </style>
 </head>
 <body>
@@ -151,7 +194,7 @@
             new google.translate.TranslateElement({pageLanguage: 'fr'}, 'google_translate_element'); 
         }
 
-        // --- SONS GÉNÉRÉS EN INTERNE (Pas de lien externe) ---
+        // --- SONS SYNTHÉTIQUES NATIFS ---
         function playPop() {
             try {
                 const ctx = new (window.AudioContext || window.webkitAudioContext)();
@@ -169,23 +212,33 @@
             } catch(e) {}
         }
 
+        // Véritable son de cloche / gong harmonieux (multi-fréquences métalliques)
         function playGong() {
             try {
                 const ctx = new (window.AudioContext || window.webkitAudioContext)();
-                const osc = ctx.createOscillator();
-                const gain = ctx.createGain();
-                osc.type = 'triangle';
-                osc.frequency.setValueAtTime(220, ctx.currentTime); // Son harmonieux de cloche
-                osc.frequency.exponentialRampToValueAtTime(110, ctx.currentTime + 0.8);
-                gain.gain.setValueAtTime(0.25, ctx.currentTime);
-                gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.8);
-                osc.connect(gain);
-                gain.connect(ctx.destination);
-                osc.start();
-                osc.stop(ctx.currentTime + 0.8);
+                const now = ctx.currentTime;
+                const freqs = [146.83, 293.66, 440.00, 587.33]; // Fréquences de résonance type cloche
+
+                freqs.forEach((f, index) => {
+                    const osc = ctx.createOscillator();
+                    const gain = ctx.createGain();
+                    
+                    osc.type = index === 0 ? 'sine' : 'triangle';
+                    osc.frequency.setValueAtTime(f, now);
+                    osc.frequency.exponentialRampToValueAtTime(f * 0.99, now + 2.0); // Légère baisse réaliste
+                    
+                    gain.gain.setValueAtTime(0.2 / (index + 1), now);
+                    gain.gain.exponentialRampToValueAtTime(0.0001, now + 2.2);
+                    
+                    osc.connect(gain);
+                    gain.connect(ctx.destination);
+                    
+                    osc.start(now);
+                    osc.stop(now + 2.2);
+                });
             } catch(e) {}
         }
-        // -----------------------------------------------------
+        // ---------------------------------
 
         async function envoyerConflit(event) {
             event.preventDefault();
@@ -233,7 +286,6 @@
                 const flux = document.getElementById('flux-conflits');
                 flux.innerHTML = "";
 
-                // Filtre robuste insensible à la casse et aux espaces
                 const conflits = globalData.filter(d => {
                     const typeVal = String(d.type || "").trim().toUpperCase();
                     return typeVal === "REGULATION";
@@ -276,7 +328,11 @@
         }
 
         function ouvrirGrandMessage(ann) {
+            playPop();
             annonceActiveId = ann.Horodateur || ann.nom;
+
+            // Bloquer le fond pour empêcher tout tremblement/scroll parasite
+            document.body.style.overflow = 'hidden';
 
             const reponses = globalData.filter(d => {
                 const typeVal = String(d.type || "").trim().toUpperCase();
@@ -303,9 +359,9 @@
             }
 
             document.getElementById('geant-contenu').innerHTML = `
-                <div style="font-size:1.5em; color:#00695c; font-weight:bold; border-bottom:3px solid #008080; margin-bottom:12px; padding-bottom:5px;">⚖️ Dossier de ${ann.nom || "Anonyme"}</div>
+                <div style="font-size:1.4em; color:#00695c; font-weight:bold; border-bottom:3px solid #008080; margin-bottom:12px; padding-bottom:5px;">⚖️ Dossier de ${ann.nom || "Anonyme"}</div>
                 
-                <div style="background:white; padding:15px; border-radius:12px; border-left:8px solid #008080; font-size:1.05em; color:#333; text-align:left; margin-bottom:12px; max-height: 160px; overflow-y: auto; box-shadow: inset 0 2px 5px rgba(0,0,0,0.05); word-break: break-word;">"${ann.message}"</div>
+                <div style="background:white; padding:15px; border-radius:12px; border-left:8px solid #008080; font-size:1em; color:#333; text-align:left; margin-bottom:12px; max-height: 180px; overflow-y: auto; box-shadow: inset 0 2px 5px rgba(0,0,0,0.05); word-break: break-word;">"${ann.message}"</div>
                 
                 <div style="text-align:left; background:#E0F2F1; padding:10px; border-radius:8px; font-size:0.9em; color:#004d40; margin-bottom:12px;">
                     <strong>📍 Localisation :</strong> ${ann.localisation || "N/C"}<br>
@@ -370,12 +426,13 @@
         function fermerGrandMessage() { 
             annonceActiveId = null;
             document.getElementById('fond-sombre').style.display = 'none'; 
+            // Restaurer le scroll de la page principale
+            document.body.style.overflow = 'auto';
         }
 
         function filtrer() {
             let val = document.getElementById('searchBox').value.toLowerCase();
             let cards = document.getElementsByClassName('carte-message');
-            let foundCount = 0;
             for (let c of cards) {
                 let match = c.innerText.toLowerCase().includes(val);
                 c.style.display = match ? "" : "none";
