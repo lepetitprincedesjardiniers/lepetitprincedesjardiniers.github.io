@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Régulation Citoyenne - Le Petit Prince</title>
     <style>
+        html { scroll-behavior: smooth; }
         * { box-sizing: border-box; }
         
         body { 
@@ -15,7 +16,6 @@
             background-color: #E8F5E9; 
             color: #004d40; 
             padding-bottom: 80px; 
-            scroll-behavior: smooth;
         }
 
         .header-tools { display: flex; justify-content: space-between; align-items: center; padding: 10px 20px; }
@@ -262,7 +262,7 @@
             new google.translate.TranslateElement({pageLanguage: 'fr'}, 'google_translate_element'); 
         }
 
-        // --- GESTION NOTIFICATION AUTOMATIQUE (Réglée à 3 secondes) ---
+        // --- GESTION NOTIFICATION AUTOMATIQUE (Réglée à 1.5 secondes) ---
         function montrerNotification(texte) {
             const notif = document.getElementById('notification-flottante');
             document.getElementById('texte-notification').innerText = texte;
@@ -274,7 +274,7 @@
 
             notificationTimer = setTimeout(() => {
                 fermerNotification();
-            }, 3000);
+            }, 1500);
         }
 
         function fermerNotification() {
@@ -351,10 +351,10 @@
                 });
 
                 setTimeout(() => {
-                    montrerNotification("Ton dossier a été déposé avec succès. L'administration a bien reçu ta requête. 🕊️");
+                    montrerNotification("Ton dossier a été déposé avec succès. 🕊️");
                     form.reset();
                     chargerConflits();
-                }, 1000);
+                }, 500);
 
             } catch (err) {
                 console.error(err);
@@ -363,7 +363,7 @@
                 setTimeout(() => {
                     btn.innerText = texteInitial;
                     btn.disabled = false;
-                }, 1000);
+                }, 500);
             }
         }
 
@@ -489,23 +489,26 @@
                     body: formData
                 });
 
-                montrerNotification("Votre réponse a été transmise ! Retour aux annonces... 🕊️");
+                montrerNotification("✓ Envoyé ! Redirection...");
 
-                // Affichage d'un message de succès dans la modale avant fermeture
+                // Affichage d'un message rapide de succès dans la modale
                 const sectionRep = document.getElementById('section-reponses');
                 sectionRep.innerHTML += `
                     <div style="background: #C8E6C9; color: #1B5E20; padding: 10px; border-radius: 8px; margin-top: 10px; font-weight: bold; text-align: center;">
-                        ✓ Réponse envoyée avec succès ! Retour au mur des annonces...
+                        ✓ Réponse enregistrée !
                     </div>
                 `;
 
-                // Attente de 3 secondes, puis fermeture, mise à jour et défilement vers les dossiers
+                // Attente de 1.5 secondes, fermeture de la modale, rafraîchissement et scroll fluide
                 setTimeout(async () => {
                     fermerGrandMessage();
                     await chargerConflits();
-                    // Bascule/Défilement fluide vers la section des dossiers
-                    document.getElementById('titre-dossiers').scrollIntoView({ behavior: 'smooth' });
-                }, 3000);
+                    
+                    const titreDossiers = document.getElementById('titre-dossiers');
+                    if (titreDossiers) {
+                        titreDossiers.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    }
+                }, 1500);
 
             } catch (err) {
                 console.error(err);
