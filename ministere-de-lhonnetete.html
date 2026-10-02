@@ -278,6 +278,13 @@
             document.body.style.overflow = 'hidden';
         }
 
+        function openArticleByIndex(index) {
+            const art = allArticles[index];
+            if (art) {
+                openModal(art.titre, art.lien);
+            }
+        }
+
         function closeModal() {
             const modal = document.getElementById('content-modal');
             const iframe = document.getElementById('modal-iframe');
@@ -350,7 +357,7 @@
 
             let html = '';
             articlesToDisplay.forEach(art => {
-                const safeTitle = art.titre.replace(/'/g, "\\'").replace(/"/g, '&quot;');
+                const realIndex = allArticles.findIndex(a => a.titre === art.titre && a.date === art.date);
                 html += `
                     <article class="bg-white rounded-3xl border border-orange-100 overflow-hidden shadow-sm hover:shadow-xl hover:-translate-y-1 transition duration-300 flex flex-col justify-between">
                         <div>
@@ -371,7 +378,7 @@
                             </div>
                         </div>
                         <div class="p-6 pt-0">
-                            <button onclick="openModal('${safeTitle}', '${art.lien}')" class="text-joy-orange font-bold text-sm hover:underline inline-flex items-center gap-1.5 cursor-pointer bg-transparent border-0 p-0">
+                            <button onclick="openArticleByIndex(${realIndex})" class="text-joy-orange font-bold text-sm hover:underline inline-flex items-center gap-1.5 cursor-pointer bg-transparent border-0 p-0">
                                 Lire l'article complet <i class="fa-solid fa-arrow-right text-xs"></i>
                             </button>
                         </div>
