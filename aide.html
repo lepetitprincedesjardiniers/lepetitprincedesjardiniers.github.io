@@ -10,9 +10,14 @@
             color: #ffffff; overflow-x: hidden; min-height: 100vh; padding-bottom: 80px;
         }
 
+        .header-tools { display: flex; justify-content: space-between; align-items: center; padding: 10px 20px; background: rgba(255,255,255,0.05); }
+        #google_translate_element { transform: scale(0.85); transform-origin: top left; opacity: 0.7; }
+        #google_translate_element:hover { opacity: 1; }
+
         .menu-table { margin: 10px auto; border-radius: 10px; background-color: #008080; border-collapse: collapse; position: relative; z-index: 10; }
-        .menu-table td { border: 1px solid #FFFFFF; }
-        .menu-table a { display: block; padding: 8px 15px; text-decoration: none; color: #FFFFFF; font-weight: bold; font-size: 0.85em; }
+        .menu-table td { border: 1px solid #FFFFFF; padding: 8px 15px; }
+        .menu-table a { display: block; text-decoration: none; color: #FFFFFF; font-weight: bold; font-size: 0.85em; }
+        .menu-table td:hover { background: #00b3b3; }
 
         .coeur { font-size: 60px; margin: 15px; animation: float 3s infinite ease-in-out; filter: drop-shadow(0 0 15px #9370DB); }
         @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
@@ -24,7 +29,7 @@
         }
         .form-container label { font-size: 0.9em; font-weight: bold; display: block; margin-top: 8px; color: #4a148c; }
         input, textarea { width: 100%; padding: 10px; margin: 5px 0 10px 0; border-radius: 10px; border: 2px solid #9370DB; box-sizing: border-box; font-family: inherit; background: #fff; color: #333; }
-        .btn-envoi { background: #9370DB; color: white; border: none; padding: 12px; border-radius: 20px; font-weight: bold; cursor: pointer; width: 100%; font-size: 1.1em; font-family: inherit; margin-top: 10px; }
+        .btn-envoi { background: #9370DB; color: white; border: none; padding: 12px; border-radius: 20px; font-weight: bold; cursor: pointer; width: 100%; font-size: 1.1em; font-family: inherit; margin-top: 10px; transition: 0.3s; }
         .btn-envoi:hover { background: #7B68EE; }
 
         /* --- GRILLE ET CARTES MINIATURES --- */
@@ -46,15 +51,22 @@
 </head>
 <body>
 
+    <!-- Effets sonores -->
+    <audio id="snd-pop" src="https://assets.mixkit.co/active_storage/sfx/2571/2571-preview.mp3" preload="auto"></audio>
+    <audio id="snd-oiseaux" src="https://assets.mixkit.co/active_storage/sfx/512/512-preview.mp3" preload="auto"></audio>
+
+    <div class="header-tools">
+        <div id="google_translate_element"></div>
+    </div>
+
     <table class="menu-table">
         <tr>
-            <td><a href="index.html">Accueil</a></td>
-            <td><a href="formulaire.html">Semer</a></td>
-            <td><a href="jardin.html">Le Jardin</a></td>
-            <td><a href="impots.html">Impôts</a></td>
-            <td><a href="impot.html">Impôts</a></td>
-            <td><a href="regulation.html">Régulation</a></td>
-            <td><a href="aide.html">Aide</a></td>
+            <td><a href="index.html" onmouseover="playPop()">Accueil</a></td>
+            <td><a href="formulaire.html" onmouseover="playPop()">Semer</a></td>
+            <td><a href="jardin.html" onmouseover="playPop()">Le Jardin</a></td>
+            <td><a href="impot.html" onmouseover="playPop()">Impôts</a></td>
+            <td><a href="regulation.html" onmouseover="playPop()">Régulation</a></td>
+            <td><a href="aide.html" onmouseover="playPop()">Aide</a></td>
         </tr>
     </table>
 
@@ -76,7 +88,7 @@
             <label>💬 Mon cœur est lourd, je cherche une oreille :</label>
             <textarea name="message" rows="4" required placeholder="Écris ton message pour un câlin de l'âme..."></textarea>
 
-            <button type="submit" class="btn-envoi">DÉPOSER MON CŒUR 🕊️</button>
+            <button type="submit" class="btn-envoi" onmouseover="playPop()">DÉPOSER MON CŒUR 🕊️</button>
         </form>
     </div>
 
@@ -93,12 +105,36 @@
         </div>
     </div>
 
+    <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
     <script>
         const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbxxToz22V88elCCjxLqjRtsb5iBIC156cbBFRIlTsju2SwOj9yNnKqzAwFITXMg_wij/exec";
 
+        function googleTranslateElementInit() { 
+            new google.translate.TranslateElement({pageLanguage: 'fr', layout: google.translate.TranslateElement.InlineLayout.SIMPLE}, 'google_translate_element'); 
+        }
+
+        function playPop() {
+            const pop = document.getElementById('snd-pop');
+            pop.currentTime = 0;
+            pop.play().catch(()=>{});
+        }
+
+        function playOiseaux() {
+            const song = document.getElementById('snd-oiseaux');
+            song.currentTime = 0;
+            song.play().catch(()=>{});
+            setTimeout(() => {
+                song.pause();
+                song.currentTime = 0;
+            }, 2000);
+        }
+
         async function envoyerAide(event) {
             event.preventDefault();
+            playOiseaux();
+
             const btn = event.target.querySelector('button');
+            const texteInitial = btn.innerText;
             btn.innerText = "Le message s'envole..."; 
             btn.disabled = true;
 
@@ -112,15 +148,21 @@
                     mode: 'no-cors', 
                     body: urlParams 
                 });
-                alert("Message déposé avec douceur."); 
-                form.reset();
-                chargerAide();
+
+                setTimeout(() => {
+                    alert("Message déposé avec douceur. 🕊️"); 
+                    form.reset();
+                    chargerAide();
+                }, 1500);
+
             } catch (err) {
                 console.error(err);
                 alert("Erreur lors de l'envoi.");
             } finally {
-                btn.innerText = "DÉPOSER MON CŒUR 🕊️";
-                btn.disabled = false;
+                setTimeout(() => {
+                    btn.innerText = texteInitial;
+                    btn.disabled = false;
+                }, 1500);
             }
         }
 
@@ -131,6 +173,7 @@
 
                 const f = document.getElementById('flux-aide'); 
                 f.innerHTML = "";
+                
                 const annonces = data.filter(i => i.type === "AIDE" || i.type === "Urgence");
 
                 if (annonces.length === 0) {
@@ -138,7 +181,7 @@
                     return;
                 }
 
-                // Inversion pour afficher les derniers messages en premier
+                // Affichage des derniers messages en premier
                 annonces.reverse();
 
                 annonces.forEach(i => {
