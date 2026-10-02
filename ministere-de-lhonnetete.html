@@ -1,6 +1,144 @@
 <!DOCTYPE html>
+<html lang="fr">
 <html lang="fr" class="scroll-smooth">
 <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Médiathèque - Style Éditorial</title>
+  <style>
+    /* --- Style Global & Grille --- */
+    body {
+      background-color: #121212;
+      color: #f1f1f1;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      margin: 0;
+      padding: 40px 20px;
+    }
+
+    .media-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 24px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    /* --- Carte Vidéo --- */
+    .video-card {
+      background: #1e1e1e;
+      border-radius: 10px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .video-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.6);
+    }
+
+    /* --- 1. Titre en haut --- */
+    .video-title {
+      font-size: 16px;
+      font-weight: 600;
+      line-height: 1.4;
+      margin: 0;
+      padding: 16px 16px 12px 16px;
+      color: #ffffff;
+    }
+
+    /* --- 2. Visuel / Vignette de la vidéo --- */
+    .video-thumbnail {
+      position: relative;
+      width: 100%;
+      height: 180px;
+      background-size: cover;
+      background-position: center;
+      background-color: #2a2a2a; /* Fallback si l'image met du temps à charger */
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* Bouton de lecture élégant */
+    .play-btn {
+      background: rgba(0, 0, 0, 0.7);
+      border: 2px solid #ffffff;
+      color: #ffffff;
+      font-size: 18px;
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: background 0.2s, transform 0.2s;
+      padding-left: 3px; /* Décale légèrement le triangle pour le centrer optiquement */
+    }
+
+    .video-thumbnail:hover .play-btn {
+      background: #e50914; /* Touche rouge style média/streaming */
+      border-color: #e50914;
+      transform: scale(1.1);
+    }
+
+    /* --- 3. Description avec flèche discrète --- */
+    .description-container {
+      padding: 12px 16px;
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+      background: #181818;
+    }
+
+    .toggle-desc-btn {
+      background: none;
+      border: none;
+      color: #888;
+      cursor: pointer;
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 4px;
+      transition: color 0.2s;
+    }
+
+    .toggle-desc-btn:hover {
+      color: #ffffff;
+    }
+
+    /* Flèche minimaliste */
+    .arrow-icon {
+      display: inline-block;
+      font-size: 12px;
+      transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    /* Contenu de la description masqué par défaut */
+    .description-content {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.35s ease, opacity 0.3s ease, margin-top 0.3s ease;
+      opacity: 0;
+      font-size: 13px;
+      color: #b0b0b0;
+      line-height: 1.5;
+      margin-top: 0;
+    }
+
+    /* État actif (ouvert) */
+    .description-container.active .arrow-icon {
+      transform: rotate(180deg);
+    }
+
+    .description-container.active .description-content {
+      max-height: 200px; /* Hauteur maximale estimée de la description */
+      opacity: 1;
+      margin-top: 8px;
+    }
+  </style>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Ministère de l'honnêteté | Journal de l'actualité et de la vérité</title>
@@ -44,12 +182,28 @@
             opacity: 0;
         }
         .video-desc-container.active .video-desc-content {
-            max-height: 400px;
+            max-height: 300px;
             opacity: 1;
-            margin-top: 12px;
+            margin-top: 8px;
         }
     </style>
 </head>
+<body>
+
+  <div class="media-grid">
+
+    <!-- Carte 1 -->
+    <div class="video-card">
+      <h3 class="video-title">Les coulisses de la transition énergétique en Europe</h3>
+      <div class="video-thumbnail" style="background-image: url('https://picsum.photos/seed/video1/600/400');">
+        <button class="play-btn" aria-label="Lire la vidéo">▶</button>
+      </div>
+      <div class="description-container">
+        <button class="toggle-desc-btn" aria-label="Afficher la description">
+          <span class="arrow-icon">▼</span>
+        </button>
+        <div class="description-content">
+          Une analyse approfondie des nouveaux défis industriels et des investissements verts menés dans les capitales européennes cette année.
 <body class="bg-joy-bg text-gray-900 font-sans antialiased">
 
     <!-- En-tête / Navigation -->
@@ -107,22 +261,24 @@
                     <span class="text-xs uppercase tracking-widest font-extrabold text-joy-orange block">Publications récentes</span>
                     <h2 class="text-3xl font-extrabold text-joy-dark">Articles & Décryptages</h2>
                 </div>
-                <!-- Barre de recherche globale -->
+                <!-- Barre de recherche -->
                 <div class="w-full sm:w-80">
                     <div class="relative">
                         <span class="absolute inset-y-0 left-0 flex items-center pl-3.5 pointer-events-none text-gray-400">
                             <i class="fa-solid fa-search"></i>
                         </span>
-                        <input type="text" id="search-input" oninput="filterContent()" placeholder="Rechercher articles, vidéos, sujets..." class="w-full pl-10 pr-4 py-2.5 bg-white border border-orange-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-joy-orange shadow-sm transition">
+                        <input type="text" id="search-input" oninput="filterArticles()" placeholder="Rechercher par titre, sujet..." class="w-full pl-10 pr-4 py-2.5 bg-white border border-orange-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-joy-orange shadow-sm transition">
                     </div>
                 </div>
             </div>
 
             <!-- Grille des articles dynamique -->
-            <div id="articles-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"></div>
+            <div id="articles-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Les articles injectés par JavaScript -->
+            </div>
 
-            <!-- Bouton "Charger plus" Articles -->
-            <div id="load-more-articles-container" class="text-center pt-6 hidden">
+            <!-- Bouton "Charger plus" -->
+            <div id="load-more-container" class="text-center pt-6 hidden">
                 <button onclick="showMoreArticles()" class="bg-orange-50 hover:bg-joy-orange hover:text-white text-joy-orange font-bold text-sm px-6 py-3 rounded-xl transition border border-orange-200 shadow-sm cursor-pointer inline-flex items-center gap-2">
                     <span>Charger plus d'articles</span> <i class="fa-solid fa-chevron-down text-xs"></i>
                 </button>
@@ -141,14 +297,9 @@
                 </a>
             </div>
 
-            <!-- Grille des vidéos -->
-            <div id="videos-grid" class="grid grid-cols-1 md:grid-cols-2 gap-8"></div>
-
-            <!-- Bouton "Charger plus" Vidéos -->
-            <div id="load-more-videos-container" class="text-center pt-6 hidden">
-                <button onclick="showMoreVideos()" class="bg-orange-50 hover:bg-joy-orange hover:text-white text-joy-orange font-bold text-sm px-6 py-3 rounded-xl transition border border-orange-200 shadow-sm cursor-pointer inline-flex items-center gap-2">
-                    <span>Charger plus de vidéos</span> <i class="fa-solid fa-chevron-down text-xs"></i>
-                </button>
+            <!-- Grille des vidéos avec miniatures automatiques et flèche discrète -->
+            <div id="videos-grid" class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <!-- Les vidéos injectées par JavaScript -->
             </div>
         </section>
 
@@ -165,7 +316,7 @@
 
     </main>
 
-    <!-- Fenêtre Popup (Modal) unique -->
+    <!-- Fenêtre Popup (Modal) pour afficher le Google Doc ou la Vidéo -->
     <div id="content-modal" class="fixed inset-0 z-50 hidden bg-black/70 backdrop-blur-sm flex items-center justify-center p-2 sm:p-6">
         <div class="bg-white w-full max-w-4xl h-[90vh] sm:h-[85vh] rounded-3xl shadow-2xl overflow-hidden flex flex-col relative border border-orange-200">
             <div class="bg-joy-dark text-white px-4 sm:px-6 py-4 flex justify-between items-center shrink-0">
@@ -175,12 +326,25 @@
                 </button>
             </div>
             <div class="flex-1 bg-gray-50 relative iframe-container overflow-hidden">
-                <iframe id="modal-iframe" src="" class="w-full h-full border-0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                <iframe id="modal-iframe" src="" class="w-full h-full border-0" allowfullscreen></iframe>
             </div>
         </div>
+      </div>
     </div>
 
-    <!-- Modale Courrier des lecteurs -->
+    <!-- Carte 2 -->
+    <div class="video-card">
+      <h3 class="video-title">Intelligence artificielle : Vers un nouveau paradigme économique ?</h3>
+      <div class="video-thumbnail" style="background-image: url('https://picsum.photos/seed/video2/600/400');">
+        <button class="play-btn" aria-label="Lire la vidéo">▶</button>
+      </div>
+      <div class="description-container">
+        <button class="toggle-desc-btn" aria-label="Afficher la description">
+          <span class="arrow-icon">▼</span>
+        </button>
+        <div class="description-content">
+          Experts et chercheurs décryptent l'impact de l'automatisation avancée sur le marché du travail mondial et les prévisions à dix ans.
+    <!-- Fenêtre Popup (Modal) pour le Courrier des lecteurs -->
     <div id="courrier-modal" class="fixed inset-0 z-50 hidden bg-black/70 backdrop-blur-sm flex items-center justify-center p-4 sm:p-6">
         <div class="bg-white w-full max-w-lg rounded-3xl shadow-2xl overflow-hidden flex flex-col relative border border-orange-200 p-6 sm:p-8 text-center space-y-6">
             <button onclick="closeCourrierModal()" class="absolute top-4 right-4 text-gray-400 hover:text-gray-700 text-xl font-bold w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center transition cursor-pointer">
@@ -193,16 +357,31 @@
             <p class="text-gray-800 text-lg font-semibold leading-relaxed">
                 Ne perds pas ton temps sur ton ordi, <span class="text-joy-orange underline decoration-wavy">va discuter dans ton quartier !</span>
             </p>
-            <p class="text-gray-500 text-sm italic">(Rien ne vaut un vrai ébat public).</p>
+            <p class="text-gray-500 text-sm italic">
+                (Rien ne vaut un vrai ébat public).
+            </p>
             <div>
                 <button onclick="closeCourrierModal()" class="bg-joy-orange text-white font-bold text-sm px-6 py-3 rounded-xl hover:bg-orange-600 transition shadow-md shadow-orange-500/20 cursor-pointer">
                     J'ai compris, j'y vais ! 🌳
                 </button>
             </div>
         </div>
+      </div>
     </div>
 
-    <!-- Modale Contact -->
+    <!-- Carte 3 -->
+    <div class="video-card">
+      <h3 class="video-title">Géopolitique des océans : Les routes maritimes sous tension</h3>
+      <div class="video-thumbnail" style="background-image: url('https://picsum.photos/seed/video3/600/400');">
+        <button class="play-btn" aria-label="Lire la vidéo">▶</button>
+      </div>
+      <div class="description-container">
+        <button class="toggle-desc-btn" aria-label="Afficher la description">
+          <span class="arrow-icon">▼</span>
+        </button>
+        <div class="description-content">
+          Reportage exclusif sur la sécurisation des détroits clés et la compétition stratégique croissante entre les grandes puissances navales.
+    <!-- Fenêtre Popup (Modal) pour la Page Contact -->
     <div id="contact-modal" class="fixed inset-0 z-50 hidden bg-black/70 backdrop-blur-sm flex items-center justify-center p-4 sm:p-6">
         <div class="bg-white w-full max-w-lg rounded-3xl shadow-2xl overflow-hidden flex flex-col relative border border-orange-200 p-6 sm:p-8 text-center space-y-6">
             <button onclick="closeContactModal()" class="absolute top-4 right-4 text-gray-400 hover:text-gray-700 text-xl font-bold w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center transition cursor-pointer">
@@ -221,8 +400,10 @@
                 </button>
             </div>
         </div>
+      </div>
     </div>
 
+  </div>
     <!-- Pied de page -->
     <footer class="bg-joy-dark text-white border-t border-indigo-900">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
@@ -254,7 +435,7 @@
         </div>
     </footer>
 
-    <!-- Script de liaison Google Sheets, Recherche globale & Modales -->
+    <!-- Script de liaison Google Sheets, Recherche & Modales -->
     <script>
         const sheetID = "1jJZm_WSIMgM5r-Y5zTSrC8FUiLhRN-dOcPnIcSyTpSI";
         const gid = "1311533436";
@@ -262,15 +443,24 @@
 
         let allArticles = []; 
         let allVideos = [];
-        let displayedArticlesLimit = 9; 
-        let displayedVideosLimit = 9; 
+        let displayedLimit = 9; 
 
-        // Détecteur YouTube universel ultra-robuste (Watch, Shorts, youtu.be, embed)
+        // Fonction pour extraire l'ID YouTube et générer l'URL d'intégration ou la miniature automatique
         function getYouTubeId(url) {
             if (!url) return '';
-            const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|shorts\/|watch\?v=|\&v=)([^#\&\?]*).*/;
-            const match = url.match(regExp);
-            return (match && match[2].length === 11) ? match[2] : '';
+            if (url.includes('youtube.com/watch?v=')) {
+                try {
+                    const urlObj = new URL(url);
+                    return urlObj.searchParams.get('v');
+                } catch(e) {}
+            }
+            if (url.includes('youtu.be/')) {
+                const parts = url.split('youtu.be/');
+                if (parts[1]) {
+                    return parts[1].split('?')[0];
+                }
+            }
+            return '';
         }
 
         function getEmbedUrl(url) {
@@ -286,6 +476,7 @@
             return url;
         }
 
+        // Gestion de la modale Article / Vidéo
         function openModal(title, url) {
             if (!url) return;
             const modal = document.getElementById('content-modal');
@@ -317,6 +508,7 @@
             document.body.style.overflow = 'auto';
         }
 
+        // Gestion de la modale "Courrier des lecteurs"
         function openCourrierModal(e) {
             if (e) e.preventDefault();
             document.getElementById('courrier-modal').classList.remove('hidden');
@@ -328,6 +520,7 @@
             document.body.style.overflow = 'auto';
         }
 
+        // Gestion de la modale "Contact"
         function openContactModal(e) {
             if (e) e.preventDefault();
             document.getElementById('contact-modal').classList.remove('hidden');
@@ -336,256 +529,217 @@
 
         function closeContactModal() {
             document.getElementById('contact-modal').classList.add('hidden');
-            document.body.Je te prie de m'excuser pour ce petit hoquet technique passager, tout est rentré dans l'ordre ! Je suis de retour à 100 % pour régler tout ça et te livrer une version ultra-robuste.
+            document.body.style.overflow = 'auto';
+        }
 
-Voici les **4 améliorations majeures** apportées dans cette version :
-1. **Support total des Shorts et des vidéos longues :** Le détecteur de lien YouTube gère désormais parfaitement les formats `shorts/`, `watch?v=`, `youtu.be/` et les embeds. Aucune vidéo ne sera oubliée (qu'elle soit courte ou longue).
-2. **Pagination "Charger plus" pour les vidéos :** Tout comme pour les articles, la section vidéos affiche désormais les **9 premières vidéos**, avec un magnifique bouton fléché **"Charger plus de vidéos"** en bas si tu en as plus de 9.
-3. **Moteur de recherche universel :** La barre de recherche en haut filtre désormais **à la fois les articles ET les vidéos** (en cherchant dans les titres, les descriptions et les catégories en temps réel).
-4. **Flèche de description bien visible :** Le bouton fléché pour dérouler le texte long est bien centré, élégant et de couleur vive, sans le mot "détails".
+        // Fermeture au clic en dehors des modales
+        document.getElementById('content-modal').addEventListener('click', function(e) {
+            if (e.target === this) closeModal();
+        });
+        document.getElementById('courrier-modal').addEventListener('click', function(e) {
+            if (e.target === this) closeCourrierModal();
+        });
+        document.getElementById('contact-modal').addEventListener('click', function(e) {
+            if (e.target === this) closeContactModal();
+        });
 
-Voici ton code complet, prêt à être utilisé :
+        function renderArticles() {
+            const grid = document.getElementById('articles-grid');
+            const searchInput = document.getElementById('search-input');
+            const loadMoreContainer = document.getElementById('load-more-container');
+            
+            const query = searchInput ? searchInput.value.toLowerCase().trim() : "";
 
-```html
-<!DOCTYPE html>
-<html lang="fr" class="scroll-smooth">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Ministère de l'honnêteté | Journal de l'actualité et de la vérité</title>
-    <!-- Tailwind CSS CDN -->
-    <script src="[https://cdn.tailwindcss.com](https://cdn.tailwindcss.com)"></script>
-    <link rel="stylesheet" href="[https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css](https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css)">
-    <!-- PapaParse pour lire le Google Sheet en CSV -->
-    <script src="[https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js](https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js)"></script>
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        joy: {
-                            dark: '#1e1b4b',   // Bleu nuit profond et élégant
-                            orange: '#f97316',   // Orange chaleureux et dynamique
-                            gold: '#f59e0b',     // Or solaire / Jaune éclatant
-                            bg: '#fffbf5',       // Fond ambré très doux et chaleureux
-                        }
-                    }
-                }
+            const filtered = allArticles.filter(item => {
+                return item.titre.toLowerCase().includes(query) || 
+                       item.description.toLowerCase().includes(query) || 
+                       item.categorie.toLowerCase().includes(query);
+            });
+
+            const limit = query ? filtered.length : displayedLimit;
+            const articlesToDisplay = filtered.slice(0, limit);
+
+            if (filtered.length === 0) {
+                grid.innerHTML = `<div class="col-span-full text-center py-12 text-gray-500 font-medium">Aucun article trouvé pour "${query}".</div>`;
+                loadMoreContainer.classList.add('hidden');
+                return;
+            }
+
+            let html = '';
+            articlesToDisplay.forEach(art => {
+                const realIndex = allArticles.findIndex(a => a.titre === art.titre && a.date === art.date);
+                html += `
+                    <article class="bg-white rounded-3xl border border-orange-100 overflow-hidden shadow-sm hover:shadow-xl hover:-translate-y-1 transition duration-300 flex flex-col justify-between">
+                        <div>
+                            <div class="h-48 bg-gradient-to-br from-amber-100 to-orange-100 flex items-center justify-center text-joy-orange">
+                                <i class="fa-solid fa-newspaper text-4xl"></i>
+                            </div>
+                            <div class="p-6 space-y-3">
+                                <div class="flex items-center justify-between text-xs font-bold gap-2">
+                                    <span class="bg-amber-100 text-amber-800 px-3 py-1 rounded-full truncate">${art.categorie}</span>
+                                    <span class="text-gray-400 font-normal shrink-0">${art.date}</span>
+                                </div>
+                                <h3 class="text-xl font-extrabold text-gray-900 leading-snug">
+                                    ${art.titre}
+                                </h3>
+                                <p class="text-gray-600 text-sm leading-relaxed line-clamp-3">
+                                    ${art.description}
+                                </p>
+                            </div>
+                        </div>
+                        <div class="p-6 pt-0">
+                            <button onclick="openArticleByIndex(${realIndex})" class="text-joy-orange font-bold text-sm hover:underline inline-flex items-center gap-1.5 cursor-pointer bg-transparent border-0 p-0">
+                                Lire l'article complet <i class="fa-solid fa-arrow-right text-xs"></i>
+                            </button>
+                        </div>
+                    </article>
+                `;
+            });
+
+            grid.innerHTML = html;
+
+            if (!query && displayedLimit < filtered.length) {
+                loadMoreContainer.classList.remove('hidden');
+            } else {
+                loadMoreContainer.classList.add('hidden');
             }
         }
+
+        // Rendu des vidéos avec miniature automatique et flèche de description rétractable
+        function renderVideos() {
+            const grid = document.getElementById('videos-grid');
+            let html = '';
+            allVideos.forEach((vid, index) => {
+                const videoId = getYouTubeId(vid.lien);
+                // Miniature automatique de YouTube
+                const thumbUrl = videoId ? `https://img.youtube.com/vi/${videoId}/hqdefault.jpg` : '';
+
+                html += `
+                    <div class="bg-white rounded-3xl border border-orange-100 overflow-hidden shadow-sm flex flex-col justify-between p-6 space-y-4">
+                        <!-- 1. Titre en haut -->
+                        <h3 class="text-lg font-extrabold text-joy-dark leading-snug">
+                            ${vid.titre}
+                        </h3>
+
+                        <!-- 2. Visuel / Vignette de la vidéo avec bouton de lecture au clic -->
+                        <div onclick="openVideoByIndex(${index})" class="rounded-2xl overflow-hidden relative shadow-md aspect-video flex items-center justify-center cursor-pointer group bg-gray-900" style="background-image: url('${thumbUrl}'); background-size: cover; background-position: center;">
+                            <div class="absolute inset-0 bg-black/30 group-hover:bg-black/10 transition duration-300"></div>
+                            <div class="w-14 h-14 bg-joy-orange text-white rounded-full flex items-center justify-center shadow-xl z-10 group-hover:scale-110 transition duration-300">
+                                <i class="fa-solid fa-play ml-1"></i>
+                            </div>
+                            <span class="absolute top-3 left-3 z-10 text-[10px] font-bold text-amber-900 bg-amber-100/90 px-2.5 py-1 rounded-full uppercase tracking-wider">${vid.categorie}</span>
+                        </div>
+
+                        <!-- 3. Description avec flèche discrète -->
+                        <div class="video-desc-container border-t border-orange-100 pt-3">
+                            <div class="flex items-center justify-between text-xs text-gray-400 font-medium">
+                                <span>${vid.date}</span>
+                                <button onclick="toggleVideoDesc(this)" class="text-gray-400 hover:text-joy-orange p-2 transition cursor-pointer" aria-label="Afficher/Masquer la description">
+                                    <i class="fa-solid fa-chevron-down arrow-icon transition-transform duration-300"></i>
+                                </button>
+                            </div>
+                            <div class="video-desc-content text-gray-600 text-sm leading-relaxed whitespace-pre-line pt-1">
+                                ${vid.description}
+                            </div>
+                        </div>
+                    </div>
+                `;
+            });
+            grid.innerHTML = html || '<div class="col-span-full text-center py-12 text-gray-500">Aucune vidéo trouvée.</div>';
+        }
+
+        // Fonction pour ouvrir/fermer la description d'une vidéo via la flèche
+        function toggleVideoDesc(btn) {
+            const container = btn.closest('.video-desc-container');
+            container.classList.toggle('active');
+        }
+
+        function filterArticles() {
+            renderArticles();
+        }
+
+        function showMoreArticles() {
+            displayedLimit += 9;
+            renderArticles();
+        }
+
+        Papa.parse(csvUrl, {
+            download: true,
+            header: true,
+            complete: function(results) {
+                const data = results.data;
+                
+                let alauneHTML = '';
+                allArticles = []; 
+                allVideos = [];
+
+                data.forEach(row => {
+                    const cleanRow = {};
+                    Object.keys(row).forEach(key => {
+                        const cleanKey = key.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").trim();
+                        cleanRow[cleanKey] = row[key];
+                    });
+
+                    const pos = (cleanRow.position || "").trim().toLowerCase();
+                    const titre = cleanRow.titre || "";
+                    const desc = cleanRow.description || "";
+                    const lien = cleanRow.lien || "#";
+                    const cat = cleanRow.categorie || "Général";
+                    const date = cleanRow.date || "";
+
+                    if (!titre) return; 
+
+  <script>
+    // Script gérant l'ouverture et la fermeture fluides des descriptions au clic sur la flèche
+    document.querySelectorAll('.toggle-desc-btn').forEach(button => {
+      button.addEventListener('click', () => {
+        const container = button.closest('.description-container');
+        container.classList.toggle('active');
+      });
+    });
+  </script>
+                    if (pos === 'alaune-article') {
+                        const safeTitle = titre.replace(/'/g, "\\'").replace(/"/g, '&quot;');
+                        alauneHTML = `
+                            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center">
+                                <div class="space-y-6">
+                                    <span class="inline-flex items-center gap-2 bg-joy-gold/20 text-joy-gold border border-joy-gold/30 px-3.5 py-1.5 rounded-full text-xs font-black uppercase tracking-wider">
+                                        <i class="fa-solid fa-bolt"></i> À la une • Enquête exclusive
+                                    </span>
+                                    <h2 class="text-3xl sm:text-4xl lg:text-5xl font-extrabold leading-tight tracking-tight text-white">
+                                        ${titre}
+                                    </h2>
+                                    <p class="text-amber-100/80 text-base sm:text-lg leading-relaxed">
+                                        ${desc}
+                                    </p>
+                                    <div class="flex flex-wrap gap-4 pt-2">
+                                        <button onclick="openModal('${safeTitle}', '${lien}')" class="bg-joy-gold text-joy-dark px-6 py-3.5 rounded-xl font-black hover:bg-amber-400 transition shadow-lg shadow-amber-500/20 inline-flex items-center gap-2 cursor-pointer">
+                                            Lire l'enquête <i class="fa-solid fa-arrow-right text-xs"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="relative rounded-2xl overflow-hidden shadow-2xl border border-white/10 bg-gray-900 p-6 sm:p-8 flex flex-col justify-center min-h-[250px] sm:min-h-[300px] cursor-pointer group" onclick="openModal('${safeTitle}', '${lien}')">
+                                    <span class="text-xs text-joy-gold font-bold uppercase tracking-wider mb-2">${cat}</span>
+                                    <h3 class="text-xl sm:text-2xl font-bold text-white mb-4 group-hover:text-amber-200 transition">${titre}</h3>
+                                    <p class="text-gray-300 text-sm line-clamp-3">${desc}</p>
+                                    <span class="mt-4 text-xs text-amber-300 font-bold flex items-center gap-1">Cliquez pour lire l'article <i class="fa-solid fa-external-link-alt"></i></span>
+                                </div>
+                            </div>
+                        `;
+                    } else if (pos === 'alaune-video') {
+                        allVideos.unshift({ titre, description: desc, lien, categorie: cat, date });
+                    } else if (pos === 'article') {
+                        allArticles.push({ titre, description: desc, lien, categorie: cat, date });
+                    } else if (pos === 'video') {
+                        allVideos.push({ titre, description: desc, lien, categorie: cat, date });
+                    }
+                });
+
+                document.getElementById('alaune-content').innerHTML = alauneHTML || '<div class="text-center py-12 text-amber-200">Aucune actualité "À la une" trouvée.</div>';
+                renderArticles();
+                renderVideos();
+            }
+        });
     </script>
-    <style>
-        html, body {
-            max-width: 100% !important;
-            overflow-x: hidden !important;
-        }
-        .iframe-container {
-            -webkit-overflow-scrolling: touch;
-        }
-        /* Animation fluide de la flèche de description */
-        .video-desc-container.active .arrow-icon {
-            transform: rotate(180deg);
-        }
-        .video-desc-content {
-            max-height: 0;
-            overflow: hidden;
-            transition: max-height 0.35s ease, opacity 0.3s ease, margin-top 0.3s ease;
-            opacity: 0;
-        }
-        .video-desc-container.active .video-desc-content {
-            max-height: 400px;
-            opacity: 1;
-            margin-top: 12px;
-        }
-    </style>
-</head>
-<body class="bg-joy-bg text-gray-900 font-sans antialiased">
-
-    <!-- En-tête / Navigation -->
-    <header class="sticky top-0 z-50 bg-joy-bg/90 backdrop-blur-md border-b border-orange-100 shadow-sm">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex justify-between items-center h-20">
-                <!-- Logo & Titre -->
-                <div class="flex items-center space-x-3">
-                    <div class="bg-gradient-to-br from-joy-gold to-joy-orange text-white p-2.5 rounded-xl shadow-md shrink-0">
-                        <i class="fa-solid fa-scale-balanced text-xl"></i>
-                    </div>
-                    <div>
-                        <span class="text-[10px] sm:text-xs uppercase tracking-widest font-extrabold text-joy-orange block">Média indépendant</span>
-                        <h1 class="text-lg sm:text-2xl font-black tracking-tight text-joy-dark truncate max-w-[200px] sm:max-w-none">Ministère de l'honnêteté</h1>
-                    </div>
-                </div>
-
-                <!-- Navigation Desktop -->
-                <nav class="hidden md:flex items-center space-x-8 text-sm font-semibold text-gray-700">
-                    <a href="#articles" class="hover:text-joy-orange transition">Articles</a>
-                    <a href="#videos" class="hover:text-joy-orange transition">Vidéos</a>
-                    <a href="#apropos" class="hover:text-joy-orange transition">Notre Mission</a>
-                    <a href="[https://lepetitprincedesjardiniers.github.io/index.html](https://lepetitprincedesjardiniers.github.io/index.html)" class="text-joy-orange hover:text-orange-600 transition flex items-center gap-1.5 font-bold text-xs bg-orange-50 px-3.5 py-2 rounded-xl border border-orange-200">
-                        <i class="fa-solid fa-arrow-left text-xs"></i> Petites Annonces Citoyennes
-                    </a>
-                </nav>
-
-                <!-- Bouton d'appel à l'action -->
-                <div class="flex items-center">
-                    <a href="#videos" class="bg-joy-orange text-white px-3.5 py-2 sm:px-4 sm:py-2.5 rounded-xl text-xs sm:text-sm font-bold hover:bg-orange-600 transition shadow-md shadow-orange-500/20">
-                        <i class="fa-solid fa-play mr-1"></i> Vidéos
-                    </a>
-                </div>
-            </div>
-        </div>
-    </header>
-
-    <!-- Section "À la une" dynamique -->
-    <section id="alaune-container" class="py-12 lg:py-16 bg-gradient-to-br from-joy-dark via-indigo-950 to-orange-950 text-white relative overflow-hidden">
-        <div class="absolute -top-24 -right-24 w-96 h-96 bg-joy-orange/20 rounded-full blur-3xl pointer-events-none"></div>
-        <div class="absolute -bottom-24 -left-24 w-96 h-96 bg-joy-gold/10 rounded-full blur-3xl pointer-events-none"></div>
-
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10" id="alaune-content">
-            <div class="text-center py-12 text-amber-200">Chargement de l'actualité...</div>
-        </div>
-    </section>
-
-    <!-- Contenu Principal -->
-    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 space-y-20">
-
-        <!-- Section Articles -->
-        <section id="articles" class="space-y-8">
-            <div class="flex flex-col sm:flex-row justify-between items-start sm:items-end gap-4 border-b border-orange-200 pb-4">
-                <div>
-                    <span class="text-xs uppercase tracking-widest font-extrabold text-joy-orange block">Publications récentes</span>
-                    <h2 class="text-3xl font-extrabold text-joy-dark">Articles & Décryptages</h2>
-                </div>
-                <!-- Barre de recherche universelle -->
-                <div class="w-full sm:w-80">
-                    <div class="relative">
-                        <span class="absolute inset-y-0 left-0 flex items-center pl-3.5 pointer-events-none text-gray-400">
-                            <i class="fa-solid fa-search"></i>
-                        </span>
-                        <input type="text" id="search-input" oninput="filterContent()" placeholder="Rechercher articles et vidéos..." class="w-full pl-10 pr-4 py-2.5 bg-white border border-orange-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-joy-orange shadow-sm transition">
-                    </div>
-                </div>
-            </div>
-
-            <!-- Grille des articles dynamique -->
-            <div id="articles-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"></div>
-
-            <!-- Bouton "Charger plus" Articles -->
-            <div id="load-more-container" class="text-center pt-6 hidden">
-                <button onclick="showMoreArticles()" class="bg-orange-50 hover:bg-joy-orange hover:text-white text-joy-orange font-bold text-sm px-6 py-3 rounded-xl transition border border-orange-200 shadow-sm cursor-pointer inline-flex items-center gap-2">
-                    <span>Charger plus d'articles</span> <i class="fa-solid fa-chevron-down text-xs"></i>
-                </button>
-            </div>
-        </section>
-
-        <!-- Section Vidéos & Liens -->
-        <section id="videos" class="space-y-8 bg-white p-6 sm:p-12 rounded-3xl border border-orange-100 shadow-md">
-            <div class="flex flex-col sm:flex-row justify-between items-start sm:items-end gap-4 border-b border-orange-100 pb-4">
-                <div>
-                    <span class="text-xs uppercase tracking-widest font-extrabold text-joy-orange block">Format multimédia</span>
-                    <h2 class="text-3xl font-extrabold text-joy-dark">Vidéos & Reportages</h2>
-                </div>
-                <a href="[https://www.youtube.com/@lepetitploucdesjardiniers](https://www.youtube.com/@lepetitploucdesjardiniers)" target="_blank" class="text-sm font-bold text-gray-700 hover:text-joy-orange transition flex items-center gap-2 bg-orange-50 px-4 py-2 rounded-xl">
-                    <i class="fa-brands fa-youtube text-red-600 text-lg"></i> Chaîne vidéo
-                </a>
-            </div>
-
-            <!-- Grille des vidéos -->
-            <div id="videos-grid" class="grid grid-cols-1 md:grid-cols-2 gap-8"></div>
-
-            <!-- Bouton "Charger plus" Vidéos -->
-            <div id="load-more-videos-container" class="text-center pt-6 hidden">
-                <button onclick="showMoreVideos()" class="bg-orange-50 hover:bg-joy-orange hover:text-white text-joy-orange font-bold text-sm px-6 py-3 rounded-xl transition border border-orange-200 shadow-sm cursor-pointer inline-flex items-center gap-2">
-                    <span>Charger plus de vidéos</span> <i class="fa-solid fa-chevron-down text-xs"></i>
-                </button>
-            </div>
-        </section>
-
-        <!-- Section Notre Mission -->
-        <section id="apropos" class="max-w-3xl mx-auto text-center space-y-6 py-8 bg-gradient-to-r from-amber-100/50 via-orange-100/30 to-amber-100/50 p-6 sm:p-8 rounded-3xl border border-orange-200/50">
-            <div class="w-14 h-14 bg-joy-orange text-white rounded-2xl flex items-center justify-center mx-auto shadow-lg shadow-orange-500/20">
-                <i class="fa-solid fa-shield-halved text-2xl"></i>
-            </div>
-            <h2 class="text-2xl sm:text-3xl font-extrabold text-joy-dark">Notre engagement envers vous</h2>
-            <p class="text-gray-700 leading-relaxed text-base sm:text-lg">
-                Le <strong>Ministère de l'honnêteté</strong> est un espace d'information libre et vibrant, conçu pour les citoyens qui exigent de la rigueur, de la joie de débattre et de la transparence. Chaque article et chaque vidéo sont pensés pour vous donner les clés de compréhension de notre époque.
-            </p>
-        </section>
-
-    </main>
-
-    <!-- Fenêtre Popup (Modal) pour afficher le Google Doc ou la Vidéo en lecture directe -->
-    <div id="content-modal" class="fixed inset-0 z-50 hidden bg-black/70 backdrop-blur-sm flex items-center justify-center p-2 sm:p-6">
-        <div class="bg-white w-full max-w-4xl h-[90vh] sm:h-[85vh] rounded-3xl shadow-2xl overflow-hidden flex flex-col relative border border-orange-200">
-            <div class="bg-joy-dark text-white px-4 sm:px-6 py-4 flex justify-between items-center shrink-0">
-                <h3 id="modal-title" class="font-bold text-base sm:text-lg truncate pr-4">Titre</h3>
-                <button onclick="closeModal()" class="text-gray-300 hover:text-white text-xl font-bold w-10 h-10 rounded-full bg-white/10 flex items-center justify-center transition shrink-0 cursor-pointer">
-                    <i class="fa-solid fa-xmark"></i>
-                </button>
-            </div>
-            <div class="flex-1 bg-gray-50 relative iframe-container overflow-hidden">
-                <iframe id="modal-iframe" src="" class="w-full h-full border-0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-            </div>
-        </div>
-    </div>
-
-    <!-- Modale Courrier des lecteurs -->
-    <div id="courrier-modal" class="fixed inset-0 z-50 hidden bg-black/70 backdrop-blur-sm flex items-center justify-center p-4 sm:p-6">
-        <div class="bg-white w-full max-w-lg rounded-3xl shadow-2xl overflow-hidden flex flex-col relative border border-orange-200 p-6 sm:p-8 text-center space-y-6">
-            <button onclick="closeCourrierModal()" class="absolute top-4 right-4 text-gray-400 hover:text-gray-700 text-xl font-bold w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center transition cursor-pointer">
-                <i class="fa-solid fa-xmark"></i>
-            </button>
-            <div class="w-16 h-16 bg-joy-orange text-white rounded-2xl flex items-center justify-center mx-auto shadow-lg shadow-orange-500/20">
-                <i class="fa-solid fa-envelope-open-text text-2xl"></i>
-            </div>
-            <h3 class="text-2xl font-extrabold text-joy-dark">Courrier des lecteurs</h3>
-            <p class="text-gray-800 text-lg font-semibold leading-relaxed">
-                Ne perds pas ton temps sur ton ordi, <span class="text-joy-orange underline decoration-wavy">va discuter dans ton quartier !</span>
-            </p>
-            <p class="text-gray-500 text-sm italic">(Rien ne vaut un vrai ébat public).</p>
-            <div>
-                <button onclick="closeCourrierModal()" class="bg-joy-orange text-white font-bold text-sm px-6 py-3 rounded-xl hover:bg-orange-600 transition shadow-md shadow-orange-500/20 cursor-pointer">
-                    J'ai compris, j'y vais ! 🌳
-                </button>
-            </div>
-        </div>
-    </div>
-
-    <!-- Modale Contact -->
-    <div id="contact-modal" class="fixed inset-0 z-50 hidden bg-black/70 backdrop-blur-sm flex items-center justify-center p-4 sm:p-6">
-        <div class="bg-white w-full max-w-lg rounded-3xl shadow-2xl overflow-hidden flex flex-col relative border border-orange-200 p-6 sm:p-8 text-center space-y-6">
-            <button onclick="closeContactModal()" class="absolute top-4 right-4 text-gray-400 hover:text-gray-700 text-xl font-bold w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center transition cursor-pointer">
-                <i class="fa-solid fa-xmark"></i>
-            </button>
-            <div class="w-16 h-16 bg-joy-orange text-white rounded-2xl flex items-center justify-center mx-auto shadow-lg shadow-orange-500/20">
-                <i class="fa-solid fa-user-secret text-2xl"></i>
-            </div>
-            <h3 class="text-2xl font-extrabold text-joy-dark">Contact</h3>
-            <p class="text-gray-800 text-lg font-semibold leading-relaxed">
-                Je ne parle pas aux inconnu(es) <span class="text-joy-orange block mt-2">mais si tu me rencontres, sois gentille avec nous !</span>
-            </p>
-            <div>
-                <button onclick="closeContactModal()" class="bg-joy-orange text-white font-bold text-sm px-6 py-3 rounded-xl hover:bg-orange-600 transition shadow-md shadow-orange-500/20 cursor-pointer">
-                    Promis ! 🤝
-                </button>
-            </div>
-        </div>
-    </div>
-
-    <!-- Pied de page -->
-    <footer class="bg-joy-dark text-white border-t border-indigo-900">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-            <div class="flex flex-col md:flex-row justify-between items-center gap-6 border-b border-indigo-900 pb-8 text-center md:text-left">
-                <div class="flex items-center space-x-3 justify-center">
-                    <div class="bg-joy-orange text-white p-2.5 rounded-xl">
-                        <i class="fa-solid fa-scale-balanced text-lg"></i>
-                    </div>
-                    <span class="font-black text-lg tracking-tight">Ministère de l'honnêteté</span>
-                </div>
-                <div class="flex space-x-6 text-amber-300 justify-center">
-                    <a href="#" class="hover:text-white transition text-xl"><i class="fa-brands fa-x-twitter"></i></a>
-                    <a href="[https://www.youtube.com/@lepetitploucdesjardiniers](https://www.youtube.com/@lepetitploucdesjardiniers)" target="_blank" class="hover:text-white transition text-xl"><i class="fa-brands fa-youtube"></i></a>
-                    <a href="#" class="hover:text-white transition text-xl"><i class="fa-brands fa-instagram"></i></a>
-                </div>
-            </div>
-            <div class="flex flex-col sm:flex-row justify-between items
+</body>
+</html>
