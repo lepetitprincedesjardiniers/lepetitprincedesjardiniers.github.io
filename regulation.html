@@ -5,155 +5,283 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Régulation Citoyenne - Le Petit Prince</title>
     <style>
-        body {
-            font-family: 'Comic Sans MS', cursive, sans-serif;
-            background: #fffdf0;
+        body { 
+            font-family: 'Comic Sans MS', cursive; 
+            text-align: center; 
+            margin: 0; 
+            padding: 0; 
+            background-color: #FFFF00; 
+            color: #000080; 
+            padding-bottom: 80px;
+        }
+
+        #google_translate_element { padding: 10px; }
+
+        .menu-table { 
+            margin: 20px auto; 
+            background-color: #008080; 
+            border-collapse: collapse; 
+            border-radius: 10px; 
+            overflow: hidden; 
+        }
+        .menu-table td { padding: 10px 15px; border: 1px solid #FFFFFF; }
+        .menu-table a { text-decoration: none; color: #FFFFFF; font-weight: bold; }
+        .menu-table td:hover { background-color: #00b3b3; }
+
+        .phrase-rose { color: #ff1493; font-weight: bold; font-size: 1.1em; text-shadow: 1px 1px 2px #ff69b4; margin-top: 5px; }
+
+        /* FORMULAIRE */
+        .etoile-form { 
+            background: #E6E6FA; 
+            border: 3px solid #9370DB; 
+            width: 90%; 
+            max-width: 600px; 
+            margin: 30px auto; 
+            padding: 30px; 
+            margin: 20px auto; 
+            padding: 25px; 
+            border-radius: 20px;
+            box-shadow: 0px 10px 20px rgba(147, 112, 219, 0.3);
+            text-align: left;
+        }
+        label { display: block; margin-top: 15px; font-weight: bold; color: #4a148c; }
+        label { display: block; margin-top: 10px; font-weight: bold; color: #4a148c; font-size: 0.9em; }
+        input, textarea, select { 
+            width: 100%; padding: 12px; margin: 8px 0; 
+            border-radius: 12px; border: 2px solid #9370DB; 
+            width: 100%; padding: 10px; margin: 5px 0 10px 0; 
+            border-radius: 10px; border: 2px solid #9370DB; 
+            box-sizing: border-box; font-family: inherit; 
+            background: #fff; color: #333;
+        }
+        .btn-envoi { 
+            background: #9370DB; color: white; border: none; 
+            padding: 15px; border-radius: 25px; 
+            padding: 12px; border-radius: 20px; 
+            font-weight: bold; cursor: pointer; font-size: 1.1em; 
+            transition: 0.3s; width: 100%; margin-top: 20px; 
+            width: 100%; margin-top: 10px; 
+        }
+        .btn-envoi:hover { transform: scale(1.02); background: #7a5eb3; }
+        .btn-envoi:hover { background: #7a5eb3; }
+
+        #searchBox { 
+            width: 90%; max-width: 650px; padding: 12px; 
+            width: 90%; max-width: 650px; padding: 10px; 
+            margin: 20px auto; border-radius: 25px; 
+            border: 2px solid #9370DB; display: block;
+        }
+
+        /* LISTE DES CONFLITS ET CARTES */
+        .liste-conflits { max-width: 700px; margin: 40px auto; padding: 20px; }
+        .carte-conflit { 
+            background: white; border-left: 10px solid #9370DB; 
+            border-radius: 15px; padding: 20px; margin-bottom: 20px; 
+            text-align: left; box-shadow: 4px 4px 10px rgba(0,0,0,0.1); 
             color: #333;
-            margin: 0;
-            padding: 20px;
         }
-        header {
-            text-align: center;
-            margin-bottom: 30px;
+        .reponse-sage { 
+            margin-left: 20px; margin-top: 10px; padding: 10px; 
+            background: #F3E5F5; border-left: 4px solid #9370DB; 
+            border-radius: 8px; font-size: 0.9em; color: #4a148c; 
         }
-        h1 {
-            color: #d4af37;
+        .btn-avis { 
+            display: inline-block; margin-top: 10px; color: #9370DB; 
+            cursor: pointer; font-weight: bold; font-size: 0.85em; 
+            text-decoration: underline; 
         }
-        .container {
-            max-width: 900px;
-            margin: 0 auto;
-            background: white;
-            padding: 25px;
-            border-radius: 15px;
-            box-shadow: 0 4px 15px rgba(212, 175, 55, 0.2);
-            border: 2px solid #f3e5ab;
-        }
-        form {
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-            margin-bottom: 30px;
-        }
-        input, textarea {
-            padding: 12px;
-            border: 2px solid #f3e5ab;
-            border-radius: 8px;
-            font-family: inherit;
-            font-size: 1rem;
-        }
-        button {
-            padding: 12px;
-            background-color: #d4af37;
-            color: white;
-            border: none;
-            border-radius: 8px;
-            font-size: 1rem;
-            cursor: pointer;
-            transition: background 0.3s;
-        }
-        button:hover {
-            background-color: #b89728;
-        }
-        .barre-recherche {
-            margin-bottom: 20px;
-            width: 100%;
-            padding: 10px;
-            border-radius: 8px;
-            border: 1px solid #ccc;
-            box-sizing: border-box;
-        }
-        .mur-reel {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-            gap: 15px;
-        }
-        .carte-conflit {
-            background: #fffef8;
-            border: 2px solid #e6d585;
-            padding: 15px;
-            border-radius: 10px;
-        }
+        /* --- GRILLE ET CARTES MINIATURES --- */
+        .mur-reel { display: grid; grid-template-columns: repeat(5, minmax(150px, 1fr)); gap: 10px; padding: 10px; max-width: 98vw; margin: 0 auto; }
+        @media (max-width: 768px) { .mur-reel { grid-template-columns: repeat(2, 1fr); } }
+
+        .carte-message { background: white; border: 2px solid #9370DB; border-radius: 12px; padding: 8px; box-shadow: 3px 3px 0px #9370DB; display: flex; flex-direction: column; height: 280px; cursor: pointer; position: relative; overflow: hidden; text-align: left; color: #333; transition: transform 0.2s; }
+        .carte-message:hover { transform: translateY(-3px); }
+        .nom-prenom { color: #4a148c; font-weight: bold; font-size: 0.8em; border-bottom: 1px solid #eee; margin-bottom: 3px; }
+        .rubrique-tag { font-size: 0.55em; background: #9370DB; color: white; padding: 1px 4px; border-radius: 5px; position: absolute; top: 5px; right: 5px; }
+        .texte-annonce { flex-grow: 1; font-style: italic; color: #333; overflow-y: auto; font-size: 0.75em; margin: 5px 0; line-height: 1.2; padding-right: 5px; }
+        .details-bas { font-size: 0.7em; color: #666; line-height: 1.3; border-top: 1px solid #eee; padding-top: 5px; background: white; }
+
+        /* --- MODALE GRAND MESSAGE --- */
+        #fond-sombre { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); z-index: 2000; justify-content: center; align-items: center; }
+        .message-geant { background: #E6E6FA; width: 95%; max-width: 800px; padding: 25px; border-radius: 25px; border: 6px solid #9370DB; position: relative; max-height: 80vh; overflow-y: auto; color: #4a148c; text-align: left; box-shadow: 0 10px 30px rgba(147,112,219,0.6); }
+        .bouton-fermer { position: absolute; top: 15px; right: 15px; background: #9370DB; color: white; border-radius: 50%; width: 40px; height: 40px; cursor: pointer; border: 2px solid white; font-weight: bold; font-size: 1.1em; display: flex; align-items: center; justify-content: center; }
     </style>
 </head>
 <body>
+@@ -96,32 +95,31 @@
+            <td><a href="index.html">Accueil</a></td>
+            <td><a href="formulaire.html">Semer</a></td>
+            <td><a href="jardin.html">Le Jardin</a></td>
+            <td><a href="impot.html">Impôt</a></td>
+            <td><a href="impot.html">Impôts</a></td>
+            <td><a href="regulation.html">Régulation</a></td>
+            <td><a href="aide.html">Aide</a></td>
+        </tr>
+    </table>
 
-    <header>
-        <h1>⚖️ Régulation Citoyenne</h1>
-        <p>Exposer les conflits pour chercher ensemble la sagesse des étoiles.</p>
-        <div id="google_translate_element"></div>
-    </header>
+    <h1>⚖️ Zone de Régulation Citoyenne</h1>
+    <p><i>Expose ton conflit avec sincérité. La communauté répondra avec délicatesse.</i></p>
+    <h2 style="color:#2E7D32; margin: 10px 0;">⚖️ Zone de Régulation Citoyenne ⚖️</h2>
+    <div class="phrase-rose">Expose ton conflit avec sincérité. La communauté répondra avec délicatesse.</div>
 
-    <div class="container">
-        <!-- Formulaire de soumission de conflit relié à la fonction universelle -->
-        <form id="form-regulation" onsubmit="envoyerFormulaireGoogleScript(event, 'VOTRE_URL_GOOGLE_APPS_SCRIPT_REGULATION', chargerConflits)">
-            <input type="text" name="citoyen" placeholder="Votre nom ou citoyenneté" required>
-            <input type="text" name="sujet" placeholder="Sujet ou titre du conflit" required>
-            <textarea name="description" rows="4" placeholder="Décrivez la situation en toute sérénité..." required></textarea>
-            <button type="submit">Soumettre à la sagesse 📜</button>
+    <div class="etoile-form">
+        <form id="regForm" onsubmit="envoyerConflit(event)">
+            <input type="hidden" name="type" value="Conflit">
+            <input type="hidden" name="type" value="REGULATION">
+
+            <label>Ton nom ou pseudo :</label>
+            <label>👤 Ton nom ou pseudo :</label>
+            <input type="text" name="nom" placeholder="Ton nom..." required>
+
+            <label>Zone Géographique (Pays, Ville) :</label>
+            <label>📍 Zone Géographique (Pays, Ville) :</label>
+            <input type="text" name="localisation" placeholder="Ex: France, Paris..." required>
+
+            <label>Durée de validité (en jours) :</label>
+            <label>⏳ Durée de validité (en jours) :</label>
+            <input type="number" name="duree_validite" value="30" min="1" required>
+
+            <label>Expose ton conflit :</label>
+            <textarea name="message" rows="5" placeholder="Décris la situation ici..." required></textarea>
+            <label>💬 Expose ton conflit :</label>
+            <textarea name="message" rows="4" placeholder="Décris la situation ici..." required></textarea>
+
+            <p><small>En soumettant, tu acceptes le regard bienveillant, le pardon ou la sentence symbolique de tes pairs.</small></p>
+            <button type="submit" id="btnEnvoi" class="btn-envoi">SOUMETTRE À L'ENSEMBLE 🕊️</button>
         </form>
+    </div>
+@@ -130,10 +128,18 @@
+        <input type="text" id="searchBox" onkeyup="filtrer()" placeholder="🔍 Chercher une ville, un nom...">
+    </div>
 
-        <h2>Conflits en cours de régulation</h2>
-        <input type="text" id="recherche" class="barre-recherche" placeholder="Filtrer par mot-clé..." onkeyup="filtrerConflits()">
-        
-        <div class="mur-reel" id="mur-conflits">
-            <!-- Les fiches de conflits injectées apparaîtront ici -->
+    <div class="liste-conflits">
+        <h3 style="color:#9370DB;">🕊 Dossiers en cours de résolution</h3>
+        <div id="chargement">Appel de la sagesse citoyenne...</div>
+        <div id="flux-conflits"></div>
+    <div style="max-width: 95vw; margin: 40px auto; padding: 10px;">
+        <h3 style="color:#008080; margin-bottom: 20px;">🕊️ Dossiers en cours de résolution</h3>
+        <div id="chargement" style="font-weight:bold; color:#000080;">Appel de la sagesse citoyenne...</div>
+        <div id="flux-conflits" class="mur-reel"></div>
+    </div>
+
+    <!-- Modale Grand Message -->
+    <div id="fond-sombre" onclick="fermerGrandMessage()">
+        <div class="message-geant" onclick="event.stopPropagation()">
+            <button class="bouton-fermer" onclick="fermerGrandMessage()">X</button>
+            <div id="geant-contenu"></div>
         </div>
     </div>
 
     <script>
-        // Fonction d'envoi universelle (commune aux deux pages)
-        async function envoyerFormulaireGoogleScript(event, urlScript, callbackSuccess) {
-            event.preventDefault();
-            const form = event.target;
-            const submitBtn = form.querySelector('button[type="submit"]');
-            const texteInitial = submitBtn ? submitBtn.innerText : 'Envoyer';
-            
-            if (submitBtn) {
-                submitBtn.innerText = 'Envoi en cours...';
-                submitBtn.disabled = true;
+@@ -167,32 +173,6 @@
             }
+        }
 
+        async function apporterAvis(nomConflit) {
+            const avis = prompt("Quel est ton avis de sage pour résoudre ce conflit ?");
+            if (avis) {
+                const nomSage = prompt("Ton nom ou pseudo de sage :") || "Anonyme";
+                
+                const formData = new URLSearchParams();
+                formData.append('type', 'Avis');
+                formData.append('nom', nomSage);
+                formData.append('localisation', 'Réponse à : ' + nomConflit);
+                formData.append('message', avis);
+
+                try {
+                    await fetch(URL_SERVEUR, {
+                        method: 'POST',
+                        mode: 'no-cors',
+                        body: formData
+                    });
+                    alert("Ton avis a été ajouté au registre de justice.");
+                    chargerConflits();
+                } catch(err) {
+                    console.error(err);
+                    alert("Erreur lors de l'envoi de l'avis.");
+                }
+            }
+        }
+
+        async function chargerConflits() {
             try {
-                const formData = new FormData(form);
-                const data = Object.fromEntries(formData.entries());
-                data.dateSoumission = new Date().toISOString();
+                const response = await fetch(URL_SERVEUR + "?v=" + Date.now());
+@@ -202,45 +182,61 @@
+                const flux = document.getElementById('flux-conflits');
+                flux.innerHTML = "";
 
-                await fetch(urlScript, {
-                    method: 'POST',
-                    mode: 'no-cors',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(data)
+                const conflits = data.filter(d => d.type === "Conflit").reverse();
+                const avis = data.filter(d => d.type === "Avis");
+                const conflits = data.filter(d => d.type === "REGULATION").reverse();
+
+                if (conflits.length === 0) {
+                    flux.innerHTML = `<p style="color: #000080;">Aucun dossier en cours pour l'instant... 🕊️</p>`;
+                    flux.innerHTML = `<div style="grid-column: span 5; padding: 20px; font-weight: bold; background: white; border-radius: 10px; color: #008080;">Aucun dossier en cours pour l'instant... 🕊️</div>`;
+                    return;
+                }
+
+                conflits.forEach(c => {
+                    let avisHTML = "";
+                    avis.filter(a => a.localisation && a.localisation.includes(c.nom)).forEach(a => {
+                        avisHTML += `<div class="reponse-sage"><b>🌿 ${a.nom} :</b> ${a.message}</div>`;
+                    });
+
+                    const div = document.createElement('div');
+                    div.className = 'carte-conflit';
+                    div.innerHTML = `
+                        <small>${c.Horodateur || c.date || 'Récemment'} - <b>${c.nom}</b> à ${c.localisation} (Validité : ${c.duree_validite || '30'}j)</small>
+                        <p style="font-weight:bold; margin:10px 0;">"${c.message}"</p>
+                        ${avisHTML}
+                        <div class="btn-avis" onclick="apporterAvis('${c.nom}')">⚖️ Apporter un avis délicat</div>
+                    const d = document.createElement('div');
+                    d.className = 'carte-message';
+                    d.onclick = () => ouvrirGrandMessage(c);
+                    d.innerHTML = `
+                        <div class="nom-prenom">${c.nom || "Anonyme"}</div>
+                        <div class="rubrique-tag">Régulation</div>
+                        <div class="texte-annonce">"${c.message}"</div>
+                        <div class="details-bas">
+                            📍 ${c.localisation || 'N/C'}<br>
+                            ⏳ Validité : ${c.duree_validite || '30'}j<br>
+                            📅 ${c.Horodateur || c.date || 'Récemment'}
+                        </div>
+                    `;
+                    flux.appendChild(div);
+                    flux.appendChild(d);
                 });
-
-                alert('✨ Votre situation a bien été transmise à la communauté !');
-                form.reset();
-
-                if (typeof callbackSuccess === 'function') {
-                    callbackSuccess();
-                }
             } catch (error) {
-                console.error('Erreur :', error);
-                alert('Une erreur est survenue lors de l\'envoi.');
-            } finally {
-                if (submitBtn) {
-                    submitBtn.innerText = texteInitial;
-                    submitBtn.disabled = false;
-                }
+                console.error("Erreur de chargement :", error);
+                document.getElementById('chargement').innerText = "La justice est en repos... Impossible de charger le registre.";
             }
         }
 
-        function chargerConflits() {
-            // Espace pour votre logique de récupération GET des données si nécessaire
+        function ouvrirGrandMessage(ann) {
+            document.getElementById('geant-contenu').innerHTML = `
+                <div style="font-size:1.6em; color:#4a148c; font-weight:bold; border-bottom:3px solid #9370DB; margin-bottom:20px; padding-bottom:5px;">⚖️ Dossier de ${ann.nom || "Anonyme"}</div>
+                <div style="background:white; padding:20px; border-radius:15px; border-left:8px solid #9370DB; font-size:1.2em; color:#333; text-align:left; margin-bottom:20px; box-shadow: inset 0 2px 5px rgba(0,0,0,0.05);">"${ann.message}"</div>
+                <div style="text-align:left; background:#F3E5F5; padding:15px; border-radius:10px; font-size:1em; color:#4a148c;">
+                    <strong>📍 Localisation :</strong> ${ann.localisation || "N/C"}<br>
+                    <strong>⏳ Durée de validité :</strong> ${ann.duree_validite || "30"} jours<br>
+                    <strong>📅 Date :</strong> ${ann.Horodateur || ann.date || "N/C"}
+                </div>
+            `;
+            document.getElementById('fond-sombre').style.display = 'flex';
         }
 
-        function filtrerConflits() {
-            const filtre = document.getElementById('recherche').value.toLowerCase();
-            const cartes = document.querySelectorAll('.carte-conflit');
-            cartes.forEach(carte => {
-                const texte = carte.innerText.toLowerCase();
-                carte.style.display = texte.includes(filtre) ? 'block' : 'none';
-            });
+        function fermerGrandMessage() { 
+            document.getElementById('fond-sombre').style.display = 'none'; 
         }
+
+        function filtrer() {
+            let val = document.getElementById('searchBox').value.toLowerCase();
+            let cards = document.getElementsByClassName('carte-conflit');
+            let cards = document.getElementsByClassName('carte-message');
+            for (let c of cards) {
+                c.style.display = c.innerText.toLowerCase().includes(val) ? "" : "none";
+            }
+        }
+
+        window.onload = chargerConflits;
     </script>
 </body>
 </html>
