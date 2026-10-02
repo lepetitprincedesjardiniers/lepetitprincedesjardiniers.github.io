@@ -2,32 +2,44 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <title>Impôts Publics - Le Jardin de la Fraternité</title>
+    <title>Trésor Public & Impôts Publics - Le Jardin</title>
     <style>
         body { font-family: 'Comic Sans MS', cursive; text-align: center; margin: 0; padding: 0; background-color: #FFFF00; color: #000080; min-height: 100vh; padding-bottom: 80px; transition: background 0.3s, color 0.3s; }
         .top-bar { position: relative; width: 100%; min-height: 50px; background: rgba(255,255,255,0.3); padding: 5px 0; display: flex; justify-content: center; align-items: center; }
+        
         #google_translate_element { position: absolute; left: 10px; top: 10px; z-index: 2000; transform: scale(0.85); transform-origin: top left; }
+
         .menu-table { margin: 5px auto; border-radius: 10px; background-color: #008080; border-collapse: collapse; }
         .menu-table td { padding: 8px 15px; border: 1px solid #FFFFFF; }
         .menu-table a { text-decoration: none; color: #FFFFFF; font-weight: bold; font-size: 0.85em; }
+
         #btn-mode { position: absolute; right: 10px; top: 10px; background: #444; color: #FFD700; border: 1px solid #222; border-radius: 5px; cursor: pointer; font-size: 14px; padding: 2px 5px; z-index: 1001; }
 
-        .form-box { background: #008080; padding: 20px; margin: 20px auto; max-width: 95%; width: 600px; border-radius: 25px; color: white; box-shadow: 0 8px 20px rgba(0,0,0,0.2); border: 3px solid #fff; text-align: left; }
-        .form-box input, .form-box textarea, .form-box select { width: 100%; padding: 10px; margin: 8px 0 15px 0; border-radius: 10px; border: none; box-sizing: border-box; font-family: 'Comic Sans MS'; }
-        .form-box button { background: #FF1493; color: white; border: 2px solid white; padding: 10px 20px; border-radius: 15px; font-weight: bold; cursor: pointer; display: block; width: 100%; font-size: 1.1em; }
+        .phrase-rose { color: #ff1493; font-weight: bold; font-size: 1.1em; text-shadow: 1px 1px 2px #ff69b4; margin-top: 5px; }
+        .phrase-sous { color: #000080; font-weight: bold; margin: 1px 0; font-size: 0.9em; }
 
+        /* --- FORMULAIRE IMPÔTS --- */
+        .form-box { background: #008080; padding: 15px; margin: 15px auto; max-width: 95%; width: 600px; border-radius: 25px; color: white; box-shadow: 0 8px 20px rgba(0,0,0,0.2); border: 3px solid #fff; text-align: left; }
+        .form-box label { font-size: 0.9em; font-weight: bold; display: block; margin-top: 8px; }
+        .form-box input, .form-box textarea { width: 100%; padding: 8px; margin: 5px 0 10px 0; border-radius: 10px; border: none; box-sizing: border-box; font-family: 'Comic Sans MS'; font-size: 0.9em; color: #004D40; }
+        .form-box button { background: #FF1493; color: white; border: 2px solid white; padding: 10px; border-radius: 15px; font-weight: bold; cursor: pointer; display: block; width: 100%; font-size: 1em; font-family: 'Comic Sans MS'; margin-top: 10px; }
+
+        /* --- GRILLE DU REGISTRE --- */
         .mur-reel { display: grid; grid-template-columns: repeat(5, minmax(150px, 1fr)); gap: 10px; padding: 10px; max-width: 98vw; margin: 0 auto; }
         @media (max-width: 768px) { .mur-reel { grid-template-columns: repeat(2, 1fr); } }
 
         .carte-message { background: white; border: 2px solid #008080; border-radius: 10px; padding: 8px; box-shadow: 3px 3px 0px #008080; display: flex; flex-direction: column; height: 280px; cursor: pointer; position: relative; overflow: hidden; text-align: left; }
         .nom-prenom { color: #2E7D32; font-weight: bold; font-size: 0.8em; border-bottom: 1px solid #eee; margin-bottom: 3px; }
         .rubrique-tag { font-size: 0.55em; background: #ff1493; color: white; padding: 1px 4px; border-radius: 5px; position: absolute; top: 5px; right: 5px; }
-        .texte-annonce { flex-grow: 1; font-style: italic; color: #000080; overflow-y: auto; font-size: 0.75em; margin: 5px 0; line-height: 1.2; }
+        
+        .texte-annonce { flex-grow: 1; font-style: italic; color: #000080; overflow-y: auto; font-size: 0.75em; margin: 5px 0; line-height: 1.2; padding-right: 5px; }
         .details-bas { font-size: 0.75em; color: #444; line-height: 1.3; border-top: 1px solid #eee; padding-top: 5px; background: white; }
 
+        /* MODE SOMBRE ET ÉTOILES */
         body.dark-mode { background-color: #0a0a1a; color: #e0e0e0; }
         .star { position: fixed; background: white; border-radius: 50%; opacity: 0; pointer-events: none; animation: twinkle var(--d) infinite; }
         @keyframes twinkle { 0%, 100% { opacity: 0.3; } 50% { opacity: 1; } }
+        
         .copyright-link { color: #008080; text-decoration: none; font-weight: bold; }
     </style>
 </head>
@@ -48,13 +60,15 @@
         <button id="btn-mode" onclick="basculerModeSombre()">🏮</button>
     </div>
 
-    <h2 style="color:#2E7D32; margin: 15px 0;">🪙 Trésor Public & Impôts Libres 🪙</h2>
-    <div style="font-weight: bold; color: #ff1493; margin-bottom: 10px;">Participez au registre des contributions et offrandes publiques</div>
+    <h2 style="color:#2E7D32; margin: 10px 0;">🪙 Trésor Public & Impôts Libres 🪙</h2>
+    <div class="phrase-rose">Participez au registre des contributions et offrandes publiques</div>
+    <div class="phrase-sous">Transparence et fraternité souveraine.</div>
 
-    <!-- Formulaire d'envoi spécifique à la page impôts -->
+    <!-- Formulaire d'envoi -->
     <div class="form-box">
         <form id="formImpots" onsubmit="envoyerImpots(event)">
             <input type="hidden" name="type" value="IMPOT">
+            
             <label>👤 Votre Nom ou Pseudo :</label>
             <input type="text" name="nom" required placeholder="Ex: Jardinier solidaire">
 
@@ -64,17 +78,20 @@
             <label>🏙️ Localisation / Ville :</label>
             <input type="text" name="localisation" placeholder="Ex: Bordeaux">
 
+            <label>⏳ Durée de validité (en jours) :</label>
+            <input type="number" name="duree_validite" value="30" min="1" required>
+
             <label>💬 Votre offrande / Contribution :</label>
-            <textarea name="message" rows="4" required placeholder="Ex: Partage de ressources, proposition pour le trésor public..."></textarea>
+            <textarea name="message" rows="3" required placeholder="Votre message pour le trésor public..."></textarea>
 
             <button type="submit" id="btnTexte">✨ Verser au Trésor Public</button>
         </form>
     </div>
 
-    <h3 style="color: #008080; margin-top: 30px;">📖 Registre des Impôts & Trésor Public</h3>
+    <h3 style="color: #008080; margin: 20px 0;">📖 Registre du Trésor Public</h3>
     <div id="mur-messages" class="mur-reel"></div>
 
-    <div class="footer-copyright" style="margin-top: 40px;">
+    <div class="footer-copyright" style="margin: 30px 0;">
         <a href="merci.html" class="copyright-link">© 2000 Le petit prince des jardiniers</a>
     </div>
 
@@ -98,20 +115,17 @@
             } else { document.querySelectorAll('.star').forEach(s => s.remove()); }
         }
 
-        // Charger et filtrer uniquement les annonces de type IMPOT
         async function chargerImpots() {
             try {
                 const response = await fetch(WEB_APP_URL + "?v=" + Date.now());
                 const toutesLesAnnonces = await response.json();
                 
-                // Filtrer pour ne garder que le Trésor Public (IMPOT)
                 const annoncesImpots = toutesLesAnnonces.filter(ann => ann.type === "IMPOT");
-
                 const cont = document.getElementById('mur-messages');
                 cont.innerHTML = "";
 
                 if (annoncesImpots.length === 0) {
-                    cont.innerHTML = `<div style="grid-column: span 5; padding: 20px; font-weight: bold; background: white; border-radius: 10px; color: #008080;">Aucune contribution au trésor public pour l'instant... 🪙</div>`;
+                    cont.innerHTML = `<div style="grid-column: span 5; padding: 20px; font-weight: bold; background: white; border-radius: 10px; color: #008080;">Aucune contribution active pour l'instant... 🪙</div>`;
                     return;
                 }
 
@@ -125,18 +139,17 @@
                         <div class="details-bas">
                             📍 Localisation : ${ann.localisation || 'N/C'}<br>
                             📍 Pays : ${ann.pays_select || 'N/C'}<br>
-                            📅 Date : ${ann.Horodateur || 'N/C'}
+                            ⏳ Validité : ${ann.duree_validite || '30'} jours
                         </div>
                     `;
                     cont.appendChild(d);
                 });
             } catch (error) {
-                console.error("Erreur de chargement :", error);
+                console.error("Erreur :", error);
                 document.getElementById('mur-messages').innerHTML = `<div style="grid-column: span 5; padding: 20px; font-weight: bold; background: white; border-radius: 10px;">Impossible de charger le registre... 🌱</div>`;
             }
         }
 
-        // Envoyer une contribution vers Google Sheets
         async function envoyerImpots(event) {
             event.preventDefault();
             const btn = document.getElementById('btnTexte');
@@ -155,7 +168,7 @@
                 });
                 alert("Votre contribution a bien été versée au Trésor Public ! ✨");
                 form.reset();
-                chargerImpots(); // Recharge la liste des impôts
+                chargerImpots();
             } catch (err) {
                 console.error(err);
                 alert("Erreur lors de l'envoi.");
