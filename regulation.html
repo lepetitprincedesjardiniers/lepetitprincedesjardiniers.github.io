@@ -96,7 +96,7 @@
             <td><a href="index.html">Accueil</a></td>
             <td><a href="formulaire.html">Semer</a></td>
             <td><a href="jardin.html">Le Jardin</a></td>
-            <td><a href="impots.html">Impôts</a></td>
+            <td><a href="impot.html">Impôts</a></td>
             <td><a href="regulation.html">Régulation</a></td>
             <td><a href="aide.html">Aide</a></td>
         </tr>
@@ -106,20 +106,20 @@
     <p><i>Expose ton conflit avec sincérité. La communauté répondra avec délicatesse.</i></p>
 
     <div class="etoile-form">
-        <form id="regForm">
+        <form id="regForm" onsubmit="envoyerConflit(event)">
             <input type="hidden" name="type" value="Conflit">
             
             <label>Ton nom ou pseudo :</label>
-            <input type="text" id="nom" name="nom" placeholder="Ton nom..." required>
+            <input type="text" name="nom" placeholder="Ton nom..." required>
 
             <label>Zone Géographique (Pays, Ville) :</label>
-            <input type="text" id="ville" name="localisation" placeholder="Ex: France, Paris..." required>
+            <input type="text" name="localisation" placeholder="Ex: France, Paris..." required>
 
             <label>Durée de validité (en jours) :</label>
-            <input type="number" id="duree_validite" name="duree_validite" value="30" min="1" required>
+            <input type="number" name="duree_validite" value="30" min="1" required>
 
             <label>Expose ton conflit :</label>
-            <textarea id="message" name="message" rows="5" placeholder="Décris la situation ici..." required></textarea>
+            <textarea name="message" rows="5" placeholder="Décris la situation ici..." required></textarea>
 
             <p><small>En soumettant, tu acceptes le regard bienveillant, le pardon ou la sentence symbolique de tes pairs.</small></p>
             <button type="submit" id="btnEnvoi" class="btn-envoi">SOUMETTRE À L'ENSEMBLE 🕊️</button>
@@ -131,7 +131,7 @@
     </div>
 
     <div class="liste-conflits">
-        <h3 style="color:#9370DB;">🕊️️ Dossiers en cours de résolution</h3>
+        <h3 style="color:#9370DB;">🕊 Dossiers en cours de résolution</h3>
         <div id="chargement">Appel de la sagesse citoyenne...</div>
         <div id="flux-conflits"></div>
     </div>
@@ -139,63 +139,65 @@
     <script>
         const URL_SERVEUR = "https://script.google.com/macros/s/AKfycbz4ncs9qw_AfmKSER5QST-P0OeKQggQaq86QC6liS53uZ9sx4Lo_-4-h1knXKWqgQMc/exec";
 
-        document.getElementById('regForm').addEventListener('submit', function(e) {
-            e.preventDefault();
+        async function envoyerConflit(event) {
+            event.preventDefault();
             const btn = document.getElementById('btnEnvoi');
             btn.innerText = "Transmission en cours...";
             btn.disabled = true;
 
-            const donnees = {
-                date: new Date().toLocaleDateString('fr-FR'),
-                type: "Conflit",
-                nom: document.getElementById('nom').value,
-                localisation: document.getElementById('ville').value,
-                duree_validite: document.getElementById('duree_validite').value,
-                message: document.getElementById('message').value
-            };
+            const form = document.getElementById('regForm');
+            const formData = new FormData(form);
+            const urlParams = new URLSearchParams(formData);
 
-            fetch(URL_SERVEUR, {
-                method: 'POST',
-                mode: 'no-cors',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(donnees)
-            }).then(() => {
-                alert("Ton dossier a été déposé avec succès.");
-                location.reload();
-            }).catch(() => {
-                alert("Erreur lors de l'envoi.");
-                btn.innerText = "SOUMETTRE À L'ENSEMBLE 🕊️";
-                btn.disabled = false;
-            });
-        });
-
-        function apporterAvis(nomConflit) {
-            const avis = prompt("Quel est ton avis de sage pour résoudre ce conflit ?");
-            if (avis) {
-                const nomSage = prompt("Ton nom ou pseudo de sage :") || "Anonyme";
-                const donneesAvis = {
-                    date: new Date().toLocaleDateString('fr-FR'),
-                    type: "Avis",
-                    nom: nomSage,
-                    localisation: "Réponse à : " + nomConflit,
-                    message: avis
-                };
-
-                fetch(URL_SERVEUR, {
+            try {
+                await fetch(URL_SERVEUR, {
                     method: 'POST',
                     mode: 'no-cors',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(donneesAvis)
-                }).then(() => {
-                    alert("Ton avis a été ajouté au registre de justice.");
-                    location.reload();
+                    body: urlParams
                 });
+                alert("Ton dossier a été déposé avec succès.");
+                form.reset();
+                chargerConflits();
+            } catch (err) {
+                console.error(err);
+                alert("Erreur lors de l'envoi.");
+            } finally {
+                btn.innerText = "SOUMETTRE À L'ENSEMBLE 🕊️";
+                btn.disabled = false;
             }
         }
 
-        fetch(URL_SERVEUR)
-            .then(r => r.json())
-            .then(data => {
+        async function apporterAvis(nomConflit) {
+            const avis = prompt("Quel est ton avis de sage pour résoudre ce conflit ?");
+            if (avis) {
+                const nomSage = prompt("Ton nom ou pseudo de sage :") || "Anonyme";
+                
+                const formData = new URLSearchParams();
+                formData.append('type', 'Avis');
+                formData.append('nom', nomSage);
+                formData.append('localisation', 'Réponse à : ' + nomConflit);
+                formData.append('message', avis);
+
+                try {
+                    await fetch(URL_SERVEUR, {
+                        method: 'POST',
+                        mode: 'no-cors',
+                        body: formData
+                    });
+                    alert("Ton avis a été ajouté au registre de justice.");
+                    chargerConflits();
+                } catch(err) {
+                    console.error(err);
+                    alert("Erreur lors de l'envoi de l'avis.");
+                }
+            }
+        }
+
+        async function chargerConflits() {
+            try {
+                const response = await fetch(URL_SERVEUR + "?v=" + Date.now());
+                const data = await response.json();
+                
                 document.getElementById('chargement').style.display = 'none';
                 const flux = document.getElementById('flux-conflits');
                 flux.innerHTML = "";
@@ -217,17 +219,18 @@
                     const div = document.createElement('div');
                     div.className = 'carte-conflit';
                     div.innerHTML = `
-                        <small>${c.date} - <b>${c.nom}</b> à ${c.localisation} (Validité : ${c.duree_validite || '30'}j)</small>
+                        <small>${c.Horodateur || c.date || 'Récemment'} - <b>${c.nom}</b> à ${c.localisation} (Validité : ${c.duree_validite || '30'}j)</small>
                         <p style="font-weight:bold; margin:10px 0;">"${c.message}"</p>
                         ${avisHTML}
                         <div class="btn-avis" onclick="apporterAvis('${c.nom}')">⚖️ Apporter un avis délicat</div>
                     `;
                     flux.appendChild(div);
                 });
-            })
-            .catch(() => {
+            } catch (error) {
+                console.error("Erreur de chargement :", error);
                 document.getElementById('chargement').innerText = "La justice est en repos... Impossible de charger le registre.";
-            });
+            }
+        }
 
         function filtrer() {
             let val = document.getElementById('searchBox').value.toLowerCase();
@@ -236,6 +239,8 @@
                 c.style.display = c.innerText.toLowerCase().includes(val) ? "" : "none";
             }
         }
+
+        window.onload = chargerConflits;
     </script>
 </body>
 </html>
