@@ -15,7 +15,6 @@
         .guide-trigger { color: #008080; font-size: 0.9em; cursor: pointer; text-decoration: underline; font-weight: bold; display: inline-block; margin-bottom: 15px; transition: 0.3s; }
         .guide-trigger:hover { color: #E67E22; transform: scale(1.1); }
         
-        /* Style discret pour le lien d'aide sous le select */
         .discreet-help { font-size: 0.75em; color: #008080; cursor: pointer; text-decoration: none; font-style: italic; display: block; margin-top: -8px; margin-bottom: 10px; text-align: right; opacity: 0.8; }
         .discreet-help:hover { text-decoration: underline; opacity: 1; }
 
@@ -54,7 +53,6 @@
         #bulle-texte { background: white; border-radius: 15px; padding: 8px 15px; font-style: italic; color: #2E7D32; border: 2px solid #2E7D32; opacity: 0; transition: 0.3s; font-weight: bold; white-space: nowrap; margin-right: 10px; box-shadow: 2px 2px 10px rgba(0,0,0,0.1); }
         #corps-animal { font-size: 38px; transition: transform 0.3s; display: inline-block; transform: scaleX(-1); }
 
-        /* --- EFFET MAGIQUE AU SURVOL --- */
         .copyright-link:hover { color: #E67E22; text-shadow: 0 0 8px #fff; }
     </style>
 </head>
@@ -296,16 +294,16 @@ Le jardin arrose les fleurs..." required></textarea>
 
     <footer>
         <a href="transition-externe.html" class="copyright-link" 
-           onmouseover="exploserParticules(event.pageX, event.pageY, ['⭐', '✨', '🌟'], 5)" 
-           onclick="exploserEtoiles(event)">
-           © 2000 Le petit prince des jardiniers
+            onmouseover="exploserParticules(event.pageX, event.pageY, ['⭐', '✨', '🌟'], 5)" 
+            onclick="exploserEtoiles(event)">
+            © 2000 Le petit prince des jardiniers
         </a>
     </footer>
 
     <div id="coffre-magique">🎁</div>
     <div id="animal-container">
         <div id="bulle-texte"></div>
-        <div id="corps-animal" onclick="animalExplode()">🕊️</div>
+        <div id="corps-animal" onclick="animalExplode()">🕊️️</div>
     </div>
 
     <script>
@@ -351,7 +349,7 @@ Le jardin arrose les fleurs..." required></textarea>
             p.style.left = x + 'px'; p.style.top = y + 'px';
             document.body.appendChild(p);
             const angle = Math.random() * Math.PI * 2;
-            const dist = Math.random() * 50 + 20; // Distance plus courte pour le survol
+            const dist = Math.random() * 50 + 20;
             p.animate([
                 { transform: 'translate(0,0) scale(1)', opacity: 1 },
                 { transform: `translate(${Math.cos(angle)*dist}px, ${Math.sin(angle)*dist}px) scale(0) rotate(360deg)`, opacity: 0 }
@@ -447,17 +445,31 @@ Le jardin arrose les fleurs..." required></textarea>
 
     function envoyerDon(event) {
         event.preventDefault();
-        document.getElementById('btnTexte').innerText = "Semailles en cours... 🌱";
+        const btn = document.getElementById('btnTexte');
+        btn.innerText = "Semailles en cours... 🌱";
+        btn.disabled = true;
         
         const form = document.getElementById('monFormulaire');
-        const data = new FormData(form);
+        const formData = new FormData(form);
+        const data = Object.fromEntries(formData.entries());
         
-        const queryString = new URLSearchParams(data).toString();
-        const url = "https://script.google.com/macros/s/AKfycbxz40XE2KiPXTNZsW-mIg-fm55EivK0r9wzZ5ECFRdEIY53nYH9nLGYRoI71OX93oII/exec" + queryString;
+        const url = "https://script.google.com/macros/s/AKfycbxxToz22V88elCCjxLqjRtsb5iBIC156cbBFRIlTsju2SwOj9yNnKqzAwFITXMg_wij/exec";
 
-        fetch(url, { method: 'POST', mode: 'no-cors' })
-        .then(() => { window.location.href = "merci_annonce.html"; })
-        .catch(() => { window.location.href = "merci_annonce.html"; });
+        fetch(url, {
+            method: 'POST',
+            mode: 'no-cors',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(data)
+        })
+        .then(() => { 
+            window.location.href = "merci_annonce.html"; 
+        })
+        .catch((error) => {
+            console.error('Erreur:', error);
+            window.location.href = "merci_annonce.html"; 
+        });
     }
 
     messenger();
