@@ -51,11 +51,9 @@
             <td><a href="index.html">Accueil</a></td>
             <td><a href="formulaire.html">Semer</a></td>
             <td><a href="jardin.html">Le Jardin</a></td>
-            <td><a href="impot.html">Impôts</a></td>
+            <td><a href="impots.html">Impôts</a></td>
             <td><a href="regulation.html">Régulation</a></td>
-            <td><a href="urgence.html">Urgences</a></td>
             <td><a href="aide.html">Aide</a></td>
-            <td><a href="savoirs.html">Savoirs</a></td>
         </tr>
     </table>
 
@@ -64,15 +62,18 @@
     <p><i>Le Câlin de l'Âme : Le cri du cœur.</i></p>
 
     <div class="form-container">
-        <form id="aideForm">
+        <form id="aideForm" onsubmit="envoyerAide(event)">
+            <input type="hidden" name="type" value="AIDE">
+            <input type="hidden" name="localisation" value="Espace Cœur">
+
             <label>👤 Ton petit nom :</label>
-            <input type="text" id="nomA" required placeholder="Ex: Âme douce">
+            <input type="text" name="nom" required placeholder="Ex: Âme douce">
 
             <label>⏳ Durée de validité (en jours) :</label>
-            <input type="number" id="dureeA" value="30" min="1" required>
+            <input type="number" name="duree_validite" value="30" min="1" required>
 
             <label>💬 Mon cœur est lourd, je cherche une oreille :</label>
-            <textarea id="msgA" rows="4" required placeholder="Écris ton message pour un câlin de l'âme..."></textarea>
+            <textarea name="message" rows="4" required placeholder="Écris ton message pour un câlin de l'âme..."></textarea>
 
             <button type="submit" class="btn-envoi">DÉPOSER MON CŒUR 🕊️</button>
         </form>
@@ -94,32 +95,42 @@
     <script>
         const URL = "https://script.google.com/macros/s/AKfycbz4ncs9qw_AfmKSER5QST-P0OeKQggQaq86QC6liS53uZ9sx4Lo_-4-h1knXKWqgQMc/exec";
 
-        document.getElementById('aideForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            const btn = e.target.querySelector('button');
-            btn.innerText = "Le message s'envole..."; btn.disabled = true;
-            
-            const d = { 
-                date: new Date().toLocaleDateString('fr-FR'), 
-                type: "AIDE", 
-                nom: document.getElementById('nomA').value, 
-                localisation: "Espace Cœur", 
-                message: document.getElementById('msgA').value,
-                duree_validite: document.getElementById('dureeA').value 
-            };
-            
-            fetch(URL, { method: 'POST', mode: 'no-cors', body: JSON.stringify(d) })
-                .then(() => { 
-                    alert("Message déposé avec douceur."); 
-                    location.reload(); 
-                });
-        });
+        async function envoyerAide(event) {
+            event.preventDefault();
+            const btn = event.target.querySelector('button');
+            btn.innerText = "Le message s'envole..."; 
+            btn.disabled = true;
 
-        function chargerAide() {
-            fetch(URL).then(r => r.json()).then(data => {
+            const form = document.getElementById('aideForm');
+            const formData = new FormData(form);
+            const urlParams = new URLSearchParams(formData);
+
+            try {
+                await fetch(URL, { 
+                    method: 'POST', 
+                    mode: 'no-cors', 
+                    body: urlParams 
+                });
+                alert("Message déposé avec douceur."); 
+                form.reset();
+                chargerAide();
+            } catch (err) {
+                console.error(err);
+                alert("Erreur lors de l'envoi.");
+            } finally {
+                btn.innerText = "DÉPOSER MON CŒUR 🕊️";
+                btn.disabled = false;
+            }
+        }
+
+        async function chargerAide() {
+            try {
+                const response = await fetch(URL + "?v=" + Date.now());
+                const data = await response.json();
+                
                 const f = document.getElementById('flux-aide'); 
                 f.innerHTML = "";
-                const annonces = data.filter(i => i.type === "AIDE").reverse();
+                const annonces = data.filter(i => i.type === "AIDE" || i.type === "Urgence").reverse();
 
                 if (annonces.length === 0) {
                     f.innerHTML = `<div style="grid-column: span 5; padding: 20px; font-weight: bold; background: #2a1045; border-radius: 10px; color: #fff;">Aucun cœur à écouter pour l'instant... 💖</div>`;
@@ -135,16 +146,16 @@
                         <div class="rubrique-tag">Câlin de l'Âme</div>
                         <div class="texte-annonce">"${i.message}"</div>
                         <div class="details-bas">
-                            📅 Date : ${i.date || 'N/C'}<br>
+                            📅 Date : ${i.Horodateur || i.date || 'N/C'}<br>
                             ⏳ Validité : ${i.duree_validite || '30'} jours
                         </div>
                     `;
                     f.appendChild(d);
                 });
-            }).catch(err => {
+            } catch (err) {
                 console.error(err);
                 document.getElementById('flux-aide').innerHTML = `<p style="grid-column: span 5; color: #ff9999;">Impossible de charger les cœurs... 🕊️</p>`;
-            });
+            }
         }
 
         function ouvrirGrandMessage(ann) {
@@ -154,7 +165,7 @@
                 <div style="text-align:left; background:#E1BEE7; padding:15px; border-radius:10px; font-size:1em; color:#4a148c;">
                     <strong>📍 Localisation :</strong> ${ann.localisation || "Espace Cœur"}<br>
                     <strong>⏳ Durée de validité :</strong> ${ann.duree_validite || "30"} jours<br>
-                    <strong>📅 Date :</strong> ${ann.date || "N/C"}
+                    <strong>📅 Date :</strong> ${ann.Horodateur || ann.date || "N/C"}
                 </div>
             `;
             document.getElementById('fond-sombre').style.display = 'flex';
