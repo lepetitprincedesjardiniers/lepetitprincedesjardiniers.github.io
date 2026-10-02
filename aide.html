@@ -51,6 +51,7 @@
             <td><a href="index.html">Accueil</a></td>
             <td><a href="formulaire.html">Semer</a></td>
             <td><a href="jardin.html">Le Jardin</a></td>
+            <td><a href="impots.html">Impôts</a></td>
             <td><a href="impot.html">Impôts</a></td>
             <td><a href="regulation.html">Régulation</a></td>
             <td><a href="aide.html">Aide</a></td>
@@ -93,7 +94,7 @@
     </div>
 
     <script>
-        const URL = "https://script.google.com/macros/s/AKfycbz4ncs9qw_AfmKSER5QST-P0OeKQggQaq86QC6liS53uZ9sx4Lo_-4-h1knXKWqgQMc/exec";
+        const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbxxToz22V88elCCjxLqjRtsb5iBIC156cbBFRIlTsju2SwOj9yNnKqzAwFITXMg_wij/exec";
 
         async function envoyerAide(event) {
             event.preventDefault();
@@ -106,7 +107,7 @@
             const urlParams = new URLSearchParams(formData);
 
             try {
-                await fetch(URL, { 
+                await fetch(WEB_APP_URL, { 
                     method: 'POST', 
                     mode: 'no-cors', 
                     body: urlParams 
@@ -125,17 +126,20 @@
 
         async function chargerAide() {
             try {
-                const response = await fetch(URL + "?v=" + Date.now());
+                const response = await fetch(WEB_APP_URL + "?v=" + Date.now());
                 const data = await response.json();
 
                 const f = document.getElementById('flux-aide'); 
                 f.innerHTML = "";
-                const annonces = data.filter(i => i.type === "AIDE" || i.type === "Urgence").reverse();
+                const annonces = data.filter(i => i.type === "AIDE" || i.type === "Urgence");
 
                 if (annonces.length === 0) {
                     f.innerHTML = `<div style="grid-column: span 5; padding: 20px; font-weight: bold; background: #2a1045; border-radius: 10px; color: #fff;">Aucun cœur à écouter pour l'instant... 💖</div>`;
                     return;
                 }
+
+                // Inversion pour afficher les derniers messages en premier
+                annonces.reverse();
 
                 annonces.forEach(i => {
                     const d = document.createElement('div');
