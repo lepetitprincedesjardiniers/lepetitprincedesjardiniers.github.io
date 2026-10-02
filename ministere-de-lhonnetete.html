@@ -44,9 +44,9 @@
             opacity: 0;
         }
         .video-desc-container.active .video-desc-content {
-            max-height: 300px;
+            max-height: 400px;
             opacity: 1;
-            margin-top: 8px;
+            margin-top: 12px;
         }
     </style>
 </head>
@@ -143,7 +143,7 @@
                 </a>
             </div>
 
-            <!-- Grille des vidéos avec miniatures automatiques et flèche discrète -->
+            <!-- Grille des vidéos -->
             <div id="videos-grid" class="grid grid-cols-1 md:grid-cols-2 gap-8">
                 <!-- Les vidéos injectées par JavaScript -->
             </div>
@@ -162,7 +162,7 @@
 
     </main>
 
-    <!-- Fenêtre Popup (Modal) pour afficher le Google Doc ou la Vidéo -->
+    <!-- Fenêtre Popup (Modal) pour afficher le Google Doc ou la Vidéo en lecture directe -->
     <div id="content-modal" class="fixed inset-0 z-50 hidden bg-black/70 backdrop-blur-sm flex items-center justify-center p-2 sm:p-6">
         <div class="bg-white w-full max-w-4xl h-[90vh] sm:h-[85vh] rounded-3xl shadow-2xl overflow-hidden flex flex-col relative border border-orange-200">
             <div class="bg-joy-dark text-white px-4 sm:px-6 py-4 flex justify-between items-center shrink-0">
@@ -172,7 +172,7 @@
                 </button>
             </div>
             <div class="flex-1 bg-gray-50 relative iframe-container overflow-hidden">
-                <iframe id="modal-iframe" src="" class="w-full h-full border-0" allowfullscreen></iframe>
+                <iframe id="modal-iframe" src="" class="w-full h-full border-0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
             </div>
         </div>
     </div>
@@ -263,7 +263,6 @@
         let allVideos = [];
         let displayedLimit = 9; 
 
-        // Fonction pour extraire l'ID YouTube et générer l'URL d'intégration ou la miniature automatique
         function getYouTubeId(url) {
             if (!url) return '';
             if (url.includes('youtube.com/watch?v=')) {
@@ -289,12 +288,12 @@
             }
             const videoId = getYouTubeId(url);
             if (videoId) {
+                // autoplay=1 lance la vidéo immédiatement à l'ouverture de la modale
                 return `https://www.youtube.com/embed/${videoId}?autoplay=1`;
             }
             return url;
         }
 
-        // Gestion de la modale Article / Vidéo
         function openModal(title, url) {
             if (!url) return;
             const modal = document.getElementById('content-modal');
@@ -322,11 +321,10 @@
             const iframe = document.getElementById('modal-iframe');
             
             modal.classList.add('hidden');
-            iframe.src = '';
+            iframe.src = ''; // Coupe proprement la vidéo à la fermeture
             document.body.style.overflow = 'auto';
         }
 
-        // Gestion de la modale "Courrier des lecteurs"
         function openCourrierModal(e) {
             if (e) e.preventDefault();
             document.getElementById('courrier-modal').classList.remove('hidden');
@@ -338,7 +336,6 @@
             document.body.style.overflow = 'auto';
         }
 
-        // Gestion de la modale "Contact"
         function openContactModal(e) {
             if (e) e.preventDefault();
             document.getElementById('contact-modal').classList.remove('hidden');
@@ -350,7 +347,6 @@
             document.body.style.overflow = 'auto';
         }
 
-        // Fermeture au clic en dehors des modales
         document.getElementById('content-modal').addEventListener('click', function(e) {
             if (e.target === this) closeModal();
         });
@@ -423,13 +419,12 @@
             }
         }
 
-        // Rendu des vidéos avec miniature automatique et flèche de description rétractable
+        // Rendu des vidéos
         function renderVideos() {
             const grid = document.getElementById('videos-grid');
             let html = '';
             allVideos.forEach((vid, index) => {
                 const videoId = getYouTubeId(vid.lien);
-                // Miniature automatique de YouTube
                 const thumbUrl = videoId ? `https://img.youtube.com/vi/${videoId}/hqdefault.jpg` : '';
 
                 html += `
@@ -439,7 +434,7 @@
                             ${vid.titre}
                         </h3>
 
-                        <!-- 2. Visuel / Vignette de la vidéo avec bouton de lecture au clic -->
+                        <!-- 2. Visuel / Vignette de la vidéo (Clic = Lancement direct dans la modale) -->
                         <div onclick="openVideoByIndex(${index})" class="rounded-2xl overflow-hidden relative shadow-md aspect-video flex items-center justify-center cursor-pointer group bg-gray-900" style="background-image: url('${thumbUrl}'); background-size: cover; background-position: center;">
                             <div class="absolute inset-0 bg-black/30 group-hover:bg-black/10 transition duration-300"></div>
                             <div class="w-14 h-14 bg-joy-orange text-white rounded-full flex items-center justify-center shadow-xl z-10 group-hover:scale-110 transition duration-300">
@@ -448,15 +443,20 @@
                             <span class="absolute top-3 left-3 z-10 text-[10px] font-bold text-amber-900 bg-amber-100/90 px-2.5 py-1 rounded-full uppercase tracking-wider">${vid.categorie}</span>
                         </div>
 
-                        <!-- 3. Description avec flèche discrète -->
-                        <div class="video-desc-container border-t border-orange-100 pt-3">
-                            <div class="flex items-center justify-between text-xs text-gray-400 font-medium">
+                        <!-- 3. Description avec bouton flèche centré, coloré et rétractable -->
+                        <div class="video-desc-container border-t border-orange-100 pt-3 space-y-2">
+                            <div class="flex items-center justify-between text-xs text-gray-400 font-medium px-1">
                                 <span>${vid.date}</span>
-                                <button onclick="toggleVideoDesc(this)" class="text-gray-400 hover:text-joy-orange p-2 transition cursor-pointer" aria-label="Afficher/Masquer la description">
-                                    <i class="fa-solid fa-chevron-down arrow-icon transition-transform duration-300"></i>
+                                <span class="text-xs text-orange-500 font-bold uppercase tracking-wider">Détails</span>
+                            </div>
+                            
+                            <div class="text-center pt-1">
+                                <button onclick="toggleVideoDesc(this)" class="inline-flex items-center justify-center w-9 h-9 rounded-full bg-orange-100 text-joy-orange hover:bg-joy-orange hover:text-white transition shadow-sm cursor-pointer group" aria-label="Afficher la description">
+                                    <i class="fa-solid fa-chevron-down arrow-icon text-sm transition-transform duration-300"></i>
                                 </button>
                             </div>
-                            <div class="video-desc-content text-gray-600 text-sm leading-relaxed whitespace-pre-line pt-1">
+
+                            <div class="video-desc-content text-gray-600 text-sm leading-relaxed whitespace-pre-line pt-2 bg-orange-50/40 p-4 rounded-2xl border border-orange-100/60">
                                 ${vid.description}
                             </div>
                         </div>
@@ -466,7 +466,6 @@
             grid.innerHTML = html || '<div class="col-span-full text-center py-12 text-gray-500">Aucune vidéo trouvée.</div>';
         }
 
-        // Fonction pour ouvrir/fermer la description d'une vidéo via la flèche
         function toggleVideoDesc(btn) {
             const container = btn.closest('.video-desc-container');
             container.classList.toggle('active');
