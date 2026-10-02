@@ -154,7 +154,7 @@
     <div id="coffre-magique" onclick="exploserCadeau()">🎁</div>
 
     <footer>
-        <a href="https://lepetitprincedesjardiniers.github.io/ministere-de-lhonnetete.html#apropos" class="lien-copyright">© 2000 le petit prince des jardiniers</a>
+        <a href="transition-externe.html" class="lien-copyright">© 2000 le petit prince des jardiniers</a>
     </footer>
 
     <script>
@@ -208,13 +208,13 @@
         }
         setInterval(creerMessager, 6000);
 
-        // Fonction pour faire voler un journal interactif comme une colombe !
+        // Fonction pour faire voler le journal vers le Ministère de l'Honnêteté !
         function creerJournalVolant() {
             const j = document.createElement('a');
-            j.href = 'journal.html';
+            j.href = 'https://lepetitprincedesjardiniers.github.io/ministere-de-lhonnetete.html#apropos';
             j.className = 'journal-volant';
             j.innerHTML = '📰';
-            j.title = 'Le Journal - Ministère de l\'honnêteté';
+            j.title = 'Ministère de l\'honnêteté - À propos';
             
             const fromLeft = Math.random() > 0.5;
             j.style.top = (Math.random() * (window.innerHeight - 150)) + 'px';
