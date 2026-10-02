@@ -15,6 +15,7 @@
             background-color: #E8F5E9; 
             color: #004d40; 
             padding-bottom: 80px; 
+            scroll-behavior: smooth;
         }
 
         .header-tools { display: flex; justify-content: space-between; align-items: center; padding: 10px 20px; }
@@ -231,7 +232,7 @@
     </div>
 
     <div style="max-width: 95vw; margin: 40px auto; padding: 10px;">
-        <h3 style="color:#00695c; margin-bottom: 20px;">🕊️ Dossiers en cours de résolution</h3>
+        <h3 id="titre-dossiers" style="color:#00695c; margin-bottom: 20px;">🕊️ Dossiers en cours de résolution</h3>
         <div id="chargement" style="font-weight:bold; color:#004d40;">Appel de la sagesse citoyenne...</div>
         <div id="flux-conflits" class="mur-reel"></div>
     </div>
@@ -261,7 +262,7 @@
             new google.translate.TranslateElement({pageLanguage: 'fr'}, 'google_translate_element'); 
         }
 
-        // --- GESTION NOTIFICATION AUTOMATIQUE ---
+        // --- GESTION NOTIFICATION AUTOMATIQUE (Réglée à 3 secondes) ---
         function montrerNotification(texte) {
             const notif = document.getElementById('notification-flottante');
             document.getElementById('texte-notification').innerText = texte;
@@ -273,7 +274,7 @@
 
             notificationTimer = setTimeout(() => {
                 fermerNotification();
-            }, 5000);
+            }, 3000);
         }
 
         function fermerNotification() {
@@ -488,7 +489,7 @@
                     body: formData
                 });
 
-                montrerNotification("Votre réponse a été transmise ! Retour aux annonces dans 3 secondes... 🕊️");
+                montrerNotification("Votre réponse a été transmise ! Retour aux annonces... 🕊️");
 
                 // Affichage d'un message de succès dans la modale avant fermeture
                 const sectionRep = document.getElementById('section-reponses');
@@ -498,10 +499,12 @@
                     </div>
                 `;
 
-                // Attente de 3 secondes, puis fermeture de la modale et rafraîchissement des annonces
+                // Attente de 3 secondes, puis fermeture, mise à jour et défilement vers les dossiers
                 setTimeout(async () => {
                     fermerGrandMessage();
                     await chargerConflits();
+                    // Bascule/Défilement fluide vers la section des dossiers
+                    document.getElementById('titre-dossiers').scrollIntoView({ behavior: 'smooth' });
                 }, 3000);
 
             } catch (err) {
