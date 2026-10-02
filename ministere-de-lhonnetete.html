@@ -78,17 +78,32 @@
 
         <!-- Section Articles -->
         <section id="articles" class="space-y-8">
-            <div class="flex justify-between items-end border-b border-orange-200 pb-4">
+            <div class="flex flex-col sm:flex-row justify-between items-start sm:items-end gap-4 border-b border-orange-200 pb-4">
                 <div>
                     <span class="text-xs uppercase tracking-widest font-extrabold text-joy-orange block">Publications récentes</span>
                     <h2 class="text-3xl font-extrabold text-joy-dark">Articles & Décryptages</h2>
                 </div>
-                <span class="text-sm text-gray-500 hidden sm:block font-medium">Géré via Google Sheets</span>
+                <!-- Barre de recherche intégrée proprement -->
+                <div class="w-full sm:w-80">
+                    <div class="relative">
+                        <span class="absolute inset-y-0 left-0 flex items-center pl-3.5 pointer-events-none text-gray-400">
+                            <i class="fa-solid fa-search"></i>
+                        </span>
+                        <input type="text" id="search-input" oninput="filterArticles()" placeholder="Rechercher par titre, sujet..." class="w-full pl-10 pr-4 py-2.5 bg-white border border-orange-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-joy-orange shadow-sm transition">
+                    </div>
+                </div>
             </div>
 
             <!-- Grille des articles dynamique -->
             <div id="articles-grid" class="grid grid-cols-1 md:grid-cols-3 gap-8">
                 <!-- Les articles injectés par JavaScript apparaîtront ici -->
+            </div>
+
+            <!-- Bouton "Charger plus" pour les centaines d'articles -->
+            <div id="load-more-container" class="text-center pt-6 hidden">
+                <button onclick="showMoreArticles()" class="bg-orange-50 hover:bg-joy-orange hover:text-white text-joy-orange font-bold text-sm px-6 py-3 rounded-xl transition border border-orange-200 shadow-sm cursor-pointer inline-flex items-center gap-2">
+                    <span>Charger plus d'articles</span> <i class="fa-solid fa-chevron-down text-xs"></i>
+                </button>
             </div>
         </section>
 
@@ -162,23 +177,22 @@
         </div>
     </footer>
 
-    <!-- Script de liaison Google Sheets & Gestion de la Popup -->
+    <!-- Script de liaison Google Sheets, Recherche & Pagination -->
     <script>
         const sheetID = "1jJZm_WSIMgM5r-Y5zTSrC8FUiLhRN-dOcPnIcSyTpSI";
         const gid = "1311533436";
         const csvUrl = `https://docs.google.com/spreadsheets/d/${sheetID}/export?format=csv&gid=${gid}`;
 
+        let allArticles = []; // Stocke tous les articles pour le moteur de recherche
+        let displayedLimit = 9; // Nombre d'articles affichés initialement par bloc
+
         // Transforme un lien normal (Google Doc ou YouTube) en lien intégrable dans la popup
         function getEmbedUrl(url) {
             if (!url) return '';
-            
-            // Si c'est un Google Doc
             if (url.includes('docs.google.com/document/d/')) {
                 const match = url.match(/\/document\/d\/([a-zA-Z0-9-_]+)/);
                 return match ? `https://docs.google.com/document/d/${match[1]}/preview` : url;
             }
-            
-            // Si c'est un lien YouTube standard (watch?v=...)
             if (url.includes('youtube.com/watch?v=')) {
                 try {
                     const urlObj = new URL(url);
@@ -186,8 +200,6 @@
                     return videoId ? `https://www.youtube.com/embed/${videoId}?autoplay=1` : url;
                 } catch(e) {}
             }
-            
-            // Si c'est un lien YouTube court (youtu.be/...)
             if (url.includes('youtu.be/')) {
                 const parts = url.split('youtu.be/');
                 if (parts[1]) {
@@ -195,15 +207,12 @@
                     return `https://www.youtube.com/embed/${videoId}?autoplay=1`;
                 }
             }
-            
             return url;
         }
 
         // Ouvrir la modale (ou nouvel onglet si YouTube / Réseaux sociaux)
         function openModal(title, url) {
             if (!url) return;
-
-            // Si c'est YouTube ou un réseau social, on ouvre dans un nouvel onglet pour éviter l'erreur de connexion
             if (url.includes('youtube.com') || url.includes('youtu.be') || url.includes('instagram.com') || url.includes('tiktok.com') || url.includes('twitter.com') || url.includes('x.com') || url.includes('facebook.com')) {
                 window.open(url, '_blank');
                 return;
@@ -216,7 +225,7 @@
             modalTitle.textContent = title;
             iframe.src = getEmbedUrl(url);
             modal.classList.remove('hidden');
-            document.body.style.overflow = 'hidden'; // Empêche le fond de défiler
+            document.body.style.overflow = 'hidden';
         }
 
         // Fermer la modale
@@ -225,16 +234,90 @@
             const iframe = document.getElementById('modal-iframe');
             
             modal.classList.add('hidden');
-            iframe.src = ''; // Coupe la vidéo ou décharge le doc
+            iframe.src = '';
             document.body.style.overflow = 'auto';
         }
 
-        // Fermer la modale en cliquant en dehors de la boîte blanche
         document.getElementById('content-modal').addEventListener('click', function(e) {
-            if (e.target === this) {
-                closeModal();
-            }
+            if (e.target === this) closeModal();
         });
+
+        // Fonction pour afficher les articles dans la grille avec gestion de la recherche et pagination
+        function renderArticles() {
+            const grid = document.getElementById('articles-grid');
+            const searchInput = document.getElementById('search-input');
+            const loadMoreContainer = document.getElementById('load-more-container');
+            
+            const query = searchInput ? searchInput.value.toLowerCase().trim() : "";
+
+            // Filtrer selon la recherche
+            const filtered = allArticles.filter(item => {
+                return item.titre.toLowerCase().includes(query) || 
+                       item.description.toLowerCase().includes(query) || 
+                       item.categorie.toLowerCase().includes(query);
+            });
+
+            // Limiter l'affichage au nombre autorisé (sauf si une recherche est active)
+            const limit = query ? filtered.length : displayedLimit;
+            const articlesToDisplay = filtered.slice(0, limit);
+
+            if (filtered.length === 0) {
+                grid.innerHTML = `<div class="col-span-3 text-center py-12 text-gray-500 font-medium">Aucun article trouvé pour "${query}".</div>`;
+                loadMoreContainer.classList.add('hidden');
+                return;
+            }
+
+            let html = '';
+            articlesToDisplay.forEach(art => {
+                const safeTitle = art.titre.replace(/'/g, "\\'").replace(/"/g, '&quot;');
+                html += `
+                    <article class="bg-white rounded-3xl border border-orange-100 overflow-hidden shadow-sm hover:shadow-xl hover:-translate-y-1 transition duration-300 flex flex-col justify-between">
+                        <div>
+                            <div class="h-48 bg-gradient-to-br from-amber-100 to-orange-100 flex items-center justify-center text-joy-orange">
+                                <i class="fa-solid fa-newspaper text-4xl"></i>
+                            </div>
+                            <div class="p-6 space-y-3">
+                                <div class="flex items-center justify-between text-xs font-bold">
+                                    <span class="bg-amber-100 text-amber-800 px-3 py-1 rounded-full">${art.categorie}</span>
+                                    <span class="text-gray-400 font-normal">${art.date}</span>
+                                </div>
+                                <h3 class="text-xl font-extrabold text-gray-900 leading-snug">
+                                    ${art.titre}
+                                </h3>
+                                <p class="text-gray-600 text-sm leading-relaxed line-clamp-3">
+                                    ${art.description}
+                                </p>
+                            </div>
+                        </div>
+                        <div class="p-6 pt-0">
+                            <button onclick="openModal('${safeTitle}', '${art.lien}')" class="text-joy-orange font-bold text-sm hover:underline inline-flex items-center gap-1.5 cursor-pointer bg-transparent border-0 p-0">
+                                Lire l'article complet <i class="fa-solid fa-arrow-right text-xs"></i>
+                            </button>
+                        </div>
+                    </article>
+                `;
+            });
+
+            grid.innerHTML = html;
+
+            // Afficher ou cacher le bouton "Charger plus"
+            if (!query && displayedLimit < filtered.length) {
+                loadMoreContainer.classList.remove('hidden');
+            } else {
+                loadMoreContainer.classList.add('hidden');
+            }
+        }
+
+        // Action de la barre de recherche
+        function filterArticles() {
+            renderArticles();
+        }
+
+        // Charger plus d'articles au clic
+        function showMoreArticles() {
+            displayedLimit += 9;
+            renderArticles();
+        }
 
         // Lecture des données du Google Sheet via PapaParse
         Papa.parse(csvUrl, {
@@ -244,8 +327,8 @@
                 const data = results.data;
                 
                 let alauneHTML = '';
-                let articlesHTML = '';
                 let videosHTML = '';
+                allArticles = []; // Réinitialisation
 
                 data.forEach(row => {
                     const cleanRow = {};
@@ -263,7 +346,6 @@
 
                     if (!titre) return; // Ignore les lignes vides
 
-                    // Sécurisation du titre pour le JS
                     const safeTitle = titre.replace(/'/g, "\\'").replace(/"/g, '&quot;');
 
                     if (pos === 'alaune-article') {
@@ -294,32 +376,8 @@
                             </div>
                         `;
                     } else if (pos === 'article') {
-                        articlesHTML += `
-                            <article class="bg-white rounded-3xl border border-orange-100 overflow-hidden shadow-sm hover:shadow-xl hover:-translate-y-1 transition duration-300 flex flex-col justify-between">
-                                <div>
-                                    <div class="h-48 bg-gradient-to-br from-amber-100 to-orange-100 flex items-center justify-center text-joy-orange">
-                                        <i class="fa-solid fa-newspaper text-4xl"></i>
-                                    </div>
-                                    <div class="p-6 space-y-3">
-                                        <div class="flex items-center justify-between text-xs font-bold">
-                                            <span class="bg-amber-100 text-amber-800 px-3 py-1 rounded-full">${cat}</span>
-                                            <span class="text-gray-400 font-normal">${date}</span>
-                                        </div>
-                                        <h3 class="text-xl font-extrabold text-gray-900 leading-snug">
-                                            ${titre}
-                                        </h3>
-                                        <p class="text-gray-600 text-sm leading-relaxed">
-                                            ${desc}
-                                        </p>
-                                    </div>
-                                </div>
-                                <div class="p-6 pt-0">
-                                    <button onclick="openModal('${safeTitle}', '${lien}')" class="text-joy-orange font-bold text-sm hover:underline inline-flex items-center gap-1.5 cursor-pointer bg-transparent border-0 p-0">
-                                        Lire l'article complet <i class="fa-solid fa-arrow-right text-xs"></i>
-                                    </button>
-                                </div>
-                            </article>
-                        `;
+                        // On stocke tous les articles pour alimenter le moteur de recherche
+                        allArticles.push({ titre, description: desc, lien, categorie: cat, date });
                     } else if (pos === 'video' || pos === 'alaune-video') {
                         videosHTML += `
                             <div class="space-y-4 group cursor-pointer" onclick="openModal('${safeTitle}', '${lien}')">
@@ -341,8 +399,10 @@
                 });
 
                 if (alauneHTML) document.getElementById('alaune-content').innerHTML = alauneHTML;
-                if (articlesHTML) document.getElementById('articles-grid').innerHTML = articlesHTML;
                 if (videosHTML) document.getElementById('videos-grid').innerHTML = videosHTML;
+                
+                // Afficher les articles initiaux avec pagination
+                renderArticles();
             }
         });
     </script>
