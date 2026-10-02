@@ -199,8 +199,16 @@
             return url;
         }
 
-        // Ouvrir la modale
+        // Ouvrir la modale (ou nouvel onglet si YouTube / Réseaux sociaux)
         function openModal(title, url) {
+            if (!url) return;
+
+            // Si c'est YouTube ou un réseau social, on ouvre dans un nouvel onglet pour éviter l'erreur de connexion
+            if (url.includes('youtube.com') || url.includes('youtu.be') || url.includes('instagram.com') || url.includes('tiktok.com') || url.includes('twitter.com') || url.includes('x.com') || url.includes('facebook.com')) {
+                window.open(url, '_blank');
+                return;
+            }
+
             const modal = document.getElementById('content-modal');
             const modalTitle = document.getElementById('modal-title');
             const iframe = document.getElementById('modal-iframe');
