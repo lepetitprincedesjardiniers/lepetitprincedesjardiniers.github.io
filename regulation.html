@@ -110,7 +110,7 @@
             display: -webkit-box;
             -webkit-line-clamp: 5;
             -webkit-box-orient: vertical;
-            white-space: pre-wrap; /* Respect des retours à la ligne */
+            white-space: pre-wrap; 
         }
         .details-bas { font-size: 0.7em; color: #666; line-height: 1.3; border-top: 1px solid #eee; padding-top: 5px; background: white; }
 
@@ -271,7 +271,6 @@
                 clearTimeout(notificationTimer);
             }
 
-            // S'efface seule après 5 secondes si pas de clic sur la croix
             notificationTimer = setTimeout(() => {
                 fermerNotification();
             }, 5000);
@@ -458,7 +457,7 @@
                     <form id="formReponse" onsubmit="envoyerReponse(event, '${annonceActiveId}')">
                         <input type="text" id="repNom" placeholder="Votre nom ou pseudo..." required style="margin-bottom: 6px; padding: 8px;">
                         <textarea id="repMessage" rows="2" placeholder="Rédigez votre réponse bienveillante ici..." required style="margin-bottom: 6px; padding: 8px;"></textarea>
-                        <button type="submit" style="background: #008080; color: white; border: none; padding: 8px 15px; border-radius: 8px; font-weight: bold; cursor: pointer; width: 100%;">Envoyer ma réponse 🕊️</button>
+                        <button type="submit" id="btnReponseSubmit" style="background: #008080; color: white; border: none; padding: 8px 15px; border-radius: 8px; font-weight: bold; cursor: pointer; width: 100%;">Envoyer ma réponse 🕊️</button>
                     </form>
                 </div>
             `;
@@ -471,6 +470,9 @@
 
             const nomRep = document.getElementById('repNom').value;
             const msgRep = document.getElementById('repMessage').value;
+            const btnSub = document.getElementById('btnReponseSubmit');
+            btnSub.innerText = "Transmission...";
+            btnSub.disabled = true;
 
             const formData = new URLSearchParams();
             formData.append('type', 'REPONSE_REGULATION');
@@ -486,20 +488,27 @@
                     body: formData
                 });
 
-                montrerNotification("Votre réponse pleine de sagesse a été transmise ! L'administration l'a bien prise en compte. 🕊️");
-                
-                const response = await fetch(WEB_APP_URL + "?v=" + Date.now());
-                globalData = await response.json();
-                
-                const annonceActuelle = globalData.find(d => (d.Horodateur || d.nom) === refId);
-                if (annonceActuelle) {
-                    ouvrirGrandMessage(annonceActuelle);
-                }
-                chargerConflits();
+                montrerNotification("Votre réponse a été transmise ! Retour aux annonces dans 3 secondes... 🕊️");
+
+                // Affichage d'un message de succès dans la modale avant fermeture
+                const sectionRep = document.getElementById('section-reponses');
+                sectionRep.innerHTML += `
+                    <div style="background: #C8E6C9; color: #1B5E20; padding: 10px; border-radius: 8px; margin-top: 10px; font-weight: bold; text-align: center;">
+                        ✓ Réponse envoyée avec succès ! Retour au mur des annonces...
+                    </div>
+                `;
+
+                // Attente de 3 secondes, puis fermeture de la modale et rafraîchissement des annonces
+                setTimeout(async () => {
+                    fermerGrandMessage();
+                    await chargerConflits();
+                }, 3000);
 
             } catch (err) {
                 console.error(err);
                 montrerNotification("Erreur lors de l'envoi de la réponse.");
+                btnSub.innerText = "Envoyer ma réponse 🕊️";
+                btnSub.disabled = false;
             }
         }
 
