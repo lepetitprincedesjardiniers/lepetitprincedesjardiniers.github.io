@@ -2,217 +2,240 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <title>Régulation & Justice Fraternelle - Le Jardin</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Régulation Citoyenne - Le Petit Prince</title>
     <style>
-        body { font-family: 'Comic Sans MS', cursive; text-align: center; margin: 0; padding: 0; background-color: #FFFF00; color: #000080; min-height: 100vh; padding-bottom: 80px; transition: background 0.3s, color 0.3s; }
-        .top-bar { position: relative; width: 100%; min-height: 50px; background: rgba(255,255,255,0.3); padding: 5px 0; display: flex; justify-content: center; align-items: center; }
-        
-        #google_translate_element { position: absolute; left: 10px; top: 10px; z-index: 2000; transform: scale(0.85); transform-origin: top left; }
+        body { 
+            font-family: 'Comic Sans MS', cursive; 
+            text-align: center; 
+            margin: 0; 
+            padding: 0; 
+            background-color: #FFFF00; 
+            color: #000080; 
+            padding-bottom: 80px;
+        }
 
-        .menu-table { margin: 5px auto; border-radius: 10px; background-color: #008080; border-collapse: collapse; }
-        .menu-table td { padding: 8px 15px; border: 1px solid #FFFFFF; }
-        .menu-table a { text-decoration: none; color: #FFFFFF; font-weight: bold; font-size: 0.85em; }
+        #google_translate_element { padding: 10px; }
 
-        #btn-mode { position: absolute; right: 10px; top: 10px; background: #444; color: #FFD700; border: 1px solid #222; border-radius: 5px; cursor: pointer; font-size: 14px; padding: 2px 5px; z-index: 1001; }
+        .menu-table { 
+            margin: 20px auto; 
+            background-color: #008080; 
+            border-collapse: collapse; 
+            border-radius: 10px; 
+            overflow: hidden; 
+        }
+        .menu-table td { padding: 10px 15px; border: 1px solid #FFFFFF; }
+        .menu-table a { text-decoration: none; color: #FFFFFF; font-weight: bold; }
+        .menu-table td:hover { background-color: #00b3b3; }
 
-        .phrase-rose { color: #ff1493; font-weight: bold; font-size: 1.1em; text-shadow: 1px 1px 2px #ff69b4; margin-top: 5px; }
-        .phrase-sous { color: #000080; font-weight: bold; margin: 1px 0; font-size: 0.9em; }
+        /* FORMULAIRE */
+        .etoile-form { 
+            background: #E6E6FA; 
+            border: 3px solid #9370DB; 
+            width: 90%; 
+            max-width: 600px; 
+            margin: 30px auto; 
+            padding: 30px; 
+            border-radius: 20px;
+            box-shadow: 0px 10px 20px rgba(147, 112, 219, 0.3);
+            text-align: left;
+        }
+        label { display: block; margin-top: 15px; font-weight: bold; color: #4a148c; }
+        input, textarea, select { 
+            width: 100%; padding: 12px; margin: 8px 0; 
+            border-radius: 12px; border: 2px solid #9370DB; 
+            box-sizing: border-box; font-family: inherit; 
+            background: #fff; color: #333;
+        }
+        .btn-envoi { 
+            background: #9370DB; color: white; border: none; 
+            padding: 15px; border-radius: 25px; 
+            font-weight: bold; cursor: pointer; font-size: 1.1em; 
+            transition: 0.3s; width: 100%; margin-top: 20px; 
+        }
+        .btn-envoi:hover { transform: scale(1.02); background: #7a5eb3; }
 
-        /* --- FORMULAIRE RÉGULATION --- */
-        .form-box { background: #008080; padding: 15px; margin: 15px auto; max-width: 95%; width: 600px; border-radius: 25px; color: white; box-shadow: 0 8px 20px rgba(0,0,0,0.2); border: 3px solid #fff; text-align: left; }
-        .form-box label { font-size: 0.9em; font-weight: bold; display: block; margin-top: 8px; }
-        .form-box input, .form-box textarea { width: 100%; padding: 8px; margin: 5px 0 10px 0; border-radius: 10px; border: none; box-sizing: border-box; font-family: 'Comic Sans MS'; font-size: 0.9em; color: #004D40; }
-        .form-box button { background: #FF1493; color: white; border: 2px solid white; padding: 10px; border-radius: 15px; font-weight: bold; cursor: pointer; display: block; width: 100%; font-size: 1em; font-family: 'Comic Sans MS'; margin-top: 10px; }
+        #searchBox { 
+            width: 90%; max-width: 650px; padding: 12px; 
+            margin: 20px auto; border-radius: 25px; 
+            border: 2px solid #9370DB; display: block;
+        }
 
-        /* --- GRILLE DU REGISTRE --- */
-        .mur-reel { display: grid; grid-template-columns: repeat(5, minmax(150px, 1fr)); gap: 10px; padding: 10px; max-width: 98vw; margin: 0 auto; }
-        @media (max-width: 768px) { .mur-reel { grid-template-columns: repeat(2, 1fr); } }
-
-        .carte-message { background: white; border: 2px solid #008080; border-radius: 10px; padding: 8px; box-shadow: 3px 3px 0px #008080; display: flex; flex-direction: column; height: 280px; cursor: pointer; position: relative; overflow: hidden; text-align: left; transition: transform 0.2s; }
-        .carte-message:hover { transform: translateY(-3px); }
-        .nom-prenom { color: #2E7D32; font-weight: bold; font-size: 0.8em; border-bottom: 1px solid #eee; margin-bottom: 3px; }
-        .rubrique-tag { font-size: 0.55em; background: #ff1493; color: white; padding: 1px 4px; border-radius: 5px; position: absolute; top: 5px; right: 5px; }
-        
-        .texte-annonce { flex-grow: 1; font-style: italic; color: #000080; overflow-y: auto; font-size: 0.75em; margin: 5px 0; line-height: 1.2; padding-right: 5px; }
-        .details-bas { font-size: 0.75em; color: #444; line-height: 1.3; border-top: 1px solid #eee; padding-top: 5px; background: white; }
-
-        /* --- FOND SOMBRE ET MODALE --- */
-        #fond-sombre { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); z-index: 2000; justify-content: center; align-items: center; }
-        .message-geant { background: #FFFFF0; width: 95%; max-width: 800px; padding: 25px; border-radius: 25px; border: 8px solid #008080; position: relative; max-height: 80vh; overflow-y: auto; color: #000; text-align: left; }
-        .bouton-fermer { position: absolute; top: 15px; right: 15px; background: #FF1493; color: white; border-radius: 50%; width: 40px; height: 40px; cursor: pointer; border: 2px solid white; font-weight: bold; font-size: 1em; }
-
-        /* MODE SOMBRE ET ÉTOILES */
-        body.dark-mode { background-color: #0a0a1a; color: #e0e0e0; }
-        .star { position: fixed; background: white; border-radius: 50%; opacity: 0; pointer-events: none; animation: twinkle var(--d) infinite; }
-        @keyframes twinkle { 0%, 100% { opacity: 0.3; } 50% { opacity: 1; } }
-        
-        .copyright-link { color: #008080; text-decoration: none; font-weight: bold; }
+        /* LISTE DES CONFLITS ET CARTES */
+        .liste-conflits { max-width: 700px; margin: 40px auto; padding: 20px; }
+        .carte-conflit { 
+            background: white; border-left: 10px solid #9370DB; 
+            border-radius: 15px; padding: 20px; margin-bottom: 20px; 
+            text-align: left; box-shadow: 4px 4px 10px rgba(0,0,0,0.1); 
+            color: #333;
+        }
+        .reponse-sage { 
+            margin-left: 20px; margin-top: 10px; padding: 10px; 
+            background: #F3E5F5; border-left: 4px solid #9370DB; 
+            border-radius: 8px; font-size: 0.9em; color: #4a148c; 
+        }
+        .btn-avis { 
+            display: inline-block; margin-top: 10px; color: #9370DB; 
+            cursor: pointer; font-weight: bold; font-size: 0.85em; 
+            text-decoration: underline; 
+        }
     </style>
 </head>
 <body>
 
-    <div class="top-bar">
-        <div id="google_translate_element"></div>
-        <table class="menu-table">
-            <tr>
-                <td><a href="index.html">Accueil</a></td>
-                <td><a href="formulaire.html">Semer</a></td>
-                <td><a href="jardin.html">Le Jardin</a></td>
-                <td><a href="impot.html">Impôts Publics</a></td>
-                <td><a href="regulation.html">Régulation</a></td>
-                <td><a href="aide.html">Aide</a></td>
-            </tr>
-        </table>
-        <button id="btn-mode" onclick="basculerModeSombre()">🏮</button>
-    </div>
+    <div id="google_translate_element"></div>
+    <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+    <script>
+        function googleTranslateElementInit() { 
+            new google.translate.TranslateElement({pageLanguage: 'fr'}, 'google_translate_element'); 
+        }
+    </script>
 
-    <h2 style="color:#2E7D32; margin: 10px 0;">⚖️ Régulation & Justice Fraternelle ⚖️</h2>
-    <div class="phrase-rose">Participez au registre des régulations et équilibres du monde</div>
-    <div class="phrase-sous">Sagesse, justice et concorde souveraine.</div>
+    <table class="menu-table">
+        <tr>
+            <td><a href="index.html">Accueil</a></td>
+            <td><a href="formulaire.html">Semer</a></td>
+            <td><a href="jardin.html">Le Jardin</a></td>
+            <td><a href="impots.html">Impôts</a></td>
+            <td><a href="regulation.html">Régulation</a></td>
+            <td><a href="aide.html">Aide</a></td>
+        </tr>
+    </table>
 
-    <!-- Formulaire d'envoi -->
-    <div class="form-box">
-        <form id="formRegulation" onsubmit="envoyerRegulation(event)">
-            <input type="hidden" name="type" value="REGULATION">
+    <h1>⚖️ Zone de Régulation Citoyenne</h1>
+    <p><i>Expose ton conflit avec sincérité. La communauté répondra avec délicatesse.</i></p>
+
+    <div class="etoile-form">
+        <form id="regForm">
+            <input type="hidden" name="type" value="Conflit">
             
-            <label>👤 Votre Nom ou Pseudo :</label>
-            <input type="text" name="nom" required placeholder="Ex: Veilleur de paix">
+            <label>Ton nom ou pseudo :</label>
+            <input type="text" id="nom" name="nom" placeholder="Ton nom..." required>
 
-            <label>📍 Pays :</label>
-            <input type="text" name="pays_select" placeholder="Ex: France">
+            <label>Zone Géographique (Pays, Ville) :</label>
+            <input type="text" id="ville" name="localisation" placeholder="Ex: France, Paris..." required>
 
-            <label>🏙️ Localisation / Ville :</label>
-            <input type="text" name="localisation" placeholder="Ex: Lyon">
+            <label>Durée de validité (en jours) :</label>
+            <input type="number" id="duree_validite" name="duree_validite" value="30" min="1" required>
 
-            <label>⏳ Durée de validité (en jours) :</label>
-            <input type="number" name="duree_validite" value="30" min="1" required>
+            <label>Expose ton conflit :</label>
+            <textarea id="message" name="message" rows="5" placeholder="Décris la situation ici..." required></textarea>
 
-            <label>💬 Votre offrande / Régulation :</label>
-            <textarea name="message" rows="3" required placeholder="Votre message pour la régulation..."></textarea>
-
-            <button type="submit" id="btnTexte">⚖️ Publier la Régulation</button>
+            <p><small>En soumettant, tu acceptes le regard bienveillant, le pardon ou la sentence symbolique de tes pairs.</small></p>
+            <button type="submit" id="btnEnvoi" class="btn-envoi">SOUMETTRE À L'ENSEMBLE 🕊️</button>
         </form>
     </div>
 
-    <h3 style="color: #008080; margin: 20px 0;">📖 Registre de la Régulation</h3>
-    <div id="mur-messages" class="mur-reel"></div>
-
-    <!-- Modale Grand Message -->
-    <div id="fond-sombre" onclick="fermerGrandMessage()">
-        <div class="message-geant" onclick="event.stopPropagation()">
-            <button class="bouton-fermer" onclick="fermerGrandMessage()">X</button>
-            <div id="geant-contenu"></div>
-        </div>
+    <div style="max-width: 650px; margin: auto; padding: 10px;">
+        <input type="text" id="searchBox" onkeyup="filtrer()" placeholder="🔍 Chercher une ville, un nom...">
     </div>
 
-    <div class="footer-copyright" style="margin: 30px 0;">
-        <a href="merci.html" class="copyright-link">© 2000 Le petit prince des jardiniers</a>
+    <div class="liste-conflits">
+        <h3 style="color:#9370DB;">🕊️️ Dossiers en cours de résolution</h3>
+        <div id="chargement">Appel de la sagesse citoyenne...</div>
+        <div id="flux-conflits"></div>
     </div>
-
-    <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
 
     <script>
-        const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbxxToz22V88elCCjxLqjRtsb5iBIC156cbBFRIlTsju2SwOj9yNnKqzAwFITXMg_wij/exec";
+        const URL_SERVEUR = "https://script.google.com/macros/s/AKfycbz4ncs9qw_AfmKSER5QST-P0OeKQggQaq86QC6liS53uZ9sx4Lo_-4-h1knXKWqgQMc/exec";
 
-        function googleTranslateElementInit() { new google.translate.TranslateElement({pageLanguage: 'fr'}, 'google_translate_element'); }
+        document.getElementById('regForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const btn = document.getElementById('btnEnvoi');
+            btn.innerText = "Transmission en cours...";
+            btn.disabled = true;
 
-        function basculerModeSombre() {
-            document.body.classList.toggle('dark-mode');
-            if (document.body.classList.contains('dark-mode')) {
-                for(let i=0; i<60; i++) {
-                    let s = document.createElement('div'); s.className = 'star';
-                    s.style.left = Math.random()*100+'vw'; s.style.top = Math.random()*100+'vh';
-                    s.style.width = s.style.height = Math.random()*3+'px';
-                    s.style.setProperty('--d', (Math.random()*3+2)+'s');
-                    document.body.appendChild(s);
-                }
-            } else { document.querySelectorAll('.star').forEach(s => s.remove()); }
+            const donnees = {
+                date: new Date().toLocaleDateString('fr-FR'),
+                type: "Conflit",
+                nom: document.getElementById('nom').value,
+                localisation: document.getElementById('ville').value,
+                duree_validite: document.getElementById('duree_validite').value,
+                message: document.getElementById('message').value
+            };
+
+            fetch(URL_SERVEUR, {
+                method: 'POST',
+                mode: 'no-cors',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(donnees)
+            }).then(() => {
+                alert("Ton dossier a été déposé avec succès.");
+                location.reload();
+            }).catch(() => {
+                alert("Erreur lors de l'envoi.");
+                btn.innerText = "SOUMETTRE À L'ENSEMBLE 🕊️";
+                btn.disabled = false;
+            });
+        });
+
+        function apporterAvis(nomConflit) {
+            const avis = prompt("Quel est ton avis de sage pour résoudre ce conflit ?");
+            if (avis) {
+                const nomSage = prompt("Ton nom ou pseudo de sage :") || "Anonyme";
+                const donneesAvis = {
+                    date: new Date().toLocaleDateString('fr-FR'),
+                    type: "Avis",
+                    nom: nomSage,
+                    localisation: "Réponse à : " + nomConflit,
+                    message: avis
+                };
+
+                fetch(URL_SERVEUR, {
+                    method: 'POST',
+                    mode: 'no-cors',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(donneesAvis)
+                }).then(() => {
+                    alert("Ton avis a été ajouté au registre de justice.");
+                    location.reload();
+                });
+            }
         }
 
-        async function chargerRegulation() {
-            try {
-                const response = await fetch(WEB_APP_URL + "?v=" + Date.now());
-                const toutesLesAnnonces = await response.json();
-                
-                // Filtrer pour ne garder que le type REGULATION
-                const annoncesRegulation = toutesLesAnnonces.filter(ann => ann.type === "REGULATION");
-                const cont = document.getElementById('mur-messages');
-                cont.innerHTML = "";
+        fetch(URL_SERVEUR)
+            .then(r => r.json())
+            .then(data => {
+                document.getElementById('chargement').style.display = 'none';
+                const flux = document.getElementById('flux-conflits');
+                flux.innerHTML = "";
 
-                if (annoncesRegulation.length === 0) {
-                    cont.innerHTML = `<div style="grid-column: span 5; padding: 20px; font-weight: bold; background: white; border-radius: 10px; color: #008080;">Aucune régulation active pour l'instant... ⚖️</div>`;
+                const conflits = data.filter(d => d.type === "Conflit").reverse();
+                const avis = data.filter(d => d.type === "Avis");
+
+                if (conflits.length === 0) {
+                    flux.innerHTML = `<p style="color: #000080;">Aucun dossier en cours pour l'instant... 🕊️</p>`;
                     return;
                 }
 
-                annoncesRegulation.forEach(ann => {
-                    const d = document.createElement('div');
-                    d.className = 'carte-message';
-                    d.onclick = () => ouvrirGrandMessage(ann);
-                    d.innerHTML = `
-                        <div class="nom-prenom">${ann.nom || "Anonyme"}</div>
-                        <div class="rubrique-tag">Régulation</div>
-                        <div class="texte-annonce">"${ann.message}"</div>
-                        <div class="details-bas">
-                            📍 Localisation : ${ann.localisation || 'N/C'}<br>
-                            📍 Pays : ${ann.pays_select || 'N/C'}<br>
-                            ⏳ Validité : ${ann.duree_validite || '30'} jours
-                        </div>
+                conflits.forEach(c => {
+                    let avisHTML = "";
+                    avis.filter(a => a.localisation && a.localisation.includes(c.nom)).forEach(a => {
+                        avisHTML += `<div class="reponse-sage"><b>🌿 ${a.nom} :</b> ${a.message}</div>`;
+                    });
+
+                    const div = document.createElement('div');
+                    div.className = 'carte-conflit';
+                    div.innerHTML = `
+                        <small>${c.date} - <b>${c.nom}</b> à ${c.localisation} (Validité : ${c.duree_validite || '30'}j)</small>
+                        <p style="font-weight:bold; margin:10px 0;">"${c.message}"</p>
+                        ${avisHTML}
+                        <div class="btn-avis" onclick="apporterAvis('${c.nom}')">⚖️ Apporter un avis délicat</div>
                     `;
-                    cont.appendChild(d);
+                    flux.appendChild(div);
                 });
-            } catch (error) {
-                console.error("Erreur :", error);
-                document.getElementById('mur-messages').innerHTML = `<div style="grid-column: span 5; padding: 20px; font-weight: bold; background: white; border-radius: 10px;">Impossible de charger le registre... 🌱</div>`;
+            })
+            .catch(() => {
+                document.getElementById('chargement').innerText = "La justice est en repos... Impossible de charger le registre.";
+            });
+
+        function filtrer() {
+            let val = document.getElementById('searchBox').value.toLowerCase();
+            let cards = document.getElementsByClassName('carte-conflit');
+            for (let c of cards) {
+                c.style.display = c.innerText.toLowerCase().includes(val) ? "" : "none";
             }
         }
-
-        function ouvrirGrandMessage(ann) {
-            document.getElementById('geant-contenu').innerHTML = `
-                <div style="font-size:1.8em; color:#2E7D32; font-weight:bold; border-bottom:3px solid #008080; margin-bottom:20px;">⚖️ Régulation de ${ann.nom || "Anonyme"}</div>
-                <div style="background:white; padding:25px; border-radius:15px; border-left:10px solid #FF1493; font-size:1.4em; color:#000080; text-align:left; margin-bottom:20px;">"${ann.message}"</div>
-                <div style="text-align:left; background:#E0F2F1; padding:20px; border-radius:10px; font-size:1.1em;">
-                    <strong>📍 Localisation :</strong> ${ann.localisation || "N/C"}<br>
-                    <strong>📍 Pays :</strong> ${ann.pays_select || "N/C"}<br>
-                    <strong>⏳ Durée de validité :</strong> ${ann.duree_validite || "30"} jours<br>
-                    <strong>📅 Date :</strong> ${ann.Horodateur || "N/C"}
-                </div>
-            `;
-            document.getElementById('fond-sombre').style.display = 'flex';
-        }
-
-        function fermerGrandMessage() { 
-            document.getElementById('fond-sombre').style.display = 'none'; 
-        }
-
-        async function envoyerRegulation(event) {
-            event.preventDefault();
-            const btn = document.getElementById('btnTexte');
-            btn.innerText = "Publication en cours... ⚖️";
-            btn.disabled = true;
-
-            const form = document.getElementById('formRegulation');
-            const formData = new FormData(form);
-            const urlParams = new URLSearchParams(formData);
-
-            try {
-                await fetch(WEB_APP_URL, {
-                    method: 'POST',
-                    mode: 'no-cors',
-                    body: urlParams
-                });
-                alert("Votre régulation a bien été publiée ! ✨");
-                form.reset();
-                chargerRegulation();
-            } catch (err) {
-                console.error(err);
-                alert("Erreur lors de l'envoi.");
-            } finally {
-                btn.innerText = "⚖️ Publier la Régulation";
-                btn.disabled = false;
-            }
-        }
-
-        window.onload = chargerRegulation;
     </script>
 </body>
 </html>
