@@ -107,13 +107,13 @@
                     <span class="text-xs uppercase tracking-widest font-extrabold text-joy-orange block">Publications récentes</span>
                     <h2 class="text-3xl font-extrabold text-joy-dark">Articles & Décryptages</h2>
                 </div>
-                <!-- Barre de recherche unifiée (Articles & Vidéos) -->
+                <!-- Barre de recherche globale -->
                 <div class="w-full sm:w-80">
                     <div class="relative">
                         <span class="absolute inset-y-0 left-0 flex items-center pl-3.5 pointer-events-none text-gray-400">
                             <i class="fa-solid fa-search"></i>
                         </span>
-                        <input type="text" id="search-input" oninput="filterContent()" placeholder="Rechercher par titre, sujet..." class="w-full pl-10 pr-4 py-2.5 bg-white border border-orange-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-joy-orange shadow-sm transition">
+                        <input type="text" id="search-input" oninput="filterContent()" placeholder="Rechercher articles, vidéos, sujets..." class="w-full pl-10 pr-4 py-2.5 bg-white border border-orange-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-joy-orange shadow-sm transition">
                     </div>
                 </div>
             </div>
@@ -137,6 +137,355 @@
                     <h2 class="text-3xl font-extrabold text-joy-dark">Vidéos & Reportages</h2>
                 </div>
                 <a href="https://www.youtube.com/@lepetitploucdesjardiniers" target="_blank" class="text-sm font-bold text-gray-700 hover:text-joy-orange transition flex items-center gap-2 bg-orange-50 px-4 py-2 rounded-xl">
+                    <i class="fa-brands fa-youtube text-red-600 text-lg"></i> Chaîne vidéo
+                </a>
+            </div>
+
+            <!-- Grille des vidéos -->
+            <div id="videos-grid" class="grid grid-cols-1 md:grid-cols-2 gap-8"></div>
+
+            <!-- Bouton "Charger plus" Vidéos -->
+            <div id="load-more-videos-container" class="text-center pt-6 hidden">
+                <button onclick="showMoreVideos()" class="bg-orange-50 hover:bg-joy-orange hover:text-white text-joy-orange font-bold text-sm px-6 py-3 rounded-xl transition border border-orange-200 shadow-sm cursor-pointer inline-flex items-center gap-2">
+                    <span>Charger plus de vidéos</span> <i class="fa-solid fa-chevron-down text-xs"></i>
+                </button>
+            </div>
+        </section>
+
+        <!-- Section Notre Mission -->
+        <section id="apropos" class="max-w-3xl mx-auto text-center space-y-6 py-8 bg-gradient-to-r from-amber-100/50 via-orange-100/30 to-amber-100/50 p-6 sm:p-8 rounded-3xl border border-orange-200/50">
+            <div class="w-14 h-14 bg-joy-orange text-white rounded-2xl flex items-center justify-center mx-auto shadow-lg shadow-orange-500/20">
+                <i class="fa-solid fa-shield-halved text-2xl"></i>
+            </div>
+            <h2 class="text-2xl sm:text-3xl font-extrabold text-joy-dark">Notre engagement envers vous</h2>
+            <p class="text-gray-700 leading-relaxed text-base sm:text-lg">
+                Le <strong>Ministère de l'honnêteté</strong> est un espace d'information libre et vibrant, conçu pour les citoyens qui exigent de la rigueur, de la joie de débattre et de la transparence. Chaque article et chaque vidéo sont pensés pour vous donner les clés de compréhension de notre époque.
+            </p>
+        </section>
+
+    </main>
+
+    <!-- Fenêtre Popup (Modal) unique -->
+    <div id="content-modal" class="fixed inset-0 z-50 hidden bg-black/70 backdrop-blur-sm flex items-center justify-center p-2 sm:p-6">
+        <div class="bg-white w-full max-w-4xl h-[90vh] sm:h-[85vh] rounded-3xl shadow-2xl overflow-hidden flex flex-col relative border border-orange-200">
+            <div class="bg-joy-dark text-white px-4 sm:px-6 py-4 flex justify-between items-center shrink-0">
+                <h3 id="modal-title" class="font-bold text-base sm:text-lg truncate pr-4">Titre</h3>
+                <button onclick="closeModal()" class="text-gray-300 hover:text-white text-xl font-bold w-10 h-10 rounded-full bg-white/10 flex items-center justify-center transition shrink-0 cursor-pointer">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+            <div class="flex-1 bg-gray-50 relative iframe-container overflow-hidden">
+                <iframe id="modal-iframe" src="" class="w-full h-full border-0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modale Courrier des lecteurs -->
+    <div id="courrier-modal" class="fixed inset-0 z-50 hidden bg-black/70 backdrop-blur-sm flex items-center justify-center p-4 sm:p-6">
+        <div class="bg-white w-full max-w-lg rounded-3xl shadow-2xl overflow-hidden flex flex-col relative border border-orange-200 p-6 sm:p-8 text-center space-y-6">
+            <button onclick="closeCourrierModal()" class="absolute top-4 right-4 text-gray-400 hover:text-gray-700 text-xl font-bold w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center transition cursor-pointer">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+            <div class="w-16 h-16 bg-joy-orange text-white rounded-2xl flex items-center justify-center mx-auto shadow-lg shadow-orange-500/20">
+                <i class="fa-solid fa-envelope-open-text text-2xl"></i>
+            </div>
+            <h3 class="text-2xl font-extrabold text-joy-dark">Courrier des lecteurs</h3>
+            <p class="text-gray-800 text-lg font-semibold leading-relaxed">
+                Ne perds pas ton temps sur ton ordi, <span class="text-joy-orange underline decoration-wavy">va discuter dans ton quartier !</span>
+            </p>
+            <p class="text-gray-500 text-sm italic">(Rien ne vaut un vrai ébat public).</p>
+            <div>
+                <button onclick="closeCourrierModal()" class="bg-joy-orange text-white font-bold text-sm px-6 py-3 rounded-xl hover:bg-orange-600 transition shadow-md shadow-orange-500/20 cursor-pointer">
+                    J'ai compris, j'y vais ! 🌳
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modale Contact -->
+    <div id="contact-modal" class="fixed inset-0 z-50 hidden bg-black/70 backdrop-blur-sm flex items-center justify-center p-4 sm:p-6">
+        <div class="bg-white w-full max-w-lg rounded-3xl shadow-2xl overflow-hidden flex flex-col relative border border-orange-200 p-6 sm:p-8 text-center space-y-6">
+            <button onclick="closeContactModal()" class="absolute top-4 right-4 text-gray-400 hover:text-gray-700 text-xl font-bold w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center transition cursor-pointer">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+            <div class="w-16 h-16 bg-joy-orange text-white rounded-2xl flex items-center justify-center mx-auto shadow-lg shadow-orange-500/20">
+                <i class="fa-solid fa-user-secret text-2xl"></i>
+            </div>
+            <h3 class="text-2xl font-extrabold text-joy-dark">Contact</h3>
+            <p class="text-gray-800 text-lg font-semibold leading-relaxed">
+                Je ne parle pas aux inconnu(es) <span class="text-joy-orange block mt-2">mais si tu me rencontres, sois gentille avec nous !</span>
+            </p>
+            <div>
+                <button onclick="closeContactModal()" class="bg-joy-orange text-white font-bold text-sm px-6 py-3 rounded-xl hover:bg-orange-600 transition shadow-md shadow-orange-500/20 cursor-pointer">
+                    Promis ! 🤝
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Pied de page -->
+    <footer class="bg-joy-dark text-white border-t border-indigo-900">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+            <div class="flex flex-col md:flex-row justify-between items-center gap-6 border-b border-indigo-900 pb-8 text-center md:text-left">
+                <div class="flex items-center space-x-3 justify-center">
+                    <div class="bg-joy-orange text-white p-2.5 rounded-xl">
+                        <i class="fa-solid fa-scale-balanced text-lg"></i>
+                    </div>
+                    <span class="font-black text-lg tracking-tight">Ministère de l'honnêteté</span>
+                </div>
+                <div class="flex space-x-6 text-amber-300 justify-center">
+                    <a href="#" class="hover:text-white transition text-xl"><i class="fa-brands fa-x-twitter"></i></a>
+                    <a href="https://www.youtube.com/@lepetitploucdesjardiniers" target="_blank" class="hover:text-white transition text-xl"><i class="fa-brands fa-youtube"></i></a>
+                    <a href="#" class="hover:text-white transition text-xl"><i class="fa-brands fa-instagram"></i></a>
+                </div>
+            </div>
+            <div class="flex flex-col sm:flex-row justify-between items-center gap-4 pt-8 text-xs text-indigo-300 text-center sm:text-left">
+                <p>&copy; 2026 Ministère de l'honnêteté. Propulsé par LePetitPloucsDesJardiniers</p>
+                <div class="flex flex-wrap justify-center items-center gap-4 sm:space-x-6">
+                    <button onclick="openContactModal(event)" class="text-amber-300 hover:text-white transition font-bold cursor-pointer bg-transparent border-0 p-0 inline-flex items-center gap-1.5">
+                        <i class="fa-solid fa-address-book"></i> Contact
+                    </button>
+                    <button onclick="openCourrierModal(event)" class="text-amber-300 hover:text-white transition font-bold cursor-pointer bg-transparent border-0 p-0 inline-flex items-center gap-1.5">
+                        <i class="fa-solid fa-envelope"></i> Courrier des lecteurs
+                    </button>
+                    <a href="https://lepetitprincedesjardiniers.github.io/index.html" class="hover:text-white transition font-bold">Retour aux Petites Annonces Citoyennes</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Script de liaison Google Sheets, Recherche globale & Modales -->
+    <script>
+        const sheetID = "1jJZm_WSIMgM5r-Y5zTSrC8FUiLhRN-dOcPnIcSyTpSI";
+        const gid = "1311533436";
+        const csvUrl = `https://docs.google.com/spreadsheets/d/${sheetID}/export?format=csv&gid=${gid}`;
+
+        let allArticles = []; 
+        let allVideos = [];
+        let displayedArticlesLimit = 9; 
+        let displayedVideosLimit = 9; 
+
+        // Détecteur YouTube universel ultra-robuste (Watch, Shorts, youtu.be, embed)
+        function getYouTubeId(url) {
+            if (!url) return '';
+            const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|shorts\/|watch\?v=|\&v=)([^#\&\?]*).*/;
+            const match = url.match(regExp);
+            return (match && match[2].length === 11) ? match[2] : '';
+        }
+
+        function getEmbedUrl(url) {
+            if (!url) return '';
+            if (url.includes('docs.google.com/document/d/')) {
+                const match = url.match(/\/document\/d\/([a-zA-Z0-9-_]+)/);
+                return match ? `https://docs.google.com/document/d/${match[1]}/preview` : url;
+            }
+            const videoId = getYouTubeId(url);
+            if (videoId) {
+                return `https://www.youtube.com/embed/${videoId}?autoplay=1`;
+            }
+            return url;
+        }
+
+        function openModal(title, url) {
+            if (!url) return;
+            const modal = document.getElementById('content-modal');
+            const modalTitle = document.getElementById('modal-title');
+            const iframe = document.getElementById('modal-iframe');
+            
+            modalTitle.textContent = title;
+            iframe.src = getEmbedUrl(url);
+            modal.classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function openArticleByIndex(index) {
+            const art = allArticles[index];
+            if (art) openModal(art.titre, art.lien);
+        }
+
+        function openVideoByIndex(index) {
+            const vid = allVideos[index];
+            if (vid) openModal(vid.titre, vid.lien);
+        }
+
+        function closeModal() {
+            const modal = document.getElementById('content-modal');
+            const iframe = document.getElementById('modal-iframe');
+            
+            modal.classList.add('hidden');
+            iframe.src = '';
+            document.body.style.overflow = 'auto';
+        }
+
+        function openCourrierModal(e) {
+            if (e) e.preventDefault();
+            document.getElementById('courrier-modal').classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeCourrierModal() {
+            document.getElementById('courrier-modal').classList.add('hidden');
+            document.body.style.overflow = 'auto';
+        }
+
+        function openContactModal(e) {
+            if (e) e.preventDefault();
+            document.getElementById('contact-modal').classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeContactModal() {
+            document.getElementById('contact-modal').classList.add('hidden');
+            document.body.Je te prie de m'excuser pour ce petit hoquet technique passager, tout est rentré dans l'ordre ! Je suis de retour à 100 % pour régler tout ça et te livrer une version ultra-robuste.
+
+Voici les **4 améliorations majeures** apportées dans cette version :
+1. **Support total des Shorts et des vidéos longues :** Le détecteur de lien YouTube gère désormais parfaitement les formats `shorts/`, `watch?v=`, `youtu.be/` et les embeds. Aucune vidéo ne sera oubliée (qu'elle soit courte ou longue).
+2. **Pagination "Charger plus" pour les vidéos :** Tout comme pour les articles, la section vidéos affiche désormais les **9 premières vidéos**, avec un magnifique bouton fléché **"Charger plus de vidéos"** en bas si tu en as plus de 9.
+3. **Moteur de recherche universel :** La barre de recherche en haut filtre désormais **à la fois les articles ET les vidéos** (en cherchant dans les titres, les descriptions et les catégories en temps réel).
+4. **Flèche de description bien visible :** Le bouton fléché pour dérouler le texte long est bien centré, élégant et de couleur vive, sans le mot "détails".
+
+Voici ton code complet, prêt à être utilisé :
+
+```html
+<!DOCTYPE html>
+<html lang="fr" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Ministère de l'honnêteté | Journal de l'actualité et de la vérité</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="[https://cdn.tailwindcss.com](https://cdn.tailwindcss.com)"></script>
+    <link rel="stylesheet" href="[https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css](https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css)">
+    <!-- PapaParse pour lire le Google Sheet en CSV -->
+    <script src="[https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js](https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js)"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        joy: {
+                            dark: '#1e1b4b',   // Bleu nuit profond et élégant
+                            orange: '#f97316',   // Orange chaleureux et dynamique
+                            gold: '#f59e0b',     // Or solaire / Jaune éclatant
+                            bg: '#fffbf5',       // Fond ambré très doux et chaleureux
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        html, body {
+            max-width: 100% !important;
+            overflow-x: hidden !important;
+        }
+        .iframe-container {
+            -webkit-overflow-scrolling: touch;
+        }
+        /* Animation fluide de la flèche de description */
+        .video-desc-container.active .arrow-icon {
+            transform: rotate(180deg);
+        }
+        .video-desc-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.35s ease, opacity 0.3s ease, margin-top 0.3s ease;
+            opacity: 0;
+        }
+        .video-desc-container.active .video-desc-content {
+            max-height: 400px;
+            opacity: 1;
+            margin-top: 12px;
+        }
+    </style>
+</head>
+<body class="bg-joy-bg text-gray-900 font-sans antialiased">
+
+    <!-- En-tête / Navigation -->
+    <header class="sticky top-0 z-50 bg-joy-bg/90 backdrop-blur-md border-b border-orange-100 shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-20">
+                <!-- Logo & Titre -->
+                <div class="flex items-center space-x-3">
+                    <div class="bg-gradient-to-br from-joy-gold to-joy-orange text-white p-2.5 rounded-xl shadow-md shrink-0">
+                        <i class="fa-solid fa-scale-balanced text-xl"></i>
+                    </div>
+                    <div>
+                        <span class="text-[10px] sm:text-xs uppercase tracking-widest font-extrabold text-joy-orange block">Média indépendant</span>
+                        <h1 class="text-lg sm:text-2xl font-black tracking-tight text-joy-dark truncate max-w-[200px] sm:max-w-none">Ministère de l'honnêteté</h1>
+                    </div>
+                </div>
+
+                <!-- Navigation Desktop -->
+                <nav class="hidden md:flex items-center space-x-8 text-sm font-semibold text-gray-700">
+                    <a href="#articles" class="hover:text-joy-orange transition">Articles</a>
+                    <a href="#videos" class="hover:text-joy-orange transition">Vidéos</a>
+                    <a href="#apropos" class="hover:text-joy-orange transition">Notre Mission</a>
+                    <a href="[https://lepetitprincedesjardiniers.github.io/index.html](https://lepetitprincedesjardiniers.github.io/index.html)" class="text-joy-orange hover:text-orange-600 transition flex items-center gap-1.5 font-bold text-xs bg-orange-50 px-3.5 py-2 rounded-xl border border-orange-200">
+                        <i class="fa-solid fa-arrow-left text-xs"></i> Petites Annonces Citoyennes
+                    </a>
+                </nav>
+
+                <!-- Bouton d'appel à l'action -->
+                <div class="flex items-center">
+                    <a href="#videos" class="bg-joy-orange text-white px-3.5 py-2 sm:px-4 sm:py-2.5 rounded-xl text-xs sm:text-sm font-bold hover:bg-orange-600 transition shadow-md shadow-orange-500/20">
+                        <i class="fa-solid fa-play mr-1"></i> Vidéos
+                    </a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Section "À la une" dynamique -->
+    <section id="alaune-container" class="py-12 lg:py-16 bg-gradient-to-br from-joy-dark via-indigo-950 to-orange-950 text-white relative overflow-hidden">
+        <div class="absolute -top-24 -right-24 w-96 h-96 bg-joy-orange/20 rounded-full blur-3xl pointer-events-none"></div>
+        <div class="absolute -bottom-24 -left-24 w-96 h-96 bg-joy-gold/10 rounded-full blur-3xl pointer-events-none"></div>
+
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10" id="alaune-content">
+            <div class="text-center py-12 text-amber-200">Chargement de l'actualité...</div>
+        </div>
+    </section>
+
+    <!-- Contenu Principal -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 space-y-20">
+
+        <!-- Section Articles -->
+        <section id="articles" class="space-y-8">
+            <div class="flex flex-col sm:flex-row justify-between items-start sm:items-end gap-4 border-b border-orange-200 pb-4">
+                <div>
+                    <span class="text-xs uppercase tracking-widest font-extrabold text-joy-orange block">Publications récentes</span>
+                    <h2 class="text-3xl font-extrabold text-joy-dark">Articles & Décryptages</h2>
+                </div>
+                <!-- Barre de recherche universelle -->
+                <div class="w-full sm:w-80">
+                    <div class="relative">
+                        <span class="absolute inset-y-0 left-0 flex items-center pl-3.5 pointer-events-none text-gray-400">
+                            <i class="fa-solid fa-search"></i>
+                        </span>
+                        <input type="text" id="search-input" oninput="filterContent()" placeholder="Rechercher articles et vidéos..." class="w-full pl-10 pr-4 py-2.5 bg-white border border-orange-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-joy-orange shadow-sm transition">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Grille des articles dynamique -->
+            <div id="articles-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"></div>
+
+            <!-- Bouton "Charger plus" Articles -->
+            <div id="load-more-container" class="text-center pt-6 hidden">
+                <button onclick="showMoreArticles()" class="bg-orange-50 hover:bg-joy-orange hover:text-white text-joy-orange font-bold text-sm px-6 py-3 rounded-xl transition border border-orange-200 shadow-sm cursor-pointer inline-flex items-center gap-2">
+                    <span>Charger plus d'articles</span> <i class="fa-solid fa-chevron-down text-xs"></i>
+                </button>
+            </div>
+        </section>
+
+        <!-- Section Vidéos & Liens -->
+        <section id="videos" class="space-y-8 bg-white p-6 sm:p-12 rounded-3xl border border-orange-100 shadow-md">
+            <div class="flex flex-col sm:flex-row justify-between items-start sm:items-end gap-4 border-b border-orange-100 pb-4">
+                <div>
+                    <span class="text-xs uppercase tracking-widest font-extrabold text-joy-orange block">Format multimédia</span>
+                    <h2 class="text-3xl font-extrabold text-joy-dark">Vidéos & Reportages</h2>
+                </div>
+                <a href="[https://www.youtube.com/@lepetitploucdesjardiniers](https://www.youtube.com/@lepetitploucdesjardiniers)" target="_blank" class="text-sm font-bold text-gray-700 hover:text-joy-orange transition flex items-center gap-2 bg-orange-50 px-4 py-2 rounded-xl">
                     <i class="fa-brands fa-youtube text-red-600 text-lg"></i> Chaîne vidéo
                 </a>
             </div>
@@ -235,194 +584,8 @@
                 </div>
                 <div class="flex space-x-6 text-amber-300 justify-center">
                     <a href="#" class="hover:text-white transition text-xl"><i class="fa-brands fa-x-twitter"></i></a>
-                    <a href="https://www.youtube.com/@lepetitploucdesjardiniers" target="_blank" class="hover:text-white transition text-xl"><i class="fa-brands fa-youtube"></i></a>
+                    <a href="[https://www.youtube.com/@lepetitploucdesjardiniers](https://www.youtube.com/@lepetitploucdesjardiniers)" target="_blank" class="hover:text-white transition text-xl"><i class="fa-brands fa-youtube"></i></a>
                     <a href="#" class="hover:text-white transition text-xl"><i class="fa-brands fa-instagram"></i></a>
                 </div>
             </div>
-            <div class="flex flex-col sm:flex-row justify-between items-center gap-4 pt-8 text-xs text-indigo-300 text-center sm:text-left">
-                <p>&copy; 2026 Ministère de l'honnêteté. Propulsé par LePetitPloucsDesJardiniers</p>
-                <div class="flex flex-wrap justify-center items-center gap-4 sm:space-x-6">
-                    <button onclick="openContactModal(event)" class="text-amber-300 hover:text-white transition font-bold cursor-pointer bg-transparent border-0 p-0 inline-flex items-center gap-1.5">
-                        <i class="fa-solid fa-address-book"></i> Contact
-                    </button>
-                    <button onclick="openCourrierModal(event)" class="text-amber-300 hover:text-white transition font-bold cursor-pointer bg-transparent border-0 p-0 inline-flex items-center gap-1.5">
-                        <i class="fa-solid fa-envelope"></i> Courrier des lecteurs
-                    </button>
-                    <a href="https://lepetitprincedesjardiniers.github.io/index.html" class="hover:text-white transition font-bold">Retour aux Petites Annonces Citoyennes</a>
-                </div>
-            </div>
-        </div>
-    </footer>
-
-    <!-- Script de liaison Google Sheets, Recherche & Modales -->
-    <script>
-        const sheetID = "1jJZm_WSIMgM5r-Y5zTSrC8FUiLhRN-dOcPnIcSyTpSI";
-        const gid = "1311533436";
-        const csvUrl = `https://docs.google.com/spreadsheets/d/${sheetID}/export?format=csv&gid=${gid}`;
-
-        let allArticles = []; 
-        let allVideos = [];
-        let articlesLimit = 9; 
-        let videosLimit = 9;
-
-        // Détecteur YouTube universel (gère watch, youtu.be, shorts, embed)
-        function getYouTubeId(url) {
-            if (!url) return '';
-            const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|shorts\/|watch\?v=|\&v=)([^#\&\?]*).*/;
-            const match = url.match(regExp);
-            return (match && match[2].length === 11) ? match[2] : '';
-        }
-
-        function getEmbedUrl(url) {
-            if (!url) return '';
-            if (url.includes('docs.google.com/document/d/')) {
-                const match = url.match(/\/document\/d\/([a-zA-Z0-9-_]+)/);
-                return match ? `https://docs.google.com/document/d/${match[1]}/preview` : url;
-            }
-            const videoId = getYouTubeId(url);
-            if (videoId) {
-                return `https://www.youtube.com/embed/${videoId}?autoplay=1`;
-            }
-            return url;
-        }
-
-        function openModal(title, url) {
-            if (!url) return;
-            const modal = document.getElementById('content-modal');
-            const modalTitle = document.getElementById('modal-title');
-            const iframe = document.getElementById('modal-iframe');
-            
-            modalTitle.textContent = title;
-            iframe.src = getEmbedUrl(url);
-            modal.classList.remove('hidden');
-            document.body.style.overflow = 'hidden';
-        }
-
-        function openArticleByIndex(index) {
-            const art = allArticles[index];
-            if (art) openModal(art.titre, art.lien);
-        }
-
-        function openVideoByIndex(index) {
-            const vid = allVideos[index];
-            if (vid) openModal(vid.titre, vid.lien);
-        }
-
-        function closeModal() {
-            const modal = document.getElementById('content-modal');
-            const iframe = document.getElementById('modal-iframe');
-            
-            modal.classList.add('hidden');
-            iframe.src = ''; 
-            document.body.style.overflow = 'auto';
-        }
-
-        function openCourrierModal(e) {
-            if (e) e.preventDefault();
-            document.getElementById('courrier-modal').classList.remove('hidden');
-            document.body.style.overflow = 'hidden';
-        }
-
-        function closeCourrierModal() {
-            document.getElementById('courrier-modal').classList.add('hidden');
-            document.body.style.overflow = 'auto';
-        }
-
-        function openContactModal(e) {
-            if (e) e.preventDefault();
-            document.getElementById('contact-modal').classList.remove('hidden');
-            document.body.style.overflow = 'hidden';
-        }
-
-        function closeContactModal() {
-            document.getElementById('contact-modal').classListVoici les corrections et améliorations apportées à ton site :
-
-1. **Correction des liens Shorts et Vidéos longues** : Le système de détection des liens YouTube a été renforcé pour accepter parfaitement les formats `shorts/`, `youtu.be`, `watch?v=` et `embed/`. Si certaines vidéos longues semblaient ne pas s'afficher, c'était simplement parce qu'il n'y avait pas de système de pagination (limite d'affichage) configuré pour les vidéos. C'est désormais réglé.
-2. **Pagination "Charger plus de vidéos"** : Tout comme pour les articles, un bouton avec une flèche élégante apparaît désormais automatiquement au bout de 9 vidéos pour charger la suite en douceur.
-3. **Moteur de recherche global** : La barre de recherche filtre désormais **simultanément les articles et les vidéos** (sur les titres, les descriptions et les catégories).
-
-Voici ton code complet mis à jour et optimisé :
-
-```html
-<!DOCTYPE html>
-<html lang="fr" class="scroll-smooth">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Ministère de l'honnêteté | Journal de l'actualité et de la vérité</title>
-    <!-- Tailwind CSS CDN -->
-    <script src="[https://cdn.tailwindcss.com](https://cdn.tailwindcss.com)"></script>
-    <link rel="stylesheet" href="[https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css](https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css)">
-    <!-- PapaParse pour lire le Google Sheet en CSV -->
-    <script src="[https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js](https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js)"></script>
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        joy: {
-                            dark: '#1e1b4b',   // Bleu nuit profond et élégant
-                            orange: '#f97316',   // Orange chaleureux et dynamique
-                            gold: '#f59e0b',     // Or solaire / Jaune éclatant
-                            bg: '#fffbf5',       // Fond ambré très doux et chaleureux
-                        }
-                    }
-                }
-            }
-        }
-    </script>
-    <style>
-        html, body {
-            max-width: 100% !important;
-            overflow-x: hidden !important;
-        }
-        .iframe-container {
-            -webkit-overflow-scrolling: touch;
-        }
-        /* Animation fluide de la flèche de description */
-        .video-desc-container.active .arrow-icon {
-            transform: rotate(180deg);
-        }
-        .video-desc-content {
-            max-height: 0;
-            overflow: hidden;
-            transition: max-height 0.35s ease, opacity 0.3s ease, margin-top 0.3s ease;
-            opacity: 0;
-        }
-        .video-desc-container.active .video-desc-content {
-            max-height: 400px;
-            opacity: 1;
-            margin-top: 12px;
-        }
-    </style>
-</head>
-<body class="bg-joy-bg text-gray-900 font-sans antialiased">
-
-    <!-- En-tête / Navigation -->
-    <header class="sticky top-0 z-50 bg-joy-bg/90 backdrop-blur-md border-b border-orange-100 shadow-sm">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex justify-between items-center h-20">
-                <!-- Logo & Titre -->
-                <div class="flex items-center space-x-3">
-                    <div class="bg-gradient-to-br from-joy-gold to-joy-orange text-white p-2.5 rounded-xl shadow-md shrink-0">
-                        <i class="fa-solid fa-scale-balanced text-xl"></i>
-                    </div>
-                    <div>
-                        <span class="text-[10px] sm:text-xs uppercase tracking-widest font-extrabold text-joy-orange block">Média indépendant</span>
-                        <h1 class="text-lg sm:text-2xl font-black tracking-tight text-joy-dark truncate max-w-[200px] sm:max-w-none">Ministère de l'honnêteté</h1>
-                    </div>
-                </div>
-
-                <!-- Navigation Desktop -->
-                <nav class="hidden md:flex items-center space-x-8 text-sm font-semibold text-gray-700">
-                    <a href="#articles" class="hover:text-joy-orange transition">Articles</a>
-                    <a href="#videos" class="hover:text-joy-orange transition">Vidéos</a>
-                    <a href="#apropos" class="hover:text-joy-orange transition">Notre Mission</a>
-                    <a href="[https://lepetitprincedesjardiniers.github.io/index.html](https://lepetitprincedesjardiniers.github.io/index.html)" class="text-joy-orange hover:text-orange-600 transition flex items-center gap-1.5 font-bold text-xs bg-orange-50 px-3.5 py-2 rounded-xl border border-orange-200">
-                        <i class="fa-solid fa-arrow-left text-xs"></i> Petites Annonces Citoyennes
-                    </a>
-                </nav>
-
-                <!-- Bouton d'appel à l'action -->
-                <div class="flex items-center">
-                    <a href="#videos" class="bg-joy-orange text-white px-3.5 py-2 sm:px-4 sm:py-2.5 rounded-xl text-xs sm:text-sm font-bold hover:bg-orange-600 transition shadow-md shadow-orange-500
+            <div class="flex flex-col sm:flex-row justify-between items
