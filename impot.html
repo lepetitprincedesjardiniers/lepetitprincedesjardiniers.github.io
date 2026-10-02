@@ -28,12 +28,18 @@
         .mur-reel { display: grid; grid-template-columns: repeat(5, minmax(150px, 1fr)); gap: 10px; padding: 10px; max-width: 98vw; margin: 0 auto; }
         @media (max-width: 768px) { .mur-reel { grid-template-columns: repeat(2, 1fr); } }
 
-        .carte-message { background: white; border: 2px solid #008080; border-radius: 10px; padding: 8px; box-shadow: 3px 3px 0px #008080; display: flex; flex-direction: column; height: 280px; cursor: pointer; position: relative; overflow: hidden; text-align: left; }
+        .carte-message { background: white; border: 2px solid #008080; border-radius: 10px; padding: 8px; box-shadow: 3px 3px 0px #008080; display: flex; flex-direction: column; height: 280px; cursor: pointer; position: relative; overflow: hidden; text-align: left; transition: transform 0.2s; }
+        .carte-message:hover { transform: translateY(-3px); }
         .nom-prenom { color: #2E7D32; font-weight: bold; font-size: 0.8em; border-bottom: 1px solid #eee; margin-bottom: 3px; }
         .rubrique-tag { font-size: 0.55em; background: #ff1493; color: white; padding: 1px 4px; border-radius: 5px; position: absolute; top: 5px; right: 5px; }
         
         .texte-annonce { flex-grow: 1; font-style: italic; color: #000080; overflow-y: auto; font-size: 0.75em; margin: 5px 0; line-height: 1.2; padding-right: 5px; }
         .details-bas { font-size: 0.75em; color: #444; line-height: 1.3; border-top: 1px solid #eee; padding-top: 5px; background: white; }
+
+        /* --- FOND SOMBRE ET MODALE --- */
+        #fond-sombre { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); z-index: 2000; justify-content: center; align-items: center; }
+        .message-geant { background: #FFFFF0; width: 95%; max-width: 800px; padding: 25px; border-radius: 25px; border: 8px solid #008080; position: relative; max-height: 80vh; overflow-y: auto; color: #000; text-align: left; }
+        .bouton-fermer { position: absolute; top: 15px; right: 15px; background: #FF1493; color: white; border-radius: 50%; width: 40px; height: 40px; cursor: pointer; border: 2px solid white; font-weight: bold; font-size: 1em; }
 
         /* MODE SOMBRE ET ÉTOILES */
         body.dark-mode { background-color: #0a0a1a; color: #e0e0e0; }
@@ -52,7 +58,7 @@
                 <td><a href="index.html">Accueil</a></td>
                 <td><a href="formulaire.html">Semer</a></td>
                 <td><a href="jardin.html">Le Jardin</a></td>
-                <td><a href="impots.html">Impôts Publics</a></td>
+                <td><a href="impot.html">Impôts Publics</a></td>
                 <td><a href="regulation.html">Régulation</a></td>
                 <td><a href="aide.html">Aide</a></td>
             </tr>
@@ -90,6 +96,14 @@
 
     <h3 style="color: #008080; margin: 20px 0;">📖 Registre du Trésor Public</h3>
     <div id="mur-messages" class="mur-reel"></div>
+
+    <!-- Modale Grand Message -->
+    <div id="fond-sombre" onclick="fermerGrandMessage()">
+        <div class="message-geant" onclick="event.stopPropagation()">
+            <button class="bouton-fermer" onclick="fermerGrandMessage()">X</button>
+            <div id="geant-contenu"></div>
+        </div>
+    </div>
 
     <div class="footer-copyright" style="margin: 30px 0;">
         <a href="merci.html" class="copyright-link">© 2000 Le petit prince des jardiniers</a>
@@ -132,6 +146,7 @@
                 annoncesImpots.forEach(ann => {
                     const d = document.createElement('div');
                     d.className = 'carte-message';
+                    d.onclick = () => ouvrirGrandMessage(ann);
                     d.innerHTML = `
                         <div class="nom-prenom">${ann.nom || "Anonyme"}</div>
                         <div class="rubrique-tag">Trésor Public</div>
@@ -148,6 +163,24 @@
                 console.error("Erreur :", error);
                 document.getElementById('mur-messages').innerHTML = `<div style="grid-column: span 5; padding: 20px; font-weight: bold; background: white; border-radius: 10px;">Impossible de charger le registre... 🌱</div>`;
             }
+        }
+
+        function ouvrirGrandMessage(ann) {
+            document.getElementById('geant-contenu').innerHTML = `
+                <div style="font-size:1.8em; color:#2E7D32; font-weight:bold; border-bottom:3px solid #008080; margin-bottom:20px;">🪙 Contribution de ${ann.nom || "Anonyme"}</div>
+                <div style="background:white; padding:25px; border-radius:15px; border-left:10px solid #FF1493; font-size:1.4em; color:#000080; text-align:left; margin-bottom:20px;">"${ann.message}"</div>
+                <div style="text-align:left; background:#E0F2F1; padding:20px; border-radius:10px; font-size:1.1em;">
+                    <strong>📍 Localisation :</strong> ${ann.localisation || "N/C"}<br>
+                    <strong>📍 Pays :</strong> ${ann.pays_select || "N/C"}<br>
+                    <strong>⏳ Durée de validité :</strong> ${ann.duree_validite || "30"} jours<br>
+                    <strong>📅 Date :</strong> ${ann.Horodateur || "N/C"}
+                </div>
+            `;
+            document.getElementById('fond-sombre').style.display = 'flex';
+        }
+
+        function fermerGrandMessage() { 
+            document.getElementById('fond-sombre').style.display = 'none'; 
         }
 
         async function envoyerImpots(event) {
