@@ -1,8 +1,12 @@
 name: Mise à jour automatique du Jardin
+
 on:
   repository_dispatch:
     types: [sheet_updated]
   workflow_dispatch: # Pour pouvoir le lancer à la main si besoin
+
+permissions:
+  contents: write  # 👈 INDISPENSABLE pour que le robot ait le droit de faire un git push
 
 jobs:
   build:
@@ -20,5 +24,5 @@ jobs:
           git config --global user.name 'Robot-Jardinier'
           git config --global user.email 'robot@jardin.com'
           git add annonces.json
-          git commit -m "🌱 Maj auto des annonces" || echo "Aucun changement"
-          git push
+          # On valide et on pousse uniquement s'il y a de vrais changements
+          git diff --quiet && git diff --staged --quiet || (git commit -m "🌱 Maj auto des annonces" && git push)
