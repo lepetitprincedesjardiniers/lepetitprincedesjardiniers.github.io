@@ -7,7 +7,7 @@
     <style>
         * { box-sizing: border-box; }
         body { 
-            font-family: 'Comic Sans MS', cursive; 
+            font-family: 'Comic Sans MS', cursive, sans-serif; 
             text-align: center; 
             margin: 0; 
             padding: 0; 
@@ -66,7 +66,7 @@
             background: #ffffff; font-family: inherit;
         }
 
-        /* --- GRILLE ET CARTES MINIATURES STABLES --- */
+        /* --- GRILLE ET CARTES --- */
         .mur-reel { display: grid; grid-template-columns: repeat(5, minmax(150px, 1fr)); gap: 10px; padding: 10px; max-width: 98vw; margin: 0 auto; }
         @media (max-width: 768px) { .mur-reel { grid-template-columns: repeat(2, 1fr); } }
 
@@ -77,17 +77,13 @@
         .texte-annonce { flex-grow: 1; font-style: italic; color: #004d40; overflow-y: auto; font-size: 0.75em; margin: 5px 0; line-height: 1.3; padding-right: 4px; }
         .details-bas { font-size: 0.7em; color: #666; line-height: 1.3; border-top: 1px solid #eee; padding-top: 5px; background: white; }
 
-        /* --- MODALE GRAND MESSAGE STABLE --- */
+        /* --- MODALE GRAND MESSAGE --- */
         #fond-sombre { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); z-index: 2000; justify-content: center; align-items: center; }
         .message-geant { background: #F1F8E9; width: 95%; max-width: 750px; padding: 25px; border-radius: 25px; border: 6px solid #008080; position: relative; max-height: 90vh; overflow-y: auto; color: #004d40; text-align: left; box-shadow: 0 10px 30px rgba(0,128,128,0.4); }
         .bouton-fermer { position: absolute; top: 15px; right: 15px; background: #008080; color: white; border-radius: 50%; width: 40px; height: 40px; cursor: pointer; border: 2px solid white; font-weight: bold; font-size: 1.1em; display: flex; align-items: center; justify-content: center; }
     </style>
 </head>
 <body>
-
-    <!-- Effet sonore : Gong bref et discret -->
-    <audio id="snd-pop" src="https://assets.mixkit.co/active_storage/sfx/2571/2571-preview.mp3" preload="auto"></audio>
-    <audio id="snd-gong" src="https://assets.mixkit.co/active_storage/sfx/2658/2658-preview.mp3" preload="auto"></audio>
 
     <div class="header-tools">
         <div id="google_translate_element"></div>
@@ -104,7 +100,7 @@
         </tr>
     </table>
 
-    <h2 style="color:#00695c; margin: 10px 0;">⚖️️ Zone de Régulation Citoyenne ⚖️</h2>
+    <h2 style="color:#00695c; margin: 10px 0;">⚖ Zone de Régulation Citoyenne ⚖️</h2>
     <div class="phrase-rose">Expose ton conflit avec sincérité. La communauté répondra avec délicatesse.</div>
 
     <div class="etoile-form">
@@ -155,21 +151,41 @@
             new google.translate.TranslateElement({pageLanguage: 'fr'}, 'google_translate_element'); 
         }
 
+        // --- SONS GÉNÉRÉS EN INTERNE (Pas de lien externe) ---
         function playPop() {
-            const pop = document.getElementById('snd-pop');
-            pop.currentTime = 0;
-            pop.play().catch(()=>{});
+            try {
+                const ctx = new (window.AudioContext || window.webkitAudioContext)();
+                const osc = ctx.createOscillator();
+                const gain = ctx.createGain();
+                osc.type = 'sine';
+                osc.frequency.setValueAtTime(600, ctx.currentTime);
+                osc.frequency.exponentialRampToValueAtTime(800, ctx.currentTime + 0.04);
+                gain.gain.setValueAtTime(0.08, ctx.currentTime);
+                gain.gain.linearRampToValueAtTime(0.001, ctx.currentTime + 0.04);
+                osc.connect(gain);
+                gain.connect(ctx.destination);
+                osc.start();
+                osc.stop(ctx.currentTime + 0.04);
+            } catch(e) {}
         }
 
         function playGong() {
-            const gong = document.getElementById('snd-gong');
-            gong.currentTime = 0;
-            gong.play().catch(()=>{});
-            setTimeout(() => {
-                gong.pause();
-                gong.currentTime = 0;
-            }, 800); // Gong bref et discret
+            try {
+                const ctx = new (window.AudioContext || window.webkitAudioContext)();
+                const osc = ctx.createOscillator();
+                const gain = ctx.createGain();
+                osc.type = 'triangle';
+                osc.frequency.setValueAtTime(220, ctx.currentTime); // Son harmonieux de cloche
+                osc.frequency.exponentialRampToValueAtTime(110, ctx.currentTime + 0.8);
+                gain.gain.setValueAtTime(0.25, ctx.currentTime);
+                gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.8);
+                osc.connect(gain);
+                gain.connect(ctx.destination);
+                osc.start();
+                osc.stop(ctx.currentTime + 0.8);
+            } catch(e) {}
         }
+        // -----------------------------------------------------
 
         async function envoyerConflit(event) {
             event.preventDefault();
@@ -217,9 +233,12 @@
                 const flux = document.getElementById('flux-conflits');
                 flux.innerHTML = "";
 
-                const conflits = globalData.filter(d => d.type === "REGULATION");
+                // Filtre robuste insensible à la casse et aux espaces
+                const conflits = globalData.filter(d => {
+                    const typeVal = String(d.type || "").trim().toUpperCase();
+                    return typeVal === "REGULATION";
+                });
 
-                // Ferme la modale si l'annonce active a expiré
                 if (annonceActiveId) {
                     const toujoursExiste = conflits.find(c => (c.Horodateur || c.nom) === annonceActiveId);
                     if (!toujoursExiste) {
@@ -235,7 +254,6 @@
                 conflits.reverse();
 
                 conflits.forEach(c => {
-                    const idUnique = c.Horodateur || c.nom;
                     const d = document.createElement('div');
                     d.className = 'carte-message';
                     d.onclick = () => ouvrirGrandMessage(c);
@@ -260,7 +278,10 @@
         function ouvrirGrandMessage(ann) {
             annonceActiveId = ann.Horodateur || ann.nom;
 
-            const reponses = globalData.filter(d => d.type === "REPONSE_REGULATION" && d.localisation === ("Ref:" + annonceActiveId));
+            const reponses = globalData.filter(d => {
+                const typeVal = String(d.type || "").trim().toUpperCase();
+                return typeVal === "REPONSE_REGULATION" && d.localisation === ("Ref:" + annonceActiveId);
+            });
             reponses.reverse();
 
             let htmlReponses = "";
@@ -284,7 +305,6 @@
             document.getElementById('geant-contenu').innerHTML = `
                 <div style="font-size:1.5em; color:#00695c; font-weight:bold; border-bottom:3px solid #008080; margin-bottom:12px; padding-bottom:5px;">⚖️ Dossier de ${ann.nom || "Anonyme"}</div>
                 
-                <!-- Message principal avec scroll interne si trop long -->
                 <div style="background:white; padding:15px; border-radius:12px; border-left:8px solid #008080; font-size:1.05em; color:#333; text-align:left; margin-bottom:12px; max-height: 160px; overflow-y: auto; box-shadow: inset 0 2px 5px rgba(0,0,0,0.05); word-break: break-word;">"${ann.message}"</div>
                 
                 <div style="text-align:left; background:#E0F2F1; padding:10px; border-radius:8px; font-size:0.9em; color:#004d40; margin-bottom:12px;">
@@ -297,7 +317,6 @@
                     ${htmlReponses}
                 </div>
 
-                <!-- Formulaire de réponse directe toujours accessible -->
                 <div style="margin-top: 15px; background: white; padding: 12px; border-radius: 10px; border: 2px dashed #008080;">
                     <h4 style="margin-top: 0; color: #00695c; margin-bottom: 6px; font-size: 1em;">🌿 Apporter une réponse délicate :</h4>
                     <form id="formReponse" onsubmit="envoyerReponse(event, '${annonceActiveId}')">
@@ -333,7 +352,6 @@
 
                 alert("Votre réponse pleine de sagesse a été transmise ! 🕊️");
                 
-                // Actualisation discrète des données en arrière-plan sans fermer la modale brusquement
                 const response = await fetch(WEB_APP_URL + "?v=" + Date.now());
                 globalData = await response.json();
                 
@@ -357,8 +375,10 @@
         function filtrer() {
             let val = document.getElementById('searchBox').value.toLowerCase();
             let cards = document.getElementsByClassName('carte-message');
+            let foundCount = 0;
             for (let c of cards) {
-                c.style.display = c.innerText.toLowerCase().includes(val) ? "" : "none";
+                let match = c.innerText.toLowerCase().includes(val);
+                c.style.display = match ? "" : "none";
             }
         }
 
