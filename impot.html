@@ -2,187 +2,170 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Impôt Public - Le Petit Prince des Jardiniers</title>
+    <title>Impôts Publics - Le Jardin de la Fraternité</title>
     <style>
-        body { font-family: 'Comic Sans MS', cursive; background-color: #E8F5E9; color: #004d40; margin: 0; text-align: center; }
-        
-        /* Traducteur ULTRA DISCRET en haut à gauche */
-        .header-tools { display: flex; justify-content: flex-start; padding: 5px; background: rgba(255,255,255,0.3); }
-        #google_translate_element { transform: scale(0.7); transform-origin: top left; opacity: 0.6; transition: opacity 0.3s; }
-        #google_translate_element:hover { opacity: 1; }
+        body { font-family: 'Comic Sans MS', cursive; text-align: center; margin: 0; padding: 0; background-color: #FFFF00; color: #000080; min-height: 100vh; padding-bottom: 80px; transition: background 0.3s, color 0.3s; }
+        .top-bar { position: relative; width: 100%; min-height: 50px; background: rgba(255,255,255,0.3); padding: 5px 0; display: flex; justify-content: center; align-items: center; }
+        #google_translate_element { position: absolute; left: 10px; top: 10px; z-index: 2000; transform: scale(0.85); transform-origin: top left; }
+        .menu-table { margin: 5px auto; border-radius: 10px; background-color: #008080; border-collapse: collapse; }
+        .menu-table td { padding: 8px 15px; border: 1px solid #FFFFFF; }
+        .menu-table a { text-decoration: none; color: #FFFFFF; font-weight: bold; font-size: 0.85em; }
+        #btn-mode { position: absolute; right: 10px; top: 10px; background: #444; color: #FFD700; border: 1px solid #222; border-radius: 5px; cursor: pointer; font-size: 14px; padding: 2px 5px; z-index: 1001; }
 
-        /* Menu de navigation */
-        .menu-table { margin: 15px auto; background-color: #008080; border-collapse: collapse; border-radius: 10px; overflow: hidden; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
-        .menu-table td { padding: 10px 18px; border: 1px solid #FFFFFF; transition: 0.3s; }
-        .menu-table td:hover { background: #2e7d32; }
-        .menu-table a { text-decoration: none; color: #FFFFFF; font-weight: bold; font-size: 0.9em; }
-        
-        /* Conteneur d'introduction */
-        .intro-box { background: white; border: 3px solid #008080; border-radius: 20px; width: 85%; max-width: 800px; margin: 20px auto; padding: 25px; box-shadow: 5px 5px 15px rgba(0,0,0,0.1); }
-        .zone-explication { text-align: left; background: #F1F8E9; border-left: 5px solid #008080; padding: 20px; margin-bottom: 25px; border-radius: 10px; line-height: 1.5; color: #004d40; }
-        .zone-explication p { margin: 8px 0; }
+        .form-box { background: #008080; padding: 20px; margin: 20px auto; max-width: 95%; width: 600px; border-radius: 25px; color: white; box-shadow: 0 8px 20px rgba(0,0,0,0.2); border: 3px solid #fff; text-align: left; }
+        .form-box input, .form-box textarea, .form-box select { width: 100%; padding: 10px; margin: 8px 0 15px 0; border-radius: 10px; border: none; box-sizing: border-box; font-family: 'Comic Sans MS'; }
+        .form-box button { background: #FF1493; color: white; border: 2px solid white; padding: 10px 20px; border-radius: 15px; font-weight: bold; cursor: pointer; display: block; width: 100%; font-size: 1.1em; }
 
-        /* Boutons principaux */
-        .action-hub { margin: 20px 0; display: flex; justify-content: center; gap: 15px; flex-wrap: wrap; }
-        .btn-principal { text-decoration: none; padding: 12px 25px; border-radius: 25px; font-weight: bold; transition: 0.3s; box-shadow: 3px 3px 0px #004d40; cursor: pointer; border: none; display: inline-block; }
-        .btn-consult { background: #2e7d32; color: white; }
-        .btn-declare { background: #FFFFFF; color: #2e7d32; border: 2px solid #2e7d32; }
-        .btn-principal:hover { transform: scale(1.03); filter: brightness(1.1); }
+        .mur-reel { display: grid; grid-template-columns: repeat(5, minmax(150px, 1fr)); gap: 10px; padding: 10px; max-width: 98vw; margin: 0 auto; }
+        @media (max-width: 768px) { .mur-reel { grid-template-columns: repeat(2, 1fr); } }
 
-        /* Formulaire */
-        #section-formulaire { display: none; animation: fadeIn 0.6s ease; }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
-        
-        .form-container { background: white; border: 5px solid #008080; border-radius: 30px; width: 85%; max-width: 800px; margin: 20px auto; padding: 25px; box-shadow: 8px 8px 0px #008080; }
-        .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; text-align: left; }
-        label { display: block; margin-top: 10px; font-weight: bold; font-size: 0.9em; color: #00695c; }
-        input, textarea, select { width: 100%; padding: 10px; border-radius: 10px; border: 2px solid #008080; font-family: inherit; box-sizing: border-box; }
-        select { background-color: #f0fdf4; cursor: pointer; }
-        .full-width { grid-column: 1 / -1; }
-        
-        .btn-envoi { background: #008080; color: white; border: none; padding: 15px 35px; border-radius: 20px; font-weight: bold; cursor: pointer; margin-top: 15px; transition: 0.3s; width: 100%; }
-        .btn-envoi:hover { background: #E67E22; transform: translateY(-2px); }
+        .carte-message { background: white; border: 2px solid #008080; border-radius: 10px; padding: 8px; box-shadow: 3px 3px 0px #008080; display: flex; flex-direction: column; height: 280px; cursor: pointer; position: relative; overflow: hidden; text-align: left; }
+        .nom-prenom { color: #2E7D32; font-weight: bold; font-size: 0.8em; border-bottom: 1px solid #eee; margin-bottom: 3px; }
+        .rubrique-tag { font-size: 0.55em; background: #ff1493; color: white; padding: 1px 4px; border-radius: 5px; position: absolute; top: 5px; right: 5px; }
+        .texte-annonce { flex-grow: 1; font-style: italic; color: #000080; overflow-y: auto; font-size: 0.75em; margin: 5px 0; line-height: 1.2; }
+        .details-bas { font-size: 0.75em; color: #444; line-height: 1.3; border-top: 1px solid #eee; padding-top: 5px; background: white; }
 
-        /* COPYRIGHT AVEC EFFET */
-        .copyright { margin: 50px 0 30px; font-size: 0.85em; color: #004d40; opacity: 0.8; }
-        .copyright a { 
-            color: #008080; 
-            text-decoration: none; 
-            font-weight: bold; 
-            padding: 4px 8px;
-            transition: all 0.4s ease;
-            display: inline-block;
-        }
-        .copyright a:hover { 
-            background: #E67E22; 
-            color: white; 
-            transform: scale(1.15) rotate(-2deg);
-            border-radius: 5px;
-        }
+        body.dark-mode { background-color: #0a0a1a; color: #e0e0e0; }
+        .star { position: fixed; background: white; border-radius: 50%; opacity: 0; pointer-events: none; animation: twinkle var(--d) infinite; }
+        @keyframes twinkle { 0%, 100% { opacity: 0.3; } 50% { opacity: 1; } }
+        .copyright-link { color: #008080; text-decoration: none; font-weight: bold; }
     </style>
 </head>
 <body>
 
-    <div class="header-tools">
+    <div class="top-bar">
         <div id="google_translate_element"></div>
+        <table class="menu-table">
+            <tr>
+                <td><a href="index.html">Accueil</a></td>
+                <td><a href="formulaire.html">Semer</a></td>
+                <td><a href="jardin.html">Le Jardin</a></td>
+                <td><a href="impots.html">Impôts Publics</a></td>
+                <td><a href="regulation.html">Régulation</a></td>
+                <td><a href="aide.html">Aide</a></td>
+            </tr>
+        </table>
+        <button id="btn-mode" onclick="basculerModeSombre()">🏮</button>
     </div>
 
-    <audio id="snd-pop" src="https://www.soundjay.com/buttons/sounds/button-37.mp3"></audio>
-    <audio id="snd-oiseaux" src="oiseaux.mp3"></audio>
+    <h2 style="color:#2E7D32; margin: 15px 0;">🪙 Trésor Public & Impôts Libres 🪙</h2>
+    <div style="font-weight: bold; color: #ff1493; margin-bottom: 10px;">Participez au registre des contributions et offrandes publiques</div>
 
-    <script>
-        function googleTranslateElementInit() { new google.translate.TranslateElement({pageLanguage: 'fr', layout: google.translate.TranslateElement.InlineLayout.SIMPLE}, 'google_translate_element'); }
-        function playPop() { document.getElementById('snd-pop').play().catch(()=>{}); }
-        function playOiseaux() { 
-            const song = document.getElementById('snd-oiseaux');
-            song.play().catch(()=>{});
-            setTimeout(() => { song.pause(); song.currentTime = 0; }, 2000); // Arrête après 2s
-        }
-    </script>
-    <script src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+    <!-- Formulaire d'envoi spécifique à la page impôts -->
+    <div class="form-box">
+        <form id="formImpots" onsubmit="envoyerImpots(event)">
+            <input type="hidden" name="type" value="IMPOT">
+            <label>👤 Votre Nom ou Pseudo :</label>
+            <input type="text" name="nom" required placeholder="Ex: Jardinier solidaire">
 
-    <table class="menu-table">
-        <tr>
-            <td><a href="index.html" onmouseover="playPop()">Accueil</a></td>
-            <td><a href="formulaire.html" onmouseover="playPop()">Semer</a></td>
-            <td><a href="jardin.html" onmouseover="playPop()">Le Jardin</a></td>
-            <td><a href="impot.html" onmouseover="playPop()">Impôt Public</a></td>
-            <td><a href="registre_public.html" onmouseover="playPop()">Le Registre</a></td>
-        </tr>
-    </table>
+            <label>📍 Pays :</label>
+            <input type="text" name="pays_select" placeholder="Ex: France">
 
-    <h1 style="color: #00695c; text-shadow: 1px 1px 0px white;">📜 Le Trésor Public</h1>
+            <label>🏙️ Localisation / Ville :</label>
+            <input type="text" name="localisation" placeholder="Ex: Bordeaux">
 
-    <div class="intro-box">
-        <div class="zone-explication">
-            <p>XXX (Phrase 1)</p>
-            <p>XXX (Phrase 2)</p>
-            <p>XXX (Phrase 3)</p>
-            <p>XXX (Phrase 4)</p>
-            <p>XXX (Phrase 5)</p>
-        </div>
+            <label>💬 Votre offrande / Contribution :</label>
+            <textarea name="message" rows="4" required placeholder="Ex: Partage de ressources, proposition pour le trésor public..."></textarea>
 
-        <div class="action-hub">
-            <a href="registre_public.html" class="btn-principal btn-consult" onmouseover="playPop()">📖 CONSULTER LE REGISTRE</a>
-            <div onclick="ouvrirFormulaire()" class="btn-principal btn-declare" onmouseover="playPop()">✍️ DÉCLARER UNE ACTION</div>
-        </div>
-    </div>
-
-    <div id="section-formulaire" class="form-container">
-        <form id="impotForm">
-            <div class="form-grid">
-                <div><label>Identité / Pseudo :</label><input type="text" id="nom" required></div>
-                <div><label>Localisation :</label><input type="text" id="ville" required></div>
-                
-                <div class="full-width">
-                    <label>Sous-rubrique d'intervention précise :</label>
-                    <select id="categorie">
-                        <optgroup label="🏗️ MAINTENANCE & RÉSEAUX">
-                            <option value="Maintenance-Eau">Gestion de l'Eau & Assainissement</option>
-                            <option value="Maintenance-Energie">Énergie & Flux (Solaire/Réseaux)</option>
-                            <option value="Maintenance-Num">Numérique, Fibres & Serveurs</option>
-                            <option value="Maintenance-Routes">Réseaux de Transport & Chemins</option>
-                        </optgroup>
-                        
-                        <optgroup label="🧹 BRIGADE DES TRAVAUX INGRATS">
-                            <option value="Ingrats-Dechets">Collecte & Valorisation des Déchets</option>
-                            <option value="Ingrats-Proprete">Nettoyage Public & Curage</option>
-                            <option value="Ingrats-Logistique">Manutention & Tâches Pénibles</option>
-                        </optgroup>
-                        
-                        <optgroup label="⚙️ INGÉNIERIE & COMMUNS MONDIAUX">
-                            <option value="Inge-Brevets">Conception de Brevets & Plans Libres</option>
-                            <option value="Inge-Global">Satellites, Câbles & Communs Mondiaux</option>
-                            <option value="Inge-Support">Support Technique Spécialisé</option>
-                        </optgroup>
-                    </select>
-                </div>
-
-                <div class="full-width"><label>Description de la contribution :</label><textarea id="message" rows="4" required></textarea></div>
-                <div class="full-width"><label>Besoins (outils, aide...) :</label><input type="text" id="besoin"></div>
-            </div>
-            <button type="submit" id="btnEnvoi" class="btn-envoi" onmouseover="playPop()">GRAVER AU REGISTRE 🌿</button>
+            <button type="submit" id="btnTexte">✨ Verser au Trésor Public</button>
         </form>
     </div>
 
-    <div class="copyright">
-        © 2000 <a href="transition-externe.html">Le Petit Prince des Jardiniers</a>
+    <h3 style="color: #008080; margin-top: 30px;">📖 Registre des Impôts & Trésor Public</h3>
+    <div id="mur-messages" class="mur-reel"></div>
+
+    <div class="footer-copyright" style="margin-top: 40px;">
+        <a href="merci.html" class="copyright-link">© 2000 Le petit prince des jardiniers</a>
     </div>
 
-    <script>
-        const URL_SERVEUR = "https://script.google.com/macros/s/AKfycbz4ncs9qw_AfmKSER5QST-P0OeKQggQaq86QC6liS53uZ9sx4Lo_-4-h1knXKWqgQMc/exec";
+    <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
 
-        function ouvrirFormulaire() {
-            playPop();
-            document.getElementById('section-formulaire').style.display = 'block';
-            window.scrollTo({ top: document.getElementById('section-formulaire').offsetTop, behavior: 'smooth' });
+    <script>
+        const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbxxToz22V88elCCjxLqjRtsb5iBIC156cbBFRIlTsju2SwOj9yNnKqzAwFITXMg_wij/exec";
+
+        function googleTranslateElementInit() { new google.translate.TranslateElement({pageLanguage: 'fr'}, 'google_translate_element'); }
+
+        function basculerModeSombre() {
+            document.body.classList.toggle('dark-mode');
+            if (document.body.classList.contains('dark-mode')) {
+                for(let i=0; i<60; i++) {
+                    let s = document.createElement('div'); s.className = 'star';
+                    s.style.left = Math.random()*100+'vw'; s.style.top = Math.random()*100+'vh';
+                    s.style.width = s.style.height = Math.random()*3+'px';
+                    s.style.setProperty('--d', (Math.random()*3+2)+'s');
+                    document.body.appendChild(s);
+                }
+            } else { document.querySelectorAll('.star').forEach(s => s.remove()); }
         }
 
-        document.getElementById('impotForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            playOiseaux();
-            const btn = document.getElementById('btnEnvoi');
-            btn.innerText = "Traitement en cours..."; btn.disabled = true;
+        // Charger et filtrer uniquement les annonces de type IMPOT
+        async function chargerImpots() {
+            try {
+                const response = await fetch(WEB_APP_URL + "?v=" + Date.now());
+                const toutesLesAnnonces = await response.json();
+                
+                // Filtrer pour ne garder que le Trésor Public (IMPOT)
+                const annoncesImpots = toutesLesAnnonces.filter(ann => ann.type === "IMPOT");
 
-            const labelCat = document.getElementById('categorie').options[document.getElementById('categorie').selectedIndex].text;
+                const cont = document.getElementById('mur-messages');
+                cont.innerHTML = "";
 
-            fetch(URL_SERVEUR, { 
-                method: 'POST', mode: 'no-cors', 
-                body: JSON.stringify({
-                    date: new Date().toLocaleDateString('fr-FR'),
-                    type: "impot",
-                    nom: document.getElementById('nom').value,
-                    localisation: document.getElementById('ville').value,
-                    message: `[${labelCat}] ${document.getElementById('message').value} (Besoins: ${document.getElementById('besoin').value || 'Aucun'})`
-                })
-            }).then(() => { 
-                setTimeout(() => {
-                    alert("Votre action a été gravée dans les Communs !"); 
-                    window.location.href = "registre_public.html"; 
-                }, 2000);
-            });
-        });
+                if (annoncesImpots.length === 0) {
+                    cont.innerHTML = `<div style="grid-column: span 5; padding: 20px; font-weight: bold; background: white; border-radius: 10px; color: #008080;">Aucune contribution au trésor public pour l'instant... 🪙</div>`;
+                    return;
+                }
+
+                annoncesImpots.forEach(ann => {
+                    const d = document.createElement('div');
+                    d.className = 'carte-message';
+                    d.innerHTML = `
+                        <div class="nom-prenom">${ann.nom || "Anonyme"}</div>
+                        <div class="rubrique-tag">Trésor Public</div>
+                        <div class="texte-annonce">"${ann.message}"</div>
+                        <div class="details-bas">
+                            📍 Localisation : ${ann.localisation || 'N/C'}<br>
+                            📍 Pays : ${ann.pays_select || 'N/C'}<br>
+                            📅 Date : ${ann.Horodateur || 'N/C'}
+                        </div>
+                    `;
+                    cont.appendChild(d);
+                });
+            } catch (error) {
+                console.error("Erreur de chargement :", error);
+                document.getElementById('mur-messages').innerHTML = `<div style="grid-column: span 5; padding: 20px; font-weight: bold; background: white; border-radius: 10px;">Impossible de charger le registre... 🌱</div>`;
+            }
+        }
+
+        // Envoyer une contribution vers Google Sheets
+        async function envoyerImpots(event) {
+            event.preventDefault();
+            const btn = document.getElementById('btnTexte');
+            btn.innerText = "Versement en cours... 🪙";
+            btn.disabled = true;
+
+            const form = document.getElementById('formImpots');
+            const formData = new FormData(form);
+            const urlParams = new URLSearchParams(formData);
+
+            try {
+                await fetch(WEB_APP_URL, {
+                    method: 'POST',
+                    mode: 'no-cors',
+                    body: urlParams
+                });
+                alert("Votre contribution a bien été versée au Trésor Public ! ✨");
+                form.reset();
+                chargerImpots(); // Recharge la liste des impôts
+            } catch (err) {
+                console.error(err);
+                alert("Erreur lors de l'envoi.");
+            } finally {
+                btn.innerText = "✨ Verser au Trésor Public";
+                btn.disabled = false;
+            }
+        }
+
+        window.onload = chargerImpots;
     </script>
 </body>
 </html>
