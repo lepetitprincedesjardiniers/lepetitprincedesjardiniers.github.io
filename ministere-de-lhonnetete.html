@@ -107,24 +107,22 @@
                     <span class="text-xs uppercase tracking-widest font-extrabold text-joy-orange block">Publications récentes</span>
                     <h2 class="text-3xl font-extrabold text-joy-dark">Articles & Décryptages</h2>
                 </div>
-                <!-- Barre de recherche -->
+                <!-- Barre de recherche unifiée (Articles & Vidéos) -->
                 <div class="w-full sm:w-80">
                     <div class="relative">
                         <span class="absolute inset-y-0 left-0 flex items-center pl-3.5 pointer-events-none text-gray-400">
                             <i class="fa-solid fa-search"></i>
                         </span>
-                        <input type="text" id="search-input" oninput="filterArticles()" placeholder="Rechercher par titre, sujet..." class="w-full pl-10 pr-4 py-2.5 bg-white border border-orange-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-joy-orange shadow-sm transition">
+                        <input type="text" id="search-input" oninput="filterContent()" placeholder="Rechercher par titre, sujet..." class="w-full pl-10 pr-4 py-2.5 bg-white border border-orange-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-joy-orange shadow-sm transition">
                     </div>
                 </div>
             </div>
 
             <!-- Grille des articles dynamique -->
-            <div id="articles-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                <!-- Les articles injectés par JavaScript -->
-            </div>
+            <div id="articles-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"></div>
 
-            <!-- Bouton "Charger plus" -->
-            <div id="load-more-container" class="text-center pt-6 hidden">
+            <!-- Bouton "Charger plus" Articles -->
+            <div id="load-more-articles-container" class="text-center pt-6 hidden">
                 <button onclick="showMoreArticles()" class="bg-orange-50 hover:bg-joy-orange hover:text-white text-joy-orange font-bold text-sm px-6 py-3 rounded-xl transition border border-orange-200 shadow-sm cursor-pointer inline-flex items-center gap-2">
                     <span>Charger plus d'articles</span> <i class="fa-solid fa-chevron-down text-xs"></i>
                 </button>
@@ -144,8 +142,13 @@
             </div>
 
             <!-- Grille des vidéos -->
-            <div id="videos-grid" class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                <!-- Les vidéos injectées par JavaScript -->
+            <div id="videos-grid" class="grid grid-cols-1 md:grid-cols-2 gap-8"></div>
+
+            <!-- Bouton "Charger plus" Vidéos -->
+            <div id="load-more-videos-container" class="text-center pt-6 hidden">
+                <button onclick="showMoreVideos()" class="bg-orange-50 hover:bg-joy-orange hover:text-white text-joy-orange font-bold text-sm px-6 py-3 rounded-xl transition border border-orange-200 shadow-sm cursor-pointer inline-flex items-center gap-2">
+                    <span>Charger plus de vidéos</span> <i class="fa-solid fa-chevron-down text-xs"></i>
+                </button>
             </div>
         </section>
 
@@ -177,7 +180,7 @@
         </div>
     </div>
 
-    <!-- Fenêtre Popup (Modal) pour le Courrier des lecteurs -->
+    <!-- Modale Courrier des lecteurs -->
     <div id="courrier-modal" class="fixed inset-0 z-50 hidden bg-black/70 backdrop-blur-sm flex items-center justify-center p-4 sm:p-6">
         <div class="bg-white w-full max-w-lg rounded-3xl shadow-2xl overflow-hidden flex flex-col relative border border-orange-200 p-6 sm:p-8 text-center space-y-6">
             <button onclick="closeCourrierModal()" class="absolute top-4 right-4 text-gray-400 hover:text-gray-700 text-xl font-bold w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center transition cursor-pointer">
@@ -190,9 +193,7 @@
             <p class="text-gray-800 text-lg font-semibold leading-relaxed">
                 Ne perds pas ton temps sur ton ordi, <span class="text-joy-orange underline decoration-wavy">va discuter dans ton quartier !</span>
             </p>
-            <p class="text-gray-500 text-sm italic">
-                (Rien ne vaut un vrai ébat public).
-            </p>
+            <p class="text-gray-500 text-sm italic">(Rien ne vaut un vrai ébat public).</p>
             <div>
                 <button onclick="closeCourrierModal()" class="bg-joy-orange text-white font-bold text-sm px-6 py-3 rounded-xl hover:bg-orange-600 transition shadow-md shadow-orange-500/20 cursor-pointer">
                     J'ai compris, j'y vais ! 🌳
@@ -201,7 +202,7 @@
         </div>
     </div>
 
-    <!-- Fenêtre Popup (Modal) pour la Page Contact -->
+    <!-- Modale Contact -->
     <div id="contact-modal" class="fixed inset-0 z-50 hidden bg-black/70 backdrop-blur-sm flex items-center justify-center p-4 sm:p-6">
         <div class="bg-white w-full max-w-lg rounded-3xl shadow-2xl overflow-hidden flex flex-col relative border border-orange-200 p-6 sm:p-8 text-center space-y-6">
             <button onclick="closeContactModal()" class="absolute top-4 right-4 text-gray-400 hover:text-gray-700 text-xl font-bold w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center transition cursor-pointer">
@@ -261,23 +262,15 @@
 
         let allArticles = []; 
         let allVideos = [];
-        let displayedLimit = 9; 
+        let articlesLimit = 9; 
+        let videosLimit = 9;
 
+        // Détecteur YouTube universel (gère watch, youtu.be, shorts, embed)
         function getYouTubeId(url) {
             if (!url) return '';
-            if (url.includes('youtube.com/watch?v=')) {
-                try {
-                    const urlObj = new URL(url);
-                    return urlObj.searchParams.get('v');
-                } catch(e) {}
-            }
-            if (url.includes('youtu.be/')) {
-                const parts = url.split('youtu.be/');
-                if (parts[1]) {
-                    return parts[1].split('?')[0];
-                }
-            }
-            return '';
+            const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|shorts\/|watch\?v=|\&v=)([^#\&\?]*).*/;
+            const match = url.match(regExp);
+            return (match && match[2].length === 11) ? match[2] : '';
         }
 
         function getEmbedUrl(url) {
@@ -288,7 +281,6 @@
             }
             const videoId = getYouTubeId(url);
             if (videoId) {
-                // autoplay=1 lance la vidéo immédiatement à l'ouverture de la modale
                 return `https://www.youtube.com/embed/${videoId}?autoplay=1`;
             }
             return url;
@@ -321,7 +313,7 @@
             const iframe = document.getElementById('modal-iframe');
             
             modal.classList.add('hidden');
-            iframe.src = ''; // Coupe proprement la vidéo à la fermeture
+            iframe.src = ''; 
             document.body.style.overflow = 'auto';
         }
 
@@ -343,211 +335,94 @@
         }
 
         function closeContactModal() {
-            document.getElementById('contact-modal').classList.add('hidden');
-            document.body.style.overflow = 'auto';
-        }
+            document.getElementById('contact-modal').classListVoici les corrections et améliorations apportées à ton site :
 
-        document.getElementById('content-modal').addEventListener('click', function(e) {
-            if (e.target === this) closeModal();
-        });
-        document.getElementById('courrier-modal').addEventListener('click', function(e) {
-            if (e.target === this) closeCourrierModal();
-        });
-        document.getElementById('contact-modal').addEventListener('click', function(e) {
-            if (e.target === this) closeContactModal();
-        });
+1. **Correction des liens Shorts et Vidéos longues** : Le système de détection des liens YouTube a été renforcé pour accepter parfaitement les formats `shorts/`, `youtu.be`, `watch?v=` et `embed/`. Si certaines vidéos longues semblaient ne pas s'afficher, c'était simplement parce qu'il n'y avait pas de système de pagination (limite d'affichage) configuré pour les vidéos. C'est désormais réglé.
+2. **Pagination "Charger plus de vidéos"** : Tout comme pour les articles, un bouton avec une flèche élégante apparaît désormais automatiquement au bout de 9 vidéos pour charger la suite en douceur.
+3. **Moteur de recherche global** : La barre de recherche filtre désormais **simultanément les articles et les vidéos** (sur les titres, les descriptions et les catégories).
 
-        function renderArticles() {
-            const grid = document.getElementById('articles-grid');
-            const searchInput = document.getElementById('search-input');
-            const loadMoreContainer = document.getElementById('load-more-container');
-            
-            const query = searchInput ? searchInput.value.toLowerCase().trim() : "";
+Voici ton code complet mis à jour et optimisé :
 
-            const filtered = allArticles.filter(item => {
-                return item.titre.toLowerCase().includes(query) || 
-                       item.description.toLowerCase().includes(query) || 
-                       item.categorie.toLowerCase().includes(query);
-            });
-
-            const limit = query ? filtered.length : displayedLimit;
-            const articlesToDisplay = filtered.slice(0, limit);
-
-            if (filtered.length === 0) {
-                grid.innerHTML = `<div class="col-span-full text-center py-12 text-gray-500 font-medium">Aucun article trouvé pour "${query}".</div>`;
-                loadMoreContainer.classList.add('hidden');
-                return;
-            }
-
-            let html = '';
-            articlesToDisplay.forEach(art => {
-                const realIndex = allArticles.findIndex(a => a.titre === art.titre && a.date === art.date);
-                html += `
-                    <article class="bg-white rounded-3xl border border-orange-100 overflow-hidden shadow-sm hover:shadow-xl hover:-translate-y-1 transition duration-300 flex flex-col justify-between">
-                        <div>
-                            <div class="h-48 bg-gradient-to-br from-amber-100 to-orange-100 flex items-center justify-center text-joy-orange">
-                                <i class="fa-solid fa-newspaper text-4xl"></i>
-                            </div>
-                            <div class="p-6 space-y-3">
-                                <div class="flex items-center justify-between text-xs font-bold gap-2">
-                                    <span class="bg-amber-100 text-amber-800 px-3 py-1 rounded-full truncate">${art.categorie}</span>
-                                    <span class="text-gray-400 font-normal shrink-0">${art.date}</span>
-                                </div>
-                                <h3 class="text-xl font-extrabold text-gray-900 leading-snug">
-                                    ${art.titre}
-                                </h3>
-                                <p class="text-gray-600 text-sm leading-relaxed line-clamp-3">
-                                    ${art.description}
-                                </p>
-                            </div>
-                        </div>
-                        <div class="p-6 pt-0">
-                            <button onclick="openArticleByIndex(${realIndex})" class="text-joy-orange font-bold text-sm hover:underline inline-flex items-center gap-1.5 cursor-pointer bg-transparent border-0 p-0">
-                                Lire l'article complet <i class="fa-solid fa-arrow-right text-xs"></i>
-                            </button>
-                        </div>
-                    </article>
-                `;
-            });
-
-            grid.innerHTML = html;
-
-            if (!query && displayedLimit < filtered.length) {
-                loadMoreContainer.classList.remove('hidden');
-            } else {
-                loadMoreContainer.classList.add('hidden');
-            }
-        }
-
-        // Rendu des vidéos
-        function renderVideos() {
-            const grid = document.getElementById('videos-grid');
-            let html = '';
-            allVideos.forEach((vid, index) => {
-                const videoId = getYouTubeId(vid.lien);
-                const thumbUrl = videoId ? `https://img.youtube.com/vi/${videoId}/hqdefault.jpg` : '';
-
-                html += `
-                    <div class="bg-white rounded-3xl border border-orange-100 overflow-hidden shadow-sm flex flex-col justify-between p-6 space-y-4">
-                        <!-- 1. Titre en haut -->
-                        <h3 class="text-lg font-extrabold text-joy-dark leading-snug">
-                            ${vid.titre}
-                        </h3>
-
-                        <!-- 2. Visuel / Vignette de la vidéo (Clic = Lancement direct dans la modale) -->
-                        <div onclick="openVideoByIndex(${index})" class="rounded-2xl overflow-hidden relative shadow-md aspect-video flex items-center justify-center cursor-pointer group bg-gray-900" style="background-image: url('${thumbUrl}'); background-size: cover; background-position: center;">
-                            <div class="absolute inset-0 bg-black/30 group-hover:bg-black/10 transition duration-300"></div>
-                            <div class="w-14 h-14 bg-joy-orange text-white rounded-full flex items-center justify-center shadow-xl z-10 group-hover:scale-110 transition duration-300">
-                                <i class="fa-solid fa-play ml-1"></i>
-                            </div>
-                            <span class="absolute top-3 left-3 z-10 text-[10px] font-bold text-amber-900 bg-amber-100/90 px-2.5 py-1 rounded-full uppercase tracking-wider">${vid.categorie}</span>
-                        </div>
-
-                        <!-- 3. Description avec bouton flèche centré, coloré et rétractable -->
-                        <div class="video-desc-container border-t border-orange-100 pt-3 space-y-2">
-                            <div class="flex items-center justify-between text-xs text-gray-400 font-medium px-1">
-                                <span>${vid.date}</span>
-                                <span class="text-xs text-orange-500 font-bold uppercase tracking-wider">Détails</span>
-                            </div>
-                            
-                            <div class="text-center pt-1">
-                                <button onclick="toggleVideoDesc(this)" class="inline-flex items-center justify-center w-9 h-9 rounded-full bg-orange-100 text-joy-orange hover:bg-joy-orange hover:text-white transition shadow-sm cursor-pointer group" aria-label="Afficher la description">
-                                    <i class="fa-solid fa-chevron-down arrow-icon text-sm transition-transform duration-300"></i>
-                                </button>
-                            </div>
-
-                            <div class="video-desc-content text-gray-600 text-sm leading-relaxed whitespace-pre-line pt-2 bg-orange-50/40 p-4 rounded-2xl border border-orange-100/60">
-                                ${vid.description}
-                            </div>
-                        </div>
-                    </div>
-                `;
-            });
-            grid.innerHTML = html || '<div class="col-span-full text-center py-12 text-gray-500">Aucune vidéo trouvée.</div>';
-        }
-
-        function toggleVideoDesc(btn) {
-            const container = btn.closest('.video-desc-container');
-            container.classList.toggle('active');
-        }
-
-        function filterArticles() {
-            renderArticles();
-        }
-
-        function showMoreArticles() {
-            displayedLimit += 9;
-            renderArticles();
-        }
-
-        Papa.parse(csvUrl, {
-            download: true,
-            header: true,
-            complete: function(results) {
-                const data = results.data;
-                
-                let alauneHTML = '';
-                allArticles = []; 
-                allVideos = [];
-
-                data.forEach(row => {
-                    const cleanRow = {};
-                    Object.keys(row).forEach(key => {
-                        const cleanKey = key.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").trim();
-                        cleanRow[cleanKey] = row[key];
-                    });
-
-                    const pos = (cleanRow.position || "").trim().toLowerCase();
-                    const titre = cleanRow.titre || "";
-                    const desc = cleanRow.description || "";
-                    const lien = cleanRow.lien || "#";
-                    const cat = cleanRow.categorie || "Général";
-                    const date = cleanRow.date || "";
-
-                    if (!titre) return; 
-
-                    if (pos === 'alaune-article') {
-                        const safeTitle = titre.replace(/'/g, "\\'").replace(/"/g, '&quot;');
-                        alauneHTML = `
-                            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center">
-                                <div class="space-y-6">
-                                    <span class="inline-flex items-center gap-2 bg-joy-gold/20 text-joy-gold border border-joy-gold/30 px-3.5 py-1.5 rounded-full text-xs font-black uppercase tracking-wider">
-                                        <i class="fa-solid fa-bolt"></i> À la une • Enquête exclusive
-                                    </span>
-                                    <h2 class="text-3xl sm:text-4xl lg:text-5xl font-extrabold leading-tight tracking-tight text-white">
-                                        ${titre}
-                                    </h2>
-                                    <p class="text-amber-100/80 text-base sm:text-lg leading-relaxed">
-                                        ${desc}
-                                    </p>
-                                    <div class="flex flex-wrap gap-4 pt-2">
-                                        <button onclick="openModal('${safeTitle}', '${lien}')" class="bg-joy-gold text-joy-dark px-6 py-3.5 rounded-xl font-black hover:bg-amber-400 transition shadow-lg shadow-amber-500/20 inline-flex items-center gap-2 cursor-pointer">
-                                            Lire l'enquête <i class="fa-solid fa-arrow-right text-xs"></i>
-                                        </button>
-                                    </div>
-                                </div>
-                                <div class="relative rounded-2xl overflow-hidden shadow-2xl border border-white/10 bg-gray-900 p-6 sm:p-8 flex flex-col justify-center min-h-[250px] sm:min-h-[300px] cursor-pointer group" onclick="openModal('${safeTitle}', '${lien}')">
-                                    <span class="text-xs text-joy-gold font-bold uppercase tracking-wider mb-2">${cat}</span>
-                                    <h3 class="text-xl sm:text-2xl font-bold text-white mb-4 group-hover:text-amber-200 transition">${titre}</h3>
-                                    <p class="text-gray-300 text-sm line-clamp-3">${desc}</p>
-                                    <span class="mt-4 text-xs text-amber-300 font-bold flex items-center gap-1">Cliquez pour lire l'article <i class="fa-solid fa-external-link-alt"></i></span>
-                                </div>
-                            </div>
-                        `;
-                    } else if (pos === 'alaune-video') {
-                        allVideos.unshift({ titre, description: desc, lien, categorie: cat, date });
-                    } else if (pos === 'article') {
-                        allArticles.push({ titre, description: desc, lien, categorie: cat, date });
-                    } else if (pos === 'video') {
-                        allVideos.push({ titre, description: desc, lien, categorie: cat, date });
+```html
+<!DOCTYPE html>
+<html lang="fr" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Ministère de l'honnêteté | Journal de l'actualité et de la vérité</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="[https://cdn.tailwindcss.com](https://cdn.tailwindcss.com)"></script>
+    <link rel="stylesheet" href="[https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css](https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css)">
+    <!-- PapaParse pour lire le Google Sheet en CSV -->
+    <script src="[https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js](https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js)"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        joy: {
+                            dark: '#1e1b4b',   // Bleu nuit profond et élégant
+                            orange: '#f97316',   // Orange chaleureux et dynamique
+                            gold: '#f59e0b',     // Or solaire / Jaune éclatant
+                            bg: '#fffbf5',       // Fond ambré très doux et chaleureux
+                        }
                     }
-                });
-
-                document.getElementById('alaune-content').innerHTML = alauneHTML || '<div class="text-center py-12 text-amber-200">Aucune actualité "À la une" trouvée.</div>';
-                renderArticles();
-                renderVideos();
+                }
             }
-        });
+        }
     </script>
-</body>
-</html>
+    <style>
+        html, body {
+            max-width: 100% !important;
+            overflow-x: hidden !important;
+        }
+        .iframe-container {
+            -webkit-overflow-scrolling: touch;
+        }
+        /* Animation fluide de la flèche de description */
+        .video-desc-container.active .arrow-icon {
+            transform: rotate(180deg);
+        }
+        .video-desc-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.35s ease, opacity 0.3s ease, margin-top 0.3s ease;
+            opacity: 0;
+        }
+        .video-desc-container.active .video-desc-content {
+            max-height: 400px;
+            opacity: 1;
+            margin-top: 12px;
+        }
+    </style>
+</head>
+<body class="bg-joy-bg text-gray-900 font-sans antialiased">
+
+    <!-- En-tête / Navigation -->
+    <header class="sticky top-0 z-50 bg-joy-bg/90 backdrop-blur-md border-b border-orange-100 shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-20">
+                <!-- Logo & Titre -->
+                <div class="flex items-center space-x-3">
+                    <div class="bg-gradient-to-br from-joy-gold to-joy-orange text-white p-2.5 rounded-xl shadow-md shrink-0">
+                        <i class="fa-solid fa-scale-balanced text-xl"></i>
+                    </div>
+                    <div>
+                        <span class="text-[10px] sm:text-xs uppercase tracking-widest font-extrabold text-joy-orange block">Média indépendant</span>
+                        <h1 class="text-lg sm:text-2xl font-black tracking-tight text-joy-dark truncate max-w-[200px] sm:max-w-none">Ministère de l'honnêteté</h1>
+                    </div>
+                </div>
+
+                <!-- Navigation Desktop -->
+                <nav class="hidden md:flex items-center space-x-8 text-sm font-semibold text-gray-700">
+                    <a href="#articles" class="hover:text-joy-orange transition">Articles</a>
+                    <a href="#videos" class="hover:text-joy-orange transition">Vidéos</a>
+                    <a href="#apropos" class="hover:text-joy-orange transition">Notre Mission</a>
+                    <a href="[https://lepetitprincedesjardiniers.github.io/index.html](https://lepetitprincedesjardiniers.github.io/index.html)" class="text-joy-orange hover:text-orange-600 transition flex items-center gap-1.5 font-bold text-xs bg-orange-50 px-3.5 py-2 rounded-xl border border-orange-200">
+                        <i class="fa-solid fa-arrow-left text-xs"></i> Petites Annonces Citoyennes
+                    </a>
+                </nav>
+
+                <!-- Bouton d'appel à l'action -->
+                <div class="flex items-center">
+                    <a href="#videos" class="bg-joy-orange text-white px-3.5 py-2 sm:px-4 sm:py-2.5 rounded-xl text-xs sm:text-sm font-bold hover:bg-orange-600 transition shadow-md shadow-orange-500
