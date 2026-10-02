@@ -141,11 +141,10 @@
         </div>
     </footer>
 
-    <!-- Script de liaison Google Sheets -->
+    <!-- Script de liaison Google Sheets (Avec gestion automatique des dates) -->
     <script>
-        // URL d'export CSV de votre Google Sheets
         const sheetID = "1jJZm_WSIMgM5r-Y5zTSrC8FUiLhRN-dOcPnIcSyTpSI";
-        const gid = "1714630626";
+        const gid = "1311533436";
         const csvUrl = `https://docs.google.com/spreadsheets/d/${sheetID}/export?format=csv&gid=${gid}`;
 
         Papa.parse(csvUrl, {
@@ -164,7 +163,7 @@
                     const desc = row.description || "";
                     const lien = row.lien || "#";
                     const cat = row.categorie || "Général";
-                    const date = row.date || "";
+                    const date = row.date || ""; // Récupère la date générée automatiquement par le script Sheets
 
                     if (!titre) return; // Ignore les lignes vides
 
