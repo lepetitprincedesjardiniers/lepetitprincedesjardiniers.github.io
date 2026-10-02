@@ -48,7 +48,7 @@
                     <a href="#articles" class="hover:text-joy-orange transition">Articles</a>
                     <a href="#videos" class="hover:text-joy-orange transition">Vidéos</a>
                     <a href="#apropos" class="hover:text-joy-orange transition">Notre Mission</a>
-                    <a href="index.html" class="text-gray-400 hover:text-gray-900 transition flex items-center gap-1 font-normal">
+                    <a href="https://lepetitprincedesjardiniers.github.io/index.html" class="text-joy-orange hover:text-orange-600 transition flex items-center gap-1.5 font-bold text-xs bg-orange-50 px-3.5 py-2 rounded-xl border border-orange-200">
                         <i class="fa-solid fa-arrow-left text-xs"></i> Petites Annonces Citoyennes
                     </a>
                 </nav>
@@ -83,7 +83,7 @@
                     <span class="text-xs uppercase tracking-widest font-extrabold text-joy-orange block">Publications récentes</span>
                     <h2 class="text-3xl font-extrabold text-joy-dark">Articles & Décryptages</h2>
                 </div>
-                <!-- Barre de recherche intégrée proprement -->
+                <!-- Barre de recherche -->
                 <div class="w-full sm:w-80">
                     <div class="relative">
                         <span class="absolute inset-y-0 left-0 flex items-center pl-3.5 pointer-events-none text-gray-400">
@@ -99,7 +99,7 @@
                 <!-- Les articles injectés par JavaScript apparaîtront ici -->
             </div>
 
-            <!-- Bouton "Charger plus" pour les centaines d'articles -->
+            <!-- Bouton "Charger plus" -->
             <div id="load-more-container" class="text-center pt-6 hidden">
                 <button onclick="showMoreArticles()" class="bg-orange-50 hover:bg-joy-orange hover:text-white text-joy-orange font-bold text-sm px-6 py-3 rounded-xl transition border border-orange-200 shadow-sm cursor-pointer inline-flex items-center gap-2">
                     <span>Charger plus d'articles</span> <i class="fa-solid fa-chevron-down text-xs"></i>
@@ -137,7 +137,7 @@
 
     </main>
 
-    <!-- Fenêtre Popup (Modal) pour afficher le Google Doc ou la Vidéo sans quitter la page -->
+    <!-- Fenêtre Popup (Modal) pour afficher le Google Doc ou la Vidéo -->
     <div id="content-modal" class="fixed inset-0 z-50 hidden bg-black/70 backdrop-blur-sm flex items-center justify-center p-4 sm:p-6">
         <div class="bg-white w-full max-w-4xl h-[85vh] rounded-3xl shadow-2xl overflow-hidden flex flex-col relative border border-orange-200">
             <div class="bg-joy-dark text-white px-6 py-4 flex justify-between items-center">
@@ -148,6 +148,51 @@
             </div>
             <div class="flex-1 bg-gray-50 relative">
                 <iframe id="modal-iframe" src="" class="w-full h-full border-0"></iframe>
+            </div>
+        </div>
+    </div>
+
+    <!-- Fenêtre Popup (Modal) pour le Courrier des lecteurs -->
+    <div id="courrier-modal" class="fixed inset-0 z-50 hidden bg-black/70 backdrop-blur-sm flex items-center justify-center p-4 sm:p-6">
+        <div class="bg-white w-full max-w-lg rounded-3xl shadow-2xl overflow-hidden flex flex-col relative border border-orange-200 p-8 text-center space-y-6">
+            <button onclick="closeCourrierModal()" class="absolute top-4 right-4 text-gray-400 hover:text-gray-700 text-xl font-bold w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center transition cursor-pointer">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+            <div class="w-16 h-16 bg-joy-orange text-white rounded-2xl flex items-center justify-center mx-auto shadow-lg shadow-orange-500/20">
+                <i class="fa-solid fa-envelope-open-text text-2xl"></i>
+            </div>
+            <h3 class="text-2xl font-extrabold text-joy-dark">Courrier des lecteurs</h3>
+            <p class="text-gray-800 text-lg font-semibold leading-relaxed">
+                Ne perds pas ton temps sur ton ordi, <span class="text-joy-orange underline decoration-wavy">va discuter dans ton quartier !</span>
+            </p>
+            <p class="text-gray-500 text-sm italic">
+                (Rien ne vaut un vrai débat au bistrot, sur un banc ou au marché).
+            </p>
+            <div>
+                <button onclick="closeCourrierModal()" class="bg-joy-orange text-white font-bold text-sm px-6 py-3 rounded-xl hover:bg-orange-600 transition shadow-md shadow-orange-500/20 cursor-pointer">
+                    J'ai compris, j'y vais ! 🌳
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Fenêtre Popup (Modal) pour la Page Contact -->
+    <div id="contact-modal" class="fixed inset-0 z-50 hidden bg-black/70 backdrop-blur-sm flex items-center justify-center p-4 sm:p-6">
+        <div class="bg-white w-full max-w-lg rounded-3xl shadow-2xl overflow-hidden flex flex-col relative border border-orange-200 p-8 text-center space-y-6">
+            <button onclick="closeContactModal()" class="absolute top-4 right-4 text-gray-400 hover:text-gray-700 text-xl font-bold w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center transition cursor-pointer">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+            <div class="w-16 h-16 bg-joy-orange text-white rounded-2xl flex items-center justify-center mx-auto shadow-lg shadow-orange-500/20">
+                <i class="fa-solid fa-user-secret text-2xl"></i>
+            </div>
+            <h3 class="text-2xl font-extrabold text-joy-dark">Contact</h3>
+            <p class="text-gray-800 text-lg font-semibold leading-relaxed">
+                Je ne parles pas aux inconnu(es) <span class="text-joy-orange block mt-2">mais si tu me rencontres soit gentil avec moi !</span>
+            </p>
+            <div>
+                <button onclick="closeContactModal()" class="bg-joy-orange text-white font-bold text-sm px-6 py-3 rounded-xl hover:bg-orange-600 transition shadow-md shadow-orange-500/20 cursor-pointer">
+                    Promis ! 🤝
+                </button>
             </div>
         </div>
     </div>
@@ -169,24 +214,29 @@
                 </div>
             </div>
             <div class="flex flex-col sm:flex-row justify-between items-center gap-4 pt-8 text-xs text-indigo-300">
-                <p>&copy; 2026 Ministère de l'honnêteté. Propulsé par LePetitPloucDesJardiniers.</p>
-                <div class="flex space-x-6">
-                    <a href="index.html" class="hover:text-white transition"> Retour Petites Annonces Citoyennes</a>
+                <p>&copy; 2026 Ministère de l'honnêteté. Propulsé par GitHub Pages & Google Sheets.</p>
+                <div class="flex items-center space-x-6">
+                    <button onclick="openContactModal(event)" class="text-amber-300 hover:text-white transition font-bold cursor-pointer bg-transparent border-0 p-0 inline-flex items-center gap-1.5">
+                        <i class="fa-solid fa-address-book"></i> Contact
+                    </button>
+                    <button onclick="openCourrierModal(event)" class="text-amber-300 hover:text-white transition font-bold cursor-pointer bg-transparent border-0 p-0 inline-flex items-center gap-1.5">
+                        <i class="fa-solid fa-envelope"></i> Courrier des lecteurs
+                    </button>
+                    <a href="https://lepetitprincedesjardiniers.github.io/index.html" class="hover:text-white transition font-bold">Retour aux Petites Annonces Citoyennes</a>
                 </div>
             </div>
         </div>
     </footer>
 
-    <!-- Script de liaison Google Sheets, Recherche & Pagination -->
+    <!-- Script de liaison Google Sheets, Recherche & Modales -->
     <script>
         const sheetID = "1jJZm_WSIMgM5r-Y5zTSrC8FUiLhRN-dOcPnIcSyTpSI";
         const gid = "1311533436";
         const csvUrl = `https://docs.google.com/spreadsheets/d/${sheetID}/export?format=csv&gid=${gid}`;
 
-        let allArticles = []; // Stocke tous les articles pour le moteur de recherche
-        let displayedLimit = 9; // Nombre d'articles affichés initialement par bloc
+        let allArticles = []; 
+        let displayedLimit = 9; 
 
-        // Transforme un lien normal (Google Doc ou YouTube) en lien intégrable dans la popup
         function getEmbedUrl(url) {
             if (!url) return '';
             if (url.includes('docs.google.com/document/d/')) {
@@ -210,7 +260,7 @@
             return url;
         }
 
-        // Ouvrir la modale (ou nouvel onglet si YouTube / Réseaux sociaux)
+        // Gestion de la modale Article / Vidéo
         function openModal(title, url) {
             if (!url) return;
             if (url.includes('youtube.com') || url.includes('youtu.be') || url.includes('instagram.com') || url.includes('tiktok.com') || url.includes('twitter.com') || url.includes('x.com') || url.includes('facebook.com')) {
@@ -228,7 +278,6 @@
             document.body.style.overflow = 'hidden';
         }
 
-        // Fermer la modale
         function closeModal() {
             const modal = document.getElementById('content-modal');
             const iframe = document.getElementById('modal-iframe');
@@ -238,11 +287,45 @@
             document.body.style.overflow = 'auto';
         }
 
+        // Gestion de la modale "Courrier des lecteurs"
+        function openCourrierModal(e) {
+            if (e) e.preventDefault();
+            const modal = document.getElementById('courrier-modal');
+            modal.classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeCourrierModal() {
+            const modal = document.getElementById('courrier-modal');
+            modal.classList.add('hidden');
+            document.body.style.overflow = 'auto';
+        }
+
+        // Gestion de la modale "Contact"
+        function openContactModal(e) {
+            if (e) e.preventDefault();
+            const modal = document.getElementById('contact-modal');
+            modal.classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeContactModal() {
+            const modal = document.getElementById('contact-modal');
+            modal.classList.add('hidden');
+            document.body.style.overflow = 'auto';
+        }
+
+        // Fermeture au clic en dehors des modales
         document.getElementById('content-modal').addEventListener('click', function(e) {
             if (e.target === this) closeModal();
         });
+        document.getElementById('courrier-modal').addEventListener('click', function(e) {
+            if (e.target === this) closeCourrierModal();
+        });
+        document.getElementById('contact-modal').addEventListener('click', function(e) {
+            if (e.target === this) closeContactModal();
+        });
 
-        // Fonction pour afficher les articles dans la grille avec gestion de la recherche et pagination
         function renderArticles() {
             const grid = document.getElementById('articles-grid');
             const searchInput = document.getElementById('search-input');
@@ -250,14 +333,12 @@
             
             const query = searchInput ? searchInput.value.toLowerCase().trim() : "";
 
-            // Filtrer selon la recherche
             const filtered = allArticles.filter(item => {
                 return item.titre.toLowerCase().includes(query) || 
                        item.description.toLowerCase().includes(query) || 
                        item.categorie.toLowerCase().includes(query);
             });
 
-            // Limiter l'affichage au nombre autorisé (sauf si une recherche est active)
             const limit = query ? filtered.length : displayedLimit;
             const articlesToDisplay = filtered.slice(0, limit);
 
@@ -300,7 +381,6 @@
 
             grid.innerHTML = html;
 
-            // Afficher ou cacher le bouton "Charger plus"
             if (!query && displayedLimit < filtered.length) {
                 loadMoreContainer.classList.remove('hidden');
             } else {
@@ -308,18 +388,15 @@
             }
         }
 
-        // Action de la barre de recherche
         function filterArticles() {
             renderArticles();
         }
 
-        // Charger plus d'articles au clic
         function showMoreArticles() {
             displayedLimit += 9;
             renderArticles();
         }
 
-        // Lecture des données du Google Sheet via PapaParse
         Papa.parse(csvUrl, {
             download: true,
             header: true,
@@ -328,7 +405,7 @@
                 
                 let alauneHTML = '';
                 let videosHTML = '';
-                allArticles = []; // Réinitialisation
+                allArticles = []; 
 
                 data.forEach(row => {
                     const cleanRow = {};
@@ -344,7 +421,7 @@
                     const cat = cleanRow.categorie || "Général";
                     const date = cleanRow.date || "";
 
-                    if (!titre) return; // Ignore les lignes vides
+                    if (!titre) return; 
 
                     const safeTitle = titre.replace(/'/g, "\\'").replace(/"/g, '&quot;');
 
@@ -376,7 +453,6 @@
                             </div>
                         `;
                     } else if (pos === 'article') {
-                        // On stocke tous les articles pour alimenter le moteur de recherche
                         allArticles.push({ titre, description: desc, lien, categorie: cat, date });
                     } else if (pos === 'video' || pos === 'alaune-video') {
                         videosHTML += `
@@ -401,7 +477,6 @@
                 if (alauneHTML) document.getElementById('alaune-content').innerHTML = alauneHTML;
                 if (videosHTML) document.getElementById('videos-grid').innerHTML = videosHTML;
                 
-                // Afficher les articles initiaux avec pagination
                 renderArticles();
             }
         });
