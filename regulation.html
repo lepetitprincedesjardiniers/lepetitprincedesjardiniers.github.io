@@ -10,8 +10,8 @@
             text-align: center; 
             margin: 0; 
             padding: 0; 
-            background-color: #FFFF00; 
-            color: #000080; 
+            background-color: #E8F5E9; /* Vert tendre */
+            color: #004d40; /* Texte vert foncé harmonieux */
             padding-bottom: 80px; 
         }
 
@@ -30,65 +30,66 @@
         .menu-table a { text-decoration: none; color: #FFFFFF; font-weight: bold; }
         .menu-table td:hover { background-color: #00b3b3; }
 
-        .phrase-rose { color: #ff1493; font-weight: bold; font-size: 1.1em; text-shadow: 1px 1px 2px #ff69b4; margin-top: 5px; }
+        .phrase-rose { color: #d81b60; font-weight: bold; font-size: 1.1em; text-shadow: 1px 1px 2px #f8bbd0; margin-top: 5px; }
 
         /* FORMULAIRE */
         .etoile-form { 
-            background: #E6E6FA; 
-            border: 3px solid #9370DB; 
+            background: #ffffff; 
+            border: 3px solid #008080; 
             width: 90%; 
             max-width: 600px; 
             margin: 20px auto; 
             padding: 25px; 
             border-radius: 20px;
-            box-shadow: 0px 10px 20px rgba(147, 112, 219, 0.3);
+            box-shadow: 0px 10px 20px rgba(0, 128, 128, 0.2);
             text-align: left;
         }
-        label { display: block; margin-top: 10px; font-weight: bold; color: #4a148c; font-size: 0.9em; }
+        label { display: block; margin-top: 10px; font-weight: bold; color: #00695c; font-size: 0.9em; }
         input, textarea, select { 
             width: 100%; padding: 10px; margin: 5px 0 10px 0; 
-            border-radius: 10px; border: 2px solid #9370DB; 
+            border-radius: 10px; border: 2px solid #008080; 
             box-sizing: border-box; font-family: inherit; 
-            background: #fff; color: #333;
+            background: #fafafa; color: #333;
         }
         .btn-envoi { 
-            background: #9370DB; color: white; border: none; 
+            background: #008080; color: white; border: none; 
             padding: 12px; border-radius: 20px; 
             font-weight: bold; cursor: pointer; font-size: 1.1em; 
             width: 100%; margin-top: 10px; 
             font-family: inherit;
         }
-        .btn-envoi:hover { background: #7a5eb3; }
+        .btn-envoi:hover { background: #2e7d32; }
 
         #searchBox { 
             width: 90%; max-width: 650px; padding: 10px; 
             margin: 20px auto; border-radius: 25px; 
-            border: 2px solid #9370DB; display: block;
+            border: 2px solid #008080; display: block;
             font-family: inherit;
+            background: #ffffff;
         }
 
         /* --- GRILLE ET CARTES MINIATURES --- */
         .mur-reel { display: grid; grid-template-columns: repeat(5, minmax(150px, 1fr)); gap: 10px; padding: 10px; max-width: 98vw; margin: 0 auto; }
         @media (max-width: 768px) { .mur-reel { grid-template-columns: repeat(2, 1fr); } }
 
-        .carte-message { background: white; border: 2px solid #9370DB; border-radius: 12px; padding: 8px; box-shadow: 3px 3px 0px #9370DB; display: flex; flex-direction: column; height: 280px; cursor: pointer; position: relative; overflow: hidden; text-align: left; color: #333; transition: transform 0.2s; }
+        .carte-message { background: white; border: 2px solid #008080; border-radius: 12px; padding: 8px; box-shadow: 3px 3px 0px #008080; display: flex; flex-direction: column; height: 280px; cursor: pointer; position: relative; overflow: hidden; text-align: left; color: #333; transition: transform 0.2s; }
         .carte-message:hover { transform: translateY(-3px); }
-        .nom-prenom { color: #4a148c; font-weight: bold; font-size: 0.8em; border-bottom: 1px solid #eee; margin-bottom: 3px; }
-        .rubrique-tag { font-size: 0.55em; background: #9370DB; color: white; padding: 1px 4px; border-radius: 5px; position: absolute; top: 5px; right: 5px; }
-        .texte-annonce { flex-grow: 1; font-style: italic; color: #333; overflow-y: auto; font-size: 0.75em; margin: 5px 0; line-height: 1.2; padding-right: 5px; }
+        .nom-prenom { color: #2e7d32; font-weight: bold; font-size: 0.8em; border-bottom: 1px solid #eee; margin-bottom: 3px; }
+        .rubrique-tag { font-size: 0.55em; background: #008080; color: white; padding: 1px 4px; border-radius: 5px; position: absolute; top: 5px; right: 5px; }
+        .texte-annonce { flex-grow: 1; font-style: italic; color: #004d40; overflow-y: auto; font-size: 0.75em; margin: 5px 0; line-height: 1.2; padding-right: 5px; }
         .details-bas { font-size: 0.7em; color: #666; line-height: 1.3; border-top: 1px solid #eee; padding-top: 5px; background: white; }
 
         /* --- MODALE GRAND MESSAGE --- */
         #fond-sombre { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); z-index: 2000; justify-content: center; align-items: center; }
-        .message-geant { background: #E6E6FA; width: 95%; max-width: 800px; padding: 25px; border-radius: 25px; border: 6px solid #9370DB; position: relative; max-height: 80vh; overflow-y: auto; color: #4a148c; text-align: left; box-shadow: 0 10px 30px rgba(147,112,219,0.6); }
-        .bouton-fermer { position: absolute; top: 15px; right: 15px; background: #9370DB; color: white; border-radius: 50%; width: 40px; height: 40px; cursor: pointer; border: 2px solid white; font-weight: bold; font-size: 1.1em; display: flex; align-items: center; justify-content: center; }
+        .message-geant { background: #F1F8E9; width: 95%; max-width: 800px; padding: 25px; border-radius: 25px; border: 6px solid #008080; position: relative; max-height: 80vh; overflow-y: auto; color: #004d40; text-align: left; box-shadow: 0 10px 30px rgba(0,128,128,0.4); }
+        .bouton-fermer { position: absolute; top: 15px; right: 15px; background: #008080; color: white; border-radius: 50%; width: 40px; height: 40px; cursor: pointer; border: 2px solid white; font-weight: bold; font-size: 1.1em; display: flex; align-items: center; justify-content: center; }
     </style>
 </head>
 <body>
 
-    <!-- Effets sonores -->
+    <!-- Effets sonores : Pop au survol + Son de Gong à la soumission -->
     <audio id="snd-pop" src="https://assets.mixkit.co/active_storage/sfx/2571/2571-preview.mp3" preload="auto"></audio>
-    <audio id="snd-oiseaux" src="https://assets.mixkit.co/active_storage/sfx/512/512-preview.mp3" preload="auto"></audio>
+    <audio id="snd-gong" src="https://assets.mixkit.co/active_storage/sfx/2658/2658-preview.mp3" preload="auto"></audio>
 
     <div class="header-tools">
         <div id="google_translate_element"></div>
@@ -105,7 +106,7 @@
         </tr>
     </table>
 
-    <h2 style="color:#2E7D32; margin: 10px 0;">⚖️ Zone de Régulation Citoyenne ⚖️️</h2>
+    <h2 style="color:#00695c; margin: 10px 0;">⚖️ Zone de Régulation Citoyenne ⚖️</h2>
     <div class="phrase-rose">Expose ton conflit avec sincérité. La communauté répondra avec délicatesse.</div>
 
     <div class="etoile-form">
@@ -133,8 +134,8 @@
     </div>
 
     <div style="max-width: 95vw; margin: 40px auto; padding: 10px;">
-        <h3 style="color:#008080; margin-bottom: 20px;">🕊️ Dossiers en cours de résolution</h3>
-        <div id="chargement" style="font-weight:bold; color:#000080;">Appel de la sagesse citoyenne...</div>
+        <h3 style="color:#00695c; margin-bottom: 20px;">🕊️ Dossiers en cours de résolution</h3>
+        <div id="chargement" style="font-weight:bold; color:#004d40;">Appel de la sagesse citoyenne...</div>
         <div id="flux-conflits" class="mur-reel"></div>
     </div>
 
@@ -151,7 +152,7 @@
         const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbxxToz22V88elCCjxLqjRtsb5iBIC156cbBFRIlTsju2SwOj9yNnKqzAwFITXMg_wij/exec";
 
         function googleTranslateElementInit() { 
-            new google.translate.TranslateElement({pageLanguage: 'fr', layout: google.translate.TranslateElement.InlineLayout.SIMPLE}, 'google_translate_element'); 
+            new google.translate.TranslateElement({pageLanguage: 'fr'}, 'google_translate_element'); 
         }
 
         function playPop() {
@@ -160,19 +161,15 @@
             pop.play().catch(()=>{});
         }
 
-        function playOiseaux() {
-            const song = document.getElementById('snd-oiseaux');
-            song.currentTime = 0;
-            song.play().catch(()=>{});
-            setTimeout(() => {
-                song.pause();
-                song.currentTime = 0;
-            }, 2000);
+        function playGong() {
+            const gong = document.getElementById('snd-gong');
+            gong.currentTime = 0;
+            gong.play().catch(()=>{});
         }
 
         async function envoyerConflit(event) {
             event.preventDefault();
-            playOiseaux();
+            playGong(); // Joue le son de gong à la soumission
 
             const btn = document.getElementById('btnEnvoi');
             const texteInitial = btn.innerText;
@@ -219,11 +216,11 @@
                 const conflits = data.filter(d => d.type === "REGULATION");
 
                 if (conflits.length === 0) {
-                    flux.innerHTML = `<div style="grid-column: span 5; padding: 20px; font-weight: bold; background: white; border-radius: 10px; color: #008080;">Aucun dossier en cours pour l'instant... 🕊️</div>`;
+                    flux.innerHTML = `<div style="grid-column: span 5; padding: 20px; font-weight: bold; background: white; border-radius: 10px; color: #008080;">Aucun dossier en cours pour l'instant... 🕊️️</div>`;
                     return;
                 }
 
-                // Affichage des derniers messages en premier
+                // Inversion pour afficher les derniers messages en premier
                 conflits.reverse();
 
                 conflits.forEach(c => {
@@ -250,9 +247,9 @@
 
         function ouvrirGrandMessage(ann) {
             document.getElementById('geant-contenu').innerHTML = `
-                <div style="font-size:1.6em; color:#4a148c; font-weight:bold; border-bottom:3px solid #9370DB; margin-bottom:20px; padding-bottom:5px;">⚖️ Dossier de ${ann.nom || "Anonyme"}</div>
-                <div style="background:white; padding:20px; border-radius:15px; border-left:8px solid #9370DB; font-size:1.2em; color:#333; text-align:left; margin-bottom:20px; box-shadow: inset 0 2px 5px rgba(0,0,0,0.05);">"${ann.message}"</div>
-                <div style="text-align:left; background:#E6E6FA; padding:15px; border-radius:10px; font-size:1em; color:#4a148c;">
+                <div style="font-size:1.6em; color:#00695c; font-weight:bold; border-bottom:3px solid #008080; margin-bottom:20px; padding-bottom:5px;">⚖️ Dossier de ${ann.nom || "Anonyme"}</div>
+                <div style="background:white; padding:20px; border-radius:15px; border-left:8px solid #008080; font-size:1.2em; color:#333; text-align:left; margin-bottom:20px; box-shadow: inset 0 2px 5px rgba(0,0,0,0.05);">"${ann.message}"</div>
+                <div style="text-align:left; background:#E0F2F1; padding:15px; border-radius:10px; font-size:1em; color:#004d40;">
                     <strong>📍 Localisation :</strong> ${ann.localisation || "N/C"}<br>
                     <strong>⏳ Durée de validité :</strong> ${ann.duree_validite || "30"} jours<br>
                     <strong>📅 Date :</strong> ${ann.Horodateur || ann.date || "N/C"}
