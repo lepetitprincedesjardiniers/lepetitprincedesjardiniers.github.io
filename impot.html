@@ -361,7 +361,7 @@
             }, 2000);
         }
 
-        // Utilitaire insensible à la casse pour lire les colonnes du Google Sheet (ex: Type ou type)
+        // Lecture insensible à la casse des colonnes du Google Sheet
         function getProp(obj, key) {
             if (!obj) return '';
             const lowerKey = key.toLowerCase();
@@ -369,6 +369,28 @@
                 if (k.toLowerCase() === lowerKey) return obj[k];
             }
             return '';
+        }
+
+        // Nettoyage et formatage des dates (supprime les 0000Z, T, etc.)
+        function formaterDate(val) {
+            if (!val) return 'Récemment';
+            let str = String(val).trim();
+            // Si c'est une date au format ISO technique (ex: 2026-10-03T00:00:00.000Z)
+            let d = new Date(str);
+            if (!isNaN(d.getTime())) {
+                const j = String(d.getDate()).padStart(2, '0');
+                const m = String(d.getMonth() + 1).padStart(2, '0');
+                const a = d.getFullYear();
+                const h = String(d.getHours()).padStart(2, '0');
+                const min = String(d.getMinutes()).padStart(2, '0');
+                // Si l'heure est 00:00 et qu'il n'y avait pas d'heure précise dans Google Sheets, on affiche juste le jour
+                if (h === '00' && min === '00') {
+                    return `${j}/${m}/${a}`;
+                }
+                return `${j}/${m}/${a} à ${h}:${min}`;
+            }
+            // Sinon, nettoyage de secours des caractères barbares
+            return str.replace(/T/g, ' à ').replace(/\.\d+Z$/, '').replace(/Z$/, '').replace(/0000Z/g, '');
         }
 
         function basculerModeSombre() {
@@ -409,7 +431,6 @@
                     return;
                 }
 
-                // Inversion pour afficher les derniers messages envoyés en premier
                 annoncesImpots.reverse();
 
                 annoncesImpots.forEach(ann => {
@@ -418,7 +439,8 @@
                     const message = getProp(ann, 'message');
                     const localisation = getProp(ann, 'localisation');
                     const pays = getProp(ann, 'pays_select');
-                    const horodateur = getProp(ann, 'horodateur');
+                    const horodateurBrut = getProp(ann, 'horodateur');
+                    const horodateur = formaterDate(horodateurBrut);
 
                     const d = document.createElement('div');
                     d.className = 'carte-message';
@@ -430,7 +452,7 @@
                         <div class="details-bas">
                             📍 Ville : ${localisation || 'N/C'}<br>
                             🌍 Pays : ${pays || 'N/C'}<br>
-                            📅 Date : ${horodateur || 'Récemment'}
+                            📅 Date : ${horodateur}
                         </div>
                     `;
                     cont.appendChild(d);
@@ -458,10 +480,13 @@
         function ouvrirGrandMessage(ann, silent = false) {
             annonceActiveCourante = ann;
             const annNom = String(getProp(ann, 'nom') || "").trim();
-            const annDate = String(getProp(ann, 'horodateur') || "").trim();
-            const annonceId = annDate ? `${annNom}_${annDate}` : annNom;
+            const annDateBrute = String(getProp(ann, 'horodateur') || "").trim();
+            const annDateFormatee = formaterDate(annDateBrute);
             
-            // Recherche robuste et élargie des réponses correspondantes
+            // Identifiant unique normalisé pour relier la réponse au message
+            const annonceId = annDateBrute ? `${annNom}_${annDateBrute}` : annNom;
+            
+            // Recherche robuste des réponses correspondantes
             const reponses = cacheAnnonces.filter(a => {
                 const typeVal = String(getProp(a, 'type') || "").toUpperCase();
                 if (!typeVal.includes("REPONSE")) return false;
@@ -470,18 +495,20 @@
                 const parentRep = String(getProp(a, 'parent') || "").trim();
 
                 const matchRef = refRep && annonceId && refRep === annonceId;
-                const matchParent = parentRep && annNom && parentRep.toLowerCase() === annNom.toLowerCase();
+                // Sécurité supplémentaire : si le parent_ref correspond juste au nom ou à la date formatée
+                const matchNomEtDate = parentRep.toLowerCase() === annNom.toLowerCase() && (refRep.includes(annDateBrute) || refRep === annNom);
                 
-                return matchRef || matchParent;
+                return matchRef || matchNomEtDate;
             });
 
             let htmlReponses = '';
             if (reponses.length > 0) {
                 reponses.forEach(rep => {
+                    const dateRep = formaterDate(getProp(rep, 'horodateur'));
                     htmlReponses += `
                         <div class="carte-reponse">
                             <strong>💬 ${getProp(rep, 'nom') || "Anonyme"} :</strong> ${getProp(rep, 'message') || ''}
-                            <div style="font-size: 0.75em; color: #555; margin-top: 3px;">📅 ${getProp(rep, 'horodateur') || ''}</div>
+                            <div style="font-size: 0.75em; color: #555; margin-top: 3px;">📅 ${dateRep}</div>
                         </div>
                     `;
                 });
@@ -497,7 +524,7 @@
                     <strong>📍 Localisation :</strong> ${getProp(ann, 'localisation') || "N/C"}<br>
                     <strong>🌍 Pays :</strong> ${getProp(ann, 'pays_select') || "N/C"}<br>
                     <strong>🛠️ Besoins :</strong> ${getProp(ann, 'besoin') || "Aucun spécifié"}<br>
-                    <strong>📅 Date :</strong> ${annDate || "N/C"}
+                    <strong>📅 Date :</strong> ${annDateFormatee}
                 </div>
 
                 <div class="reponses-container">
@@ -550,7 +577,6 @@
                     body: urlParams
                 });
 
-                // Attente de 2.5s pour laisser le temps à Google Sheets d'écrire et de recharger les données
                 setTimeout(async () => {
                     form.reset();
                     await chargerImpots();
