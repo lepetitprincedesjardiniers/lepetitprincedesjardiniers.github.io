@@ -24,22 +24,27 @@
         .search-row { display: flex; gap: 10px; width: 90%; justify-content: center; }
         .search-item { display: flex; flex-direction: column; width: 45%; }
         .search-item input { padding: 8px; border-radius: 10px; border: none; text-align: center; }
-        .btn-group { display: flex; gap: 8px; flex-wrap: wrap; justify-content: center; margin-top: 10px; }
+        
+        .btn-group { display: flex; gap: 8px; flex-wrap: wrap; justify-content: center; margin-top: 5px; }
         .btn-filtre-rapide { background: rgba(255,255,255,0.2); border: 1px solid white; color: white; padding: 6px 12px; border-radius: 20px; cursor: pointer; font-family: 'Comic Sans MS'; font-size: 0.8em; transition: 0.3s; }
         .btn-filtre-rapide.actif { background: #fff !important; color: #008080 !important; font-weight: bold; }
 
-        /* Tiroir dynamique avec menu déroulant harmonisé */
+        /* Tiroir dynamique avec menu déroulant de sous-rubriques */
         #sous-rubriques-container { display: none; width: 90%; background: rgba(255, 105, 180, 0.25); padding: 10px; border-radius: 15px; border: 2px dashed #ff1493; margin-top: 8px; text-align: center; }
         .select-sous-rubrique { padding: 6px 10px; border-radius: 12px; border: 2px solid #ff1493; font-family: 'Comic Sans MS'; font-size: 0.78em; background: white; color: #008080; font-weight: bold; cursor: pointer; outline: none; width: 80%; max-width: 450px; }
 
-        .mur-reel { display: grid; grid-template-columns: repeat(5, minmax(150px, 1fr)); gap: 10px; padding: 10px; max-width: 98vw; margin: 0 auto; }
-        @media (max-width: 768px) { .mur-reel { grid-template-columns: repeat(2, 1fr); } }
+        .mur-reel { display: grid; grid-template-columns: repeat(5, minmax(180px, 1fr)); gap: 15px; padding: 10px; max-width: 98vw; margin: 0 auto; align-items: start; }
+        @media (max-width: 1024px) { .mur-reel { grid-template-columns: repeat(3, 1fr); } }
+        @media (max-width: 768px) { .mur-reel { grid-template-columns: repeat(1, 1fr); } }
 
-        .carte-message { background: white; border: 3px solid #008080; border-radius: 10px; padding: 8px; box-shadow: 3px 3px 0px #008080; display: flex; flex-direction: column; height: 320px; cursor: pointer; position: relative; overflow: hidden; text-align: left; transition: transform 0.2s; }
+        /* Carte avec hauteur fixe et zone de défilement (scroll) pour le texte */
+        .carte-message { background: white; border: 3px solid #008080; border-radius: 10px; padding: 10px; box-shadow: 3px 3px 0px #008080; display: flex; flex-direction: column; height: 330px; cursor: pointer; position: relative; overflow: hidden; text-align: left; transition: transform 0.2s; }
         .carte-message:hover { transform: translateY(-3px); }
-        .nom-prenom { color: #2E7D32; font-weight: bold; font-size: 0.8em; border-bottom: 1px solid #eee; margin-bottom: 3px; }
-        .rubrique-tag { font-size: 0.55em; background: #ff1493; color: white; padding: 1px 4px; border-radius: 5px; position: absolute; top: 5px; right: 5px; }
-        .texte-annonce { flex-grow: 1; font-style: italic; color: #000080; overflow-y: auto; font-size: 0.75em; margin: 5px 0; line-height: 1.2; padding-right: 5px; scrollbar-width: thin; white-space: pre-line; }
+        .nom-prenom { color: #2E7D32; font-weight: bold; font-size: 0.85em; border-bottom: 1px solid #eee; margin-bottom: 4px; padding-right: 70px; }
+        .rubrique-tag { font-size: 0.55em; background: #ff1493; color: white; padding: 2px 6px; border-radius: 5px; position: absolute; top: 8px; right: 8px; }
+        
+        /* Zone de défilement pour les annonces longues */
+        .texte-annonce { flex-grow: 1; font-style: italic; color: #000080; overflow-y: auto; font-size: 0.75em; margin: 4px 0; line-height: 1.2; padding-right: 4px; scrollbar-width: thin; white-space: pre-line; word-break: break-word; }
         .texte-annonce::-webkit-scrollbar { width: 4px; }
         .texte-annonce::-webkit-scrollbar-thumb { background: #008080; border-radius: 10px; }
 
@@ -49,16 +54,16 @@
         .btn-repondre { background: #E67E22; border: 1px solid #b35900; border-radius: 8px; color: white; font-size: 0.75em; padding: 5px; cursor: pointer; margin: 2px 0; font-weight: bold; width: 100%; transition: 0.2s; }
         .btn-repondre:hover { background: #d35400; transform: scale(1.02); }
 
-        .details-bas { font-size: 0.7em; color: #444; line-height: 1.2; border-top: 1px solid #eee; padding-top: 3px; background: white; }
+        .details-bas { font-size: 0.65em; color: #444; line-height: 1.2; border-top: 1px solid #eee; padding-top: 4px; background: white; flex-shrink: 0; }
 
         body.dark-mode { background-color: #0a0a1a; color: #e0e0e0; }
         .star { position: fixed; background: white; border-radius: 50%; opacity: 0; pointer-events: none; animation: twinkle var(--d) infinite; }
         @keyframes twinkle { 0%, 100% { opacity: 0.3; } 50% { opacity: 1; } }
         
-        #fond-sombre, #modal-reponse { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); z-index: 2000; justify-content: center; align-items: center; }
-        .message-geant { background: #FFFFF0; width: 95%; max-width: 800px; padding: 25px; border-radius: 25px; border: 8px solid #008080; position: relative; max-height: 80vh; overflow-y: auto; color: #000; }
+        #fond-sombre, #modal-reponse { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); z-index: 2000; justify-content: center; align-items: center; padding: 10px; box-sizing: border-box; }
+        .message-geant { background: #FFFFF0; width: 95%; max-width: 800px; padding: 25px; border-radius: 25px; border: 8px solid #008080; position: relative; max-height: 85vh; overflow-y: auto; color: #000; text-align: left; box-sizing: border-box; }
         .form-reponse-box { background: #FFFFFF; width: 90%; max-width: 500px; padding: 25px; border-radius: 20px; border: 6px solid #E67E22; position: relative; text-align: left; color: #000; box-shadow: 0 0 30px rgba(0,0,0,0.5); }
-        .bouton-fermer { position: absolute; top: 15px; right: 15px; background: #FF1493; color: white; border-radius: 50%; width: 40px; height: 40px; cursor: pointer; border: 2px solid white; font-weight: bold; }
+        .bouton-fermer { position: absolute; top: 15px; right: 15px; background: #FF1493; color: white; border-radius: 50%; width: 40px; height: 40px; cursor: pointer; border: 2px solid white; font-weight: bold; display: flex; align-items: center; justify-content: center; z-index: 10; }
         
         .field-rep { width: 100%; padding: 10px; margin: 8px 0; border: 2px solid #008080; border-radius: 10px; font-family: 'Comic Sans MS'; box-sizing: border-box; }
         .copyright-link { color: #008080; text-decoration: none; font-weight: bold; }
@@ -98,7 +103,7 @@
                 <div class="search-item"><input type="text" id="searchVille" onkeyup="executerFiltrage()" placeholder="🏙️ Ville"></div>
             </div>
             
-            <!-- Boutons de filtres principaux (Destination du semis) -->
+            <!-- Boutons de filtres rapides -->
             <div class="btn-group">
                 <button class="btn-filtre-rapide" data-cat="Savoir" onclick="rechercheRapide('Savoir', this)">🎓 Savoirs</button>
                 <button class="btn-filtre-rapide" data-cat="Citoyenne" onclick="rechercheRapide('Citoyenne', this)">🏛 Vie Citoyenne</button>
@@ -109,7 +114,7 @@
                 <button class="btn-filtre-rapide btn-reset" onclick="resetRecherche()">🔄 Tout voir</button>
             </div>
 
-            <!-- Tiroir dynamique avec menu déroulant personnalisé par catégorie -->
+            <!-- Tiroir dynamique avec menu déroulant personnalisé par sous-rubrique -->
             <div id="sous-rubriques-container">
                 <select id="selectSousRubrique" class="select-sous-rubrique" onchange="changerSousRubrique(this)"></select>
             </div>
@@ -170,19 +175,17 @@
             "Autre": ["AUTRE_CAT"] 
         };
 
-        // Couleurs de contours distinctes pour chaque catégorie (aux couleurs de la page d'accueil)
         const couleursBordures = {
-            "SAVOIR": "#ffc107",       // Or / Jaune (Savoirs)
-            "VIE": "#9370DB",          // Violet lavande (Vie Citoyenne)
-            "AIDE": "#ff69b4",         // Rose (Aide & Harmonie)
-            "URGENCE": "#ff69b4",      // Rose (Urgences)
-            "ECOUTE": "#ff69b4",       // Rose (Écoute)
-            "REGULATION": "#9370DB",   // Violet (Régulation)
-            "IMPOT": "#00ced1",        // Turquoise (Trésor Public)
-            "AUTRE_CAT": "#008080"     // Vert canard (Autre domaine)
+            "SAVOIR": "#ffc107",       
+            "VIE": "#9370DB",          
+            "AIDE": "#ff69b4",         
+            "URGENCE": "#ff69b4",      
+            "ECOUTE": "#ff69b4",       
+            "REGULATION": "#9370DB",   
+            "IMPOT": "#00ced1",        
+            "AUTRE_CAT": "#008080"     
         };
 
-        // Sous-rubriques avec l'ajout de "Bibliothèque vivante" corrigée
         const sousRubriquesData = {
             "Savoir": [
                 { id: "", label: "🎓 Toutes les précisions" },
@@ -261,6 +264,19 @@
             return String(str).replace(/[^a-zA-Z0-9]/g, '').toLowerCase();
         }
 
+        function formaterDate(horodateur) {
+            if (!horodateur) return "N/C";
+            try {
+                const dateObj = new Date(horodateur);
+                if (!isNaN(dateObj)) {
+                    return dateObj.toLocaleDateString('fr-FR', { day: '2-digit', month: '2-digit', year: 'numeric' });
+                }
+                return horodateur.split('T')[0] || horodateur;
+            } catch(e) {
+                return horodateur;
+            }
+        }
+
         function obtenirReponsesPourAnnonce(ann) {
             const idOriginal = ann.Horodateur || ann.id || "";
             const idCle = nettoyerCle(idOriginal);
@@ -273,7 +289,6 @@
             });
         }
 
-        // Bip très bas et adouci (volume réglé à 0.03)
         function jouerBip() {
             try {
                 const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
@@ -363,7 +378,6 @@
                             filtreTypeActuel = nomBouton;
                             document.querySelectorAll('.btn-filtre-rapide').forEach(b => b.classList.remove('actif'));
                             btnTarget.classList.add('actif');
-                            
                             afficherTiroirSousRubriques(nomBouton);
                         }
                     }
@@ -444,6 +458,7 @@
                 const nomAnnonce = ann.nom || "Anonyme";
                 const typeAnnonce = (ann.type || "").toUpperCase();
                 const msgAnnonce = ann.message || "";
+                const datePubli = formaterDate(ann.Horodateur);
                 
                 const listeReponses = obtenirReponsesPourAnnonce(ann);
                 let badgeReponsesHtml = '';
@@ -454,7 +469,6 @@
                 const d = document.createElement('div');
                 d.className = 'carte-message';
                 
-                // Application de la couleur de contour spécifique à la catégorie
                 const couleurBord = couleursBordures[typeAnnonce] || "#008080";
                 d.style.borderColor = couleurBord;
                 d.style.boxShadow = `3px 3px 0px ${couleurBord}`;
@@ -467,11 +481,12 @@
                     <div class="texte-annonce"></div>
                     ${badgeReponsesHtml}
                     <div class="details-bas">
-                        <button class="btn-arrosage">💧 Arroser (${ann.votes_arrosage || 0})</button>
-                        <button class="btn-repondre">💌 Répondre à cette graine</button>
+                        📅 Publié le : ${escapeHtml(datePubli)}<br>
                         📍 Localisation : ${escapeHtml(ann.localisation || 'N/C')}<br>
                         📍 Pays : ${escapeHtml(ann.pays_select || 'N/C')}<br>
                         🌍 Portée : ${escapeHtml(ann.rayon_action || 'Locale')}
+                        <button class="btn-arrosage">💧 Arroser (${ann.votes_arrosage || 0})</button>
+                        <button class="btn-repondre">💌 Répondre à cette graine</button>
                     </div>
                 `;
 
@@ -508,14 +523,16 @@
 
         function ouvrirGrandMessage(ann) {
             const listeReponses = obtenirReponsesPourAnnonce(ann);
+            const datePubli = formaterDate(ann.Horodateur);
             
             let htmlReponsesGeant = '';
             if (listeReponses.length > 0) {
-                htmlReponsesGeant = `<div style="background:#FFF8E7; padding:15px; border-radius:10px; border:2px dashed #E67E22; margin-bottom:15px; text-align:left;">
+                htmlReponsesGeant = `<div style="background:#FFF8E7; padding:15px; border-radius:10px; border:2px dashed #E67E22; margin-bottom:15px; text-align:left; max-height: 300px; overflow-y: auto;">
                     <h4 style="color:#E67E22; margin:0 0 10px 0;">💬 Réponses reçues (${listeReponses.length}) :</h4>`;
                 listeReponses.forEach(r => {
-                    htmlReponsesGeant += `<div style="margin-bottom:8px; border-bottom:1px solid #eee; padding-bottom:5px;">
-                        <strong style="color:#2E7D32;">${escapeHtml(r.nom || 'Ami')} :</strong> "${escapeHtml(r.message || '')}"
+                    htmlReponsesGeant += `<div style="margin-bottom:10px; border-bottom:1px solid #ddd; padding-bottom:8px; word-break: break-word;">
+                        <strong style="color:#2E7D32;">${escapeHtml(r.nom || 'Ami')} :</strong> 
+                        <div style="white-space: pre-line; color: #333; margin-top: 3px;">"${escapeHtml(r.message || '')}"</div>
                     </div>`;
                 });
                 htmlReponsesGeant += `</div>`;
@@ -523,9 +540,10 @@
 
             const divContent = document.getElementById('geant-contenu');
             divContent.innerHTML = `
-                <div style="font-size:1.8em; color:#2E7D32; font-weight:bold; border-bottom:3px solid #008080; margin-bottom:15px;">🌱 Offrande de <span id="geant-nom"></span></div>
-                <div style="background:white; padding:20px; border-radius:15px; border-left:10px solid #FF1493; font-size:1.2em; color:#000080; text-align:left; margin-bottom:15px; white-space: pre-line;" id="geant-msg"></div>
-                <div style="text-align:left; background:#E0F2F1; padding:15px; border-radius:10px; font-size:1em; margin-bottom:15px;">
+                <div style="font-size:1.6em; color:#2E7D32; font-weight:bold; border-bottom:3px solid #008080; margin-bottom:15px; padding-right: 40px;">🌱 Offrande de <span id="geant-nom"></span></div>
+                <div style="background:white; padding:20px; border-radius:15px; border-left:10px solid #FF1493; font-size:1.1em; color:#000080; text-align:left; margin-bottom:15px; white-space: pre-line; word-break: break-word;" id="geant-msg"></div>
+                <div style="text-align:left; background:#E0F2F1; padding:15px; border-radius:10px; font-size:0.95em; margin-bottom:15px; line-height: 1.4;">
+                    <strong>📅 Date de publication :</strong> ${escapeHtml(datePubli)}<br>
                     <strong>📍 Localisation :</strong> ${escapeHtml(ann.localisation || "N/C")}<br>
                     <strong>📍 Pays :</strong> ${escapeHtml(ann.pays_select || "N/C")}<br>
                     <strong>🌍 Portée :</strong> ${escapeHtml(ann.rayon_action || "Locale")}<br>
@@ -618,7 +636,6 @@
             });
         }
 
-        // Clic sur un filtre principal
         function rechercheRapide(t, el) {
             jouerBip();
             document.querySelectorAll('.btn-filtre-rapide').forEach(b => b.classList.remove('actif'));
