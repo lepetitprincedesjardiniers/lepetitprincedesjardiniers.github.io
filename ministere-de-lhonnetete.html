@@ -32,8 +32,7 @@
         <div class="max-w-7xl mx-auto px-4 py-4 flex flex-col sm:flex-row justify-between items-center gap-4">
             <h1 class="text-2xl font-black text-joy-dark">MEDIA<span class="text-joy-orange">MAG</span></h1>
             <div class="relative w-full sm:w-96">
-                <!-- IMPORTANT : oninput appelle filterContent() pour filtrer vidéos ET articles -->
-                <input type="text" id="search-input" oninput="filterContent()" placeholder="Rechercher vidéos, articles, catégories..." class="w-full pl-10 pr-4 py-2 rounded-full border border-gray-200 focus:outline-none focus:border-joy-orange focus:ring-1 focus:ring-joy-orange bg-gray-50">
+                <input type="text" id="search-input" oninput="filterContent()" placeholder="Rechercher articles, vidéos, catégories..." class="w-full pl-10 pr-4 py-2 rounded-full border border-gray-200 focus:outline-none focus:border-joy-orange focus:ring-1 focus:ring-joy-orange bg-gray-50">
                 <i class="fa-solid fa-search absolute left-4 top-3.5 text-gray-400"></i>
             </div>
         </div>
@@ -46,29 +45,28 @@
             <div id="hero-container"></div>
         </section>
 
-        <!-- Grille des Vidéos -->
-        <section>
-            <h2 class="text-sm font-bold text-gray-400 uppercase tracking-widest mb-6">Vidéos & Shorts</h2>
-            <div id="videos-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                <!-- Chargement... -->
-                <div class="col-span-full text-center py-12 text-gray-500"><i class="fa-solid fa-circle-notch fa-spin text-3xl mb-3 text-joy-orange"></i><br>Chargement des vidéos...</div>
-            </div>
-            <!-- Bouton Charger plus de Vidéos -->
-            <div id="load-more-videos-container" class="text-center pt-6 hidden">
-                <button onclick="showMoreVideos()" class="bg-orange-50 hover:bg-joy-orange hover:text-white text-joy-orange font-bold text-sm px-6 py-3 rounded-xl transition border border-orange-200 shadow-sm cursor-pointer inline-flex items-center gap-2">
-                    <span>Charger plus de vidéos</span> <i class="fa-solid fa-chevron-down text-xs"></i>
-                </button>
-            </div>
-        </section>
-
-        <!-- Grille des Articles -->
+        <!-- Grille des Articles (Remis en premier) -->
         <section>
             <h2 class="text-sm font-bold text-gray-400 uppercase tracking-widest mb-6">Articles</h2>
-            <div id="articles-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"></div>
+            <div id="articles-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <div class="col-span-full text-center py-12 text-gray-500"><i class="fa-solid fa-circle-notch fa-spin text-3xl mb-3 text-joy-orange"></i><br>Chargement des articles...</div>
+            </div>
             <!-- Bouton Charger plus d'Articles -->
             <div id="load-more-container" class="text-center pt-6 hidden">
                 <button onclick="showMoreArticles()" class="bg-gray-100 hover:bg-gray-200 text-gray-700 font-bold text-sm px-6 py-3 rounded-xl transition border border-gray-200 shadow-sm cursor-pointer inline-flex items-center gap-2">
                     <span>Charger plus d'articles</span> <i class="fa-solid fa-chevron-down text-xs"></i>
+                </button>
+            </div>
+        </section>
+
+        <!-- Grille des Vidéos -->
+        <section>
+            <h2 class="text-sm font-bold text-gray-400 uppercase tracking-widest mb-6">Vidéos & Shorts</h2>
+            <div id="videos-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"></div>
+            <!-- Bouton Charger plus de Vidéos -->
+            <div id="load-more-videos-container" class="text-center pt-6 hidden">
+                <button onclick="showMoreVideos()" class="bg-orange-50 hover:bg-joy-orange hover:text-white text-joy-orange font-bold text-sm px-6 py-3 rounded-xl transition border border-orange-200 shadow-sm cursor-pointer inline-flex items-center gap-2">
+                    <span>Charger plus de vidéos</span> <i class="fa-solid fa-chevron-down text-xs"></i>
                 </button>
             </div>
         </section>
@@ -98,7 +96,6 @@
         let displayedArticleLimit = 9; 
         let displayedVideoLimit = 9;
 
-        // DÉTECTEUR YOUTUBE ULTRA-ROBUSTE (Nettoie les espaces et trouve l'ID partout)
         function getYouTubeId(url) {
             if (!url) return '';
             const cleanUrl = url.trim(); 
@@ -107,7 +104,6 @@
             return match ? match[1] : '';
         }
 
-        // URL D'INTÉGRATION
         function getEmbedUrl(url) {
             if (!url) return '';
             const cleanUrl = url.trim();
@@ -122,7 +118,6 @@
             return cleanUrl;
         }
 
-        // GESTION DES MODALES
         function openModal(title, url) {
             if (!url) return;
             const modal = document.getElementById('content-modal');
@@ -151,7 +146,6 @@
             document.body.style.overflow = 'auto';
         }
 
-        // SYSTÈME DE DÉPLIANT (Chevron MINIMALISTE)
         function toggleDesc(btn) {
             const container = btn.closest('.desc-container');
             const content = container.querySelector('.desc-content');
@@ -160,12 +154,77 @@
             icon.classList.toggle('rotated');
         }
 
-        // RECHERCHE GLOBALE
         function filterContent() {
-            renderVideos();
             renderArticles();
+            renderVideos();
         }
-        // AFFICHAGE DES VIDÉOS (Avec recherche et pagination)
+        // AFFICHAGE DES ARTICLES
+        function renderArticles() {
+            const grid = document.getElementById('articles-grid');
+            const searchInput = document.getElementById('search-input');
+            const loadMoreContainer = document.getElementById('load-more-container');
+            
+            const query = searchInput ? searchInput.value.toLowerCase().trim() : "";
+
+            const filtered = allArticles.filter(item => {
+                const searchStr = `${item.titre || ''} ${item.description || ''} ${item.categorie || ''}`.toLowerCase();
+                return searchStr.includes(query);
+            });
+
+            const limit = query ? filtered.length : displayedArticleLimit;
+            const articlesToDisplay = filtered.slice(0, limit);
+
+            if (filtered.length === 0) {
+                if (grid) grid.innerHTML = `<div class="col-span-full text-center py-12 text-gray-500 font-medium bg-white rounded-3xl border border-gray-100">Aucun article trouvé pour "${query}".</div>`;
+                if (loadMoreContainer) loadMoreContainer.classList.add('hidden');
+                return;
+            }
+
+            let html = '';
+            articlesToDisplay.forEach(art => {
+                const realIndex = allArticles.findIndex(a => a === art);
+                
+                html += `
+                    <div class="bg-white rounded-3xl border border-gray-100 overflow-hidden shadow-sm flex flex-col justify-between p-6 space-y-4">
+                        <h3 class="text-lg font-extrabold text-gray-800 leading-snug line-clamp-2">${art.titre}</h3>
+                        
+                        <div onclick="openArticleByIndex(${realIndex})" class="rounded-2xl overflow-hidden relative shadow-md aspect-video flex items-center justify-center cursor-pointer group bg-gray-100 border border-gray-200">
+                            <div class="absolute inset-0 bg-black/5 group-hover:bg-black/0 transition duration-300"></div>
+                            <div class="w-12 h-12 bg-white text-gray-800 rounded-full flex items-center justify-center shadow-lg z-10 group-hover:scale-110 transition duration-300">
+                                <i class="fa-solid fa-arrow-right"></i>
+                            </div>
+                            <span class="absolute top-3 left-3 z-10 text-[10px] font-bold text-gray-700 bg-white/90 px-2.5 py-1 rounded-full uppercase tracking-wider">${art.categorie || 'Article'}</span>
+                        </div>
+
+                        <div class="desc-container border-t border-gray-100 pt-3 space-y-2">
+                            <div class="flex items-center justify-between text-xs text-gray-400 font-medium px-1">
+                                <span>${art.date || ''}</span>
+                            </div>
+                            <div class="text-center pt-1">
+                                <button onclick="toggleDesc(this)" class="inline-flex items-center justify-center w-9 h-9 rounded-full bg-gray-50 text-gray-500 hover:bg-gray-200 hover:text-gray-800 transition shadow-sm cursor-pointer">
+                                    <i class="fa-solid fa-chevron-down arrow-icon text-sm"></i>
+                                </button>
+                            </div>
+                            <div class="desc-content text-gray-600 text-sm leading-relaxed whitespace-pre-line pt-2 bg-gray-50/50 p-4 rounded-2xl border border-gray-100">
+                                ${art.description || 'Aucune description fournie.'}
+                            </div>
+                        </div>
+                    </div>
+                `;
+            });
+
+            if (grid) grid.innerHTML = html;
+
+            if (loadMoreContainer) {
+                if (!query && displayedArticleLimit < filtered.length) {
+                    loadMoreContainer.classList.remove('hidden');
+                } else {
+                    loadMoreContainer.classList.add('hidden');
+                }
+            }
+        }
+
+        // AFFICHAGE DES VIDÉOS
         function renderVideos() {
             const grid = document.getElementById('videos-grid');
             const searchInput = document.getElementById('search-input');
@@ -233,84 +292,18 @@
             }
         }
 
-        // AFFICHAGE DES ARTICLES
-        function renderArticles() {
-            const grid = document.getElementById('articles-grid');
-            const searchInput = document.getElementById('search-input');
-            const loadMoreContainer = document.getElementById('load-more-container');
-            
-            const query = searchInput ? searchInput.value.toLowerCase().trim() : "";
-
-            const filtered = allArticles.filter(item => {
-                const searchStr = `${item.titre || ''} ${item.description || ''} ${item.categorie || ''}`.toLowerCase();
-                return searchStr.includes(query);
-            });
-
-            const limit = query ? filtered.length : displayedArticleLimit;
-            const articlesToDisplay = filtered.slice(0, limit);
-
-            if (filtered.length === 0) {
-                if (grid) grid.innerHTML = `<div class="col-span-full text-center py-12 text-gray-500 font-medium bg-white rounded-3xl border border-gray-100">Aucun article trouvé pour "${query}".</div>`;
-                if (loadMoreContainer) loadMoreContainer.classList.add('hidden');
-                return;
-            }
-
-            let html = '';
-            articlesToDisplay.forEach(art => {
-                const realIndex = allArticles.findIndex(a => a === art);
-                
-                html += `
-                    <div class="bg-white rounded-3xl border border-gray-100 overflow-hidden shadow-sm flex flex-col justify-between p-6 space-y-4">
-                        <h3 class="text-lg font-extrabold text-gray-800 leading-snug line-clamp-2">${art.titre}</h3>
-                        
-                        <div onclick="openArticleByIndex(${realIndex})" class="rounded-2xl overflow-hidden relative shadow-md aspect-video flex items-center justify-center cursor-pointer group bg-gray-100 border border-gray-200">
-                            <div class="absolute inset-0 bg-black/5 group-hover:bg-black/0 transition duration-300"></div>
-                            <div class="w-12 h-12 bg-white text-gray-800 rounded-full flex items-center justify-center shadow-lg z-10 group-hover:scale-110 transition duration-300">
-                                <i class="fa-solid fa-arrow-right"></i>
-                            </div>
-                            <span class="absolute top-3 left-3 z-10 text-[10px] font-bold text-gray-700 bg-white/90 px-2.5 py-1 rounded-full uppercase tracking-wider">${art.categorie || 'Article'}</span>
-                        </div>
-
-                        <div class="desc-container border-t border-gray-100 pt-3 space-y-2">
-                            <div class="flex items-center justify-between text-xs text-gray-400 font-medium px-1">
-                                <span>${art.date || ''}</span>
-                            </div>
-                            <div class="text-center pt-1">
-                                <button onclick="toggleDesc(this)" class="inline-flex items-center justify-center w-9 h-9 rounded-full bg-gray-50 text-gray-500 hover:bg-gray-200 hover:text-gray-800 transition shadow-sm cursor-pointer">
-                                    <i class="fa-solid fa-chevron-down arrow-icon text-sm"></i>
-                                </button>
-                            </div>
-                            <div class="desc-content text-gray-600 text-sm leading-relaxed whitespace-pre-line pt-2 bg-gray-50/50 p-4 rounded-2xl border border-gray-100">
-                                ${art.description || 'Aucune description fournie.'}
-                            </div>
-                        </div>
-                    </div>
-                `;
-            });
-
-            if (grid) grid.innerHTML = html;
-
-            if (loadMoreContainer) {
-                if (!query && displayedArticleLimit < filtered.length) {
-                    loadMoreContainer.classList.remove('hidden');
-                } else {
-                    loadMoreContainer.classList.add('hidden');
-                }
-            }
-        }
-
-        // FONCTIONS CHARGER PLUS
-        function showMoreVideos() {
-            displayedVideoLimit += 9;
-            renderVideos();
-        }
-
+        // CHARGER PLUS
         function showMoreArticles() {
             displayedArticleLimit += 9;
             renderArticles();
         }
 
-        // CHARGEMENT DEPUIS GOOGLE SHEETS
+        function showMoreVideos() {
+            displayedVideoLimit += 9;
+            renderVideos();
+        }
+
+        // CHARGEMENT GOOGLE SHEETS
         window.addEventListener('DOMContentLoaded', () => {
             Papa.parse(csvUrl, {
                 download: true,
@@ -319,9 +312,8 @@
                 complete: function(results) {
                     const data = results.data;
                     
-                    // Séparation automatique Vidéos vs Articles
                     data.forEach(row => {
-                        if (!row.titre || !row.lien) return; // Ignore les lignes vides
+                        if (!row.titre || !row.lien) return;
                         
                         if (getYouTubeId(row.lien)) {
                             allVideos.push(row);
@@ -330,7 +322,6 @@
                         }
                     });
 
-                    // Si on a un article, on le met "À la une"
                     if (allArticles.length > 0) {
                         const heroSection = document.getElementById('hero-section');
                         const heroContainer = document.getElementById('hero-container');
@@ -351,12 +342,12 @@
                         }
                     }
 
-                    renderVideos();
                     renderArticles();
+                    renderVideos();
                 },
                 error: function(error) {
                     console.error("Erreur PapaParse:", error);
-                    document.getElementById('videos-grid').innerHTML = `<div class="col-span-full text-center py-12 text-red-500">Erreur de connexion au document.</div>`;
+                    document.getElementById('articles-grid').innerHTML = `<div class="col-span-full text-center py-12 text-red-500">Erreur de connexion au document.</div>`;
                 }
             });
         });
