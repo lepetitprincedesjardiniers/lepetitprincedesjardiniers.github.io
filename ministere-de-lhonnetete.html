@@ -128,7 +128,7 @@
                 </a>
             </div>
 
-            <!-- Grille des Vidéos -->
+            <!-- Grille des Vidéos (2 colonnes sur écran moyen/large) -->
             <div id="videos-grid" class="grid grid-cols-1 md:grid-cols-2 gap-8">
                 <div class="col-span-full text-center py-12 text-gray-500 font-medium">Chargement des vidéos...</div>
             </div>
@@ -245,7 +245,7 @@
         </div>
     </footer>
 
-    <!-- Script de liaison Google Sheets, Recherche, Vidéos & Modales -->
+    <!-- Scripts JS -->
     <script>
         const sheetID = "1jJZm_WSIMgM5r-Y5zTSrC8FUiLhRN-dOcPnIcSyTpSI";
         const gid = "1311533436";
@@ -278,7 +278,6 @@
             return cleanUrl;
         }
 
-        // Lancement direct de la vidéo YouTube dans la carte au clic
         function playVideoInline(containerId, videoId) {
             const container = document.getElementById(containerId);
             if (!container || !videoId) return;
@@ -319,8 +318,11 @@
             document.body.style.overflow = 'auto';
         }
 
+        // Bascule de la description et synchronisation de la carte voisine
         function toggleDesc(btn, index) {
             const container = btn.closest('.desc-container');
+            if (!container) return;
+
             const content = container.querySelector('.desc-content');
             const descText = container.querySelector('.desc-text');
             const icon = btn.querySelector('.arrow-icon');
@@ -333,9 +335,11 @@
             if (content) {
                 content.classList.toggle('expanded', isExpanded);
             }
-            icon.classList.toggle('rotated', isExpanded);
+            if (icon) {
+                icon.classList.toggle('rotated', isExpanded);
+            }
 
-            // Synchronisation de la carte voisine sur la même ligne (grille de 2 colonnes)
+            // Synchronisation de la carte voisine sur la même ligne (0 <-> 1, 2 <-> 3, etc.)
             if (index !== undefined) {
                 const neighborIndex = (index % 2 === 0) ? index + 1 : index - 1;
                 const neighborContainer = document.querySelector(`.desc-container[data-index="${neighborIndex}"]`);
@@ -343,7 +347,7 @@
                     const neighborBtn = neighborContainer.querySelector('button');
                     const neighborExpanded = neighborContainer.classList.contains('expanded');
                     if (neighborExpanded !== isExpanded && neighborBtn) {
-                        toggleDesc(neighborBtn); // Appel sans index pour éviter la boucle infinie
+                        toggleDesc(neighborBtn); // Appel sans index pour éviter toute boucle infinie
                     }
                 }
             }
@@ -449,7 +453,7 @@
             }
         }
 
-        // AFFICHAGE DES VIDÉOS
+        // AFFICHAGE DES VIDÉOS (Correction HTML & Structure)
         function renderVideos() {
             const grid = document.getElementById('videos-grid');
             const searchInput = document.getElementById('search-input');
@@ -479,53 +483,42 @@
                 const descriptionText = vid.description || 'Aucune description fournie.';
 
                 html += `
-                    <div class="bg-white rounded-3xl border border-orange-100 overflow-hidden shadow-sm flex flex-col justify-between p-6 space-y-3">
-                    <div class="bg-white rounded-3xl border border-orange-100 overflow-hidden shadow-sm flex flex-col justify-between p-5 sm:p-6 space-y-2.5">
-                        
-                        <!-- 1. Titre en haut avec catégorie et date -->
-                        <div class="space-y-1.5">
-                        <div class="space-y-1">
-                            <div class="flex items-center justify-between text-xs font-bold gap-2">
-                                <span class="bg-amber-100 text-amber-800 px-3 py-1 rounded-full truncate">${vid.categorie || 'Vidéo'}</span>
-                                <span class="text-gray-400 font-normal shrink-0">${vid.date || ''}</span>
-                            </div>
-                            <h3 class="text-lg font-extrabold text-joy-dark leading-snug">${vid.titre}</h3>
-                        </div>
-                        
-                        <!-- 2. Vidéo juste en dessous sans espace -->
-                        <!-- 2. Vidéo juste en dessous sans espace excessif -->
-                        <div id="${uniqueId}" onclick="playVideoInline('${uniqueId}', '${videoId}')" class="overflow-hidden relative shadow-md aspect-video flex items-center justify-center cursor-pointer group bg-gray-900 bg-cover bg-center rounded-2xl" style="background-image: url('${thumbUrl}');">
-                            <div class="absolute inset-0 bg-black/30 group-hover:bg-black/10 transition duration-300"></div>
-                            <div class="w-14 h-14 bg-joy-orange text-white rounded-full flex items-center justify-center shadow-xl z-10 group-hover:scale-110 transition duration-300">
-                                <i class="fa-solid fa-play ml-1"></i>
-                            </div>
-                        </div>
-
-                        <!-- 3. Description avec line-clamp et flèche centrale -->
-                        <div class="desc-container pt-1 space-y-2" data-index="${idx}">
-                        <div class="desc-container space-y-1.5 pt-0.5" data-index="${idx}">
-                            <div class="desc-text text-gray-700 text-sm leading-relaxed whitespace-pre-line line-clamp-5">
-                                ${descriptionText}
+                    <div class="bg-white rounded-3xl border border-orange-100 overflow-hidden shadow-sm flex flex-col justify-between p-5 sm:p-6 space-y-4">
+                        <div class="space-y-3">
+                            <!-- En-tête : catégorie, date et titre -->
+                            <div class="space-y-1.5">
+                                <div class="flex items-center justify-between text-xs font-bold gap-2">
+                                    <span class="bg-amber-100 text-amber-800 px-3 py-1 rounded-full truncate">${vid.categorie || 'Vidéo'}</span>
+                                    <span class="text-gray-400 font-normal shrink-0">${vid.date || ''}</span>
+                                </div>
+                                <h3 class="text-lg font-extrabold text-joy-dark leading-snug">${vid.titre}</h3>
                             </div>
 
-                            <!-- Flèche orange au centre pour dérouler -->
-                            <div class="text-center py-1">
-                                <button onclick="toggleDesc(this, ${idx})" class="bg-orange-50 hover:bg-joy-orange text-joy-orange hover:text-white w-10 h-10 rounded-full inline-flex items-center justify-center transition shadow-sm cursor-pointer" aria-label="Développer les détails">
-                                    <i class="fa-solid fa-chevron-down arrow-icon text-sm"></i>
-                            <div class="text-center py-0.5">
-                                <button onclick="toggleDesc(this, ${idx})" class="bg-orange-50 hover:bg-joy-orange text-joy-orange hover:text-white w-9 h-9 rounded-full inline-flex items-center justify-center transition shadow-sm cursor-pointer" aria-label="Développer les détails">
-                                    <i class="fa-solid fa-chevron-down arrow-icon text-xs"></i>
-                                </button>
+                            <!-- Lecteur / Miniature Vidéo -->
+                            <div id="${uniqueId}" onclick="playVideoInline('${uniqueId}', '${videoId}')" class="overflow-hidden relative shadow-md aspect-video flex items-center justify-center cursor-pointer group bg-gray-900 bg-cover bg-center rounded-2xl" style="background-image: url('${thumbUrl}');">
+                                <div class="absolute inset-0 bg-black/30 group-hover:bg-black/10 transition duration-300"></div>
+                                <div class="w-14 h-14 bg-joy-orange text-white rounded-full flex items-center justify-center shadow-xl z-10 group-hover:scale-110 transition duration-300">
+                                    <i class="fa-solid fa-play ml-1"></i>
+                                </div>
                             </div>
 
-                            <!-- 4. Contenu supplémentaire affiché à la suite -->
-                            <div class="desc-content space-y-2 pt-1 text-gray-700 text-sm leading-relaxed">
-                                <div class="text-blue-600 font-medium pt-1">#MinistereDeLHonnetete #LePetitPrinceDesJardiniers #Reportage</div>
-                            <div class="desc-content space-y-1 pt-0.5 text-gray-700 text-sm leading-relaxed">
-                                <div class="text-blue-600 font-medium">#MinistereDeLHonnetete #LePetitPrinceDesJardiniers #Reportage</div>
+                            <!-- Description extensible -->
+                            <div class="desc-container space-y-2 pt-1" data-index="${idx}">
+                                <div class="desc-text text-gray-700 text-sm leading-relaxed whitespace-pre-line line-clamp-5">
+                                    ${descriptionText}
+                                </div>
+
+                                <div class="text-center py-1">
+                                    <button onclick="toggleDesc(this, ${idx})" class="bg-orange-50 hover:bg-joy-orange text-joy-orange hover:text-white w-9 h-9 rounded-full inline-flex items-center justify-center transition shadow-sm cursor-pointer" aria-label="Développer les détails">
+                                        <i class="fa-solid fa-chevron-down arrow-icon text-xs"></i>
+                                    </button>
+                                </div>
+
+                                <div class="desc-content space-y-1 pt-0.5 text-gray-700 text-sm leading-relaxed">
+                                    <div class="text-blue-600 font-medium">#MinistereDeLHonnetete #LePetitPrinceDesJardiniers #Reportage</div>
+                                </div>
                             </div>
                         </div>
-
                     </div>
                 `;
             });
@@ -551,7 +544,7 @@
             renderVideos();
         }
 
-        // Chargement robuste des données Google Sheets
+        // Chargement des données Google Sheets
         Papa.parse(csvUrl, {
             download: true,
             header: true,
@@ -628,7 +621,6 @@
                                 <h2 class="text-3xl sm:text-4xl lg:text-5xl font-extrabold leading-tight tracking-tight text-white">
                                     ${firstArt.titre}
                                 </h2>
-                                }</h2>
                                 <p class="text-amber-100/80 text-base sm:text-lg leading-relaxed">
                                     ${firstArt.description}
                                 </p>
