@@ -416,7 +416,7 @@
             }
         }
 
-        // AFFICHAGE DES VIDÉOS (Découpage intelligent : Aperçu court visible, reste du texte + métadonnées masqués)
+        // AFFICHAGE DES VIDÉOS (Texte collé sous la vidéo, ~5 lignes d'aperçu, puis flèche centrale)
         function renderVideos() {
             const grid = document.getElementById('videos-grid');
             const searchInput = document.getElementById('search-input');
@@ -444,15 +444,15 @@
                 const thumbUrl = videoId ? `https://img.youtube.com/vi/${videoId}/hqdefault.jpg` : '';
                 const uniqueId = `video-container-${idx}-${Math.random().toString(36).substring(2, 7)}`;
 
-                // Découpage intelligent du texte de description
+                // Découpage pour ~5 lignes d'aperçu par défaut (~280 caractères)
                 const fullDesc = vid.description || 'Aucune description fournie.';
                 let previewDesc = fullDesc;
                 let restDesc = '';
 
-                if (fullDesc.length > 110) {
-                    let splitIndex = 110;
-                    let periodIndex = fullDesc.indexOf('.', 70);
-                    if (periodIndex !== -1 && periodIndex < 160) {
+                if (fullDesc.length > 280) {
+                    let splitIndex = 280;
+                    let periodIndex = fullDesc.indexOf('.', 200);
+                    if (periodIndex !== -1 && periodIndex < 350) {
                         splitIndex = periodIndex + 1;
                     }
                     previewDesc = fullDesc.substring(0, splitIndex).trim();
@@ -479,8 +479,8 @@
                             </div>
                         </div>
 
-                        <!-- 3. Quelques lignes de résumé & Flèche centrale -->
-                        <div class="desc-container pt-2 space-y-3">
+                        <!-- 3. Résumé collé sans espace vide & Flèche centrale -->
+                        <div class="desc-container pt-1 space-y-2">
                             <div class="text-gray-700 text-sm leading-relaxed whitespace-pre-line">
                                 ${previewDesc}
                             </div>
