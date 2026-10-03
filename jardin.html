@@ -108,7 +108,7 @@
                 <button class="btn-filtre-rapide btn-reset" onclick="resetRecherche()">🔄 Tout voir</button>
             </div>
 
-            <!-- Tiroir dynamique avec menu déroulant contenant strictement la liste officielle -->
+            <!-- Tiroir dynamique avec menu déroulant (Libellés officiels & "Autre précision") -->
             <div id="sous-rubriques-container">
                 <select id="selectSousRubrique" class="select-sous-rubrique" onchange="changerSousRubrique(this)"></select>
             </div>
@@ -169,7 +169,7 @@
             "Autre": ["AUTRE_CAT"] 
         };
 
-        // Liste officielle exacte fournie par vos soins
+        // Liste officielle avec "Autre précision" à la place de "AUTRE_SUB" pour l'affichage
         const sousRubriquesData = {
             "Savoir": [
                 { id: "", label: "🎓 Toutes les précisions" },
@@ -177,7 +177,7 @@
                 { id: "Art, artisanat & musique", label: "Art, artisanat & musique" },
                 { id: "Mentorat pro & compétences techniques", label: "Mentorat pro & compétences techniques" },
                 { id: "Savoir-faire du quotidien", label: "Savoir-faire du quotidien" },
-                { id: "AUTRE_SUB", label: "AUTRE_SUB" }
+                { id: "AUTRE_SUB", label: "Autre précision" }
             ],
             "Citoyenne": [
                 { id: "", label: "🏛️ Toutes les précisions" },
@@ -185,7 +185,7 @@
                 { id: "Prêt d'objets, outils & équipement", label: "Prêt d'objets, outils & équipement" },
                 { id: "Accueil, hébergement & covoiturage", label: "Accueil, hébergement & covoiturage" },
                 { id: "Loisirs & activités partagées", label: "Loisirs & activités partagées" },
-                { id: "AUTRE_SUB", label: "AUTRE_SUB" }
+                { id: "AUTRE_SUB", label: "Autre précision" }
             ],
             "Harmonie": [
                 { id: "", label: "🤝 Toutes les précisions" },
@@ -193,21 +193,21 @@
                 { id: "Écoute, présence & soutien aux aînés", label: "Écoute, présence & soutien aux aînés" },
                 { id: "Garde d'enfants & soutien familial", label: "Garde d'enfants & soutien familial" },
                 { id: "Soin des animaux & aide à la maison", label: "Soin des animaux & aide à la maison" },
-                { id: "AUTRE_SUB", label: "AUTRE_SUB" }
+                { id: "AUTRE_SUB", label: "Autre précision" }
             ],
             "Régulation": [
                 { id: "", label: "⚖️ Toutes les précisions" },
                 { id: "Aide aux démarches (Aide sociale rapprochée)", label: "Aide aux démarches (Aide sociale rapprochée)" },
                 { id: "Médiation de voisinage & paix citoyenne", label: "Médiation de voisinage & paix citoyenne" },
                 { id: "Organisation d'assemblées & conseils citoyens", label: "Organisation d'assemblées & conseils citoyens" },
-                { id: "AUTRE_SUB", label: "AUTRE_SUB" }
+                { id: "AUTRE_SUB", label: "Autre précision" }
             ],
             "Trésor": [
                 { id: "", label: "💰 Toutes les précisions" },
                 { id: "Entretien des réseaux vitaux (eau, énergie)", label: "Entretien des réseaux vitaux (eau, énergie)" },
                 { id: "Voirie & chantiers participatifs", label: "Voirie & chantiers participatifs" },
                 { id: "Espaces verts, forêts & parcs publics", label: "Espaces verts, forêts & parcs publics" },
-                { id: "AUTRE_SUB", label: "AUTRE_SUB" }
+                { id: "AUTRE_SUB", label: "Autre précision" }
             ],
             "Autre": [
                 { id: "", label: "✨ Toutes les précisions" }
