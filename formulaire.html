@@ -16,7 +16,7 @@
         .guide-trigger { color: #008080; font-size: 0.9em; cursor: pointer; text-decoration: underline; font-weight: bold; display: inline-block; margin-bottom: 15px; transition: 0.3s; }
         .guide-trigger:hover { color: #E67E22; transform: scale(1.1); }
         
-        .discreet-help { font-size: 0.75em; color: #008080; cursor: pointer; text-decoration: none; font-style: italic; display: block; margin-top: -8px; margin-bottom: 10px; text-align: right; opacity: 0.8; }
+        .discreet-help { font-size: 0.75em; color: #008080; cursor: pointer; text-decoration: none; font-style: italic; display: block; margin-top: 5px; margin-bottom: 10px; text-align: right; opacity: 0.8; }
         .discreet-help:hover { text-decoration: underline; opacity: 1; }
 
         #aide-panneau { 
@@ -39,7 +39,7 @@
         input, select, textarea { width: 100%; padding: 12px; margin-bottom: 10px; border: 2px solid #008080; border-radius: 10px; font-family: 'Comic Sans MS'; font-size: 1em; box-sizing: border-box; }
         textarea { min-height: 350px; resize: vertical; background-color: #fffdf0; }
 
-        .extra-field { display: none; animation: fadeIn 0.5s; background: #f0fdf4; padding: 10px; border-radius: 10px; margin-top: -5px; margin-bottom: 10px; border: 1px dashed #008080; }
+        .extra-field { display: none; animation: fadeIn 0.3s; background: #f0fdf4; padding: 10px; border-radius: 10px; margin-top: 5px; margin-bottom: 10px; border: 1px dashed #008080; }
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 
         .btn-envoyer { width: 100%; padding: 25px; background: #E67E22; color: white; border: none; border-radius: 20px; cursor: pointer; font-weight: bold; font-size: 1.2em; box-shadow: 0px 4px 0px #b35900; transition: 0.2s; }
@@ -47,6 +47,7 @@
 
         footer { margin: 40px 0 80px 0; }
         .copyright-link { color: #008080; text-decoration: none; font-weight: bold; transition: 0.3s; padding: 10px; cursor: pointer; display: inline-block; position: relative; z-index: 20; }
+        .copyright-link:hover { color: #E67E22; text-shadow: 0 0 8px #fff; }
         
         .particle { position: absolute; pointer-events: none; z-index: 9999; }
         #coffre-magique { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); font-size: 60px; z-index: 800; transition: 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275); cursor: pointer; }
@@ -54,9 +55,6 @@
         #bulle-texte { background: white; border-radius: 15px; padding: 8px 15px; font-style: italic; color: #2E7D32; border: 2px solid #2E7D32; opacity: 0; transition: 0.3s; font-weight: bold; white-space: nowrap; margin-right: 10px; box-shadow: 2px 2px 10px rgba(0,0,0,0.1); }
         #corps-animal { font-size: 38px; transition: transform 0.3s; display: inline-block; transform: scaleX(-1); }
 
-        .copyright-link:hover { color: #E67E22; text-shadow: 0 0 8px #fff; }
-
-        /* 📱 ADAPTATION POUR TÉLÉPHONES ET TABLETTES */
         @media (max-width: 768px) {
             .menu-table, .menu-table tbody, .menu-table tr { display: flex; flex-wrap: wrap; justify-content: center; width: 95%; }
             .menu-table td { flex: 1 1 28%; text-align: center; padding: 8px 2px; font-size: 0.8em; }
@@ -218,9 +216,10 @@
                 <input type="text" name="localisation" placeholder="Ville, Code Postal ou Quartier précis..." required>
             </div>
 
+            <!-- Destination du semis -->
             <div class="form-group">
                 <label>Destination du semis</label>
-                <select name="type" id="main_cat" onchange="updateSubCats()" required>
+                <select name="type" id="main_cat" onchange="updateSubCats(); checkOther(this, 'extra_cat');" required>
                     <option value="">-- Domaine d'action --</option>
                     <option value="SAVOIR">💡 SAVOIRS (Apprendre, transmettre, partager un talent)</option>
                     <option value="VIE">🏠 VIE CITOYENNE (De personne à personne : repas, objets, logement, covoiturage)</option>
@@ -229,7 +228,21 @@
                     <option value="IMPOT">📜 TRÉSOR PUBLIC (Pour la collectivité : réseaux, voirie, chantiers, parcs)</option>
                     <option value="AUTRE_CAT">🌈 AUTRE DOMAINE...</option>
                 </select>
+                
+                <div id="extra_cat" class="extra-field">
+                    <input type="text" name="cat_precision" placeholder="Précise ton domaine d'action sur mesure...">
+                </div>
+
                 <a class="discreet-help" onclick="toggleGuide(event)">❓ Pas sûr ? Ouvrir le guide des semailles</a>
+            </div>
+
+            <!-- Précision de la graine -->
+            <div id="sub_cat_group" class="form-group" style="display:none;">
+                <label>Précision de la graine</label>
+                <select name="sousType" id="sub_cat" onchange="checkOther(this, 'extra_sub')"></select>
+                <div id="extra_sub" class="extra-field">
+                    <input type="text" name="sub_precision" placeholder="Décris ta spécialité précise...">
+                </div>
             </div>
 
             <div class="form-group">
@@ -244,14 +257,6 @@
                     <option value="universel">universel</option>
                     <option value="infinie">infinie</option>
                 </select>
-            </div>
-
-            <div id="sub_cat_group" class="form-group" style="display:none;">
-                <label>Précision de la graine</label>
-                <select name="sousType" id="sub_cat" onchange="checkOther(this, 'extra_sub')"></select>
-                <div id="extra_sub" class="extra-field">
-                    <input type="text" name="sub_precision" placeholder="Décrivez votre spécialité précise...">
-                </div>
             </div>
 
             <div class="form-group">
@@ -321,7 +326,7 @@ Le jardin arrose les fleurs..." required></textarea>
     </div>
 
     <footer>
-        <a href="transition-externe.html" class="copyright-link" 
+        <a href="ministere-de-lhonnetete.html" class="copyright-link" 
             onmouseover="exploserParticules(event.pageX, event.pageY, ['⭐', '✨', '🌟'], 5)" 
             onclick="exploserEtoiles(event)">
             © 2000 Le petit prince des jardiniers
@@ -347,26 +352,72 @@ Le jardin arrose les fleurs..." required></textarea>
     function googleTranslateElementInit() { new google.translate.TranslateElement({pageLanguage: 'fr'}, 'google_translate_element'); }
 
     const tree = {
-        "SAVOIR": ["🎓 Soutien Scolaire & Cours", "🎨 Art, Musique & Création", "💼 Mentorat Pro & Métiers", "AUTRE_SUB"],
-        "VIE": ["🍎 Nourriture, Repas & Eau", "🛠️ Prêt d'Objets, Outils & Véhicules", "🏠 Accueil, Logement & Déménagement", "⚽ Loisirs & Sport", "AUTRE_SUB"],
-        "AIDE": ["🚑 URGENCE & Secours du quotidien", "💬 Écoute, Aînés & Garde d'enfants", "💖 Soins & Entraide", "🐾 Animaux & Nature", "AUTRE_SUB"],
-        "REGULATION": ["⚖️ Aide Sociale Rapprochée", "🕊️ Médiation de Voisinage", "🗳️ Assemblées & Décisions Communes", "AUTRE_SUB"],
-        "IMPOT": ["⚡ Réseaux Vitaux (Centrale, EDF, Eau publique)", "🏗️ Chantiers Collectifs & Voirie", "🌲 Espaces Verts & Forêts", "AUTRE_SUB"]
+        "SAVOIR": [
+            "Soutien scolaire & cours",
+            "Art, artisanat & musique",
+            "Mentorat pro & compétences techniques",
+            "Savoir-faire du quotidien",
+            "AUTRE_SUB"
+        ],
+        "VIE": [
+            "Repas, graines & eau",
+            "Prêt d'objets, outils & équipement",
+            "Accueil, hébergement & covoiturage",
+            "Loisirs & activités partagées",
+            "AUTRE_SUB"
+        ],
+        "AIDE": [
+            "Secours immédiat & petite urgence",
+            "Écoute, présence & soutien aux aînés",
+            "Garde d'enfants & soutien familial",
+            "Soin des animaux & aide à la maison",
+            "AUTRE_SUB"
+        ],
+        "REGULATION": [
+            "Aide aux démarches (Aide sociale rapprochée)",
+            "Médiation de voisinage & paix citoyenne",
+            "Organisation d'assemblées & conseils citoyens",
+            "AUTRE_SUB"
+        ],
+        "IMPOT": [
+            "Entretien des réseaux vitaux (eau, énergie)",
+            "Voirie & chantiers participatifs",
+            "Espaces verts, forêts & parcs publics",
+            "AUTRE_SUB"
+        ]
     };
 
     function updateSubCats() {
         const cat = document.getElementById('main_cat').value;
         const subGroup = document.getElementById('sub_cat_group');
         const subSelect = document.getElementById('sub_cat');
+        const extraSub = document.getElementById('extra_sub');
+
+        if (extraSub) extraSub.style.display = 'none';
+
         if (cat && tree[cat]) {
-            subSelect.innerHTML = tree[cat].map(s => `<option value="${s}">${s === 'AUTRE_SUB' ? '🌈 Autre...' : s}</option>`).join('');
+            let options = '<option value="">-- Choisir une précision --</option>';
+            options += tree[cat].map(s => `<option value="${s}">${s === 'AUTRE_SUB' ? '🌈 Autre précision...' : s}</option>`).join('');
+            subSelect.innerHTML = options;
             subGroup.style.display = 'block';
-        } else { subGroup.style.display = 'none'; }
+        } else { 
+            subGroup.style.display = 'none'; 
+            subSelect.innerHTML = '';
+        }
     }
 
     function checkOther(select, divId) {
         const extraDiv = document.getElementById(divId);
-        extraDiv.style.display = (select.value === "AUTRE" || select.value === "AUTRE_PAYS") ? "block" : "none";
+        if (!extraDiv) return;
+
+        const isOther = (
+            select.value === "AUTRE" || 
+            select.value === "AUTRE_PAYS" || 
+            select.value === "AUTRE_SUB" || 
+            select.value === "AUTRE_CAT"
+        );
+
+        extraDiv.style.display = isOther ? "block" : "none";
     }
 
     function exploserParticules(x, y, emojis, count = 20) {
