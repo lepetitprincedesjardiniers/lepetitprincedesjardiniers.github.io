@@ -2,58 +2,62 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <title>Graine Semée ! - Le Petit Prince</title>
-    <style>
-        /* On garde ton style de menu pour la cohérence */
-        .menu-table { margin: 20px auto; border-radius: 10px; background-color: #008080; border-collapse: collapse; }
-        .menu-table td { padding: 10px 15px; border: 1px solid #FFFFFF; transition: 0.3s; }
-        .menu-table a { text-decoration: none; color: #FFFFFF; font-weight: bold; font-size: 0.9em; font-family:'Comic Sans MS', cursive; }
-        #google_translate_element { margin-top: 10px; }
-    </style>
+    <title>Graine bien semée - Le Petit Prince des Jardiniers</title>
 </head>
-<body bgcolor="#FFFF00" text="#000080" style="font-family:'Comic Sans MS', cursive; text-align:center;">
+<body>
+    <audio loop><source src="oiseaux.mp3" type="audio/mpeg"></audio>
+    <div></div>
+    
+    <div>
+        <table>
+            <tbody>
+                <tr>
+                    <td><a href="index.html">Accueil</a></td>
+                    <td><a href="formulaire.html">Semer</a></td>
+                    <td><a href="jardin.html">Le Jardin</a></td>
+                    <td><a href="impot.html">Trésor Public</a></td>
+                    <td><a href="regulation.html">Régulation</a></td>
+                    <td><a href="aide.html">Aide &amp; Harmonie</a></td>
+                    <td><a href="savoirs.html">Savoirs</a></td>
+                    <td><a href="vie.html">Vie Citoyenne</a></td>
+                </tr>
+            </tbody>
+        </table>
+        
+        <a href="ministere-de-lhonnetete.html">
+            📰 Le Journal ►
+        </a>
+    </div>
 
-    <div id="google_translate_element"></div>
+    <br><br>
+    <div align="center">💚 🎁 💚</div>
+    <div align="center"><font color="#2E7D32" size=7><b>GRAINE BIEN SEMÉE !</b></font></div>
+    <br><br>
 
-    <table class="menu-table" align="center">
-        <tr>
-            <td><a href="index.html">Accueil</a></td>
-            <td><a href="formulaire.html">Semer</a></td>
-            <td><a href="jardin.html">Le Jardin</a></td>
-            <td><a href="impot.html">Impôts Publics</a></td>
-            <td><a href="regulation.html">Régulation</a></td>
-            <td><a href="urgence.html">Aide</a></td>
-        </tr>
+    <table align="center" bgcolor="#FFFFFF" border="4" cellpadding="30">
+        <tbody>
+            <tr>
+                <td>
+                    <font size=5>"Merci d'avoir semé votre générosité."</font><br><br>
+                    <font color="#008080" size=6><b>"Qui sème le cadeau, récolte l'altruisme !"</b></font><br><br>
+                    <font size=4><i>
+                        <p>Votre graine d'annonce est en train de naître dans le jardin collectif...</p>
+                        <p>💧 Attendez quelques instants, le temps que le Petit Prince l'arrose et la fasse fleurir !</p>
+                    </i></font>
+                </td>
+            </tr>
+        </tbody>
     </table>
 
     <br><br>
-    <div style="font-size: 70px;">💚 🎁 💚</div>
-    <font size="7" color="#2E7D32"><b>GRAINE BIEN SEMÉE !</b></font>
-    <br><br>
-
-    <table border="4" cellpadding="30" bgcolor="#FFFFFF" align="center" style="border-color:#2E7D32; border-radius:40px; max-width:600px; box-shadow: 10px 10px 0px #E67E22;">
-        <tr>
-            <td>
-                <font size="5">"Merci d'avoir semé votre générosité."</font><br><br>
-                <font size="6" color="#008080"><b>"Qui sème le cadeau, récolte l'altruisme !"</b></font><br><br>
-                <font size="4"><i><p>Votre graine d'annonce est en train de naître dans le jardin collectif...</p>
-            <p>💧 Attendez 5 secondes, le temps que le Petit Prince l'arrose ;</p>
-            <p>🌱 15 secondes, le temps que les racines se développent ;</p>
-            <p>🌸 Et enfin 10 secondes pour voir l'annonce fleurir !</p></i></font>
-            </td>
-        </tr>
-    </table>
-
-    <br><br>
-    <div style="font-size: 50px;">🌱 🌿 🌸 🌼 🌻</div>
+    <div align="center">🌱 🌿 🌸 🌼 🌻</div>
     <br>
 
-    <a href="jardin.html"><button style="padding:15px 30px; background-color:#E67E22; color:white; border-radius:10px; cursor:pointer; border:none; font-weight:bold; font-family:'Comic Sans MS', cursive;">VOIR LE JARDIN</button></a>
-
-    <script type="text/javascript">
-        function googleTranslateElementInit() { new google.translate.TranslateElement({pageLanguage: 'fr'}, 'google_translate_element'); }
+    <!-- Redirection automatique vers jardin.html après 10 secondes -->
+    <script>
+        setTimeout(function() {
+            window.location.href = "jardin.html";
+        }, 10000);
     </script>
-    <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
-
 </body>
 </html>
