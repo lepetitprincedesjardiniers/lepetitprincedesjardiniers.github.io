@@ -3,6 +3,7 @@
 <head>
     <meta name="google-site-verification" content="35YGSTJv911M05cdP6FHHcnj57ZBCs7iprQJzsXtT4Q" />
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>La Fraternité du Palais Nature - Accueil</title>
 
     <script type="text/javascript">
@@ -47,7 +48,6 @@
         .texte-semis { font-family: 'Georgia', serif; font-style: italic; font-weight: bold; text-shadow: 2px 2px 10px black; font-size: 1.2em; padding: 20px; }
         @keyframes rotationTerre { from { background-position: 0 0; } to { background-position: 1000px 0; } }
 
-        /* GRILLE CENTRÉE */
         .bulles-grid { 
             display: flex; justify-content: center; align-items: center; 
             gap: 30px; flex-wrap: wrap; padding: 40px 20px; position: relative; z-index: 5; 
@@ -74,7 +74,6 @@
         #coffre-magique { position: fixed; font-size: 55px; z-index: 8; cursor: pointer; transition: 4s ease-in-out; }
         .oiseau-volant { position: fixed; font-size: 40px; z-index: 7; transition: transform 6s linear; pointer-events: none; }
         
-        /* Style du journal volant interactif */
         .journal-volant {
             position: fixed;
             font-size: 42px;
@@ -91,6 +90,20 @@
         footer { padding: 40px 0; }
         .lien-copyright { color: rgba(255,255,255,0.5); text-decoration: none; font-weight: bold; transition: 0.3s; }
         .lien-copyright:hover { color: #f0e68c; text-shadow: 0 0 10px #fff; }
+
+        /* 📱 ADAPTATION POUR TÉLÉPHONES ET TABLETTES */
+        @media (max-width: 768px) {
+            .titre-fraternite { font-size: 1.4em; }
+            .menu-table, .menu-table tbody, .menu-table tr { display: flex; flex-wrap: wrap; justify-content: center; width: 95%; }
+            .menu-table td { flex: 1 1 28%; text-align: center; padding: 8px 2px; font-size: 0.8em; }
+            .terre-don { width: 240px; height: 240px; }
+            .texte-semis { font-size: 1em; }
+            .bulles-grid { flex-direction: column; gap: 20px; padding: 10px; }
+            .nuage, .cadre-aide { width: 85%; padding: 15px; }
+            #coffre-magique { font-size: 40px; }
+            .journal-volant, .oiseau-volant { font-size: 30px; }
+            #btn-son { font-size: 30px; top: 10px; right: 10px; }
+        }
     </style>
 </head>
 <body>
@@ -127,7 +140,7 @@
             <p style="font-size: 0.85em; font-weight: bold;">Travaux en participation libre.</p>
             <div class="phrases-impots">Motivation indispensable.<br>Attention : Travaux ingrats.</div>
             <ul class="liste-exemples-discrets">
-                <li>ex: réseaux d'eau potable, électricité publique & centrale, transports, voirie, chantiers collectifs, espaces verts.</li>
+                <li>ex : réseaux d'eau potable, électricité publique & centrale, transports, voirie, chantiers collectifs, espaces verts.</li>
             </ul>
         </a>
 
