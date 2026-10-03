@@ -416,7 +416,7 @@
             }
         }
 
-        // AFFICHAGE DES VIDÉOS (Texte collé sous la vidéo, ~5 lignes d'aperçu, puis flèche centrale)
+        // AFFICHAGE DES VIDÉOS (Texte collé sous la vidéo, ~5 lignes d'aperçu, puis flèche centrale, texte suite sans boîte orange)
         function renderVideos() {
             const grid = document.getElementById('videos-grid');
             const searchInput = document.getElementById('search-input');
@@ -486,16 +486,16 @@
                             </div>
 
                             <!-- Flèche orange au centre pour dérouler -->
-                            <div class="text-center pt-1">
+                            <div class="text-center py-1">
                                 <button onclick="toggleDesc(this)" class="bg-orange-50 hover:bg-joy-orange text-joy-orange hover:text-white w-10 h-10 rounded-full inline-flex items-center justify-center transition shadow-sm cursor-pointer" aria-label="Développer les détails">
                                     <i class="fa-solid fa-chevron-down arrow-icon text-sm"></i>
                                 </button>
                             </div>
 
-                            <!-- 4. Contenu supplémentaire masqué (Reste du résumé, Auteur, Hashtags, Copyright) -->
-                            <div class="desc-content space-y-2 pt-3 border-t border-orange-100/60 bg-orange-50/40 p-4 rounded-2xl text-xs">
-                                ${restDesc ? `<div class="text-gray-700 text-sm leading-relaxed whitespace-pre-line pb-3 border-b border-orange-100/60">${restDesc}</div>` : ''}
-                                <div class="font-bold text-joy-orange">Auteur : Ministère de l'Honnêteté</div>
+                            <!-- 4. Contenu supplémentaire affiché à la suite (sans boîte orange) -->
+                            <div class="desc-content space-y-2 pt-1 text-gray-700 text-sm leading-relaxed whitespace-pre-line">
+                                ${restDesc ? `<div>${restDesc}</div>` : ''}
+                                <div class="font-bold text-joy-orange pt-1">Auteur : Ministère de l'Honnêteté</div>
                                 <div class="text-blue-600 font-medium">#MinistereDeLHonnetete #LePetitPrinceDesJardiniers #Reportage</div>
                                 <div class="text-gray-400">© 2026 Ministère de l'Honnêteté. Tous droits réservés.</div>
                             </div>
