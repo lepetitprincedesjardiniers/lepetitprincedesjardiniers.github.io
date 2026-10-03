@@ -58,8 +58,6 @@
                         <i class="fa-solid fa-arrow-left text-xs"></i> Petites Annonces Citoyennes
                     </a>
                 </nav>
-
-                <!-- Bouton d'appel à l'action supprimé ici -->
             </div>
         </div>
     </header>
@@ -418,7 +416,7 @@
             }
         }
 
-        // AFFICHAGE DES VIDÉOS (avec structure aérée, résumé, flèche orange centrée et détails)
+        // AFFICHAGE DES VIDÉOS (Ordre exact : Titre en haut, vidéo juste en dessous sans espace, résumé, flèche centrale et détails)
         function renderVideos() {
             const grid = document.getElementById('videos-grid');
             const searchInput = document.getElementById('search-input');
@@ -447,43 +445,46 @@
                 const uniqueId = `video-container-${idx}-${Math.random().toString(36).substring(2, 7)}`;
 
                 html += `
-                    <div class="bg-white rounded-3xl border border-orange-100 overflow-hidden shadow-sm flex flex-col justify-between p-6 space-y-4">
-                        <div class="flex items-center justify-between text-xs font-bold gap-2">
-                            <span class="bg-amber-100 text-amber-800 px-3 py-1 rounded-full truncate">${vid.categorie || 'Vidéo'}</span>
-                            <span class="text-gray-400 font-normal shrink-0">${vid.date || ''}</span>
-                        </div>
-                        <h3 class="text-lg font-extrabold text-joy-dark leading-snug line-clamp-2">${vid.titre}</h3>
+                    <div class="bg-white rounded-3xl border border-orange-100 overflow-hidden shadow-sm flex flex-col justify-between p-6 space-y-3">
                         
-                        <!-- Lecteur Vidéo cliquable avec lancement direct -->
-                        <div id="${uniqueId}" onclick="playVideoInline('${uniqueId}', '${videoId}')" class="rounded-2xl overflow-hidden relative shadow-md aspect-video flex items-center justify-center cursor-pointer group bg-gray-900 bg-cover bg-center" style="background-image: url('${thumbUrl}');">
+                        <!-- 1. Titre en haut avec catégorie et date -->
+                        <div class="space-y-1.5">
+                            <div class="flex items-center justify-between text-xs font-bold gap-2">
+                                <span class="bg-amber-100 text-amber-800 px-3 py-1 rounded-full truncate">${vid.categorie || 'Vidéo'}</span>
+                                <span class="text-gray-400 font-normal shrink-0">${vid.date || ''}</span>
+                            </div>
+                            <h3 class="text-lg font-extrabold text-joy-dark leading-snug">${vid.titre}</h3>
+                        </div>
+                        
+                        <!-- 2. Vidéo juste en dessous sans espace -->
+                        <div id="${uniqueId}" onclick="playVideoInline('${uniqueId}', '${videoId}')" class="overflow-hidden relative shadow-md aspect-video flex items-center justify-center cursor-pointer group bg-gray-900 bg-cover bg-center rounded-2xl" style="background-image: url('${thumbUrl}');">
                             <div class="absolute inset-0 bg-black/30 group-hover:bg-black/10 transition duration-300"></div>
                             <div class="w-14 h-14 bg-joy-orange text-white rounded-full flex items-center justify-center shadow-xl z-10 group-hover:scale-110 transition duration-300">
                                 <i class="fa-solid fa-play ml-1"></i>
                             </div>
-                            <span class="absolute top-3 left-3 z-10 text-[10px] font-bold text-amber-900 bg-amber-100/90 px-2.5 py-1 rounded-full uppercase tracking-wider">${vid.categorie || 'Vidéo'}</span>
                         </div>
 
-                        <!-- Section Commentaires & Description Structurée -->
-                        <div class="desc-container border-t border-orange-100 pt-3 space-y-3">
-                            <!-- Résumé principal (toujours visible, espacé et aéré) -->
+                        <!-- 3. Quelques lignes de résumé & Flèche centrale -->
+                        <div class="desc-container pt-2 space-y-3">
                             <div class="text-gray-700 text-sm leading-relaxed whitespace-pre-line">
                                 ${vid.description || 'Aucune description fournie.'}
                             </div>
 
-                            <!-- Flèche orange au centre pour développer davantage -->
+                            <!-- Flèche orange au centre pour dérouler -->
                             <div class="text-center pt-1">
-                                <button onclick="toggleDesc(this)" class="bg-orange-50 hover:bg-joy-orange text-joy-orange hover:text-white w-10 h-10 rounded-full inline-flex items-center justify-center transition shadow-sm cursor-pointer" aria-label="Développer les commentaires">
+                                <button onclick="toggleDesc(this)" class="bg-orange-50 hover:bg-joy-orange text-joy-orange hover:text-white w-10 h-10 rounded-full inline-flex items-center justify-center transition shadow-sm cursor-pointer" aria-label="Développer les détails">
                                     <i class="fa-solid fa-chevron-down arrow-icon text-sm"></i>
                                 </button>
                             </div>
 
-                            <!-- Contenu supplémentaire masqué (Auteur, Hashtags, Copyright, etc.) -->
+                            <!-- 4. Contenu supplémentaire masqué (Hashtag, copyright, auteur...) -->
                             <div class="desc-content space-y-2 pt-3 border-t border-orange-100/60 bg-orange-50/40 p-4 rounded-2xl text-xs">
                                 <div class="font-bold text-joy-orange">Auteur : Ministère de l'Honnêteté</div>
                                 <div class="text-blue-600 font-medium">#MinistereDeLHonnetete #LePetitPrinceDesJardiniers #Reportage</div>
                                 <div class="text-gray-400">© 2026 Ministère de l'Honnêteté. Tous droits réservés.</div>
                             </div>
                         </div>
+
                     </div>
                 `;
             });
@@ -521,7 +522,6 @@
                 allVideos = [];
 
                 data.forEach(row => {
-                    // Normalisation robuste des colonnes pour éviter les problèmes de casse ou d'accents
                     const cleanRow = {};
                     Object.keys(row).forEach(key => {
                         const cleanKey = key.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").trim();
