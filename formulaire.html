@@ -404,7 +404,7 @@ Le jardin arrose les fleurs..." required></textarea>
 
         if (cat && tree[cat]) {
             let options = '<option value="">-- Choisir une précision --</option>';
-            options += tree[cat].map(s => `<option value="${s}">${s === 'AUTRE_SUB' ? '🌈 Autre précision...' : s}</option>`).join('');
+            options += tree[cat].map(s => `<option value="${s}">${s === 'AUTRE_SUB' ? '🌈 Autres distinctions...' : s}</option>`).join('');
             subSelect.innerHTML = options;
             subGroup.style.display = 'block';
         } else { 
