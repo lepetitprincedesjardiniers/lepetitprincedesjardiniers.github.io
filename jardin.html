@@ -38,6 +38,9 @@
         .texte-annonce::-webkit-scrollbar { width: 4px; }
         .texte-annonce::-webkit-scrollbar-thumb { background: #008080; border-radius: 10px; }
 
+        /* Badge pour indiquer le nombre de réponses sur la carte */
+        .badge-reponses { font-size: 0.7em; color: #E67E22; font-weight: bold; background: #FFF8E7; border: 1px solid #E67E22; border-radius: 6px; padding: 2px 6px; margin: 3px 0; align-self: flex-start; }
+
         .btn-arrosage { background: #E1F5FE; border: 1px solid #00BFFF; border-radius: 8px; color: #0277BD; font-size: 0.75em; padding: 4px; cursor: pointer; margin: 2px 0; font-weight: bold; width: 100%; }
         .btn-repondre { background: #E67E22; border: 1px solid #b35900; border-radius: 8px; color: white; font-size: 0.75em; padding: 5px; cursor: pointer; margin: 2px 0; font-weight: bold; width: 100%; transition: 0.2s; }
         .btn-repondre:hover { background: #d35400; transform: scale(1.02); }
@@ -145,7 +148,7 @@
 
     <script>
         const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbxxToz22V88elCCjxLqjRtsb5iBIC156cbBFRIlTsju2SwOj9yNnKqzAwFITXMg_wij/exec";
-        let toutesLesAnnonces = [], filtreTypeActuel = "";
+        let toutesLesAnnonces = [], annoncesPrincipales = [], reponsesMap = {}, filtreTypeActuel = "";
         
         const mappingBoutons = { 
             "Savoir": ["SAVOIR"], 
@@ -215,7 +218,23 @@
             try {
                 const response = await fetch(WEB_APP_URL + "?v=" + Date.now());
                 toutesLesAnnonces = await response.json();
-                document.getElementById('phrase-petit-prince').innerHTML = `✨ Aujourd'hui, le Petit Prince a pris soin de <b>${toutesLesAnnonces.length}</b> fleurs resplendissantes dans le jardin du monde...`;
+                
+                annoncesPrincipales = [];
+                reponsesMap = {};
+
+                toutesLesAnnonces.forEach(item => {
+                    const type = String(item.type || '');
+                    const refId = item.ref_id || item.Ref || '';
+                    
+                    if (type.startsWith('REPONSE') || refId) {
+                        if (!reponsesMap[refId]) reponsesMap[refId] = [];
+                        reponsesMap[refId].push(item);
+                    } else {
+                        annoncesPrincipales.push(item);
+                    }
+                });
+
+                document.getElementById('phrase-petit-prince').innerHTML = `✨ Aujourd'hui, le Petit Prince a pris soin de <b>${annoncesPrincipales.length}</b> fleurs resplendissantes dans le jardin du monde...`;
                 
                 const urlParams = new URLSearchParams(window.location.search);
                 const catParam = urlParams.get('cat');
@@ -238,7 +257,7 @@
             const vi = document.getElementById('searchVille').value.toLowerCase();
             const mi = document.getElementById('searchKeyword').value.toLowerCase();
 
-            const filtrées = toutesLesAnnonces.filter(ann => {
+            const filtrées = annoncesPrincipales.filter(ann => {
                 const matchP = pi === "" || (ann.pays_select || "").toLowerCase().startsWith(pi);
                 const matchV = vi === "" || (ann.localisation || "").toLowerCase().startsWith(vi);
                 const texteMsg = (ann.message || "").toLowerCase();
@@ -261,10 +280,17 @@
             }
 
             filtrées.forEach(ann => {
-                const idAnnonce = ann.Horodateur || ann.id || Date.now();
+                const idAnnonce = ann.Horodateur || ann.id || '';
                 const nomAnnonce = ann.nom || "Anonyme";
                 const typeAnnonce = ann.type || "Graine";
                 const msgAnnonce = ann.message || "";
+                
+                // Indication du nombre de réponses (badge)
+                const listeReponses = reponsesMap[idAnnonce] || [];
+                let badgeReponsesHtml = '';
+                if (listeReponses.length > 0) {
+                    badgeReponsesHtml = `<div class="badge-reponses">💬 ${listeReponses.length} réponse(s)</div>`;
+                }
 
                 const d = document.createElement('div');
                 d.className = 'carte-message';
@@ -274,6 +300,7 @@
                     <div class="nom-prenom"></div>
                     <div class="rubrique-tag">${nomBoutonAffiche[typeAnnonce] || "Graine"}</div>
                     <div class="texte-annonce"></div>
+                    ${badgeReponsesHtml}
                     <div class="details-bas">
                         <button class="btn-arrosage">💧 Arroser (${ann.votes_arrosage || 0})</button>
                         <button class="btn-repondre">💌 Répondre à cette graine</button>
@@ -309,7 +336,21 @@
         }
 
         function ouvrirGrandMessage(ann) {
-            const idAnnonce = ann.Horodateur || ann.id || Date.now();
+            const idAnnonce = ann.Horodateur || ann.id || '';
+            const listeReponses = reponsesMap[idAnnonce] || [];
+            
+            let htmlReponsesGeant = '';
+            if (listeReponses.length > 0) {
+                htmlReponsesGeant = `<div style="background:#FFF8E7; padding:15px; border-radius:10px; border:2px dashed #E67E22; margin-bottom:15px; text-align:left;">
+                    <h4 style="color:#E67E22; margin:0 0 10px 0;">💬 Réponses reçues (${listeReponses.length}) :</h4>`;
+                listeReponses.forEach(r => {
+                    htmlReponsesGeant += `<div style="margin-bottom:8px; border-bottom:1px solid #eee; padding-bottom:5px;">
+                        <strong style="color:#2E7D32;">${escapeHtml(r.nom || 'Ami')} :</strong> "${escapeHtml(r.message || '')}"
+                    </div>`;
+                });
+                htmlReponsesGeant += `</div>`;
+            }
+
             const divContent = document.getElementById('geant-contenu');
             divContent.innerHTML = `
                 <div style="font-size:1.8em; color:#2E7D32; font-weight:bold; border-bottom:3px solid #008080; margin-bottom:15px;">🌱 Offrande de <span id="geant-nom"></span></div>
@@ -320,6 +361,7 @@
                     <strong>🌍 Portée :</strong> ${escapeHtml(ann.rayon_action || "Locale")}<br>
                     <strong>🚚 Logistique :</strong> ${escapeHtml(ann.logistique || "Main Propre")}
                 </div>
+                ${htmlReponsesGeant}
                 <button class="btn-repondre" id="geant-btn-rep" style="font-size: 1.1em; padding: 12px;">💌 Répondre à cette graine</button>
             `;
 
@@ -337,7 +379,7 @@
         function ouvrirModalReponse(ann) {
             jouerBip();
             
-            const id = ann.Horodateur || ann.id || Date.now();
+            const id = ann.Horodateur || ann.id || '';
             const type = ann.type || "";
             const nom = ann.nom || "Anonyme";
             const message = ann.message || "";
@@ -389,6 +431,7 @@
                     btn.innerText = "ENVOYER MA RÉPONSE ✨";
                     btn.disabled = false;
                     document.getElementById('formReponse').reset();
+                    chargerAnnonces();
                 }, 1200);
             })
             .catch(err => {
