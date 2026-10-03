@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AIDE & ÉCOUTE - Le Câlin de l'Âme</title>
+    <title>AIDE & ÉCUTE - Le Câlin de l'Âme</title>
     <style>
         * { box-sizing: border-box; }
         
@@ -184,28 +184,30 @@
         let globalData = [];
         let annonceActiveId = null;
 
+        // Son très doux, feutré et apaisant (accord harmonique de type carillon/souffle)
         function playGong() {
             try {
                 const ctx = new (window.AudioContext || window.webkitAudioContext)();
                 const now = ctx.currentTime;
-                const freqs = [146.83, 293.66, 440.00, 587.33]; 
+                const freqs = [220.00, 329.63, 440.00]; // Notes harmoniques et douces
 
                 freqs.forEach((f, index) => {
                     const osc = ctx.createOscillator();
                     const gain = ctx.createGain();
                     
-                    osc.type = index === 0 ? 'sine' : 'triangle';
+                    osc.type = 'sine'; // Onde sinusoïdale pure (pas de son criard)
                     osc.frequency.setValueAtTime(f, now);
-                    osc.frequency.exponentialRampToValueAtTime(f * 0.99, now + 2.0);
                     
-                    gain.gain.setValueAtTime(0.25 / (index + 1), now);
-                    gain.gain.exponentialRampToValueAtTime(0.0001, now + 2.2);
+                    const baseGain = 0.03 / (index + 1); // Volume très bas pour ne pas agresser
+                    gain.gain.setValueAtTime(0, now);
+                    gain.gain.linearRampToValueAtTime(baseGain, now + 0.15); // Attaque très progressive
+                    gain.gain.exponentialRampToValueAtTime(0.00001, now + 2.5); // Extinction longue et feutrée
                     
                     osc.connect(gain);
                     gain.connect(ctx.destination);
                     
                     osc.start(now);
-                    osc.stop(now + 2.2);
+                    osc.stop(now + 2.5);
                 });
             } catch(e) {}
         }
