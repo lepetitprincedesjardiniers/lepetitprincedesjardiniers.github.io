@@ -416,7 +416,7 @@
             }
         }
 
-        // AFFICHAGE DES VIDÉOS (Texte collé sous la vidéo, ~5 lignes d'aperçu, puis flèche centrale, texte suite sans boîte orange)
+        // AFFICHAGE DES VIDÉOS
         function renderVideos() {
             const grid = document.getElementById('videos-grid');
             const searchInput = document.getElementById('search-input');
@@ -492,12 +492,10 @@
                                 </button>
                             </div>
 
-                            <!-- 4. Contenu supplémentaire affiché à la suite (sans boîte orange) -->
+                            <!-- 4. Contenu supplémentaire affiché à la suite (sans auteur ni copyright redondant) -->
                             <div class="desc-content space-y-2 pt-1 text-gray-700 text-sm leading-relaxed whitespace-pre-line">
                                 ${restDesc ? `<div>${restDesc}</div>` : ''}
-                                <div class="font-bold text-joy-orange pt-1">Auteur : Ministère de l'Honnêteté</div>
-                                <div class="text-blue-600 font-medium">#MinistereDeLHonnetete #LePetitPrinceDesJardiniers #Reportage</div>
-                                <div class="text-gray-400">© 2026 Ministère de l'Honnêteté. Tous droits réservés.</div>
+                                <div class="text-blue-600 font-medium pt-1">#MinistereDeLHonnetete #LePetitPrinceDesJardiniers #Reportage</div>
                             </div>
                         </div>
 
