@@ -20,7 +20,7 @@
             scroll-behavior: smooth;
         }
 
-        /* --- BARRE DE DRAPEAUX ANIMÉS À LA PLACE DU "G" --- */
+        /* --- EN-TÊTE AVEC DRAPEAUX ET TRADUCTEUR PROPRE --- */
         .header-tools { 
             display: flex; 
             justify-content: space-between; 
@@ -30,23 +30,35 @@
         }
         
         .drapeaux-animes {
-            font-size: 1.5em;
-            letter-spacing: 5px;
+            font-size: 1.4em;
+            letter-spacing: 3px;
             animation: pulseDrapeaux 2s infinite ease-in-out;
             filter: drop-shadow(0 0 8px #9370DB);
-            cursor: default;
         }
         @keyframes pulseDrapeaux {
             0%, 100% { transform: scale(1); opacity: 0.8; }
             50% { transform: scale(1.05); opacity: 1; }
         }
 
-        /* Masquer le vilain bloc Google original tout en gardant son moteur fonctionnel en arrière-plan */
+        /* Style propre du bloc traducteur Google sans casser le menu */
         #google_translate_element { 
-            display: none !important; 
+            opacity: 0.95; 
+        }
+        .goog-te-combo {
+            background-color: #2a1045 !important;
+            color: #D8BFD8 !important;
+            border: 2px solid #9370DB !important;
+            border-radius: 8px !important;
+            padding: 6px 12px !important;
+            font-family: inherit !important;
+            font-size: 1em !important;
+            outline: none;
+            cursor: pointer;
         }
         .goog-te-banner-frame.skiptranslate { display: none !important; }
         body { top: 0 !important; }
+        /* Masquer uniquement le logo Google pour garder l'interface épurée */
+        .goog-logo-link { display: none !important; }
 
         .menu-table { margin: 10px auto; border-radius: 10px; background-color: #008080; border-collapse: collapse; position: relative; z-index: 10; }
         .menu-table td { border: 1px solid #FFFFFF; padding: 8px 15px; }
@@ -161,8 +173,9 @@
 <body>
 
     <div class="header-tools">
-        <!-- Farandole de drapeaux animés et changeants -->
+        <!-- Farandole de drapeaux animés à gauche -->
         <div id="drapeaux-changeants" class="drapeaux-animes">🇫🇷 🌍 🇬🇧</div>
+        <!-- Le sélecteur de langue Google propre à droite -->
         <div id="google_translate_element"></div>
     </div>
 
@@ -225,26 +238,9 @@
                 layout: google.translate.TranslateElement.InlineLayout.SIMPLE,
                 autoDisplay: false
             }, 'google_translate_element'); 
-
-            // Script automatique pour forcer l'intégration visuelle de Google Translate en un sélecteur propre
-            setTimeout(() => {
-                const combo = document.querySelector('.goog-te-combo');
-                if (combo) {
-                    combo.style.backgroundColor = '#2a1045';
-                    combo.style.color = '#D8BFD8';
-                    combo.style.border = '2px solid #9370DB';
-                    combo.style.borderRadius = '8px';
-                    combo.style.padding = '6px 12px';
-                    combo.style.fontFamily = 'inherit';
-                    combo.style.cursor = 'pointer';
-                    // On reaffiche le select de google discrètement à côté des drapeaux
-                    combo.style.display = 'inline-block';
-                    document.getElementById('google_translate_element').style.display = 'block';
-                }
-            }, 1000);
         }
 
-        // --- ANIMATION ALÉATOIRE DES DRAPEAUX ---
+        // --- ANIMATION DES DRAPEAUX ---
         const listeDrapeaux = ["🇫🇷 🌍 🇬🇧", "🇪🇸 🌍 🇮🇹", "🇩🇪 🌍 🇯🇵", "🇺🇸 🌍 🇨🇦", "🇧🇷 🌍 🇵🇹", "🇯🇵 🌍 🇰🇷"];
         setInterval(() => {
             const indexAleatoire = Math.floor(Math.random() * listeDrapeaux.length);
@@ -252,7 +248,7 @@
             if(elementDrapeaux) {
                 elementDrapeaux.innerText = listeDrapeaux[indexAleatoire];
             }
-        }, 3000); // Change toutes les 3 secondes
+        }, 3000);
 
         function playGong() {
             try {
