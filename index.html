@@ -144,12 +144,12 @@
         #btn-son:hover { transform: scale(1.2); }
 
         /* Icône Jour/Nuit vagabonde */
-        #icone-jour-nuit { 
+        .icone-jour-nuit { 
             position: fixed; font-size: 38px; z-index: 12; cursor: pointer; 
             transition: 4s ease-in-out, transform 0.3s; 
             filter: drop-shadow(0 0 12px rgba(255, 215, 0, 0.8)); 
         }
-        #icone-jour-nuit:hover { transform: scale(1.3) rotate(20deg); }
+        .icone-jour-nuit:hover { transform: scale(1.3) rotate(20deg); }
 
         /* Icône Météo vagabonde (Pluie/Neige) */
         #icone-meteo { 
@@ -190,7 +190,7 @@
     <button id="btn-son" onclick="toggleSon()" title="Activer / couper le son">🕊️</button>
 
     <!-- Icônes vagabondes magiques -->
-    <div id="icone-jour-nuit" onclick="clicJourNuit()" title="Attrape-moi pour changer le temps !">☀️</div>
+    <div id="icone-jour-nuit" class="icone-jour-nuit" onclick="clicJourNuit()" title="Attrape-moi pour changer le temps !">☀️</div>
     <div id="icone-meteo" onclick="clicMeteo()" title="Attrape-moi pour faire de la pluie ou de la neige !">☁️</div>
 
     <div class="header-container">
@@ -267,10 +267,11 @@
             <a href="jardin.html?cat=SAVOIR" class="rubrique-carte style-savoir flotte-d">
                 <div style="padding-top: 6px;">
                     <h3 style="margin:0; font-size: 1em;">💡 Savoirs</h3>
-                    <div class="phrases-impots" style="font-size: 0.78em; margin-top: 10px;">Partageons nos connaissances et les trésors de l'intelligence.</div>
+                    <div class="phrases-impots" style="font-size: 0.78em; margin-top: 6px;">Partageons nos connaissances et les trésors de l'intelligence.</div>
+                    <div class="phrases-impots" style="font-size: 0.78em; margin-top: 4px;">Bibliothèque vivante.</div>
                 </div>
                 <div class="liste-exemples-discrets">
-                    Ex : transmettre, créer, ateliers et manuels.
+                    Ex : Éclosion, transmettre, créer, ateliers et manuels.
                 </div>
             </a>
         </div>
@@ -319,7 +320,7 @@
         }
 
         function exploserEffetJN(x, y) {
-            const els = ['✨', '🌟', '💫', '☀️', '🌙'];
+            const els = ['✨', '🌟', '💫', '☀️️', '🌙'];
             for(let i=0; i<15; i++) {
                 const p = document.createElement('div');
                 p.style.position = 'fixed'; p.style.left = x+'px'; p.style.top = y+'px';
