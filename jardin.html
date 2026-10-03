@@ -38,7 +38,6 @@
         .texte-annonce::-webkit-scrollbar { width: 4px; }
         .texte-annonce::-webkit-scrollbar-thumb { background: #008080; border-radius: 10px; }
 
-        /* Badge pour indiquer le nombre de réponses sur la carte */
         .badge-reponses { font-size: 0.7em; color: #E67E22; font-weight: bold; background: #FFF8E7; border: 1px solid #E67E22; border-radius: 6px; padding: 2px 6px; margin: 3px 0; align-self: flex-start; }
 
         .btn-arrosage { background: #E1F5FE; border: 1px solid #00BFFF; border-radius: 8px; color: #0277BD; font-size: 0.75em; padding: 4px; cursor: pointer; margin: 2px 0; font-weight: bold; width: 100%; }
@@ -77,7 +76,7 @@
                     <td><a href="vie.html">Vie Citoyenne</a></td>
                 </tr>
             </table>
-            <a href="transition-externe.html" class="journal-link">📰 Le Journal ►</a>
+            <a href="ministere-de-lhonnetete.html" class="journal-link">📰 Le Journal ►</a>
         </div>
         <button id="btn-mode" onclick="basculerModeSombre()">🏮</button>
     </div>
@@ -141,14 +140,14 @@
     </div>
 
     <div class="footer-copyright">
-        <a href="transition-externe.html" class="copyright-link">© 2000 Le petit prince des jardiniers</a>
+        <a href="merci.html" class="copyright-link">© 2000 Le petit prince des jardiniers</a>
     </div>
 
     <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
 
     <script>
         const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbxxToz22V88elCCjxLqjRtsb5iBIC156cbBFRIlTsju2SwOj9yNnKqzAwFITXMg_wij/exec";
-        let toutesLesAnnonces = [], annoncesPrincipales = [], reponsesMap = {}, filtreTypeActuel = "";
+        let toutesLesAnnonces = [], annoncesPrincipales = [], toutesLesReponses = [], filtreTypeActuel = "";
         
         const mappingBoutons = { 
             "Savoir": ["SAVOIR"], 
@@ -185,6 +184,23 @@
             return String(str || '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
         }
 
+        function nettoyerCle(str) {
+            if (!str) return "";
+            return String(str).replace(/[^a-zA-Z0-9]/g, '').toLowerCase();
+        }
+
+        function obtenirReponsesPourAnnonce(ann) {
+            const idOriginal = ann.Horodateur || ann.id || "";
+            const idCle = nettoyerCle(idOriginal);
+            if (!idCle) return [];
+
+            return toutesLesReponses.filter(rep => {
+                const refBrute = rep.ref_id || rep.Ref || rep.ref || rep.localisation || "";
+                const refCle = nettoyerCle(refBrute);
+                return refCle.includes(idCle) || (idCle.length > 6 && refCle.includes(idCle.substring(0, 15)));
+            });
+        }
+
         function jouerBip() {
             try {
                 const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
@@ -199,6 +215,34 @@
                 osc.start();
                 osc.stop(audioCtx.currentTime + 0.25);
             } catch(e) { console.log("Audio non supporté"); }
+        }
+
+        function animerPluieGouttes(event) {
+            const x = event.clientX || window.innerWidth / 2;
+            const y = event.clientY || window.innerHeight / 2;
+            
+            for (let i = 0; i < 8; i++) {
+                const goutte = document.createElement('div');
+                goutte.innerHTML = '💧';
+                goutte.style.position = 'fixed';
+                goutte.style.left = (x + (Math.random() * 60 - 30)) + 'px';
+                goutte.style.top = (y + (Math.random() * 20 - 20)) + 'px';
+                goutte.style.fontSize = (16 + Math.random() * 12) + 'px';
+                goutte.style.pointerEvents = 'none';
+                goutte.style.zIndex = '3000';
+                goutte.style.transition = 'transform 0.8s ease-out, opacity 0.8s ease-out';
+                goutte.style.opacity = '1';
+                document.body.appendChild(goutte);
+
+                setTimeout(() => {
+                    const dropY = 40 + Math.random() * 60;
+                    const dropX = (Math.random() * 40 - 20);
+                    goutte.style.transform = `translate(${dropX}px, ${dropY}px) scale(1.3)`;
+                    goutte.style.opacity = '0';
+                }, 20);
+
+                setTimeout(() => goutte.remove(), 850);
+            }
         }
 
         function basculerModeSombre() {
@@ -220,15 +264,14 @@
                 toutesLesAnnonces = await response.json();
                 
                 annoncesPrincipales = [];
-                reponsesMap = {};
+                toutesLesReponses = [];
 
                 toutesLesAnnonces.forEach(item => {
-                    const type = String(item.type || '');
-                    const refId = item.ref_id || item.Ref || '';
+                    const type = String(item.type || '').toUpperCase();
+                    const refBrute = item.ref_id || item.Ref || item.ref || item.localisation || '';
                     
-                    if (type.startsWith('REPONSE') || refId) {
-                        if (!reponsesMap[refId]) reponsesMap[refId] = [];
-                        reponsesMap[refId].push(item);
+                    if (type.includes('REPONSE') || refBrute.toLowerCase().includes('ref:') || refBrute.includes('202')) {
+                        toutesLesReponses.push(item);
                     } else {
                         annoncesPrincipales.push(item);
                     }
@@ -285,8 +328,7 @@
                 const typeAnnonce = ann.type || "Graine";
                 const msgAnnonce = ann.message || "";
                 
-                // Indication du nombre de réponses (badge)
-                const listeReponses = reponsesMap[idAnnonce] || [];
+                const listeReponses = obtenirReponsesPourAnnonce(ann);
                 let badgeReponsesHtml = '';
                 if (listeReponses.length > 0) {
                     badgeReponsesHtml = `<div class="badge-reponses">💬 ${listeReponses.length} réponse(s)</div>`;
@@ -314,7 +356,7 @@
                 d.querySelector('.texte-annonce').textContent = `"${msgAnnonce}"`;
 
                 const btnArroser = d.querySelector('.btn-arrosage');
-                btnArroser.onclick = (e) => arroser(e, idAnnonce, btnArroser);
+                btnArroser.onclick = (e) => arroser(e, idAnnonce, btnArroser, ann);
 
                 const btnRep = d.querySelector('.btn-repondre');
                 btnRep.onclick = (e) => {
@@ -326,18 +368,23 @@
             });
         }
 
-        async function arroser(e, id, btn) {
+        async function arroser(e, id, btn, ann) {
             e.stopPropagation();
             jouerBip();
-            btn.innerHTML = "Merci ! la pluie arrose cette annonce 24h";
+            animerPluieGouttes(e);
+            
+            ann.votes_arrosage = (parseInt(ann.votes_arrosage) || 0) + 1;
+            btn.innerHTML = `💧 Arrosé ! (${ann.votes_arrosage})`;
             btn.style.background = "#C8E6C9";
-            const fd = new URLSearchParams(); fd.append('action', 'arroser'); fd.append('id', id);
+            
+            const fd = new URLSearchParams(); 
+            fd.append('action', 'arroser'); 
+            fd.append('id', id);
             fetch(WEB_APP_URL, { method: 'POST', mode: 'no-cors', body: fd });
         }
 
         function ouvrirGrandMessage(ann) {
-            const idAnnonce = ann.Horodateur || ann.id || '';
-            const listeReponses = reponsesMap[idAnnonce] || [];
+            const listeReponses = obtenirReponsesPourAnnonce(ann);
             
             let htmlReponsesGeant = '';
             if (listeReponses.length > 0) {
@@ -412,9 +459,16 @@
             const nomRep = document.getElementById('rep_nom').value;
             const msgRep = document.getElementById('rep_message').value;
 
+            toutesLesReponses.push({
+                ref_id: `Ref:${idRef}`,
+                type: `REPONSE_${typeAnn}`,
+                nom: nomRep,
+                message: msgRep
+            });
+
             const params = new URLSearchParams();
             params.append('action', 'repondre');
-            params.append('ref_id', idRef);
+            params.append('ref_id', `Ref:${idRef}`);
             params.append('type', `REPONSE_${typeAnn}`);
             params.append('nom', nomRep);
             params.append('message', msgRep);
@@ -431,8 +485,8 @@
                     btn.innerText = "ENVOYER MA RÉPONSE ✨";
                     btn.disabled = false;
                     document.getElementById('formReponse').reset();
-                    chargerAnnonces();
-                }, 1200);
+                    executerFiltrage();
+                }, 500);
             })
             .catch(err => {
                 console.error("Erreur d'envoi :", err);
