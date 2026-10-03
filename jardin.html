@@ -28,9 +28,9 @@
         .btn-filtre-rapide { background: rgba(255,255,255,0.2); border: 1px solid white; color: white; padding: 6px 12px; border-radius: 20px; cursor: pointer; font-family: 'Comic Sans MS'; font-size: 0.8em; transition: 0.3s; }
         .btn-filtre-rapide.actif { background: #fff !important; color: #008080 !important; font-weight: bold; }
 
-        /* Style du tiroir de sous-rubriques */
-        #sous-rubriques-urgence { display: none; width: 90%; background: rgba(255, 105, 180, 0.2); padding: 12px; border-radius: 15px; border: 2px dashed #ff1493; margin-top: 5px; text-align: center; }
-        .btn-sous-filtre { background: #ff1493; border: 1px solid white; color: white; padding: 5px 10px; border-radius: 15px; cursor: pointer; font-family: 'Comic Sans MS'; font-size: 0.75em; margin: 3px; transition: 0.3s; }
+        /* Style de la case rose unique pour les sous-rubriques */
+        #sous-rubriques-urgence { display: none; width: 90%; background: rgba(255, 105, 180, 0.25); padding: 12px; border-radius: 15px; border: 2px dashed #ff1493; margin-top: 10px; text-align: center; }
+        .btn-sous-filtre { background: #ff1493; border: 1px solid white; color: white; padding: 6px 12px; border-radius: 15px; cursor: pointer; font-family: 'Comic Sans MS'; font-size: 0.8em; margin: 3px; transition: 0.3s; }
         .btn-sous-filtre.actif { background: #fff !important; color: #ff1493 !important; font-weight: bold; }
 
         .mur-reel { display: grid; grid-template-columns: repeat(5, minmax(150px, 1fr)); gap: 10px; padding: 10px; max-width: 98vw; margin: 0 auto; }
@@ -109,11 +109,14 @@
                 <button class="btn-filtre-rapide btn-reset" onclick="resetRecherche()">🔄 Tout voir</button>
             </div>
 
-            <!-- Tiroir des sous-rubriques (apparaît pour Aide & Harmonie) -->
+            <!-- Tiroir des sous-rubriques (Aide & Harmonie) -->
             <div id="sous-rubriques-urgence">
-                <div style="font-size: 0.85em; font-weight: bold; color: #fff; margin-bottom: 5px;">✨ Affiner la recherche (Aide & Harmonie) :</div>
-                <button class="btn-sous-filtre" data-sous="URGENCE" onclick="rechercheSousCategorie('URGENCE', this)">🏥 Urgences (Santé & Secours)</button>
-                <button class="btn-sous-filtre" data-sous="ECOUTE" onclick="rechercheSousCategorie('ECOUTE', this)">💖 Écoute et réconfort</button>
+                <div style="font-size: 0.85em; font-weight: bold; color: #ff1493; margin-bottom: 6px;">💖 Affiner la recherche (Aide & Harmonie) :</div>
+                <div style="display: flex; gap: 8px; justify-content: center; flex-wrap: wrap;">
+                    <button class="btn-sous-filtre" data-sous="" onclick="rechercheSousCategorie('', this)">🌸 Tout Aide & Harmonie</button>
+                    <button class="btn-sous-filtre" data-sous="URGENCE" onclick="rechercheSousCategorie('URGENCE', this)">🏥 Urgences (Santé & Secours)</button>
+                    <button class="btn-sous-filtre" data-sous="ECOUTE" onclick="rechercheSousCategorie('ECOUTE', this)">💌 Écoute et réconfort</button>
+                </div>
             </div>
         </div>
     </div>
@@ -163,7 +166,6 @@
         const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbxxToz22V88elCCjxLqjRtsb5iBIC156cbBFRIlTsju2SwOj9yNnKqzAwFITXMg_wij/exec";
         let toutesLesAnnonces = [], annoncesPrincipales = [], toutesLesReponses = [], filtreTypeActuel = "", filtreSousTypeActuel = "";
         
-        // Mapping complet des boutons principaux vers les types de la base
         const mappingBoutons = { 
             "Savoir": ["SAVOIR"], 
             "Citoyenne": ["VIE"], 
@@ -173,7 +175,6 @@
             "Autre": ["AUTRE_CAT"] 
         };
 
-        // Paramètres URL acceptés depuis l'accueil (gestion complète de toutes les rubriques)
         const paramToBouton = {
             "SAVOIR": "Savoir",
             "VIE": "Citoyenne",
@@ -297,7 +298,6 @@
 
                 document.getElementById('phrase-petit-prince').innerHTML = `✨ Aujourd'hui, le Petit Prince a pris soin de <b>${annoncesPrincipales.length}</b> fleurs resplendissantes dans le jardin du monde...`;
                 
-                // Gestion intelligente des paramètres URL au chargement
                 const urlParams = new URLSearchParams(window.location.search);
                 const catParam = urlParams.get('cat');
                 
@@ -321,6 +321,10 @@
                                         document.querySelectorAll('.btn-sous-filtre').forEach(b => b.classList.remove('actif'));
                                         btnSous.classList.add('actif');
                                     }
+                                } else {
+                                    // Sélection par défaut sur "Tout Aide & Harmonie"
+                                    const btnSousDefaut = document.querySelector('.btn-sous-filtre[data-sous=""]');
+                                    if (btnSousDefaut) btnSousDefaut.classList.add('actif');
                                 }
                             } else {
                                 tiroirSousRub.style.display = 'none';
@@ -350,12 +354,12 @@
                 let matchT = true;
                 if (filtreTypeActuel !== "") {
                     const catsPermises = mappingBoutons[filtreTypeActuel] || [];
-                    matchT = catsPermises.includes(String(ann.type || '').toUpperCase());
+                    matchT = catsPermises.includes(ann.type);
                 }
 
                 let matchSousT = true;
                 if (filtreTypeActuel === "Harmonie" && filtreSousTypeActuel !== "") {
-                    matchSousT = (String(ann.type || '').toUpperCase() === filtreSousTypeActuel);
+                    matchSousT = (ann.type === filtreSousTypeActuel);
                 }
 
                 return matchP && matchV && matchM && matchT && matchSousT;
@@ -372,7 +376,7 @@
             filtrées.forEach(ann => {
                 const idAnnonce = ann.Horodateur || ann.id || '';
                 const nomAnnonce = ann.nom || "Anonyme";
-                const typeAnnonce = String(ann.type || '').toUpperCase();
+                const typeAnnonce = ann.type || "Graine";
                 const msgAnnonce = ann.message || "";
                 
                 const listeReponses = obtenirReponsesPourAnnonce(ann);
@@ -542,6 +546,7 @@
             });
         }
 
+        // Clic sur un filtre principal
         function rechercheRapide(t, el) {
             jouerBip();
             document.querySelectorAll('.btn-filtre-rapide').forEach(b => b.classList.remove('actif'));
@@ -559,6 +564,12 @@
             const tiroirSousRub = document.getElementById('sous-rubriques-urgence');
             if (filtreTypeActuel === "Harmonie") {
                 tiroirSousRub.style.display = 'block';
+                // Active le bouton "Tout Aide & Harmonie" par défaut
+                const btnTous = document.querySelector('.btn-sous-filtre[data-sous=""]');
+                if (btnTous) {
+                    document.querySelectorAll('.btn-sous-filtre').forEach(b => b.classList.remove('actif'));
+                    btnTous.classList.add('actif');
+                }
             } else {
                 tiroirSousRub.style.display = 'none';
                 document.querySelectorAll('.btn-sous-filtre').forEach(b => b.classList.remove('actif'));
@@ -567,16 +578,14 @@
             executerFiltrage();
         }
 
+        // Clic sur une sous-rubrique
         function rechercheSousCategorie(sousT, el) {
             jouerBip();
             document.querySelectorAll('.btn-sous-filtre').forEach(b => b.classList.remove('actif'));
             
-            if (filtreSousTypeActuel === sousT) {
-                filtreSousTypeActuel = "";
-            } else {
-                filtreSousTypeActuel = sousT;
-                if (el) el.classList.add('actif');
-            }
+            filtreSousTypeActuel = sousT;
+            if (el) el.classList.add('actif');
+            
             executerFiltrage();
         }
 
