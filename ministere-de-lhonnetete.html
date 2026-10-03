@@ -1,45 +1,615 @@
-<div class="video-comment-box" id="apropos">
-  
-  <!-- Zone Vidéo / Lecteur YouTube (Lancement direct au clic) -->
-  <div class="video-container" id="videoContainer" onclick="playYouTubeVideo('VOTRE_ID_DE_VIDEO')">
-    <div class="video-thumbnail-overlay">
-      <!-- Remplacez VOTRE_ID_DE_VIDEO par l'identifiant YouTube de votre vidéo (ex: dQw4w9WgXcQ) -->
-      <img src="https://img.youtube.com/vi/VOTRE_ID_DE_VIDEO/hqdefault.jpg" alt="Miniature vidéo" class="video-thumb">
-      <div class="play-button-overlay">
-        <svg width="64" height="64" viewBox="0 0 24 24" fill="#ff8c00">
-          <path d="M8 5v14l11-7z"/>
-        </svg>
-      </div>
+<!DOCTYPE html>
+<html lang="fr" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Ministère de l'honnêteté | Journal de l'actualité et de la vérité</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        joy: {
+                            dark: '#1e1b4b',   // Bleu nuit profond
+                            orange: '#f97316', // Orange chaleureux
+                            gold: '#f59e0b',   // Or solaire
+                            bg: '#fffbf5',     // Fond ambré très doux
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .desc-content { display: none; }
+        .desc-content.expanded { display: block; }
+        .arrow-icon { transition: transform 0.3s ease; }
+        .arrow-icon.rotated { transform: rotate(180deg); }
+        html, body { max-width: 100% !important; overflow-x: hidden !important; }
+        .iframe-container { -webkit-overflow-scrolling: touch; }
+    </style>
+</head>
+<body class="bg-joy-bg text-gray-900 font-sans antialiased">
+
+    <!-- En-tête / Navigation -->
+    <header class="sticky top-0 z-50 bg-joy-bg/90 backdrop-blur-md border-b border-orange-100 shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-20">
+                <!-- Logo & Titre -->
+                <div class="flex items-center space-x-3">
+                    <div class="bg-gradient-to-br from-joy-gold to-joy-orange text-white p-2.5 rounded-xl shadow-md shrink-0">
+                        <i class="fa-solid fa-scale-balanced text-xl"></i>
+                    </div>
+                    <div>
+                        <span class="text-[10px] sm:text-xs uppercase tracking-widest font-extrabold text-joy-orange block">Média indépendant</span>
+                        <h1 class="text-lg sm:text-2xl font-black tracking-tight text-joy-dark truncate max-w-[200px] sm:max-w-none">Ministère de l'honnêteté</h1>
+                    </div>
+                </div>
+
+                <!-- Navigation Desktop -->
+                <nav class="hidden md:flex items-center space-x-8 text-sm font-semibold text-gray-700">
+                    <a href="#articles" class="hover:text-joy-orange transition">Articles</a>
+                    <a href="#videos" class="hover:text-joy-orange transition">Vidéos</a>
+                    <a href="#apropos" class="hover:text-joy-orange transition">Notre Mission</a>
+                    <a href="https://lepetitprincedesjardiniers.github.io/index.html" class="text-joy-orange hover:text-orange-600 transition flex items-center gap-1.5 font-bold text-xs bg-orange-50 px-3.5 py-2 rounded-xl border border-orange-200">
+                        <i class="fa-solid fa-arrow-left text-xs"></i> Petites Annonces Citoyennes
+                    </a>
+                </nav>
+
+                <!-- Bouton d'appel à l'action -->
+                <div class="flex items-center">
+                    <a href="#videos" class="bg-joy-orange text-white px-3.5 py-2 sm:px-4 sm:py-2.5 rounded-xl text-xs sm:text-sm font-bold hover:bg-orange-600 transition shadow-md shadow-orange-500/20 flex items-center gap-1.5">
+                        <i class="fa-solid fa-play"></i> Vidéos
+                    </a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Section "À la une" dynamique -->
+    <section id="alaune-container" class="py-12 lg:py-16 bg-gradient-to-br from-joy-dark via-indigo-950 to-orange-950 text-white relative overflow-hidden">
+        <div class="absolute -top-24 -right-24 w-96 h-96 bg-joy-orange/20 rounded-full blur-3xl pointer-events-none"></div>
+        <div class="absolute -bottom-24 -left-24 w-96 h-96 bg-joy-gold/10 rounded-full blur-3xl pointer-events-none"></div>
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10" id="alaune-content">
+            <div class="text-center py-12 text-amber-200">Chargement de l'actualité...</div>
+        </div>
+    </section>
+
+    <!-- Contenu Principal -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 space-y-20">
+
+        <!-- Section Articles -->
+        <section id="articles" class="space-y-8">
+            <div class="flex flex-col sm:flex-row justify-between items-start sm:items-end gap-4 border-b border-orange-200 pb-4">
+                <div>
+                    <span class="text-xs uppercase tracking-widest font-extrabold text-joy-orange block">Publications récentes</span>
+                    <h2 class="text-3xl font-extrabold text-joy-dark">Articles & Décryptages</h2>
+                </div>
+                <!-- Barre de recherche Globale -->
+                <div class="w-full sm:w-80">
+                    <div class="relative">
+                        <span class="absolute inset-y-0 left-0 flex items-center pl-3.5 pointer-events-none text-gray-400">
+                            <i class="fa-solid fa-search"></i>
+                        </span>
+                        <input type="text" id="search-input" oninput="filterContent()" placeholder="Rechercher articles, vidéos..." class="w-full pl-10 pr-4 py-2.5 bg-white border border-orange-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-joy-orange shadow-sm transition">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Grille des articles -->
+            <div id="articles-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div class="col-span-full text-center py-12 text-gray-500 font-medium">Chargement des articles...</div>
+            </div>
+
+            <!-- Bouton "Charger plus" Articles -->
+            <div id="load-more-container" class="text-center pt-6 hidden">
+                <button onclick="showMoreArticles()" class="bg-orange-50 hover:bg-joy-orange hover:text-white text-joy-orange font-bold text-sm px-6 py-3 rounded-xl transition border border-orange-200 shadow-sm cursor-pointer inline-flex items-center gap-2">
+                    <span>Charger plus d'articles</span> <i class="fa-solid fa-chevron-down text-xs"></i>
+                </button>
+            </div>
+        </section>
+
+        <!-- Section Vidéos & Reportages -->
+        <section id="videos" class="space-y-8 bg-white p-6 sm:p-12 rounded-3xl border border-orange-100 shadow-md">
+            <div class="flex flex-col sm:flex-row justify-between items-start sm:items-end gap-4 border-b border-orange-100 pb-4">
+                <div>
+                    <span class="text-xs uppercase tracking-widest font-extrabold text-joy-orange block">Format multimédia</span>
+                    <h2 class="text-3xl font-extrabold text-joy-dark">Vidéos & Reportages</h2>
+                </div>
+                <a href="https://www.youtube.com/@lepetitploucdesjardiniers" target="_blank" class="text-sm font-bold text-gray-700 hover:text-joy-orange transition flex items-center gap-2 bg-orange-50 px-4 py-2 rounded-xl">
+                    <i class="fa-brands fa-youtube text-red-600 text-lg"></i> Chaîne vidéo
+                </a>
+            </div>
+
+            <!-- Grille des Vidéos -->
+            <div id="videos-grid" class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div class="col-span-full text-center py-12 text-gray-500 font-medium">Chargement des vidéos...</div>
+            </div>
+
+            <!-- Bouton "Charger plus" Vidéos -->
+            <div id="load-more-videos-container" class="text-center pt-6 hidden">
+                <button onclick="showMoreVideos()" class="bg-orange-50 hover:bg-joy-orange hover:text-white text-joy-orange font-bold text-sm px-6 py-3 rounded-xl transition border border-orange-200 shadow-sm cursor-pointer inline-flex items-center gap-2">
+                    <span>Charger plus de vidéos</span> <i class="fa-solid fa-chevron-down text-xs"></i>
+                </button>
+            </div>
+        </section>
+
+        <!-- Section Notre Mission -->
+        <section id="apropos" class="max-w-3xl mx-auto text-center space-y-6 py-8 bg-gradient-to-r from-amber-100/50 via-orange-100/30 to-amber-100/50 p-6 sm:p-8 rounded-3xl border border-orange-200/50">
+            <div class="w-14 h-14 bg-joy-orange text-white rounded-2xl flex items-center justify-center mx-auto shadow-lg shadow-orange-500/20">
+                <i class="fa-solid fa-shield-halved text-2xl"></i>
+            </div>
+            <h2 class="text-2xl sm:text-3xl font-extrabold text-joy-dark">Notre engagement envers vous</h2>
+            <p class="text-gray-700 leading-relaxed text-base sm:text-lg">
+                Le <strong>Ministère de l'honnêteté</strong> est un espace d'information libre et vibrant, conçu pour les citoyens qui exigent de la rigueur, de la joie de débattre et de la transparence. Chaque article et chaque vidéo sont pensés pour vous donner les clés de compréhension de notre époque.
+            </p>
+        </section>
+
+    </main>
+
+    <!-- Modale Visionneuse (Articles / Docs) -->
+    <div id="content-modal" class="fixed inset-0 z-50 hidden bg-black/70 backdrop-blur-sm flex items-center justify-center p-2 sm:p-6">
+        <div class="bg-white w-full max-w-4xl h-[90vh] sm:h-[85vh] rounded-3xl shadow-2xl overflow-hidden flex flex-col relative border border-orange-200">
+            <div class="bg-joy-dark text-white px-4 sm:px-6 py-4 flex justify-between items-center shrink-0">
+                <h3 id="modal-title" class="font-bold text-base sm:text-lg truncate pr-4">Titre de l'article</h3>
+                <button onclick="closeModal()" class="text-gray-300 hover:text-white text-xl font-bold w-10 h-10 rounded-full bg-white/10 flex items-center justify-center transition shrink-0 cursor-pointer">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+            <div class="flex-grow flex items-center justify-center p-2 sm:p-6 bg-gray-50 relative iframe-container overflow-hidden">
+                <iframe id="modal-iframe" class="w-full h-full max-w-5xl rounded-2xl shadow-2xl bg-black border-0" allow="autoplay; fullscreen"></iframe>
+            </div>
+        </div>
     </div>
-  </div>
 
-  <!-- Résumé principal (toujours visible) -->
-  <div class="video-summary">
-    <p>Ceci est le résumé principal de la vidéo. Les phrases sont bien espacées et aérées pour un confort de lecture optimal.</p>
-  </div>
-
-  <!-- Contenu supplémentaire masqué par défaut (développé via la flèche) -->
-  <div class="video-details" id="extra-details">
-    <!-- Nom de l'auteur -->
-    <div class="author-name">Auteur : Nom de la Chaîne</div>
-
-    <!-- Hashtags -->
-    <div class="video-hashtags">
-      <span>#MinistereDeLHonnetete</span> <span>#LePetitPrinceDesJardiniers</span> <span>#Video</span>
+    <!-- Modale Courrier des lecteurs -->
+    <div id="courrier-modal" class="fixed inset-0 z-50 hidden bg-black/70 backdrop-blur-sm flex items-center justify-center p-4 sm:p-6">
+        <div class="bg-white w-full max-w-lg rounded-3xl shadow-2xl overflow-hidden flex flex-col relative border border-orange-200 p-6 sm:p-8 text-center space-y-6">
+            <button onclick="closeCourrierModal()" class="absolute top-4 right-4 text-gray-400 hover:text-gray-700 text-xl font-bold w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center transition cursor-pointer">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+            <div class="w-16 h-16 bg-joy-orange text-white rounded-2xl flex items-center justify-center mx-auto shadow-lg shadow-orange-500/20">
+                <i class="fa-solid fa-envelope-open-text text-2xl"></i>
+            </div>
+            <h3 class="text-2xl font-extrabold text-joy-dark">Courrier des lecteurs</h3>
+            <p class="text-gray-800 text-lg font-semibold leading-relaxed">
+                Ne perds pas ton temps sur ton ordi, <span class="text-joy-orange underline decoration-wavy">va discuter dans ton quartier !</span>
+            </p>
+            <p class="text-gray-500 text-sm italic">
+                (Rien ne vaut un vrai ébat public).
+            </p>
+            <div>
+                <button onclick="closeCourrierModal()" class="bg-joy-orange text-white font-bold text-sm px-6 py-3 rounded-xl hover:bg-orange-600 transition shadow-md shadow-orange-500/20 cursor-pointer">
+                    J'ai compris, j'y vais ! 🌳
+                </button>
+            </div>
+        </div>
     </div>
 
-    <!-- Copyright -->
-    <div class="video-copyright">
-      <small>© 2026 Ministère de l'Honnêteté. Tous droits réservés.</small>
+    <!-- Modale Contact -->
+    <div id="contact-modal" class="fixed inset-0 z-50 hidden bg-black/70 backdrop-blur-sm flex items-center justify-center p-4 sm:p-6">
+        <div class="bg-white w-full max-w-lg rounded-3xl shadow-2xl overflow-hidden flex flex-col relative border border-orange-200 p-6 sm:p-8 text-center space-y-6">
+            <button onclick="closeContactModal()" class="absolute top-4 right-4 text-gray-400 hover:text-gray-700 text-xl font-bold w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center transition cursor-pointer">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+            <div class="w-16 h-16 bg-joy-orange text-white rounded-2xl flex items-center justify-center mx-auto shadow-lg shadow-orange-500/20">
+                <i class="fa-solid fa-user-secret text-2xl"></i>
+            </div>
+            <h3 class="text-2xl font-extrabold text-joy-dark">Contact</h3>
+            <p class="text-gray-800 text-lg font-semibold leading-relaxed">
+                Je ne parle pas aux inconnu(es) <span class="text-joy-orange block mt-2">mais si tu me rencontres, sois gentille avec nous !</span>
+            </p>
+            <div>
+                <button onclick="closeContactModal()" class="bg-joy-orange text-white font-bold text-sm px-6 py-3 rounded-xl hover:bg-orange-600 transition shadow-md shadow-orange-500/20 cursor-pointer">
+                    Promis ! 🤝
+                </button>
+            </div>
+        </div>
     </div>
-  </div>
 
-  <!-- Flèche orange au centre pour développer -->
-  <div class="arrow-container">
-    <button class="orange-arrow-btn" onclick="toggleVideoDetails()" aria-label="Développer les commentaires">
-      <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#ff8c00" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="arrow-icon">
-        <polyline points="6 9 12 15 18 9"></polyline>
-      </svg>
-    </button>
-  </div>
-</div>
+    <!-- Pied de page -->
+    <footer class="bg-joy-dark text-white border-t border-indigo-900">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+            <div class="flex flex-col md:flex-row justify-between items-center gap-6 border-b border-indigo-900 pb-8 text-center md:text-left">
+                <div class="flex items-center space-x-3 justify-center">
+                    <div class="bg-joy-orange text-white p-2.5 rounded-xl">
+                        <i class="fa-solid fa-scale-balanced text-lg"></i>
+                    </div>
+                    <span class="font-black text-lg tracking-tight">Ministère de l'honnêteté</span>
+                </div>
+                <div class="flex space-x-6 text-amber-300 justify-center">
+                    <a href="#" class="hover:text-white transition text-xl"><i class="fa-brands fa-x-twitter"></i></a>
+                    <a href="https://www.youtube.com/@lepetitploucdesjardiniers" target="_blank" class="hover:text-white transition text-xl"><i class="fa-brands fa-youtube"></i></a>
+                    <a href="#" class="hover:text-white transition text-xl"><i class="fa-brands fa-instagram"></i></a>
+                </div>
+            </div>
+            <div class="flex flex-col sm:flex-row justify-between items-center gap-4 pt-8 text-xs text-indigo-300 text-center sm:text-left">
+                <p>&copy; 2026 Ministère de l'honnêteté. Propulsé par LePetitPloucsDesJardiniers</p>
+                <div class="flex flex-wrap justify-center items-center gap-4 sm:space-x-6">
+                    <button onclick="openContactModal(event)" class="text-amber-300 hover:text-white transition font-bold cursor-pointer bg-transparent border-0 p-0 inline-flex items-center gap-1.5">
+                        <i class="fa-solid fa-address-book"></i> Contact
+                    </button>
+                    <button onclick="openCourrierModal(event)" class="text-amber-300 hover:text-white transition font-bold cursor-pointer bg-transparent border-0 p-0 inline-flex items-center gap-1.5">
+                        <i class="fa-solid fa-envelope"></i> Courrier des lecteurs
+                    </button>
+                    <a href="https://lepetitprincedesjardiniers.github.io/index.html" class="hover:text-white transition font-bold">Retour aux Petites Annonces Citoyennes</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Script de liaison Google Sheets, Recherche, Vidéos & Modales -->
+    <script>
+        const sheetID = "1jJZm_WSIMgM5r-Y5zTSrC8FUiLhRN-dOcPnIcSyTpSI";
+        const gid = "1311533436";
+        const csvUrl = `https://docs.google.com/spreadsheets/d/${sheetID}/export?format=csv&gid=${gid}`;
+
+        let allArticles = []; 
+        let allVideos = [];
+        let displayedArticleLimit = 9; 
+        let displayedVideoLimit = 9;
+
+        function getYouTubeId(url) {
+            if (!url) return '';
+            const cleanUrl = url.trim(); 
+            const regExp = /(?:youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/|youtube\.com\/shorts\/)([^"&?\/\s]{11})/i;
+            const match = cleanUrl.match(regExp);
+            return match ? match[1] : '';
+        }
+
+        function getEmbedUrl(url) {
+            if (!url) return '';
+            const cleanUrl = url.trim();
+            if (cleanUrl.includes('docs.google.com/document/d/')) {
+                const match = cleanUrl.match(/\/document\/d\/([a-zA-Z0-9-_]+)/);
+                return match ? `https://docs.google.com/document/d/${match[1]}/preview` : cleanUrl;
+            }
+            const videoId = getYouTubeId(cleanUrl);
+            if (videoId) {
+                return `https://www.youtube.com/embed/${videoId}?autoplay=1`;
+            }
+            return cleanUrl;
+        }
+
+        // Lancement direct de la vidéo YouTube dans la carte au clic
+        function playVideoInline(containerId, videoId) {
+            const container = document.getElementById(containerId);
+            if (!container || !videoId) return;
+            container.innerHTML = `
+                <iframe width="100%" height="100%" 
+                    src="https://www.youtube.com/embed/${videoId}?autoplay=1" 
+                    title="YouTube video player" 
+                    frameborder="0" 
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+                    allowfullscreen
+                    style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;">
+                </iframe>
+            `;
+            container.onclick = null;
+        }
+
+        function openModal(title, url) {
+            if (!url) return;
+            const modal = document.getElementById('content-modal');
+            const modalTitle = document.getElementById('modal-title');
+            const iframe = document.getElementById('modal-iframe');
+
+            modalTitle.textContent = title;
+            iframe.src = getEmbedUrl(url);
+            modal.classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function openArticleByIndex(index) {
+            if (allArticles[index]) openModal(allArticles[index].titre, allArticles[index].lien);
+        }
+
+        function closeModal() {
+            const modal = document.getElementById('content-modal');
+            const iframe = document.getElementById('modal-iframe');
+            modal.classList.add('hidden');
+            iframe.src = ''; 
+            document.body.style.overflow = 'auto';
+        }
+
+        function toggleDesc(btn) {
+            const container = btn.closest('.desc-container');
+            const content = container.querySelector('.desc-content');
+            const icon = btn.querySelector('.arrow-icon');
+            content.classList.toggle('expanded');
+            icon.classList.toggle('rotated');
+        }
+
+        function openCourrierModal(e) {
+            if (e) e.preventDefault();
+            document.getElementById('courrier-modal').classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeCourrierModal() {
+            document.getElementById('courrier-modal').classList.add('hidden');
+            document.body.style.overflow = 'auto';
+        }
+
+        function openContactModal(e) {
+            if (e) e.preventDefault();
+            document.getElementById('contact-modal').classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeContactModal() {
+            document.getElementById('contact-modal').classList.add('hidden');
+            document.body.style.overflow = 'auto';
+        }
+
+        document.getElementById('content-modal').addEventListener('click', function(e) {
+            if (e.target === this) closeModal();
+        });
+        document.getElementById('courrier-modal').addEventListener('click', function(e) {
+            if (e.target === this) closeCourrierModal();
+        });
+        document.getElementById('contact-modal').addEventListener('click', function(e) {
+            if (e.target === this) closeContactModal();
+        });
+
+        function filterContent() {
+            renderArticles();
+            renderVideos();
+        }
+
+        function renderArticles() {
+            const grid = document.getElementById('articles-grid');
+            const searchInput = document.getElementById('search-input');
+            const loadMoreContainer = document.getElementById('load-more-container');
+
+            const query = searchInput ? searchInput.value.toLowerCase().trim() : "";
+
+            const filtered = allArticles.filter(item => {
+                const searchStr = `${item.titre || ''} ${item.description || ''} ${item.categorie || ''}`.toLowerCase();
+                return searchStr.includes(query);
+            });
+
+            const limit = query ? filtered.length : displayedArticleLimit;
+            const articlesToDisplay = filtered.slice(0, limit);
+
+            if (filtered.length === 0) {
+                if (grid) grid.innerHTML = `<div class="col-span-full text-center py-12 text-gray-500 font-medium bg-white rounded-3xl border border-orange-100">Aucun article trouvé pour "${query}".</div>`;
+                if (loadMoreContainer) loadMoreContainer.classList.add('hidden');
+                return;
+            }
+
+            let html = '';
+            articlesToDisplay.forEach((art, idx) => {
+                const realIndex = allArticles.findIndex(a => a === art);
+                html += `
+                    <article class="bg-white rounded-3xl border border-orange-100 overflow-hidden shadow-sm hover:shadow-xl hover:-translate-y-1 transition duration-300 flex flex-col justify-between">
+                        <div>
+                            <div class="h-48 bg-gradient-to-br from-amber-100 to-orange-100 flex items-center justify-center text-joy-orange">
+                                <i class="fa-solid fa-newspaper text-4xl"></i>
+                            </div>
+                            <div class="p-6 space-y-3">
+                                <div class="flex items-center justify-between text-xs font-bold gap-2">
+                                    <span class="bg-amber-100 text-amber-800 px-3 py-1 rounded-full truncate">${art.categorie || 'Article'}</span>
+                                    <span class="text-gray-400 font-normal shrink-0">${art.date || ''}</span>
+                                </div>
+                                <h3 class="text-xl font-extrabold text-gray-900 leading-snug line-clamp-2">
+                                    ${art.titre}
+                                </h3>
+                                <p class="text-gray-600 text-sm leading-relaxed line-clamp-3">
+                                    ${art.description || ''}
+                                </p>
+                            </div>
+                        </div>
+                        <div class="p-6 pt-0">
+                            <button onclick="openArticleByIndex(${realIndex})" class="text-joy-orange font-bold text-sm hover:underline inline-flex items-center gap-1.5 cursor-pointer bg-transparent border-0 p-0">
+                                Lire l'article complet <i class="fa-solid fa-arrow-right text-xs"></i>
+                            </button>
+                        </div>
+                    </article>
+                `;
+            });
+
+            if (grid) grid.innerHTML = html;
+
+            if (loadMoreContainer) {
+                if (!query && displayedArticleLimit < filtered.length) {
+                    loadMoreContainer.classList.remove('hidden');
+                } else {
+                    loadMoreContainer.classList.add('hidden');
+                }
+            }
+        }
+
+        // AFFICHAGE DES VIDÉOS (avec structure aérée, résumé, flèche orange centrée et détails)
+        function renderVideos() {
+            const grid = document.getElementById('videos-grid');
+            const searchInput = document.getElementById('search-input');
+            const loadMoreContainer = document.getElementById('load-more-videos-container');
+
+            const query = searchInput ? searchInput.value.toLowerCase().trim() : "";
+
+            const filtered = allVideos.filter(item => {
+                const searchStr = `${item.titre || ''} ${item.description || ''} ${item.categorie || ''}`.toLowerCase();
+                return searchStr.includes(query);
+            });
+
+            const limit = query ? filtered.length : displayedVideoLimit;
+            const videosToDisplay = filtered.slice(0, limit);
+
+            if (filtered.length === 0) {
+                if (grid) grid.innerHTML = `<div class="col-span-full text-center py-12 text-gray-500 font-medium bg-white rounded-3xl border border-orange-100">Aucune vidéo trouvée pour "${query}".</div>`;
+                if (loadMoreContainer) loadMoreContainer.classList.add('hidden');
+                return;
+            }
+
+            let html = '';
+            videosToDisplay.forEach((vid, idx) => {
+                const videoId = getYouTubeId(vid.lien);
+                const thumbUrl = videoId ? `https://img.youtube.com/vi/${videoId}/hqdefault.jpg` : '';
+                const uniqueId = `video-container-${idx}-${Math.random().toString(36.substring(2, 7))}`;
+
+                html += `
+                    <div class="bg-white rounded-3xl border border-orange-100 overflow-hidden shadow-sm flex flex-col justify-between p-6 space-y-4">
+                        <div class="flex items-center justify-between text-xs font-bold gap-2">
+                            <span class="bg-amber-100 text-amber-800 px-3 py-1 rounded-full truncate">${vid.categorie || 'Vidéo'}</span>
+                            <span class="text-gray-400 font-normal shrink-0">${vid.date || ''}</span>
+                        </div>
+                        <h3 class="text-lg font-extrabold text-joy-dark leading-snug line-clamp-2">${vid.titre}</h3>
+                        
+                        <!-- Lecteur Vidéo cliquable avec lancement direct -->
+                        <div id="${uniqueId}" onclick="playVideoInline('${uniqueId}', '${videoId}')" class="rounded-2xl overflow-hidden relative shadow-md aspect-video flex items-center justify-center cursor-pointer group bg-gray-900 bg-cover bg-center" style="background-image: url('${thumbUrl}');">
+                            <div class="absolute inset-0 bg-black/30 group-hover:bg-black/10 transition duration-300"></div>
+                            <div class="w-14 h-14 bg-joy-orange text-white rounded-full flex items-center justify-center shadow-xl z-10 group-hover:scale-110 transition duration-300">
+                                <i class="fa-solid fa-play ml-1"></i>
+                            </div>
+                            <span class="absolute top-3 left-3 z-10 text-[10px] font-bold text-amber-900 bg-amber-100/90 px-2.5 py-1 rounded-full uppercase tracking-wider">${vid.categorie || 'Vidéo'}</span>
+                        </div>
+
+                        <!-- Section Commentaires & Description Structurée -->
+                        <div class="desc-container border-t border-orange-100 pt-3 space-y-3">
+                            <!-- Résumé principal (toujours visible, espacé et aéré) -->
+                            <div class="text-gray-700 text-sm leading-relaxed whitespace-pre-line">
+                                ${vid.description || 'Aucune description fournie.'}
+                            </div>
+
+                            <!-- Flèche orange au centre pour développer davantage -->
+                            <div class="text-center pt-1">
+                                <button onclick="toggleDesc(this)" class="bg-orange-50 hover:bg-joy-orange text-joy-orange hover:text-white w-10 h-10 rounded-full inline-flex items-center justify-center transition shadow-sm cursor-pointer" aria-label="Développer les commentaires">
+                                    <i class="fa-solid fa-chevron-down arrow-icon text-sm"></i>
+                                </button>
+                            </div>
+
+                            <!-- Contenu supplémentaire masqué (Auteur, Hashtags, Copyright, etc.) -->
+                            <div class="desc-content space-y-2 pt-3 border-t border-orange-100/60 bg-orange-50/40 p-4 rounded-2xl text-xs">
+                                <div class="font-bold text-joy-orange">Auteur : Ministère de l'Honnêteté</div>
+                                <div class="text-blue-600 font-medium">#MinistereDeLHonnetete #LePetitPrinceDesJardiniers #Reportage</div>
+                                <div class="text-gray-400">© 2026 Ministère de l'Honnêteté. Tous droits réservés.</div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            });
+
+            if (grid) grid.innerHTML = html;
+
+            if (loadMoreContainer) {
+                if (!query && displayedVideoLimit < filtered.length) {
+                    loadMoreContainer.classList.remove('hidden');
+                } else {
+                    loadMoreContainer.classList.add('hidden');
+                }
+            }
+        }
+
+        function showMoreArticles() {
+            displayedArticleLimit += 9;
+            renderArticles();
+        }
+
+        function showMoreVideos() {
+            displayedVideoLimit += 9;
+            renderVideos();
+        }
+
+        // Chargement des données Google Sheets
+        Papa.parse(csvUrl, {
+            download: true,
+            header: true,
+            complete: function(results) {
+                const data = results.data;
+                let alauneHTML = '';
+                allArticles = [];
+                allVideos = [];
+
+                data.forEach(row => {
+                    const cleanRow = {};
+                    Object.keys(row).forEach(key => {
+                        const cleanKey = key.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").trim();
+                        cleanRow[cleanKey] = row[key];
+                    });
+
+                    const pos = (cleanRow.position || "").trim().toLowerCase();
+                    const titre = cleanRow.titre || "";
+                    const desc = cleanRow.description || "";
+                    const lien = cleanRow.lien || "#";
+                    const cat = cleanRow.categorie || "Général";
+                    const date = cleanRow.date || "";
+
+                    if (!titre) return;
+                    const safeTitle = titre.replace(/'/g, "\\'").replace(/"/g, '&quot;');
+
+                    if (pos === 'alaune-article') {
+                        alauneHTML = `
+                            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center">
+                                <div class="space-y-6">
+                                    <span class="inline-flex items-center gap-2 bg-joy-gold/20 text-joy-gold border border-joy-gold/30 px-3.5 py-1.5 rounded-full text-xs font-black uppercase tracking-wider">
+                                        <i class="fa-solid fa-bolt"></i> À la une • Enquête exclusive
+                                    </span>
+                                    <h2 class="text-3xl sm:text-4xl lg:text-5xl font-extrabold leading-tight tracking-tight text-white">
+                                        ${titre}
+                                    </h2>
+                                    <p class="text-amber-100/80 text-base sm:text-lg leading-relaxed">
+                                        ${desc}
+                                    </p>
+                                    <div class="flex flex-wrap gap-4 pt-2">
+                                        <button onclick="openModal('${safeTitle}', '${lien}')" class="bg-joy-gold text-joy-dark px-6 py-3.5 rounded-xl font-black hover:bg-amber-400 transition shadow-lg shadow-amber-500/20 inline-flex items-center gap-2 cursor-pointer">
+                                            Lire l'enquête <i class="fa-solid fa-arrow-right text-xs"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="relative rounded-2xl overflow-hidden shadow-2xl border border-white/10 bg-gray-900 p-6 sm:p-8 flex flex-col justify-center min-h-[250px] sm:min-h-[300px] cursor-pointer group" onclick="openModal('${safeTitle}', '${lien}')">
+                                    <span class="text-xs text-joy-gold font-bold uppercase tracking-wider mb-2">${cat}</span>
+                                    <h3 class="text-xl sm:text-2xl font-bold text-white mb-4 group-hover:text-amber-200 transition">${titre}</h3>
+                                    <p class="text-gray-300 text-sm line-clamp-3">${desc}</p>
+                                    <span class="mt-4 text-xs text-amber-300 font-bold flex items-center gap-1">Cliquez pour lire l'article <i class="fa-solid fa-external-link-alt"></i></span>
+                                </div>
+                            </div>
+                        `;
+                    } else if (pos === 'video' || pos === 'alaune-video' || getYouTubeId(lien)) {
+                        allVideos.push({ titre, description: desc, lien, categorie: cat, date });
+                    } else {
+                        allArticles.push({ titre, description: desc, lien, categorie: cat, date });
+                    }
+                });
+
+                const alauneContainer = document.getElementById('alaune-content');
+                if (alauneHTML && alauneContainer) {
+                    alauneContainer.innerHTML = alauneHTML;
+                } else if (allArticles.length > 0) {
+                    const firstArt = allArticles[0];
+                    const safeTitle = firstArt.titre.replace(/'/g, "\\'").replace(/"/g, '&quot;');
+                    alauneContainer.innerHTML = `
+                        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center">
+                            <div class="space-y-6">
+                                <span class="inline-flex items-center gap-2 bg-joy-gold/20 text-joy-gold border border-joy-gold/30 px-3.5 py-1.5 rounded-full text-xs font-black uppercase tracking-wider">
+                                    <i class="fa-solid fa-bolt"></i> À la une
+                                </span>
+                                <h2 class="text-3xl sm:text-4xl lg:text-5xl font-extrabold leading-tight tracking-tight text-white">
+                                    ${firstArt.titre}
+                                </h2>
+                                <p class="text-amber-100/80 text-base sm:text-lg leading-relaxed">
+                                    ${firstArt.description}
+                                </p>
+                                <div class="flex flex-wrap gap-4 pt-2">
+                                    <button onclick="openModal('${safeTitle}', '${firstArt.lien}')" class="bg-joy-gold text-joy-dark px-6 py-3.5 rounded-xl font-black hover:bg-amber-400 transition shadow-lg shadow-amber-500/20 inline-flex items-center gap-2 cursor-pointer">
+                                        Lire l'article <i class="fa-solid fa-arrow-right text-xs"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                }
+
+                renderArticles();
+                renderVideos();
+            },
+            error: function(err) {
+                console.error("Erreur PapaParse :", err);
+            }
+        });
+    </script>
+</body>
+</html>
