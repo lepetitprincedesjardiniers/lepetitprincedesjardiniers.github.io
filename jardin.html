@@ -28,8 +28,8 @@
         .btn-filtre-rapide { background: rgba(255,255,255,0.2); border: 1px solid white; color: white; padding: 6px 12px; border-radius: 20px; cursor: pointer; font-family: 'Comic Sans MS'; font-size: 0.8em; transition: 0.3s; }
         .btn-filtre-rapide.actif { background: #fff !important; color: #008080 !important; font-weight: bold; }
 
-        /* Style de la case rose unique pour les sous-rubriques */
-        #sous-rubriques-urgence { display: none; width: 90%; background: rgba(255, 105, 180, 0.25); padding: 12px; border-radius: 15px; border: 2px dashed #ff1493; margin-top: 10px; text-align: center; }
+        /* Style du tiroir dynamique pour les sous-rubriques */
+        #sous-rubriques-container { display: none; width: 90%; background: rgba(255, 105, 180, 0.25); padding: 12px; border-radius: 15px; border: 2px dashed #ff1493; margin-top: 10px; text-align: center; }
         .btn-sous-filtre { background: #ff1493; border: 1px solid white; color: white; padding: 6px 12px; border-radius: 15px; cursor: pointer; font-family: 'Comic Sans MS'; font-size: 0.8em; margin: 3px; transition: 0.3s; }
         .btn-sous-filtre.actif { background: #fff !important; color: #ff1493 !important; font-weight: bold; }
 
@@ -101,7 +101,7 @@
             <!-- Boutons de filtres principaux -->
             <div class="btn-group">
                 <button class="btn-filtre-rapide" data-cat="Savoir" onclick="rechercheRapide('Savoir', this)">🎓 Savoirs</button>
-                <button class="btn-filtre-rapide" data-cat="Citoyenne" onclick="rechercheRapide('Citoyenne', this)">🏛️ Vie Citoyenne</button>
+                <button class="btn-filtre-rapide" data-cat="Citoyenne" onclick="rechercheRapide('Citoyenne', this)">🏛️️ Vie Citoyenne</button>
                 <button class="btn-filtre-rapide" data-cat="Harmonie" onclick="rechercheRapide('Harmonie', this)">🤝 Aide & Harmonie</button>
                 <button class="btn-filtre-rapide" data-cat="Régulation" onclick="rechercheRapide('Régulation', this)">⚖️ Régulation</button>
                 <button class="btn-filtre-rapide" data-cat="Trésor" onclick="rechercheRapide('Trésor', this)">💰 Trésor Public</button>
@@ -109,14 +109,10 @@
                 <button class="btn-filtre-rapide btn-reset" onclick="resetRecherche()">🔄 Tout voir</button>
             </div>
 
-            <!-- Tiroir des sous-rubriques (Aide & Harmonie) -->
-            <div id="sous-rubriques-urgence">
-                <div style="font-size: 0.85em; font-weight: bold; color: #ff1493; margin-bottom: 6px;">💖 Affiner la recherche (Aide & Harmonie) :</div>
-                <div style="display: flex; gap: 8px; justify-content: center; flex-wrap: wrap;">
-                    <button class="btn-sous-filtre" data-sous="" onclick="rechercheSousCategorie('', this)">🌸 Tout Aide & Harmonie</button>
-                    <button class="btn-sous-filtre" data-sous="URGENCE" onclick="rechercheSousCategorie('URGENCE', this)">🏥 Urgences (Santé & Secours)</button>
-                    <button class="btn-sous-filtre" data-sous="ECOUTE" onclick="rechercheSousCategorie('ECOUTE', this)">💌 Écoute et réconfort</button>
-                </div>
+            <!-- Tiroir dynamique des sous-rubriques -->
+            <div id="sous-rubriques-container">
+                <div style="font-size: 0.85em; font-weight: bold; color: #ff1493; margin-bottom: 6px;">💖 Précision de la graine :</div>
+                <div id="liste-boutons-sous-rubriques" style="display: flex; gap: 8px; justify-content: center; flex-wrap: wrap;"></div>
             </div>
         </div>
     </div>
@@ -173,6 +169,35 @@
             "Régulation": ["REGULATION"], 
             "Trésor": ["IMPOT"], 
             "Autre": ["AUTRE_CAT"] 
+        };
+
+        // Association des sous-rubriques (précision de la graine) pour chaque destination principale
+        const sousRubriquesData = {
+            "Savoir": [
+                { id: "", label: "🎓 Tout Savoir" },
+                { id: "COURS", label: "📚 Cours & Tutorat" },
+                { id: "ATELIER", label: "🛠️ Ateliers pratiques" }
+            ],
+            "Citoyenne": [
+                { id: "", label: "🏛️ Tout Vie Citoyenne" },
+                { id: "INITIATIVE", label: "🌱 Initiative locale" }
+            ],
+            "Harmonie": [
+                { id: "", label: "🌸 Tout Aide & Harmonie" },
+                { id: "URGENCE", label: "🏥 Urgences (Santé & Secours)" },
+                { id: "ECOUTE", label: "💌 Écoute et réconfort" }
+            ],
+            "Régulation": [
+                { id: "", label: "⚖️ Tout Régulation" },
+                { id: "MEDIATION", label: "🤝 Médiation" }
+            ],
+            "Trésor": [
+                { id: "", label: "💰 Tout Trésor Public" },
+                { id: "ADMIN", label: "📋 Aide administrative" }
+            ],
+            "Autre": [
+                { id: "", label: "✨ Tout Autre domaine" }
+            ]
         };
 
         const paramToBouton = {
@@ -310,24 +335,14 @@
                             document.querySelectorAll('.btn-filtre-rapide').forEach(b => b.classList.remove('actif'));
                             btnTarget.classList.add('actif');
                             
-                            const tiroirSousRub = document.getElementById('sous-rubriques-urgence');
-                            if (nomBouton === "Harmonie") {
-                                tiroirSousRub.style.display = 'block';
-
-                                if (catParam === "URGENCE" || catParam === "ECOUTE") {
-                                    const btnSous = document.querySelector(`.btn-sous-filtre[data-sous="${catParam}"]`);
-                                    if (btnSous) {
-                                        filtreSousTypeActuel = catParam;
-                                        document.querySelectorAll('.btn-sous-filtre').forEach(b => b.classList.remove('actif'));
-                                        btnSous.classList.add('actif');
-                                    }
-                                } else {
-                                    // Sélection par défaut sur "Tout Aide & Harmonie"
-                                    const btnSousDefaut = document.querySelector('.btn-sous-filtre[data-sous=""]');
-                                    if (btnSousDefaut) btnSousDefaut.classList.add('actif');
+                            afficherTiroirSousRubriques(nomBouton);
+                            if (catParam === "URGENCE" || catParam === "ECOUTE") {
+                                filtreSousTypeActuel = catParam;
+                                const btnSous = document.querySelector(`.btn-sous-filtre[data-sous="${catParam}"]`);
+                                if (btnSous) {
+                                    document.querySelectorAll('.btn-sous-filtre').forEach(b => b.classList.remove('actif'));
+                                    btnSous.classList.add('actif');
                                 }
-                            } else {
-                                tiroirSousRub.style.display = 'none';
                             }
                         }
                     }
@@ -337,6 +352,29 @@
             } catch (error) {
                 console.error("Erreur de chargement :", error);
                 document.getElementById('mur-messages').innerHTML = `<div style="grid-column: span 5; padding: 20px; font-weight: bold; background: white; border-radius: 10px;">Impossible de charger les annonces du jardin... 🌱</div>`;
+            }
+        }
+
+        function afficherTiroirSousRubriques(cat) {
+            const conteneurSous = document.getElementById('sous-rubriques-container');
+            const listeBoutons = document.getElementById('liste-boutons-sous-rubriques');
+            
+            if (sousRubriquesData[cat] && sousRubriquesData[cat].length > 1) {
+                conteneurSous.style.display = 'block';
+                listeBoutons.innerHTML = "";
+                
+                sousRubriquesData[cat].forEach(sub => {
+                    const btn = document.createElement('button');
+                    btn.className = `btn-sous-filtre ${sub.id === filtreSousTypeActuel ? 'actif' : ''}`;
+                    if (sub.id === "" && !filtreSousTypeActuel) btn.classList.add('actif');
+                    btn.setAttribute('data-sous', sub.id);
+                    btn.textContent = sub.label;
+                    btn.onclick = () => rechercheSousCategorie(sub.id, btn);
+                    listeBoutons.appendChild(btn);
+                });
+            } else {
+                conteneurSous.style.display = 'none';
+                listeBoutons.innerHTML = "";
             }
         }
 
@@ -358,7 +396,7 @@
                 }
 
                 let matchSousT = true;
-                if (filtreTypeActuel === "Harmonie" && filtreSousTypeActuel !== "") {
+                if (filtreTypeActuel !== "" && filtreSousTypeActuel !== "") {
                     matchSousT = (ann.type === filtreSousTypeActuel);
                 }
 
@@ -514,7 +552,7 @@
                 ref_id: `Ref:${idRef}`,
                 type: `REPONSE_${typeAnn}`,
                 nom: nomRep,
-                message: msgRep
+                message: msgRen
             });
 
             const params = new URLSearchParams();
@@ -561,20 +599,7 @@
 
             if (filtreTypeActuel && el) el.classList.add('actif');
 
-            const tiroirSousRub = document.getElementById('sous-rubriques-urgence');
-            if (filtreTypeActuel === "Harmonie") {
-                tiroirSousRub.style.display = 'block';
-                // Active le bouton "Tout Aide & Harmonie" par défaut
-                const btnTous = document.querySelector('.btn-sous-filtre[data-sous=""]');
-                if (btnTous) {
-                    document.querySelectorAll('.btn-sous-filtre').forEach(b => b.classList.remove('actif'));
-                    btnTous.classList.add('actif');
-                }
-            } else {
-                tiroirSousRub.style.display = 'none';
-                document.querySelectorAll('.btn-sous-filtre').forEach(b => b.classList.remove('actif'));
-            }
-
+            afficherTiroirSousRubriques(filtreTypeActuel);
             executerFiltrage();
         }
 
@@ -597,7 +622,7 @@
             filtreTypeActuel = ""; 
             filtreSousTypeActuel = "";
             document.querySelectorAll('.btn-filtre-rapide, .btn-sous-filtre').forEach(b => b.classList.remove('actif'));
-            document.getElementById('sous-rubriques-urgence').style.display = 'none';
+            document.getElementById('sous-rubriques-container').style.display = 'none';
             executerFiltrage();
         }
 
