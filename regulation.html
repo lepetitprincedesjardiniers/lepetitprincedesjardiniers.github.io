@@ -262,7 +262,23 @@
             new google.translate.TranslateElement({pageLanguage: 'fr'}, 'google_translate_element'); 
         }
 
-        // --- GESTION NOTIFICATION AUTOMATIQUE (Réglée à 3 secondes) ---
+        // --- FONCTION DE FORMATAGE PROPRE DES DATES ---
+        function formaterDate(dateStr) {
+            if (!dateStr) return 'Récemment';
+            const d = new Date(dateStr);
+            if (!isNaN(d.getTime())) {
+                return d.toLocaleDateString('fr-FR', {
+                    day: '2-digit',
+                    month: '2-digit',
+                    year: 'numeric',
+                    hour: '2-digit',
+                    minute: '2-digit'
+                });
+            }
+            return String(dateStr).replace(/[:.]?00Z$/, '').replace('T', ' à ');
+        }
+
+        // --- GESTION NOTIFICATION AUTOMATIQUE ---
         function montrerNotification(texte) {
             const notif = document.getElementById('notification-flottante');
             document.getElementById('texte-notification').innerText = texte;
@@ -354,7 +370,6 @@
                     montrerNotification("Ton dossier a été déposé avec succès. L'administration a bien reçu ta requête. 🕊️");
                     form.reset();
                     await chargerConflits();
-                    // --- CORRECTION : Défilement fluide vers les annonces après soumission du formulaire ---
                     document.getElementById('titre-dossiers').scrollIntoView({ behavior: 'smooth' });
                 }, 1000);
 
@@ -401,7 +416,7 @@
                         <div class="details-bas">
                             📍 ${c.localisation || 'N/C'}<br>
                             ⏳ Validité : ${c.duree_validite || '30'}j<br>
-                            📅 ${c.Horodateur || c.date || 'Récemment'}
+                            📅 ${formaterDate(c.Horodateur || c.date)}
                         </div>
                     `;
                     flux.appendChild(d);
@@ -414,11 +429,14 @@
 
         function ouvrirGrandMessage(ann) {
             playPop();
-            annonceActiveId = ann.Horodateur || ann.nom;
+            
+            // --- NETTOYAGE DE L'ID DE RÉFÉRENCE (SUPPRESSION DU 00Z) ---
+            let rawRef = ann.Horodateur || ann.nom;
+            annonceActiveId = String(rawRef).replace(/[:.]?00Z$/, '').replace(/Z$/, '');
 
             const reponses = globalData.filter(d => {
                 const typeVal = String(d.type || "").trim().toUpperCase();
-                return typeVal === "REPONSE_REGULATION" && d.localisation === ("Ref:" + annonceActiveId);
+                return typeVal === "REPONSE_REGULATION" && String(d.localisation || "").includes(annonceActiveId);
             });
             reponses.reverse();
 
@@ -431,7 +449,7 @@
                     htmlReponses += `
                         <div style="background: #E8F5E9; border-left: 4px solid #2e7d32; padding: 8px 10px; margin-bottom: 8px; border-radius: 6px; font-size: 0.9em; text-align: left; color: #004d40; white-space: pre-wrap;">
                             <strong>🕊️ ${r.nom || "Un sage"} :</strong> ${r.message}
-                            <div style="font-size: 0.7em; color: #555; margin-top: 3px;">📅 ${r.Horodateur || 'Récemment'}</div>
+                            <div style="font-size: 0.7em; color: #555; margin-top: 3px;">📅 ${formaterDate(r.Horodateur)}</div>
                         </div>
                     `;
                 });
@@ -448,7 +466,7 @@
                 <div style="text-align:left; background:#E0F2F1; padding:10px; border-radius:8px; font-size:0.9em; color:#004d40; margin-bottom:12px;">
                     <strong>📍 Localisation :</strong> ${ann.localisation || "N/C"}<br>
                     <strong>⏳ Durée de validité :</strong> ${ann.duree_validite || "30"} jours<br>
-                    <strong>📅 Date :</strong> ${ann.Horodateur || ann.date || "N/C"}
+                    <strong>📅 Date :</strong> ${formaterDate(ann.Horodateur || ann.date)}
                 </div>
 
                 <div id="section-reponses">
@@ -480,7 +498,7 @@
             const formData = new URLSearchParams();
             formData.append('type', 'REPONSE_REGULATION');
             formData.append('nom', nomRep);
-            formData.append('localisation', 'Ref:' + refId);
+            formData.append('localisation', 'Ref:' + refId); // refId est désormais propre et sans 00Z
             formData.append('message', msgRep);
             formData.append('duree_validite', '30');
 
@@ -500,11 +518,9 @@
                     </div>
                 `;
 
-                // Attente de 3 secondes, puis fermeture, mise à jour et défilement fluide
                 setTimeout(async () => {
                     fermerGrandMessage();
                     await chargerConflits();
-                    // --- CORRECTION : Petit délai supplémentaire pour s'assurer que la modale est fermée et le layout prêt ---
                     setTimeout(() => {
                         document.getElementById('titre-dossiers').scrollIntoView({ behavior: 'smooth' });
                     }, 100);
