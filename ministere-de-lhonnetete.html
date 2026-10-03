@@ -59,12 +59,7 @@
                     </a>
                 </nav>
 
-                <!-- Bouton d'appel à l'action -->
-                <div class="flex items-center">
-                    <a href="#videos" class="bg-joy-orange text-white px-3.5 py-2 sm:px-4 sm:py-2.5 rounded-xl text-xs sm:text-sm font-bold hover:bg-orange-600 transition shadow-md shadow-orange-500/20 flex items-center gap-1.5">
-                        <i class="fa-solid fa-play"></i> Vidéos
-                    </a>
-                </div>
+                <!-- Bouton d'appel à l'action supprimé ici -->
             </div>
         </div>
     </header>
@@ -449,7 +444,7 @@
             videosToDisplay.forEach((vid, idx) => {
                 const videoId = getYouTubeId(vid.lien);
                 const thumbUrl = videoId ? `https://img.youtube.com/vi/${videoId}/hqdefault.jpg` : '';
-                const uniqueId = `video-container-${idx}-${Math.random().toString(36.substring(2, 7))}`;
+                const uniqueId = `video-container-${idx}-${Math.random().toString(36).substring(2, 7)}`;
 
                 html += `
                     <div class="bg-white rounded-3xl border border-orange-100 overflow-hidden shadow-sm flex flex-col justify-between p-6 space-y-4">
@@ -514,10 +509,11 @@
             renderVideos();
         }
 
-        // Chargement des données Google Sheets
+        // Chargement robuste des données Google Sheets
         Papa.parse(csvUrl, {
             download: true,
             header: true,
+            skipEmptyLines: true,
             complete: function(results) {
                 const data = results.data;
                 let alauneHTML = '';
@@ -525,6 +521,7 @@
                 allVideos = [];
 
                 data.forEach(row => {
+                    // Normalisation robuste des colonnes pour éviter les problèmes de casse ou d'accents
                     const cleanRow = {};
                     Object.keys(row).forEach(key => {
                         const cleanKey = key.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").trim();
@@ -608,6 +605,8 @@
             },
             error: function(err) {
                 console.error("Erreur PapaParse :", err);
+                const artGrid = document.getElementById('articles-grid');
+                if (artGrid) artGrid.innerHTML = `<div class="col-span-full text-center py-12 text-red-500 font-medium">Erreur de chargement des données.</div>`;
             }
         });
     </script>
