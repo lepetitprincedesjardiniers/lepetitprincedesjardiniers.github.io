@@ -20,26 +20,30 @@
             scroll-behavior: smooth;
         }
 
-        .header-tools { display: flex; justify-content: space-between; align-items: center; padding: 10px 20px; background: rgba(255,255,255,0.05); }
-        
-        /* --- TRADUCTEUR DISCRET MAIS VISIBLE ET FONDU --- */
-        #google_translate_element { 
-            transform: scale(0.9); 
-            transform-origin: top left; 
-            opacity: 0.85; 
-            background: rgba(42, 16, 69, 0.8);
-            padding: 3px 8px;
-            border-radius: 8px;
-            border: 1px solid #9370DB;
+        /* --- HEADER & TRADUCTEUR IDENTIQUE À LA PAGE IMPÔTS --- */
+        .header-tools { 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center; 
+            padding: 10px 20px; 
+            background: rgba(255, 255, 255, 0.05); 
         }
-        #google_translate_element:hover { opacity: 1; }
+        #google_translate_element { 
+            opacity: 0.85; 
+            transition: opacity 0.3s ease;
+        }
+        #google_translate_element:hover { 
+            opacity: 1; 
+        }
         .goog-te-combo {
             background-color: #2a1045 !important;
             color: #D8BFD8 !important;
-            border: none !important;
-            outline: none !important;
+            border: 2px solid #9370DB !important;
+            border-radius: 8px !important;
+            padding: 6px 12px !important;
             font-family: inherit !important;
-            font-size: 0.9em !important;
+            font-size: 1em !important;
+            outline: none;
             cursor: pointer;
         }
         .goog-te-banner-frame { display: none !important; }
@@ -345,18 +349,16 @@
             } catch (error) {
                 console.error("Erreur de chargement :", error);
                 const chargementEl = document.getElementById('chargement');
-                if (chargementEl) chargementEl.innerText = "Impossible de charger les cœurs... 🕊️️";
+                if (chargementEl) chargementEl.innerText = "Impossible de charger les cœurs... 🕊️";
             }
         }
 
         function ouvrirGrandMessage(ann) {
             playGong();
             
-            // On utilise l'horodateur ou le nom comme identifiant unique invisible dans le tableau propre
             let rawRef = ann.Horodateur || ann.nom;
             annonceActiveId = String(rawRef).replace(/[:.]?00Z$/, '').replace(/Z$/, '');
 
-            // On cherche les réponses dont la localisation contient l'identifiant de l'annonce
             const reponses = globalData.filter(d => {
                 const typeVal = String(d.type || "").trim().toUpperCase();
                 const locVal = String(d.localisation || "");
@@ -370,13 +372,12 @@
                 htmlReponses += `<div style="max-height: 150px; overflow-y: auto; border: 2px solid #9370DB; border-radius: 10px; padding: 10px; background: #ffffff;">`;
                 
                 reponses.forEach(r => {
-                    htmlReponslesHTML = `
+                    htmlReponses += `
                         <div style="background: #F3E5F5; border-left: 4px solid #7B68EE; padding: 8px 10px; margin-bottom: 8px; border-radius: 6px; font-size: 0.9em; text-align: left; color: #4a148c; white-space: pre-wrap;">
                             <strong>🕊️ ${r.nom || "Une âme douce"} :</strong> ${r.message}
                             <div style="font-size: 0.7em; color: #666; margin-top: 3px;">📅 ${formaterDate(r.Horodateur)}</div>
                         </div>
                     `;
-                    htmlReponses += htmlReponslesHTML;
                 });
                 htmlReponses += `</div>`;
             } else {
@@ -423,9 +424,7 @@
             const formData = new URLSearchParams();
             formData.append('type', 'REPONSE_AIDE');
             formData.append('nom', nomRep);
-            // On met proprement "Espace Cœur" dans la case localisation, et l'identifiant technique caché derrière un point ou discret s'il le faut, 
-            // ou on conserve la liaison propre. Pour que la case localisation du tableur affiche bien "Espace Cœur" sans "Ref:", on fait :
-            formData.append('localisation', 'Espace Cœur (' + refId + ')'); 
+            formData.append('localisation', 'Espace Cœur (' + refId + ')');
             formData.append('message', msgRep);
             formData.append('duree_validite', '30');
 
@@ -436,7 +435,7 @@
                     body: formData
                 });
 
-                alert("Votre réponse a été transmise ! 🕊️️");
+                alert("Votre réponse a été transmise ! 🕊️");
 
                 const sectionRep = document.getElementById('section-reponses');
                 sectionRep.innerHTML += `
