@@ -19,26 +19,22 @@
             --text-color: #ffffff;
             --card-bg: rgba(15, 23, 42, 0.45);
             --menu-bg: rgba(0, 128, 128, 0.25);
-            --menu-text: #ffffff;
-            --title-color: #fde047;
-            --footer-color: rgba(255,255,255,0.4);
+            --star-opacity: 1;
         }
 
         body.day-mode {
-            --bg-gradient: radial-gradient(circle at center, #e0f2fe 0%, #7dd3fc 100%);
-            --text-color: #0f172a;
-            --card-bg: rgba(255, 255, 255, 0.75);
-            --menu-bg: rgba(255, 255, 255, 0.6);
-            --menu-text: #0f172a;
-            --title-color: #1e3a8a;
-            --footer-color: rgba(15, 23, 42, 0.6);
+            --bg-gradient: radial-gradient(circle at center, #e0f7fa 0%, #80deea 100%);
+            --text-color: #1e293b;
+            --card-bg: rgba(255, 255, 255, 0.65);
+            --menu-bg: rgba(255, 255, 255, 0.4);
+            --star-opacity: 0;
         }
 
         body { 
             font-family: 'Comic Sans MS', cursive, sans-serif; text-align: center; margin: 0; padding: 0; 
             background: var(--bg-gradient);
             color: var(--text-color); overflow-x: hidden; min-height: 100vh; position: relative;
-            transition: background 0.6s ease, color 0.6s ease;
+            transition: background 0.8s ease, color 0.8s ease;
         }
 
         #google_translate_element { 
@@ -48,21 +44,23 @@
         #google_translate_element:hover { opacity: 1; }
 
         .header-container { position: relative; padding-top: 25px; z-index: 100; }
-        .titre-fraternite { display: block; font-size: 2.2em; letter-spacing: 4px; color: var(--title-color); text-shadow: 0 0 20px rgba(253,224,71,0.4); font-weight: bold; margin-bottom: 12px; transition: color 0.6s; }
+        .titre-fraternite { display: block; font-size: 2.2em; letter-spacing: 4px; color: #fde047; text-shadow: 0 0 20px rgba(253,224,71,0.4); font-weight: bold; margin-bottom: 12px; }
+
+        body.day-mode .titre-fraternite { color: #d97706; text-shadow: 0 0 15px rgba(217,119,6,0.3); }
 
         /* Menu pro et épuré */
-        .menu-table { margin: 15px auto; border-radius: 12px; background: var(--menu-bg); backdrop-filter: blur(8px); border: 1px solid rgba(255,255,255,0.2); border-collapse: separate; border-spacing: 0; overflow: hidden; position: relative; z-index: 10; box-shadow: 0 8px 32px rgba(0,0,0,0.3); transition: background 0.6s; }
+        .menu-table { margin: 15px auto; border-radius: 12px; background: var(--menu-bg); backdrop-filter: blur(8px); border: 1px solid rgba(255,255,255,0.2); border-collapse: separate; border-spacing: 0; overflow: hidden; position: relative; z-index: 10; box-shadow: 0 8px 32px rgba(0,0,0,0.15); }
         .menu-table td { border-right: 1px solid rgba(255, 255, 255, 0.1); transition: 0.3s; }
         .menu-table td:last-child { border-right: none; }
         .menu-table td:hover { background-color: rgba(0, 179, 179, 0.4); }
-        .menu-table a { display: block; padding: 10px 18px; text-decoration: none; color: var(--menu-text); font-weight: bold; font-size: 0.95em; transition: color 0.6s; }
+        .menu-table a { display: block; padding: 10px 18px; text-decoration: none; color: var(--text-color); font-weight: bold; font-size: 0.95em; }
 
-        /* Soleil central supérieur amélioré */
-        .soleil-cadre { width: 160px; height: 160px; background: radial-gradient(circle, #fffbeb 30%, #f59e0b 80%, #d97706 100%); border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 0 45px rgba(245,158,11,0.7), inset 0 0 15px rgba(255,255,255,0.8); margin: 25px auto; position: relative; z-index: 20; transition: 0.6s; text-decoration: none; border: 3px solid rgba(255,255,255,0.8); }
-        .soleil-cadre h1 { font-size: 0.85em; color: #222; line-height: 1.2; margin: 0; padding: 10px; font-weight: bold; text-shadow: 0 1px 2px rgba(255,255,255,0.5); }
-        .soleil-cadre:hover { box-shadow: 0 0 70px #f59e0b, 0 0 30px #fff; transform: scale(1.08) rotate(360deg); }
+        /* Soleil central supérieur */
+        .soleil-cadre { width: 150px; height: 150px; background: radial-gradient(circle, #ffeb3b 0%, #ff9800 100%); border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 0 30px rgba(255,152,0,0.6); margin: 25px auto; position: relative; z-index: 20; transition: 0.6s; text-decoration: none; border: 2px solid rgba(255,255,255,0.5); }
+        .soleil-cadre h1 { font-size: 0.85em; color: #222; line-height: 1.2; margin: 0; padding: 10px; font-weight: bold; }
+        .soleil-cadre:hover { box-shadow: 0 0 50px #fff; transform: scale(1.08) rotate(360deg); }
 
-        /* --- PAYSAGE COSMOS : BLOCS CENTRÉS ET HARMONIEUX --- */
+        /* --- PAYSAGE COSMOS --- */
         .paysage-cosmos {
             display: flex;
             align-items: center;
@@ -76,32 +74,15 @@
             padding: 20px;
         }
 
-        /* Mouvement organique vraiment aléatoire et multi-directionnel */
-        @keyframes floatAleatoire1 {
-            0%, 100% { transform: translateY(0px) translateX(0px) rotate(0deg); }
-            33% { transform: translateY(-7px) translateX(4px) rotate(0.6deg); }
-            66% { transform: translateY(5px) translateX(-4px) rotate(-0.6deg); }
-        }
-        @keyframes floatAleatoire2 {
-            0%, 100% { transform: translateY(0px) translateX(0px) rotate(0deg); }
-            30% { transform: translateY(6px) translateX(-5px) rotate(-0.8deg); }
-            70% { transform: translateY(-6px) translateX(5px) rotate(0.8deg); }
-        }
-        @keyframes floatAleatoire3 {
-            0%, 100% { transform: translateY(0px) translateX(0px) rotate(0deg); }
-            40% { transform: translateY(-8px) translateX(-3px) rotate(0.5deg); }
-            80% { transform: translateY(6px) translateX(4px) rotate(-0.5deg); }
-        }
-        @keyframes floatAleatoire4 {
-            0%, 100% { transform: translateY(0px) translateX(0px) rotate(0deg); }
-            35% { transform: translateY(5px) translateX(6px) rotate(-0.7deg); }
-            75% { transform: translateY(-7px) translateX(-5px) rotate(0.7deg); }
+        @keyframes floatOrganique {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-6px); }
         }
 
-        .flotte-a { animation: floatAleatoire1 7.5s ease-in-out infinite; }
-        .flotte-b { animation: floatAleatoire2 8.3s ease-in-out infinite; animation-delay: -1.2s; }
-        .flotte-c { animation: floatAleatoire3 7.8s ease-in-out infinite; animation-delay: -2.5s; }
-        .flotte-d { animation: floatAleatoire4 8.6s ease-in-out infinite; animation-delay: -3.8s; }
+        .flotte-a { animation: floatOrganique 7.2s ease-in-out infinite; }
+        .flotte-b { animation: floatOrganique 8.1s ease-in-out infinite; animation-delay: -1.5s; }
+        .flotte-c { animation: floatOrganique 7.5s ease-in-out infinite; animation-delay: -3s; }
+        .flotte-d { animation: floatOrganique 8.5s ease-in-out infinite; animation-delay: -2s; }
 
         .colonne-cosmos {
             display: flex;
@@ -120,112 +101,76 @@
             flex: 0 0 auto;
         }
 
-        /* Terre améliorée avec atmosphère lumineuse bleutée */
         .terre-don { 
-            width: 330px; height: 330px; border-radius: 50%; 
+            width: 320px; height: 320px; border-radius: 50%; 
             background-image: url('https://upload.wikimedia.org/wikipedia/commons/thumb/c/c3/Solarsystemscope_texture_2k_earth_daymap.jpg/1200px-Solarsystemscope_texture_2k_earth_daymap.jpg'); 
             background-size: cover; display: flex; align-items: center; justify-content: center; 
-            text-decoration: none; color: white; 
-            box-shadow: inset -35px -35px 70px rgba(0,0,0,0.9), 0 0 50px rgba(56, 189, 248, 0.7); 
-            animation: rotationTerre 45s linear infinite; position: relative; z-index: 5; transition: transform 0.8s, box-shadow 0.6s;
-            border: 4px solid rgba(125, 211, 252, 0.6);
+            text-decoration: none; color: white; box-shadow: inset -35px -35px 70px rgba(0,0,0,0.9), 0 0 40px rgba(0,128,128,0.3); 
+            animation: rotationTerre 45s linear infinite; position: relative; z-index: 5; transition: transform 0.8s;
+            border: 3px solid rgba(255,255,255,0.2);
         }
-        .terre-don:hover { transform: scale(1.05); box-shadow: inset -35px -35px 70px rgba(0,0,0,0.9), 0 0 75px rgba(56, 189, 248, 0.9); }
-        .texte-semis { font-family: 'Georgia', serif; font-style: italic; font-weight: bold; text-shadow: 2px 2px 12px black, 0 0 10px rgba(0,0,0,0.8); font-size: 1.15em; padding: 25px; text-align: center; color: #fff; }
+        .terre-don:hover { transform: scale(1.05); box-shadow: inset -35px -35px 70px rgba(0,0,0,0.9), 0 0 60px rgba(255,255,255,0.5); }
+        .texte-semis { font-family: 'Georgia', serif; font-style: italic; font-weight: bold; text-shadow: 2px 2px 12px black; font-size: 1.15em; padding: 25px; text-align: center; color: #fff; }
         @keyframes rotationTerre { from { background-position: 0 0; } to { background-position: 1000px 0; } }
 
         /* --- BLOCS UNIFORMES --- */
         .rubrique-carte { 
             background: var(--card-bg); backdrop-filter: blur(12px); 
             border-radius: 30px; padding: 22px; width: 100%; height: 210px; box-sizing: border-box; 
-            transition: transform 0.4s, background 0.6s, border-color 0.4s, box-shadow 0.4s; text-decoration: none; display: flex; flex-direction: column; justify-content: space-between; 
-            box-shadow: 0 8px 32px rgba(0,0,0,0.3); text-align: center;
+            transition: 0.4s; text-decoration: none; display: flex; flex-direction: column; justify-content: space-between; 
+            box-shadow: 0 8px 32px rgba(0,0,0,0.15); text-align: center;
         }
 
-        .style-tresor { border: 2px solid rgba(0, 206, 209, 0.6); color: var(--text-color); }
+        .style-tresor { border: 2px solid rgba(0, 206, 209, 0.6); }
         .style-tresor:hover { transform: translateY(-5px); border-color: #00ced1; background: rgba(0, 206, 209, 0.2); box-shadow: 0 12px 40px rgba(0,206,209,0.3); }
 
-        .style-urgence { border: 2px solid rgba(255, 105, 180, 0.6); color: var(--text-color); }
+        .style-urgence { border: 2px solid rgba(255, 105, 180, 0.6); }
         .style-urgence:hover { transform: translateY(-5px); border-color: #ff69b4; background: rgba(255, 105, 180, 0.2); box-shadow: 0 12px 40px rgba(255,105,180,0.3); }
 
-        .style-regulation { border: 2px solid rgba(147, 112, 219, 0.6); color: var(--text-color); }
+        .style-regulation { border: 2px solid rgba(147, 112, 219, 0.6); }
         .style-regulation:hover { transform: translateY(-5px); border-color: #9370DB; background: rgba(147, 112, 219, 0.2); box-shadow: 0 12px 40px rgba(147,112,219,0.3); }
 
-        .style-savoir { border: 2px solid rgba(255, 193, 7, 0.6); color: var(--text-color); }
+        .style-savoir { border: 2px solid rgba(255, 193, 7, 0.6); }
         .style-savoir:hover { transform: translateY(-5px); border-color: #ffc107; background: rgba(255, 193, 7, 0.2); box-shadow: 0 12px 40px rgba(255,193,7,0.3); }
 
-        .phrases-impots { font-size: 0.78em; color: var(--text-color); opacity: 0.9; font-weight: bold; margin: 3px 0; line-height: 1.3; transition: color 0.6s; }
-        .liste-exemples-discrets { font-size: 0.68em; color: var(--text-color); opacity: 0.75; font-style: italic; list-style: none; padding: 0; margin: 4px 0 0 0; border-top: 1px dashed rgba(255,255,255,0.3); padding-top: 4px; transition: color 0.6s; }
+        .phrases-impots { font-size: 0.78em; color: var(--text-color); opacity: 0.9; font-weight: bold; margin: 3px 0; line-height: 1.3; }
+        .liste-exemples-discrets { font-size: 0.68em; color: var(--text-color); opacity: 0.7; font-style: italic; list-style: none; padding: 0; margin: 4px 0 0 0; border-top: 1px dashed rgba(255,255,255,0.2); padding-top: 4px; }
 
-        /* --- SECTION ANIMATION NATURE & PERSONNAGE --- */
-        .section-nature-animee {
-            max-width: 700px;
-            margin: 30px auto 10px auto;
-            background: var(--card-bg);
-            backdrop-filter: blur(10px);
-            border: 2px solid rgba(74, 222, 128, 0.4);
-            border-radius: 25px;
-            padding: 15px;
-            box-shadow: 0 8px 30px rgba(0,0,0,0.2);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 20px;
-            flex-wrap: wrap;
-            transition: background 0.6s;
-        }
-        .conteneur-gif {
-            width: 90px;
-            height: 90px;
-            border-radius: 50%;
-            overflow: hidden;
-            border: 2px solid #4ade80;
-            box-shadow: 0 0 15px rgba(74,222,128,0.5);
-            flex-shrink: 0;
-        }
-        .conteneur-gif img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-        .texte-nature-anime {
-            font-size: 0.9em;
-            font-weight: bold;
-            color: var(--text-color);
-            text-align: left;
-            flex: 1;
-            min-width: 220px;
-            transition: color 0.6s;
-        }
-
-        .star { position: fixed; color: white; z-index: -1; animation: twinkle var(--duration) infinite ease-in-out, moveStar var(--move-duration) linear infinite; transition: opacity 0.5s; }
-        body.day-mode .star { opacity: 0 !important; } /* Les étoiles s'effacent doucement en mode jour */
-
-        @keyframes twinkle { 0%, 100% { opacity: 0.2; transform: scale(0.7); } 50% { opacity: 1; transform: scale(1.2); } }
+        .star { position: fixed; color: white; z-index: -1; opacity: var(--star-opacity); animation: twinkle var(--duration) infinite ease-in-out, moveStar var(--move-duration) linear infinite; transition: opacity 0.5s; }
+        @keyframes twinkle { 0%, 100% { opacity: calc(0.2 * var(--star-opacity)); transform: scale(0.7); } 50% { opacity: var(--star-opacity); transform: scale(1.2); } }
         @keyframes moveStar { from { transform: translateX(-10vw); } to { transform: translateX(110vw); } }
 
-        /* Boutons de contrôle (Son + Mode Jour/Nuit) */
-        .commandes-fixes {
-            position: fixed; top: 20px; right: 20px; z-index: 1000;
-            display: flex; gap: 10px; align-items: center;
-        }
-        .btn-controle {
-            background: rgba(0,0,0,0.4); backdrop-filter: blur(8px); border: 2px solid rgba(255,255,255,0.3); border-radius: 50%; width: 50px; height: 50px; color: white; cursor: pointer; font-size: 24px; display: flex; align-items: center; justify-content: center; filter: drop-shadow(0 0 8px rgba(255,255,255,0.4)); transition: 0.3s;
-        }
-        .btn-controle:hover { transform: scale(1.15); background: rgba(0,0,0,0.6); }
+        #btn-son { position: fixed; top: 20px; right: 20px; z-index: 1000; background: none; border: none; color: var(--text-color); cursor: pointer; font-size: 32px; filter: drop-shadow(0 0 8px rgba(255,255,255,0.5)); transition: 0.3s; }
+        #btn-son:hover { transform: scale(1.2); }
 
-        #coffre-magique { position: fixed; font-size: 50px; z-index: 8; cursor: pointer; transition: 4s ease-in-out; filter: drop-shadow(0 0 10px gold); }
-        .oiseau-volant { position: fixed; font-size: 35px; z-index: 7; transition: transform 6s linear; pointer-events: none; }
+        /* Icône Jour/Nuit vagabonde */
+        #icone-jour-nuit { 
+            position: fixed; font-size: 38px; z-index: 12; cursor: pointer; 
+            transition: 4s ease-in-out, transform 0.3s; 
+            filter: drop-shadow(0 0 12px rgba(255, 215, 0, 0.8)); 
+        }
+        #icone-jour-nuit:hover { transform: scale(1.3) rotate(20deg); }
+
+        /* Icône Météo vagabonde (Pluie/Neige) */
+        #icone-meteo { 
+            position: fixed; font-size: 38px; z-index: 12; cursor: pointer; 
+            transition: 4s ease-in-out, transform 0.3s; 
+            filter: drop-shadow(0 0 12px rgba(135, 206, 250, 0.8)); 
+        }
+        #icone-meteo:hover { transform: scale(1.3) rotate(15deg); }
+
+        #coffre-magique { position: fixed; font-size: 40px; z-index: 8; cursor: pointer; transition: 4s ease-in-out; filter: drop-shadow(0 0 10px gold); opacity: 0.85; }
+        .oiseau-volant { position: fixed; font-size: 30px; z-index: 7; transition: transform 7s linear; pointer-events: none; opacity: 0.8; }
 
         .journal-volant {
-            position: fixed; font-size: 40px; z-index: 15; cursor: pointer;
-            filter: drop-shadow(0 0 12px #f59e0b); transition: transform 8s linear; text-decoration: none;
+            position: fixed; font-size: 35px; z-index: 15; cursor: pointer;
+            filter: drop-shadow(0 0 10px #f59e0b); transition: transform 8s linear; text-decoration: none;
         }
         .journal-volant:hover { transform: scale(1.3) rotate(20deg) !important; }
 
-        footer { padding: 30px 0; }
-        .lien-copyright { color: var(--footer-color); text-decoration: none; font-weight: bold; font-size: 0.9em; transition: 0.3s; }
-        .lien-copyright:hover { color: var(--title-color); text-shadow: 0 0 10px #fff; }
+        footer { padding: 35px 0; }
+        .lien-copyright { color: var(--text-color); opacity: 0.5; text-decoration: none; font-weight: bold; font-size: 0.9em; transition: 0.3s; }
+        .lien-copyright:hover { opacity: 1; text-shadow: 0 0 10px #fff; }
 
         @media (max-width: 950px) {
             .paysage-cosmos { flex-direction: column; gap: 20px; }
@@ -233,23 +178,20 @@
             .titre-fraternite { font-size: 1.5em; }
             .menu-table, .menu-table tbody, .menu-table tr { display: flex; flex-wrap: wrap; justify-content: center; width: 95%; }
             .menu-table td { flex: 1 1 28%; text-align: center; padding: 6px 2px; font-size: 0.8em; border-right: none; }
-            .terre-don { width: 260px; height: 260px; }
+            .terre-don { width: 250px; height: 250px; }
             .texte-semis { font-size: 1em; }
             .rubrique-carte { height: auto; min-height: 190px; }
-            .section-nature-animee { width: 90%; margin: 20px auto; text-align: center; }
-            .texte-nature-anime { text-align: center; }
         }
     </style>
 </head>
-<body>
+<body class="night-mode">
 
     <div id="google_translate_element"></div>
+    <button id="btn-son" onclick="toggleSon()" title="Activer / couper le son">🕊️</button>
 
-    <!-- Commandes fixes : Son et Mode Nuit/Jour -->
-    <div class="commandes-fixes">
-        <button class="btn-controle" id="btn-theme" onclick="toggleTheme()" title="Basculer Mode Jour / Nuit">🌙</button>
-        <button class="btn-controle" id="btn-son" onclick="toggleSon()" title="Activer / Couper les sons">🕊️</button>
-    </div>
+    <!-- Icônes vagabondes magiques -->
+    <div id="icone-jour-nuit" onclick="clicJourNuit()" title="Attrape-moi pour changer le temps !">☀️</div>
+    <div id="icone-meteo" onclick="clicMeteo()" title="Attrape-moi pour faire de la pluie ou de la neige !">☁️</div>
 
     <div class="header-container">
         <div class="titre-fraternite">La Fraternité du Palais Nature</div>
@@ -267,7 +209,7 @@
                     <td><a href="vie.html">Vie Citoyenne</a></td>
                 </tr>
             </table>
-            <a href="ministere-de-lhonnetete.html" style="position: absolute; right: 20px; top: 50%; transform: translateY(-50%); color: var(--title-color); background: transparent; text-decoration: none; font-weight: bold; font-size: 0.95em; white-space: nowrap; text-shadow: 0 0 10px rgba(253,224,71,0.5);">
+            <a href="ministere-de-lhonnetete.html" style="position: absolute; right: 20px; top: 50%; transform: translateY(-50%); color: #fde047; background: transparent; text-decoration: none; font-weight: bold; font-size: 0.95em; white-space: nowrap; text-shadow: 0 0 10px rgba(253,224,71,0.5);">
                 📰 Le Journal ►
             </a>
         </div>
@@ -276,15 +218,14 @@
     <!-- Soleil central supérieur -->
     <a href="jardin.html?cat=IMPOT" class="soleil-cadre"><h1>Le Jardin Public des Fraternels</h1></a>
 
-    <!-- PAYSAGE COSMOS : Rubriques centrées et équilibrées -->
+    <!-- PAYSAGE COSMOS -->
     <div class="paysage-cosmos">
 
         <!-- COLONNE GAUCHE -->
         <div class="colonne-cosmos">
-            <!-- Trésor Public -->
             <a href="jardin.html?cat=IMPOT" class="rubrique-carte style-tresor flotte-a">
                 <div style="padding-top: 6px;">
-                    <h3 style="margin:0; font-size: 1em; color: #00ced1;">📜 Trésor Public</h3>
+                    <h3 style="margin:0; font-size: 1em;">📜 Trésor Public</h3>
                     <p style="font-size: 0.75em; font-weight: bold; margin: 3px 0;">Un Don pluriel</p>
                     <div class="phrases-impots">Rassemble les bras et les têtes volontaires pour faire vivre nos biens communs essentiels.</div>
                 </div>
@@ -293,10 +234,9 @@
                 </div>
             </a>
 
-            <!-- Aide & Harmonie -->
             <a href="jardin.html?cat=AIDE" class="rubrique-carte style-urgence flotte-b">
                 <div style="padding-top: 6px;">
-                    <h3 style="margin:0; font-size: 1em; color: #ff69b4;">💖 Aide & Harmonie</h3>
+                    <h3 style="margin:0; font-size: 1em;">💖 Aide & Harmonie</h3>
                     <div class="phrases-impots" style="margin-top: 6px;">Entraide et secours du quotidien. Partageons ensemble les câlins du cœur.</div>
                 </div>
                 <div class="liste-exemples-discrets">
@@ -314,10 +254,9 @@
 
         <!-- COLONNE DROITE -->
         <div class="colonne-cosmos">
-            <!-- Vie citoyenne -->
             <a href="jardin.html?cat=REGULATION" class="rubrique-carte style-regulation flotte-c">
                 <div style="padding-top: 6px;">
-                    <h3 style="margin:0; font-size: 1em; color: #b19cd9;">⚖️ Vie citoyenne</h3>
+                    <h3 style="margin:0; font-size: 1em;">⚖️ Vie citoyenne</h3>
                     <div class="phrases-impots" style="margin-top: 6px;">Expose ta sincérité : la citoyenneté participative y répond avec délicatesse.</div>
                 </div>
                 <div class="liste-exemples-discrets">
@@ -325,12 +264,10 @@
                 </div>
             </a>
 
-            <!-- Savoirs -->
             <a href="jardin.html?cat=SAVOIR" class="rubrique-carte style-savoir flotte-d">
                 <div style="padding-top: 6px;">
-                    <h3 style="margin:0; font-size: 1em; color: #ffd700;">💡 Savoirs</h3>
-                    <p style="font-size: 0.75em; font-weight: bold; margin: 3px 0;">Bibliothèque vivante</p>
-                    <div class="phrases-impots" style="font-size: 0.72em;">Partageons nos connaissances et les trésors de l'intelligence.</div>
+                    <h3 style="margin:0; font-size: 1em;">💡 Savoirs</h3>
+                    <div class="phrases-impots" style="font-size: 0.78em; margin-top: 10px;">Partageons nos connaissances et les trésors de l'intelligence.</div>
                 </div>
                 <div class="liste-exemples-discrets">
                     Ex : transmettre, créer, ateliers et manuels.
@@ -340,46 +277,14 @@
 
     </div>
 
-    <!-- Section Animation Nature / Jardinier (Optimisée mobile, légère et élégante) -->
-    <div class="section-nature-animee">
-        <div class="conteneur-gif">
-            <!-- Animation GIF illustrant un personnage / arbres / fleurs qui poussent -->
-            <img src="https://media.giphy.com/media/3o7TKSjRrfIPjeiVyM/giphy.gif" alt="Jardin magique et nature" loading="lazy">
-        </div>
-        <div class="texte-nature-anime">
-            🌿 <em>« Semer chaque jour un brin d'attention pour faire grandir la forêt des fraternels. »</em>
-        </div>
-    </div>
-
-    <div id="coffre-magique" onclick="exploserCadeau()">🎁</div>
+    <div id="coffre-magique" onclick="exploserCadeau()" title="Coffre magique">🎁</div>
 
     <footer>
         <a href="transition-externe.html" class="lien-copyright">© 2000 le petit prince des jardiniers</a>
     </footer>
 
     <script>
-        // Gestion du mode Sombre / Jour
-        function toggleTheme() {
-            const body = document.body;
-            const btnTheme = document.getElementById('btn-theme');
-            body.classList.toggle('day-mode');
-            if(body.classList.contains('day-mode')) {
-                btnTheme.innerHTML = "☀️";
-                localStorage.setItem('theme', 'day');
-            } else {
-                btnTheme.innerHTML = "🌙";
-                localStorage.setItem('theme', 'night');
-            }
-        }
-
-        // Sauvegarde de la préférence de thème au chargement
-        window.addEventListener('DOMContentLoaded', () => {
-            if(localStorage.getItem('theme') === 'day') {
-                document.body.classList.add('day-mode');
-                document.getElementById('btn-theme').innerHTML = "☀️";
-            }
-        });
-
+        // Création des étoiles de fond
         function createStar() {
             let s = document.createElement('div'); s.className = 'star';
             s.innerHTML = ['✦','★','✶','✧'][Math.floor(Math.random()*4)];
@@ -390,12 +295,102 @@
         }
         for(let i=0; i<85; i++) createStar();
 
+        // Icône Jour / Nuit vagabonde
+        const iconeJN = document.getElementById('icone-jour-nuit');
+        let jnX = 150, jnY = 150;
+        function moveJourNuit() {
+            jnX = Math.random() * (window.innerWidth - 100);
+            jnY = Math.random() * (window.innerHeight - 100);
+            iconeJN.style.left = jnX + 'px';
+            iconeJN.style.top = jnY + 'px';
+        }
+        setInterval(moveJourNuit, 6000); moveJourNuit();
+
+        function clicJourNuit() {
+            const body = document.body;
+            if (body.classList.contains('night-mode')) {
+                body.classList.replace('night-mode', 'day-mode');
+                iconeJN.innerHTML = "🌙";
+            } else {
+                body.classList.replace('day-mode', 'night-mode');
+                iconeJN.innerHTML = "☀️";
+            }
+            exploserEffetJN(jnX, jnY);
+        }
+
+        function exploserEffetJN(x, y) {
+            const els = ['✨', '🌟', '💫', '☀️', '🌙'];
+            for(let i=0; i<15; i++) {
+                const p = document.createElement('div');
+                p.style.position = 'fixed'; p.style.left = x+'px'; p.style.top = y+'px';
+                p.innerHTML = els[Math.floor(Math.random()*els.length)];
+                document.body.appendChild(p);
+                const a = Math.random()*Math.PI*2, d = Math.random()*120+40;
+                p.animate([{transform:'scale(1)', opacity:1}, {transform:`translate(${Math.cos(a)*d}px, ${Math.sin(a)*d}px) scale(0)`, opacity:0}], {duration:800});
+                setTimeout(() => p.remove(), 800);
+            }
+        }
+
+        // Icône Météo vagabonde (Pluie / Neige)
+        const iconeMeteo = document.getElementById('icone-meteo');
+        let mX = 200, mY = 200;
+        let modePluie = true; // Alterne entre pluie et neige à chaque clic
+
+        function moveMeteo() {
+            mX = Math.random() * (window.innerWidth - 100);
+            mY = Math.random() * (window.innerHeight - 100);
+            iconeMeteo.style.left = mX + 'px';
+            iconeMeteo.style.top = mY + 'px';
+        }
+        setInterval(moveMeteo, 7000); moveMeteo();
+
+        function clicMeteo() {
+            if (modePluie) {
+                lancerAverse('💧');
+                iconeMeteo.innerHTML = "❄️";
+                modePluie = false;
+            } else {
+                lancerAverse('❄️');
+                iconeMeteo.innerHTML = "🌧️";
+                modePluie = true;
+            }
+        }
+
+        function lancerAverse(symbole) {
+            for (let i = 0; i < 35; i++) {
+                const drop = document.createElement('div');
+                drop.style.position = 'fixed';
+                drop.style.left = Math.random() * window.innerWidth + 'px';
+                drop.style.top = '-30px';
+                drop.style.fontSize = (Math.random() * 12 + 16) + 'px';
+                drop.style.zIndex = '999';
+                drop.style.pointerEvents = 'none';
+                drop.innerHTML = symbole;
+                document.body.appendChild(drop);
+
+                const duree = Math.random() * 2000 + 1500;
+                const decalageX = (Math.random() - 0.5) * 80;
+
+                drop.animate([
+                    { transform: 'translateY(0px) translateX(0px)', opacity: 1 },
+                    { transform: `translateY(${window.innerHeight + 50}px) translateX(${decalageX}px)`, opacity: 0.3 }
+                ], {
+                    duration: duree,
+                    easing: 'linear'
+                });
+
+                setTimeout(() => drop.remove(), duree);
+            }
+        }
+
+        // Gestion du son
         let audio = new Audio('oiseaux.mp3'); audio.loop = true; let enLecture = false;
         function toggleSon() {
             if (!enLecture) { audio.play().catch(e=>{}); document.getElementById('btn-son').innerHTML = "🎶"; enLecture = true; } 
             else { audio.pause(); document.getElementById('btn-son').innerHTML = "🕊️"; enLecture = false; }
         }
 
+        // Déplacement du coffre magique
         const coffre = document.getElementById('coffre-magique');
         let cX = 100, cY = 100;
         function move() {
@@ -417,6 +412,7 @@
             }
         }
 
+        // Oiseaux / papillons volants
         function creerMessager() {
             const a = document.createElement('div'); a.className = 'oiseau-volant'; 
             a.innerHTML = ['🕊️', '🦋', '🐝'][Math.floor(Math.random()*3)];
@@ -430,6 +426,7 @@
         }
         setInterval(creerMessager, 6000);
 
+        // Journal volant
         function creerJournalVolant() {
             const j = document.createElement('a');
             j.href = 'https://lepetitprincedesjardiniers.github.io/ministere-de-lhonnetete.html#apropos';
