@@ -163,7 +163,7 @@
         const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbxxToz22V88elCCjxLqjRtsb5iBIC156cbBFRIlTsju2SwOj9yNnKqzAwFITXMg_wij/exec";
         let toutesLesAnnonces = [], annoncesPrincipales = [], toutesLesReponses = [], filtreTypeActuel = "", filtreSousTypeActuel = "";
         
-        // Mapping des boutons principaux vers les types de la base
+        // Mapping complet des boutons principaux vers les types de la base
         const mappingBoutons = { 
             "Savoir": ["SAVOIR"], 
             "Citoyenne": ["VIE"], 
@@ -173,7 +173,7 @@
             "Autre": ["AUTRE_CAT"] 
         };
 
-        // Paramètres URL acceptés depuis la page d'accueil ou d'autres pages
+        // Paramètres URL acceptés depuis l'accueil (gestion complète de toutes les rubriques)
         const paramToBouton = {
             "SAVOIR": "Savoir",
             "VIE": "Citoyenne",
@@ -297,7 +297,7 @@
 
                 document.getElementById('phrase-petit-prince').innerHTML = `✨ Aujourd'hui, le Petit Prince a pris soin de <b>${annoncesPrincipales.length}</b> fleurs resplendissantes dans le jardin du monde...`;
                 
-                // Gestion rigoureuse de l'URL au chargement (ex: jardin.html?cat=URGENCE, ?cat=IMPOT, etc.)
+                // Gestion intelligente des paramètres URL au chargement
                 const urlParams = new URLSearchParams(window.location.search);
                 const catParam = urlParams.get('cat');
                 
@@ -310,7 +310,6 @@
                             document.querySelectorAll('.btn-filtre-rapide').forEach(b => b.classList.remove('actif'));
                             btnTarget.classList.add('actif');
                             
-                            // Gérer l'affichage du tiroir des sous-rubriques uniquement si c'est de l'aide/harmonie
                             const tiroirSousRub = document.getElementById('sous-rubriques-urgence');
                             if (nomBouton === "Harmonie") {
                                 tiroirSousRub.style.display = 'block';
@@ -351,12 +350,12 @@
                 let matchT = true;
                 if (filtreTypeActuel !== "") {
                     const catsPermises = mappingBoutons[filtreTypeActuel] || [];
-                    matchT = catsPermises.includes(ann.type);
+                    matchT = catsPermises.includes(String(ann.type || '').toUpperCase());
                 }
 
                 let matchSousT = true;
                 if (filtreTypeActuel === "Harmonie" && filtreSousTypeActuel !== "") {
-                    matchSousT = (ann.type === filtreSousTypeActuel);
+                    matchSousT = (String(ann.type || '').toUpperCase() === filtreSousTypeActuel);
                 }
 
                 return matchP && matchV && matchM && matchT && matchSousT;
@@ -373,7 +372,7 @@
             filtrées.forEach(ann => {
                 const idAnnonce = ann.Horodateur || ann.id || '';
                 const nomAnnonce = ann.nom || "Anonyme";
-                const typeAnnonce = ann.type || "Graine";
+                const typeAnnonce = String(ann.type || '').toUpperCase();
                 const msgAnnonce = ann.message || "";
                 
                 const listeReponses = obtenirReponsesPourAnnonce(ann);
@@ -543,7 +542,6 @@
             });
         }
 
-        // Gestion du clic sur un filtre principal
         function rechercheRapide(t, el) {
             jouerBip();
             document.querySelectorAll('.btn-filtre-rapide').forEach(b => b.classList.remove('actif'));
@@ -558,7 +556,6 @@
 
             if (filtreTypeActuel && el) el.classList.add('actif');
 
-            // Gestion de l'affichage du tiroir des sous-rubriques
             const tiroirSousRub = document.getElementById('sous-rubriques-urgence');
             if (filtreTypeActuel === "Harmonie") {
                 tiroirSousRub.style.display = 'block';
@@ -570,7 +567,6 @@
             executerFiltrage();
         }
 
-        // Gestion du clic sur une sous-rubrique
         function rechercheSousCategorie(sousT, el) {
             jouerBip();
             document.querySelectorAll('.btn-sous-filtre').forEach(b => b.classList.remove('actif'));
