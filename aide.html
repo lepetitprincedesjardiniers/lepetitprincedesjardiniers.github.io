@@ -2,12 +2,22 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <title>AIDE & ÉCOUTE - Le Câlin de l'Âme</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AIDE & ÉCUTE - Le Câlin de l'Âme</title>
     <style>
+        * { box-sizing: border-box; }
+        
         body { 
-            font-family: 'Comic Sans MS', cursive; text-align: center; margin: 0; padding: 0; 
+            font-family: 'Comic Sans MS', cursive; 
+            text-align: center; 
+            margin: 0; 
+            padding: 0; 
             background: radial-gradient(circle at center, #1a0a2e 0%, #000000 100%);
-            color: #ffffff; overflow-x: hidden; min-height: 100vh; padding-bottom: 80px;
+            color: #ffffff; 
+            overflow-x: hidden; 
+            min-height: 100vh; 
+            padding-bottom: 80px;
+            scroll-behavior: smooth;
         }
 
         .header-tools { display: flex; justify-content: space-between; align-items: center; padding: 10px 20px; background: rgba(255,255,255,0.05); }
@@ -32,19 +42,98 @@
         .btn-envoi { background: #9370DB; color: white; border: none; padding: 12px; border-radius: 20px; font-weight: bold; cursor: pointer; width: 100%; font-size: 1.1em; font-family: inherit; margin-top: 10px; transition: 0.3s; }
         .btn-envoi:hover { background: #7B68EE; }
 
-        .mur-reel { display: grid; grid-template-columns: repeat(5, minmax(150px, 1fr)); gap: 10px; padding: 10px; max-width: 98vw; margin: 0 auto; }
-        @media (max-width: 768px) { .mur-reel { grid-template-columns: repeat(2, 1fr); } }
+        /* --- GRILLE ET CARTES PROPRES --- */
+        .mur-reel { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); 
+            gap: 15px; 
+            padding: 15px; 
+            max-width: 1100px; 
+            margin: 0 auto; 
+        }
 
-        .carte-message { background: white; border: 2px solid #9370DB; border-radius: 12px; padding: 10px; box-shadow: 0 4px 10px rgba(147,112,219,0.3); display: flex; flex-direction: column; height: 260px; cursor: pointer; position: relative; overflow: hidden; text-align: left; color: #333; transition: transform 0.2s; }
-        .carte-message:hover { transform: translateY(-3px); box-shadow: 0 6px 15px rgba(147,112,219,0.5); }
+        .carte-message { 
+            background: white; 
+            border: 2px solid #9370DB; 
+            border-radius: 12px; 
+            padding: 12px; 
+            box-shadow: 3px 3px 0px #9370DB; 
+            display: flex; 
+            flex-direction: column; 
+            height: 220px; 
+            cursor: pointer; 
+            position: relative; 
+            text-align: left; 
+            color: #333; 
+            transition: transform 0.15s ease, box-shadow 0.15s ease;
+        }
+        .carte-message:hover { 
+            transform: translateY(-3px); 
+            box-shadow: 4px 4px 0px #9370DB; 
+        }
         .nom-prenom { color: #4a148c; font-weight: bold; font-size: 0.85em; border-bottom: 1px solid #eee; margin-bottom: 4px; padding-bottom: 2px; }
-        .rubrique-tag { font-size: 0.55em; background: #9370DB; color: white; padding: 1px 5px; border-radius: 5px; position: absolute; top: 8px; right: 8px; }
-        .texte-annonce { flex-grow: 1; font-style: italic; color: #333; overflow-y: auto; font-size: 0.75em; margin: 5px 0; line-height: 1.3; padding-right: 5px; }
+        .rubrique-tag { font-size: 0.55em; background: #9370DB; color: white; padding: 1px 4px; border-radius: 5px; position: absolute; top: 8px; right: 8px; }
+        
+        .texte-annonce { 
+            flex-grow: 1; 
+            font-style: italic; 
+            color: #4a148c; 
+            font-size: 0.75em; 
+            margin: 5px 0; 
+            line-height: 1.3; 
+            overflow: hidden;
+            display: -webkit-box;
+            -webkit-line-clamp: 5;
+            -webkit-box-orient: vertical;
+            white-space: pre-wrap; 
+        }
         .details-bas { font-size: 0.7em; color: #666; line-height: 1.3; border-top: 1px solid #eee; padding-top: 5px; background: white; }
 
-        #fond-sombre { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); z-index: 2000; justify-content: center; align-items: center; }
-        .message-geant { background: #F3E5F5; width: 95%; max-width: 800px; padding: 25px; border-radius: 25px; border: 6px solid #9370DB; position: relative; max-height: 85vh; overflow-y: auto; color: #4a148c; text-align: left; box-shadow: 0 10px 30px rgba(147,112,219,0.6); }
-        .bouton-fermer { position: absolute; top: 15px; right: 15px; background: #9370DB; color: white; border-radius: 50%; width: 40px; height: 40px; cursor: pointer; border: 2px solid white; font-weight: bold; font-size: 1.1em; display: flex; align-items: center; justify-content: center; }
+        /* --- GRANDE FENÊTRE (MODALE) --- */
+        #fond-sombre { 
+            display: none; 
+            position: fixed; 
+            top: 0; 
+            left: 0; 
+            width: 100vw; 
+            height: 100vh; 
+            background: rgba(0,0,0,0.8); 
+            z-index: 99999; 
+            justify-content: center; 
+            align-items: center; 
+        }
+        .message-geant { 
+            background: #F3E5F5; 
+            width: 90%; 
+            max-width: 650px; 
+            max-height: 85vh; 
+            padding: 25px; 
+            border-radius: 20px; 
+            border: 5px solid #9370DB; 
+            position: relative; 
+            overflow-y: auto; 
+            color: #4a148c; 
+            text-align: left; 
+            box-shadow: 0 10px 25px rgba(0,0,0,0.4); 
+        }
+        .bouton-fermer { 
+            position: absolute; 
+            top: 15px; 
+            right: 15px; 
+            background: #9370DB; 
+            color: white; 
+            border-radius: 50%; 
+            width: 35px; 
+            height: 35px; 
+            cursor: pointer; 
+            border: 2px solid white; 
+            font-weight: bold; 
+            font-size: 1em; 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+        }
+        .bouton-fermer:hover { background: #7B68EE; }
     </style>
 </head>
 <body>
@@ -85,13 +174,14 @@
             <label>💬 Mon cœur est lourd, je cherche une oreille :</label>
             <textarea name="message" rows="4" required placeholder="Écris ton message pour un câlin de l'âme..."></textarea>
 
-            <button type="submit" class="btn-envoi">DÉPOSER MON CŒUR 🕊️️</button>
+            <button type="submit" id="btnEnvoi" class="btn-envoi">DÉPOSER MON CŒUR 🕊️</button>
         </form>
     </div>
 
     <div style="max-width: 95vw; margin: 40px auto; padding: 10px;">
-        <h2 style="color: #D8BFD8; margin-bottom: 20px;">🌸 Les Cœurs à Écouter</h2>
-        <div id="flux-aide" class="mur-reel"><p style="grid-column: span 5; color: #fff;">Appel de la douceur...</p></div>
+        <h2 id="titre-dossiers" style="color: #D8BFD8; margin-bottom: 20px;">🌸 Les Cœurs à Écouter</h2>
+        <div id="chargement" style="font-weight:bold; color:#fff;">Appel de la douceur...</div>
+        <div id="flux-aide" class="mur-reel"></div>
     </div>
 
     <!-- Modale Grand Message -->
@@ -105,171 +195,243 @@
     <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
     <script>
         const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbxxToz22V88elCCjxLqjRtsb5iBIC156cbBFRIlTsju2SwOj9yNnKqzAwFITXMg_wij/exec";
-        let allAnnonces = [];
+        let globalData = [];
+        let annonceActiveId = null;
 
         function googleTranslateElementInit() { 
             new google.translate.TranslateElement({pageLanguage: 'fr', layout: google.translate.TranslateElement.InlineLayout.SIMPLE}, 'google_translate_element'); 
         }
 
-        function playPop() { const p = document.getElementById('snd-pop'); p.currentTime = 0; p.play().catch(()=>{}); }
-        function playOiseaux() { 
-            const s = document.getElementById('snd-oiseaux'); s.currentTime = 0; s.play().catch(()=>{});
-            setTimeout(() => { s.pause(); s.currentTime = 0; }, 2000);
+        function playPop() {
+            try {
+                const pop = document.getElementById('snd-pop');
+                pop.currentTime = 0;
+                pop.play().catch(()=>{});
+            } catch(e) {}
+        }
+
+        function playOiseaux() {
+            try {
+                const song = document.getElementById('snd-oiseaux');
+                song.currentTime = 0;
+                song.play().catch(()=>{});
+                setTimeout(() => {
+                    song.pause();
+                    song.currentTime = 0;
+                }, 2000);
+            } catch(e) {}
+        }
+
+        function formaterDate(dateStr) {
+            if (!dateStr) return 'Récemment';
+            const d = new Date(dateStr);
+            if (!isNaN(d.getTime())) {
+                return d.toLocaleDateString('fr-FR', {
+                    day: '2-digit',
+                    month: '2-digit',
+                    year: 'numeric',
+                    hour: '2-digit',
+                    minute: '2-digit'
+                });
+            }
+            return String(dateStr).replace(/[:.]?00Z$/, '').replace('T', ' à ');
         }
 
         async function envoyerAide(event) {
             event.preventDefault();
             playOiseaux();
-            const btn = event.target.querySelector('button');
+
+            const btn = document.getElementById('btnEnvoi');
             const texteInitial = btn.innerText;
             btn.innerText = "Le message s'envole..."; 
             btn.disabled = true;
 
-            const formData = new FormData(event.target);
+            const form = document.getElementById('aideForm');
+            const formData = new FormData(form);
+            const urlParams = new URLSearchParams(formData);
+
             try {
-                await fetch(WEB_APP_URL, { method: 'POST', mode: 'no-cors', body: new URLSearchParams(formData) });
-                setTimeout(() => { alert("Message déposé avec douceur. 🕊️"); event.target.reset(); chargerAide(); }, 1500);
+                await fetch(WEB_APP_URL, { 
+                    method: 'POST', 
+                    mode: 'no-cors', 
+                    body: urlParams 
+                });
+
+                setTimeout(async () => {
+                    alert("Message déposé avec douceur. 🕊️"); 
+                    form.reset();
+                    await chargerAide();
+                    document.getElementById('titre-dossiers').scrollIntoView({ behavior: 'smooth' });
+                }, 1000);
+
             } catch (err) {
                 console.error(err);
                 alert("Erreur lors de l'envoi.");
             } finally {
-                setTimeout(() => { btn.innerText = texteInitial; btn.disabled = false; }, 1500);
-            }
-        }
-
-        async function envoyerReponse(event, annonceId) {
-            event.preventDefault();
-            playOiseaux();
-            const btn = event.target.querySelector('button');
-            const texteInitial = btn.innerText;
-            btn.innerText = "Envoi en cours...";
-            btn.disabled = true;
-
-            const formData = new FormData(event.target);
-            try {
-                await fetch(WEB_APP_URL, { method: 'POST', mode: 'no-cors', body: new URLSearchParams(formData) });
-                alert("Réponse envoyée avec douceur. 🕊️");
-                event.target.reset();
-                await chargerAide();
-                
-                const updatedAnn = allAnnonces.find(i => (i.Horodateur == annonceId) || (i.id == annonceId));
-                if (updatedAnn) ouvrirGrandMessage(updatedAnn);
-                else fermerGrandMessage();
-            } catch (err) {
-                console.error(err);
-                alert("Erreur lors de l'envoi de la réponse.");
-            } finally {
-                btn.innerText = texteInitial;
-                btn.disabled = false;
+                setTimeout(() => {
+                    btn.innerText = texteInitial;
+                    btn.disabled = false;
+                }, 1000);
             }
         }
 
         async function chargerAide() {
             try {
                 const response = await fetch(WEB_APP_URL + "?v=" + Date.now());
-                const data = await response.json();
-                allAnnonces = data;
-
-                const f = document.getElementById('flux-aide'); 
-                f.innerHTML = "";
+                if (!response.ok) throw new Error("Erreur réseau");
                 
-                const annonces = data.filter(i => i.type === "AIDE" || i.type === "Urgence");
+                globalData = await response.json();
+                
+                const chargementEl = document.getElementById('chargement');
+                if (chargementEl) chargementEl.style.display = 'none';
+
+                const flux = document.getElementById('flux-aide');
+                flux.innerHTML = "";
+
+                if (!Array.isArray(globalData)) {
+                    globalData = [];
+                }
+
+                const annonces = globalData.filter(d => {
+                    const typeVal = String(d.type || "").trim().toUpperCase();
+                    return typeVal === "AIDE" || typeVal === "URGENCE";
+                });
 
                 if (annonces.length === 0) {
-                    f.innerHTML = `<div style="grid-column: span 5; padding: 20px; font-weight: bold; background: #2a1045; border-radius: 10px; color: #fff;">Aucun cœur à écouter pour l'instant... 💖</div>`;
+                    flux.innerHTML = `<div style="grid-column: 1 / -1; padding: 20px; font-weight: bold; background: #2a1045; border-radius: 10px; color: #fff;">Aucun cœur à écouter pour l'instant... 💖</div>`;
                     return;
                 }
 
                 annonces.reverse();
 
-                annonces.forEach(i => {
+                annonces.forEach(c => {
                     const d = document.createElement('div');
                     d.className = 'carte-message';
-                    d.onclick = () => ouvrirGrandMessage(i);
-
-                    // Comptage robuste des réponses
-                    const nbRep = allAnnonces.filter(r => 
-                        r.type === "REPONSE" && (
-                            (i.Horodateur && r.parent == i.Horodateur) || 
-                            (i.id && r.id_annonce == i.id) ||
-                            (r.id_annonce == i.Horodateur)
-                        )
-                    ).length;
-
+                    d.onclick = () => ouvrirGrandMessage(c);
                     d.innerHTML = `
-                        <div class="nom-prenom">${i.nom || "Anonyme"}</div>
+                        <div class="nom-prenom">${c.nom || "Anonyme"}</div>
                         <div class="rubrique-tag">Câlin de l'Âme</div>
-                        <div class="texte-annonce">"${i.message}"</div>
+                        <div class="texte-annonce">"${c.message}"</div>
                         <div class="details-bas">
-                            📅 Date : ${i.Horodateur || i.date || 'N/C'}<br>
-                            ⏳ Validité : ${i.duree_validite || '30'} jours
-                            ${nbRep > 0 ? `<br>💬 Réponses : ${nbRep}` : ''}
+                            📍 ${c.localisation || 'Espace Cœur'}<br>
+                            ⏳ Validité : ${c.duree_validite || '30'}j<br>
+                            📅 ${formaterDate(c.Horodateur || c.date)}
                         </div>
                     `;
-                    f.appendChild(d);
+                    flux.appendChild(d);
                 });
-            } catch (err) {
-                console.error(err);
-                document.getElementById('flux-aide').innerHTML = `<p style="grid-column: span 5; color: #ff9999;">Impossible de charger les cœurs... 🕊️</p>`;
+            } catch (error) {
+                console.error("Erreur de chargement :", error);
+                const chargementEl = document.getElementById('chargement');
+                if (chargementEl) chargementEl.innerText = "Impossible de charger les cœurs... 🕊️";
             }
         }
 
         function ouvrirGrandMessage(ann) {
-            // Filtrage robuste des réponses pour cette annonce spécifique
-            const repList = allAnnonces.filter(i => 
-                i.type === "REPONSE" && (
-                    (ann.Horodateur && i.parent == ann.Horodateur) || 
-                    (ann.id && i.id_annonce == ann.id) || 
-                    (i.id_annonce == ann.Horodateur)
-                )
-            );
+            playPop();
+            
+            let rawRef = ann.Horodateur || ann.nom;
+            annonceActiveId = String(rawRef).replace(/[:.]?00Z$/, '').replace(/Z$/, '');
+
+            const reponses = globalData.filter(d => {
+                const typeVal = String(d.type || "").trim().toUpperCase();
+                return typeVal === "REPONSE_AIDE" && String(d.localisation || "").includes(annonceActiveId);
+            });
+            reponses.reverse();
 
             let htmlReponses = "";
-            if (repList.length > 0) {
-                htmlReponses += `<div style="margin-top: 20px;"><h4 style="color: #4a148c; border-bottom: 2px dashed #9370DB; padding-bottom: 5px;">💬 Réponses & Soutiens (${repList.length})</h4>`;
-                repList.forEach(r => {
+            if (reponses.length > 0) {
+                htmlReponses += `<h4 style="color: #4a148c; margin-top: 15px; margin-bottom: 8px;">💬 Réponses & Soutiens (${reponses.length}) :</h4>`;
+                htmlReponses += `<div style="max-height: 150px; overflow-y: auto; border: 2px solid #9370DB; border-radius: 10px; padding: 10px; background: #ffffff;">`;
+                
+                reponses.forEach(r => {
                     htmlReponses += `
-                        <div style="background: white; padding: 12px; border-radius: 10px; margin-bottom: 10px; border-left: 5px solid #9370DB; text-align: left;">
-                            <div style="font-weight: bold; color: #4a148c; font-size: 0.85em; margin-bottom: 4px;">👤 ${r.nom || "Anonyme"} <span style="font-size: 0.7em; color: #666; font-weight: normal; float: right;">${r.Horodateur || r.date || ''}</span></div>
-                            <div style="color: #333; font-size: 0.9em; white-space: pre-wrap;">${r.message}</div>
+                        <div style="background: #F3E5F5; border-left: 4px solid #7B68EE; padding: 8px 10px; margin-bottom: 8px; border-radius: 6px; font-size: 0.9em; text-align: left; color: #4a148c; white-space: pre-wrap;">
+                            <strong>🕊️ ${r.nom || "Une âme douce"} :</strong> ${r.message}
+                            <div style="font-size: 0.7em; color: #666; margin-top: 3px;">📅 ${formaterDate(r.Horodateur)}</div>
                         </div>
                     `;
                 });
                 htmlReponses += `</div>`;
             } else {
-                htmlReponses += `<div style="margin-top: 20px; font-size: 0.9em; color: #666; font-style: italic;">Aucune réponse pour l'instant. Sois le premier à apporter un soutien ! 💖</div>`;
+                htmlReponses += `<p style="font-style: italic; color: #666; margin-top: 15px;">Aucune réponse pour l'instant. Soyez le premier à apporter votre soutien ! 💖</p>`;
             }
 
             document.getElementById('geant-contenu').innerHTML = `
-                <div style="font-size:1.6em; color:#4a148c; font-weight:bold; border-bottom:3px solid #9370DB; margin-bottom:20px; padding-bottom:5px;">💖 Cœur de ${ann.nom || "Anonyme"}</div>
-                <div style="background:white; padding:20px; border-radius:15px; border-left:8px solid #9370DB; font-size:1.2em; color:#333; text-align:left; margin-bottom:20px; box-shadow: inset 0 2px 5px rgba(0,0,0,0.05);">"${ann.message}"</div>
-                <div style="text-align:left; background:#E1BEE7; padding:15px; border-radius:10px; font-size:1em; color:#4a148c; margin-bottom: 20px;">
+                <div style="font-size:1.3em; color:#4a148c; font-weight:bold; border-bottom:3px solid #9370DB; margin-bottom:12px; padding-bottom:5px;">💖 Cœur de ${ann.nom || "Anonyme"}</div>
+                
+                <div style="background:white; padding:15px; border-radius:12px; border-left:8px solid #9370DB; font-size:1em; color:#333; text-align:left; margin-bottom:12px; max-height: 160px; overflow-y: auto; box-shadow: inset 0 2px 5px rgba(0,0,0,0.05); word-break: break-word; white-space: pre-wrap;">"${ann.message}"</div>
+                
+                <div style="text-align:left; background:#E1BEE7; padding:10px; border-radius:8px; font-size:0.9em; color:#4a148c; margin-bottom:12px;">
                     <strong>📍 Localisation :</strong> ${ann.localisation || "Espace Cœur"}<br>
                     <strong>⏳ Durée de validité :</strong> ${ann.duree_validite || "30"} jours<br>
-                    <strong>📅 Date :</strong> ${ann.Horodateur || ann.date || "N/C"}
+                    <strong>📅 Date :</strong> ${formaterDate(ann.Horodateur || ann.date)}
                 </div>
 
-                ${htmlReponses}
+                <div id="section-reponses">
+                    ${htmlReponses}
+                </div>
 
-                <form onsubmit="envoyerReponse(event, '${ann.Horodateur || ann.id || ''}')" style="margin-top: 25px; background: #fff; padding: 20px; border-radius: 15px; border: 2px solid #9370DB; text-align: left;">
-                    <h4 style="color: #4a148c; margin-top: 0; margin-bottom: 10px;">🕊️ Apporter une réponse / un réconfort :</h4>
-                    <input type="hidden" name="type" value="REPONSE">
-                    <input type="hidden" name="id_annonce" value="${ann.id || ann.Horodateur || ''}">
-                    <input type="hidden" name="parent" value="${ann.Horodateur || ''}">
-                    
-                    <label style="font-size: 0.85em; font-weight: bold; color: #4a148c;">👤 Ton petit nom :</label>
-                    <input type="text" name="nom" required placeholder="Ex: Âme bienveillante">
-                    
-                    <label style="font-size: 0.85em; font-weight: bold; color: #4a148c;">💬 Ton message de soutien :</label>
-                    <textarea name="message" rows="3" required placeholder="Écris un mot doux ou une réponse..."></textarea>
-                    
-                    <button type="submit" class="btn-envoi" style="margin-top: 10px;">ENVOYER MA RÉPONSE 💌</button>
-                </form>
+                <div style="margin-top: 15px; background: white; padding: 12px; border-radius: 10px; border: 2px dashed #9370DB;">
+                    <h4 style="margin-top: 0; color: #4a148c; margin-bottom: 6px; font-size: 1em;">🌿 Apporter un soutien :</h4>
+                    <form id="formReponse" onsubmit="envoyerReponse(event, '${annonceActiveId}')">
+                        <input type="text" id="repNom" placeholder="Votre nom ou pseudo..." required style="margin-bottom: 6px; padding: 8px;">
+                        <textarea id="repMessage" rows="2" placeholder="Rédigez votre message de soutien ici..." required style="margin-bottom: 6px; padding: 8px;"></textarea>
+                        <button type="submit" id="btnReponseSubmit" style="background: #9370DB; color: white; border: none; padding: 8px 15px; border-radius: 8px; font-weight: bold; cursor: pointer; width: 100%;">Envoyer ma réponse 🕊️</button>
+                    </form>
+                </div>
             `;
             document.getElementById('fond-sombre').style.display = 'flex';
         }
 
+        async function envoyerReponse(event, refId) {
+            event.preventDefault();
+            playOiseaux();
+
+            const nomRep = document.getElementById('repNom').value;
+            const msgRep = document.getElementById('repMessage').value;
+            const btnSub = document.getElementById('btnReponseSubmit');
+            btnSub.innerText = "Transmission...";
+            btnSub.disabled = true;
+
+            const formData = new URLSearchParams();
+            formData.append('type', 'REPONSE_AIDE');
+            formData.append('nom', nomRep);
+            formData.append('localisation', 'Ref:' + refId);
+            formData.append('message', msgRep);
+            formData.append('duree_validite', '30');
+
+            try {
+                await fetch(WEB_APP_URL, {
+                    method: 'POST',
+                    mode: 'no-cors',
+                    body: formData
+                });
+
+                alert("Votre réponse a été transmise ! 🕊️");
+
+                const sectionRep = document.getElementById('section-reponses');
+                sectionRep.innerHTML += `
+                    <div style="background: #C8E6C9; color: #1B5E20; padding: 10px; border-radius: 8px; margin-top: 10px; font-weight: bold; text-align: center;">
+                        ✓ Réponse envoyée avec succès ! Rechargement...
+                    </div>
+                `;
+
+                setTimeout(async () => {
+                    fermerGrandMessage();
+                    await chargerAide();
+                }, 2000);
+
+            } catch (err) {
+                console.error(err);
+                alert("Erreur lors de l'envoi de la réponse.");
+                btnSub.innerText = "Envoyer ma réponse 🕊️";
+                btnSub.disabled = false;
+            }
+        }
+
         function fermerGrandMessage() { 
+            annonceActiveId = null;
             document.getElementById('fond-sombre').style.display = 'none'; 
         }
 
