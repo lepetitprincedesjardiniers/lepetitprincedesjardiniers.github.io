@@ -209,10 +209,25 @@
             justify-content: center; 
         }
 
+        /* Section Réponses intégrée */
+        .reponses-container {
+            margin-top: 20px;
+            border-top: 2px dashed #008080;
+            padding-top: 15px;
+        }
+        .carte-reponse {
+            background: white;
+            border-left: 4px solid #008080;
+            padding: 10px 15px;
+            margin-bottom: 10px;
+            border-radius: 8px;
+            font-size: 0.9em;
+        }
+
         /* Mode Sombre & Étoiles harmonisés */
         body.dark-mode { background-color: #0a0a1a; color: #e0e0e0; }
-        body.dark-mode .intro-box, body.dark-mode .form-container, body.dark-mode .carte-message, body.dark-mode .details-bas { background: #12122c; border-color: #4db6ac; color: #e0e0e0; }
-        body.dark-mode .zone-explication { background: #1b1b3a; border-left-color: #4db6ac; color: #b2dfdb; }
+        body.dark-mode .intro-box, body.dark-mode .form-container, body.dark-mode .carte-message, body.dark-mode .details-bas, body.dark-mode .carte-reponse { background: #12122c; border-color: #4db6ac; color: #e0e0e0; }
+        body.dark-mode .zone-explication, body.dark-mode .message-geant { background: #1b1b3a; border-left-color: #4db6ac; color: #b2dfdb; }
         body.dark-mode input, body.dark-mode textarea, body.dark-mode select { background: #1a1a3a; color: #fff; border-color: #4db6ac; }
         body.dark-mode .nom-prenom { color: #80cbc4; border-bottom-color: #2a2a4a; }
         body.dark-mode .texte-annonce { color: #b2dfdb; }
@@ -327,6 +342,7 @@
     <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
     <script>
         const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbxxToz22V88elCCjxLqjRtsb5iBIC156cbBFRIlTsju2SwOj9yNnKqzAwFITXMg_wij/exec";
+        let cacheAnnonces = [];
 
         function googleTranslateElementInit() {
             new google.translate.TranslateElement({pageLanguage: 'fr', layout: google.translate.TranslateElement.InlineLayout.SIMPLE}, 'google_translate_element');
@@ -370,8 +386,10 @@
             try {
                 const response = await fetch(WEB_APP_URL + "?v=" + Date.now());
                 const toutesLesAnnonces = await response.json();
+                cacheAnnonces = toutesLesAnnonces;
                 
-                const annoncesImpots = toutesLesAnnonces.filter(ann => ann.type === "IMPOT" || ann.type === "impot" || !ann.type);
+                // Ne garder que les annonces principales (en ignorant les réponses directes pour la grille principale)
+                const annoncesImpots = toutesLesAnnonces.filter(ann => (ann.type === "IMPOT" || ann.type === "impot" || !ann.type) && !ann.parent_ref);
                 const cont = document.getElementById('mur-messages');
                 cont.innerHTML = "";
 
@@ -406,10 +424,27 @@
         }
 
         function ouvrirGrandMessage(ann) {
+            const annonceId = ann.Horodateur || ann.nom || '';
+            const reponses = cacheAnnonces.filter(a => a.parent_ref === annonceId || (a.type === "REPONSE" && a.parent === ann.nom));
+
+            let htmlReponses = '';
+            if (reponses.length > 0) {
+                reponses.forEach(rep => {
+                    htmlReponses += `
+                        <div class="carte-reponse">
+                            <strong>💬 ${rep.nom || "Anonyme"} :</strong> ${rep.message || ''}
+                            <div style="font-size: 0.75em; color: #555; margin-top: 3px;">📅 ${rep.Horodateur || ''}</div>
+                        </div>
+                    `;
+                });
+            } else {
+                htmlReponses = `<p style="font-size: 0.9em; font-style: italic; color: #555;">Aucune réponse pour le moment. Soyez le premier à répondre ! 🌿</p>`;
+            }
+
             document.getElementById('geant-contenu').innerHTML = `
                 <div style="font-size:1.5em; color:#00695c; font-weight:bold; border-bottom:3px solid #008080; margin-bottom:15px; padding-bottom:5px;">🪙 Contribution de ${ann.nom || "Anonyme"}</div>
                 <div style="background:white; padding:20px; border-radius:15px; border-left:8px solid #008080; font-size:1.1em; color:#004d40; text-align:left; margin-bottom:15px; font-style:italic;">"${ann.message || ''}"</div>
-                <div style="text-align:left; background:#E0F2F1; padding:15px; border-radius:10px; font-size:0.95em; color:#004d40;">
+                <div style="text-align:left; background:#E0F2F1; padding:15px; border-radius:10px; font-size:0.95em; color:#004d40; margin-bottom:20px;">
                     <strong>🌿 Rubrique :</strong> ${ann.categorie || 'N/C'}<br>
                     <strong>📍 Localisation :</strong> ${ann.localisation || "N/C"}<br>
                     <strong>🌍 Pays :</strong> ${ann.pays_select || "N/C"}<br>
@@ -417,12 +452,70 @@
                     <strong>🛠️ Besoins :</strong> ${ann.besoin || "Aucun spécifié"}<br>
                     <strong>📅 Date :</strong> ${ann.Horodateur || "N/C"}
                 </div>
+
+                <div class="reponses-container">
+                    <h3 style="color: #00695c; margin-bottom: 10px;">💬 Réponses à cette contribution</h3>
+                    <div id="liste-reponses">${htmlReponses}</div>
+
+                    <form id="formReponse" onsubmit="envoyerReponse(event, '${annonceId}', '${ann.nom || ''}')" style="margin-top: 15px;">
+                        <input type="hidden" name="type" value="REPONSE">
+                        <input type="hidden" name="parent_ref" value="${annonceId}">
+                        <input type="hidden" name="parent" value="${ann.nom || ''}">
+                        <div style="margin-bottom: 10px;">
+                            <label>👤 Votre Nom / Pseudo :</label>
+                            <input type="text" name="nom" required placeholder="Votre pseudo">
+                        </div>
+                        <div style="margin-bottom: 10px;">
+                            <label>💬 Votre réponse :</label>
+                            <textarea name="message" rows="3" required placeholder="Écrivez votre réponse ici..."></textarea>
+                        </div>
+                        <button type="submit" id="btnReponse" class="btn-envoi" style="padding: 10px 20px; font-size: 1em;" onmouseover="playPop()">RÉPONDRE 🌿</button>
+                    </form>
+                </div>
             `;
             document.getElementById('fond-sombre').style.display = 'flex';
         }
 
         function fermerGrandMessage() { 
             document.getElementById('fond-sombre').style.display = 'none'; 
+        }
+
+        async function envoyerReponse(event, annonceId, parentNom) {
+            event.preventDefault();
+            playOiseaux();
+
+            const btn = document.getElementById('btnReponse');
+            const texteInitial = btn.innerText;
+            btn.innerText = "Envoi en cours... 🌿";
+            btn.disabled = true;
+
+            const form = document.getElementById('formReponse');
+            const formData = new FormData(form);
+            const urlParams = new URLSearchParams(formData);
+
+            try {
+                await fetch(WEB_APP_URL, {
+                    method: 'POST',
+                    mode: 'no-cors',
+                    body: urlParams
+                });
+
+                setTimeout(() => {
+                    alert("Votre réponse a bien été enregistrée ! ✨");
+                    form.reset();
+                    fermerGrandMessage();
+                    chargerImpots();
+                }, 1500);
+
+            } catch (err) {
+                console.error(err);
+                alert("Erreur lors de l'envoi de la réponse.");
+            } finally {
+                setTimeout(() => {
+                    btn.innerText = texteInitial;
+                    btn.disabled = false;
+                }, 1500);
+            }
         }
 
         async function envoyerImpots(event) {
