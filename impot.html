@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Impôt Public - Le Petit Prince des Jardiniers</title>
     <style>
-        /* --- THÉMATIQUE & COULEURS (Code 1) --- */
+        /* --- THÉMATIQUE & COULEURS --- */
         body { 
             font-family: 'Comic Sans MS', cursive; 
             background-color: #E8F5E9; 
@@ -121,7 +121,7 @@
         }
         .btn-envoi:hover { background: #2e7d32; transform: translateY(-2px); }
 
-        /* --- TECHNIQUE & GRILLE DYNAMIQUE (Code 2) --- */
+        /* Grille dynamique */
         .mur-reel { 
             display: grid; 
             grid-template-columns: repeat(5, minmax(150px, 1fr)); 
@@ -288,10 +288,6 @@
                     <label>🌍 Pays :</label>
                     <input type="text" name="pays_select" placeholder="Ex: France">
                 </div>
-                <div>
-                    <label>⏳ Durée de validité (en jours) :</label>
-                    <input type="number" name="duree_validite" value="30" min="1" required>
-                </div>
                 <div class="full-width">
                     <label>🌿 Sous-rubrique d'intervention :</label>
                     <select name="categorie" id="categorie">
@@ -343,6 +339,7 @@
     <script>
         const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbxxToz22V88elCCjxLqjRtsb5iBIC156cbBFRIlTsju2SwOj9yNnKqzAwFITXMg_wij/exec";
         let cacheAnnonces = [];
+        let annonceActiveCourante = null;
 
         function googleTranslateElementInit() {
             new google.translate.TranslateElement({pageLanguage: 'fr', layout: google.translate.TranslateElement.InlineLayout.SIMPLE}, 'google_translate_element');
@@ -381,15 +378,20 @@
             }
         }
 
-        // Chargement asynchrone du registre (avec inversion pour afficher les derniers en premier)
+        // Chargement asynchrone du registre
         async function chargerImpots() {
             try {
                 const response = await fetch(WEB_APP_URL + "?v=" + Date.now());
                 const toutesLesAnnonces = await response.json();
                 cacheAnnonces = toutesLesAnnonces;
                 
-                // Ne garder que les annonces principales (en ignorant les réponses directes pour la grille principale)
-                const annoncesImpots = toutesLesAnnonces.filter(ann => (ann.type === "IMPOT" || ann.type === "impot" || !ann.type) && !ann.parent_ref);
+                // Filtrage des annonces principales (en ignorant les réponses directes)
+                const annoncesImpots = toutesLesAnnonces.filter(ann => {
+                    const typeVal = (ann.type || "").toUpperCase();
+                    const isReponse = typeVal.includes("REPONSE");
+                    return !isReponse;
+                });
+
                 const cont = document.getElementById('mur-messages');
                 cont.innerHTML = "";
 
@@ -398,13 +400,13 @@
                     return;
                 }
 
-                // 🔄 Inversion du tableau : les derniers messages envoyés s'affichent en premier
+                // Inversion pour afficher les derniers messages envoyés en premier
                 annoncesImpots.reverse();
 
                 annoncesImpots.forEach(ann => {
                     const d = document.createElement('div');
                     d.className = 'carte-message';
-                    d.onclick = () => ouvrirGrandMessage(ann);
+                    d.onclick = () =>ouvrirGrandMessage(ann);
                     d.innerHTML = `
                         <div class="nom-prenom">${ann.nom || "Anonyme"}</div>
                         <div class="rubrique-tag">${ann.categorie || 'Trésor'}</div>
@@ -412,20 +414,40 @@
                         <div class="details-bas">
                             📍 Ville : ${ann.localisation || 'N/C'}<br>
                             🌍 Pays : ${ann.pays_select || 'N/C'}<br>
-                            ⏳ Validité : ${ann.duree_validite || '30'} j
+                            📅 Date : ${ann.Horodateur || 'Récemment'}
                         </div>
                     `;
                     cont.appendChild(d);
                 });
+
+                // Si la modale est ouverte, rafraîchir son contenu dynamiquement
+                if (annonceActiveCourante) {
+                    const miseAJourAnnonce = toutesLesAnnonces.find(a => (a.Horodateur === annonceActiveCourante.Horodateur && a.nom === annonceActiveCourante.nom));
+                    if (miseAJourAnnonce) {
+                        ouvrirGrandMessage(miseAJourAnnonce, true);
+                    }
+                }
+
             } catch (error) {
                 console.error("Erreur de chargement :", error);
                 document.getElementById('mur-messages').innerHTML = `<div style="grid-column: span 5; padding: 20px; font-weight: bold; background: white; border-radius: 10px; color: #d32f2f;">Impossible de charger le registre... 🌱</div>`;
             }
         }
 
-        function ouvrirGrandMessage(ann) {
+        function ouvrirGrandMessage(ann, silent = false) {
+            annonceActiveCourante = ann;
             const annonceId = ann.Horodateur || ann.nom || '';
-            const reponses = cacheAnnonces.filter(a => a.parent_ref === annonceId || (a.type === "REPONSE" && a.parent === ann.nom));
+            
+            // Recherche élargie des réponses correspondantes (par parent_ref, parent ou type REPONSE_REGULATION)
+            const reponses = cacheAnnonces.filter(a => {
+                const typeVal = (a.type || "").toUpperCase();
+                const isRep = typeVal.includes("REPONSE");
+                if (!isRep) return false;
+
+                const matchRef = a.parent_ref && annonceId && String(a.parent_ref).trim() === String(annonceId).trim();
+                const matchParent = a.parent && ann.nom && String(a.parent).trim().toLowerCase() === String(ann.nom).trim().toLowerCase();
+                return matchRef || matchParent;
+            });
 
             let htmlReponses = '';
             if (reponses.length > 0) {
@@ -448,7 +470,6 @@
                     <strong>🌿 Rubrique :</strong> ${ann.categorie || 'N/C'}<br>
                     <strong>📍 Localisation :</strong> ${ann.localisation || "N/C"}<br>
                     <strong>🌍 Pays :</strong> ${ann.pays_select || "N/C"}<br>
-                    <strong>⏳ Durée de validité :</strong> ${ann.duree_validite || "30"} jours<br>
                     <strong>🛠️ Besoins :</strong> ${ann.besoin || "Aucun spécifié"}<br>
                     <strong>📅 Date :</strong> ${ann.Horodateur || "N/C"}
                 </div>
@@ -458,7 +479,7 @@
                     <div id="liste-reponses">${htmlReponses}</div>
 
                     <form id="formReponse" onsubmit="envoyerReponse(event, '${annonceId}', '${ann.nom || ''}')" style="margin-top: 15px;">
-                        <input type="hidden" name="type" value="REPONSE">
+                        <input type="hidden" name="type" value="REPONSE_REGULATION">
                         <input type="hidden" name="parent_ref" value="${annonceId}">
                         <input type="hidden" name="parent" value="${ann.nom || ''}">
                         <div style="margin-bottom: 10px;">
@@ -473,11 +494,14 @@
                     </form>
                 </div>
             `;
-            document.getElementById('fond-sombre').style.display = 'flex';
+            if (!silent) {
+                document.getElementById('fond-sombre').style.display = 'flex';
+            }
         }
 
         function fermerGrandMessage() { 
             document.getElementById('fond-sombre').style.display = 'none'; 
+            annonceActiveCourante = null;
         }
 
         async function envoyerReponse(event, annonceId, parentNom) {
@@ -500,21 +524,18 @@
                     body: urlParams
                 });
 
-                setTimeout(() => {
-                    alert("Votre réponse a bien été enregistrée ! ✨");
+                // Délai allongé à 2.5s pour laisser le temps à Google Sheets d'écrire la ligne
+                setTimeout(async () => {
                     form.reset();
-                    fermerGrandMessage();
-                    chargerImpots();
-                }, 1500);
+                    await chargerImpots();
+                    alert("Votre réponse a bien été enregistrée ! ✨");
+                }, 2500);
 
             } catch (err) {
                 console.error(err);
                 alert("Erreur lors de l'envoi de la réponse.");
-            } finally {
-                setTimeout(() => {
-                    btn.innerText = texteInitial;
-                    btn.disabled = false;
-                }, 1500);
+                btn.innerText = texteInitial;
+                btn.disabled = false;
             }
         }
 
@@ -538,20 +559,17 @@
                     body: urlParams
                 });
 
-                setTimeout(() => {
-                    alert("Votre contribution a bien été gravée dans les Communs ! ✨");
+                setTimeout(async () => {
                     form.reset();
-                    chargerImpots();
-                }, 1500);
+                    await chargerImpots();
+                    alert("Votre contribution a bien été gravée dans les Communs ! ✨");
+                }, 2500);
 
             } catch (err) {
                 console.error(err);
                 alert("Erreur lors de l'envoi au Trésor Public.");
-            } finally {
-                setTimeout(() => {
-                    btn.innerText = texteInitial;
-                    btn.disabled = false;
-                }, 1500);
+                btn.innerText = texteInitial;
+                btn.disabled = false;
             }
         }
 
