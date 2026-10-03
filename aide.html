@@ -136,6 +136,7 @@
 </head>
 <body>
 
+    <!-- Barre d'outils avec le traducteur -->
     <div class="header-tools">
         <div id="google_translate_element"></div>
     </div>
@@ -187,6 +188,7 @@
         </div>
     </div>
 
+    <!-- Script Google Traduction -->
     <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
     <script>
         const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbxxToz22V88elCCjxLqjRtsb5iBIC156cbBFRIlTsju2SwOj9yNnKqzAwFITXMg_wij/exec";
@@ -194,10 +196,10 @@
         let annonceActiveId = null;
 
         function googleTranslateElementInit() { 
-            new google.translate.TranslateElement({pageLanguage: 'fr', layout: google.translate.TranslateElement.InlineLayout.SIMPLE}, 'google_translate_element'); 
+            new google.translate.TranslateElement({pageLanguage: 'fr'}, 'google_translate_element'); 
         }
 
-        // --- SON DE GONG HARMONIQUE (identique à Régulation) ---
+        // --- SON DE GONG HARMONIQUE ---
         function playGong() {
             try {
                 const ctx = new (window.AudioContext || window.webkitAudioContext)();
@@ -241,7 +243,7 @@
 
         async function envoyerAide(event) {
             event.preventDefault();
-            playGong(); // Son de gong à l'envoi
+            playGong();
 
             const btn = document.getElementById('btnEnvoi');
             const texteInitial = btn.innerText;
@@ -325,12 +327,12 @@
             } catch (error) {
                 console.error("Erreur de chargement :", error);
                 const chargementEl = document.getElementById('chargement');
-                if (chargementEl) chargementEl.innerText = "Impossible de charger les cœurs... 🕊️";
+                if (chargementEl) chargementEl.innerText = "Impossible de charger les cœurs... 🕊️️";
             }
         }
 
         function ouvrirGrandMessage(ann) {
-            playGong(); // Son de gong à l'ouverture de la modale
+            playGong();
             
             let rawRef = ann.Horodateur || ann.nom;
             annonceActiveId = String(rawRef).replace(/[:.]?00Z$/, '').replace(/Z$/, '');
@@ -389,7 +391,7 @@
 
         async function envoyerReponse(event, refId) {
             event.preventDefault();
-            playGong(); // Son de gong à l'envoi de la réponse
+            playGong();
 
             const nomRep = document.getElementById('repNom').value;
             const msgRep = document.getElementById('repMessage').value;
