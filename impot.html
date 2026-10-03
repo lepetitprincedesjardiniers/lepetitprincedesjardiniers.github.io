@@ -3,254 +3,194 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Impôt Public - Le Petit Prince des Jardiniers</title>
+    <title>Impôts - Le Petit Prince</title>
     <style>
-        /* --- THÉMATIQUE & COULEURS --- */
+        * { box-sizing: border-box; }
+        
         body { 
-            font-family: 'Comic Sans MS', cursive; 
+            font-family: 'Comic Sans MS', cursive, sans-serif; 
+            text-align: center; 
+            margin: 0; 
+            padding: 0; 
             background-color: #E8F5E9; 
             color: #004d40; 
-            margin: 0; 
-            text-align: center; 
-            min-height: 100vh; 
-            padding-bottom: 50px; 
-            transition: background 0.3s, color 0.3s; 
+            padding-bottom: 80px; 
+            scroll-behavior: smooth;
         }
 
-        /* Barre d'outils haut (Traducteur + Mode Nuit) */
-        .header-tools { 
-            display: flex; 
-            justify-content: space-between; 
-            align-items: center; 
-            padding: 10px 20px; 
-            background: rgba(255,255,255,0.3); 
-        }
-        #google_translate_element { 
-            transform: scale(0.8); 
-            transform-origin: top left; 
-            opacity: 0.7; 
-            transition: opacity 0.3s; 
-        }
+        .header-tools { display: flex; justify-content: space-between; align-items: center; padding: 10px 20px; }
+        #google_translate_element { transform: scale(0.85); transform-origin: top left; opacity: 0.7; }
         #google_translate_element:hover { opacity: 1; }
 
-        #btn-mode { 
-            background: #008080; 
-            color: #FFD700; 
-            border: 2px solid white; 
-            border-radius: 8px; 
-            cursor: pointer; 
-            font-size: 16px; 
-            padding: 5px 10px; 
-            font-family: 'Comic Sans MS', cursive; 
-            font-weight: bold; 
-        }
-
-        /* Menu de navigation */
         .menu-table { 
-            margin: 15px auto; 
+            margin: 20px auto; 
             background-color: #008080; 
             border-collapse: collapse; 
             border-radius: 10px; 
             overflow: hidden; 
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1); 
         }
-        .menu-table td { padding: 10px 18px; border: 1px solid #FFFFFF; transition: 0.3s; }
-        .menu-table td:hover { background: #2e7d32; }
-        .menu-table a { text-decoration: none; color: #FFFFFF; font-weight: bold; font-size: 0.9em; }
+        .menu-table td { padding: 10px 15px; border: 1px solid #FFFFFF; }
+        .menu-table td a { text-decoration: none; color: #FFFFFF; font-weight: bold; display: block; }
+        .menu-table td:hover { background-color: #00b3b3; }
 
-        /* Introduction & Explications */
-        .intro-box { 
-            background: white; 
+        .phrase-rose { color: #d81b60; font-weight: bold; font-size: 1.1em; text-shadow: 1px 1px 2px #f8bbd0; margin-top: 5px; }
+
+        /* FORMULAIRE */
+        .etoile-form { 
+            background: #ffffff; 
             border: 3px solid #008080; 
-            border-radius: 20px; 
-            width: 85%; 
-            max-width: 800px; 
+            width: 90%; 
+            max-width: 600px; 
             margin: 20px auto; 
             padding: 25px; 
-            box-shadow: 5px 5px 15px rgba(0,0,0,0.1); 
-            text-align: left; 
+            border-radius: 20px;
+            box-shadow: 0px 10px 20px rgba(0, 128, 128, 0.2);
+            text-align: left;
         }
-        .zone-explication { 
-            background: #F1F8E9; 
-            border-left: 5px solid #008080; 
-            padding: 20px; 
-            border-radius: 10px; 
-            line-height: 1.5; 
-            color: #004d40; 
-        }
-
-        /* Formulaire */
-        .form-container { 
-            background: white; 
-            border: 5px solid #008080; 
-            border-radius: 30px; 
-            width: 85%; 
-            max-width: 800px; 
-            margin: 20px auto; 
-            padding: 25px; 
-            box-shadow: 8px 8px 0px #008080; 
-            text-align: left; 
-        }
-        .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
-        label { display: block; margin-top: 10px; font-weight: bold; font-size: 0.9em; color: #00695c; }
+        label { display: block; margin-top: 10px; font-weight: bold; color: #00695c; font-size: 0.9em; }
         input, textarea, select { 
-            width: 100%; 
-            padding: 10px; 
-            border-radius: 10px; 
-            border: 2px solid #008080; 
-            font-family: inherit; 
-            box-sizing: border-box; 
-            background: #fafafa; 
-            color: #004d40; 
+            width: 100%; padding: 10px; margin: 5px 0 10px 0; 
+            border-radius: 10px; border: 2px solid #008080; 
+            background: #fafafa; color: #333; font-family: inherit;
         }
-        select { background-color: #f0fdf4; cursor: pointer; }
-        .full-width { grid-column: 1 / -1; }
         .btn-envoi { 
-            background: #008080; 
-            color: white; 
-            border: none; 
-            padding: 15px 35px; 
-            border-radius: 20px; 
-            font-weight: bold; 
-            cursor: pointer; 
-            margin-top: 15px; 
-            transition: 0.3s; 
-            width: 100%; 
-            font-family: inherit; 
-            font-size: 1.1em; 
+            background: #008080; color: white; border: none; 
+            padding: 12px; border-radius: 20px; 
+            font-weight: bold; cursor: pointer; font-size: 1.1em; 
+            width: 100%; margin-top: 10px; font-family: inherit;
         }
-        .btn-envoi:hover { background: #2e7d32; transform: translateY(-2px); }
+        .btn-envoi:hover { background: #2e7d32; }
 
-        /* Grille dynamique */
+        #searchBox { 
+            width: 90%; max-width: 650px; padding: 10px; 
+            margin: 20px auto; border-radius: 25px; 
+            border: 2px solid #008080; display: block;
+            background: #ffffff; font-family: inherit;
+        }
+
+        /* --- GRILLE ET CARTES PROPRES --- */
         .mur-reel { 
             display: grid; 
-            grid-template-columns: repeat(5, minmax(150px, 1fr)); 
-            gap: 12px; 
+            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); 
+            gap: 15px; 
             padding: 15px; 
-            max-width: 95vw; 
-            margin: 20px auto; 
+            max-width: 1100px; 
+            margin: 0 auto; 
         }
-        @media (max-width: 768px) { .mur-reel { grid-template-columns: repeat(2, 1fr); } }
 
         .carte-message { 
             background: white; 
             border: 2px solid #008080; 
-            border-radius: 10px; 
-            padding: 10px; 
+            border-radius: 12px; 
+            padding: 12px; 
             box-shadow: 3px 3px 0px #008080; 
             display: flex; 
             flex-direction: column; 
-            height: 260px; 
+            height: 220px; 
             cursor: pointer; 
             position: relative; 
-            overflow: hidden; 
             text-align: left; 
-            transition: transform 0.2s; 
+            color: #333; 
+            transition: transform 0.15s ease, box-shadow 0.15s ease;
         }
-        .carte-message:hover { transform: translateY(-3px); }
-        .nom-prenom { color: #2E7D32; font-weight: bold; font-size: 0.85em; border-bottom: 1px solid #eee; margin-bottom: 3px; }
-        .rubrique-tag { 
-            font-size: 0.6em; 
-            background: #008080; 
-            color: white; 
-            padding: 2px 6px; 
-            border-radius: 5px; 
-            position: absolute; 
-            top: 8px; 
-            right: 8px; 
+        .carte-message:hover { 
+            transform: translateY(-3px); 
+            box-shadow: 4px 4px 0px #008080; 
         }
+        .nom-prenom { color: #2e7d32; font-weight: bold; font-size: 0.85em; border-bottom: 1px solid #eee; margin-bottom: 4px; padding-bottom: 2px; }
+        .rubrique-tag { font-size: 0.55em; background: #008080; color: white; padding: 1px 4px; border-radius: 5px; position: absolute; top: 8px; right: 8px; }
+        
         .texte-annonce { 
             flex-grow: 1; 
             font-style: italic; 
             color: #004d40; 
-            overflow-y: auto; 
-            font-size: 0.8em; 
+            font-size: 0.75em; 
             margin: 5px 0; 
             line-height: 1.3; 
+            overflow: hidden;
+            display: -webkit-box;
+            -webkit-line-clamp: 5;
+            -webkit-box-orient: vertical;
+            white-space: pre-wrap; 
         }
-        .details-bas { font-size: 0.7em; color: #555; line-height: 1.3; border-top: 1px solid #eee; padding-top: 5px; background: white; }
+        .details-bas { font-size: 0.7em; color: #666; line-height: 1.3; border-top: 1px solid #eee; padding-top: 5px; background: white; }
 
-        /* Modale grand affichage */
+        /* --- GRANDE FENÊTRE (MODALE) --- */
         #fond-sombre { 
             display: none; 
             position: fixed; 
-            top: 0; left: 0; width: 100%; height: 100%; 
-            background: rgba(0,0,0,0.85); 
-            z-index: 2000; 
+            top: 0; 
+            left: 0; 
+            width: 100vw; 
+            height: 100vh; 
+            background: rgba(0,0,0,0.8); 
+            z-index: 99999; 
             justify-content: center; 
             align-items: center; 
         }
         .message-geant { 
             background: #F1F8E9; 
-            width: 95%; 
-            max-width: 700px; 
+            width: 90%; 
+            max-width: 650px; 
+            max-height: 85vh; 
             padding: 25px; 
-            border-radius: 25px; 
+            border-radius: 20px; 
             border: 5px solid #008080; 
             position: relative; 
-            max-height: 80vh; 
             overflow-y: auto; 
             color: #004d40; 
             text-align: left; 
-            box-shadow: 0 10px 25px rgba(0,0,0,0.3); 
+            box-shadow: 0 10px 25px rgba(0,0,0,0.4); 
         }
         .bouton-fermer { 
             position: absolute; 
-            top: 15px; right: 15px; 
+            top: 15px; 
+            right: 15px; 
             background: #008080; 
             color: white; 
             border-radius: 50%; 
-            width: 35px; height: 35px; 
+            width: 35px; 
+            height: 35px; 
             cursor: pointer; 
             border: 2px solid white; 
             font-weight: bold; 
+            font-size: 1em; 
             display: flex; 
             align-items: center; 
             justify-content: center; 
         }
+        .bouton-fermer:hover { background: #005f5f; }
 
-        /* Section Réponses intégrée */
-        .reponses-container {
-            margin-top: 20px;
-            border-top: 2px dashed #008080;
-            padding-top: 15px;
+        /* --- NOTIFICATION FLOTTANTE --- */
+        #notification-flottante {
+            display: none;
+            position: fixed;
+            top: 25px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #008080;
+            color: white;
+            padding: 15px 25px;
+            border-radius: 14px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.3);
+            z-index: 100000;
+            font-family: inherit;
+            max-width: 450px;
+            width: 90%;
+            text-align: left;
+            border: 2px solid #ffffff;
+            animation: fadeInTop 0.3s ease;
         }
-        .carte-reponse {
-            background: white;
-            border-left: 4px solid #008080;
-            padding: 10px 15px;
-            margin-bottom: 10px;
-            border-radius: 8px;
-            font-size: 0.9em;
+        @keyframes fadeInTop {
+            from { opacity: 0; transform: translate(-50%, -15px); }
+            to { opacity: 1; transform: translate(-50%, 0); }
         }
-
-        /* Mode Sombre & Étoiles harmonisés */
-        body.dark-mode { background-color: #0a0a1a; color: #e0e0e0; }
-        body.dark-mode .intro-box, body.dark-mode .form-container, body.dark-mode .carte-message, body.dark-mode .details-bas, body.dark-mode .carte-reponse { background: #12122c; border-color: #4db6ac; color: #e0e0e0; }
-        body.dark-mode .zone-explication, body.dark-mode .message-geant { background: #1b1b3a; border-left-color: #4db6ac; color: #b2dfdb; }
-        body.dark-mode input, body.dark-mode textarea, body.dark-mode select { background: #1a1a3a; color: #fff; border-color: #4db6ac; }
-        body.dark-mode .nom-prenom { color: #80cbc4; border-bottom-color: #2a2a4a; }
-        body.dark-mode .texte-annonce { color: #b2dfdb; }
-        .star { position: fixed; background: white; border-radius: 50%; opacity: 0; pointer-events: none; animation: twinkle var(--d) infinite; z-index: 10; }
-        @keyframes twinkle { 0%, 100% { opacity: 0.3; } 50% { opacity: 1; } }
-
-        /* Copyright interactif */
-        .copyright { margin: 40px 0 20px; font-size: 0.85em; color: #004d40; }
-        body.dark-mode .copyright { color: #b2dfdb; }
-        .copyright a { color: #008080; text-decoration: none; font-weight: bold; padding: 4px 8px; transition: all 0.4s ease; display: inline-block; }
-        body.dark-mode .copyright a { color: #4db6ac; }
-        .copyright a:hover { background: #E67E22; color: white; transform: scale(1.15) rotate(-2deg); border-radius: 5px; }
     </style>
 </head>
 <body>
 
-    <!-- Effets sonores -->
-    <audio id="snd-pop" src="https://assets.mixkit.co/active_storage/sfx/2571/2571-preview.mp3" preload="auto"></audio>
-    <audio id="snd-oiseaux" src="https://assets.mixkit.co/active_storage/sfx/512/512-preview.mp3" preload="auto"></audio>
-
     <div class="header-tools">
         <div id="google_translate_element"></div>
-        <button id="btn-mode" onclick="basculerModeSombre()" title="Mode Nuit / Ciel Étoilé">🏮</button>
     </div>
 
     <table class="menu-table">
@@ -258,71 +198,46 @@
             <td><a href="index.html" onmouseover="playPop()">Accueil</a></td>
             <td><a href="formulaire.html" onmouseover="playPop()">Semer</a></td>
             <td><a href="jardin.html" onmouseover="playPop()">Le Jardin</a></td>
-            <td><a href="impot.html" onmouseover="playPop()">Impôt Public</a></td>
-            <td><a href="registre_public.html" onmouseover="playPop()">Le Registre</a></td>
+            <td><a href="impot.html" onmouseover="playPop()">Impôts</a></td>
+            <td><a href="regulation.html" onmouseover="playPop()">Régulation</a></td>
+            <td><a href="aide.html" onmouseover="playPop()">Aide</a></td>
         </tr>
     </table>
 
-    <h1 style="color: #00695c; text-shadow: 1px 1px 0px white;">📜 Le Trésor Public</h1>
+    <h2 style="color:#00695c; margin: 10px 0;">💰 Espace Fiscal et Partage des Impôts 💰</h2>
+    <div class="phrase-rose">Expose ta situation ou ton questionnement fiscal. La communauté y répondra avec entraide.</div>
 
-    <div class="intro-box">
-        <div class="zone-explication">
-            <p>🌱 <strong>Bienvenue au Trésor Public du Jardinier.</strong> Chaque impôt ou contribution est ici une offrande libre pour la maintenance des communs et la fraternité souveraine.</p>
-        </div>
-    </div>
-
-    <!-- Formulaire d'envoi dynamique -->
-    <div class="form-container">
-        <form id="formImpots" onsubmit="envoyerImpots(event)">
+    <div class="etoile-form">
+        <form id="regForm" onsubmit="envoyerConflit(event)">
             <input type="hidden" name="type" value="IMPOT">
-            <div class="form-grid">
-                <div>
-                    <label>👤 Identité / Pseudo :</label>
-                    <input type="text" name="nom" required placeholder="Ex: Jardinier solidaire">
-                </div>
-                <div>
-                    <label>📍 Localisation / Ville :</label>
-                    <input type="text" name="localisation" required placeholder="Ex: Bordeaux">
-                </div>
-                <div>
-                    <label>🌍 Pays :</label>
-                    <input type="text" name="pays_select" placeholder="Ex: France">
-                </div>
-                <div class="full-width">
-                    <label>🌿 Sous-rubrique d'intervention :</label>
-                    <select name="categorie" id="categorie">
-                        <optgroup label="🏗️ MAINTENANCE & RÉSEAUX">
-                            <option value="Maintenance-Eau">Gestion de l'Eau & Assainissement</option>
-                            <option value="Maintenance-Energie">Énergie & Flux (Solaire/Réseaux)</option>
-                            <option value="Maintenance-Num">Numérique, Fibres & Serveurs</option>
-                        </optgroup>
-                        <optgroup label="🧹 BRIGADE DES TRAVAUX INGRATS">
-                            <option value="Ingrats-Dechets">Collecte & Valorisation des Déchets</option>
-                            <option value="Ingrats-Proprete">Nettoyage Public & Curage</option>
-                        </optgroup>
-                        <optgroup label="⚙️ INGÉNIERIE & COMMUNS MONDIAUX">
-                            <option value="Inge-Brevets">Conception de Brevets & Plans Libres</option>
-                            <option value="Inge-Global">Satellites, Câbles & Communs Mondiaux</option>
-                        </optgroup>
-                    </select>
-                </div>
-                <div class="full-width">
-                    <label>💬 Description de la contribution :</label>
-                    <textarea name="message" rows="4" required placeholder="Votre message pour le trésor public..."></textarea>
-                </div>
-                <div class="full-width">
-                    <label>🛠️ Besoins éventuels (outils, aide...) :</label>
-                    <input type="text" name="besoin" placeholder="Ex: Pioche, documentation, etc.">
-                </div>
-            </div>
-            <button type="submit" id="btnEnvoi" class="btn-envoi" onmouseover="playPop()">GRAVER AU REGISTRE 🌿</button>
+            
+            <label>👤 Ton nom ou pseudo :</label>
+            <input type="text" name="nom" placeholder="Ton nom..." required>
+
+            <label>📍 Zone Géographique (Pays, Ville) :</label>
+            <input type="text" name="localisation" placeholder="Ex: France, Paris..." required>
+
+            <label>⏳ Durée de validité (en jours) :</label>
+            <input type="number" name="duree_validite" value="30" min="1" required>
+
+            <label>💬 Expose ta question ou situation fiscale :</label>
+            <textarea name="message" rows="4" placeholder="Décris ta situation ici..." required></textarea>
+
+            <button type="submit" id="btnEnvoi" class="btn-envoi" onmouseover="playPop()">SOUMETTRE À L'ENSEMBLE 🕊️</button>
         </form>
     </div>
 
-    <h2 style="color: #00695c; margin: 30px 0 10px;">📖 Registre du Trésor Public</h2>
-    <div id="mur-messages" class="mur-reel"></div>
+    <div style="max-width: 650px; margin: auto; padding: 10px;">
+        <input type="text" id="searchBox" onkeyup="filtrer()" placeholder="🔍 Chercher une ville, un nom...">
+    </div>
 
-    <!-- Modale interactive -->
+    <div style="max-width: 95vw; margin: 40px auto; padding: 10px;">
+        <h3 id="titre-dossiers" style="color:#00695c; margin-bottom: 20px;">🕊️ Dossiers fiscaux en cours</h3>
+        <div id="chargement" style="font-weight:bold; color:#004d40;">Appel de la sagesse citoyenne...</div>
+        <div id="flux-conflits" class="mur-reel"></div>
+    </div>
+
+    <!-- Modale Grand Message -->
     <div id="fond-sombre" onclick="fermerGrandMessage()">
         <div class="message-geant" onclick="event.stopPropagation()">
             <button class="bouton-fermer" onclick="fermerGrandMessage()">X</button>
@@ -330,302 +245,306 @@
         </div>
     </div>
 
-    <div class="copyright">
-        <a href="merci.html" class="copyright-link" onmouseover="playPop()">© 2000 Le petit prince des jardiniers</a>
+    <!-- Notification Flottante -->
+    <div id="notification-flottante">
+        <span id="texte-notification"></span>
+        <button onclick="fermerNotification()" style="background: none; border: none; color: white; font-weight: bold; font-size: 1.2em; float: right; cursor: pointer; margin-left: 10px; line-height: 1;">&times;</button>
     </div>
 
-    <!-- Scripts fonctionnels & Sons -->
     <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
     <script>
         const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbxxToz22V88elCCjxLqjRtsb5iBIC156cbBFRIlTsju2SwOj9yNnKqzAwFITXMg_wij/exec";
-        let cacheAnnonces = [];
-        let annonceActiveCourante = null;
+        let globalData = [];
+        let annonceActiveId = null;
+        let notificationTimer = null;
 
-        function googleTranslateElementInit() {
-            new google.translate.TranslateElement({pageLanguage: 'fr', layout: google.translate.TranslateElement.InlineLayout.SIMPLE}, 'google_translate_element');
+        function googleTranslateElementInit() { 
+            new google.translate.TranslateElement({pageLanguage: 'fr'}, 'google_translate_element'); 
+        }
+
+        function formaterDate(dateStr) {
+            if (!dateStr) return 'Récemment';
+            const d = new Date(dateStr);
+            if (!isNaN(d.getTime())) {
+                return d.toLocaleDateString('fr-FR', {
+                    day: '2-digit',
+                    month: '2-digit',
+                    year: 'numeric',
+                    hour: '2-digit',
+                    minute: '2-digit'
+                });
+            }
+            return String(dateStr).replace(/[:.]?00Z$/, '').replace('T', ' à ');
+        }
+
+        function montrerNotification(texte) {
+            const notif = document.getElementById('notification-flottante');
+            document.getElementById('texte-notification').innerText = texte;
+            notif.style.display = 'block';
+
+            if (notificationTimer) {
+                clearTimeout(notificationTimer);
+            }
+
+            notificationTimer = setTimeout(() => {
+                fermerNotification();
+            }, 3000);
+        }
+
+        function fermerNotification() {
+            const notif = document.getElementById('notification-flottante');
+            notif.style.display = 'none';
+            if (notificationTimer) {
+                clearTimeout(notificationTimer);
+                notificationTimer = null;
+            }
         }
 
         function playPop() {
-            const pop = document.getElementById('snd-pop');
-            pop.currentTime = 0;
-            pop.play().catch(()=>{});
-        }
-
-        function playOiseaux() {
-            const song = document.getElementById('snd-oiseaux');
-            song.currentTime = 0;
-            song.play().catch(()=>{});
-            setTimeout(() => {
-                song.pause();
-                song.currentTime = 0;
-            }, 2000);
-        }
-
-        // Lecture insensible à la casse des colonnes du Google Sheet
-        function getProp(obj, key) {
-            if (!obj) return '';
-            const lowerKey = key.toLowerCase();
-            for (let k in obj) {
-                if (k.toLowerCase() === lowerKey) return obj[k];
-            }
-            return '';
-        }
-
-        // Nettoyage et formatage des dates (supprime les 0000Z, T, etc.)
-        function formaterDate(val) {
-            if (!val) return 'Récemment';
-            let str = String(val).trim();
-            // Si c'est une date au format ISO technique (ex: 2026-10-03T00:00:00.000Z)
-            let d = new Date(str);
-            if (!isNaN(d.getTime())) {
-                const j = String(d.getDate()).padStart(2, '0');
-                const m = String(d.getMonth() + 1).padStart(2, '0');
-                const a = d.getFullYear();
-                const h = String(d.getHours()).padStart(2, '0');
-                const min = String(d.getMinutes()).padStart(2, '0');
-                // Si l'heure est 00:00 et qu'il n'y avait pas d'heure précise dans Google Sheets, on affiche juste le jour
-                if (h === '00' && min === '00') {
-                    return `${j}/${m}/${a}`;
-                }
-                return `${j}/${m}/${a} à ${h}:${min}`;
-            }
-            // Sinon, nettoyage de secours des caractères barbares
-            return str.replace(/T/g, ' à ').replace(/\.\d+Z$/, '').replace(/Z$/, '').replace(/0000Z/g, '');
-        }
-
-        function basculerModeSombre() {
-            document.body.classList.toggle('dark-mode');
-            if (document.body.classList.contains('dark-mode')) {
-                for(let i=0; i<60; i++) {
-                    let s = document.createElement('div');
-                    s.className = 'star';
-                    s.style.left = Math.random() * 100 + 'vw';
-                    s.style.top = Math.random() * 100 + 'vh';
-                    s.style.width = s.style.height = (Math.random() * 3 + 1) + 'px';
-                    s.style.setProperty('--d', (Math.random() * 3 + 2) + 's');
-                    document.body.appendChild(s);
-                }
-            } else {
-                document.querySelectorAll('.star').forEach(s => s.remove());
-            }
-        }
-
-        // Chargement asynchrone du registre
-        async function chargerImpots() {
             try {
-                const response = await fetch(WEB_APP_URL + "?v=" + Date.now());
-                const toutesLesAnnonces = await response.json();
-                cacheAnnonces = toutesLesAnnonces;
-                
-                // Filtrage des annonces principales (en ignorant les réponses)
-                const annoncesImpots = toutesLesAnnonces.filter(ann => {
-                    const typeVal = String(getProp(ann, 'type') || "").toUpperCase();
-                    return !typeVal.includes("REPONSE");
+                const ctx = new (window.AudioContext || window.webkitAudioContext)();
+                const osc = ctx.createOscillator();
+                const gain = ctx.createGain();
+                osc.type = 'sine';
+                osc.frequency.setValueAtTime(600, ctx.currentTime);
+                osc.frequency.exponentialRampToValueAtTime(800, ctx.currentTime + 0.04);
+                gain.gain.setValueAtTime(0.08, ctx.currentTime);
+                gain.gain.linearRampToValueAtTime(0.001, ctx.currentTime + 0.04);
+                osc.connect(gain);
+                gain.connect(ctx.destination);
+                osc.start();
+                osc.stop(ctx.currentTime + 0.04);
+            } catch(e) {}
+        }
+
+        function playGong() {
+            try {
+                const ctx = new (window.AudioContext || window.webkitAudioContext)();
+                const now = ctx.currentTime;
+                const freqs = [146.83, 293.66, 440.00, 587.33]; 
+
+                freqs.forEach((f, index) => {
+                    const osc = ctx.createOscillator();
+                    const gain = ctx.createGain();
+                    
+                    osc.type = index === 0 ? 'sine' : 'triangle';
+                    osc.frequency.setValueAtTime(f, now);
+                    osc.frequency.exponentialRampToValueAtTime(f * 0.99, now + 2.0);
+                    
+                    gain.gain.setValueAtTime(0.25 / (index + 1), now);
+                    gain.gain.exponentialRampToValueAtTime(0.0001, now + 2.2);
+                    
+                    osc.connect(gain);
+                    gain.connect(ctx.destination);
+                    
+                    osc.start(now);
+                    osc.stop(now + 2.2);
+                });
+            } catch(e) {}
+        }
+
+        async function envoyerConflit(event) {
+            event.preventDefault();
+            playGong();
+
+            const btn = document.getElementById('btnEnvoi');
+            const texteInitial = btn.innerText;
+            btn.innerText = "Transmission en cours...";
+            btn.disabled = true;
+
+            const form = document.getElementById('regForm');
+            const formData = new FormData(form);
+            const urlParams = new URLSearchParams(formData);
+
+            try {
+                await fetch(WEB_APP_URL, {
+                    method: 'POST',
+                    mode: 'no-cors',
+                    body: urlParams
                 });
 
-                const cont = document.getElementById('mur-messages');
-                cont.innerHTML = "";
+                setTimeout(async () => {
+                    montrerNotification("Ton dossier fiscal a été déposé avec succès. 🕊️");
+                    form.reset();
+                    await chargerConflits();
+                    document.getElementById('titre-dossiers').scrollIntoView({ behavior: 'smooth' });
+                }, 1000);
 
-                if (annoncesImpots.length === 0) {
-                    cont.innerHTML = `<div style="grid-column: span 5; padding: 20px; font-weight: bold; background: white; border-radius: 10px; color: #008080;">Aucune contribution active pour l'instant... 🪙</div>`;
+            } catch (err) {
+                console.error(err);
+                montrerNotification("Erreur lors de l'envoi.");
+            } finally {
+                setTimeout(() => {
+                    btn.innerText = texteInitial;
+                    btn.disabled = false;
+                }, 1000);
+            }
+        }
+
+        async function chargerConflits() {
+            try {
+                const response = await fetch(WEB_APP_URL + "?v=" + Date.now());
+                globalData = await response.json();
+                
+                document.getElementById('chargement').style.display = 'none';
+                const flux = document.getElementById('flux-conflits');
+                flux.innerHTML = "";
+
+                const conflits = globalData.filter(d => {
+                    const typeVal = String(d.type || "").trim().toUpperCase();
+                    return typeVal === "IMPOT";
+                });
+
+                if (conflits.length === 0) {
+                    flux.innerHTML = `<div style="grid-column: 1 / -1; padding: 20px; font-weight: bold; background: white; border-radius: 10px; color: #008080;">Aucun dossier fiscal pour l'instant... 🕊️</div>`;
                     return;
                 }
 
-                annoncesImpots.reverse();
+                conflits.reverse();
 
-                annoncesImpots.forEach(ann => {
-                    const nom = getProp(ann, 'nom');
-                    const categorie = getProp(ann, 'categorie');
-                    const message = getProp(ann, 'message');
-                    const localisation = getProp(ann, 'localisation');
-                    const pays = getProp(ann, 'pays_select');
-                    const horodateurBrut = getProp(ann, 'horodateur');
-                    const horodateur = formaterDate(horodateurBrut);
-
+                conflits.forEach(c => {
                     const d = document.createElement('div');
                     d.className = 'carte-message';
-                    d.onclick = () => ouvrirGrandMessage(ann);
+                    d.onclick = () => ouvrirGrandMessage(c);
                     d.innerHTML = `
-                        <div class="nom-prenom">${nom || "Anonyme"}</div>
-                        <div class="rubrique-tag">${categorie || 'Trésor'}</div>
-                        <div class="texte-annonce">"${message || ''}"</div>
+                        <div class="nom-prenom">${c.nom || "Anonyme"}</div>
+                        <div class="rubrique-tag">Impôt</div>
+                        <div class="texte-annonce">"${c.message}"</div>
                         <div class="details-bas">
-                            📍 Ville : ${localisation || 'N/C'}<br>
-                            🌍 Pays : ${pays || 'N/C'}<br>
-                            📅 Date : ${horodateur}
+                            📍 ${c.localisation || 'N/C'}<br>
+                            ⏳ Validité : ${c.duree_validite || '30'}j<br>
+                            📅 ${formaterDate(c.Horodateur || c.date)}
                         </div>
                     `;
-                    cont.appendChild(d);
+                    flux.appendChild(d);
                 });
-
-                // Si la modale est ouverte, rafraîchir son contenu dynamiquement
-                if (annonceActiveCourante) {
-                    const activeNom = getProp(annonceActiveCourante, 'nom');
-                    const activeDate = getProp(annonceActiveCourante, 'horodateur');
-                    const miseAJourAnnonce = toutesLesAnnonces.find(a => 
-                        String(getProp(a, 'nom')).trim().toLowerCase() === String(activeNom).trim().toLowerCase() && 
-                        String(getProp(a, 'horodateur')).trim() === String(activeDate).trim()
-                    );
-                    if (miseAJourAnnonce) {
-                        ouvrirGrandMessage(miseAJourAnnonce, true);
-                    }
-                }
-
             } catch (error) {
                 console.error("Erreur de chargement :", error);
-                document.getElementById('mur-messages').innerHTML = `<div style="grid-column: span 5; padding: 20px; font-weight: bold; background: white; border-radius: 10px; color: #d32f2f;">Impossible de charger le registre... 🌱</div>`;
+                document.getElementById('chargement').innerText = "Impossible de charger le registre fiscal.";
             }
         }
 
-        function ouvrirGrandMessage(ann, silent = false) {
-            annonceActiveCourante = ann;
-            const annNom = String(getProp(ann, 'nom') || "").trim();
-            const annDateBrute = String(getProp(ann, 'horodateur') || "").trim();
-            const annDateFormatee = formaterDate(annDateBrute);
+        function ouvrirGrandMessage(ann) {
+            playPop();
             
-            // Identifiant unique normalisé pour relier la réponse au message
-            const annonceId = annDateBrute ? `${annNom}_${annDateBrute}` : annNom;
-            
-            // Recherche robuste des réponses correspondantes
-            const reponses = cacheAnnonces.filter(a => {
-                const typeVal = String(getProp(a, 'type') || "").toUpperCase();
-                if (!typeVal.includes("REPONSE")) return false;
+            let rawRef = ann.Horodateur || ann.nom;
+            annonceActiveId = String(rawRef).replace(/[:.]?00Z$/, '').replace(/Z$/, '');
 
-                const refRep = String(getProp(a, 'parent_ref') || "").trim();
-                const parentRep = String(getProp(a, 'parent') || "").trim();
-
-                const matchRef = refRep && annonceId && refRep === annonceId;
-                // Sécurité supplémentaire : si le parent_ref correspond juste au nom ou à la date formatée
-                const matchNomEtDate = parentRep.toLowerCase() === annNom.toLowerCase() && (refRep.includes(annDateBrute) || refRep === annNom);
-                
-                return matchRef || matchNomEtDate;
+            const reponses = globalData.filter(d => {
+                const typeVal = String(d.type || "").trim().toUpperCase();
+                return typeVal === "REPONSE_IMPOT" && String(d.localisation || "").includes(annonceActiveId);
             });
+            reponses.reverse();
 
-            let htmlReponses = '';
+            let htmlReponses = "";
             if (reponses.length > 0) {
-                reponses.forEach(rep => {
-                    const dateRep = formaterDate(getProp(rep, 'horodateur'));
+                htmlReponses += `<h4 style="color: #00695c; margin-top: 15px; margin-bottom: 8px;">💬 Réponses de la communauté (${reponses.length}) :</h4>`;
+                htmlReponses += `<div style="max-height: 150px; overflow-y: auto; border: 2px solid #008080; border-radius: 10px; padding: 10px; background: #ffffff;">`;
+                
+                reponses.forEach(r => {
                     htmlReponses += `
-                        <div class="carte-reponse">
-                            <strong>💬 ${getProp(rep, 'nom') || "Anonyme"} :</strong> ${getProp(rep, 'message') || ''}
-                            <div style="font-size: 0.75em; color: #555; margin-top: 3px;">📅 ${dateRep}</div>
+                        <div style="background: #E8F5E9; border-left: 4px solid #2e7d32; padding: 8px 10px; margin-bottom: 8px; border-radius: 6px; font-size: 0.9em; text-align: left; color: #004d40; white-space: pre-wrap;">
+                            <strong>🕊️ ${r.nom || "Un sage"} :</strong> ${r.message}
+                            <div style="font-size: 0.7em; color: #555; margin-top: 3px;">📅 ${formaterDate(r.Horodateur)}</div>
                         </div>
                     `;
                 });
+                htmlReponses += `</div>`;
             } else {
-                htmlReponses = `<p style="font-size: 0.9em; font-style: italic; color: #555;">Aucune réponse pour le moment. Soyez le premier à répondre ! 🌿</p>`;
+                htmlReponses += `<p style="font-style: italic; color: #555; margin-top: 15px;">Aucune réponse pour l'instant. Soyez le premier à apporter votre sagesse fiscale ! 🌿</p>`;
             }
 
             document.getElementById('geant-contenu').innerHTML = `
-                <div style="font-size:1.5em; color:#00695c; font-weight:bold; border-bottom:3px solid #008080; margin-bottom:15px; padding-bottom:5px;">🪙 Contribution de ${annNom || "Anonyme"}</div>
-                <div style="background:white; padding:20px; border-radius:15px; border-left:8px solid #008080; font-size:1.1em; color:#004d40; text-align:left; margin-bottom:15px; font-style:italic;">"${getProp(ann, 'message') || ''}"</div>
-                <div style="text-align:left; background:#E0F2F1; padding:15px; border-radius:10px; font-size:0.95em; color:#004d40; margin-bottom:20px;">
-                    <strong>🌿 Rubrique :</strong> ${getProp(ann, 'categorie') || 'N/C'}<br>
-                    <strong>📍 Localisation :</strong> ${getProp(ann, 'localisation') || "N/C"}<br>
-                    <strong>🌍 Pays :</strong> ${getProp(ann, 'pays_select') || "N/C"}<br>
-                    <strong>🛠️ Besoins :</strong> ${getProp(ann, 'besoin') || "Aucun spécifié"}<br>
-                    <strong>📅 Date :</strong> ${annDateFormatee}
+                <div style="font-size:1.3em; color:#00695c; font-weight:bold; border-bottom:3px solid #008080; margin-bottom:12px; padding-bottom:5px;">💰 Dossier de ${ann.nom || "Anonyme"}</div>
+                
+                <div style="background:white; padding:15px; border-radius:12px; border-left:8px solid #008080; font-size:1em; color:#333; text-align:left; margin-bottom:12px; max-height: 160px; overflow-y: auto; box-shadow: inset 0 2px 5px rgba(0,0,0,0.05); word-break: break-word; white-space: pre-wrap;">"${ann.message}"</div>
+                
+                <div style="text-align:left; background:#E0F2F1; padding:10px; border-radius:8px; font-size:0.9em; color:#004d40; margin-bottom:12px;">
+                    <strong>📍 Localisation :</strong> ${ann.localisation || "N/C"}<br>
+                    <strong>⏳ Durée de validité :</strong> ${ann.duree_validite || "30"} jours<br>
+                    <strong>📅 Date :</strong> ${formaterDate(ann.Horodateur || ann.date)}
                 </div>
 
-                <div class="reponses-container">
-                    <h3 style="color: #00695c; margin-bottom: 10px;">💬 Réponses à cette contribution</h3>
-                    <div id="liste-reponses">${htmlReponses}</div>
+                <div id="section-reponses">
+                    ${htmlReponses}
+                </div>
 
-                    <form id="formReponse" onsubmit="envoyerReponse(event, '${annonceId.replace(/'/g, "\\'")}', '${annNom.replace(/'/g, "\\'")}')" style="margin-top: 15px;">
-                        <input type="hidden" name="type" value="REPONSE_REGULATION">
-                        <input type="hidden" name="parent_ref" value="${annonceId}">
-                        <input type="hidden" name="parent" value="${annNom}">
-                        <div style="margin-bottom: 10px;">
-                            <label>👤 Votre Nom / Pseudo :</label>
-                            <input type="text" name="nom" required placeholder="Votre pseudo">
-                        </div>
-                        <div style="margin-bottom: 10px;">
-                            <label>💬 Votre réponse :</label>
-                            <textarea name="message" rows="3" required placeholder="Écrivez votre réponse ici..."></textarea>
-                        </div>
-                        <button type="submit" id="btnReponse" class="btn-envoi" style="padding: 10px 20px; font-size: 1em;" onmouseover="playPop()">RÉPONDRE 🌿</button>
+                <div style="margin-top: 15px; background: white; padding: 12px; border-radius: 10px; border: 2px dashed #008080;">
+                    <h4 style="margin-top: 0; color: #00695c; margin-bottom: 6px; font-size: 1em;">🌿 Apporter une réponse :</h4>
+                    <form id="formReponse" onsubmit="envoyerReponse(event, '${annonceActiveId}')">
+                        <input type="text" id="repNom" placeholder="Votre nom ou pseudo..." required style="margin-bottom: 6px; padding: 8px;">
+                        <textarea id="repMessage" rows="2" placeholder="Rédigez votre réponse ici..." required style="margin-bottom: 6px; padding: 8px;"></textarea>
+                        <button type="submit" id="btnReponseSubmit" style="background: #008080; color: white; border: none; padding: 8px 15px; border-radius: 8px; font-weight: bold; cursor: pointer; width: 100%;">Envoyer ma réponse 🕊️</button>
                     </form>
                 </div>
             `;
-            if (!silent) {
-                document.getElementById('fond-sombre').style.display = 'flex';
+            document.getElementById('fond-sombre').style.display = 'flex';
+        }
+
+        async function envoyerReponse(event, refId) {
+            event.preventDefault();
+            playGong();
+
+            const nomRep = document.getElementById('repNom').value;
+            const msgRep = document.getElementById('repMessage').value;
+            const btnSub = document.getElementById('btnReponseSubmit');
+            btnSub.innerText = "Transmission...";
+            btnSub.disabled = true;
+
+            const formData = new URLSearchParams();
+            formData.append('type', 'REPONSE_IMPOT');
+            formData.append('nom', nomRep);
+            formData.append('localisation', 'Ref:' + refId);
+            formData.append('message', msgRep);
+            formData.append('duree_validite', '30');
+
+            try {
+                await fetch(WEB_APP_URL, {
+                    method: 'POST',
+                    mode: 'no-cors',
+                    body: formData
+                });
+
+                montrerNotification("Votre réponse a été transmise ! 🕊️");
+
+                const sectionRep = document.getElementById('section-reponses');
+                sectionRep.innerHTML += `
+                    <div style="background: #C8E6C9; color: #1B5E20; padding: 10px; border-radius: 8px; margin-top: 10px; font-weight: bold; text-align: center;">
+                        ✓ Réponse envoyée avec succès ! Retour au mur...
+                    </div>
+                `;
+
+                setTimeout(async () => {
+                    fermerGrandMessage();
+                    await chargerConflits();
+                    setTimeout(() => {
+                        document.getElementById('titre-dossiers').scrollIntoView({ behavior: 'smooth' });
+                    }, 100);
+                }, 3000);
+
+            } catch (err) {
+                console.error(err);
+                montrerNotification("Erreur lors de l'envoi de la réponse.");
+                btnSub.innerText = "Envoyer ma réponse 🕊️";
+                btnSub.disabled = false;
             }
         }
 
         function fermerGrandMessage() { 
+            annonceActiveId = null;
             document.getElementById('fond-sombre').style.display = 'none'; 
-            annonceActiveCourante = null;
         }
 
-        async function envoyerReponse(event, annonceId, parentNom) {
-            event.preventDefault();
-            playOiseaux();
-
-            const btn = document.getElementById('btnReponse');
-            const texteInitial = btn.innerText;
-            btn.innerText = "Envoi en cours... 🌿";
-            btn.disabled = true;
-
-            const form = document.getElementById('formReponse');
-            const formData = new FormData(form);
-            const urlParams = new URLSearchParams(formData);
-
-            try {
-                await fetch(WEB_APP_URL, {
-                    method: 'POST',
-                    mode: 'no-cors',
-                    body: urlParams
-                });
-
-                setTimeout(async () => {
-                    form.reset();
-                    await chargerImpots();
-                    alert("Votre réponse a bien été enregistrée ! ✨");
-                }, 2500);
-
-            } catch (err) {
-                console.error(err);
-                alert("Erreur lors de l'envoi de la réponse.");
-                btn.innerText = texteInitial;
-                btn.disabled = false;
+        function filtrer() {
+            let val = document.getElementById('searchBox').value.toLowerCase();
+            let cards = document.getElementsByClassName('carte-message');
+            for (let c of cards) {
+                let match = c.innerText.toLowerCase().includes(val);
+                c.style.display = match ? "" : "none";
             }
         }
 
-        async function envoyerImpots(event) {
-            event.preventDefault();
-            playOiseaux();
-
-            const btn = document.getElementById('btnEnvoi');
-            const texteInitial = btn.innerText;
-            btn.innerText = "Versement en cours... 🌿";
-            btn.disabled = true;
-
-            const form = document.getElementById('formImpots');
-            const formData = new FormData(form);
-            const urlParams = new URLSearchParams(formData);
-
-            try {
-                await fetch(WEB_APP_URL, {
-                    method: 'POST',
-                    mode: 'no-cors',
-                    body: urlParams
-                });
-
-                setTimeout(async () => {
-                    form.reset();
-                    await chargerImpots();
-                    alert("Votre contribution a bien été gravée dans les Communs ! ✨");
-                }, 2500);
-
-            } catch (err) {
-                console.error(err);
-                alert("Erreur lors de l'envoi au Trésor Public.");
-                btn.innerText = texteInitial;
-                btn.disabled = false;
-            }
-        }
-
-        window.onload = chargerImpots;
+        window.onload = chargerConflits;
     </script>
 </body>
 </html>
