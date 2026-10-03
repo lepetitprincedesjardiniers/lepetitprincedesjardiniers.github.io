@@ -234,7 +234,7 @@
                 <div style="padding-top: 6px;">
                     <h3 style="margin:0; font-size: 1em; color: #fff9c4;">💡 Savoirs</h3>
                     <p style="font-size: 0.75em; font-weight: bold; margin: 3px 0; color: #ffffff;">Bibliothèque vivante</p>
-                    <p style="font-size: 0.75em; font-weight: bold; margin: 3px 0; color: #fffde7;">Transmettre et créer</p>
+                    <p style="font-size: 0.75em; font-weight: bold; margin: 3px 0; color: #ffffff;">Transmettre et créer</p>
                     <div class="phrases-impots" style="font-size: 0.72em;">Partage des connaissances, apprentissages et trésors de l'intelligence.</div>
                 </div>
                 <div class="liste-exemples-discrets">
@@ -265,7 +265,7 @@
         let audio = new Audio('oiseaux.mp3'); audio.loop = true; let enLecture = false;
         function toggleSon() {
             if (!enLecture) { audio.play().catch(e=>{}); document.getElementById('btn-son').innerHTML = "🎶"; enLecture = true; } 
-            else { audio.pause(); document.getElementById('btn-son').innerHTML = "🕊️️"; enLecture = false; }
+            else { audio.pause(); document.getElementById('btn-son').innerHTML = "🕊️"; enLecture = false; }
         }
 
         const coffre = document.getElementById('coffre-magique');
