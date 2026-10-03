@@ -66,6 +66,7 @@
             <td><a href="index.html">Accueil</a></td>
             <td><a href="formulaire.html">Semer</a></td>
             <td><a href="jardin.html">Le Jardin</a></td>
+            <td><a href="ministere-de-lhonnetete.html#apropos">📰 Le Journal</a></td>
             <td><a href="impot.html">Impôts Publics</a></td>
             <td><a href="regulation.html">Régulation</a></td>
             <td><a href="aide.html">Aide & Harmonie</a></td>
@@ -82,26 +83,33 @@
         <h4>🌟 Guide des Semailles</h4>
         <div class="aide-section">
             <span class="aide-titre">💡 SAVOIRS</span>
-            • <b>Étudiant :</b> Soutien scolaire.<br>
-            • <b>Artiste :</b> Cours de danse/chant.<br>
-            • <b>Ingénieur :</b> Mentorat technique.
+            • Enseignement, cours, soutien scolaire.<br>
+            • Transmettre un artisanat ou un art.<br>
+            • Mentorat pro et conseils techniques.
         </div>
         <div class="aide-section">
             <span class="aide-titre">🏠 VIE CITOYENNE</span>
-            • <b>Jeune :</b> Prêt vélo/trottinette.<br>
-            • <b>Sportif :</b> Cherche équipe foot.<br>
-            • <b>Ouvrier :</b> Prêt d'outils bricolage.
+            • Nourriture, repas, graines, eau potable.<br>
+            • Prêt/don d'objets, vêtements, outils.<br>
+            • Logement, accueil, soutien au covoiturage.
         </div>
         <div class="aide-section">
             <span class="aide-titre">💖 AIDE & HARMONIE</span>
-            • <b>Malade :</b> Besoin de soins/visite.<br>
-            • <b>Maman :</b> Cherche crèche/garde.<br>
-            • <b>Urgence :</b> Panne de chauffage/gaz.
+            • Urgence de santé, visites, écoute.<br>
+            • Garde d'enfants, aides aux personnes âgées.<br>
+            • Ménage, soutien quotidien, soin des animaux.
         </div>
         <div class="aide-section">
             <span class="aide-titre">⚖️ RÉGULATION</span>
-            • <b>Aîné :</b> Aide avec les papiers.<br>
-            • <b>Voisins :</b> Calmer un conflit.
+            • Aide administrative, paperasse.<br>
+            • Médiation entre voisins, paix citoyenne.<br>
+            • Assemblées et décisions collectives.
+        </div>
+        <div class="aide-section">
+            <span class="aide-titre">📜 TRÉSOR PUBLIC</span>
+            • Réseaux vitaux (Centrale élec, Eau public, EDF).<br>
+            • Chantiers collectifs, réfection de routes.<br>
+            • Entretien des espaces verts & forêts.
         </div>
     </div>
 
@@ -195,10 +203,10 @@
                 <select name="type" id="main_cat" onchange="updateSubCats()" required>
                     <option value="">-- Domaine d'action --</option>
                     <option value="SAVOIR">💡 SAVOIRS (Apprendre, Transmettre, Talents)</option>
-                    <option value="VIE">🏠 VIE CITOYENNE (Échanges d'objets, Loisirs, Logement)</option>
-                    <option value="AIDE">💖 AIDE & HARMONIE (Soins, Urgences, Petite enfance)</option>
-                    <option value="REGULATION">⚖️ RÉGULATION (Médiation, Paperasse, Conseils)</option>
-                    <option value="IMPOT">📜 TRÉSOR PUBLIC (Nature, Chantiers pour tous)</option>
+                    <option value="VIE">🏠 VIE CITOYENNE (Nourriture, Objets, Logement, Matériel)</option>
+                    <option value="AIDE">💖 AIDE & HARMONIE (Soins, Aînés, Ménage, Animaux, Urgences)</option>
+                    <option value="REGULATION">⚖️ RÉGULATION (Médiation, Paperasse, Assemblées)</option>
+                    <option value="IMPOT">📜 TRÉSOR PUBLIC (Réseaux vitaux, Eau, Électricité, Chantiers)</option>
                     <option value="AUTRE_CAT">🌈 AUTRE DOMAINE...</option>
                 </select>
                 <a class="discreet-help" onclick="toggleGuide(event)">❓ Pas sûr ? Consultez le guide des semailles</a>
@@ -319,11 +327,11 @@ Le jardin arrose les fleurs..." required></textarea>
     function googleTranslateElementInit() { new google.translate.TranslateElement({pageLanguage: 'fr'}, 'google_translate_element'); }
 
     const tree = {
-        "SAVOIR": ["🎓 Soutien Scolaire", "🎨 Talents (Art, Musique)", "💼 Mentorat Pro", "AUTRE_SUB"],
-        "VIE": ["🛠️ Prêt de Matériel", "🏠 Accueil & Logement", "🚗 Sport & Loisirs", "AUTRE_SUB"],
-        "AIDE": ["🚑 URGENCE", "🤝 Garde d'enfants", "🏥 Santé & Visites", "AUTRE_SUB"],
-        "REGULATION": ["⚖️ Aide Administrative", "🕊️ Médiation", "AUTRE_SUB"],
-        "IMPOT": ["🏗️ Chantiers Collectifs", "🌲 Nature", "AUTRE_SUB"]
+        "SAVOIR": ["🎓 Soutien Scolaire & Cours", "🎨 Art, Musique & Création", "💼 Mentorat Pro & Métiers", "AUTRE_SUB"],
+        "VIE": ["🍎 Nourriture, Repas & Eau", "🛠️ Prêt d'Objets, Outils & Véhicules", "🏠 Accueil, Logement & Déménagement", "⚽ Loisirs & Sport", "AUTRE_SUB"],
+        "AIDE": ["🚑 URGENCE & Santé", "👵 Aînés, Ménage & Garde d'enfants", "💖 Écoute & Soutien Moral", "🐾 Animaux & Nature", "AUTRE_SUB"],
+        "REGULATION": ["⚖️ Aide Administrative & Paperasse", "🕊️ Médiation de Voisinage", "🗳️ Assemblées & Décisions Communes", "AUTRE_SUB"],
+        "IMPOT": ["⚡ Réseaux Vitaux (Centrale, EDF, Eau publique)", "🏗️ Chantiers Collectifs & Voirie", "🌲 Espaces Verts & Forêts", "AUTRE_SUB"]
     };
 
     function updateSubCats() {
