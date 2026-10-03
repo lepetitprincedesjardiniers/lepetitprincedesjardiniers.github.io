@@ -74,10 +74,10 @@
                     <td><a href="index.html">Accueil</a></td>
                     <td><a href="formulaire.html">Semer</a></td>
                     <td><a href="jardin.html">Le Jardin</a></td>
-                    <td><a href="impot.html">Trésor Public</a></td>
-                    <td><a href="regulation.html">Régulation</a></td>
-                    <td><a href="aide.html">Aide & Harmonie</a></td>
-                    <td><a href="savoirs.html">Savoirs</a></td>
+                    <td><a href="jardin.html?cat=IMPOT">Trésor Public</a></td>
+                    <td><a href="jardin.html?cat=REGULATION">Régulation</a></td>
+                    <td><a href="jardin.html?cat=AIDE">Aide & Harmonie</a></td>
+                    <td><a href="jardin.html?cat=SAVOIR">Savoirs</a></td>
                     <td><a href="vie.html">Vie Citoyenne</a></td>
                 </tr>
             </table>
@@ -178,8 +178,8 @@
             "SAVOIR": "Savoir",
             "VIE": "Citoyenne",
             "AIDE": "Harmonie",
-            "URGENCE": "Harmonie",  // Se liera au grand bouton et affichera la sous-rubrique
-            "ECOUTE": "Harmonie",   // Se liera au grand bouton et affichera la sous-rubrique
+            "URGENCE": "Harmonie",  
+            "ECOUTE": "Harmonie",   
             "REGULATION": "Régulation",
             "IMPOT": "Trésor",
             "AUTRE_CAT": "Autre"
@@ -297,7 +297,7 @@
 
                 document.getElementById('phrase-petit-prince').innerHTML = `✨ Aujourd'hui, le Petit Prince a pris soin de <b>${annoncesPrincipales.length}</b> fleurs resplendissantes dans le jardin du monde...`;
                 
-                // Gestion de l'URL au chargement (ex: jardin.html?cat=URGENCE)
+                // Gestion rigoureuse de l'URL au chargement (ex: jardin.html?cat=URGENCE, ?cat=IMPOT, etc.)
                 const urlParams = new URLSearchParams(window.location.search);
                 const catParam = urlParams.get('cat');
                 
@@ -306,22 +306,25 @@
                     if (nomBouton) {
                         const btnTarget = document.querySelector(`.btn-filtre-rapide[data-cat="${nomBouton}"]`);
                         if (btnTarget) {
-                            // Active le filtre global Harmonie
                             filtreTypeActuel = nomBouton;
                             document.querySelectorAll('.btn-filtre-rapide').forEach(b => b.classList.remove('actif'));
                             btnTarget.classList.add('actif');
                             
-                            // Affiche le tiroir des sous-rubriques
-                            document.getElementById('sous-rubriques-urgence').style.display = 'block';
+                            // Gérer l'affichage du tiroir des sous-rubriques uniquement si c'est de l'aide/harmonie
+                            const tiroirSousRub = document.getElementById('sous-rubriques-urgence');
+                            if (nomBouton === "Harmonie") {
+                                tiroirSousRub.style.display = 'block';
 
-                            // Si l'URL demandait spécifiquement URGENCE ou ECOUTE, on affine directement
-                            if (catParam === "URGENCE" || catParam === "ECOUTE") {
-                                const btnSous = document.querySelector(`.btn-sous-filtre[data-sous="${catParam}"]`);
-                                if (btnSous) {
-                                    filtreSousTypeActuel = catParam;
-                                    document.querySelectorAll('.btn-sous-filtre').forEach(b => b.classList.remove('actif'));
-                                    btnSous.classList.add('actif');
+                                if (catParam === "URGENCE" || catParam === "ECOUTE") {
+                                    const btnSous = document.querySelector(`.btn-sous-filtre[data-sous="${catParam}"]`);
+                                    if (btnSous) {
+                                        filtreSousTypeActuel = catParam;
+                                        document.querySelectorAll('.btn-sous-filtre').forEach(b => b.classList.remove('actif'));
+                                        btnSous.classList.add('actif');
+                                    }
                                 }
+                            } else {
+                                tiroirSousRub.style.display = 'none';
                             }
                         }
                     }
@@ -550,7 +553,7 @@
                 filtreSousTypeActuel = "";
             } else {
                 filtreTypeActuel = t;
-                filtreSousTypeActuel = ""; // Réinitialise la sous-catégorie si on change de grand domaine
+                filtreSousTypeActuel = ""; 
             }
 
             if (filtreTypeActuel && el) el.classList.add('actif');
