@@ -42,7 +42,6 @@
         .btn-envoi { background: #9370DB; color: white; border: none; padding: 12px; border-radius: 20px; font-weight: bold; cursor: pointer; width: 100%; font-size: 1.1em; font-family: inherit; margin-top: 10px; transition: 0.3s; }
         .btn-envoi:hover { background: #7B68EE; }
 
-        /* --- GRILLE ET CARTES PROPRES --- */
         .mur-reel { 
             display: grid; 
             grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); 
@@ -89,7 +88,6 @@
         }
         .details-bas { font-size: 0.7em; color: #666; line-height: 1.3; border-top: 1px solid #eee; padding-top: 5px; background: white; }
 
-        /* --- GRANDE FENÊTRE (MODALE) --- */
         #fond-sombre { 
             display: none; 
             position: fixed; 
@@ -333,9 +331,11 @@
             let rawRef = ann.Horodateur || ann.nom;
             annonceActiveId = String(rawRef).replace(/[:.]?00Z$/, '').replace(/Z$/, '');
 
+            // Récupère toutes les réponses associées (qu'elles s'appellent REPONSE ou REPONSE_AIDE)
             const reponses = globalData.filter(d => {
                 const typeVal = String(d.type || "").trim().toUpperCase();
-                return typeVal === "REPONSE_AIDE" && String(d.localisation || "").includes(annonceActiveId);
+                const locVal = String(d.localisation || "");
+                return (typeVal === "REPONSE" || typeVal === "REPONSE_AIDE") && locVal.includes(annonceActiveId);
             });
             reponses.reverse();
 
@@ -395,7 +395,7 @@
             btnSub.disabled = true;
 
             const formData = new URLSearchParams();
-            formData.append('type', 'REPONSE_AIDE');
+            formData.append('type', 'REPONSE');
             formData.append('nom', nomRep);
             formData.append('localisation', 'Ref:' + refId);
             formData.append('message', msgRep);
