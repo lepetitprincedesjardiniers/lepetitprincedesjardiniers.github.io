@@ -4,26 +4,28 @@
     <meta charset="UTF-8">
     <title>Graine Semée ! - Le Petit Prince</title>
     <style>
-        /* Menu vert harmonisé avec le Jardin (#2E7D32) */
-        .menu-table { margin: 20px auto 10px auto; border-radius: 10px; background-color: #2E7D32; border-collapse: collapse; }
+        /* Menu vert jardin harmonisé (#1b5e20) */
+        .menu-table { margin: 20px auto 10px auto; border-radius: 10px; background-color: #1b5e20; border-collapse: collapse; }
         .menu-table td { padding: 10px 15px; border: 1px solid #FFFFFF; transition: 0.3s; }
         .menu-table a { text-decoration: none; color: #FFFFFF; font-weight: bold; font-size: 0.9em; font-family:'Comic Sans MS', cursive; }
         #google_translate_element { margin-top: 10px; }
 
-        /* Style propre pour le lien du Journal */
-        .journal-container {
-            margin: 10px auto 25px auto;
-            text-align: center;
+        /* Le Journal positionné en haut à gauche avec la flèche vers la gauche */
+        .journal-fixed {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            z-index: 1000;
         }
         .journal-link {
             display: inline-block;
-            padding: 8px 18px;
+            padding: 6px 14px;
             background-color: #008080;
             color: white;
             text-decoration: none;
             border-radius: 8px;
             font-weight: bold;
-            font-size: 0.95em;
+            font-size: 0.85em;
             font-family: 'Comic Sans MS', cursive;
             box-shadow: 2px 2px 5px rgba(0,0,0,0.2);
             transition: 0.2s;
@@ -32,7 +34,7 @@
             background-color: #006666;
         }
 
-        /* Effet d'étoiles filantes amélioré et fluide */
+        /* Effet de pluie d'étoiles filantes multiples et fluides */
         .sky {
             position: fixed;
             top: 0;
@@ -45,12 +47,12 @@
         }
         .shooting-star {
             position: absolute;
-            width: 100px;
+            width: 120px;
             height: 2px;
             background: linear-gradient(90deg, rgba(255,255,255,1), rgba(230,126,34,0));
             transform: rotate(-45deg);
             opacity: 0;
-            animation: shoot 5s linear infinite;
+            animation: shoot 4s linear infinite;
         }
         .shooting-star::before {
             content: '⭐';
@@ -59,30 +61,36 @@
             left: 0;
             font-size: 14px;
         }
-        /* Positions et délais aléatoires pour un effet naturel */
-        .shooting-star:nth-child(1) { top: 10%; left: 20%; animation-delay: 0s; animation-duration: 4s; }
-        .shooting-star:nth-child(2) { top: 30%; left: 70%; animation-delay: 2s; animation-duration: 5s; }
-        .shooting-star:nth-child(3) { top: 5%; left: 80%; animation-delay: 3.5s; animation-duration: 3.5s; }
+        .shooting-star:nth-child(1) { top: 5%; left: 30%; animation-delay: 0s; animation-duration: 3.5s; }
+        .shooting-star:nth-child(2) { top: 15%; left: 80%; animation-delay: 1.2s; animation-duration: 4s; }
+        .shooting-star:nth-child(3) { top: 40%; left: 95%; animation-delay: 2.5s; animation-duration: 3s; }
+        .shooting-star:nth-child(4) { top: 70%; left: 60%; animation-delay: 0.8s; animation-duration: 4.5s; }
+        .shooting-star:nth-child(5) { top: 20%; left: 10%; animation-delay: 3s; animation-duration: 3.8s; }
+        .shooting-star:nth-child(6) { top: 55%; left: 40%; animation-delay: 1.8s; animation-duration: 4.2s; }
+        .shooting-star:nth-child(7) { top: 85%; left: 90%; animation-delay: 2.2s; animation-duration: 3.2s; }
 
         @keyframes shoot {
-            0% {
-                transform: translateX(0) translateY(0) rotate(-45deg);
-                opacity: 1;
-            }
-            100% {
-                transform: translateX(-500px) translateY(500px) rotate(-45deg);
-                opacity: 0;
-            }
+            0% { transform: translateX(0) translateY(0) rotate(-45deg); opacity: 1; }
+            100% { transform: translateX(-600px) translateY(600px) rotate(-45deg); opacity: 0; }
         }
     </style>
 </head>
 <body bgcolor="#FFFF00" text="#000080" style="font-family:'Comic Sans MS', cursive; text-align:center;">
 
-    <!-- Ciel magique avec étoiles filantes améliorées -->
+    <!-- Ciel constellé d'étoiles filantes magiques -->
     <div class="sky">
         <div class="shooting-star"></div>
         <div class="shooting-star"></div>
         <div class="shooting-star"></div>
+        <div class="shooting-star"></div>
+        <div class="shooting-star"></div>
+        <div class="shooting-star"></div>
+        <div class="shooting-star"></div>
+    </div>
+
+    <!-- Le Journal en haut à gauche -->
+    <div class="journal-fixed">
+        <a href="ministere-de-lhonnetete.html" class="journal-link">◄ Le Journal</a>
     </div>
 
     <!-- Chant des oiseaux en fond -->
@@ -90,7 +98,7 @@
 
     <div id="google_translate_element"></div>
 
-    <!-- Barre de navigation du haut (verte) -->
+    <!-- Barre de navigation du haut -->
     <table class="menu-table" align="center">
         <tr>
             <td><a href="index.html">Accueil</a></td>
@@ -104,16 +112,12 @@
         </tr>
     </table>
 
-    <!-- Lien vers Le Journal proprement centré -->
-    <div class="journal-container">
-        <a href="ministere-de-lhonnetete.html" class="journal-link">📰 Le Journal ►</a>
-    </div>
-
+    <br><br>
     <div style="font-size: 70px;">💚 🎁 💚</div>
-    <font size="7" color="#2E7D32"><b>GRAINE BIEN SEMÉE !</b></font>
+    <font size="7" color="#1b5e20"><b>GRAINE BIEN SEMÉE !</b></font>
     <br><br>
 
-    <table border="4" cellpadding="30" bgcolor="#FFFFFF" align="center" style="border-color:#2E7D32; border-radius:40px; max-width:600px; box-shadow: 10px 10px 0px #E67E22;">
+    <table border="4" cellpadding="30" bgcolor="#FFFFFF" align="center" style="border-color:#1b5e20; border-radius:40px; max-width:600px; box-shadow: 10px 10px 0px #E67E22;">
         <tr>
             <td>
                 <font size="5">"Merci d'avoir semé votre générosité."</font><br><br>
