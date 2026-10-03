@@ -127,14 +127,14 @@
             <p style="font-size: 0.85em; font-weight: bold;">Travaux en participation libre.</p>
             <div class="phrases-impots">Motivation indispensable.<br>Attention : Travaux ingrats.</div>
             <ul class="liste-exemples-discrets">
-                <li>ex: réseaux des eaux potable, électricité publique, transport en commub, réfection des routes, aide administrative, entretien des espaces verts.</li>
+                <li>ex: réseaux d'eau potable, électricité publique & centrale, transports, voirie, chantiers collectifs, espaces verts.</li>
             </ul>
         </a>
 
         <div style="display: flex; flex-direction: column; align-items: center;">
             <a href="regulation.html" class="etoile-justice">
                 <h3 style="margin:0;">⚖️ Régulation</h3>
-                <p style="font-size:0.8em;">Médiation et harmonie citoyenne.</p>
+                <p style="font-size:0.8em;">Médiation, assemblées & harmonie citoyenne.</p>
             </a>
             <a href="savoirs.html" class="rond-savoir">
                 <h3 style="margin:0;">💡 Savoirs</h3>
@@ -146,8 +146,8 @@
             <h3 style="margin:0;">🆘 Urgence & Détresse</h3>
             <p style="font-size:0.75em; font-style: italic; margin-top:5px;">L'Étoile de la Main Tendue</p>
             <div style="margin-top:15px; display: flex; flex-direction: column; gap: 10px;">
-                <a href="urgence.html" class="lien-separé lien-urgence">🏥 Urgences (Santé)</a>
-                <a href="aide.html" class="lien-separé lien-écoute">💖 Écoute (Câlin de l'Âme)</a>
+                <a href="urgence.html" class="lien-separé lien-urgence">🏥 Urgences (Santé & Secours)</a>
+                <a href="aide.html" class="lien-separé lien-ecoute">💖 Écoute, Aînés & Garde</a>
             </div>
         </div>
     </div>
@@ -209,7 +209,6 @@
         }
         setInterval(creerMessager, 6000);
 
-        // Fonction pour faire voler le journal vers le Ministère de l'Honnêteté !
         function creerJournalVolant() {
             const j = document.createElement('a');
             j.href = 'https://lepetitprincedesjardiniers.github.io/ministere-de-lhonnetete.html#apropos';
@@ -231,7 +230,7 @@
             
             setTimeout(() => j.remove(), 8100);
         }
-        setInterval(creerJournalVolant, 9000); // Un journal s'envole toutes les 9 secondes !
+        setInterval(creerJournalVolant, 9000);
     </script>
 </body>
 </html>
