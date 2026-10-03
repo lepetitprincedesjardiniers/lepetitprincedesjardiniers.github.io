@@ -21,8 +21,31 @@
         }
 
         .header-tools { display: flex; justify-content: space-between; align-items: center; padding: 10px 20px; background: rgba(255,255,255,0.05); }
-        #google_translate_element { transform: scale(0.85); transform-origin: top left; opacity: 0.7; }
-        #google_translate_element:hover { opacity: 1; }
+        
+        /* --- TRADUCTEUR DISCRET ET FONDU --- */
+        #google_translate_element { 
+            transform: scale(0.85); 
+            transform-origin: top left; 
+            opacity: 0.6; 
+            transition: opacity 0.3s ease;
+        }
+        #google_translate_element:hover { 
+            opacity: 1; 
+        }
+        .goog-te-combo {
+            background-color: #2a1045 !important;
+            color: #D8BFD8 !important;
+            border: 1px solid #9370DB !important;
+            border-radius: 8px !important;
+            padding: 4px 8px !important;
+            font-family: inherit !important;
+            font-size: 0.9em !important;
+            outline: none;
+            cursor: pointer;
+        }
+        /* Masquer la barre publicitaire Google Translate du haut si elle apparaît */
+        .goog-te-banner-frame { display: none !important; }
+        body { top: 0 !important; }
 
         .menu-table { margin: 10px auto; border-radius: 10px; background-color: #008080; border-collapse: collapse; position: relative; z-index: 10; }
         .menu-table td { border: 1px solid #FFFFFF; padding: 8px 15px; }
@@ -136,7 +159,6 @@
 </head>
 <body>
 
-    <!-- Barre d'outils avec le traducteur -->
     <div class="header-tools">
         <div id="google_translate_element"></div>
     </div>
@@ -188,7 +210,6 @@
         </div>
     </div>
 
-    <!-- Script Google Traduction -->
     <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
     <script>
         const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbxxToz22V88elCCjxLqjRtsb5iBIC156cbBFRIlTsju2SwOj9yNnKqzAwFITXMg_wij/exec";
@@ -199,7 +220,6 @@
             new google.translate.TranslateElement({pageLanguage: 'fr'}, 'google_translate_element'); 
         }
 
-        // --- SON DE GONG HARMONIQUE ---
         function playGong() {
             try {
                 const ctx = new (window.AudioContext || window.webkitAudioContext)();
@@ -327,7 +347,7 @@
             } catch (error) {
                 console.error("Erreur de chargement :", error);
                 const chargementEl = document.getElementById('chargement');
-                if (chargementEl) chargementEl.innerText = "Impossible de charger les cœurs... 🕊️️";
+                if (chargementEl) chargementEl.innerText = "Impossible de charger les cœurs... 🕊️";
             }
         }
 
