@@ -20,47 +20,7 @@
             scroll-behavior: smooth;
         }
 
-        /* --- EN-TÊTE AVEC DRAPEAUX ET TRADUCTEUR PROPRE --- */
-        .header-tools { 
-            display: flex; 
-            justify-content: space-between; 
-            align-items: center; 
-            padding: 10px 20px; 
-            background: rgba(255, 255, 255, 0.05); 
-        }
-        
-        .drapeaux-animes {
-            font-size: 1.4em;
-            letter-spacing: 3px;
-            animation: pulseDrapeaux 2s infinite ease-in-out;
-            filter: drop-shadow(0 0 8px #9370DB);
-        }
-        @keyframes pulseDrapeaux {
-            0%, 100% { transform: scale(1); opacity: 0.8; }
-            50% { transform: scale(1.05); opacity: 1; }
-        }
-
-        /* Style propre du bloc traducteur Google sans casser le menu */
-        #google_translate_element { 
-            opacity: 0.95; 
-        }
-        .goog-te-combo {
-            background-color: #2a1045 !important;
-            color: #D8BFD8 !important;
-            border: 2px solid #9370DB !important;
-            border-radius: 8px !important;
-            padding: 6px 12px !important;
-            font-family: inherit !important;
-            font-size: 1em !important;
-            outline: none;
-            cursor: pointer;
-        }
-        .goog-te-banner-frame.skiptranslate { display: none !important; }
-        body { top: 0 !important; }
-        /* Masquer uniquement le logo Google pour garder l'interface épurée */
-        .goog-logo-link { display: none !important; }
-
-        .menu-table { margin: 10px auto; border-radius: 10px; background-color: #008080; border-collapse: collapse; position: relative; z-index: 10; }
+        .menu-table { margin: 20px auto; border-radius: 10px; background-color: #008080; border-collapse: collapse; position: relative; z-index: 10; }
         .menu-table td { border: 1px solid #FFFFFF; padding: 8px 15px; }
         .menu-table a { display: block; text-decoration: none; color: #FFFFFF; font-weight: bold; font-size: 0.85em; }
         .menu-table td:hover { background: #00b3b3; }
@@ -172,13 +132,6 @@
 </head>
 <body>
 
-    <div class="header-tools">
-        <!-- Farandole de drapeaux animés à gauche -->
-        <div id="drapeaux-changeants" class="drapeaux-animes">🇫🇷 🌍 🇬🇧</div>
-        <!-- Le sélecteur de langue Google propre à droite -->
-        <div id="google_translate_element"></div>
-    </div>
-
     <table class="menu-table">
         <tr>
             <td><a href="index.html">Accueil</a></td>
@@ -226,29 +179,10 @@
         </div>
     </div>
 
-    <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
     <script>
         const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbxxToz22V88elCCjxLqjRtsb5iBIC156cbBFRIlTsju2SwOj9yNnKqzAwFITXMg_wij/exec";
         let globalData = [];
         let annonceActiveId = null;
-
-        function googleTranslateElementInit() { 
-            new google.translate.TranslateElement({
-                pageLanguage: 'fr',
-                layout: google.translate.TranslateElement.InlineLayout.SIMPLE,
-                autoDisplay: false
-            }, 'google_translate_element'); 
-        }
-
-        // --- ANIMATION DES DRAPEAUX ---
-        const listeDrapeaux = ["🇫🇷 🌍 🇬🇧", "🇪🇸 🌍 🇮🇹", "🇩🇪 🌍 🇯🇵", "🇺🇸 🌍 🇨🇦", "🇧🇷 🌍 🇵🇹", "🇯🇵 🌍 🇰🇷"];
-        setInterval(() => {
-            const indexAleatoire = Math.floor(Math.random() * listeDrapeaux.length);
-            const elementDrapeaux = document.getElementById('drapeaux-changeants');
-            if(elementDrapeaux) {
-                elementDrapeaux.innerText = listeDrapeaux[indexAleatoire];
-            }
-        }, 3000);
 
         function playGong() {
             try {
