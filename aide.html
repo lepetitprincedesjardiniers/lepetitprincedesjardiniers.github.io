@@ -136,9 +136,6 @@
 </head>
 <body>
 
-    <audio id="snd-pop" src="https://assets.mixkit.co/active_storage/sfx/2571/2571-preview.mp3" preload="auto"></audio>
-    <audio id="snd-oiseaux" src="https://assets.mixkit.co/active_storage/sfx/512/512-preview.mp3" preload="auto"></audio>
-
     <div class="header-tools">
         <div id="google_translate_element"></div>
     </div>
@@ -200,23 +197,30 @@
             new google.translate.TranslateElement({pageLanguage: 'fr', layout: google.translate.TranslateElement.InlineLayout.SIMPLE}, 'google_translate_element'); 
         }
 
-        function playPop() {
+        // --- SON DE GONG HARMONIQUE (identique à Régulation) ---
+        function playGong() {
             try {
-                const pop = document.getElementById('snd-pop');
-                pop.currentTime = 0;
-                pop.play().catch(()=>{});
-            } catch(e) {}
-        }
+                const ctx = new (window.AudioContext || window.webkitAudioContext)();
+                const now = ctx.currentTime;
+                const freqs = [146.83, 293.66, 440.00, 587.33]; 
 
-        function playOiseaux() {
-            try {
-                const song = document.getElementById('snd-oiseaux');
-                song.currentTime = 0;
-                song.play().catch(()=>{});
-                setTimeout(() => {
-                    song.pause();
-                    song.currentTime = 0;
-                }, 2000);
+                freqs.forEach((f, index) => {
+                    const osc = ctx.createOscillator();
+                    const gain = ctx.createGain();
+                    
+                    osc.type = index === 0 ? 'sine' : 'triangle';
+                    osc.frequency.setValueAtTime(f, now);
+                    osc.frequency.exponentialRampToValueAtTime(f * 0.99, now + 2.0);
+                    
+                    gain.gain.setValueAtTime(0.25 / (index + 1), now);
+                    gain.gain.exponentialRampToValueAtTime(0.0001, now + 2.2);
+                    
+                    osc.connect(gain);
+                    gain.connect(ctx.destination);
+                    
+                    osc.start(now);
+                    osc.stop(now + 2.2);
+                });
             } catch(e) {}
         }
 
@@ -237,7 +241,7 @@
 
         async function envoyerAide(event) {
             event.preventDefault();
-            playOiseaux();
+            playGong(); // Son de gong à l'envoi
 
             const btn = document.getElementById('btnEnvoi');
             const texteInitial = btn.innerText;
@@ -326,12 +330,11 @@
         }
 
         function ouvrirGrandMessage(ann) {
-            playPop();
+            playGong(); // Son de gong à l'ouverture de la modale
             
             let rawRef = ann.Horodateur || ann.nom;
             annonceActiveId = String(rawRef).replace(/[:.]?00Z$/, '').replace(/Z$/, '');
 
-            // Récupère toutes les réponses associées (qu'elles s'appellent REPONSE ou REPONSE_AIDE)
             const reponses = globalData.filter(d => {
                 const typeVal = String(d.type || "").trim().toUpperCase();
                 const locVal = String(d.localisation || "");
@@ -386,7 +389,7 @@
 
         async function envoyerReponse(event, refId) {
             event.preventDefault();
-            playOiseaux();
+            playGong(); // Son de gong à l'envoi de la réponse
 
             const nomRep = document.getElementById('repNom').value;
             const msgRep = document.getElementById('repMessage').value;
