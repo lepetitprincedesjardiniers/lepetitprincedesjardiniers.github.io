@@ -35,21 +35,21 @@
         .mur-reel { display: grid; grid-template-columns: repeat(5, minmax(150px, 1fr)); gap: 10px; padding: 10px; max-width: 98vw; margin: 0 auto; }
         @media (max-width: 768px) { .mur-reel { grid-template-columns: repeat(2, 1fr); } }
 
-        .carte-message { border: 2px solid #008080; border-radius: 10px; padding: 8px; box-shadow: 3px 3px 0px #008080; display: flex; flex-direction: column; height: 320px; cursor: pointer; position: relative; overflow: hidden; text-align: left; transition: transform 0.2s; }
+        .carte-message { background: white; border: 3px solid #008080; border-radius: 10px; padding: 8px; box-shadow: 3px 3px 0px #008080; display: flex; flex-direction: column; height: 320px; cursor: pointer; position: relative; overflow: hidden; text-align: left; transition: transform 0.2s; }
         .carte-message:hover { transform: translateY(-3px); }
-        .nom-prenom { color: #2E7D32; font-weight: bold; font-size: 0.8em; border-bottom: 1px solid rgba(0,0,0,0.1); margin-bottom: 3px; }
+        .nom-prenom { color: #2E7D32; font-weight: bold; font-size: 0.8em; border-bottom: 1px solid #eee; margin-bottom: 3px; }
         .rubrique-tag { font-size: 0.55em; background: #ff1493; color: white; padding: 1px 4px; border-radius: 5px; position: absolute; top: 5px; right: 5px; }
         .texte-annonce { flex-grow: 1; font-style: italic; color: #000080; overflow-y: auto; font-size: 0.75em; margin: 5px 0; line-height: 1.2; padding-right: 5px; scrollbar-width: thin; white-space: pre-line; }
         .texte-annonce::-webkit-scrollbar { width: 4px; }
         .texte-annonce::-webkit-scrollbar-thumb { background: #008080; border-radius: 10px; }
 
-        .badge-reponses { font-size: 0.7em; color: #E67E22; font-weight: bold; background: rgba(255,255,255,0.8); border: 1px solid #E67E22; border-radius: 6px; padding: 2px 6px; margin: 3px 0; align-self: flex-start; }
+        .badge-reponses { font-size: 0.7em; color: #E67E22; font-weight: bold; background: #FFF8E7; border: 1px solid #E67E22; border-radius: 6px; padding: 2px 6px; margin: 3px 0; align-self: flex-start; }
 
         .btn-arrosage { background: #E1F5FE; border: 1px solid #00BFFF; border-radius: 8px; color: #0277BD; font-size: 0.75em; padding: 4px; cursor: pointer; margin: 2px 0; font-weight: bold; width: 100%; }
         .btn-repondre { background: #E67E22; border: 1px solid #b35900; border-radius: 8px; color: white; font-size: 0.75em; padding: 5px; cursor: pointer; margin: 2px 0; font-weight: bold; width: 100%; transition: 0.2s; }
         .btn-repondre:hover { background: #d35400; transform: scale(1.02); }
 
-        .details-bas { font-size: 0.7em; color: #444; line-height: 1.2; border-top: 1px solid rgba(0,0,0,0.1); padding-top: 3px; background: transparent; }
+        .details-bas { font-size: 0.7em; color: #444; line-height: 1.2; border-top: 1px solid #eee; padding-top: 3px; background: white; }
 
         body.dark-mode { background-color: #0a0a1a; color: #e0e0e0; }
         .star { position: fixed; background: white; border-radius: 50%; opacity: 0; pointer-events: none; animation: twinkle var(--d) infinite; }
@@ -101,7 +101,7 @@
             <!-- Boutons de filtres principaux (Destination du semis) -->
             <div class="btn-group">
                 <button class="btn-filtre-rapide" data-cat="Savoir" onclick="rechercheRapide('Savoir', this)">🎓 Savoirs</button>
-                <button class="btn-filtre-rapide" data-cat="Citoyenne" onclick="rechercheRapide('Citoyenne', this)">🏛️ Vie Citoyenne</button>
+                <button class="btn-filtre-rapide" data-cat="Citoyenne" onclick="rechercheRapide('Citoyenne', this)">🏛 Vie Citoyenne</button>
                 <button class="btn-filtre-rapide" data-cat="Harmonie" onclick="rechercheRapide('Harmonie', this)">🤝 Aide & Harmonie</button>
                 <button class="btn-filtre-rapide" data-cat="Régulation" onclick="rechercheRapide('Régulation', this)">⚖️ Régulation</button>
                 <button class="btn-filtre-rapide" data-cat="Trésor" onclick="rechercheRapide('Trésor', this)">💰 Trésor Public</button>
@@ -170,19 +170,19 @@
             "Autre": ["AUTRE_CAT"] 
         };
 
-        // Couleurs pastel harmonisées pour chaque catégorie d'annonce sur les cartes du jardin
-        const couleursCategories = {
-            "SAVOIR": "#E8F8F5",       // Vert menthe doux (Savoirs)
-            "VIE": "#EBF5FB",          // Bleu ciel doux (Vie Citoyenne)
-            "AIDE": "#FADBD8",         // Rose poudré (Aide & Harmonie)
-            "URGENCE": "#FADBD8",      // Rose poudré (Urgences)
-            "ECOUTE": "#FADBD8",       // Rose poudré (Écoute)
-            "REGULATION": "#E8DAEF",   // Violet lavande doux (Régulation)
-            "IMPOT": "#FEF9E7",        // Jaune paille chaleureux (Trésor Public)
-            "AUTRE_CAT": "#F4F6F6"     // Gris perle neutre (Autre domaine)
+        // Couleurs de contours distinctes pour chaque catégorie (aux couleurs de la page d'accueil)
+        const couleursBordures = {
+            "SAVOIR": "#ffc107",       // Or / Jaune (Savoirs)
+            "VIE": "#9370DB",          // Violet lavande (Vie Citoyenne)
+            "AIDE": "#ff69b4",         // Rose (Aide & Harmonie)
+            "URGENCE": "#ff69b4",      // Rose (Urgences)
+            "ECOUTE": "#ff69b4",       // Rose (Écoute)
+            "REGULATION": "#9370DB",   // Violet (Régulation)
+            "IMPOT": "#00ced1",        // Turquoise (Trésor Public)
+            "AUTRE_CAT": "#008080"     // Vert canard (Autre domaine)
         };
 
-        // Sous-rubriques avec les libellés officiels et les "Autres..." personnalisés par catégorie
+        // Sous-rubriques avec l'ajout de "Bibliothèque vivante" corrigée
         const sousRubriquesData = {
             "Savoir": [
                 { id: "", label: "🎓 Toutes les précisions" },
@@ -190,6 +190,7 @@
                 { id: "Art, artisanat & musique", label: "Art, artisanat & musique" },
                 { id: "Mentorat pro & compétences techniques", label: "Mentorat pro & compétences techniques" },
                 { id: "Savoir-faire du quotidien", label: "Savoir-faire du quotidien" },
+                { id: "Bibliothèque vivante", label: "Bibliothèque vivante" },
                 { id: "AUTRE_SUB", label: "Autres interprétations" }
             ],
             "Citoyenne": [
@@ -453,9 +454,10 @@
                 const d = document.createElement('div');
                 d.className = 'carte-message';
                 
-                // Application de la couleur spécifique à la catégorie de l'annonce
-                const couleurFond = couleursCategories[typeAnnonce] || "#FFFFFF";
-                d.style.backgroundColor = couleurFond;
+                // Application de la couleur de contour spécifique à la catégorie
+                const couleurBord = couleursBordures[typeAnnonce] || "#008080";
+                d.style.borderColor = couleurBord;
+                d.style.boxShadow = `3px 3px 0px ${couleurBord}`;
 
                 d.onclick = () => ouvrirGrandMessage(ann);
 
