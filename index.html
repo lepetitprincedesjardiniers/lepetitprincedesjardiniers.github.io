@@ -1,187 +1,86 @@
-
 <!DOCTYPE html>
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
     <title>Le Jardin de la Fraternité - Accueil</title>
     <style>
-        body { 
-            font-family: 'Comic Sans MS', cursive; 
-            text-align: center; 
-            margin: 0; 
-            padding: 0; 
-            background-color: #FFFF00; 
-            color: #000080; 
-            min-height: 100vh; 
-            padding-bottom: 80px; 
-            transition: background 0.3s, color 0.3s; 
-        }
-        .top-bar { 
-            position: relative; 
-            width: 100%; 
-            min-height: 50px; 
-            background: rgba(255,255,255,0.3); 
-            padding: 5px 0; 
-            display: flex; 
-            justify-content: center; 
-            align-items: center; 
-        }
-        #google_translate_element { 
-            position: absolute; 
-            left: 10px; 
-            top: 10px; 
-            z-index: 2000; 
-            transform: scale(0.85); 
-            transform-origin: top left; 
-        }
+        body { font-family: 'Comic Sans MS', cursive; text-align: center; margin: 0; padding: 0; background-color: #FFFF00; color: #000080; min-height: 100vh; padding-bottom: 80px; transition: background 0.3s, color 0.3s; }
+        .top-bar { position: relative; width: 100%; min-height: 50px; background: rgba(255,255,255,0.3); padding: 5px 0; display: flex; justify-content: center; align-items: center; }
+        #google_translate_element { position: absolute; left: 10px; top: 10px; z-index: 2000; transform: scale(0.85); transform-origin: top left; }
         
-        .menu-wrapper { 
-            position: relative; 
-            display: flex; 
-            justify-content: center; 
-            align-items: center; 
-            width: 100%; 
-            margin: 5px 0; 
-        }
-        .menu-table { 
-            margin: 0 !important; 
-            border-radius: 10px; 
-            background-color: #008080; 
-            border-collapse: collapse; 
-        }
-        .menu-table td { 
-            padding: 8px 15px; 
-            border: 1px solid #FFFFFF; 
-        }
-        .menu-table a { 
-            text-decoration: none; 
-            color: #FFFFFF; 
-            font-weight: bold; 
-            font-size: 0.85em; 
-        }
-        .journal-link { 
-            position: absolute; 
-            right: 20px; 
-            top: 50%; 
-            transform: translateY(-50%); 
-            color: #E67E22; 
-            background: transparent; 
-            text-decoration: none; 
-            font-weight: bold; 
-            font-size: 0.95em; 
-            white-space: nowrap; 
-        }
+        .menu-wrapper { position: relative; display: flex; justify-content: center; align-items: center; width: 100%; margin: 5px 0; }
+        .menu-table { margin: 0 !important; border-radius: 10px; background-color: #008080; border-collapse: collapse; }
+        .menu-table td { padding: 8px 15px; border: 1px solid #FFFFFF; }
+        .menu-table a { text-decoration: none; color: #FFFFFF; font-weight: bold; font-size: 0.85em; }
+        .journal-link { position: absolute; right: 20px; top: 50%; transform: translateY(-50%); color: #E67E22; background: transparent; text-decoration: none; font-weight: bold; font-size: 0.95em; white-space: nowrap; }
 
-        #btn-mode { 
-            position: absolute; 
-            right: 10px; 
-            top: 10px; 
-            background: #444; 
-            color: #FFD700; 
-            border: 1px solid #222; 
-            border-radius: 5px; 
-            cursor: pointer; 
-            font-size: 14px; 
-            padding: 2px 5px; 
-            z-index: 1001; 
-        }
+        #btn-mode { position: absolute; right: 10px; top: 10px; background: #444; color: #FFD700; border: 1px solid #222; border-radius: 5px; cursor: pointer; font-size: 14px; padding: 2px 5px; z-index: 1001; }
+        
+        .titre-principal { color: #2E7D32; margin: 15px 0 5px 0; font-size: 1.8em; text-shadow: 1px 1px 2px #a3d9a5; }
+        .phrase-rose { color: #ff1493; font-weight: bold; font-size: 1.2em; text-shadow: 1px 1px 2px #ff69b4; margin-bottom: 15px; }
 
-        .titre-principal { 
-            color: #2E7D32; 
-            margin: 15px 0 5px 0; 
-            font-size: 1.8em; 
-            text-shadow: 1px 1px 2px #a3d9a5; 
-        }
-        .phrase-rose { 
-            color: #ff1493; 
-            font-weight: bold; 
-            font-size: 1.2em; 
-            text-shadow: 1px 1px 2px #ff69b4; 
-            margin-bottom: 10px; 
-        }
-
-        /* Conteneur de l'unique grande case rose */
-        .conteneur-central {
-            max-width: 850px;
+        /* L'unique grande case rose centrale qui remplace les anciennes */
+        .case-rose-unique {
+            max-width: 800px;
             margin: 20px auto;
             padding: 25px;
-            background: rgba(255, 105, 180, 0.15);
-            border: 4px dashed #ff1493;
-            border-radius: 25px;
-            box-shadow: 0 8px 25px rgba(255, 20, 147, 0.2);
+            background: rgba(255, 105, 180, 0.18);
+            border: 3px dashed #ff1493;
+            border-radius: 20px;
+            box-shadow: 0 6px 20px rgba(255, 20, 147, 0.15);
         }
 
-        .texte-presentation {
+        .texte-intro-rose {
             font-size: 1em;
             color: #000080;
-            line-height: 1.6;
+            line-height: 1.5;
             margin-bottom: 20px;
             font-weight: bold;
         }
 
-        /* Grille des boutons d'accès rapide à l'intérieur de la case rose */
-        .grille-actions {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 15px;
-            margin-top: 15px;
-        }
-        @media (max-width: 600px) {
-            .grille-actions { grid-template-columns: 1fr; }
+        /* Les liens / boutons à l'intérieur de la case rose unique */
+        .liens-case-rose {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            flex-wrap: wrap;
         }
 
-        .btn-action-jardin {
-            background: #008080;
+        .btn-rose-lien {
+            background: #ff1493;
             color: white;
             border: 2px solid white;
-            padding: 12px 15px;
+            padding: 10px 18px;
             border-radius: 15px;
             font-family: 'Comic Sans MS', cursive;
             font-weight: bold;
-            font-size: 0.95em;
-            cursor: pointer;
+            font-size: 0.9em;
             text-decoration: none;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
             transition: transform 0.2s, background 0.2s;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.15);
-        }
-        .btn-action-jardin:hover {
-            background: #006666;
-            transform: scale(1.03);
+            box-shadow: 0 3px 8px rgba(0,0,0,0.15);
         }
 
-        .btn-semer-grand {
-            grid-column: span 2;
-            background: #ff1493;
-            border: 2px solid white;
-            font-size: 1.1em;
-        }
-        .btn-semer-grand:hover {
+        .btn-rose-lien:hover {
             background: #e00b82;
+            transform: scale(1.03);
         }
 
         .phrase-etoiles {
             font-style: italic;
             color: #2E7D32;
-            margin: 25px auto;
+            margin: 30px auto;
             font-size: 1em;
             max-width: 700px;
         }
 
         body.dark-mode { background-color: #0a0a1a; color: #e0e0e0; }
-        body.dark-mode .conteneur-central { background: rgba(255, 105, 180, 0.08); border-color: #ff69b4; }
-        body.dark-mode .texte-presentation { color: #ff99cc; }
+        body.dark-mode .case-rose-unique { background: rgba(255, 105, 180, 0.08); border-color: #ff69b4; }
+        body.dark-mode .texte-intro-rose { color: #ff99cc; }
 
         .star { position: fixed; background: white; border-radius: 50%; opacity: 0; pointer-events: none; animation: twinkle var(--d) infinite; }
         @keyframes twinkle { 0%, 100% { opacity: 0.3; } 50% { opacity: 1; } }
 
-        .footer-copyright {
-            margin-top: 30px;
-            font-size: 0.85em;
-        }
+        .footer-copyright { margin-top: 40px; font-size: 0.85em; }
         .copyright-link { color: #008080; text-decoration: none; font-weight: bold; }
         body.dark-mode .copyright-link { color: #00ffff; }
     </style>
@@ -211,21 +110,17 @@
     <h2 class="titre-principal">🍃 Le Jardin de la Fraternité 🍃</h2>
     <div class="phrase-rose">« On ne voit bien qu'avec le cœur. L'essentiel est invisible pour les yeux. »</div>
 
-    <!-- Unique Grande Case Rose -->
-    <div class="conteneur-central">
-        <div class="texte-presentation">
+    <!-- L'UNIQUE CASE ROSE (qui remplace les 3 anciennes) -->
+    <div class="case-rose-unique">
+        <div class="texte-intro-rose">
             Bienvenue dans le Grand Registre de l'Abondance Partagée et de la Fraternité Universelle.<br>
-            Ici, chaque citoyen peut déposer une graine de savoir, proposer un soutien fraternel, ou découvrir les richesses du cœur offertes par d'autres jardiniers du monde entier.
+            Dépose une graine ou explore les chemins de l'entraide :
         </div>
-
-        <div class="grille-actions">
-            <a href="formulaire.html" class="btn-action-jardin btn-semer-grand">🌱 Semer une nouvelle graine (Déposer une annonce)</a>
-            <a href="jardin.html" class="btn-action-jardin">🌸 Explorer tout le Jardin</a>
-            <a href="jardin.html?cat=AIDE" class="btn-action-jardin">🤝 Aide & Harmonie</a>
-            <a href="jardin.html?cat=SAVOIR" class="btn-action-jardin">🎓 Savoirs & Talents</a>
-            <a href="jardin.html?cat=IMPOT" class="btn-action-jardin">💰 Trésor Public</a>
-            <a href="jardin.html?cat=REGULATION" class="btn-action-jardin">⚖️ Régulation & Justice</a>
-            <a href="vie.html" class="btn-action-jardin">🏛️ Vie Citoyenne</a>
+        
+        <div class="liens-case-rose">
+            <a href="jardin.html?cat=AIDE" class="btn-rose-lien">🌸 Aide & Harmonie (Général)</a>
+            <a href="jardin.html?cat=URGENCE" class="btn-rose-lien">🏥 Urgences (Santé & Secours)</a>
+            <a href="jardin.html?cat=ECOUTE" class="btn-rose-lien">💌 Écoute et réconfort</a>
         </div>
     </div>
 
