@@ -149,7 +149,7 @@
     function finishTransition() {
         document.getElementById('flash').style.opacity = 1;
         const params = new URLSearchParams(window.location.search);
-        const dest = params.get('page') || 'ministere-de-lhonnetete.html#apropos';
+        const dest = params.get('page') || 'ministere-de-lhonnetete.html';
         setTimeout(() => { window.location.href = dest; }, 600);
     }
 
