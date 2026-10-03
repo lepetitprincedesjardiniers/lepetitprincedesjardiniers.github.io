@@ -4,33 +4,41 @@
     <meta charset="UTF-8">
     <title>Graine Semée ! - Le Petit Prince</title>
     <style>
-        /* Conteneur haut pour aligner le menu et le journal à droite */
+        /* Conteneur principal pour l'en-tête */
         .header-container {
+            position: relative;
+            width: 100%;
+            margin: 20px 0 10px 0;
             display: flex;
             justify-content: center;
             align-items: center;
-            gap: 20px;
-            flex-wrap: wrap;
-            margin: 25px auto 10px auto;
-            padding: 0 15px;
         }
 
-        /* Menu vert jardin (#1b5e20) */
-        .menu-table { border-radius: 10px; background-color: #1b5e20; border-collapse: collapse; margin: 0; }
+        /* Menu vert (identique au Jardin : #2E7D32) et centré */
+        .menu-table { 
+            border-radius: 10px; 
+            background-color: #2E7D32; 
+            border-collapse: collapse; 
+            margin: 0 auto; 
+        }
         .menu-table td { padding: 10px 15px; border: 1px solid #FFFFFF; transition: 0.3s; }
         .menu-table a { text-decoration: none; color: #FFFFFF; font-weight: bold; font-size: 0.9em; font-family:'Comic Sans MS', cursive; }
         
-        /* Le Journal discret à droite */
+        /* Le Journal collé tout à fait à droite, identique à la page Jardin */
         .journal-link {
+            position: absolute;
+            right: 20px;
+            top: 50%;
+            transform: translateY(-50%);
             text-decoration: none;
             color: #000080;
             font-size: 0.9em;
             font-weight: bold;
             font-family: 'Comic Sans MS', cursive;
-            background-color: rgba(255, 255, 255, 0.8);
+            background-color: rgba(255, 255, 255, 0.9);
             padding: 8px 14px;
             border-radius: 8px;
-            border: 1px solid #1b5e20;
+            border: 1px solid #2E7D32;
             box-shadow: 1px 1px 3px rgba(0,0,0,0.1);
             transition: 0.2s;
         }
@@ -95,7 +103,7 @@
     <!-- Chant des oiseaux en fond -->
     <audio autoplay loop><source src="oiseaux.mp3" type="audio/mpeg"></audio>
 
-    <!-- En-tête avec Menu et Journal discret à droite -->
+    <!-- En-tête : Menu centré + Le Journal calé à droite -->
     <div class="header-container">
         <table class="menu-table">
             <tr>
@@ -114,10 +122,10 @@
 
     <br>
     <div style="font-size: 70px;">💚 🎁 💚</div>
-    <font size="7" color="#1b5e20"><b>GRAINE BIEN SEMÉE !</b></font>
+    <font size="7" color="#2E7D32"><b>GRAINE BIEN SEMÉE !</b></font>
     <br><br>
 
-    <table border="4" cellpadding="30" bgcolor="#FFFFFF" align="center" style="border-color:#1b5e20; border-radius:40px; max-width:600px; box-shadow: 10px 10px 0px #E67E22;">
+    <table border="4" cellpadding="30" bgcolor="#FFFFFF" align="center" style="border-color:#2E7D32; border-radius:40px; max-width:600px; box-shadow: 10px 10px 0px #E67E22;">
         <tr>
             <td>
                 <font size="5">"Merci d'avoir semé votre générosité."</font><br><br>
