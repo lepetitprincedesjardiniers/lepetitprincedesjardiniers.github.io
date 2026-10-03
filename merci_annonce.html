@@ -5,45 +5,85 @@
     <title>Graine Semée ! - Le Petit Prince</title>
     <style>
         /* Menu vert harmonisé avec le Jardin (#2E7D32) */
-        .menu-table { margin: 20px auto; border-radius: 10px; background-color: #2E7D32; border-collapse: collapse; }
+        .menu-table { margin: 20px auto 10px auto; border-radius: 10px; background-color: #2E7D32; border-collapse: collapse; }
         .menu-table td { padding: 10px 15px; border: 1px solid #FFFFFF; transition: 0.3s; }
         .menu-table a { text-decoration: none; color: #FFFFFF; font-weight: bold; font-size: 0.9em; font-family:'Comic Sans MS', cursive; }
         #google_translate_element { margin-top: 10px; }
 
-        /* Animation de l'étoile filante qui parcourt l'écran */
-        @keyframes shootingStar {
-            0% { transform: translateX(-50px) translateY(-50px); opacity: 1; }
-            100% { transform: translateX(110vw) translateY(110vh); opacity: 0; }
+        /* Style propre pour le lien du Journal */
+        .journal-container {
+            margin: 10px auto 25px auto;
+            text-align: center;
         }
-        .shooting-star {
-            position: fixed;
-            top: 0;
-            left: 0;
-            font-size: 35px;
-            z-index: 1000;
-            pointer-events: none;
-            animation: shootingStar 4s linear infinite;
-        }
-
-        /* Style pour le lien du Journal */
         .journal-link {
             display: inline-block;
-            margin-top: 10px;
-            padding: 6px 16px;
-            background-color: #E67E22;
+            padding: 8px 18px;
+            background-color: #008080;
             color: white;
             text-decoration: none;
             border-radius: 8px;
             font-weight: bold;
+            font-size: 0.95em;
             font-family: 'Comic Sans MS', cursive;
             box-shadow: 2px 2px 5px rgba(0,0,0,0.2);
+            transition: 0.2s;
+        }
+        .journal-link:hover {
+            background-color: #006666;
+        }
+
+        /* Effet d'étoiles filantes amélioré et fluide */
+        .sky {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 999;
+            overflow: hidden;
+        }
+        .shooting-star {
+            position: absolute;
+            width: 100px;
+            height: 2px;
+            background: linear-gradient(90deg, rgba(255,255,255,1), rgba(230,126,34,0));
+            transform: rotate(-45deg);
+            opacity: 0;
+            animation: shoot 5s linear infinite;
+        }
+        .shooting-star::before {
+            content: '⭐';
+            position: absolute;
+            top: -8px;
+            left: 0;
+            font-size: 14px;
+        }
+        /* Positions et délais aléatoires pour un effet naturel */
+        .shooting-star:nth-child(1) { top: 10%; left: 20%; animation-delay: 0s; animation-duration: 4s; }
+        .shooting-star:nth-child(2) { top: 30%; left: 70%; animation-delay: 2s; animation-duration: 5s; }
+        .shooting-star:nth-child(3) { top: 5%; left: 80%; animation-delay: 3.5s; animation-duration: 3.5s; }
+
+        @keyframes shoot {
+            0% {
+                transform: translateX(0) translateY(0) rotate(-45deg);
+                opacity: 1;
+            }
+            100% {
+                transform: translateX(-500px) translateY(500px) rotate(-45deg);
+                opacity: 0;
+            }
         }
     </style>
 </head>
 <body bgcolor="#FFFF00" text="#000080" style="font-family:'Comic Sans MS', cursive; text-align:center;">
 
-    <!-- Étoile filante magique -->
-    <div class="shooting-star">🌠</div>
+    <!-- Ciel magique avec étoiles filantes améliorées -->
+    <div class="sky">
+        <div class="shooting-star"></div>
+        <div class="shooting-star"></div>
+        <div class="shooting-star"></div>
+    </div>
 
     <!-- Chant des oiseaux en fond -->
     <audio autoplay loop><source src="oiseaux.mp3" type="audio/mpeg"></audio>
@@ -64,12 +104,11 @@
         </tr>
     </table>
 
-    <!-- Lien vers Le Journal -->
-    <div>
+    <!-- Lien vers Le Journal proprement centré -->
+    <div class="journal-container">
         <a href="ministere-de-lhonnetete.html" class="journal-link">📰 Le Journal ►</a>
     </div>
 
-    <br><br>
     <div style="font-size: 70px;">💚 🎁 💚</div>
     <font size="7" color="#2E7D32"><b>GRAINE BIEN SEMÉE !</b></font>
     <br><br>
