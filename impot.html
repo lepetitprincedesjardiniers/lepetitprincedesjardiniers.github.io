@@ -361,6 +361,16 @@
             }, 2000);
         }
 
+        // Utilitaire insensible à la casse pour lire les colonnes du Google Sheet (ex: Type ou type)
+        function getProp(obj, key) {
+            if (!obj) return '';
+            const lowerKey = key.toLowerCase();
+            for (let k in obj) {
+                if (k.toLowerCase() === lowerKey) return obj[k];
+            }
+            return '';
+        }
+
         function basculerModeSombre() {
             document.body.classList.toggle('dark-mode');
             if (document.body.classList.contains('dark-mode')) {
@@ -385,11 +395,10 @@
                 const toutesLesAnnonces = await response.json();
                 cacheAnnonces = toutesLesAnnonces;
                 
-                // Filtrage des annonces principales (en ignorant les réponses directes)
+                // Filtrage des annonces principales (en ignorant les réponses)
                 const annoncesImpots = toutesLesAnnonces.filter(ann => {
-                    const typeVal = (ann.type || "").toUpperCase();
-                    const isReponse = typeVal.includes("REPONSE");
-                    return !isReponse;
+                    const typeVal = String(getProp(ann, 'type') || "").toUpperCase();
+                    return !typeVal.includes("REPONSE");
                 });
 
                 const cont = document.getElementById('mur-messages');
@@ -404,17 +413,24 @@
                 annoncesImpots.reverse();
 
                 annoncesImpots.forEach(ann => {
+                    const nom = getProp(ann, 'nom');
+                    const categorie = getProp(ann, 'categorie');
+                    const message = getProp(ann, 'message');
+                    const localisation = getProp(ann, 'localisation');
+                    const pays = getProp(ann, 'pays_select');
+                    const horodateur = getProp(ann, 'horodateur');
+
                     const d = document.createElement('div');
                     d.className = 'carte-message';
-                    d.onclick = () =>ouvrirGrandMessage(ann);
+                    d.onclick = () => ouvrirGrandMessage(ann);
                     d.innerHTML = `
-                        <div class="nom-prenom">${ann.nom || "Anonyme"}</div>
-                        <div class="rubrique-tag">${ann.categorie || 'Trésor'}</div>
-                        <div class="texte-annonce">"${ann.message || ''}"</div>
+                        <div class="nom-prenom">${nom || "Anonyme"}</div>
+                        <div class="rubrique-tag">${categorie || 'Trésor'}</div>
+                        <div class="texte-annonce">"${message || ''}"</div>
                         <div class="details-bas">
-                            📍 Ville : ${ann.localisation || 'N/C'}<br>
-                            🌍 Pays : ${ann.pays_select || 'N/C'}<br>
-                            📅 Date : ${ann.Horodateur || 'Récemment'}
+                            📍 Ville : ${localisation || 'N/C'}<br>
+                            🌍 Pays : ${pays || 'N/C'}<br>
+                            📅 Date : ${horodateur || 'Récemment'}
                         </div>
                     `;
                     cont.appendChild(d);
@@ -422,7 +438,12 @@
 
                 // Si la modale est ouverte, rafraîchir son contenu dynamiquement
                 if (annonceActiveCourante) {
-                    const miseAJourAnnonce = toutesLesAnnonces.find(a => (a.Horodateur === annonceActiveCourante.Horodateur && a.nom === annonceActiveCourante.nom));
+                    const activeNom = getProp(annonceActiveCourante, 'nom');
+                    const activeDate = getProp(annonceActiveCourante, 'horodateur');
+                    const miseAJourAnnonce = toutesLesAnnonces.find(a => 
+                        String(getProp(a, 'nom')).trim().toLowerCase() === String(activeNom).trim().toLowerCase() && 
+                        String(getProp(a, 'horodateur')).trim() === String(activeDate).trim()
+                    );
                     if (miseAJourAnnonce) {
                         ouvrirGrandMessage(miseAJourAnnonce, true);
                     }
@@ -436,16 +457,21 @@
 
         function ouvrirGrandMessage(ann, silent = false) {
             annonceActiveCourante = ann;
-            const annonceId = ann.Horodateur || ann.nom || '';
+            const annNom = String(getProp(ann, 'nom') || "").trim();
+            const annDate = String(getProp(ann, 'horodateur') || "").trim();
+            const annonceId = annDate ? `${annNom}_${annDate}` : annNom;
             
-            // Recherche élargie des réponses correspondantes (par parent_ref, parent ou type REPONSE_REGULATION)
+            // Recherche robuste et élargie des réponses correspondantes
             const reponses = cacheAnnonces.filter(a => {
-                const typeVal = (a.type || "").toUpperCase();
-                const isRep = typeVal.includes("REPONSE");
-                if (!isRep) return false;
+                const typeVal = String(getProp(a, 'type') || "").toUpperCase();
+                if (!typeVal.includes("REPONSE")) return false;
 
-                const matchRef = a.parent_ref && annonceId && String(a.parent_ref).trim() === String(annonceId).trim();
-                const matchParent = a.parent && ann.nom && String(a.parent).trim().toLowerCase() === String(ann.nom).trim().toLowerCase();
+                const refRep = String(getProp(a, 'parent_ref') || "").trim();
+                const parentRep = String(getProp(a, 'parent') || "").trim();
+
+                const matchRef = refRep && annonceId && refRep === annonceId;
+                const matchParent = parentRep && annNom && parentRep.toLowerCase() === annNom.toLowerCase();
+                
                 return matchRef || matchParent;
             });
 
@@ -454,8 +480,8 @@
                 reponses.forEach(rep => {
                     htmlReponses += `
                         <div class="carte-reponse">
-                            <strong>💬 ${rep.nom || "Anonyme"} :</strong> ${rep.message || ''}
-                            <div style="font-size: 0.75em; color: #555; margin-top: 3px;">📅 ${rep.Horodateur || ''}</div>
+                            <strong>💬 ${getProp(rep, 'nom') || "Anonyme"} :</strong> ${getProp(rep, 'message') || ''}
+                            <div style="font-size: 0.75em; color: #555; margin-top: 3px;">📅 ${getProp(rep, 'horodateur') || ''}</div>
                         </div>
                     `;
                 });
@@ -464,24 +490,24 @@
             }
 
             document.getElementById('geant-contenu').innerHTML = `
-                <div style="font-size:1.5em; color:#00695c; font-weight:bold; border-bottom:3px solid #008080; margin-bottom:15px; padding-bottom:5px;">🪙 Contribution de ${ann.nom || "Anonyme"}</div>
-                <div style="background:white; padding:20px; border-radius:15px; border-left:8px solid #008080; font-size:1.1em; color:#004d40; text-align:left; margin-bottom:15px; font-style:italic;">"${ann.message || ''}"</div>
+                <div style="font-size:1.5em; color:#00695c; font-weight:bold; border-bottom:3px solid #008080; margin-bottom:15px; padding-bottom:5px;">🪙 Contribution de ${annNom || "Anonyme"}</div>
+                <div style="background:white; padding:20px; border-radius:15px; border-left:8px solid #008080; font-size:1.1em; color:#004d40; text-align:left; margin-bottom:15px; font-style:italic;">"${getProp(ann, 'message') || ''}"</div>
                 <div style="text-align:left; background:#E0F2F1; padding:15px; border-radius:10px; font-size:0.95em; color:#004d40; margin-bottom:20px;">
-                    <strong>🌿 Rubrique :</strong> ${ann.categorie || 'N/C'}<br>
-                    <strong>📍 Localisation :</strong> ${ann.localisation || "N/C"}<br>
-                    <strong>🌍 Pays :</strong> ${ann.pays_select || "N/C"}<br>
-                    <strong>🛠️ Besoins :</strong> ${ann.besoin || "Aucun spécifié"}<br>
-                    <strong>📅 Date :</strong> ${ann.Horodateur || "N/C"}
+                    <strong>🌿 Rubrique :</strong> ${getProp(ann, 'categorie') || 'N/C'}<br>
+                    <strong>📍 Localisation :</strong> ${getProp(ann, 'localisation') || "N/C"}<br>
+                    <strong>🌍 Pays :</strong> ${getProp(ann, 'pays_select') || "N/C"}<br>
+                    <strong>🛠️ Besoins :</strong> ${getProp(ann, 'besoin') || "Aucun spécifié"}<br>
+                    <strong>📅 Date :</strong> ${annDate || "N/C"}
                 </div>
 
                 <div class="reponses-container">
                     <h3 style="color: #00695c; margin-bottom: 10px;">💬 Réponses à cette contribution</h3>
                     <div id="liste-reponses">${htmlReponses}</div>
 
-                    <form id="formReponse" onsubmit="envoyerReponse(event, '${annonceId}', '${ann.nom || ''}')" style="margin-top: 15px;">
+                    <form id="formReponse" onsubmit="envoyerReponse(event, '${annonceId.replace(/'/g, "\\'")}', '${annNom.replace(/'/g, "\\'")}')" style="margin-top: 15px;">
                         <input type="hidden" name="type" value="REPONSE_REGULATION">
                         <input type="hidden" name="parent_ref" value="${annonceId}">
-                        <input type="hidden" name="parent" value="${ann.nom || ''}">
+                        <input type="hidden" name="parent" value="${annNom}">
                         <div style="margin-bottom: 10px;">
                             <label>👤 Votre Nom / Pseudo :</label>
                             <input type="text" name="nom" required placeholder="Votre pseudo">
@@ -524,7 +550,7 @@
                     body: urlParams
                 });
 
-                // Délai allongé à 2.5s pour laisser le temps à Google Sheets d'écrire la ligne
+                // Attente de 2.5s pour laisser le temps à Google Sheets d'écrire et de recharger les données
                 setTimeout(async () => {
                     form.reset();
                     await chargerImpots();
