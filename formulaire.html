@@ -73,29 +73,27 @@
 
     <audio id="chantOiseaux" loop><source src="oiseaux.mp3" type="audio/mpeg"></audio>
     <div id="google_translate_element"></div>
-<!-- Conteneur qui gère les marges globale et le centrage -->
-<div style="position: relative; display: flex; justify-content: center; align-items: center; width: 100%; margin: 20px 0 5px 0;">
-
-    <!-- Menu principal (sans Le Journal) -->
-    <table class="menu-table" style="margin: 0 !important;">
-        <tr>
-            <td><a href="index.html">Accueil</a></td>
-            <td><a href="formulaire.html">Semer</a></td>
-            <td><a href="jardin.html">Le Jardin</a></td>
-            <td><a href="impot.html">Trésor Public</a></td>
-            <td><a href="regulation.html">Régulation</a></td>
-            <td><a href="aide.html">Aide & Harmonie</a></td>
-            <td><a href="savoirs.html">Savoirs</a></td>
-            <td><a href="vie.html">Vie Citoyenne</a></td>
-        </tr>
-    </table>
-
-    <!-- Lien Journal calé à droite et aligné sur l'axe vertical du menu -->
-    <a href="ministere-de-lhonnetete.html" style="position: absolute; right: 20px; top: 50%; transform: translateY(-50%); color: #E67E22; background: transparent; text-decoration: none; font-weight: bold; font-size: 0.95em; white-space: nowrap;">
-        📰 Le Journal ►
-    </a>
-
-</div>
+    
+    <!-- Conteneur qui gère les marges globale et le centrage -->
+    <div style="position: relative; display: flex; justify-content: center; align-items: center; width: 100%; margin: 20px 0 5px 0;">
+        <!-- Menu principal -->
+        <table class="menu-table" style="margin: 0 !important;">
+            <tr>
+                <td><a href="index.html">Accueil</a></td>
+                <td><a href="formulaire.html">Semer</a></td>
+                <td><a href="jardin.html">Le Jardin</a></td>
+                <td><a href="impot.html">Trésor Public</a></td>
+                <td><a href="regulation.html">Régulation</a></td>
+                <td><a href="aide.html">Aide & Harmonie</a></td>
+                <td><a href="savoirs.html">Savoirs</a></td>
+                <td><a href="vie.html">Vie Citoyenne</a></td>
+            </tr>
+        </table>
+        <!-- Lien Journal calé à droite et aligné sur l'axe vertical du menu -->
+        <a href="ministere-de-lhonnetete.html" style="position: absolute; right: 20px; top: 50%; transform: translateY(-50%); color: #E67E22; background: transparent; text-decoration: none; font-weight: bold; font-size: 0.95em; white-space: nowrap;">
+            📰 Le Journal ►
+        </a>
+    </div>
    
     <div class="guide-trigger" onclick="toggleGuide(event)">🌱 Ouvrir le Guide des Semailles</div>
 
@@ -242,7 +240,7 @@
                     <input type="text" name="cat_precision" placeholder="Précise ton domaine d'action sur mesure...">
                 </div>
 
-                <a class="discreet-help" onclick="toggleGuide(event)">❓ Pas sûr ? Ouvrir le guide des semailles</a>
+                <a class="discreet-help" onclick="toggleGuide(event)">❓ Précision ? Ouvrir le guide des semailles</a>
             </div>
 
             <!-- Précision de la graine -->
@@ -465,7 +463,7 @@ Le jardin arrose les fleurs..." required></textarea>
         "La fraternité est un jardin sans fin 🌍",
         "S'entraider, c'est cultiver l'avenir 🌱",
         "Nouveau message de solidarité ! 💌",
-        "Regarde la bonté s'envoler... 🕊️"
+        "Regarde la bonté s'envoler... 🕊️️"
     ];
     
     let aniX = -200, state = "FLY", targetY = 250, dropCount = 0;
@@ -555,6 +553,20 @@ Le jardin arrose les fleurs..." required></textarea>
             window.location.href = "merci_annonce.html"; 
         });
     }
+
+    // Gestion de la pré-sélection automatique de la catégorie via l'URL (ex: formulaire.html?cat=SAVOIR)
+    window.addEventListener('DOMContentLoaded', () => {
+        const urlParams = new URLSearchParams(window.location.search);
+        const catParam = urlParams.get('cat');
+
+        if (catParam) {
+            const selectCat = document.getElementById('main_cat');
+            if (selectCat) {
+                selectCat.value = catParam.toUpperCase();
+                updateSubCats(); // Met à jour les sous-catégories dynamiquement
+            }
+        }
+    });
 
     messenger();
 </script>
