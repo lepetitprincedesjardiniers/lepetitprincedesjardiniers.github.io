@@ -36,7 +36,6 @@
         @media (max-width: 1024px) { .mur-reel { grid-template-columns: repeat(3, 1fr); } }
         @media (max-width: 768px) { .mur-reel { grid-template-columns: repeat(1, 1fr); } }
 
-        /* Cartes uniformes avec hauteur fixe et texte défilant si nécessaire */
         .carte-message { background: white; border: 3px solid #008080; border-radius: 10px; padding: 10px; box-shadow: 3px 3px 0px #008080; display: flex; flex-direction: column; height: 330px; cursor: pointer; position: relative; overflow: hidden; text-align: left; transition: transform 0.2s; }
         .carte-message:hover { transform: translateY(-3px); }
         .nom-prenom { color: #2E7D32; font-weight: bold; font-size: 0.85em; border-bottom: 1px solid #eee; margin-bottom: 4px; padding-right: 70px; }
@@ -271,6 +270,26 @@
             }
         }
 
+        // Vérifie si une annonce est expirée selon sa date et sa durée de validité
+        function estExpire(ann) {
+            const horodateur = ann.Horodateur || ann.date;
+            if (!horodateur) return false;
+            
+            const datePub = new Date(horodateur);
+            if (isNaN(datePub)) return false;
+            
+            const validiteStr = String(ann.validite || ann.duree || "1 jour").toLowerCase();
+            
+            let nbJours = 1; 
+            if (validiteStr.includes('7') || validiteStr.includes('semaine')) nbJours = 7;
+            else if (validiteStr.includes('30') || validiteStr.includes('mois')) nbJours = 30;
+            else if (validiteStr.includes('1') || validiteStr.includes('jour')) nbJours = 1;
+            else if (validiteStr.includes('illimité') || validiteStr.includes('permanent')) return false;
+            
+            const dateExpiration = new Date(datePub.getTime() + (nbJours * 24 * 60 * 60 * 1000));
+            return new Date() > dateExpiration;
+        }
+
         function obtenirReponsesPourAnnonce(ann) {
             const idOriginal = String(ann.Horodateur || ann.id || "").trim();
             if (!idOriginal) return [];
@@ -419,6 +438,9 @@
             const mi = document.getElementById('searchKeyword').value.toLowerCase();
 
             const filtrées = annoncesPrincipales.filter(ann => {
+                // Ignore directement les annonces expirées
+                if (estExpire(ann)) return false;
+
                 const matchP = pi === "" || (ann.pays_select || "").toLowerCase().startsWith(pi);
                 const matchV = vi === "" || (ann.localisation || "").toLowerCase().startsWith(vi);
                 const texteMsg = (ann.message || "").toLowerCase();
