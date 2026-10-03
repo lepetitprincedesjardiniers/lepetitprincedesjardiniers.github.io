@@ -28,9 +28,9 @@
         .btn-filtre-rapide { background: rgba(255,255,255,0.2); border: 1px solid white; color: white; padding: 6px 12px; border-radius: 20px; cursor: pointer; font-family: 'Comic Sans MS'; font-size: 0.8em; transition: 0.3s; }
         .btn-filtre-rapide.actif { background: #fff !important; color: #008080 !important; font-weight: bold; }
 
-        /* Style du tiroir dynamique des sous-rubriques */
+        /* Tiroir dynamique des sous-rubriques avec taille de texte optimisée */
         #sous-rubriques-container { display: none; width: 90%; background: rgba(255, 105, 180, 0.25); padding: 12px; border-radius: 15px; border: 2px dashed #ff1493; margin-top: 10px; text-align: center; }
-        .btn-sous-filtre { background: #ff1493; border: 1px solid white; color: white; padding: 6px 12px; border-radius: 15px; cursor: pointer; font-family: 'Comic Sans MS'; font-size: 0.8em; margin: 3px; transition: 0.3s; }
+        .btn-sous-filtre { background: #ff1493; border: 1px solid white; color: white; padding: 5px 10px; border-radius: 12px; cursor: pointer; font-family: 'Comic Sans MS'; font-size: 0.73em; margin: 3px; transition: 0.3s; white-space: nowrap; }
         .btn-sous-filtre.actif { background: #fff !important; color: #ff1493 !important; font-weight: bold; }
 
         .mur-reel { display: grid; grid-template-columns: repeat(5, minmax(150px, 1fr)); gap: 10px; padding: 10px; max-width: 98vw; margin: 0 auto; }
@@ -109,10 +109,10 @@
                 <button class="btn-filtre-rapide btn-reset" onclick="resetRecherche()">🔄 Tout voir</button>
             </div>
 
-            <!-- Tiroir dynamique des sous-rubriques (Précision de la graine) -->
+            <!-- Tiroir dynamique des sous-rubriques (Précision de la graine) avec intitulés complets -->
             <div id="sous-rubriques-container">
                 <div style="font-size: 0.85em; font-weight: bold; color: #ff1493; margin-bottom: 6px;">💖 Précision de la graine :</div>
-                <div id="liste-boutons-sous-rubriques" style="display: flex; gap: 8px; justify-content: center; flex-wrap: wrap;"></div>
+                <div id="liste-boutons-sous-rubriques" style="display: flex; gap: 6px; justify-content: center; flex-wrap: wrap;"></div>
             </div>
         </div>
     </div>
@@ -171,7 +171,7 @@
             "Autre": ["AUTRE_CAT"] 
         };
 
-        // Sous-rubriques (Précision de la graine) exactes correspondant au formulaire officiel
+        // Sous-rubriques (Précision de la graine) avec intitulés complets d'origine
         const sousRubriquesData = {
             "Savoir": [
                 { id: "", label: "🎓 Tous les Savoirs" },
@@ -183,17 +183,22 @@
                 { id: "", label: "🏛️ Toute Vie Citoyenne" },
                 { id: "Prêt de Matériel", label: "🛠️ Prêt de Matériel" },
                 { id: "Sport & Loisirs", label: "⚽ Sport & Loisirs" },
-                { id: "Espace Commun", label: "🏡 Espace Commun" }
+                { id: "Espace Commun", label: "🏡 Espace Commun" },
+                { id: "Initiatives & Écologie", label: "🌱 Initiatives & Écologie" },
+                { id: "Mobilité & Partage", label: "🚗 Mobilité & Partage" }
             ],
             "Harmonie": [
                 { id: "", label: "🤝 Toute Aide & Harmonie" },
                 { id: "URGENCE", label: "🚨 URGENCE" },
-                { id: "ECOUTE", label: "💌 Écoute & Réconfort" },
-                { id: "Soutien Quotidien", label: "🍲 Soutien Quotidien" }
+                { id: "Écoute & Réconfort", label: "💌 Écoute & Réconfort" },
+                { id: "Soutien Quotidien", label: "🍲 Soutien Quotidien" },
+                { id: "Hébergement & Refuge", label: "🏠 Hébergement & Refuge" },
+                { id: "Protection Animale", label: "🐾 Protection Animale" }
             ],
             "Régulation": [
                 { id: "", label: "⚖️ Toute Régulation" },
-                { id: "Zone de Régulation Citoyenne", label: "⚖️ Zone de Régulation Citoyenne" }
+                { id: "Zone de Régulation Citoyenne", label: "⚖️ Zone de Régulation Citoyenne" },
+                { id: "Médiation & Conflits", label: "🤝 Médiation & Conflits" }
             ],
             "Trésor": [
                 { id: "", label: "💰 Tout Trésor Public" },
@@ -252,7 +257,7 @@
             });
         }
 
-        // Bip très bas et adouci (volume 0.03)
+        // Bip très bas et adouci (volume réduit à 0.03)
         function jouerBip() {
             try {
                 const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
