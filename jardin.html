@@ -28,7 +28,7 @@
         .btn-filtre-rapide { background: rgba(255,255,255,0.2); border: 1px solid white; color: white; padding: 6px 12px; border-radius: 20px; cursor: pointer; font-family: 'Comic Sans MS'; font-size: 0.8em; transition: 0.3s; }
         .btn-filtre-rapide.actif { background: #fff !important; color: #008080 !important; font-weight: bold; }
 
-        /* Tiroir dynamique avec menu déroulant harmonisé (sans texte parasite au-dessus) */
+        /* Tiroir dynamique avec menu déroulant harmonisé */
         #sous-rubriques-container { display: none; width: 90%; background: rgba(255, 105, 180, 0.25); padding: 10px; border-radius: 15px; border: 2px dashed #ff1493; margin-top: 8px; text-align: center; }
         .select-sous-rubrique { padding: 6px 10px; border-radius: 12px; border: 2px solid #ff1493; font-family: 'Comic Sans MS'; font-size: 0.78em; background: white; color: #008080; font-weight: bold; cursor: pointer; outline: none; width: 80%; max-width: 450px; }
 
@@ -108,7 +108,7 @@
                 <button class="btn-filtre-rapide btn-reset" onclick="resetRecherche()">🔄 Tout voir</button>
             </div>
 
-            <!-- Tiroir dynamique avec menu déroulant (Précision de la graine) sans texte parasite -->
+            <!-- Tiroir dynamique avec menu déroulant contenant strictement la liste officielle -->
             <div id="sous-rubriques-container">
                 <select id="selectSousRubrique" class="select-sous-rubrique" onchange="changerSousRubrique(this)"></select>
             </div>
@@ -169,40 +169,48 @@
             "Autre": ["AUTRE_CAT"] 
         };
 
-        // Contenu exact des sous-rubriques (Précision de la graine) pour chaque destination du semis.
-        // Tu peux ajuster directement ces libellés si besoin pour qu'ils collent mot pour mot à ton formulaire.
+        // Liste officielle exacte fournie par vos soins
         const sousRubriquesData = {
             "Savoir": [
                 { id: "", label: "🎓 Toutes les précisions" },
-                { id: "Savoirs & Transmissions", label: "Savoirs & Transmissions" },
-                { id: "Artisanat & Arts", label: "Artisanat & Arts" },
-                { id: "Pratiques de la Terre", label: "Pratiques de la Terre" }
+                { id: "Soutien scolaire & cours", label: "Soutien scolaire & cours" },
+                { id: "Art, artisanat & musique", label: "Art, artisanat & musique" },
+                { id: "Mentorat pro & compétences techniques", label: "Mentorat pro & compétences techniques" },
+                { id: "Savoir-faire du quotidien", label: "Savoir-faire du quotidien" },
+                { id: "AUTRE_SUB", label: "AUTRE_SUB" }
             ],
             "Citoyenne": [
                 { id: "", label: "🏛️ Toutes les précisions" },
-                { id: "Prêt de Matériel", label: "Prêt de Matériel" },
-                { id: "Sport & Loisirs", label: "Sport & Loisirs" },
-                { id: "Espace Commun", label: "Espace Commun" }
+                { id: "Repas, graines & eau", label: "Repas, graines & eau" },
+                { id: "Prêt d'objets, outils & équipement", label: "Prêt d'objets, outils & équipement" },
+                { id: "Accueil, hébergement & covoiturage", label: "Accueil, hébergement & covoiturage" },
+                { id: "Loisirs & activités partagées", label: "Loisirs & activités partagées" },
+                { id: "AUTRE_SUB", label: "AUTRE_SUB" }
             ],
             "Harmonie": [
                 { id: "", label: "🤝 Toutes les précisions" },
-                { id: "URGENCE", label: "URGENCE" },
-                { id: "Écoute & Réconfort", label: "Écoute & Réconfort" },
-                { id: "Soutien Quotidien", label: "Soutien Quotidien" }
+                { id: "Secours immédiat & petite urgence", label: "Secours immédiat & petite urgence" },
+                { id: "Écoute, présence & soutien aux aînés", label: "Écoute, présence & soutien aux aînés" },
+                { id: "Garde d'enfants & soutien familial", label: "Garde d'enfants & soutien familial" },
+                { id: "Soin des animaux & aide à la maison", label: "Soin des animaux & aide à la maison" },
+                { id: "AUTRE_SUB", label: "AUTRE_SUB" }
             ],
             "Régulation": [
                 { id: "", label: "⚖️ Toutes les précisions" },
-                { id: "Zone de Régulation Citoyenne", label: "Zone de Régulation Citoyenne" }
+                { id: "Aide aux démarches (Aide sociale rapprochée)", label: "Aide aux démarches (Aide sociale rapprochée)" },
+                { id: "Médiation de voisinage & paix citoyenne", label: "Médiation de voisinage & paix citoyenne" },
+                { id: "Organisation d'assemblées & conseils citoyens", label: "Organisation d'assemblées & conseils citoyens" },
+                { id: "AUTRE_SUB", label: "AUTRE_SUB" }
             ],
             "Trésor": [
                 { id: "", label: "💰 Toutes les précisions" },
-                { id: "Énergie & Flux (Solaire/Réseaux)", label: "Énergie & Flux (Solaire/Réseaux)" },
-                { id: "Partage de Ressources", label: "Partage de Ressources" }
+                { id: "Entretien des réseaux vitaux (eau, énergie)", label: "Entretien des réseaux vitaux (eau, énergie)" },
+                { id: "Voirie & chantiers participatifs", label: "Voirie & chantiers participatifs" },
+                { id: "Espaces verts, forêts & parcs publics", label: "Espaces verts, forêts & parcs publics" },
+                { id: "AUTRE_SUB", label: "AUTRE_SUB" }
             ],
             "Autre": [
-                { id: "", label: "✨ Toutes les précisions" },
-                { id: "Espace Cœur", label: "Espace Cœur" },
-                { id: "Poésie & Rêves", label: "Poésie & Rêves" }
+                { id: "", label: "✨ Toutes les précisions" }
             ]
         };
 
