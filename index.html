@@ -174,7 +174,6 @@
                     <td><a href="jardin.html">Le Jardin</a></td>
                     <td><a href="jardin.html?cat=IMPOT">Trésor Public</a></td>
                     <td><a href="jardin.html?cat=REGULATION">Régulation</a></td>
-                    <!-- Lien Aide & Harmonie du menu du haut pointant vers ?cat=AIDE -->
                     <td><a href="jardin.html?cat=AIDE">Aide & Harmonie</a></td>
                     <td><a href="jardin.html?cat=SAVOIR">Savoirs</a></td>
                     <td><a href="vie.html">Vie Citoyenne</a></td>
@@ -276,7 +275,7 @@
         let audio = new Audio('oiseaux.mp3'); audio.loop = true; let enLecture = false;
         function toggleSon() {
             if (!enLecture) { audio.play().catch(e=>{}); document.getElementById('btn-son').innerHTML = "🎶"; enLecture = true; } 
-            else { audio.pause(); document.getElementById('btn-son').innerHTML = "🕊️️"; enLecture = false; }
+            else { audio.pause(); document.getElementById('btn-son').innerHTML = "🕊"; enLecture = false; }
         }
 
         const coffre = document.getElementById('coffre-magique');
