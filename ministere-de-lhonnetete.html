@@ -416,7 +416,7 @@
             }
         }
 
-        // AFFICHAGE DES VIDÉOS (Ordre exact : Titre en haut, vidéo juste en dessous sans espace, résumé, flèche centrale et détails)
+        // AFFICHAGE DES VIDÉOS (Découpage intelligent : Aperçu court visible, reste du texte + métadonnées masqués)
         function renderVideos() {
             const grid = document.getElementById('videos-grid');
             const searchInput = document.getElementById('search-input');
@@ -444,6 +444,21 @@
                 const thumbUrl = videoId ? `https://img.youtube.com/vi/${videoId}/hqdefault.jpg` : '';
                 const uniqueId = `video-container-${idx}-${Math.random().toString(36).substring(2, 7)}`;
 
+                // Découpage intelligent du texte de description
+                const fullDesc = vid.description || 'Aucune description fournie.';
+                let previewDesc = fullDesc;
+                let restDesc = '';
+
+                if (fullDesc.length > 110) {
+                    let splitIndex = 110;
+                    let periodIndex = fullDesc.indexOf('.', 70);
+                    if (periodIndex !== -1 && periodIndex < 160) {
+                        splitIndex = periodIndex + 1;
+                    }
+                    previewDesc = fullDesc.substring(0, splitIndex).trim();
+                    restDesc = fullDesc.substring(splitIndex).trim();
+                }
+
                 html += `
                     <div class="bg-white rounded-3xl border border-orange-100 overflow-hidden shadow-sm flex flex-col justify-between p-6 space-y-3">
                         
@@ -467,7 +482,7 @@
                         <!-- 3. Quelques lignes de résumé & Flèche centrale -->
                         <div class="desc-container pt-2 space-y-3">
                             <div class="text-gray-700 text-sm leading-relaxed whitespace-pre-line">
-                                ${vid.description || 'Aucune description fournie.'}
+                                ${previewDesc}
                             </div>
 
                             <!-- Flèche orange au centre pour dérouler -->
@@ -477,8 +492,9 @@
                                 </button>
                             </div>
 
-                            <!-- 4. Contenu supplémentaire masqué (Hashtag, copyright, auteur...) -->
+                            <!-- 4. Contenu supplémentaire masqué (Reste du résumé, Auteur, Hashtags, Copyright) -->
                             <div class="desc-content space-y-2 pt-3 border-t border-orange-100/60 bg-orange-50/40 p-4 rounded-2xl text-xs">
+                                ${restDesc ? `<div class="text-gray-700 text-sm leading-relaxed whitespace-pre-line pb-3 border-b border-orange-100/60">${restDesc}</div>` : ''}
                                 <div class="font-bold text-joy-orange">Auteur : Ministère de l'Honnêteté</div>
                                 <div class="text-blue-600 font-medium">#MinistereDeLHonnetete #LePetitPrinceDesJardiniers #Reportage</div>
                                 <div class="text-gray-400">© 2026 Ministère de l'Honnêteté. Tous droits réservés.</div>
