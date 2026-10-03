@@ -30,6 +30,17 @@
         .arrow-icon.rotated { transform: rotate(180deg); }
         html, body { max-width: 100% !important; overflow-x: hidden !important; }
         .iframe-container { -webkit-overflow-scrolling: touch; }
+        .desc-text {
+            display: -webkit-box;
+            -webkit-line-clamp: 5;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+        .desc-text.line-clamp-none {
+            display: block;
+            -webkit-line-clamp: unset;
+            overflow: visible;
+        }
     </style>
 </head>
 <body class="bg-joy-bg text-gray-900 font-sans antialiased">
@@ -308,12 +319,34 @@
             document.body.style.overflow = 'auto';
         }
 
-        function toggleDesc(btn) {
+        function toggleDesc(btn, index) {
             const container = btn.closest('.desc-container');
             const content = container.querySelector('.desc-content');
+            const descText = container.querySelector('.desc-text');
             const icon = btn.querySelector('.arrow-icon');
-            content.classList.toggle('expanded');
-            icon.classList.toggle('rotated');
+
+            const isExpanded = container.classList.toggle('expanded');
+            if (descText) {
+                descText.classList.toggle('line-clamp-5', !isExpanded);
+                descText.classList.toggle('line-clamp-none', isExpanded);
+            }
+            if (content) {
+                content.classList.toggle('expanded', isExpanded);
+            }
+            icon.classList.toggle('rotated', isExpanded);
+
+            // Synchronisation de la carte voisine sur la même ligne (grille de 2 colonnes)
+            if (index !== undefined) {
+                const neighborIndex = (index % 2 === 0) ? index + 1 : index - 1;
+                const neighborContainer = document.querySelector(`.desc-container[data-index="${neighborIndex}"]`);
+                if (neighborContainer) {
+                    const neighborBtn = neighborContainer.querySelector('button');
+                    const neighborExpanded = neighborContainer.classList.contains('expanded');
+                    if (neighborExpanded !== isExpanded && neighborBtn) {
+                        toggleDesc(neighborBtn); // Appel sans index pour éviter la boucle infinie
+                    }
+                }
+            }
         }
 
         function openCourrierModal(e) {
@@ -443,21 +476,7 @@
                 const videoId = getYouTubeId(vid.lien);
                 const thumbUrl = videoId ? `https://img.youtube.com/vi/${videoId}/hqdefault.jpg` : '';
                 const uniqueId = `video-container-${idx}-${Math.random().toString(36).substring(2, 7)}`;
-
-                // Découpage pour ~5 lignes d'aperçu par défaut (~280 caractères)
-                const fullDesc = vid.description || 'Aucune description fournie.';
-                let previewDesc = fullDesc;
-                let restDesc = '';
-
-                if (fullDesc.length > 280) {
-                    let splitIndex = 280;
-                    let periodIndex = fullDesc.indexOf('.', 200);
-                    if (periodIndex !== -1 && periodIndex < 350) {
-                        splitIndex = periodIndex + 1;
-                    }
-                    previewDesc = fullDesc.substring(0, splitIndex).trim();
-                    restDesc = fullDesc.substring(splitIndex).trim();
-                }
+                const descriptionText = vid.description || 'Aucune description fournie.';
 
                 html += `
                     <div class="bg-white rounded-3xl border border-orange-100 overflow-hidden shadow-sm flex flex-col justify-between p-6 space-y-3">
@@ -479,22 +498,21 @@
                             </div>
                         </div>
 
-                        <!-- 3. Résumé collé sans espace vide & Flèche centrale -->
-                        <div class="desc-container pt-1 space-y-2">
-                            <div class="text-gray-700 text-sm leading-relaxed whitespace-pre-line">
-                                ${previewDesc}
+                        <!-- 3. Description avec line-clamp et flèche centrale -->
+                        <div class="desc-container pt-1 space-y-2" data-index="${idx}">
+                            <div class="desc-text text-gray-700 text-sm leading-relaxed whitespace-pre-line line-clamp-5">
+                                ${descriptionText}
                             </div>
 
                             <!-- Flèche orange au centre pour dérouler -->
                             <div class="text-center py-1">
-                                <button onclick="toggleDesc(this)" class="bg-orange-50 hover:bg-joy-orange text-joy-orange hover:text-white w-10 h-10 rounded-full inline-flex items-center justify-center transition shadow-sm cursor-pointer" aria-label="Développer les détails">
+                                <button onclick="toggleDesc(this, ${idx})" class="bg-orange-50 hover:bg-joy-orange text-joy-orange hover:text-white w-10 h-10 rounded-full inline-flex items-center justify-center transition shadow-sm cursor-pointer" aria-label="Développer les détails">
                                     <i class="fa-solid fa-chevron-down arrow-icon text-sm"></i>
                                 </button>
                             </div>
 
-                            <!-- 4. Contenu supplémentaire affiché à la suite (sans auteur ni copyright redondant) -->
-                            <div class="desc-content space-y-2 pt-1 text-gray-700 text-sm leading-relaxed whitespace-pre-line">
-                                ${restDesc ? `<div>${restDesc}</div>` : ''}
+                            <!-- 4. Contenu supplémentaire affiché à la suite -->
+                            <div class="desc-content space-y-2 pt-1 text-gray-700 text-sm leading-relaxed">
                                 <div class="text-blue-600 font-medium pt-1">#MinistereDeLHonnetete #LePetitPrinceDesJardiniers #Reportage</div>
                             </div>
                         </div>
