@@ -28,9 +28,9 @@
         .btn-filtre-rapide { background: rgba(255,255,255,0.2); border: 1px solid white; color: white; padding: 6px 12px; border-radius: 20px; cursor: pointer; font-family: 'Comic Sans MS'; font-size: 0.8em; transition: 0.3s; }
         .btn-filtre-rapide.actif { background: #fff !important; color: #008080 !important; font-weight: bold; }
 
-        /* Tiroir dynamique avec menu déroulant pour les sous-rubriques */
-        #sous-rubriques-container { display: none; width: 90%; background: rgba(255, 105, 180, 0.25); padding: 12px; border-radius: 15px; border: 2px dashed #ff1493; margin-top: 10px; text-align: center; }
-        .select-sous-rubrique { padding: 8px 12px; border-radius: 12px; border: 2px solid #ff1493; font-family: 'Comic Sans MS'; font-size: 0.9em; background: white; color: #008080; font-weight: bold; cursor: pointer; outline: none; width: 80%; max-width: 450px; }
+        /* Tiroir dynamique avec menu déroulant harmonisé (sans texte parasite au-dessus) */
+        #sous-rubriques-container { display: none; width: 90%; background: rgba(255, 105, 180, 0.25); padding: 10px; border-radius: 15px; border: 2px dashed #ff1493; margin-top: 8px; text-align: center; }
+        .select-sous-rubrique { padding: 6px 10px; border-radius: 12px; border: 2px solid #ff1493; font-family: 'Comic Sans MS'; font-size: 0.78em; background: white; color: #008080; font-weight: bold; cursor: pointer; outline: none; width: 80%; max-width: 450px; }
 
         .mur-reel { display: grid; grid-template-columns: repeat(5, minmax(150px, 1fr)); gap: 10px; padding: 10px; max-width: 98vw; margin: 0 auto; }
         @media (max-width: 768px) { .mur-reel { grid-template-columns: repeat(2, 1fr); } }
@@ -100,7 +100,7 @@
             <!-- Boutons de filtres principaux (Destination du semis) -->
             <div class="btn-group">
                 <button class="btn-filtre-rapide" data-cat="Savoir" onclick="rechercheRapide('Savoir', this)">🎓 Savoirs</button>
-                <button class="btn-filtre-rapide" data-cat="Citoyenne" onclick="rechercheRapide('Citoyenne', this)">🏛 Vie Citoyenne</button>
+                <button class="btn-filtre-rapide" data-cat="Citoyenne" onclick="rechercheRapide('Citoyenne', this)">🏛️ Vie Citoyenne</button>
                 <button class="btn-filtre-rapide" data-cat="Harmonie" onclick="rechercheRapide('Harmonie', this)">🤝 Aide & Harmonie</button>
                 <button class="btn-filtre-rapide" data-cat="Régulation" onclick="rechercheRapide('Régulation', this)">⚖️ Régulation</button>
                 <button class="btn-filtre-rapide" data-cat="Trésor" onclick="rechercheRapide('Trésor', this)">💰 Trésor Public</button>
@@ -108,9 +108,8 @@
                 <button class="btn-filtre-rapide btn-reset" onclick="resetRecherche()">🔄 Tout voir</button>
             </div>
 
-            <!-- Tiroir dynamique avec menu déroulant (Précision de la graine) -->
+            <!-- Tiroir dynamique avec menu déroulant (Précision de la graine) sans texte parasite -->
             <div id="sous-rubriques-container">
-                <div style="font-size: 0.85em; font-weight: bold; color: #ff1493; margin-bottom: 6px;">💖 Affiner par Précision de la graine :</div>
                 <select id="selectSousRubrique" class="select-sous-rubrique" onchange="changerSousRubrique(this)"></select>
             </div>
         </div>
@@ -170,44 +169,40 @@
             "Autre": ["AUTRE_CAT"] 
         };
 
-        // Sous-rubriques (Précision de la graine) avec intitulés complets d'origine
+        // Contenu exact des sous-rubriques (Précision de la graine) pour chaque destination du semis.
+        // Tu peux ajuster directement ces libellés si besoin pour qu'ils collent mot pour mot à ton formulaire.
         const sousRubriquesData = {
             "Savoir": [
-                { id: "", label: "🎓 Tous les Savoirs" },
-                { id: "Savoirs & Transmissions", label: "📖 Savoirs & Transmissions" },
-                { id: "Artisanat & Arts", label: "🎨 Artisanat & Arts" },
-                { id: "Pratiques de la Terre", label: "🌱 Pratiques de la Terre" }
+                { id: "", label: "🎓 Toutes les précisions" },
+                { id: "Savoirs & Transmissions", label: "Savoirs & Transmissions" },
+                { id: "Artisanat & Arts", label: "Artisanat & Arts" },
+                { id: "Pratiques de la Terre", label: "Pratiques de la Terre" }
             ],
             "Citoyenne": [
-                { id: "", label: "🏛️ Toute Vie Citoyenne" },
-                { id: "Prêt de Matériel", label: "🛠️ Prêt de Matériel" },
-                { id: "Sport & Loisirs", label: "⚽ Sport & Loisirs" },
-                { id: "Espace Commun", label: "🏡 Espace Commun" },
-                { id: "Initiatives & Écologie", label: "🌱 Initiatives & Écologie" },
-                { id: "Mobilité & Partage", label: "🚗 Mobilité & Partage" }
+                { id: "", label: "🏛️ Toutes les précisions" },
+                { id: "Prêt de Matériel", label: "Prêt de Matériel" },
+                { id: "Sport & Loisirs", label: "Sport & Loisirs" },
+                { id: "Espace Commun", label: "Espace Commun" }
             ],
             "Harmonie": [
-                { id: "", label: "🤝 Toute Aide & Harmonie" },
-                { id: "URGENCE", label: "🚨 URGENCE" },
-                { id: "Écoute & Réconfort", label: "💌 Écoute & Réconfort" },
-                { id: "Soutien Quotidien", label: "🍲 Soutien Quotidien" },
-                { id: "Hébergement & Refuge", label: "🏠 Hébergement & Refuge" },
-                { id: "Protection Animale", label: "🐾 Protection Animale" }
+                { id: "", label: "🤝 Toutes les précisions" },
+                { id: "URGENCE", label: "URGENCE" },
+                { id: "Écoute & Réconfort", label: "Écoute & Réconfort" },
+                { id: "Soutien Quotidien", label: "Soutien Quotidien" }
             ],
             "Régulation": [
-                { id: "", label: "⚖️ Toute Régulation" },
-                { id: "Zone de Régulation Citoyenne", label: "⚖️ Zone de Régulation Citoyenne" },
-                { id: "Médiation & Conflits", label: "🤝 Médiation & Conflits" }
+                { id: "", label: "⚖️ Toutes les précisions" },
+                { id: "Zone de Régulation Citoyenne", label: "Zone de Régulation Citoyenne" }
             ],
             "Trésor": [
-                { id: "", label: "💰 Tout Trésor Public" },
-                { id: "Énergie & Flux (Solaire/Réseaux)", label: "⚡ Énergie & Flux (Solaire/Réseaux)" },
-                { id: "Partage de Ressources", label: "💧 Partage de Ressources" }
+                { id: "", label: "💰 Toutes les précisions" },
+                { id: "Énergie & Flux (Solaire/Réseaux)", label: "Énergie & Flux (Solaire/Réseaux)" },
+                { id: "Partage de Ressources", label: "Partage de Ressources" }
             ],
             "Autre": [
-                { id: "", label: "✨ Tout Autre domaine" },
-                { id: "Espace Cœur", label: "💖 Espace Cœur" },
-                { id: "Poésie & Rêves", label: "🌟 Poésie & Rêves" }
+                { id: "", label: "✨ Toutes les précisions" },
+                { id: "Espace Cœur", label: "Espace Cœur" },
+                { id: "Poésie & Rêves", label: "Poésie & Rêves" }
             ]
         };
 
@@ -256,7 +251,7 @@
             });
         }
 
-        // Bip très bas et adouci (volume réglé à 0.03)
+        // Bip très bas et adouci (volume réduit à 0.03)
         function jouerBip() {
             try {
                 const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
