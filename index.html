@@ -55,17 +55,16 @@
             padding: 20px;
         }
 
-        @keyframes floatSlow1 {
+        @keyframes floatOrganique {
             0%, 100% { transform: translateY(0px); }
-            50% { transform: translateY(-8px); }
-        }
-        @keyframes floatSlow2 {
-            0%, 100% { transform: translateY(0px); }
-            50% { transform: translateY(8px); }
+            50% { transform: translateY(-6px); }
         }
 
-        .flotte-1 { animation: floatSlow1 7s ease-in-out infinite; }
-        .flotte-2 { animation: floatSlow2 8s ease-in-out infinite; }
+        /* Mouvements subtilement décalés pour un effet vivant et naturel */
+        .flotte-a { animation: floatOrganique 7.2s ease-in-out infinite; }
+        .flotte-b { animation: floatOrganique 8.1s ease-in-out infinite; animation-delay: -1.5s; }
+        .flotte-c { animation: floatOrganique 7.5s ease-in-out infinite; animation-delay: -3s; }
+        .flotte-d { animation: floatOrganique 8.5s ease-in-out infinite; animation-delay: -2s; }
 
         .colonne-cosmos {
             display: flex;
@@ -186,7 +185,7 @@
         <!-- COLONNE GAUCHE -->
         <div class="colonne-cosmos">
             <!-- Trésor Public -->
-            <a href="jardin.html?cat=IMPOT" class="rubrique-carte style-tresor flotte-1">
+            <a href="jardin.html?cat=IMPOT" class="rubrique-carte style-tresor flotte-a">
                 <div style="padding-top: 6px;">
                     <h3 style="margin:0; font-size: 1em; color: #80deea;">📜 Trésor Public</h3>
                     <p style="font-size: 0.75em; font-weight: bold; margin: 3px 0; color: #b2ebf2;">Un Don pluriel</p>
@@ -198,7 +197,7 @@
             </a>
 
             <!-- Aide & Harmonie -->
-            <a href="jardin.html?cat=AIDE" class="rubrique-carte style-urgence flotte-2">
+            <a href="jardin.html?cat=AIDE" class="rubrique-carte style-urgence flotte-b">
                 <div style="padding-top: 6px;">
                     <h3 style="margin:0; font-size: 1em; color: #ffb6c1;">💖 Aide & Harmonie</h3>
                     <div class="phrases-impots" style="margin-top: 6px;">Entraide et secours du quotidien. Partageons ensemble les câlins du cœur.</div>
@@ -219,7 +218,7 @@
         <!-- COLONNE DROITE -->
         <div class="colonne-cosmos">
             <!-- Vie citoyenne -->
-            <a href="jardin.html?cat=REGULATION" class="rubrique-carte style-regulation flotte-2">
+            <a href="jardin.html?cat=REGULATION" class="rubrique-carte style-regulation flotte-c">
                 <div style="padding-top: 6px;">
                     <h3 style="margin:0; font-size: 1em; color: #d1c4e9;">⚖️ Vie citoyenne</h3>
                     <div class="phrases-impots" style="margin-top: 6px;">Expose ta sincérité : la citoyenneté participative y répond avec délicatesse.</div>
@@ -229,16 +228,14 @@
                 </div>
             </a>
 
-            <!-- Savoirs / Bibliothèque vivante -->
-            <a href="jardin.html?cat=SAVOIR" class="rubrique-carte style-savoir flotte-1">
+            <!-- Savoirs -->
+            <a href="jardin.html?cat=SAVOIR" class="rubrique-carte style-savoir flotte-d">
                 <div style="padding-top: 6px;">
                     <h3 style="margin:0; font-size: 1em; color: #fff9c4;">💡 Savoirs</h3>
-                    <p style="font-size: 0.75em; font-weight: bold; margin: 3px 0; color: #ffffff;">Bibliothèque vivante</p>
-                    <p style="font-size: 0.75em; font-weight: bold; margin: 3px 0; color: #ffffff;">Transmettre et créer</p>
-                    <div class="phrases-impots" style="font-size: 0.72em;">Partageons nos connaissances, nos apprentissages et les trésors de l'intelligence.</div>
+                    <div class="phrases-impots" style="font-size: 0.78em; margin-top: 10px;">Partageons nos connaissances et les trésors de l'intelligence.</div>
                 </div>
                 <div class="liste-exemples-discrets">
-                    Ex : ateliers, manuels et leçons de vie.
+                    Ex : transmettre, créer, ateliers et manuels.
                 </div>
             </a>
         </div>
