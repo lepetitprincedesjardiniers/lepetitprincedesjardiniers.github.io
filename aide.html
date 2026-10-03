@@ -20,7 +20,7 @@
             scroll-behavior: smooth;
         }
 
-        /* --- HEADER & TRADUCTEUR DISCRET SANS OUVERTURE DE FENÊTRE --- */
+        /* --- BARRE DE DRAPEAUX ANIMÉS À LA PLACE DU "G" --- */
         .header-tools { 
             display: flex; 
             justify-content: space-between; 
@@ -28,33 +28,25 @@
             padding: 10px 20px; 
             background: rgba(255, 255, 255, 0.05); 
         }
+        
+        .drapeaux-animes {
+            font-size: 1.5em;
+            letter-spacing: 5px;
+            animation: pulseDrapeaux 2s infinite ease-in-out;
+            filter: drop-shadow(0 0 8px #9370DB);
+            cursor: default;
+        }
+        @keyframes pulseDrapeaux {
+            0%, 100% { transform: scale(1); opacity: 0.8; }
+            50% { transform: scale(1.05); opacity: 1; }
+        }
+
+        /* Masquer le vilain bloc Google original tout en gardant son moteur fonctionnel en arrière-plan */
         #google_translate_element { 
-            opacity: 0.85; 
-            transition: opacity 0.3s ease;
+            display: none !important; 
         }
-        #google_translate_element:hover { 
-            opacity: 1; 
-        }
-        .goog-te-combo {
-            background-color: #2a1045 !important;
-            color: #D8BFD8 !important;
-            border: 2px solid #9370DB !important;
-            border-radius: 8px !important;
-            padding: 6px 12px !important;
-            font-family: inherit !important;
-            font-size: 1em !important;
-            outline: none;
-            cursor: pointer;
-        }
-        /* Masquer la bannière et empêcher les éléments parasites de s'ouvrir */
         .goog-te-banner-frame.skiptranslate { display: none !important; }
         body { top: 0 !important; }
-        .goog-tooltip { display: none !important; }
-        .goog-text-highlight { background-color: transparent !important; box-shadow: none !important; }
-        /* Masquer le logo/liens Google annexes pour éviter les clics vers de nouvelles fenêtres */
-        .goog-logo-link { display: none !important; }
-        .goog-te-gadget { color: transparent !important; }
-        .goog-te-gadget span { display: none !important; }
 
         .menu-table { margin: 10px auto; border-radius: 10px; background-color: #008080; border-collapse: collapse; position: relative; z-index: 10; }
         .menu-table td { border: 1px solid #FFFFFF; padding: 8px 15px; }
@@ -169,6 +161,8 @@
 <body>
 
     <div class="header-tools">
+        <!-- Farandole de drapeaux animés et changeants -->
+        <div id="drapeaux-changeants" class="drapeaux-animes">🇫🇷 🌍 🇬🇧</div>
         <div id="google_translate_element"></div>
     </div>
 
@@ -225,14 +219,40 @@
         let globalData = [];
         let annonceActiveId = null;
 
-        // Configuration Inline SIMPLE pour rester strictement dans la page sans ouvrir de fenêtres
         function googleTranslateElementInit() { 
             new google.translate.TranslateElement({
                 pageLanguage: 'fr',
                 layout: google.translate.TranslateElement.InlineLayout.SIMPLE,
                 autoDisplay: false
             }, 'google_translate_element'); 
+
+            // Script automatique pour forcer l'intégration visuelle de Google Translate en un sélecteur propre
+            setTimeout(() => {
+                const combo = document.querySelector('.goog-te-combo');
+                if (combo) {
+                    combo.style.backgroundColor = '#2a1045';
+                    combo.style.color = '#D8BFD8';
+                    combo.style.border = '2px solid #9370DB';
+                    combo.style.borderRadius = '8px';
+                    combo.style.padding = '6px 12px';
+                    combo.style.fontFamily = 'inherit';
+                    combo.style.cursor = 'pointer';
+                    // On reaffiche le select de google discrètement à côté des drapeaux
+                    combo.style.display = 'inline-block';
+                    document.getElementById('google_translate_element').style.display = 'block';
+                }
+            }, 1000);
         }
+
+        // --- ANIMATION ALÉATOIRE DES DRAPEAUX ---
+        const listeDrapeaux = ["🇫🇷 🌍 🇬🇧", "🇪🇸 🌍 🇮🇹", "🇩🇪 🌍 🇯🇵", "🇺🇸 🌍 🇨🇦", "🇧🇷 🌍 🇵🇹", "🇯🇵 🌍 🇰🇷"];
+        setInterval(() => {
+            const indexAleatoire = Math.floor(Math.random() * listeDrapeaux.length);
+            const elementDrapeaux = document.getElementById('drapeaux-changeants');
+            if(elementDrapeaux) {
+                elementDrapeaux.innerText = listeDrapeaux[indexAleatoire];
+            }
+        }, 3000); // Change toutes les 3 secondes
 
         function playGong() {
             try {
@@ -464,7 +484,7 @@
             } catch (err) {
                 console.error(err);
                 alert("Erreur lors de l'envoi de la réponse.");
-                btnSub.innerText = "Envoyer ma réponse 🕊️️";
+                btnSub.innerText = "Envoyer ma réponse 🕊️";
                 btnSub.disabled = false;
             }
         }
