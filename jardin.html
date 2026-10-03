@@ -28,7 +28,7 @@
         .btn-filtre-rapide { background: rgba(255,255,255,0.2); border: 1px solid white; color: white; padding: 6px 12px; border-radius: 20px; cursor: pointer; font-family: 'Comic Sans MS'; font-size: 0.8em; transition: 0.3s; }
         .btn-filtre-rapide.actif { background: #fff !important; color: #008080 !important; font-weight: bold; }
 
-        /* Style du tiroir dynamique pour les sous-rubriques */
+        /* Style du tiroir dynamique des sous-rubriques */
         #sous-rubriques-container { display: none; width: 90%; background: rgba(255, 105, 180, 0.25); padding: 12px; border-radius: 15px; border: 2px dashed #ff1493; margin-top: 10px; text-align: center; }
         .btn-sous-filtre { background: #ff1493; border: 1px solid white; color: white; padding: 6px 12px; border-radius: 15px; cursor: pointer; font-family: 'Comic Sans MS'; font-size: 0.8em; margin: 3px; transition: 0.3s; }
         .btn-sous-filtre.actif { background: #fff !important; color: #ff1493 !important; font-weight: bold; }
@@ -171,32 +171,49 @@
             "Autre": ["AUTRE_CAT"] 
         };
 
-        // Association des sous-rubriques (précision de la graine) pour chaque destination principale
+        // Liste exhaustive et exacte des sous-rubriques (Précision de la graine) pour chaque destination du semis
         const sousRubriquesData = {
             "Savoir": [
                 { id: "", label: "🎓 Tout Savoir" },
-                { id: "COURS", label: "📚 Cours & Tutorat" },
-                { id: "ATELIER", label: "🛠️ Ateliers pratiques" }
+                { id: "📚 Éducation & Transmission", label: "📚 Éducation & Transmission" },
+                { id: "🛠️ Arts & Artisanat", label: "🛠️ Arts & Artisanat" },
+                { id: "💻 Numérique & Technique", label: "💻 Numérique & Technique" },
+                { id: "🌱 Permaculture & Nature", label: "🌱 Permaculture & Nature" },
+                { id: "🎨 Culture & Langues", label: "🎨 Culture & Langues" }
             ],
             "Citoyenne": [
                 { id: "", label: "🏛️ Tout Vie Citoyenne" },
-                { id: "INITIATIVE", label: "🌱 Initiative locale" }
+                { id: "🌱 Initiatives & Écologie", label: "🌱 Initiatives & Écologie" },
+                { id: "🛠️ Prêt de Matériel", label: "🛠️ Prêt de Matériel" },
+                { id: "🚗 Mobilité & Partage", label: "🚗 Mobilité & Partage" },
+                { id: "🍴 Cantine & Partage de repas", label: "🍴 Cantine & Partage de repas" },
+                { id: "⚽ Sport & Loisirs", label: "⚽ Sport & Loisirs" }
             ],
             "Harmonie": [
-                { id: "", label: "🌸 Tout Aide & Harmonie" },
-                { id: "URGENCE", label: "🏥 Urgences (Santé & Secours)" },
-                { id: "ECOUTE", label: "💌 Écoute et réconfort" }
+                { id: "", label: "🤝 Tout Aide & Harmonie" },
+                { id: "🏥 Urgences (Santé & Secours)", label: "🏥 Urgences (Santé & Secours)" },
+                { id: "💌 Écoute et réconfort", label: "💌 Écoute et réconfort" },
+                { id: "🍲 Solidarité alimentaire", label: "🍲 Solidarité alimentaire" },
+                { id: "🏠 Hébergement & Refuge", label: "🏠 Hébergement & Refuge" },
+                { id: "🐾 Protection Animale", label: "🐾 Protection Animale" }
             ],
             "Régulation": [
                 { id: "", label: "⚖️ Tout Régulation" },
-                { id: "MEDIATION", label: "🤝 Médiation" }
+                { id: "🤝 Médiation & Conflits", label: "🤝 Médiation & Conflits" },
+                { id: "📜 Droits & Démarches", label: "📜 Droits & Démarches" },
+                { id: "🛡️️ Justice & Paix", label: "🛡️ Justice & Paix" }
             ],
             "Trésor": [
                 { id: "", label: "💰 Tout Trésor Public" },
-                { id: "ADMIN", label: "📋 Aide administrative" }
+                { id: "📋 Fiscalité & Impôts", label: "📋 Fiscalité & Impôts" },
+                { id: "💡 Énergie & Flux (Solaire/Réseaux)", label: "💡 Énergie & Flux (Solaire/Réseaux)" },
+                { id: "🏛️ Biens Communs & Finances", label: "🏛️️ Biens Communs & Finances" }
             ],
             "Autre": [
-                { id: "", label: "✨ Tout Autre domaine" }
+                { id: "", label: "✨ Tout Autre domaine" },
+                { id: "🌟 Rêves & Poésie", label: "🌟 Rêves & Poésie" },
+                { id: "🔮 Mystères & Philosophies", label: "🔮 Mystères & Philosophies" },
+                { id: "🌀 Divers & Surprises", label: "🌀 Divers & Surprises" }
             ]
         };
 
@@ -245,6 +262,7 @@
             });
         }
 
+        // Bip adouci et fortement baissé (volume réduit à 0.03)
         function jouerBip() {
             try {
                 const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
@@ -252,12 +270,12 @@
                 const gain = audioCtx.createGain();
                 osc.type = 'sine';
                 osc.frequency.setValueAtTime(587.33, audioCtx.currentTime);
-                gain.gain.setValueAtTime(0.15, audioCtx.currentTime);
-                gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.25);
+                gain.gain.setValueAtTime(0.03, audioCtx.currentTime);
+                gain.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + 0.2);
                 osc.connect(gain);
                 gain.connect(audioCtx.destination);
                 osc.start();
-                osc.stop(audioCtx.currentTime + 0.25);
+                osc.stop(audioCtx.currentTime + 0.2);
             } catch(e) { console.log("Audio non supporté"); }
         }
 
@@ -336,14 +354,6 @@
                             btnTarget.classList.add('actif');
                             
                             afficherTiroirSousRubriques(nomBouton);
-                            if (catParam === "URGENCE" || catParam === "ECOUTE") {
-                                filtreSousTypeActuel = catParam;
-                                const btnSous = document.querySelector(`.btn-sous-filtre[data-sous="${catParam}"]`);
-                                if (btnSous) {
-                                    document.querySelectorAll('.btn-sous-filtre').forEach(b => b.classList.remove('actif'));
-                                    btnSous.classList.add('actif');
-                                }
-                            }
                         }
                     }
                 }
@@ -365,8 +375,8 @@
                 
                 sousRubriquesData[cat].forEach(sub => {
                     const btn = document.createElement('button');
-                    btn.className = `btn-sous-filtre ${sub.id === filtreSousTypeActuel ? 'actif' : ''}`;
-                    if (sub.id === "" && !filtreSousTypeActuel) btn.classList.add('actif');
+                    const estActif = (sub.id === "" && !filtreSousTypeActuel) || (sub.id !== "" && filtreSousTypeActuel === sub.id);
+                    btn.className = `btn-sous-filtre ${estActif ? 'actif' : ''}`;
                     btn.setAttribute('data-sous', sub.id);
                     btn.textContent = sub.label;
                     btn.onclick = () => rechercheSousCategorie(sub.id, btn);
@@ -397,7 +407,8 @@
 
                 let matchSousT = true;
                 if (filtreTypeActuel !== "" && filtreSousTypeActuel !== "") {
-                    matchSousT = (ann.type === filtreSousTypeActuel);
+                    const subVal = ann.sousType || ann.sub_precision || "";
+                    matchSousT = subVal.toLowerCase().includes(filtreSousTypeActuel.toLowerCase());
                 }
 
                 return matchP && matchV && matchM && matchT && matchSousT;
@@ -552,7 +563,7 @@
                 ref_id: `Ref:${idRef}`,
                 type: `REPONSE_${typeAnn}`,
                 nom: nomRep,
-                message: msgRen
+                message: msgRep
             });
 
             const params = new URLSearchParams();
