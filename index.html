@@ -112,10 +112,10 @@
     <button id="btn-son" onclick="toggleSon()">🕊️</button>
     <div class="header-container">
         <div class="titre-fraternite">La Fraternité du Palais Nature</div>
-   <!-- Conteneur pleine largeur pour isoler le menu au centre et le lien tout à droite -->
-<div style="position: relative; width: 100%; margin: 20px 0 10px 0;">
-    <!-- Menu principal centré au milieu -->
-    <table class="menu-table" style="margin: 0 auto;">
+ <!-- Conteneur qui gère les marges globale et le centrage -->
+<div style="position: relative; display: flex; justify-content: center; align-items: center; width: 100%; margin: 20px 0 5px 0;">
+
+    <table class="menu-table" style="margin: 0 !important;">
         <tr>
             <td><a href="index.html">Accueil</a></td>
             <td><a href="formulaire.html">Semer</a></td>
@@ -127,10 +127,12 @@
             <td><a href="vie.html">Vie Citoyenne</a></td>
         </tr>
     </table>
-    <!-- Lien Journal à droite, fond transparent et texte orange -->
-    <a href="ministere-de-lhonnetete.html" style="position: absolute; right: 10px; color: #E67E22; background: transparent; text-decoration: none; font-weight: bold; font-size: 1em; white-space: nowrap;">
+
+    <!-- Lien Journal calé à droite et aligné sur l'axe vertical du menu -->
+    <a href="ministere-de-lhonnetete.html" style="position: absolute; right: 20px; top: 50%; transform: translateY(-50%); color: #E67E22; background: transparent; text-decoration: none; font-weight: bold; font-size: 0.95em; white-space: nowrap;">
         📰 Le Journal ►
     </a>
+
 </div>
     <a href="jardin.html" class="soleil-cadre"><h1>Le Trésor Public du Jardin</h1></a>
 
