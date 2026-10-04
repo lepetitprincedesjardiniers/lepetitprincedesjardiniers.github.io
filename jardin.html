@@ -49,6 +49,7 @@
         .badge-reponses { font-size: 0.7em; color: #E67E22; font-weight: bold; background: #FFF8E7; border: 1px solid #E67E22; border-radius: 6px; padding: 2px 6px; margin: 3px 0; align-self: flex-start; }
 
         .btn-arrosage { background: #E1F5FE; border: 1px solid #00BFFF; border-radius: 8px; color: #0277BD; font-size: 0.75em; padding: 4px; cursor: pointer; margin: 2px 0; font-weight: bold; width: 100%; }
+        .btn-arrosage:disabled { background: #E0E0E0; border-color: #BDBDBD; color: #757575; cursor: not-allowed; }
         .btn-repondre { background: #E67E22; border: 1px solid #b35900; border-radius: 8px; color: white; font-size: 0.75em; padding: 5px; cursor: pointer; margin: 2px 0; font-weight: bold; width: 100%; transition: 0.2s; }
         .btn-repondre:hover { background: #d35400; transform: scale(1.02); }
 
@@ -100,14 +101,14 @@
             
             <div class="search-row">
                 <div class="search-item"><input type="text" id="searchPays" onkeyup="executerFiltrage()" placeholder="📍 Pays"></div>
-                <div class="search-item"><input type="text" id="searchVille" onkeyup="executerFiltrage()" placeholder="🏙️️ Ville"></div>
+                <div class="search-item"><input type="text" id="searchVille" onkeyup="executerFiltrage()" placeholder="🏙 Ville"></div>
             </div>
             
             <div class="btn-group">
                 <button class="btn-filtre-rapide" data-cat="Savoir" onclick="rechercheRapide('Savoir', this)">🎓 Savoirs</button>
                 <button class="btn-filtre-rapide" data-cat="Citoyenne" onclick="rechercheRapide('Citoyenne', this)">🏛 Vie Citoyenne</button>
                 <button class="btn-filtre-rapide" data-cat="Harmonie" onclick="rechercheRapide('Harmonie', this)">🤝 Aide & Harmonie</button>
-                <button class="btn-filtre-rapide" data-cat="Régulation" onclick="rechercheRapide('Régulation', this)">⚖️ Régulation</button>
+                <button class="btn-filtre-rapide" data-cat="Régulation" onclick="rechercheRapide('Régulation', this)">⚖️️ Régulation</button>
                 <button class="btn-filtre-rapide" data-cat="Trésor" onclick="rechercheRapide('Trésor', this)">💰 Trésor Public</button>
                 <button class="btn-filtre-rapide" data-cat="Autre" onclick="rechercheRapide('Autre', this)">✨ Autre domaine</button>
                 <button class="btn-filtre-rapide btn-reset" onclick="resetRecherche()">🔄 Tout voir</button>
@@ -164,6 +165,7 @@
     <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
 
     <script>
+        const TOKEN_SECRET = "MonJardinSecuritToken2026";
         const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbxxToz22V88elCCjxLqjRtsb5iBIC156cbBFRIlTsju2SwOj9yNnKqzAwFITXMg_wij/exec";
         let toutesLesAnnonces = [], annoncesPrincipales = [], toutesLesReponses = [], filtreTypeActuel = "", filtreSousTypeActuel = "";
         
@@ -214,7 +216,7 @@
                 { id: "AUTRE_SUB", label: "Autres merveilles" }
             ],
             "Régulation": [
-                { id: "", label: "⚖️️ Toutes les précisions" },
+                { id: "", label: "⚖ Toutes les précisions" },
                 { id: "Aide aux démarches (Aide sociale rapprochée)", label: "Aide aux démarches (Aide sociale rapprochée)" },
                 { id: "Médiation de voisinage & paix citoyenne", label: "Médiation de voisinage & paix citoyenne" },
                 { id: "Organisation d'assemblées & conseils citoyens", label: "Organisation d'assemblées & conseils citoyens" },
@@ -371,7 +373,7 @@
 
         async function chargerAnnonces() {
             try {
-                const response = await fetch(WEB_APP_URL + "?v=" + Date.now());
+                const response = await fetch(WEB_APP_URL + "?token=" + TOKEN_SECRET + "&v=" + Date.now());
                 toutesLesAnnonces = await response.json();
                 
                 annoncesPrincipales = [];
@@ -500,6 +502,15 @@
                 d.style.boxShadow = `3px 3px 0px ${couleurBord}`;
                 d.onclick = () => ouvrirGrandMessage(ann);
 
+                // Vérification si déjà voté via localStorage
+                const dejaVote = localStorage.getItem('vote_' + idAnnonce);
+                let texteBoutonArrosage = `💧 Arroser (${ann.votes_arrosage || 0})`;
+                let styleDesactive = "";
+                if (dejaVote) {
+                    texteBoutonArrosage = `💧 Déjà arrosé (${ann.votes_arrosage || 0})`;
+                    styleDesactive = "disabled";
+                }
+
                 d.innerHTML = `
                     <div class="nom-prenom">${escapeHtml(nomAnnonce)}</div>
                     <div class="rubrique-tag">${nomBoutonAffiche[typeAnnonce] || "Graine"}</div>
@@ -510,7 +521,7 @@
                         📍 Localisation : ${escapeHtml(ann.localisation || 'N/C')}<br>
                         📍 Pays : ${escapeHtml(ann.pays_select || 'N/C')}<br>
                         🌍 Portée : ${escapeHtml(ann.rayon_action || 'Locale')}
-                        <button class="btn-arrosage">💧 Arroser (${ann.votes_arrosage || 0})</button>
+                        <button class="btn-arrosage" ${styleDesactive}>${texteBoutonArrosage}</button>
                         <button class="btn-repondre">💌 Répondre à cette graine</button>
                     </div>
                 `;
@@ -530,14 +541,20 @@
 
         async function arroser(e, id, btn, ann) {
             e.stopPropagation();
+            if (localStorage.getItem('vote_' + id)) return;
+
             jouerBip();
             animerPluieGouttes(e);
             
             ann.votes_arrosage = (parseInt(ann.votes_arrosage) || 0) + 1;
             btn.innerHTML = `💧 Arrosé ! (${ann.votes_arrosage})`;
             btn.style.background = "#C8E6C9";
+            btn.disabled = true;
             
+            localStorage.setItem('vote_' + id, 'true');
+
             const fd = new URLSearchParams(); 
+            fd.append('token', TOKEN_SECRET);
             fd.append('action', 'arroser'); 
             fd.append('id', id);
             fetch(WEB_APP_URL, { method: 'POST', mode: 'no-cors', body: fd });
@@ -618,6 +635,7 @@
             });
 
             const params = new URLSearchParams();
+            params.append('token', TOKEN_SECRET);
             params.append('action', 'repondre');
             params.append('ref_id', `Ref:${idRef}`);
             params.append('type', `REPONSE_${typeAnn}`);
