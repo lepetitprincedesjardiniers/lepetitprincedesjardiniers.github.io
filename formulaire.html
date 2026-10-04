@@ -231,7 +231,7 @@
                     <option value="SAVOIR">💡 SAVOIRS (Apprendre, transmettre, partager un talent)</option>
                     <option value="VIE">🏠 VIE CITOYENNE (De personne à personne : repas, objets, logement, covoiturage)</option>
                     <option value="AIDE">💖 AIDE & HARMONIE (Urgence & Détresse : secours, écoute, aînés, garde)</option>
-                    <option value="REGULATION">⚖️ RÉGULATION (Aide sociale rapprochée, médiation, décisions collectives)</option>
+                    <option value="REGULATION">⚖️️ RÉGULATION (Aide sociale rapprochée, médiation, décisions collectives)</option>
                     <option value="IMPOT">📜 TRÉSOR PUBLIC (Pour la collectivité : réseaux, voirie, chantiers, parcs)</option>
                     <option value="AUTRE_CAT">🌈 AUTRE DOMAINE...</option>
                 </select>
@@ -367,7 +367,7 @@ Le jardin arrose les fleurs..." required></textarea>
             "Art, artisanat & musique",
             "Mentorat pro & compétences techniques",
             "Savoir-faire du quotidien",
-            "AUTRE_SUB"
+            "AUTRE_SUB",
             "Autres interprétations"
         ],
         "VIE": [
@@ -375,7 +375,7 @@ Le jardin arrose les fleurs..." required></textarea>
             "Prêt d'objets, outils & équipement",
             "Accueil, hébergement & covoiturage",
             "Loisirs & activités partagées",
-            "AUTRE_SUB"
+            "AUTRE_SUB",
             "Autres recommandations"
         ],
         "AIDE": [
@@ -383,21 +383,21 @@ Le jardin arrose les fleurs..." required></textarea>
             "Écoute, présence & soutien aux aînés",
             "Garde d'enfants & soutien familial",
             "Soin des animaux & aide à la maison",
-            "AUTRE_SUB"
+            "AUTRE_SUB",
             "Autres merveilles"
         ],
         "REGULATION": [
             "Aide aux démarches (Aide sociale rapprochée)",
             "Médiation de voisinage & paix citoyenne",
             "Organisation d'assemblées & conseils citoyens",
-            "AUTRE_SUB"
+            "AUTRE_SUB",
             "Autres conciliations"
         ],
         "IMPOT": [
             "Entretien des réseaux vitaux (eau, énergie)",
             "Voirie & chantiers participatifs",
             "Espaces verts, forêts & parcs publics",
-            "AUTRE_SUB"
+            "AUTRE_SUB",
             "Autres contributions"
         ]
     };
@@ -469,9 +469,9 @@ Le jardin arrose les fleurs..." required></textarea>
         "On sème une graine de paix ✨",
         "Un don, c'est une fleur qui éclot 🌸",
         "La fraternité est un jardin sans fin 🌍",
-        "S'entraider, c'est cultiver l'avenir 🌱",
+        "S'entraider, c',est cultiver l'avenir 🌱",
         "Nouveau message de solidarité ! 💌",
-        "Regarde la bonté s'envoler... 🕊️️"
+        "Regarde la bonté s'envoler... 🕊"
     ];
 
     let aniX = -200, state = "FLY", targetY = 250, dropCount = 0;
@@ -545,20 +545,23 @@ Le jardin arrose les fleurs..." required></textarea>
 
         const form = document.getElementById('monFormulaire');
         const formData = new FormData(form);
-        const urlParams = new URLSearchParams(formData);
 
-        const url = "https://script.google.com/macros/s/AKfycbxxToz22V88elCCjxLqjRtsb5iBIC156cbBFRIlTsju2SwOj9yNnKqzAwFITXMg_wij/exec?" + urlParams.toString();
+        // URL de votre Web App Google Apps Script
+        const url = "https://script.google.com/macros/s/AKfycbxxToz22V88elCCjxLqjRtsb5iBIC156cbBFRIlTsju2SwOj9yNnKqzAwFITXMg_wij/exec";
 
+        // Envoi des données en POST dans le corps de la requête
         fetch(url, {
             method: 'POST',
-            mode: 'no-cors'
+            body: formData
         })
-        .then(() => { 
-            window.location.href = "merci_annonce.html"; 
+        .then(response => {
+            // Redirection vers la page de remerciement une fois l'envoi effectué
+            window.location.href = "merci_annonce.html";
         })
         .catch((error) => {
             console.error('Erreur:', error);
-            window.location.href = "merci_annonce.html"; 
+            // Redirection de secours pour ne pas bloquer l'utilisateur
+            window.location.href = "merci_annonce.html";
         });
     }
 
