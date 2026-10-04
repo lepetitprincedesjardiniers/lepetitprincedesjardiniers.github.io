@@ -94,7 +94,6 @@
 
     <div class="search-box">
         <div class="search-container">
-            <!-- VOTRE PHRASE PERSONNALISÉE DANS LE MOTEUR DE RECHERCHE -->
             <input type="text" id="searchKeyword" class="search-main-input" onkeyup="executerFiltrage()" placeholder="✨ Votre phrase personnalisée ici (ex: Rechercher un don, un savoir...)">
             
             <div class="search-row">
@@ -415,6 +414,32 @@
             }
         }
 
+        async function chargerAnnoncesSilencieux() {
+            try {
+                const response = await fetch(WEB_APP_URL + "?v=" + Date.now());
+                toutesLesAnnonces = await response.json();
+                
+                annoncesPrincipales = [];
+                toutesLesReponses = [];
+
+                toutesLesAnnonces.forEach(item => {
+                    const type = String(item.type || item.Type || '').toUpperCase();
+                    const refBrute = String(item.ref_id || item.Ref || item.ref || '').trim();
+                    
+                    if (type === 'VIDEO' || type === 'VIDÉO') return;
+
+                    if (type.includes('REPONSE') || refBrute !== '') {
+                        toutesLesReponses.push(item);
+                    } else {
+                        annoncesPrincipales.push(item);
+                    }
+                });
+                executerFiltrage();
+            } catch (error) {
+                console.error("Erreur de synchronisation silencieuse :", error);
+            }
+        }
+
         function afficherTiroirSousRubriques(cat) {
             const conteneurSous = document.getElementById('sous-rubriques-container');
             const selectSous = document.getElementById('selectSousRubrique');
@@ -551,7 +576,13 @@
             const fd = new URLSearchParams(); 
             fd.append('action', 'arroser'); 
             fd.append('id', id);
-            fetch(WEB_APP_URL, { method: 'POST', mode: 'no-cors', body: fd });
+
+            try {
+                await fetch(WEB_APP_URL, { method: 'POST', mode: 'no-cors', body: fd });
+                setTimeout(chargerAnnoncesSilencieux, 1500);
+            } catch(err) {
+                console.error("Erreur lors de l'arrosage :", err);
+            }
         }
 
         function ouvrirGrandMessage(ann) {
@@ -634,13 +665,6 @@
             const nomRep = document.getElementById('rep_nom').value;
             const msgRep = document.getElementById('rep_message').value;
 
-            toutesLesReponses.push({
-                ref_id: `Ref:${idRef}`,
-                type: `REPONSE_${typeAnn}`,
-                nom: nomRep,
-                message: msgRep
-            });
-
             const params = new URLSearchParams();
             params.append('action', 'repondre');
             params.append('ref_id', `Ref:${idRef}`);
@@ -660,7 +684,7 @@
                     btn.innerText = "ENVOYER MA RÉPONSE ✨";
                     btn.disabled = false;
                     document.getElementById('formReponse').reset();
-                    executerFiltrage();
+                    setTimeout(chargerAnnoncesSilencieux, 2000);
                 }, 500);
             })
             .catch(err => {
