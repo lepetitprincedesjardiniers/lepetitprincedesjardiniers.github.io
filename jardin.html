@@ -2,716 +2,178 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <title>Le Jardin de la Fraternité - Registre</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jardin Public - Le Don Entier</title>
     <style>
-        body { font-family: 'Comic Sans MS', cursive; text-align: center; margin: 0; padding: 0; background-color: #FFFF00; color: #000080; min-height: 100vh; padding-bottom: 80px; transition: background 0.3s, color 0.3s; }
-        .top-bar { position: relative; width: 100%; min-height: 50px; background: rgba(255,255,255,0.3); padding: 5px 0; display: flex; justify-content: center; align-items: center; }
-        #google_translate_element { position: absolute; left: 10px; top: 10px; z-index: 2000; transform: scale(0.85); transform-origin: top left; }
-        
-        .menu-wrapper { position: relative; display: flex; justify-content: center; align-items: center; width: 100%; margin: 5px 0; }
-        .menu-table { margin: 0 !important; border-radius: 10px; background-color: #008080; border-collapse: collapse; }
-        .menu-table td { padding: 8px 15px; border: 1px solid #FFFFFF; }
-        .menu-table a { text-decoration: none; color: #FFFFFF; font-weight: bold; font-size: 0.85em; }
-        .journal-link { position: absolute; right: 20px; top: 50%; transform: translateY(-50%); color: #E67E22; background: transparent; text-decoration: none; font-weight: bold; font-size: 0.95em; white-space: nowrap; }
-
-        #btn-mode { position: absolute; right: 10px; top: 10px; background: #444; color: #FFD700; border: 1px solid #222; border-radius: 5px; cursor: pointer; font-size: 14px; padding: 2px 5px; z-index: 1001; }
-        .phrase-rose { color: #ff1493; font-weight: bold; font-size: 1.1em; text-shadow: 1px 1px 2px #ff69b4; margin-top: 5px; }
-        .phrase-sous { color: #000080; font-weight: bold; margin: 1px 0; font-size: 0.9em; }
-
-        .search-box { background: #008080; padding: 15px; margin: 10px auto; max-width: 95%; width: 1100px; border-radius: 25px; color: white; box-shadow: 0 8px 20px rgba(0,0,0,0.2); border: 3px solid #fff; }
-        .search-container { display: flex; flex-direction: column; gap: 10px; align-items: center; }
-        .search-main-input { width: 90%; padding: 12px; border-radius: 15px; border: none; font-size: 1em; text-align: center; font-weight: bold; color: #004D40; }
-        .search-row { display: flex; gap: 10px; width: 90%; justify-content: center; }
-        .search-item { display: flex; flex-direction: column; width: 45%; }
-        .search-item input { padding: 8px; border-radius: 10px; border: none; text-align: center; }
-        
-        .btn-group { display: flex; gap: 8px; flex-wrap: wrap; justify-content: center; margin-top: 5px; }
-        .btn-filtre-rapide { background: rgba(255,255,255,0.2); border: 1px solid white; color: white; padding: 6px 12px; border-radius: 20px; cursor: pointer; font-family: 'Comic Sans MS'; font-size: 0.8em; transition: 0.3s; }
-        .btn-filtre-rapide.actif { background: #fff !important; color: #008080 !important; font-weight: bold; }
-
-        #sous-rubriques-container { display: none; width: 90%; background: rgba(255, 105, 180, 0.25); padding: 10px; border-radius: 15px; border: 2px dashed #ff1493; margin-top: 8px; text-align: center; }
-        .select-sous-rubrique { padding: 6px 10px; border-radius: 12px; border: 2px solid #ff1493; font-family: 'Comic Sans MS'; font-size: 0.78em; background: white; color: #008080; font-weight: bold; cursor: pointer; outline: none; width: 80%; max-width: 450px; }
-
-        .mur-reel { display: grid; grid-template-columns: repeat(5, minmax(180px, 1fr)); gap: 15px; padding: 10px; max-width: 98vw; margin: 0 auto; align-items: start; }
-        @media (max-width: 1024px) { .mur-reel { grid-template-columns: repeat(3, 1fr); } }
-        @media (max-width: 768px) { .mur-reel { grid-template-columns: repeat(1, 1fr); } }
-
-        .carte-message { background: white; border: 3px solid #008080; border-radius: 10px; padding: 10px; box-shadow: 3px 3px 0px #008080; display: flex; flex-direction: column; height: 330px; cursor: pointer; position: relative; overflow: hidden; text-align: left; transition: transform 0.2s; }
-        .carte-message:hover { transform: translateY(-3px); }
-        .nom-prenom { color: #2E7D32; font-weight: bold; font-size: 0.85em; border-bottom: 1px solid #eee; margin-bottom: 4px; padding-right: 70px; }
-        .rubrique-tag { font-size: 0.55em; background: #ff1493; color: white; padding: 2px 6px; border-radius: 5px; position: absolute; top: 8px; right: 8px; }
-        
-        .texte-annonce { flex-grow: 1; font-style: italic; color: #000080; overflow-y: auto; font-size: 0.75em; margin: 4px 0; line-height: 1.2; padding-right: 4px; scrollbar-width: thin; white-space: pre-line; word-break: break-word; }
-        .texte-annonce::-webkit-scrollbar { width: 4px; }
-        .texte-annonce::-webkit-scrollbar-thumb { background: #008080; border-radius: 10px; }
-
-        .badge-reponses { font-size: 0.7em; color: #E67E22; font-weight: bold; background: #FFF8E7; border: 1px solid #E67E22; border-radius: 6px; padding: 2px 6px; margin: 3px 0; align-self: flex-start; }
-
-        .btn-arrosage { background: #E1F5FE; border: 1px solid #00BFFF; border-radius: 8px; color: #0277BD; font-size: 0.75em; padding: 4px; cursor: pointer; margin: 2px 0; font-weight: bold; width: 100%; }
-        .btn-repondre { background: #E67E22; border: 1px solid #b35900; border-radius: 8px; color: white; font-size: 0.75em; padding: 5px; cursor: pointer; margin: 2px 0; font-weight: bold; width: 100%; transition: 0.2s; }
-        .btn-repondre:hover { background: #d35400; transform: scale(1.02); }
-
-        .details-bas { font-size: 0.65em; color: #444; line-height: 1.2; border-top: 1px solid #eee; padding-top: 4px; background: white; flex-shrink: 0; }
-
-        body.dark-mode { background-color: #0a0a1a; color: #e0e0e0; }
-        .star { position: fixed; background: white; border-radius: 50%; opacity: 0; pointer-events: none; animation: twinkle var(--d) infinite; }
-        @keyframes twinkle { 0%, 100% { opacity: 0.3; } 50% { opacity: 1; } }
-        
-        #fond-sombre, #modal-reponse { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); z-index: 2000; justify-content: center; align-items: center; padding: 10px; box-sizing: border-box; }
-        .message-geant { background: #FFFFF0; width: 95%; max-width: 800px; padding: 25px; border-radius: 25px; border: 8px solid #008080; position: relative; max-height: 85vh; overflow-y: auto; color: #000; text-align: left; box-sizing: border-box; }
-        .form-reponse-box { background: #FFFFFF; width: 90%; max-width: 500px; padding: 25px; border-radius: 20px; border: 6px solid #E67E22; position: relative; text-align: left; color: #000; box-shadow: 0 0 30px rgba(0,0,0,0.5); }
-        .bouton-fermer { position: absolute; top: 15px; right: 15px; background: #FF1493; color: white; border-radius: 50%; width: 40px; height: 40px; cursor: pointer; border: 2px solid white; font-weight: bold; display: flex; align-items: center; justify-content: center; z-index: 10; }
-        
-        .field-rep { width: 100%; padding: 10px; margin: 8px 0; border: 2px solid #008080; border-radius: 10px; font-family: 'Comic Sans MS'; box-sizing: border-box; }
-        .copyright-link { color: #008080; text-decoration: none; font-weight: bold; }
+        body {
+            background-color: #e8f5e9;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 40px 20px;
+            color: #2c3e50;
+        }
+        .header-jardin {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+        h1 {
+            color: #27ae60;
+            font-size: 2.5em;
+            margin-bottom: 20px;
+        }
+        .search-container {
+            max-width: 700px;
+            margin: 0 auto;
+        }
+        .search-main-input {
+            width: 100%;
+            padding: 18px 25px;
+            font-size: 1.2em;
+            border-radius: 40px;
+            border: 2px solid #2ecc71;
+            outline: none;
+            box-shadow: 0 4px 15px rgba(46, 204, 113, 0.2);
+            transition: box-shadow 0.3s;
+            box-sizing: border-box;
+        }
+        .search-main-input:focus {
+            box-shadow: 0 4px 20px rgba(46, 204, 113, 0.4);
+        }
+        .grid-dons {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 25px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .carte-don {
+            background: white;
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            border-top: 5px solid #27ae60;
+            transition: transform 0.2s;
+        }
+        .carte-don:hover {
+            transform: translateY(-5px);
+        }
+        .carte-don h3 {
+            margin-top: 0;
+            color: #2c3e50;
+            font-size: 1.4em;
+        }
+        .etiquette {
+            display: inline-block;
+            background: #f1f8e9;
+            color: #33691e;
+            padding: 5px 10px;
+            border-radius: 15px;
+            font-size: 0.85em;
+            margin-right: 5px;
+            margin-bottom: 10px;
+        }
+        .btn-retour {
+            display: inline-block;
+            margin-top: 40px;
+            padding: 12px 25px;
+            background: #34495e;
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: bold;
+            transition: background 0.3s;
+        }
+        .btn-retour:hover {
+            background: #2c3e50;
+        }
     </style>
 </head>
 <body>
 
-    <div class="top-bar">
-        <div id="google_translate_element"></div>
-        <div class="menu-wrapper">
-            <table class="menu-table">
-                <tr>
-                    <td><a href="index.html">Accueil</a></td>
-                    <td><a href="formulaire.html">Semer</a></td>
-                    <td><a href="jardin.html">Le Jardin</a></td>
-                    <td><a href="jardin.html?cat=IMPOT">Trésor Public</a></td>
-                    <td><a href="jardin.html?cat=REGULATION">Régulation</a></td>
-                    <td><a href="jardin.html?cat=AIDE">Aide & Harmonie</a></td>
-                    <td><a href="jardin.html?cat=SAVOIR">Savoirs</a></td>
-                    <td><a href="vie.html">Vie Citoyenne</a></td>
-                </tr>
-            </table>
-            <a href="ministere-de-lhonnetete.html" class="journal-link">📰 Le Journal ►</a>
-        </div>
-        <button id="btn-mode" onclick="basculerModeSombre()">🏮</button>
-    </div>
-
-    <h2 style="color:#2E7D32; margin: 10px 0;">🍃 Le Jardin des Cadeaux Existentiels 🍃</h2>
-    <div class="phrase-rose">Bienvenue au Jardin des Dons entiers</div>
-    <div class="phrase-sous">Talents, savoirs, objets et fraternité.</div>
-
-    <div class="search-box">
+    <div class="header-jardin">
+        <h1>Le Jardin Public des Fraternels</h1>
         <div class="search-container">
-            <input type="text" id="searchKeyword" class="search-main-input" onkeyup="executerFiltrage()" placeholder="🔍 Recherche par mot-clé ou première lettre...">
-            <div class="search-row">
-                <div class="search-item"><input type="text" id="searchPays" onkeyup="executerFiltrage()" placeholder="📍 Pays"></div>
-                <div class="search-item"><input type="text" id="searchVille" onkeyup="executerFiltrage()" placeholder="🏙️ Ville"></div>
-            </div>
-            
-            <div class="btn-group">
-                <button class="btn-filtre-rapide" data-cat="Savoir" onclick="rechercheRapide('Savoir', this)">🎓 Savoirs</button>
-                <button class="btn-filtre-rapide" data-cat="Citoyenne" onclick="rechercheRapide('Citoyenne', this)">🏛 Vie Citoyenne</button>
-                <button class="btn-filtre-rapide" data-cat="Harmonie" onclick="rechercheRapide('Harmonie', this)">🤝 Aide & Harmonie</button>
-                <button class="btn-filtre-rapide" data-cat="Régulation" onclick="rechercheRapide('Régulation', this)">⚖️ Régulation</button>
-                <button class="btn-filtre-rapide" data-cat="Trésor" onclick="rechercheRapide('Trésor', this)">💰 Trésor Public</button>
-                <button class="btn-filtre-rapide" data-cat="Autre" onclick="rechercheRapide('Autre', this)">✨ Autre domaine</button>
-                <button class="btn-filtre-rapide btn-reset" onclick="resetRecherche()">🔄 Tout voir</button>
-            </div>
-
-            <div id="sous-rubriques-container">
-                <select id="selectSousRubrique" class="select-sous-rubrique" onchange="changerSousRubrique(this)"></select>
-            </div>
+            <!-- Votre phrase personnalisée dans le moteur de recherche -->
+            <input type="text" id="searchKeyword" class="search-main-input" onkeyup="executerFiltrage()" placeholder="✨ Votre phrase personnalisée ici (ex: Rechercher un don, un savoir...)">
         </div>
     </div>
 
-    <h3 id="titre-registre" style="color: #008080;">📖 Registre de la Fraternité</h3>
-    <div id="mur-messages" class="mur-reel"></div>
-
-    <div class="phrase-etoiles" id="phrase-petit-prince" style="font-style: italic; color: #2E7D32; margin: 20px;"></div>
-
-    <div id="fond-sombre" onclick="fermerGrandMessage()">
-        <div class="message-geant" onclick="event.stopPropagation()">
-            <button class="bouton-fermer" onclick="fermerGrandMessage()">X</button>
-            <div id="geant-contenu"></div>
-        </div>
+    <!-- Grille d'affichage des dons -->
+    <div class="grid-dons" id="listeDons">
+        <!-- Les cartes semées via le formulaire s'afficheront dynamiquement ici -->
     </div>
 
-    <div id="modal-reponse" onclick="fermerModalReponse()">
-        <div class="form-reponse-box" onclick="event.stopPropagation()">
-            <button class="bouton-fermer" onclick="fermerModalReponse()">X</button>
-            <h3 style="color: #E67E22; margin-top: 0;">💌 Répondre à cette graine</h3>
-            <div id="rappel-annonce" style="font-size: 0.85em; background: #fffdf0; padding: 10px; border-radius: 8px; border-left: 4px solid #E67E22; margin-bottom: 15px; color: #444;"></div>
-            
-            <form id="formReponse" onsubmit="envoyerReponse(event)">
-                <input type="hidden" id="rep_id_annonce" name="ref_id">
-                <input type="hidden" id="rep_type_annonce" name="type_annonce">
-                
-                <label style="font-weight: bold; color: #008080; font-size: 0.9em;">Ton Prénom / Pseudo :</label>
-                <input type="text" id="rep_nom" class="field-rep" placeholder="Ton nom de cœur..." required>
-                
-                <label style="font-weight: bold; color: #008080; font-size: 0.9em;">Ton Message / Proposition :</label>
-                <textarea id="rep_message" class="field-rep" rows="4" placeholder="Propose ton aide, ton soutien ou pose ta question..." required></textarea>
-                
-                <button type="submit" id="btnSubmitReponse" class="btn-repondre" style="font-size: 1em; padding: 12px; margin-top: 10px;">ENVOYER MA RÉPONSE ✨</button>
-            </form>
-        </div>
+    <div style="text-align: center;">
+        <a href="formulaire.html" class="btn-retour" style="background:#e67e22; margin-right: 10px;">Semer un Don</a>
+        <a href="index.html" class="btn-retour">Retour à l'Accueil</a>
     </div>
-
-    <div class="footer-copyright">
-        <a href="merci.html" class="copyright-link">© 2000 Le petit prince des jardiniers</a>
-    </div>
-
-    <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
 
     <script>
-        const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbxxToz22V88elCCjxLqjRtsb5iBIC156cbBFRIlTsju2SwOj9yNnKqzAwFITXMg_wij/exec";
-        let toutesLesAnnonces = [], annoncesPrincipales = [], toutesLesReponses = [], filtreTypeActuel = "", filtreSousTypeActuel = "";
-        
-        const mappingBoutons = { 
-            "Savoir": ["SAVOIR"], 
-            "Citoyenne": ["VIE"], 
-            "Harmonie": ["AIDE", "URGENCE", "ECOUTE"], 
-            "Régulation": ["REGULATION"], 
-            "Trésor": ["IMPOT"], 
-            "Autre": ["AUTRE_CAT"] 
-        };
-
-        const couleursBordures = {
-            "SAVOIR": "#ffc107",       
-            "VIE": "#9370DB",          
-            "AIDE": "#ff69b4",         
-            "URGENCE": "#ff69b4",      
-            "ECOUTE": "#ff69b4",       
-            "REGULATION": "#9370DB",   
-            "IMPOT": "#00ced1",        
-            "AUTRE_CAT": "#008080"     
-        };
-
-        const sousRubriquesData = {
-            "Savoir": [
-                { id: "", label: "🎓 Toutes les précisions" },
-                { id: "Soutien scolaire & cours", label: "Soutien scolaire & cours" },
-                { id: "Art, artisanat & musique", label: "Art, artisanat & musique" },
-                { id: "Mentorat pro & compétences techniques", label: "Mentorat pro & compétences techniques" },
-                { id: "Savoir-faire du quotidien", label: "Savoir-faire du quotidien" },
-                { id: "Bibliothèque vivante", label: "Bibliothèque vivante" },
-                { id: "AUTRE_SUB", label: "Autres interprétations" }
-            ],
-            "Citoyenne": [
-                { id: "", label: "🏛️ Toutes les précisions" },
-                { id: "Repas, graines & eau", label: "Repas, graines & eau" },
-                { id: "Prêt d'objets, outils & équipement", label: "Prêt d'objets, outils & équipement" },
-                { id: "Accueil, hébergement & covoiturage", label: "Accueil, hébergement & covoiturage" },
-                { id: "Loisirs & activités partagées", label: "Loisirs & activités partagées" },
-                { id: "AUTRE_SUB", label: "Autres recommandations" }
-            ],
-            "Harmonie": [
-                { id: "", label: "🤝 Toutes les précisions" },
-                { id: "Secours immédiat & petite urgence", label: "Secours immédiat & petite urgence" },
-                { id: "Écoute, présence & soutien aux aînés", label: "Écoute, présence & soutien aux aînés" },
-                { id: "Garde d'enfants & soutien familial", label: "Garde d'enfants & soutien familial" },
-                { id: "Soin des animaux & aide à la maison", label: "Soin des animaux & aide à la maison" },
-                { id: "AUTRE_SUB", label: "Autres merveilles" }
-            ],
-            "Régulation": [
-                { id: "", label: "⚖️ Toutes les précisions" },
-                { id: "Aide aux démarches (Aide sociale rapprochée)", label: "Aide aux démarches (Aide sociale rapprochée)" },
-                { id: "Médiation de voisinage & paix citoyenne", label: "Médiation de voisinage & paix citoyenne" },
-                { id: "Organisation d'assemblées & conseils citoyens", label: "Organisation d'assemblées & conseils citoyens" },
-                { id: "AUTRE_SUB", label: "Autres conciliations" }
-            ],
-            "Trésor": [
-                { id: "", label: "💰 Toutes les précisions" },
-                { id: "Entretien des réseaux vitaux (eau, énergie)", label: "Entretien des réseaux vitaux (eau, énergie)" },
-                { id: "Voirie & chantiers participatifs", label: "Voirie & chantiers participatifs" },
-                { id: "Espaces verts, forêts & parcs publics", label: "Espaces verts, forêts & parcs publics" },
-                { id: "AUTRE_SUB", label: "Autres contributions" }
-            ],
-            "Autre": [
-                { id: "", label: "✨ Toutes les précisions" }
-            ]
-        };
-
-        const paramToBouton = {
-            "SAVOIR": "Savoir",
-            "VIE": "Citoyenne",
-            "AIDE": "Harmonie",
-            "URGENCE": "Harmonie",  
-            "ECOUTE": "Harmonie",   
-            "REGULATION": "Régulation",
-            "IMPOT": "Trésor",
-            "AUTRE_CAT": "Autre"
-        };
-
-        const nomBoutonAffiche = { 
-            "SAVOIR": "Savoir", 
-            "VIE": "Vie Citoyenne", 
-            "AIDE": "Aide & Harmonie", 
-            "URGENCE": "Urgences (Santé & Secours)", 
-            "ECOUTE": "Écoute et réconfort", 
-            "REGULATION": "Régulation", 
-            "IMPOT": "Trésor Public", 
-            "AUTRE_CAT": "Autre domaine" 
-        };
-
-        function googleTranslateElementInit() { new google.translate.TranslateElement({pageLanguage: 'fr'}, 'google_translate_element'); }
-
-        function escapeHtml(str) {
-            return String(str || '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
-        }
-
-        // Masquage automatique des e-mails et numéros de téléphone pour parer au moissonage
-        function masquerCoordonnees(texte) {
-            if (!texte) return "";
-            let protege = String(texte).replace(/([a-zA-Z0-9._-]+)@([a-zA-Z0-9._-]+)\.([a-zA-Z]{2,5})/gi, "$1 [at] $2 [dot] $3");
-            protege = protege.replace(/(?:(?:\+|00)33|0)\s*[1-9](?:[\s.-]*\d{2}){4}/g, "📱 [Numéro protégé]");
-            return protege;
-        }
-
-        // Décodage Base64 pour contact obfusqué
-        function ouvrirContactProtege(encodedMail) {
-            const email = atob(encodedMail);
-            window.location.href = 'mailto:' + email;
-        }
-
-        function nettoyerCle(str) {
-            if (!str) return "";
-            return String(str).replace(/[^a-zA-Z0-9]/g, '').toLowerCase();
-        }
-
-        function formaterDate(horodateur) {
-            if (!horodateur) return "N/C";
-            try {
-                const dateObj = new Date(horodateur);
-                if (!isNaN(dateObj)) {
-                    return dateObj.toLocaleDateString('fr-FR', { day: '2-digit', month: '2-digit', year: 'numeric' });
-                }
-                return horodateur.split('T')[0] || horodateur;
-            } catch(e) {
-                return horodateur;
-            }
-        }
-
-        // Vérifie si une annonce est expirée selon sa date et sa durée de validité
-        function estExpire(ann) {
-            const horodateur = ann.Horodateur || ann.date;
-            if (!horodateur) return false;
+        // Récupération et affichage du don soumis par le formulaire
+        window.onload = function() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const mainCat = urlParams.get('main_cat');
+            const subCat = urlParams.get('sub_cat');
+            const description = urlParams.get('description');
             
-            const datePub = new Date(horodateur);
-            if (isNaN(datePub)) return false;
-            
-            const validiteStr = String(ann.validite || ann.duree || "1 jour").toLowerCase();
-            
-            let nbJours = 1; 
-            if (validiteStr.includes('7') || validiteStr.includes('semaine')) nbJours = 7;
-            else if (validiteStr.includes('30') || validiteStr.includes('mois')) nbJours = 30;
-            else if (validiteStr.includes('1') || validiteStr.includes('jour')) nbJours = 1;
-            else if (validiteStr.includes('illimité') || validiteStr.includes('permanent')) return false;
-            
-            const dateExpiration = new Date(datePub.getTime() + (nbJours * 24 * 60 * 60 * 1000));
-            return new Date() > dateExpiration;
-        }
+            const grilleDons = document.getElementById('listeDons');
 
-        function obtenirReponsesPourAnnonce(ann) {
-            const idOriginal = String(ann.Horodateur || ann.id || "").trim();
-            if (!idOriginal) return [];
-            const idCle = nettoyerCle(idOriginal);
-
-            return toutesLesReponses.filter(rep => {
-                const refBrute = String(rep.ref_id || rep.Ref || rep.ref || rep.localisation || "").trim();
-                const refCle = nettoyerCle(refBrute);
-                return refCle.includes(idCle) || (idCle.length > 6 && refCle.includes(idCle.substring(0, 15)));
-            });
-        }
-
-        function jouerBip() {
-            try {
-                const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-                const osc = audioCtx.createOscillator();
-                const gain = audioCtx.createGain();
-                osc.type = 'sine';
-                osc.frequency.setValueAtTime(587.33, audioCtx.currentTime);
-                gain.gain.setValueAtTime(0.03, audioCtx.currentTime);
-                gain.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + 0.2);
-                osc.connect(gain);
-                gain.connect(audioCtx.destination);
-                osc.start();
-                osc.stop(audioCtx.currentTime + 0.2);
-            } catch(e) { console.log("Audio non supporté"); }
-        }
-
-        function animerPluieGouttes(event) {
-            const x = event.clientX || window.innerWidth / 2;
-            const y = event.clientY || window.innerHeight / 2;
-            
-            for (let i = 0; i < 8; i++) {
-                const goutte = document.createElement('div');
-                goutte.innerHTML = '💧';
-                goutte.style.position = 'fixed';
-                goutte.style.left = (x + (Math.random() * 60 - 30)) + 'px';
-                goutte.style.top = (y + (Math.random() * 20 - 20)) + 'px';
-                goutte.style.fontSize = (16 + Math.random() * 12) + 'px';
-                goutte.style.pointerEvents = 'none';
-                goutte.style.zIndex = '3000';
-                goutte.style.transition = 'transform 0.8s ease-out, opacity 0.8s ease-out';
-                goutte.style.opacity = '1';
-                document.body.appendChild(goutte);
-
-                setTimeout(() => {
-                    const dropY = 40 + Math.random() * 60;
-                    const dropX = (Math.random() * 40 - 20);
-                    goutte.style.transform = `translate(${dropX}px, ${dropY}px) scale(1.3)`;
-                    goutte.style.opacity = '0';
-                }, 20);
-
-                setTimeout(() => goutte.remove(), 850);
-            }
-        }
-
-        function basculerModeSombre() {
-            document.body.classList.toggle('dark-mode');
-            if (document.body.classList.contains('dark-mode')) {
-                for(let i=0; i<60; i++) {
-                    let s = document.createElement('div'); s.className = 'star';
-                    s.style.left = Math.random()*100+'vw'; s.style.top = Math.random()*100+'vh';
-                    s.style.width = s.style.height = Math.random()*3+'px';
-                    s.style.setProperty('--d', (Math.random()*3+2)+'s');
-                    document.body.appendChild(s);
-                }
-            } else { document.querySelectorAll('.star').forEach(s => s.remove()); }
-        }
-
-        async function chargerAnnonces() {
-            try {
-                const response = await fetch(WEB_APP_URL + "?v=" + Date.now());
-                toutesLesAnnonces = await response.json();
+            // Si un formulaire vient d'être validé, on crée la carte dynamiquement
+            if (mainCat || description) {
+                const nouvelleCarte = document.createElement('div');
+                nouvelleCarte.className = 'carte-don';
                 
-                annoncesPrincipales = [];
-                toutesLesReponses = [];
-
-                toutesLesAnnonces.forEach(item => {
-                    const type = String(item.type || item.Type || '').toUpperCase();
-                    const refBrute = String(item.ref_id || item.Ref || item.ref || '').trim();
-                    
-                    // Exclut les vidéos YouTube du Ministère sur la page Jardin
-                    if (type === 'VIDEO' || type === 'VIDÉO') {
-                        return;
-                    }
-
-                    if (type.includes('REPONSE') || refBrute !== '') {
-                        toutesLesReponses.push(item);
-                    } else {
-                        annoncesPrincipales.push(item);
-                    }
-                });
-
-                document.getElementById('phrase-petit-prince').innerHTML = `✨ Aujourd'hui, le Petit Prince a pris soin de <b>${annoncesPrincipales.length}</b> fleurs resplendissantes dans le jardin du monde...`;
-                
-                const urlParams = new URLSearchParams(window.location.search);
-                const catParam = urlParams.get('cat');
-                
-                if (catParam) {
-                    const nomBouton = paramToBouton[catParam];
-                    if (nomBouton) {
-                        const btnTarget = document.querySelector(`.btn-filtre-rapide[data-cat="${nomBouton}"]`);
-                        if (btnTarget) {
-                            filtreTypeActuel = nomBouton;
-                            document.querySelectorAll('.btn-filtre-rapide').forEach(b => b.classList.remove('actif'));
-                            btnTarget.classList.add('actif');
-                            afficherTiroirSousRubriques(nomBouton);
-                        }
-                    }
-                }
-                executerFiltrage();
-
-            } catch (error) {
-                console.error("Erreur de chargement :", error);
-                document.getElementById('mur-messages').innerHTML = `<div style="grid-column: span 5; padding: 20px; font-weight: bold; background: white; border-radius: 10px;">Impossible de charger les annonces du jardin... 🌱</div>`;
-            }
-        }
-
-        function afficherTiroirSousRubriques(cat) {
-            const conteneurSous = document.getElementById('sous-rubriques-container');
-            const selectSous = document.getElementById('selectSousRubrique');
-            
-            if (sousRubriquesData[cat] && sousRubriquesData[cat].length > 1) {
-                conteneurSous.style.display = 'block';
-                selectSous.innerHTML = "";
-                
-                sousRubriquesData[cat].forEach(sub => {
-                    const option = document.createElement('option');
-                    option.value = sub.id;
-                    option.textContent = sub.label;
-                    if ((sub.id === "" && !filtreSousTypeActuel) || (sub.id !== "" && filtreSousTypeActuel === sub.id)) {
-                        option.selected = true;
-                    }
-                    selectSous.appendChild(option);
-                });
-            } else {
-                conteneurSous.style.display = 'none';
-                selectSous.innerHTML = "";
-            }
-        }
-
-        function changerSousRubrique(selectEl) {
-            jouerBip();
-            filtreSousTypeActuel = selectEl.value;
-            executerFiltrage();
-        }
-
-        function executerFiltrage() {
-            const pi = document.getElementById('searchPays').value.toLowerCase();
-            const vi = document.getElementById('searchVille').value.toLowerCase();
-            const mi = document.getElementById('searchKeyword').value.toLowerCase();
-
-            const filtrées = annoncesPrincipales.filter(ann => {
-                // Ignore directement les annonces expirées
-                if (estExpire(ann)) return false;
-
-                const matchP = pi === "" || (ann.pays_select || "").toLowerCase().startsWith(pi);
-                const matchV = vi === "" || (ann.localisation || "").toLowerCase().startsWith(vi);
-                const texteMsg = (ann.message || "").toLowerCase();
-                const matchM = mi === "" || texteMsg.includes(mi);
-                
-                let matchT = true;
-                if (filtreTypeActuel !== "") {
-                    const catsPermises = mappingBoutons[filtreTypeActuel] || [];
-                    matchT = catsPermises.includes(ann.type);
-                }
-
-                let matchSousT = true;
-                if (filtreTypeActuel !== "" && filtreSousTypeActuel !== "") {
-                    const subVal = ann.sousType || ann.sub_precision || "";
-                    matchSousT = subVal.toLowerCase().includes(filtreSousTypeActuel.toLowerCase());
-                }
-
-                return matchP && matchV && matchM && matchT && matchSousT;
-            });
-
-            // Tri pour afficher les plus récentes en PREMIER (haut de page)
-            filtrées.sort((a, b) => {
-                const dateA = new Date(a.Horodateur || 0);
-                const dateB = new Date(b.Horodateur || 0);
-                return dateB - dateA;
-            });
-
-            const cont = document.getElementById('mur-messages');
-            cont.innerHTML = "";
-            
-            if (filtrées.length === 0) {
-                cont.innerHTML = `<div style="grid-column: span 5; padding: 20px; font-weight: bold; background: white; border-radius: 10px; color: #008080;">Aucune annonce trouvée dans le jardin pour l'instant... 🌸</div>`;
-                return;
-            }
-
-            filtrées.forEach(ann => {
-                const idAnnonce = ann.Horodateur || ann.id || '';
-                const nomAnnonce = ann.nom || ann.Nom || ann.prenom || ann.Prenom || ann.auteur || "Anonyme";
-                const typeAnnonce = (ann.type || "").toUpperCase();
-                const msgAnnonce = ann.message || "";
-                const datePubli = formaterDate(ann.Horodateur);
-                
-                const listeReponses = obtenirReponsesPourAnnonce(ann);
-                let badgeReponsesHtml = '';
-                if (listeReponses.length > 0) {
-                    badgeReponsesHtml = `<div class="badge-reponses">💬 ${listeReponses.length} réponse(s)</div>`;
-                }
-
-                const d = document.createElement('div');
-                d.className = 'carte-message';
-                
-                const couleurBord = couleursBordures[typeAnnonce] || "#008080";
-                d.style.borderColor = couleurBord;
-                d.style.boxShadow = `3px 3px 0px ${couleurBord}`;
-
-                d.onclick = () => ouvrirGrandMessage(ann);
-
-                d.innerHTML = `
-                    <div class="nom-prenom"></div>
-                    <div class="rubrique-tag">${nomBoutonAffiche[typeAnnonce] || "Graine"}</div>
-                    <div class="texte-annonce"></div>
-                    ${badgeReponsesHtml}
-                    <div class="details-bas">
-                        📅 Publié le : ${escapeHtml(datePubli)}<br>
-                        📍 Localisation : ${escapeHtml(ann.localisation || 'N/C')}<br>
-                        📍 Pays : ${escapeHtml(ann.pays_select || 'N/C')}<br>
-                        🌍 Portée : ${escapeHtml(ann.rayon_action || 'Locale')}
-                        <button class="btn-arrosage">💧 Arroser (${ann.votes_arrosage || 0})</button>
-                        <button class="btn-repondre">💌 Répondre à cette graine</button>
-                    </div>
-                `;
-
-                d.querySelector('.nom-prenom').textContent = nomAnnonce;
-                d.querySelector('.texte-annonce').textContent = `"${masquerCoordonnees(msgAnnonce)}"`;
-
-                const btnArroser = d.querySelector('.btn-arrosage');
-                btnArroser.onclick = (e) => arroser(e, idAnnonce, btnArroser, ann);
-
-                const btnRep = d.querySelector('.btn-repondre');
-                btnRep.onclick = (e) => {
-                    e.stopPropagation();
-                    ouvrirModalReponse(ann);
+                // Traduction propre du domaine principal pour l'affichage
+                const nomsDomaines = {
+                    "IMPOT": "Trésor Public",
+                    "AIDE": "Aide & Harmonie",
+                    "REGULATION": "Régulation",
+                    "SAVOIR": "Savoirs"
                 };
+                let libelleDomaine = nomsDomaines[mainCat] || mainCat || "Don";
 
-                cont.appendChild(d);
-            });
-        }
-
-        async function arroser(e, id, btn, ann) {
-            e.stopPropagation();
-            jouerBip();
-            animerPluieGouttes(e);
-            
-            ann.votes_arrosage = (parseInt(ann.votes_arrosage) || 0) + 1;
-            btn.innerHTML = `💧 Arrosé ! (${ann.votes_arrosage})`;
-            btn.style.background = "#C8E6C9";
-            
-            const fd = new URLSearchParams(); 
-            fd.append('action', 'arroser'); 
-            fd.append('id', id);
-            fetch(WEB_APP_URL, { method: 'POST', mode: 'no-cors', body: fd });
-        }
-
-        function ouvrirGrandMessage(ann) {
-            const listeReponses = obtenirReponsesPourAnnonce(ann);
-            const datePubli = formaterDate(ann.Horodateur);
-            
-            let htmlReponsesGeant = '';
-            if (listeReponses.length > 0) {
-                htmlReponsesGeant = `<div style="background:#FFF8E7; padding:15px; border-radius:10px; border:2px dashed #E67E22; margin-bottom:15px; text-align:left; max-height: 300px; overflow-y: auto;">
-                    <h4 style="color:#E67E22; margin:0 0 10px 0;">💬 Réponses reçues (${listeReponses.length}) :</h4>`;
-                listeReponses.forEach(r => {
-                    const nomReponseur = r.nom || r.Nom || r.prenom || r.Prenom || 'Ami';
-                    htmlReponsesGeant += `<div style="margin-bottom:10px; border-bottom:1px solid #ddd; padding-bottom:8px; word-break: break-word;">
-                        <strong style="color:#2E7D32;">${escapeHtml(nomReponseur)} :</strong> 
-                        <div style="white-space: pre-line; color: #333; margin-top: 3px;">"${escapeHtml(masquerCoordonnees(r.message || ''))}"</div>
-                    </div>`;
-                });
-                htmlReponsesGeant += `</div>`;
+                nouvelleCarte.innerHTML = `
+                    <h3>${subCat ? subCat : 'Offre du Jardin'}</h3>
+                    <div>
+                        <span class="etiquette">${libelleDomaine}</span>
+                        ${subCat ? `<span class="etiquette">${subCat}</span>` : ''}
+                    </div>
+                    <p>${description ? description : 'Aucune description fournie.'}</p>
+                `;
+                
+                grilleDons.appendChild(nouvelleCarte);
             }
 
-            const divContent = document.getElementById('geant-contenu');
-            divContent.innerHTML = `
-                <div style="font-size:1.6em; color:#2E7D32; font-weight:bold; border-bottom:3px solid #008080; margin-bottom:15px; padding-right: 40px;">🌱 Offrande de <span id="geant-nom"></span></div>
-                <div style="background:white; padding:20px; border-radius:15px; border-left:10px solid #FF1493; font-size:1.1em; color:#000080; text-align:left; margin-bottom:15px; white-space: pre-line; word-break: break-word;" id="geant-msg"></div>
-                <div style="text-align:left; background:#E0F2F1; padding:15px; border-radius:10px; font-size:0.95em; margin-bottom:15px; line-height: 1.4;">
-                    <strong>📅 Date de publication :</strong> ${escapeHtml(datePubli)}<br>
-                    <strong>📍 Localisation :</strong> ${escapeHtml(ann.localisation || "N/C")}<br>
-                    <strong>📍 Pays :</strong> ${escapeHtml(ann.pays_select || "N/C")}<br>
-                    <strong>🌍 Portée :</strong> ${escapeHtml(ann.rayon_action || "Locale")}<br>
-                    <strong>🚚 Logistique :</strong> ${escapeHtml(ann.logistique || "Main Propre")}
-                </div>
-                ${htmlReponsesGeant}
-                <button class="btn-repondre" id="geant-btn-rep" style="font-size: 1.1em; padding: 12px;">💌 Répondre à cette graine</button>
-            `;
-
-            document.getElementById('geant-nom').textContent = ann.nom || ann.Nom || ann.prenom || ann.auteur || "Anonyme";
-            document.getElementById('geant-msg').textContent = `"${masquerCoordonnees(ann.message || "")}"`;
-
-            document.getElementById('geant-btn-rep').onclick = () => {
-                fermerGrandMessage();
-                ouvrirModalReponse(ann);
+            // Gestion du filtre si on arrive depuis les cartes colorées de l'accueil/formulaire
+            const categorie = urlParams.get('cat');
+            const traductions = {
+                "IMPOT": "Trésor Public",
+                "AIDE": "Aide & Harmonie",
+                "REGULATION": "Régulation",
+                "SAVOIR": "Savoirs"
             };
 
-            document.getElementById('fond-sombre').style.display = 'flex';
-        }
-
-        function ouvrirModalReponse(ann) {
-            jouerBip();
-            
-            const id = ann.Horodateur || ann.id || '';
-            const type = ann.type || "";
-            const nom = ann.nom || ann.Nom || ann.prenom || "Anonyme";
-            const message = ann.message || "";
-
-            document.getElementById('rep_id_annonce').value = id;
-            document.getElementById('rep_type_annonce').value = type;
-
-            const rappel = document.getElementById('rappel-annonce');
-            rappel.innerHTML = `<strong>Graine de <span id="rappel-nom"></span> :</strong> <span id="rappel-msg"></span>`;
-            document.getElementById('rappel-nom').textContent = nom;
-            document.getElementById('rappel-msg').textContent = `"${masquerCoordonnees(message).substring(0, 100)}${message.length > 100 ? '...' : ''}"`;
-            
-            document.getElementById('modal-reponse').style.display = 'flex';
-        }
-
-        function fermerModalReponse() {
-            document.getElementById('modal-reponse').style.display = 'none';
-        }
-
-        function envoyerReponse(e) {
-            e.preventDefault();
-            jouerBip();
-            
-            const btn = document.getElementById('btnSubmitReponse');
-            btn.innerText = "Envoi de la réponse en cours... 🌱";
-            btn.disabled = true;
-
-            const idRef = document.getElementById('rep_id_annonce').value;
-            const typeAnn = document.getElementById('rep_type_annonce').value;
-            const nomRep = document.getElementById('rep_nom').value;
-            const msgRep = document.getElementById('rep_message').value;
-
-            toutesLesReponses.push({
-                ref_id: `Ref:${idRef}`,
-                type: `REPONSE_${typeAnn}`,
-                nom: nomRep,
-                message: msgRep
-            });
-
-            const params = new URLSearchParams();
-            params.append('action', 'repondre');
-            params.append('ref_id', `Ref:${idRef}`);
-            params.append('type', `REPONSE_${typeAnn}`);
-            params.append('nom', nomRep);
-            params.append('message', msgRep);
-
-            fetch(WEB_APP_URL, {
-                method: 'POST',
-                mode: 'no-cors',
-                body: params
-            })
-            .then(() => {
-                btn.innerText = "Réponse envoyée avec succès ! 🌸";
-                setTimeout(() => {
-                    fermerModalReponse();
-                    btn.innerText = "ENVOYER MA RÉPONSE ✨";
-                    btn.disabled = false;
-                    document.getElementById('formReponse').reset();
-                    executerFiltrage();
-                }, 500);
-            })
-            .catch(err => {
-                console.error("Erreur d'envoi :", err);
-                fermerModalReponse();
-                btn.disabled = false;
-            });
-        }
-
-        function rechercheRapide(t, el) {
-            jouerBip();
-            document.querySelectorAll('.btn-filtre-rapide').forEach(b => b.classList.remove('actif'));
-            
-            if (filtreTypeActuel === t) {
-                filtreTypeActuel = "";
-                filtreSousTypeActuel = "";
-            } else {
-                filtreTypeActuel = t;
-                filtreSousTypeActuel = ""; 
+            if (categorie && traductions[categorie]) {
+                const searchInput = document.getElementById('searchKeyword');
+                searchInput.value = traductions[categorie];
+                executerFiltrage();
             }
+        };
 
-            if (filtreTypeActuel && el) el.classList.add('actif');
-
-            afficherTiroirSousRubriques(filtreTypeActuel);
-            executerFiltrage();
+        // Moteur de recherche instantanée
+        function executerFiltrage() {
+            const input = document.getElementById('searchKeyword').value.toLowerCase();
+            const cartes = document.querySelectorAll('.carte-don');
+            
+            cartes.forEach(carte => {
+                const texteGlobal = carte.innerText.toLowerCase();
+                if (texteGlobal.includes(input)) {
+                    carte.style.display = "block";
+                } else {
+                    carte.style.display = "none";
+                }
+            });
         }
-
-        function resetRecherche() {
-            jouerBip();
-            document.getElementById('searchKeyword').value = ""; 
-            document.getElementById('searchPays').value = ""; 
-            document.getElementById('searchVille').value = "";
-            filtreTypeActuel = ""; 
-            filtreSousTypeActuel = "";
-            document.querySelectorAll('.btn-filtre-rapide').forEach(b => b.classList.remove('actif'));
-            document.getElementById('sous-rubriques-container').style.display = 'none';
-            executerFiltrage();
-        }
-
-        function fermerGrandMessage() { document.getElementById('fond-sombre').style.display = 'none'; }
-
-        window.onload = chargerAnnonces;
     </script>
 </body>
 </html>
