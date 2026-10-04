@@ -88,18 +88,24 @@
 
         <!-- Section Articles -->
         <section id="articles" class="space-y-8">
-            <div class="flex flex-col sm:flex-row justify-between items-start sm:items-end gap-4 border-b border-orange-200 pb-4">
+            <div class="flex flex-col lg:flex-row justify-between items-start lg:items-end gap-4 border-b border-orange-200 pb-4">
                 <div>
                     <span class="text-xs uppercase tracking-widest font-extrabold text-joy-orange block">Publications récentes</span>
                     <h2 class="text-3xl font-extrabold text-joy-dark">Articles & Décryptages</h2>
                 </div>
-                <!-- Barre de recherche Globale -->
-                <div class="w-full sm:w-80">
-                    <div class="relative">
-                        <span class="absolute inset-y-0 left-0 flex items-center pl-3.5 pointer-events-none text-gray-400">
-                            <i class="fa-solid fa-search"></i>
-                        </span>
-                        <input type="text" id="search-input" oninput="filterContent()" placeholder="Rechercher articles, vidéos..." class="w-full pl-10 pr-4 py-2.5 bg-white border border-orange-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-joy-orange shadow-sm transition">
+                
+                <!-- Filtres par catégorie et Barre de recherche -->
+                <div class="flex flex-col sm:flex-row items-center gap-3 w-full lg:w-auto">
+                    <div id="category-filters" class="flex flex-wrap gap-2 w-full sm:w-auto">
+                        <button onclick="filterByCategory('Tous')" class="cat-pill active bg-joy-orange text-white px-3 py-2 rounded-xl text-xs font-bold transition shadow-sm cursor-pointer">Tous</button>
+                    </div>
+                    <div class="w-full sm:w-72">
+                        <div class="relative">
+                            <span class="absolute inset-y-0 left-0 flex items-center pl-3.5 pointer-events-none text-gray-400">
+                                <i class="fa-solid fa-search"></i>
+                            </span>
+                            <input type="text" id="search-input" oninput="filterContent()" placeholder="Rechercher articles..." class="w-full pl-10 pr-4 py-2 bg-white border border-orange-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-joy-orange shadow-sm transition">
+                        </div>
                     </div>
                 </div>
             </div>
@@ -129,7 +135,7 @@
                 </a>
             </div>
 
-            <!-- Grille des Vidéos (2 colonnes sur écran moyen/large) -->
+            <!-- Grille des Vidéos -->
             <div id="videos-grid" class="grid grid-cols-1 md:grid-cols-2 gap-8">
                 <div class="col-span-full text-center py-12 text-gray-500 font-medium">Chargement des vidéos...</div>
             </div>
@@ -155,14 +161,19 @@
 
     </main>
 
-    <!-- Modale Visionneuse (Articles / Docs) -->
+    <!-- Modale Visionneuse (Articles / Docs) avec Partage -->
     <div id="content-modal" class="fixed inset-0 z-50 hidden bg-black/70 backdrop-blur-sm flex items-center justify-center p-2 sm:p-6">
         <div class="bg-white w-full max-w-4xl h-[90vh] sm:h-[85vh] rounded-3xl shadow-2xl overflow-hidden flex flex-col relative border border-orange-200">
             <div class="bg-joy-dark text-white px-4 sm:px-6 py-4 flex justify-between items-center shrink-0">
                 <h3 id="modal-title" class="font-bold text-base sm:text-lg truncate pr-4">Titre de l'article</h3>
-                <button onclick="closeModal()" class="text-gray-300 hover:text-white text-xl font-bold w-10 h-10 rounded-full bg-white/10 flex items-center justify-center transition shrink-0 cursor-pointer">
-                    <i class="fa-solid fa-xmark"></i>
-                </button>
+                <div class="flex items-center gap-3">
+                    <button onclick="shareCurrentArticle()" class="bg-white/10 hover:bg-white/20 text-amber-300 px-3 py-1.5 rounded-lg text-xs font-bold inline-flex items-center gap-1.5 transition cursor-pointer" title="Partager cette pépite">
+                        <i class="fa-solid fa-share-nodes"></i> <span class="hidden sm:inline">Partager</span>
+                    </button>
+                    <button onclick="closeModal()" class="text-gray-300 hover:text-white text-xl font-bold w-10 h-10 rounded-full bg-white/10 flex items-center justify-center transition shrink-0 cursor-pointer">
+                        <i class="fa-solid fa-xmark"></i>
+                    </button>
+                </div>
             </div>
             <div class="flex-grow flex items-center justify-center p-2 sm:p-6 bg-gray-50 relative iframe-container overflow-hidden">
                 <iframe id="modal-iframe" class="w-full h-full max-w-5xl rounded-2xl shadow-2xl bg-black border-0" allow="autoplay; fullscreen"></iframe>
@@ -256,6 +267,7 @@
         let allVideos = [];
         let displayedArticleLimit = 9; 
         let displayedVideoLimit = 9;
+        let currentSelectedCategory = 'Tous';
 
         function getYouTubeId(url) {
             if (!url) return '';
@@ -319,6 +331,29 @@
             document.body.style.overflow = 'auto';
         }
 
+        // Calculer le temps de lecture estimé
+        function getReadingTime(text) {
+            if (!text) return "1 min";
+            const words = text.trim().split(/\s+/).length;
+            const minutes = Math.ceil(words / 130); 
+            return `${minutes} min`;
+        }
+
+        // Partager l'article ouvert
+        function shareCurrentArticle() {
+            const title = document.getElementById('modal-title').textContent;
+            if (navigator.share) {
+                navigator.share({
+                    title: title,
+                    text: "Découvre cette lecture indépendante sur le Ministère de l'honnêteté :",
+                    url: window.location.href
+                }).catch(() => {});
+            } else {
+                navigator.clipboard.writeText(window.location.href);
+                alert("Lien copié dans le presse-papier ! 📋✨");
+            }
+        }
+
         // Bascule de la description et synchronisation de la carte voisine
         function toggleDesc(btn, index) {
             const container = btn.closest('.desc-container');
@@ -340,7 +375,6 @@
                 icon.classList.toggle('rotated', isExpanded);
             }
 
-            // Synchronisation de la carte voisine sur la même ligne (0 <-> 1, 2 <-> 3, etc.)
             if (index !== undefined) {
                 const neighborIndex = (index % 2 === 0) ? index + 1 : index - 1;
                 const neighborContainer = document.querySelector(`.desc-container[data-index="${neighborIndex}"]`);
@@ -348,7 +382,7 @@
                     const neighborBtn = neighborContainer.querySelector('button');
                     const neighborExpanded = neighborContainer.classList.contains('expanded');
                     if (neighborExpanded !== isExpanded && neighborBtn) {
-                        toggleDesc(neighborBtn); // Appel sans index pour éviter toute boucle infinie
+                        toggleDesc(neighborBtn);
                     }
                 }
             }
@@ -391,6 +425,32 @@
             renderVideos();
         }
 
+        // Filtrer par catégorie en un clic
+        function filterByCategory(category) {
+            currentSelectedCategory = category;
+            updateCategoryPills();
+            renderArticles();
+        }
+
+        function updateCategoryPills() {
+            const container = document.getElementById('category-filters');
+            if (!container) return;
+            
+            const categories = ['Tous', ...new Set(allArticles.map(a => (a.categorie || 'Général').trim()))];
+            
+            let pillsHtml = '';
+            categories.forEach(cat => {
+                const isActive = currentSelectedCategory.toLowerCase() === cat.toLowerCase();
+                const btnClass = isActive 
+                    ? "cat-pill active bg-joy-orange text-white px-3 py-2 rounded-xl text-xs font-bold transition shadow-sm cursor-pointer"
+                    : "cat-pill bg-white text-gray-700 hover:bg-orange-50 border border-orange-200 px-3 py-2 rounded-xl text-xs font-bold transition shadow-sm cursor-pointer";
+                
+                pillsHtml += `<button onclick="filterByCategory('${cat}')" class="${btnClass}">${cat}</button>`;
+            });
+            
+            container.innerHTML = pillsHtml;
+        }
+
         function renderArticles() {
             const grid = document.getElementById('articles-grid');
             const searchInput = document.getElementById('search-input');
@@ -399,15 +459,16 @@
             const query = searchInput ? searchInput.value.toLowerCase().trim() : "";
 
             const filtered = allArticles.filter(item => {
-                const searchStr = `${item.titre || ''} ${item.description || ''} ${item.categorie || ''}`.toLowerCase();
-                return searchStr.includes(query);
+                const matchesQuery = `${item.titre || ''} ${item.description || ''} ${item.categorie || ''}`.toLowerCase().includes(query);
+                const matchesCategory = currentSelectedCategory === 'Tous' || (item.categorie || '').trim().toLowerCase() === currentSelectedCategory.toLowerCase();
+                return matchesQuery && matchesCategory;
             });
 
-            const limit = query ? filtered.length : displayedArticleLimit;
+            const limit = (query || currentSelectedCategory !== 'Tous') ? filtered.length : displayedArticleLimit;
             const articlesToDisplay = filtered.slice(0, limit);
 
             if (filtered.length === 0) {
-                if (grid) grid.innerHTML = `<div class="col-span-full text-center py-12 text-gray-500 font-medium bg-white rounded-3xl border border-orange-100">Aucun article trouvé pour "${query}".</div>`;
+                if (grid) grid.innerHTML = `<div class="col-span-full text-center py-12 text-gray-500 font-medium bg-white rounded-3xl border border-orange-100">Aucun article trouvé.</div>`;
                 if (loadMoreContainer) loadMoreContainer.classList.add('hidden');
                 return;
             }
@@ -415,11 +476,16 @@
             let html = '';
             articlesToDisplay.forEach((art, idx) => {
                 const realIndex = allArticles.findIndex(a => a === art);
+                const readingTime = getReadingTime(art.description);
+
                 html += `
                     <article class="bg-white rounded-3xl border border-orange-100 overflow-hidden shadow-sm hover:shadow-xl hover:-translate-y-1 transition duration-300 flex flex-col justify-between">
                         <div>
-                            <div class="h-48 bg-gradient-to-br from-amber-100 to-orange-100 flex items-center justify-center text-joy-orange">
+                            <div class="h-48 bg-gradient-to-br from-amber-100 to-orange-100 flex items-center justify-center text-joy-orange relative">
                                 <i class="fa-solid fa-newspaper text-4xl"></i>
+                                <span class="absolute bottom-3 right-3 bg-white/90 text-gray-700 text-[11px] font-bold px-2.5 py-1 rounded-lg shadow-sm">
+                                    ⏱️ ${readingTime}
+                                </span>
                             </div>
                             <div class="p-6 space-y-3">
                                 <div class="flex items-center justify-between text-xs font-bold gap-2">
@@ -446,7 +512,7 @@
             if (grid) grid.innerHTML = html;
 
             if (loadMoreContainer) {
-                if (!query && displayedArticleLimit < filtered.length) {
+                if (!query && currentSelectedCategory === 'Tous' && displayedArticleLimit < filtered.length) {
                     loadMoreContainer.classList.remove('hidden');
                 } else {
                     loadMoreContainer.classList.add('hidden');
@@ -454,7 +520,7 @@
             }
         }
 
-        // AFFICHAGE DES VIDÉOS (Correction HTML & Structure)
+        // AFFICHAGE DES VIDÉOS
         function renderVideos() {
             const grid = document.getElementById('videos-grid');
             const searchInput = document.getElementById('search-input');
@@ -486,7 +552,6 @@
                 html += `
                     <div class="bg-white rounded-3xl border border-orange-100 overflow-hidden shadow-sm flex flex-col justify-between p-5 sm:p-6 space-y-4">
                         <div class="space-y-3">
-                            <!-- En-tête : catégorie, date et titre -->
                             <div class="space-y-1.5">
                                 <div class="flex items-center justify-between text-xs font-bold gap-2">
                                     <span class="bg-amber-100 text-amber-800 px-3 py-1 rounded-full truncate">${vid.categorie || 'Vidéo'}</span>
@@ -495,7 +560,6 @@
                                 <h3 class="text-lg font-extrabold text-joy-dark leading-snug">${vid.titre}</h3>
                             </div>
 
-                            <!-- Lecteur / Miniature Vidéo -->
                             <div id="${uniqueId}" onclick="playVideoInline('${uniqueId}', '${videoId}')" class="overflow-hidden relative shadow-md aspect-video flex items-center justify-center cursor-pointer group bg-gray-900 bg-cover bg-center rounded-2xl" style="background-image: url('${thumbUrl}');">
                                 <div class="absolute inset-0 bg-black/30 group-hover:bg-black/10 transition duration-300"></div>
                                 <div class="w-14 h-14 bg-joy-orange text-white rounded-full flex items-center justify-center shadow-xl z-10 group-hover:scale-110 transition duration-300">
@@ -503,7 +567,6 @@
                                 </div>
                             </div>
 
-                            <!-- Description extensible -->
                             <div class="desc-container space-y-2 pt-1" data-index="${idx}">
                                 <div class="desc-text text-gray-700 text-sm leading-relaxed whitespace-pre-line line-clamp-5">
                                     ${descriptionText}
@@ -528,7 +591,7 @@
 
             if (loadMoreContainer) {
                 if (!query && displayedVideoLimit < filtered.length) {
-                    loadMoreContainer.classList.remove('hidden');
+                    loadMoreContainer.classList.add('hidden');
                 } else {
                     loadMoreContainer.classList.add('hidden');
                 }
@@ -635,6 +698,7 @@
                     `;
                 }
 
+                updateCategoryPills();
                 renderArticles();
                 renderVideos();
             },
