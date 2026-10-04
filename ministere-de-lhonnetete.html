@@ -50,7 +50,6 @@
     <header class="sticky top-0 z-50 bg-joy-bg/90 backdrop-blur-md border-b border-orange-100 shadow-sm">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between items-center h-20">
-                <!-- Logo & Titre -->
                 <div class="flex items-center space-x-3">
                     <div class="bg-gradient-to-br from-joy-gold to-joy-orange text-white p-2.5 rounded-xl shadow-md shrink-0">
                         <i class="fa-solid fa-scale-balanced text-xl"></i>
@@ -61,7 +60,6 @@
                     </div>
                 </div>
 
-                <!-- Navigation Desktop -->
                 <nav class="hidden md:flex items-center space-x-8 text-sm font-semibold text-gray-700">
                     <a href="#articles" class="hover:text-joy-orange transition">Articles</a>
                     <a href="#videos" class="hover:text-joy-orange transition">Vidéos</a>
@@ -94,7 +92,6 @@
                     <h2 class="text-3xl font-extrabold text-joy-dark">Articles & Décryptages</h2>
                 </div>
                 
-                <!-- Filtres par catégorie et Barre de recherche -->
                 <div class="flex flex-col sm:flex-row items-center gap-3 w-full lg:w-auto">
                     <div id="category-filters" class="flex flex-wrap gap-2 w-full sm:w-auto">
                         <button onclick="filterByCategory('Tous')" class="cat-pill active bg-joy-orange text-white px-3 py-2 rounded-xl text-xs font-bold transition shadow-sm cursor-pointer">Tous</button>
@@ -110,12 +107,10 @@
                 </div>
             </div>
 
-            <!-- Grille des articles -->
             <div id="articles-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                 <div class="col-span-full text-center py-12 text-gray-500 font-medium">Chargement des articles...</div>
             </div>
 
-            <!-- Bouton "Charger plus" Articles -->
             <div id="load-more-container" class="text-center pt-6 hidden">
                 <button onclick="showMoreArticles()" class="bg-orange-50 hover:bg-joy-orange hover:text-white text-joy-orange font-bold text-sm px-6 py-3 rounded-xl transition border border-orange-200 shadow-sm cursor-pointer inline-flex items-center gap-2">
                     <span>Charger plus d'articles</span> <i class="fa-solid fa-chevron-down text-xs"></i>
@@ -135,12 +130,10 @@
                 </a>
             </div>
 
-            <!-- Grille des Vidéos -->
             <div id="videos-grid" class="grid grid-cols-1 md:grid-cols-2 gap-8">
                 <div class="col-span-full text-center py-12 text-gray-500 font-medium">Chargement des vidéos...</div>
             </div>
 
-            <!-- Bouton "Charger plus" Vidéos -->
             <div id="load-more-videos-container" class="text-center pt-6 hidden">
                 <button onclick="showMoreVideos()" class="bg-orange-50 hover:bg-joy-orange hover:text-white text-joy-orange font-bold text-sm px-6 py-3 rounded-xl transition border border-orange-200 shadow-sm cursor-pointer inline-flex items-center gap-2">
                     <span>Charger plus de vidéos</span> <i class="fa-solid fa-chevron-down text-xs"></i>
@@ -155,20 +148,19 @@
             </div>
             <h2 class="text-2xl sm:text-3xl font-extrabold text-joy-dark">Notre engagement envers vous</h2>
             <p class="text-gray-700 leading-relaxed text-base sm:text-lg">
-                Le <strong>Ministère de l'honnêteté</strong> est un espace d'information libre et vibrant, conçu pour les citoyens qui exigent de la rigueur, de la joie de débattre et de la transparence. Chaque article et chaque vidéo sont pensés pour vous donner les clés de compréhension de notre époque.
+                Le <strong>Ministère de l'honnêteté</strong> est un espace d'information libre et vibrant, conçu pour les citoyens qui exigent de la rigueur, de la joie de débattre et de la transparence.
             </p>
         </section>
 
     </main>
 
-    <!-- Modale Visionneuse (Articles / Docs) avec Partage & Section Réponses -->
+    <!-- Modale Visionneuse -->
     <div id="content-modal" class="fixed inset-0 z-50 hidden bg-black/70 backdrop-blur-sm flex items-center justify-center p-2 sm:p-6">
         <div class="bg-white w-full max-w-4xl h-[92vh] sm:h-[88vh] rounded-3xl shadow-2xl overflow-hidden flex flex-col relative border border-orange-200">
-            <!-- Barre de titre de la modale -->
             <div class="bg-joy-dark text-white px-4 sm:px-6 py-4 flex justify-between items-center shrink-0">
                 <h3 id="modal-title" class="font-bold text-base sm:text-lg truncate pr-4">Titre de l'article</h3>
                 <div class="flex items-center gap-3">
-                    <button onclick="shareCurrentArticle()" class="bg-white/10 hover:bg-white/20 text-amber-300 px-3 py-1.5 rounded-lg text-xs font-bold inline-flex items-center gap-1.5 transition cursor-pointer" title="Partager cette pépite">
+                    <button onclick="shareCurrentArticle()" class="bg-white/10 hover:bg-white/20 text-amber-300 px-3 py-1.5 rounded-lg text-xs font-bold inline-flex items-center gap-1.5 transition cursor-pointer">
                         <i class="fa-solid fa-share-nodes"></i> <span class="hidden sm:inline">Partager</span>
                     </button>
                     <button onclick="closeModal()" class="text-gray-300 hover:text-white text-xl font-bold w-10 h-10 rounded-full bg-white/10 flex items-center justify-center transition shrink-0 cursor-pointer">
@@ -177,7 +169,6 @@
                 </div>
             </div>
 
-            <!-- Onglets d'action dans la modale (Lecture vs Répondre) -->
             <div class="bg-orange-50 border-b border-orange-200 px-6 py-2 flex items-center gap-4 shrink-0 text-sm font-bold">
                 <button onclick="switchModalTab('reading')" id="tab-reading-btn" class="text-joy-orange border-b-2 border-joy-orange pb-1 transition cursor-pointer">
                     <i class="fa-solid fa-book-open mr-1"></i> Lecture de l'article
@@ -187,14 +178,11 @@
                 </button>
             </div>
 
-            <!-- Contenu de la modale -->
             <div class="flex-grow relative overflow-hidden flex flex-col bg-gray-50">
-                <!-- Panneau 1 : L'iframe de lecture -->
                 <div id="panel-reading" class="w-full h-full p-2 sm:p-6 iframe-container overflow-hidden flex items-center justify-center">
                     <iframe id="modal-iframe" class="w-full h-full max-w-5xl rounded-2xl shadow-2xl bg-black border-0" allow="autoplay; fullscreen"></iframe>
                 </div>
 
-                <!-- Panneau 2 : Section pour répondre à l'article -->
                 <div id="panel-responses" class="w-full h-full p-4 sm:p-6 overflow-y-auto hidden space-y-6">
                     <div class="bg-white p-6 rounded-2xl border border-orange-200 shadow-sm space-y-4">
                         <h4 class="font-extrabold text-joy-dark text-base flex items-center gap-2">
@@ -211,19 +199,16 @@
                         </div>
                     </div>
 
-                    <!-- Liste des réponses postées -->
                     <div class="space-y-3">
                         <h5 class="font-bold text-gray-700 text-sm uppercase tracking-wider">Réponses de la communauté</h5>
-                        <div id="responses-list" class="space-y-3">
-                            <!-- Injecté dynamiquement -->
-                        </div>
+                        <div id="responses-list" class="space-y-3"></div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- Modale Courrier des lecteurs -->
+    <!-- Modale Courrier -->
     <div id="courrier-modal" class="fixed inset-0 z-50 hidden bg-black/70 backdrop-blur-sm flex items-center justify-center p-4 sm:p-6">
         <div class="bg-white w-full max-w-lg rounded-3xl shadow-2xl overflow-hidden flex flex-col relative border border-orange-200 p-6 sm:p-8 text-center space-y-6">
             <button onclick="closeCourrierModal()" class="absolute top-4 right-4 text-gray-400 hover:text-gray-700 text-xl font-bold w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center transition cursor-pointer">
@@ -235,9 +220,6 @@
             <h3 class="text-2xl font-extrabold text-joy-dark">Courrier des lecteurs</h3>
             <p class="text-gray-800 text-lg font-semibold leading-relaxed">
                 Ne perds pas ton temps sur ton ordi, <span class="text-joy-orange underline decoration-wavy">va discuter dans ton quartier !</span>
-            </p>
-            <p class="text-gray-500 text-sm italic">
-                (Rien ne vaut un vrai ébat public).
             </p>
             <div>
                 <button onclick="closeCourrierModal()" class="bg-joy-orange text-white font-bold text-sm px-6 py-3 rounded-xl hover:bg-orange-600 transition shadow-md shadow-orange-500/20 cursor-pointer">
@@ -304,8 +286,6 @@
         const sheetID = "1jJZm_WSIMgM5r-Y5zTSrC8FUiLhRN-dOcPnIcSyTpSI";
         const gid = "1311533436";
         const csvUrl = `https://docs.google.com/spreadsheets/d/${sheetID}/export?format=csv&gid=${gid}`;
-
-        // URL de votre Web App Google Apps Script intégrée
         const scriptUrl = "https://script.google.com/macros/s/AKfycbxxToz22V88elCCjxLqjRtsb5iBIC156cbBFRIlTsju2SwOj9yNnKqzAwFITXMg_wij/exec";
 
         let allArticles = []; 
@@ -351,7 +331,6 @@
             formData.append('ref_id', currentArticleIndex);
             formData.append('titre', author);       
             formData.append('description', text);    
-            formData.append('categorie', 'Réponse');
 
             const submitBtn = event.target.closest('button');
             const originalContent = submitBtn.innerHTML;
@@ -367,8 +346,8 @@
                 if (result.result === 'success') {
                     textInput.value = '';
                     authorInput.value = '';
-                    alert("Votre réponse a été enregistrée dans la base de données ! ✨");
                     loadDataFromSheet();
+                    switchModalTab('responses');
                 } else {
                     alert("Erreur lors de l'enregistrement : " + (result.message || 'Inconnue'));
                 }
@@ -503,13 +482,6 @@
             modal.classList.add('hidden');
             iframe.src = ''; 
             document.body.style.overflow = 'auto';
-        }
-
-        function getReadingTime(text) {
-            if (!text) return "1 min";
-            const words = text.trim().split(/\s+/).length;
-            const minutes = Math.ceil(words / 130); 
-            return `${minutes} min`;
         }
 
         function shareCurrentArticle() {
@@ -738,10 +710,6 @@
                                         <i class="fa-solid fa-chevron-down arrow-icon text-xs"></i>
                                     </button>
                                 </div>
-
-                                <div class="desc-content space-y-1 pt-0.5 text-gray-700 text-sm leading-relaxed">
-                                    <div class="text-blue-600 font-medium">#MinistereDeLHonnetete #LePetitPrinceDesJardiniers #Reportage</div>
-                                </div>
                             </div>
                         </div>
                     </div>
@@ -749,14 +717,7 @@
             });
 
             if (grid) grid.innerHTML = html;
-
-            if (loadMoreContainer) {
-                if (!query && displayedVideoLimit < filtered.length) {
-                    loadMoreContainer.classList.add('hidden');
-                } else {
-                    loadMoreContainer.classList.add('hidden');
-                }
-            }
+            if (loadMoreContainer) loadMoreContainer.classList.add('hidden');
         }
 
         function showMoreArticles() {
@@ -780,7 +741,7 @@
                     allVideos = [];
                     allResponses = {};
 
-                    data.forEach(row => {
+                    data.forEach((row, index) => {
                         const cleanRow = {};
                         Object.keys(row).forEach(key => {
                             const cleanKey = key.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").trim();
@@ -788,26 +749,48 @@
                         });
 
                         const pos = (cleanRow.position || "").trim().toLowerCase();
-                        const cat = (cleanRow.categorie || "").trim().toLowerCase();
                         const titre = cleanRow.titre || "";
                         const desc = cleanRow.description || "";
                         const lien = cleanRow.lien || "#";
                         const date = cleanRow.date || cleanRow.horodateur || "";
-                        const refId = cleanRow.refid !== undefined ? cleanRow.refid : cleanRow.ref_id;
 
                         if (!titre && !desc) return;
 
-                        if (pos === 'reponse' || cat === 'réponse') {
-                            const refIndex = (refId !== undefined && refId !== "" && !isNaN(refId)) ? parseInt(refId) : 0;
-                            if (!allResponses[refIndex]) {
-                                allResponses[refIndex] = [];
+                        // Extraction de la colonne des réponses stockées sur la ligne de l'article
+                        let rawResponses = "";
+                        Object.keys(cleanRow).forEach(k => {
+                            if (k.includes('reponse') || k.includes('commentaire')) {
+                                rawResponses = cleanRow[k] || "";
                             }
-                            allResponses[refIndex].push({
-                                author: titre,
-                                text: desc,
-                                date: date
+                        });
+
+                        const articleIndex = allArticles.length;
+                        if (rawResponses) {
+                            allResponses[articleIndex] = [];
+                            const items = rawResponses.split('||');
+                            items.forEach(item => {
+                                const trimmed = item.trim();
+                                if (trimmed) {
+                                    const match = trimmed.match(/^\[(.*?)\]\s*:\s*(.+)$/);
+                                    if (match) {
+                                        const authorDate = match[1];
+                                        const text = match[2];
+                                        const lastOpenParen = authorDate.lastIndexOf('(');
+                                        let author = authorDate;
+                                        let respDate = "";
+                                        if (lastOpenParen !== -1) {
+                                            author = authorDate.substring(0, lastOpenParen).trim();
+                                            respDate = authorDate.substring(lastOpenParen + 1, authorDate.length - 1).trim();
+                                        }
+                                        allResponses[articleIndex].push({ author, text, date: respDate });
+                                    } else {
+                                        allResponses[articleIndex].push({ author: "Citoyen", text: trimmed, date: "" });
+                                    }
+                                }
                             });
-                        } else if (pos === 'video' || pos === 'alaune-video' || getYouTubeId(lien)) {
+                        }
+
+                        if (pos === 'video' || pos === 'alaune-video' || getYouTubeId(lien)) {
                             allVideos.push({ titre, description: desc, lien, categorie: cleanRow.categorie || 'Vidéo', date });
                         } else {
                             allArticles.push({ titre, description: desc, lien, categorie: cleanRow.categorie || 'Général', date });
