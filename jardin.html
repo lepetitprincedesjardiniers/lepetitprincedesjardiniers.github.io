@@ -7,7 +7,7 @@
         body { font-family: 'Comic Sans MS', cursive; text-align: center; margin: 0; padding: 0; background-color: #FFFF00; color: #000080; min-height: 100vh; padding-bottom: 80px; transition: background 0.3s, color 0.3s; }
         .top-bar { position: relative; width: 100%; min-height: 50px; background: rgba(255,255,255,0.3); padding: 5px 0; display: flex; justify-content: center; align-items: center; }
         #google_translate_element { position: absolute; left: 10px; top: 10px; z-index: 2000; transform: scale(0.85); transform-origin: top left; }
-        
+
         .menu-wrapper { position: relative; display: flex; justify-content: center; align-items: center; width: 100%; margin: 5px 0; }
         .menu-table { margin: 0 !important; border-radius: 10px; background-color: #008080; border-collapse: collapse; }
         .menu-table td { padding: 8px 15px; border: 1px solid #FFFFFF; }
@@ -24,7 +24,7 @@
         .search-row { display: flex; gap: 10px; width: 90%; justify-content: center; }
         .search-item { display: flex; flex-direction: column; width: 45%; }
         .search-item input { padding: 8px; border-radius: 10px; border: none; text-align: center; }
-        
+
         .btn-group { display: flex; gap: 8px; flex-wrap: wrap; justify-content: center; margin-top: 5px; }
         .btn-filtre-rapide { background: rgba(255,255,255,0.2); border: 1px solid white; color: white; padding: 6px 12px; border-radius: 20px; cursor: pointer; font-family: 'Comic Sans MS'; font-size: 0.8em; transition: 0.3s; }
         .btn-filtre-rapide.actif { background: #fff !important; color: #008080 !important; font-weight: bold; }
@@ -40,7 +40,7 @@
         .carte-message:hover { transform: translateY(-3px); }
         .nom-prenom { color: #2E7D32; font-weight: bold; font-size: 0.85em; border-bottom: 1px solid #eee; margin-bottom: 4px; padding-right: 70px; }
         .rubrique-tag { font-size: 0.55em; background: #ff1493; color: white; padding: 2px 6px; border-radius: 5px; position: absolute; top: 8px; right: 8px; }
-        
+
         .texte-annonce { flex-grow: 1; font-style: italic; color: #000080; overflow-y: auto; font-size: 0.75em; margin: 4px 0; line-height: 1.2; padding-right: 4px; scrollbar-width: thin; white-space: pre-line; word-break: break-word; }
         .texte-annonce::-webkit-scrollbar { width: 4px; }
         .texte-annonce::-webkit-scrollbar-thumb { background: #008080; border-radius: 10px; }
@@ -56,12 +56,12 @@
         body.dark-mode { background-color: #0a0a1a; color: #e0e0e0; }
         .star { position: fixed; background: white; border-radius: 50%; opacity: 0; pointer-events: none; animation: twinkle var(--d) infinite; }
         @keyframes twinkle { 0%, 100% { opacity: 0.3; } 50% { opacity: 1; } }
-        
+
         #fond-sombre, #modal-reponse { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); z-index: 2000; justify-content: center; align-items: center; padding: 10px; box-sizing: border-box; }
         .message-geant { background: #FFFFF0; width: 95%; max-width: 800px; padding: 25px; border-radius: 25px; border: 8px solid #008080; position: relative; max-height: 85vh; overflow-y: auto; color: #000; text-align: left; box-sizing: border-box; }
         .form-reponse-box { background: #FFFFFF; width: 90%; max-width: 500px; padding: 25px; border-radius: 20px; border: 6px solid #E67E22; position: relative; text-align: left; color: #000; box-shadow: 0 0 30px rgba(0,0,0,0.5); }
         .bouton-fermer { position: absolute; top: 15px; right: 15px; background: #FF1493; color: white; border-radius: 50%; width: 40px; height: 40px; cursor: pointer; border: 2px solid white; font-weight: bold; display: flex; align-items: center; justify-content: center; z-index: 10; }
-        
+
         .field-rep { width: 100%; padding: 10px; margin: 8px 0; border: 2px solid #008080; border-radius: 10px; font-family: 'Comic Sans MS'; box-sizing: border-box; }
         .copyright-link { color: #008080; text-decoration: none; font-weight: bold; }
     </style>
@@ -89,18 +89,18 @@
     </div>
 
     <h2 style="color:#2E7D32; margin: 10px 0;">🍃 Le Jardin des Cadeaux Existentiels 🍃</h2>
-    <div class="phrase-rose">Bienvenue au Jardin des Dons entiers[cite: 9]</div>
-    <div class="phrase-sous">Talents, savoirs, objets et fraternité.[cite: 9]</div>
+    <div class="phrase-rose">Bienvenue au Jardin des Dons entiers</div>
+    <div class="phrase-sous">Talents, savoirs, objets et fraternité.</div>
 
     <div class="search-box">
         <div class="search-container">
             <input type="text" id="searchKeyword" class="search-main-input" onkeyup="executerFiltrage()" placeholder="✨ Votre phrase personnalisée ici (ex: Rechercher un don, un savoir...)">
-            
+
             <div class="search-row">
                 <div class="search-item"><input type="text" id="searchPays" onkeyup="executerFiltrage()" placeholder="📍 Pays"></div>
-                <div class="search-item"><input type="text" id="searchVille" onkeyup="executerFiltrage()" placeholder="🏙️️ Ville"></div>
+                <div class="search-item"><input type="text" id="searchVille" onkeyup="executerFiltrage()" placeholder="🏙️ Ville"></div>
             </div>
-            
+
             <div class="btn-group">
                 <button class="btn-filtre-rapide" data-cat="Savoir" onclick="rechercheRapide('Savoir', this)">🎓 Savoirs</button>
                 <button class="btn-filtre-rapide" data-cat="Citoyenne" onclick="rechercheRapide('Citoyenne', this)">🏛 Vie Citoyenne</button>
@@ -117,7 +117,7 @@
         </div>
     </div>
 
-    <h3 id="titre-registre" style="color: #008080;">📖 Registre de la Fraternité</h3>[cite: 9]
+    <h3 id="titre-registre" style="color: #008080;">📖 Registre de la Fraternité</h3>
     <div id="mur-messages" class="mur-reel"></div>
 
     <div class="phrase-etoiles" id="phrase-petit-prince" style="font-style: italic; color: #2E7D32; margin: 20px;"></div>
@@ -134,17 +134,17 @@
             <button class="bouton-fermer" onclick="fermerModalReponse()">X</button>
             <h3 style="color: #E67E22; margin-top: 0;">💌 Répondre à cette graine</h3>
             <div id="rappel-annonce" style="font-size: 0.85em; background: #fffdf0; padding: 10px; border-radius: 8px; border-left: 4px solid #E67E22; margin-bottom: 15px; color: #444;"></div>
-            
+
             <form id="formReponse" onsubmit="envoyerReponse(event)">
                 <input type="hidden" id="rep_id_annonce" name="ref_id">
                 <input type="hidden" id="rep_type_annonce" name="type_annonce">
-                
+
                 <label style="font-weight: bold; color: #008080; font-size: 0.9em;">Ton Prénom / Pseudo :</label>
                 <input type="text" id="rep_nom" class="field-rep" placeholder="Ton nom de cœur..." required>
-                
+
                 <label style="font-weight: bold; color: #008080; font-size: 0.9em;">Ton Message / Proposition :</label>
                 <textarea id="rep_message" class="field-rep" rows="4" placeholder="Propose ton aide, ton soutien ou pose ta question..." required></textarea>
-                
+
                 <button type="submit" id="btnSubmitReponse" class="btn-repondre" style="font-size: 1em; padding: 12px; margin-top: 10px;">ENVOYER MA RÉPONSE ✨</button>
             </form>
         </div>
@@ -159,7 +159,7 @@
     <script>
         const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbxxToz22V88elCCjxLqjRtsb5iBIC156cbBFRIlTsju2SwOj9yNnKqzAwFITXMg_wij/exec";
         let toutesLesAnnonces = [], annoncesPrincipales = [], toutesLesReponses = [], filtreTypeActuel = "", filtreSousTypeActuel = "";
-        
+
         const mappingBoutons = { 
             "Savoir": ["SAVOIR"], 
             "Citoyenne": ["VIE"], 
@@ -281,18 +281,18 @@
         function estExpire(ann) {
             const horodateur = ann.Horodateur || ann.date;
             if (!horodateur) return false;
-            
+
             const datePub = new Date(horodateur);
             if (isNaN(datePub)) return false;
-            
+
             const validiteStr = String(ann.validite || ann.duree || "1 jour").toLowerCase();
-            
+
             let nbJours = 1; 
             if (validiteStr.includes('7') || validiteStr.includes('semaine')) nbJours = 7;
             else if (validiteStr.includes('30') || validiteStr.includes('mois')) nbJours = 30;
             else if (validiteStr.includes('1') || validiteStr.includes('jour')) nbJours = 1;
             else if (validiteStr.includes('illimité') || validiteStr.includes('permanent')) return false;
-            
+
             const dateExpiration = new Date(datePub.getTime() + (nbJours * 24 * 60 * 60 * 1000));
             return new Date() > dateExpiration;
         }
@@ -328,7 +328,7 @@
         function animerPluieGouttes(event) {
             const x = event.clientX || window.innerWidth / 2;
             const y = event.clientY || window.innerHeight / 2;
-            
+
             for (let i = 0; i < 8; i++) {
                 const goutte = document.createElement('div');
                 goutte.innerHTML = '💧';
@@ -370,16 +370,20 @@
             try {
                 const response = await fetch(WEB_APP_URL + "?v=" + Date.now());
                 toutesLesAnnonces = await response.json();
-                
+
                 annoncesPrincipales = [];
                 toutesLesReponses = [];
 
                 toutesLesAnnonces.forEach(item => {
                     const type = String(item.type || item.Type || '').toUpperCase();
                     const refBrute = String(item.ref_id || item.Ref || item.ref || '').trim();
-                    
+
+                    if (type === 'VIDEO' || type === 'VIDÉO') {
+                        return;
+                    }
                     if (type === 'VIDEO' || type === 'VIDÉO') return;
 
+                    // Si c'est une réponse (contient une référence ou type REPONSE)
                     if (type.includes('REPONSE') || refBrute !== '') {
                         toutesLesReponses.push(item);
                     } else {
@@ -387,11 +391,11 @@
                     }
                 });
 
-                document.getElementById('phrase-petit-prince').innerHTML = `✨ Aujourd'hui, le Petit Prince a pris soin de <b>${annoncesPrincipales.length}</b> fleurs resplendissantes dans le jardin du monde...`;[cite: 9]
-                
+                document.getElementById('phrase-petit-prince').innerHTML = `✨ Aujourd'hui, le Petit Prince a pris soin de <b>${annoncesPrincipales.length}</b> fleurs resplendissantes dans le jardin du monde...`;
+
                 const urlParams = new URLSearchParams(window.location.search);
                 const catParam = urlParams.get('cat');
-                
+
                 if (catParam) {
                     const nomBouton = paramToBouton[catParam];
                     if (nomBouton) {
@@ -416,14 +420,14 @@
             try {
                 const response = await fetch(WEB_APP_URL + "?v=" + Date.now());
                 toutesLesAnnonces = await response.json();
-                
+
                 annoncesPrincipales = [];
                 toutesLesReponses = [];
 
                 toutesLesAnnonces.forEach(item => {
                     const type = String(item.type || item.Type || '').toUpperCase();
                     const refBrute = String(item.ref_id || item.Ref || item.ref || '').trim();
-                    
+
                     if (type === 'VIDEO' || type === 'VIDÉO') return;
 
                     if (type.includes('REPONSE') || refBrute !== '') {
@@ -441,11 +445,11 @@
         function afficherTiroirSousRubriques(cat) {
             const conteneurSous = document.getElementById('sous-rubriques-container');
             const selectSous = document.getElementById('selectSousRubrique');
-            
+
             if (sousRubriquesData[cat] && sousRubriquesData[cat].length > 1) {
                 conteneurSous.style.display = 'block';
                 selectSous.innerHTML = "";
-                
+
                 sousRubriquesData[cat].forEach(sub => {
                     const option = document.createElement('option');
                     option.value = sub.id;
@@ -479,7 +483,7 @@
                 const matchV = vi === "" || (ann.localisation || "").toLowerCase().startsWith(vi);
                 const texteMsg = (ann.message || "").toLowerCase();
                 const matchM = mi === "" || texteMsg.includes(mi);
-                
+
                 let matchT = true;
                 if (filtreTypeActuel !== "") {
                     const catsPermises = mappingBoutons[filtreTypeActuel] || [];
@@ -503,7 +507,7 @@
 
             const cont = document.getElementById('mur-messages');
             cont.innerHTML = "";
-            
+
             if (filtrées.length === 0) {
                 cont.innerHTML = `<div style="grid-column: span 5; padding: 20px; font-weight: bold; background: white; border-radius: 10px; color: #008080;">Aucune annonce trouvée dans le jardin pour l'instant... 🌸</div>`;
                 return;
@@ -515,7 +519,7 @@
                 const typeAnnonce = (ann.type || "").toUpperCase();
                 const msgAnnonce = ann.message || "";
                 const datePubli = formaterDate(ann.Horodateur);
-                
+
                 const listeReponses = obtenirReponsesPourAnnonce(ann);
                 let badgeReponsesHtml = '';
                 if (listeReponses.length > 0) {
@@ -524,7 +528,7 @@
 
                 const d = document.createElement('div');
                 d.className = 'carte-message';
-                
+
                 const couleurBord = couleursBordures[typeAnnonce] || "#008080";
                 d.style.borderColor = couleurBord;
                 d.style.boxShadow = `3px 3px 0px ${couleurBord}`;
@@ -566,17 +570,19 @@
             e.stopPropagation();
             jouerBip();
             animerPluieGouttes(e);
-            
+
             ann.votes_arrosage = (parseInt(ann.votes_arrosage) || 0) + 1;
             btn.innerHTML = `💧 Arrosé ! (${ann.votes_arrosage})`;
             btn.style.background = "#C8E6C9";
-            
+
             const fd = new URLSearchParams(); 
             fd.append('action', 'arroser'); 
             fd.append('id', id);
 
             try {
                 await fetch(WEB_APP_URL, { method: 'POST', mode: 'no-cors', body: fd });
+                setTimeout(chargerAnnoncesSilencieux, 1500);
+                // Augmentation du délai à 3 secondes pour laisser le temps au Google Sheet d'écrire l'arrosage
                 setTimeout(chargerAnnoncesSilencieux, 3000);
             } catch(err) {
                 console.error("Erreur lors de l'arrosage :", err);
@@ -586,7 +592,7 @@
         function ouvrirGrandMessage(ann) {
             const listeReponses = obtenirReponsesPourAnnonce(ann);
             const datePubli = formaterDate(ann.Horodateur);
-            
+
             let htmlReponsesGeant = '';
             if (listeReponses.length > 0) {
                 htmlReponsesGeant = `<div style="background:#FFF8E7; padding:15px; border-radius:10px; border:2px dashed #E67E22; margin-bottom:15px; text-align:left; max-height: 300px; overflow-y: auto;">
@@ -629,7 +635,7 @@
 
         function ouvrirModalReponse(ann) {
             jouerBip();
-            
+
             const id = ann.Horodateur || ann.id || '';
             const type = ann.type || "";
             const nom = ann.nom || ann.Nom || ann.prenom || "Anonyme";
@@ -642,7 +648,7 @@
             rappel.innerHTML = `<strong>Graine de <span id="rappel-nom"></span> :</strong> <span id="rappel-msg"></span>`;
             document.getElementById('rappel-nom').textContent = nom;
             document.getElementById('rappel-msg').textContent = `"${masquerCoordonnees(message).substring(0, 100)}${message.length > 100 ? '...' : ''}"`;
-            
+
             document.getElementById('modal-reponse').style.display = 'flex';
         }
 
@@ -653,7 +659,7 @@
         function envoyerReponse(e) {
             e.preventDefault();
             jouerBip();
-            
+
             const btn = document.getElementById('btnSubmitReponse');
             btn.innerText = "Envoi de la réponse en cours... 🌱";
             btn.disabled = true;
@@ -665,7 +671,8 @@
 
             const params = new URLSearchParams();
             params.append('action', 'repondre');
-            params.append('ref_id', idRef);
+            params.append('ref_id', `Ref:${idRef}`);
+            params.append('ref_id', idRef); // On envoie l'ID exact de l'annonce d'origine pour que le lien soit parfait
             params.append('type', `REPONSE_${typeAnn}`);
             params.append('nom', nomRep);
             params.append('message', msgRep);
@@ -678,6 +685,7 @@
             .then(() => {
                 btn.innerText = "Réponse envoyée avec succès ! 🌸";
                 
+                // Ajout immédiat local temporaire de la réponse pour un retour visuel instantané
                 toutesLesReponses.push({
                     ref_id: idRef,
                     type: `REPONSE_${typeAnn}`,
@@ -690,6 +698,9 @@
                     btn.innerText = "ENVOYER MA RÉPONSE ✨";
                     btn.disabled = false;
                     document.getElementById('formReponse').reset();
+                    setTimeout(chargerAnnoncesSilencieux, 2000);
+                }, 500);
+                    // Délai de 3 secondes pour synchroniser proprement avec Google Sheets
                     setTimeout(chargerAnnoncesSilencieux, 3000);
                 }, 800);
             })
@@ -703,7 +714,7 @@
         function rechercheRapide(t, el) {
             jouerBip();
             document.querySelectorAll('.btn-filtre-rapide').forEach(b => b.classList.remove('actif'));
-            
+
             if (filtreTypeActuel === t) {
                 filtreTypeActuel = "";
                 filtreSousTypeActuel = "";
