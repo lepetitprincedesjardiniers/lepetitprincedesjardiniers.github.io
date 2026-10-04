@@ -378,10 +378,9 @@
                     const type = String(item.type || item.Type || '').toUpperCase();
                     const refBrute = String(item.ref_id || item.Ref || item.ref || '').trim();
                     
-                    if (type === 'VIDEO' || type === 'VIDÉO') {
-                        return;
-                    }
+                    if (type === 'VIDEO' || type === 'VIDÉO') return;
 
+                    // Si c'est une réponse (contient une référence ou type REPONSE)
                     if (type.includes('REPONSE') || refBrute !== '') {
                         toutesLesReponses.push(item);
                     } else {
@@ -579,7 +578,8 @@
 
             try {
                 await fetch(WEB_APP_URL, { method: 'POST', mode: 'no-cors', body: fd });
-                setTimeout(chargerAnnoncesSilencieux, 1500);
+                // Augmentation du délai à 3 secondes pour laisser le temps au Google Sheet d'écrire l'arrosage
+                setTimeout(chargerAnnoncesSilencieux, 3000);
             } catch(err) {
                 console.error("Erreur lors de l'arrosage :", err);
             }
@@ -667,7 +667,7 @@
 
             const params = new URLSearchParams();
             params.append('action', 'repondre');
-            params.append('ref_id', `Ref:${idRef}`);
+            params.append('ref_id', idRef); // On envoie l'ID exact de l'annonce d'origine pour que le lien soit parfait
             params.append('type', `REPONSE_${typeAnn}`);
             params.append('nom', nomRep);
             params.append('message', msgRep);
@@ -679,13 +679,23 @@
             })
             .then(() => {
                 btn.innerText = "Réponse envoyée avec succès ! 🌸";
+                
+                // Ajout immédiat local temporaire de la réponse pour un retour visuel instantané
+                toutesLesReponses.push({
+                    ref_id: idRef,
+                    type: `REPONSE_${typeAnn}`,
+                    nom: nomRep,
+                    message: msgRep
+                });
+
                 setTimeout(() => {
                     fermerModalReponse();
                     btn.innerText = "ENVOYER MA RÉPONSE ✨";
                     btn.disabled = false;
                     document.getElementById('formReponse').reset();
-                    setTimeout(chargerAnnoncesSilencieux, 2000);
-                }, 500);
+                    // Délai de 3 secondes pour synchroniser proprement avec Google Sheets
+                    setTimeout(chargerAnnoncesSilencieux, 3000);
+                }, 800);
             })
             .catch(err => {
                 console.error("Erreur d'envoi :", err);
