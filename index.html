@@ -55,7 +55,7 @@
         .menu-table td:hover { background-color: rgba(0, 179, 179, 0.4); }
         .menu-table a { display: block; padding: 10px 18px; text-decoration: none; color: var(--text-color); font-weight: bold; font-size: 0.95em; }
 
-        /* Soleil central supérieur */
+        /* Soleil central supérieur (Inversé : mène au formulaire) */
         .soleil-cadre { width: 150px; height: 150px; background: radial-gradient(circle, #ffeb3b 0%, #ff9800 100%); border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 0 30px rgba(255,152,0,0.6); margin: 25px auto; position: relative; z-index: 20; transition: 0.6s; text-decoration: none; border: 2px solid rgba(255,255,255,0.5); }
         .soleil-cadre h1 { font-size: 0.85em; color: #222; line-height: 1.2; margin: 0; padding: 10px; font-weight: bold; }
         .soleil-cadre:hover { box-shadow: 0 0 50px #fff; transform: scale(1.08) rotate(360deg); }
@@ -101,6 +101,7 @@
             flex: 0 0 auto;
         }
 
+        /* Terre animée (Inversée : mène au Jardin) */
         .terre-don { 
             width: 320px; height: 320px; border-radius: 50%; 
             background-image: url('https://upload.wikimedia.org/wikipedia/commons/thumb/c/c3/Solarsystemscope_texture_2k_earth_daymap.jpg/1200px-Solarsystemscope_texture_2k_earth_daymap.jpg'); 
@@ -215,8 +216,8 @@
         </div>
     </div>
 
-    <!-- Soleil central supérieur -->
-    <a href="jardin.html?cat=IMPOT" class="soleil-cadre"><h1>Le Jardin Public des Fraternels</h1></a>
+    <!-- Soleil central supérieur (Inversé : mène vers le formulaire) -->
+    <a href="formulaire.html" class="soleil-cadre"><h1>ESPACE DU SEMIS DE DON ENTIER</h1></a>
 
     <!-- PAYSAGE COSMOS -->
     <div class="paysage-cosmos">
@@ -245,10 +246,10 @@
             </a>
         </div>
 
-        <!-- CENTRE : La Terre animée -->
+        <!-- CENTRE : La Terre animée (Inversée : mène vers le Jardin) -->
         <div class="centre-terre-cosmos">
-            <a href="formulaire.html" class="terre-don">
-                <div class="texte-semis"><b>ESPACE DU SEMIS DE DON ENTIER</b></div>
+            <a href="jardin.html" class="terre-don">
+                <div class="texte-semis"><b>Le Jardin Public des Fraternels</b></div>
             </a>
         </div>
 
@@ -320,7 +321,7 @@
         }
 
         function exploserEffetJN(x, y) {
-            const els = ['✨', '🌟', '💫', '☀️️', '🌙'];
+            const els = ['✨', '🌟', '💫', '☀', '🌙'];
             for(let i=0; i<15; i++) {
                 const p = document.createElement('div');
                 p.style.position = 'fixed'; p.style.left = x+'px'; p.style.top = y+'px';
@@ -335,7 +336,7 @@
         // Icône Météo vagabonde (Pluie / Neige)
         const iconeMeteo = document.getElementById('icone-meteo');
         let mX = 200, mY = 200;
-        let modePluie = true; // Alterne entre pluie et neige à chaque clic
+        let modePluie = true;
 
         function moveMeteo() {
             mX = Math.random() * (window.innerWidth - 100);
