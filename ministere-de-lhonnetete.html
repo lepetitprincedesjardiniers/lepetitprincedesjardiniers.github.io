@@ -347,7 +347,7 @@
                     textInput.value = '';
                     authorInput.value = '';
                     loadDataFromSheet();
-                    switchModalTab('responses');
+                    closeModal(); // Ferme la modale automatiquement après la contribution réussie
                 } else {
                     alert("Erreur lors de l'enregistrement : " + (result.message || 'Inconnue'));
                 }
@@ -756,7 +756,6 @@
 
                         if (!titre && !desc) return;
 
-                        // Extraction de la colonne des réponses stockées sur la ligne de l'article
                         let rawResponses = "";
                         Object.keys(cleanRow).forEach(k => {
                             if (k.includes('reponse') || k.includes('commentaire')) {
