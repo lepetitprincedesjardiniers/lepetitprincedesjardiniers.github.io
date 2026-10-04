@@ -140,7 +140,6 @@
 
     <div class="form-container">
         <form id="monFormulaire" onsubmit="envoyerDon(event)">
-            <!-- Champ piège anti-spam invisible -->
             <div style="display:none;" aria-hidden="true">
                 <input type="text" name="website_hp" tabindex="-1" autocomplete="off">
             </div>
@@ -293,8 +292,8 @@
                         <option value="AUTRE">autres</option>
                     </optgroup>
                     <optgroup label="🚚 Expédition & Route">
-                        <option value="Relais">Point Relais </option>
-                        <option value="Poste"> Courrier</option>
+                        <option value="Relais">Point Relais</option>
+                        <option value="Poste">Courrier</option>
                         <option value="Colis-voiturage">Colis-voiturage (Via un voyageur)</option>
                         <option value="Transporteur">Fret Camion / Logistique lourde</option>
                     </optgroup>
@@ -311,24 +310,7 @@
 
             <div class="form-group">
                 <label>Description du Don amoureux</label>
-                <textarea name="message" placeholder="Décris ici ton offre ou ton besoin...
-
-Ici, on transforme les talents en actes de fraternité. Tout s'offre sans compter. C'est la richesse du don qui crée la paix. Le système est conçu pour transformer des métiers ou des objets en actes de fraternité.
-
-Demander un service est un don en soi, car cela permet à l'autre de cultiver sa propre générosité. Ici, on sème des graines de générosité pour récolter de l'altruisme.
-
-Attention : zone de gratuité absolue pour cadeau réellement efficace.
-Il s'agit d'un site de mise en relation : aucune donnée commerciale n'est exploitée et aucune personne n'est fichée. 
-Les annonces s'effacent automatiquement après la durée de validité choisie.
-                    
-La meilleure justice est encore le pardon.
-Cadeaux sans détour, cadeaux sans demande de retour.
-Regardez la fraternité s'épanouir au gré des dons du monde entier...
-
-Les Graines Semées au Jardin
-Chaque don est une fleur qui ne se fane jamais.
-Registre de la Fraternité
-Le jardin arrose les fleurs..." required></textarea>
+                <textarea name="message" placeholder="Décris ici ton offre ou ton besoin..." required></textarea>
             </div>
 
             <button type="submit" class="btn-envoyer" id="btnTexte">ENGENDRER LA FRATERNITÉ UNIVERSELLE</button>
@@ -336,11 +318,7 @@ Le jardin arrose les fleurs..." required></textarea>
     </div>
 
     <footer>
-        <a href="transition-externe.html" class="copyright-link" 
-            onmouseover="exploserParticules(event.pageX, event.pageY, ['⭐', '✨', '🌟'], 5)" 
-            onclick="exploserEtoiles(event)">
-            © 2000 Le petit prince des jardiniers
-        </a>
+        <a href="transition-externe.html" class="copyright-link">© 2000 Le petit prince des jardiniers</a>
     </footer>
 
     <div id="coffre-magique">🎁</div>
@@ -362,44 +340,11 @@ Le jardin arrose les fleurs..." required></textarea>
     function googleTranslateElementInit() { new google.translate.TranslateElement({pageLanguage: 'fr'}, 'google_translate_element'); }
 
     const tree = {
-        "SAVOIR": [
-            "Soutien scolaire & cours",
-            "Art, artisanat & musique",
-            "Mentorat pro & compétences techniques",
-            "Savoir-faire du quotidien",
-            "AUTRE_SUB",
-            "Autres interprétations"
-        ],
-        "VIE": [
-            "Repas, graines & eau",
-            "Prêt d'objets, outils & équipement",
-            "Accueil, hébergement & covoiturage",
-            "Loisirs & activités partagées",
-            "AUTRE_SUB",
-            "Autres recommandations"
-        ],
-        "AIDE": [
-            "Secours immédiat & petite urgence",
-            "Écoute, présence & soutien aux aînés",
-            "Garde d'enfants & soutien familial",
-            "Soin des animaux & aide à la maison",
-            "AUTRE_SUB",
-            "Autres merveilles"
-        ],
-        "REGULATION": [
-            "Aide aux démarches (Aide sociale rapprochée)",
-            "Médiation de voisinage & paix citoyenne",
-            "Organisation d'assemblées & conseils citoyens",
-            "AUTRE_SUB",
-            "Autres conciliations"
-        ],
-        "IMPOT": [
-            "Entretien des réseaux vitaux (eau, énergie)",
-            "Voirie & chantiers participatifs",
-            "Espaces verts, forêts & parcs publics",
-            "AUTRE_SUB",
-            "Autres contributions"
-        ]
+        "SAVOIR": ["Soutien scolaire & cours", "Art, artisanat & musique", "Mentorat pro & compétences techniques", "Savoir-faire du quotidien", "AUTRE_SUB", "Autres interprétations"],
+        "VIE": ["Repas, graines & eau", "Prêt d'objets, outils & équipement", "Accueil, hébergement & covoiturage", "Loisirs & activités partagées", "AUTRE_SUB", "Autres recommandations"],
+        "AIDE": ["Secours immédiat & petite urgence", "Écoute, présence & soutien aux aînés", "Garde d'enfants & soutien familial", "Soin des animaux & aide à la maison", "AUTRE_SUB", "Autres merveilles"],
+        "REGULATION": ["Aide aux démarches (Aide sociale rapprochée)", "Médiation de voisinage & paix citoyenne", "Organisation d'assemblées & conseils citoyens", "AUTRE_SUB", "Autres conciliations"],
+        "IMPOT": ["Entretien des réseaux vitaux (eau, énergie)", "Voirie & chantiers participatifs", "Espaces verts, forêts & parcs publics", "AUTRE_SUB", "Autres contributions"]
     };
 
     function updateSubCats() {
@@ -424,117 +369,8 @@ Le jardin arrose les fleurs..." required></textarea>
     function checkOther(select, divId) {
         const extraDiv = document.getElementById(divId);
         if (!extraDiv) return;
-
-        const isOther = (
-            select.value === "AUTRE" || 
-            select.value === "AUTRE_PAYS" || 
-            select.value === "AUTRE_SUB" || 
-            select.value === "AUTRE_CAT"
-        );
-
+        const isOther = (select.value === "AUTRE" || select.value === "AUTRE_PAYS" || select.value === "AUTRE_SUB" || select.value === "AUTRE_CAT");
         extraDiv.style.display = isOther ? "block" : "none";
-    }
-
-    function exploserParticules(x, y, emojis, count = 20) {
-        for (let i = 0; i < count; i++) {
-            const p = document.createElement('div');
-            p.className = 'particle';
-            p.innerHTML = emojis[Math.floor(Math.random() * emojis.length)];
-            p.style.left = x + 'px'; p.style.top = y + 'px';
-            document.body.appendChild(p);
-            const angle = Math.random() * Math.PI * 2;
-            const dist = Math.random() * 50 + 20;
-            p.animate([
-                { transform: 'translate(0,0) scale(1)', opacity: 1 },
-                { transform: `translate(${Math.cos(angle)*dist}px, ${Math.sin(angle)*dist}px) scale(0) rotate(360deg)`, opacity: 0 }
-            ], { duration: 1000, easing: 'ease-out' });
-            setTimeout(() => p.remove(), 1000);
-        }
-    }
-
-    function exploserEtoiles(e) {
-        e.preventDefault();
-        exploserParticules(e.pageX, e.pageY, ['⭐', '✨', '🌟'], 25);
-        const href = e.currentTarget.getAttribute('href');
-        setTimeout(() => { window.location.href = href; }, 800);
-    }
-
-    const animalCont = document.getElementById('animal-container');
-    const animalEmoji = document.getElementById('corps-animal');
-    const bulle = document.getElementById('bulle-texte');
-    const coffre = document.getElementById('coffre-magique');
-
-    const citationsFraternite = [
-        "L'essentiel est invisible pour les yeux... 🌹",
-        "On sème une graine de paix ✨",
-        "Un don, c'est une fleur qui éclot 🌸",
-        "La fraternité est un jardin sans fin 🌍",
-        "S'entraider, c'est cultiver l'avenir 🌱",
-        "Nouveau message de solidarité ! 💌",
-        "Regarde la bonté s'envoler... 🕊"
-    ];
-
-    let aniX = -200, state = "FLY", targetY = 250, dropCount = 0;
-    let isDead = false;
-    let direction = 1;
-
-    function animalExplode() {
-        if(isDead) return;
-        isDead = true;
-        const rect = animalEmoji.getBoundingClientRect();
-        exploserParticules(rect.left + 20, rect.top + 20, ['⭐', '✨', '🌟'], 40);
-        animalEmoji.style.opacity = 0;
-        bulle.style.opacity = 0;
-        setTimeout(() => { 
-            animalEmoji.style.opacity = 1; 
-            isDead = false; 
-            aniX = -200; 
-            direction = 1;
-            state = "FLY";
-        }, 3000);
-    }
-
-    function messenger() {
-        if (!isDead) {
-            if (state === "FLY") {
-                aniX += 2 * direction;
-                animalEmoji.style.transform = direction === 1 ? "scaleX(-1)" : "scaleX(1)";
-
-                if (Math.abs(aniX - window.innerWidth/2) < 5) {
-                    state = "DROP";
-                    dropCount++;
-                    bulle.innerText = citationsFraternite[Math.floor(Math.random() * citationsFraternite.length)];
-                    bulle.style.opacity = 1;
-
-                    coffre.style.transform = "translateX(-50%) scale(1.3)";
-                    setTimeout(() => coffre.style.transform = "translateX(-50%) scale(1)", 400);
-
-                    if(dropCount >= 3) {
-                        setTimeout(() => {
-                            exploserParticules(window.innerWidth/2, window.innerHeight - 50, ['🌸', '🌺', '🌻', '🌼', '🌷'], 60);
-                            dropCount = 0;
-                        }, 500);
-                    }
-
-                    setTimeout(() => { bulle.style.opacity = 0; state = "EXIT"; }, 2500);
-                }
-            } else if (state === "EXIT") {
-                aniX += 3 * direction;
-                if (aniX > window.innerWidth + 200 || aniX < -200) { 
-                    direction = Math.random() > 0.5 ? 1 : -1;
-                    aniX = direction === 1 ? -200 : window.innerWidth + 200;
-                    state = "FLY"; 
-                }
-            }
-            animalCont.style.left = aniX + 'px';
-            animalCont.style.top = (targetY + Math.sin(aniX/60)*40) + 'px';
-        }
-        requestAnimationFrame(messenger);
-    }
-
-    function activerAudio() { 
-        const a = document.getElementById('chantOiseaux');
-        if(a.paused) { a.volume = 0.05; a.play(); }
     }
 
     function envoyerDon(event) {
@@ -545,39 +381,22 @@ Le jardin arrose les fleurs..." required></textarea>
 
         const form = document.getElementById('monFormulaire');
         const formData = new FormData(form);
-
-        // URL de votre Web App Google Apps Script
         const url = "https://script.google.com/macros/s/AKfycbxxToz22V88elCCjxLqjRtsb5iBIC156cbBFRIlTsju2SwOj9yNnKqzAwFITXMg_wij/exec";
 
-        // Envoi des données en POST dans le corps de la requête
-        fetch(url, {
-            method: 'POST',
-            body: formData
-        })
-        .then(response => {
-            window.location.href = "merci_annonce.html";
-        })
-        .catch((error) => {
-            console.error('Erreur:', error);
-            window.location.href = "merci_annonce.html";
-        });
+        fetch(url, { method: 'POST', body: formData })
+        .then(() => { window.location.href = "merci_annonce.html"; })
+        .catch(() => { window.location.href = "merci_annonce.html"; });
     }
 
     window.addEventListener('DOMContentLoaded', () => {
         const urlParams = new URLSearchParams(window.location.search);
         const catParam = urlParams.get('cat');
-
         if (catParam) {
             const selectCat = document.getElementById('main_cat');
-            if (selectCat) {
-                selectCat.value = catParam.toUpperCase();
-                updateSubCats();
-            }
+            if (selectCat) { selectCat.value = catParam.toUpperCase(); updateSubCats(); }
         }
     });
-
-    messenger();
-</script>
+    </script>
     <script src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
 </body>
 </html>
