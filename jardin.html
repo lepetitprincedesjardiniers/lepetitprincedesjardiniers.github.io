@@ -89,8 +89,8 @@
     </div>
 
     <h2 style="color:#2E7D32; margin: 10px 0;">🍃 Le Jardin des Cadeaux Existentiels 🍃</h2>
-    <div class="phrase-rose">Bienvenue au Jardin des Dons entiers</div>
-    <div class="phrase-sous">Talents, savoirs, objets et fraternité.</div>
+    <div class="phrase-rose">Bienvenue au Jardin des Dons entiers[cite: 9]</div>
+    <div class="phrase-sous">Talents, savoirs, objets et fraternité.[cite: 9]</div>
 
     <div class="search-box">
         <div class="search-container">
@@ -98,7 +98,7 @@
             
             <div class="search-row">
                 <div class="search-item"><input type="text" id="searchPays" onkeyup="executerFiltrage()" placeholder="📍 Pays"></div>
-                <div class="search-item"><input type="text" id="searchVille" onkeyup="executerFiltrage()" placeholder="🏙️ Ville"></div>
+                <div class="search-item"><input type="text" id="searchVille" onkeyup="executerFiltrage()" placeholder="🏙️️ Ville"></div>
             </div>
             
             <div class="btn-group">
@@ -117,7 +117,7 @@
         </div>
     </div>
 
-    <h3 id="titre-registre" style="color: #008080;">📖 Registre de la Fraternité</h3>
+    <h3 id="titre-registre" style="color: #008080;">📖 Registre de la Fraternité</h3>[cite: 9]
     <div id="mur-messages" class="mur-reel"></div>
 
     <div class="phrase-etoiles" id="phrase-petit-prince" style="font-style: italic; color: #2E7D32; margin: 20px;"></div>
@@ -380,7 +380,6 @@
                     
                     if (type === 'VIDEO' || type === 'VIDÉO') return;
 
-                    // Si c'est une réponse (contient une référence ou type REPONSE)
                     if (type.includes('REPONSE') || refBrute !== '') {
                         toutesLesReponses.push(item);
                     } else {
@@ -388,7 +387,7 @@
                     }
                 });
 
-                document.getElementById('phrase-petit-prince').innerHTML = `✨ Aujourd'hui, le Petit Prince a pris soin de <b>${annoncesPrincipales.length}</b> fleurs resplendissantes dans le jardin du monde...`;
+                document.getElementById('phrase-petit-prince').innerHTML = `✨ Aujourd'hui, le Petit Prince a pris soin de <b>${annoncesPrincipales.length}</b> fleurs resplendissantes dans le jardin du monde...`;[cite: 9]
                 
                 const urlParams = new URLSearchParams(window.location.search);
                 const catParam = urlParams.get('cat');
@@ -578,7 +577,6 @@
 
             try {
                 await fetch(WEB_APP_URL, { method: 'POST', mode: 'no-cors', body: fd });
-                // Augmentation du délai à 3 secondes pour laisser le temps au Google Sheet d'écrire l'arrosage
                 setTimeout(chargerAnnoncesSilencieux, 3000);
             } catch(err) {
                 console.error("Erreur lors de l'arrosage :", err);
@@ -667,7 +665,7 @@
 
             const params = new URLSearchParams();
             params.append('action', 'repondre');
-            params.append('ref_id', idRef); // On envoie l'ID exact de l'annonce d'origine pour que le lien soit parfait
+            params.append('ref_id', idRef);
             params.append('type', `REPONSE_${typeAnn}`);
             params.append('nom', nomRep);
             params.append('message', msgRep);
@@ -680,7 +678,6 @@
             .then(() => {
                 btn.innerText = "Réponse envoyée avec succès ! 🌸";
                 
-                // Ajout immédiat local temporaire de la réponse pour un retour visuel instantané
                 toutesLesReponses.push({
                     ref_id: idRef,
                     type: `REPONSE_${typeAnn}`,
@@ -693,7 +690,6 @@
                     btn.innerText = "ENVOYER MA RÉPONSE ✨";
                     btn.disabled = false;
                     document.getElementById('formReponse').reset();
-                    // Délai de 3 secondes pour synchroniser proprement avec Google Sheets
                     setTimeout(chargerAnnoncesSilencieux, 3000);
                 }, 800);
             })
