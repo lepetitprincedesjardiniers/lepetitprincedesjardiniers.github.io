@@ -97,7 +97,7 @@
                 <!-- Filtres par catégorie et Barre de recherche -->
                 <div class="flex flex-col sm:flex-row items-center gap-3 w-full lg:w-auto">
                     <div id="category-filters" class="flex flex-wrap gap-2 w-full sm:w-auto">
-                        <button onclick="filterByCategory('Tous')" class="cat-pill active bg-joy-orange text-white border-2 border-joy-orange px-3 py-2 rounded-xl text-xs font-bold transition shadow-sm cursor-pointer">Tous</button>
+                        <button onclick="filterByCategory('Tous')" class="cat-pill active bg-joy-orange text-white px-3 py-2 rounded-xl text-xs font-bold transition shadow-sm cursor-pointer">Tous</button>
                     </div>
                     <div class="w-full sm:w-72">
                         <div class="relative">
@@ -305,38 +305,18 @@
         const gid = "1311533436";
         const csvUrl = `https://docs.google.com/spreadsheets/d/${sheetID}/export?format=csv&gid=${gid}`;
 
+        // URL de votre Web App Google Apps Script intégrée
+        const scriptUrl = "https://script.google.com/macros/s/AKfycbxxToz22V88elCCjxLqjRtsb5iBIC156cbBFRIlTsju2SwOj9yNnKqzAwFITXMg_wij/exec";
+
         let allArticles = []; 
         let allVideos = [];
+        let allResponses = {}; 
         let displayedArticleLimit = 9; 
         let displayedVideoLimit = 9;
         let currentSelectedCategory = 'Tous';
         let currentArticleIndex = 0; 
         let currentArticleTitle = '';
 
-        // --- PALETTE DE COULEURS POUR LES CATÉGORIES ---
-        const categoryPalette = [
-            { border: 'border-orange-300', bgBadge: 'bg-orange-100', textBadge: 'text-orange-800' },
-            { border: 'border-amber-300', bgBadge: 'bg-amber-100', textBadge: 'text-amber-800' },
-            { border: 'border-emerald-300', bgBadge: 'bg-emerald-100', textBadge: 'text-emerald-800' },
-            { border: 'border-blue-300', bgBadge: 'bg-blue-100', textBadge: 'text-blue-800' },
-            { border: 'border-purple-300', bgBadge: 'bg-purple-100', textBadge: 'text-purple-800' },
-            { border: 'border-rose-300', bgBadge: 'bg-rose-100', textBadge: 'text-rose-800' },
-            { border: 'border-cyan-300', bgBadge: 'bg-cyan-100', textBadge: 'text-cyan-800' },
-            { border: 'border-indigo-300', bgBadge: 'bg-indigo-100', textBadge: 'text-indigo-800' }
-        ];
-
-        function getCategoryStyle(categoryName) {
-            if (!categoryName) return categoryPalette[0];
-            let hash = 0;
-            const str = categoryName.trim().toLowerCase();
-            for (let i = 0; i < str.length; i++) {
-                hash = str.charCodeAt(i) + ((hash << 5) - hash);
-            }
-            const index = Math.abs(hash) % categoryPalette.length;
-            return categoryPalette[index];
-        }
-
-        // --- GESTION DES VUES PAR INDEX ---
         function getArticleViews(index) {
             const key = 'article_views_index_' + index;
             return parseInt(localStorage.getItem(key)) || 0;
@@ -350,26 +330,57 @@
             return views;
         }
 
-        // --- GESTION DES RÉPONSES PAR INDEX ---
         function getArticleResponses(index) {
-            const key = 'article_responses_index_' + index;
-            try {
-                return JSON.parse(localStorage.getItem(key)) || [];
-            } catch(e) {
-                return [];
-            }
+            return allResponses[index] || [];
         }
 
-        function saveArticleResponse(index, author, text) {
-            if (!text.trim()) return;
-            const key = 'article_responses_index_' + index;
-            const responses = getArticleResponses(index);
-            responses.unshift({
-                author: author.trim() || 'Citoyen Anonyme',
-                text: text.trim(),
-                date: new Date().toLocaleDateString('fr-FR', { day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit' })
+        function submitResponse() {
+            const authorInput = document.getElementById('response-author');
+            const textInput = document.getElementById('response-text');
+
+            const author = authorInput.value.trim() || 'Citoyen Anonyme';
+            const text = textInput.value.trim();
+
+            if (!text) {
+                alert("Veuillez écrire un message avant de publier.");
+                return;
+            }
+
+            const formData = new URLSearchParams();
+            formData.append('position', 'reponse');
+            formData.append('ref_id', currentArticleIndex);
+            formData.append('titre', author);       
+            formData.append('description', text);    
+            formData.append('categorie', 'Réponse');
+
+            const submitBtn = event.target.closest('button');
+            const originalContent = submitBtn.innerHTML;
+            submitBtn.innerHTML = `<i class="fa-solid fa-spinner fa-spin"></i> Envoi...`;
+            submitBtn.disabled = true;
+
+            fetch(scriptUrl, {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(result => {
+                if (result.result === 'success') {
+                    textInput.value = '';
+                    authorInput.value = '';
+                    alert("Votre réponse a été enregistrée dans la base de données ! ✨");
+                    loadDataFromSheet();
+                } else {
+                    alert("Erreur lors de l'enregistrement : " + (result.message || 'Inconnue'));
+                }
+            })
+            .catch(error => {
+                console.error('Erreur:', error);
+                alert("Erreur de connexion avec la base de données.");
+            })
+            .finally(() => {
+                submitBtn.innerHTML = originalContent;
+                submitBtn.disabled = false;
             });
-            localStorage.setItem(key, JSON.stringify(responses));
         }
 
         function switchModalTab(tab) {
@@ -417,20 +428,6 @@
                 `;
             });
             listContainer.innerHTML = html;
-        }
-
-        function submitResponse() {
-            const authorInput = document.getElementById('response-author');
-            const textInput = document.getElementById('response-text');
-
-            if (!textInput.value.trim()) {
-                alert("Veuillez écrire un message avant de publier.");
-                return;
-            }
-
-            saveArticleResponse(currentArticleIndex, authorInput.value, textInput.value);
-            textInput.value = '';
-            renderResponsesList();
         }
 
         function getYouTubeId(url) {
@@ -548,18 +545,6 @@
             if (icon) {
                 icon.classList.toggle('rotated', isExpanded);
             }
-
-            if (index !== undefined) {
-                const neighborIndex = (index % 2 === 0) ? index + 1 : index - 1;
-                const neighborContainer = document.querySelector(`.desc-container[data-index="${neighborIndex}"]`);
-                if (neighborContainer) {
-                    const neighborBtn = neighborContainer.querySelector('button');
-                    const neighborExpanded = neighborContainer.classList.contains('expanded');
-                    if (neighborExpanded !== isExpanded && neighborBtn) {
-                        toggleDesc(neighborBtn);
-                    }
-                }
-            }
         }
 
         function openCourrierModal(e) {
@@ -614,11 +599,9 @@
             let pillsHtml = '';
             categories.forEach(cat => {
                 const isActive = currentSelectedCategory.toLowerCase() === cat.toLowerCase();
-                let style = cat === 'Tous' ? { border: 'border-orange-300', bgBadge: 'bg-orange-100', textBadge: 'text-orange-800' } : getCategoryStyle(cat);
-                
                 const btnClass = isActive 
-                    ? "cat-pill active bg-joy-orange text-white border-2 border-joy-orange px-3 py-2 rounded-xl text-xs font-bold transition shadow-sm cursor-pointer"
-                    : `cat-pill bg-white text-gray-700 hover:bg-orange-50 border-2 ${style.border} px-3 py-2 rounded-xl text-xs font-bold transition shadow-sm cursor-pointer`;
+                    ? "cat-pill active bg-joy-orange text-white px-3 py-2 rounded-xl text-xs font-bold transition shadow-sm cursor-pointer"
+                    : "cat-pill bg-white text-gray-700 hover:bg-orange-50 border border-orange-200 px-3 py-2 rounded-xl text-xs font-bold transition shadow-sm cursor-pointer";
                 
                 pillsHtml += `<button onclick="filterByCategory('${cat}')" class="${btnClass}">${cat}</button>`;
             });
@@ -651,12 +634,11 @@
             let html = '';
             articlesToDisplay.forEach((art) => {
                 const realIndex = allArticles.findIndex(a => a === art);
-                const readingTime = getReadingTime(art.description);
                 const viewsCount = getArticleViews(realIndex);
-                const style = getCategoryStyle(art.categorie || 'Général');
+                const responseCount = (allResponses[realIndex] || []).length;
 
                 html += `
-                    <article class="bg-white rounded-3xl border-2 ${style.border} overflow-hidden shadow-sm hover:shadow-xl hover:-translate-y-1 transition duration-300 flex flex-col justify-between">
+                    <article class="bg-white rounded-3xl border border-orange-100 overflow-hidden shadow-sm hover:shadow-xl hover:-translate-y-1 transition duration-300 flex flex-col justify-between">
                         <div>
                             <div class="h-48 bg-gradient-to-br from-amber-100 to-orange-100 flex items-center justify-center text-joy-orange relative">
                                 <i class="fa-solid fa-newspaper text-4xl"></i>
@@ -664,12 +646,12 @@
                                     👁 ${viewsCount} vue${viewsCount > 1 ? 's' : ''}
                                 </span>
                                 <span class="absolute bottom-3 right-3 bg-white/90 text-gray-700 text-[11px] font-bold px-2.5 py-1 rounded-lg shadow-sm">
-                                    ⏱️ ${readingTime}
+                                    💬 ${responseCount} réponse${responseCount > 1 ? 's' : ''}
                                 </span>
                             </div>
                             <div class="p-6 space-y-3">
                                 <div class="flex items-center justify-between text-xs font-bold gap-2">
-                                    <span class="${style.bgBadge} ${style.textBadge} px-3 py-1 rounded-full truncate">${art.categorie || 'Article'}</span>
+                                    <span class="bg-amber-100 text-amber-800 px-3 py-1 rounded-full truncate">${art.categorie || 'Article'}</span>
                                     <span class="text-gray-400 font-normal shrink-0">${art.date || ''}</span>
                                 </div>
                                 <h3 class="text-xl font-extrabold text-gray-900 leading-snug line-clamp-2">
@@ -727,14 +709,13 @@
                 const thumbUrl = videoId ? `https://img.youtube.com/vi/${videoId}/hqdefault.jpg` : '';
                 const uniqueId = `video-container-${idx}-${Math.random().toString(36).substring(2, 7)}`;
                 const descriptionText = vid.description || 'Aucune description fournie.';
-                const style = getCategoryStyle(vid.categorie || 'Vidéo');
 
                 html += `
-                    <div class="bg-white rounded-3xl border-2 ${style.border} overflow-hidden shadow-sm flex flex-col justify-between p-5 sm:p-6 space-y-4">
+                    <div class="bg-white rounded-3xl border border-orange-100 overflow-hidden shadow-sm flex flex-col justify-between p-5 sm:p-6 space-y-4">
                         <div class="space-y-3">
                             <div class="space-y-1.5">
                                 <div class="flex items-center justify-between text-xs font-bold gap-2">
-                                    <span class="${style.bgBadge} ${style.textBadge} px-3 py-1 rounded-full truncate">${vid.categorie || 'Vidéo'}</span>
+                                    <span class="bg-amber-100 text-amber-800 px-3 py-1 rounded-full truncate">${vid.categorie || 'Vidéo'}</span>
                                     <span class="text-gray-400 font-normal shrink-0">${vid.date || ''}</span>
                                 </div>
                                 <h3 class="text-lg font-extrabold text-joy-dark leading-snug">${vid.titre}</h3>
@@ -788,75 +769,90 @@
             renderVideos();
         }
 
-        Papa.parse(csvUrl, {
-            download: true,
-            header: true,
-            skipEmptyLines: true,
-            complete: function(results) {
-                const data = results.data;
-                let alauneHTML = '';
-                allArticles = [];
-                allVideos = [];
+        function loadDataFromSheet() {
+            Papa.parse(csvUrl, {
+                download: true,
+                header: true,
+                skipEmptyLines: true,
+                complete: function(results) {
+                    const data = results.data;
+                    allArticles = [];
+                    allVideos = [];
+                    allResponses = {};
 
-                data.forEach(row => {
-                    const cleanRow = {};
-                    Object.keys(row).forEach(key => {
-                        const cleanKey = key.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").trim();
-                        cleanRow[cleanKey] = row[key];
+                    data.forEach(row => {
+                        const cleanRow = {};
+                        Object.keys(row).forEach(key => {
+                            const cleanKey = key.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").trim();
+                            cleanRow[cleanKey] = row[key];
+                        });
+
+                        const pos = (cleanRow.position || "").trim().toLowerCase();
+                        const cat = (cleanRow.categorie || "").trim().toLowerCase();
+                        const titre = cleanRow.titre || "";
+                        const desc = cleanRow.description || "";
+                        const lien = cleanRow.lien || "#";
+                        const date = cleanRow.date || cleanRow.horodateur || "";
+                        const refId = cleanRow.refid !== undefined ? cleanRow.refid : cleanRow.ref_id;
+
+                        if (!titre && !desc) return;
+
+                        if (pos === 'reponse' || cat === 'réponse') {
+                            const refIndex = (refId !== undefined && refId !== "" && !isNaN(refId)) ? parseInt(refId) : 0;
+                            if (!allResponses[refIndex]) {
+                                allResponses[refIndex] = [];
+                            }
+                            allResponses[refIndex].push({
+                                author: titre,
+                                text: desc,
+                                date: date
+                            });
+                        } else if (pos === 'video' || pos === 'alaune-video' || getYouTubeId(lien)) {
+                            allVideos.push({ titre, description: desc, lien, categorie: cleanRow.categorie || 'Vidéo', date });
+                        } else {
+                            allArticles.push({ titre, description: desc, lien, categorie: cleanRow.categorie || 'Général', date });
+                        }
                     });
 
-                    const pos = (cleanRow.position || "").trim().toLowerCase();
-                    const titre = cleanRow.titre || "";
-                    const desc = cleanRow.description || "";
-                    const lien = cleanRow.lien || "#";
-                    const cat = cleanRow.categorie || "Général";
-                    const date = cleanRow.date || "";
-
-                    if (!titre) return;
-
-                    if (pos === 'video' || pos === 'alaune-video' || getYouTubeId(lien)) {
-                        allVideos.push({ titre, description: desc, lien, categorie: cat, date });
-                    } else {
-                        allArticles.push({ titre, description: desc, lien, categorie: cat, date });
-                    }
-                });
-
-                const alauneContainer = document.getElementById('alaune-content');
-                if (allArticles.length > 0) {
-                    const firstArt = allArticles[0];
-                    const safeTitle = firstArt.titre.replace(/'/g, "\\'").replace(/"/g, '&quot;');
-                    alauneContainer.innerHTML = `
-                        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center">
-                            <div class="space-y-6">
-                                <span class="inline-flex items-center gap-2 bg-joy-gold/20 text-joy-gold border border-joy-gold/30 px-3.5 py-1.5 rounded-full text-xs font-black uppercase tracking-wider">
-                                    <i class="fa-solid fa-bolt"></i> À la une
-                                </span>
-                                <h2 class="text-3xl sm:text-4xl lg:text-5xl font-extrabold leading-tight tracking-tight text-white">
-                                    ${firstArt.titre}
-                                </h2>
-                                <p class="text-amber-100/80 text-base sm:text-lg leading-relaxed">
-                                    ${firstArt.description}
-                                </p>
-                                <div class="flex flex-wrap gap-4 pt-2">
-                                    <button onclick="openModal('${safeTitle}', '${firstArt.lien}', 0)" class="bg-joy-gold text-joy-dark px-6 py-3.5 rounded-xl font-black hover:bg-amber-400 transition shadow-lg shadow-amber-500/20 inline-flex items-center gap-2 cursor-pointer">
-                                        Lire l'article <i class="fa-solid fa-arrow-right text-xs"></i>
-                                    </button>
+                    const alauneContainer = document.getElementById('alaune-content');
+                    if (allArticles.length > 0) {
+                        const firstArt = allArticles[0];
+                        const safeTitle = firstArt.titre.replace(/'/g, "\\'").replace(/"/g, '&quot;');
+                        alauneContainer.innerHTML = `
+                            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center">
+                                <div class="space-y-6">
+                                    <span class="inline-flex items-center gap-2 bg-joy-gold/20 text-joy-gold border border-joy-gold/30 px-3.5 py-1.5 rounded-full text-xs font-black uppercase tracking-wider">
+                                        <i class="fa-solid fa-bolt"></i> À la une
+                                    </span>
+                                    <h2 class="text-3xl sm:text-4xl lg:text-5xl font-extrabold leading-tight tracking-tight text-white">
+                                        ${firstArt.titre}
+                                    </h2>
+                                    <p class="text-amber-100/80 text-base sm:text-lg leading-relaxed">
+                                        ${firstArt.description}
+                                    </p>
+                                    <div class="flex flex-wrap gap-4 pt-2">
+                                        <button onclick="openModal('${safeTitle}', '${firstArt.lien}', 0)" class="bg-joy-gold text-joy-dark px-6 py-3.5 rounded-xl font-black hover:bg-amber-400 transition shadow-lg shadow-amber-500/20 inline-flex items-center gap-2 cursor-pointer">
+                                            Lire l'article <i class="fa-solid fa-arrow-right text-xs"></i>
+                                        </button>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                    `;
-                }
+                        `;
+                    }
 
-                updateCategoryPills();
-                renderArticles();
-                renderVideos();
-            },
-            error: function(err) {
-                console.error("Erreur PapaParse :", err);
-                const artGrid = document.getElementById('articles-grid');
-                if (artGrid) artGrid.innerHTML = `<div class="col-span-full text-center py-12 text-red-500 font-medium">Erreur de chargement des données.</div>`;
-            }
-        });
+                    updateCategoryPills();
+                    renderArticles();
+                    renderVideos();
+                },
+                error: function(err) {
+                    console.error("Erreur PapaParse :", err);
+                    const artGrid = document.getElementById('articles-grid');
+                    if (artGrid) artGrid.innerHTML = `<div class="col-span-full text-center py-12 text-red-500 font-medium">Erreur de chargement des données.</div>`;
+                }
+            });
+        }
+
+        loadDataFromSheet();
     </script>
 </body>
 </html>
