@@ -97,7 +97,7 @@
                 <!-- Filtres par catégorie et Barre de recherche -->
                 <div class="flex flex-col sm:flex-row items-center gap-3 w-full lg:w-auto">
                     <div id="category-filters" class="flex flex-wrap gap-2 w-full sm:w-auto">
-                        <button onclick="filterByCategory('Tous')" class="cat-pill active bg-joy-orange text-white px-3 py-2 rounded-xl text-xs font-bold transition shadow-sm cursor-pointer">Tous</button>
+                        <button onclick="filterByCategory('Tous')" class="cat-pill active bg-joy-orange text-white border-2 border-joy-orange px-3 py-2 rounded-xl text-xs font-bold transition shadow-sm cursor-pointer">Tous</button>
                     </div>
                     <div class="w-full sm:w-72">
                         <div class="relative">
@@ -310,8 +310,31 @@
         let displayedArticleLimit = 9; 
         let displayedVideoLimit = 9;
         let currentSelectedCategory = 'Tous';
-        let currentArticleIndex = 0; // Index unique de l'article actif
+        let currentArticleIndex = 0; 
         let currentArticleTitle = '';
+
+        // --- PALETTE DE COULEURS POUR LES CATÉGORIES ---
+        const categoryPalette = [
+            { border: 'border-orange-300', bgBadge: 'bg-orange-100', textBadge: 'text-orange-800' },
+            { border: 'border-amber-300', bgBadge: 'bg-amber-100', textBadge: 'text-amber-800' },
+            { border: 'border-emerald-300', bgBadge: 'bg-emerald-100', textBadge: 'text-emerald-800' },
+            { border: 'border-blue-300', bgBadge: 'bg-blue-100', textBadge: 'text-blue-800' },
+            { border: 'border-purple-300', bgBadge: 'bg-purple-100', textBadge: 'text-purple-800' },
+            { border: 'border-rose-300', bgBadge: 'bg-rose-100', textBadge: 'text-rose-800' },
+            { border: 'border-cyan-300', bgBadge: 'bg-cyan-100', textBadge: 'text-cyan-800' },
+            { border: 'border-indigo-300', bgBadge: 'bg-indigo-100', textBadge: 'text-indigo-800' }
+        ];
+
+        function getCategoryStyle(categoryName) {
+            if (!categoryName) return categoryPalette[0];
+            let hash = 0;
+            const str = categoryName.trim().toLowerCase();
+            for (let i = 0; i < str.length; i++) {
+                hash = str.charCodeAt(i) + ((hash << 5) - hash);
+            }
+            const index = Math.abs(hash) % categoryPalette.length;
+            return categoryPalette[index];
+        }
 
         // --- GESTION DES VUES PAR INDEX ---
         function getArticleViews(index) {
@@ -453,7 +476,6 @@
             currentArticleIndex = index !== undefined ? index : 0;
             currentArticleTitle = title || "Article sans titre";
             
-            // Incrémenter les vues basées sur l'index unique de l'article
             incrementArticleViews(currentArticleIndex);
 
             const modal = document.getElementById('content-modal');
@@ -592,9 +614,11 @@
             let pillsHtml = '';
             categories.forEach(cat => {
                 const isActive = currentSelectedCategory.toLowerCase() === cat.toLowerCase();
+                let style = cat === 'Tous' ? { border: 'border-orange-300', bgBadge: 'bg-orange-100', textBadge: 'text-orange-800' } : getCategoryStyle(cat);
+                
                 const btnClass = isActive 
-                    ? "cat-pill active bg-joy-orange text-white px-3 py-2 rounded-xl text-xs font-bold transition shadow-sm cursor-pointer"
-                    : "cat-pill bg-white text-gray-700 hover:bg-orange-50 border border-orange-200 px-3 py-2 rounded-xl text-xs font-bold transition shadow-sm cursor-pointer";
+                    ? "cat-pill active bg-joy-orange text-white border-2 border-joy-orange px-3 py-2 rounded-xl text-xs font-bold transition shadow-sm cursor-pointer"
+                    : `cat-pill bg-white text-gray-700 hover:bg-orange-50 border-2 ${style.border} px-3 py-2 rounded-xl text-xs font-bold transition shadow-sm cursor-pointer`;
                 
                 pillsHtml += `<button onclick="filterByCategory('${cat}')" class="${btnClass}">${cat}</button>`;
             });
@@ -629,9 +653,10 @@
                 const realIndex = allArticles.findIndex(a => a === art);
                 const readingTime = getReadingTime(art.description);
                 const viewsCount = getArticleViews(realIndex);
+                const style = getCategoryStyle(art.categorie || 'Général');
 
                 html += `
-                    <article class="bg-white rounded-3xl border border-orange-100 overflow-hidden shadow-sm hover:shadow-xl hover:-translate-y-1 transition duration-300 flex flex-col justify-between">
+                    <article class="bg-white rounded-3xl border-2 ${style.border} overflow-hidden shadow-sm hover:shadow-xl hover:-translate-y-1 transition duration-300 flex flex-col justify-between">
                         <div>
                             <div class="h-48 bg-gradient-to-br from-amber-100 to-orange-100 flex items-center justify-center text-joy-orange relative">
                                 <i class="fa-solid fa-newspaper text-4xl"></i>
@@ -644,7 +669,7 @@
                             </div>
                             <div class="p-6 space-y-3">
                                 <div class="flex items-center justify-between text-xs font-bold gap-2">
-                                    <span class="bg-amber-100 text-amber-800 px-3 py-1 rounded-full truncate">${art.categorie || 'Article'}</span>
+                                    <span class="${style.bgBadge} ${style.textBadge} px-3 py-1 rounded-full truncate">${art.categorie || 'Article'}</span>
                                     <span class="text-gray-400 font-normal shrink-0">${art.date || ''}</span>
                                 </div>
                                 <h3 class="text-xl font-extrabold text-gray-900 leading-snug line-clamp-2">
@@ -702,13 +727,14 @@
                 const thumbUrl = videoId ? `https://img.youtube.com/vi/${videoId}/hqdefault.jpg` : '';
                 const uniqueId = `video-container-${idx}-${Math.random().toString(36).substring(2, 7)}`;
                 const descriptionText = vid.description || 'Aucune description fournie.';
+                const style = getCategoryStyle(vid.categorie || 'Vidéo');
 
                 html += `
-                    <div class="bg-white rounded-3xl border border-orange-100 overflow-hidden shadow-sm flex flex-col justify-between p-5 sm:p-6 space-y-4">
+                    <div class="bg-white rounded-3xl border-2 ${style.border} overflow-hidden shadow-sm flex flex-col justify-between p-5 sm:p-6 space-y-4">
                         <div class="space-y-3">
                             <div class="space-y-1.5">
                                 <div class="flex items-center justify-between text-xs font-bold gap-2">
-                                    <span class="bg-amber-100 text-amber-800 px-3 py-1 rounded-full truncate">${vid.categorie || 'Vidéo'}</span>
+                                    <span class="${style.bgBadge} ${style.textBadge} px-3 py-1 rounded-full truncate">${vid.categorie || 'Vidéo'}</span>
                                     <span class="text-gray-400 font-normal shrink-0">${vid.date || ''}</span>
                                 </div>
                                 <h3 class="text-lg font-extrabold text-joy-dark leading-snug">${vid.titre}</h3>
@@ -795,7 +821,6 @@
                     }
                 });
 
-                // Gérer l'affichage "À la une" en prenant l'article d'index 0 ou désigné
                 const alauneContainer = document.getElementById('alaune-content');
                 if (allArticles.length > 0) {
                     const firstArt = allArticles[0];
