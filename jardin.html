@@ -43,9 +43,6 @@
         .rubrique-tag { font-size: 0.55em; background: #ff1493; color: white; padding: 2px 6px; border-radius: 5px; position: absolute; top: 8px; right: 8px; }
 
         .texte-annonce { flex-grow: 1; font-style: italic; color: #000080; overflow-y: auto; font-size: 0.75em; margin: 4px 0; line-height: 1.2; padding-right: 4px; scrollbar-width: thin; white-space: pre-line; word-break: break-word; }
-        .texte-annonce::-webkit-scrollbar { width: 4px; }
-        .texte-annonce::-webkit-scrollbar-thumb { background: #008080; border-radius: 10px; }
-
         .badge-reponses { font-size: 0.7em; color: #E67E22; font-weight: bold; background: #FFF8E7; border: 1px solid #E67E22; border-radius: 6px; padding: 2px 6px; margin: 3px 0; align-self: flex-start; }
 
         .btn-arrosage { background: #E1F5FE; border: 1px solid #00BFFF; border-radius: 8px; color: #0277BD; font-size: 0.75em; padding: 4px; cursor: pointer; margin: 2px 0; font-weight: bold; width: 100%; }
@@ -101,7 +98,6 @@
 
             <div class="search-row">
                 <div class="search-item"><input type="text" id="searchPays" onkeyup="executerFiltrage()" placeholder="📍 Pays"></div>
-                <div class="search-item"><input type="text" id="searchVille" onkeyup="executerFiltrage()" placeholder="🏙️️ Ville"></div>
                 <div class="search-item"><input type="text" id="searchVille" onkeyup="executerFiltrage()" placeholder="🏙 Ville"></div>
             </div>
 
@@ -110,7 +106,6 @@
                 <button class="btn-filtre-rapide" data-cat="Citoyenne" onclick="rechercheRapide('Citoyenne', this)">🏛 Vie Citoyenne</button>
                 <button class="btn-filtre-rapide" data-cat="Harmonie" onclick="rechercheRapide('Harmonie', this)">🤝 Aide & Harmonie</button>
                 <button class="btn-filtre-rapide" data-cat="Régulation" onclick="rechercheRapide('Régulation', this)">⚖️ Régulation</button>
-                <button class="btn-filtre-rapide" data-cat="Régulation" onclick="rechercheRapide('Régulation', this)">⚖️️ Régulation</button>
                 <button class="btn-filtre-rapide" data-cat="Trésor" onclick="rechercheRapide('Trésor', this)">💰 Trésor Public</button>
                 <button class="btn-filtre-rapide" data-cat="Autre" onclick="rechercheRapide('Autre', this)">✨ Autre domaine</button>
                 <button class="btn-filtre-rapide btn-reset" onclick="resetRecherche()">🔄 Tout voir</button>
@@ -218,7 +213,6 @@
                 { id: "AUTRE_SUB", label: "Autres merveilles" }
             ],
             "Régulation": [
-                { id: "", label: "⚖️️ Toutes les précisions" },
                 { id: "", label: "⚖ Toutes les précisions" },
                 { id: "Aide aux démarches (Aide sociale rapprochée)", label: "Aide aux démarches (Aide sociale rapprochée)" },
                 { id: "Médiation de voisinage & paix citoyenne", label: "Médiation de voisinage & paix citoyenne" },
@@ -376,7 +370,6 @@
 
         async function chargerAnnonces() {
             try {
-                const response = await fetch(WEB_APP_URL + "?v=" + Date.now());
                 const response = await fetch(WEB_APP_URL + "?token=" + TOKEN_SECRET + "&v=" + Date.now());
                 toutesLesAnnonces = await response.json();
 
@@ -506,7 +499,6 @@
                 d.style.boxShadow = `3px 3px 0px ${couleurBord}`;
                 d.onclick = () => ouvrirGrandMessage(ann);
 
-                // Vérification si déjà voté via localStorage
                 const dejaVote = localStorage.getItem('vote_' + idAnnonce);
                 let texteBoutonArrosage = `💧 Arroser (${ann.votes_arrosage || 0})`;
                 let styleDesactive = "";
@@ -525,7 +517,6 @@
                         📍 Localisation : ${escapeHtml(ann.localisation || 'N/C')}<br>
                         📍 Pays : ${escapeHtml(ann.pays_select || 'N/C')}<br>
                         🌍 Portée : ${escapeHtml(ann.rayon_action || 'Locale')}
-                        <button class="btn-arrosage">💧 Arroser (${ann.votes_arrosage || 0})</button>
                         <button class="btn-arrosage" ${styleDesactive}>${texteBoutonArrosage}</button>
                         <button class="btn-repondre">💌 Répondre à cette graine</button>
                     </div>
