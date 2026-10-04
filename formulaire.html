@@ -139,10 +139,9 @@
 
     <div class="form-container">
         <form id="monFormulaire" onsubmit="envoyerDon(event)">
-            <!-- Champ piège anti-spam (Honeypot) invisible pour les humains -->
+            <!-- Champ piège anti-spam invisible -->
             <div style="display:none;" aria-hidden="true">
-                <label for="website_hp">Ne pas remplir ce champ si vous êtes humain :</label>
-                <input type="text" id="website_hp" name="website_hp" tabindex="-1" autocomplete="off">
+                <input type="text" name="website_hp" tabindex="-1" autocomplete="off">
             </div>
 
             <div class="form-group">
@@ -311,7 +310,24 @@
 
             <div class="form-group">
                 <label>Description du Don amoureux</label>
-                <textarea name="message" placeholder="Décris ici ton offre ou ton besoin..." required></textarea>
+                <textarea name="message" placeholder="Décris ici ton offre ou ton besoin...
+
+Ici, on transforme les talents en actes de fraternité. Tout s'offre sans compter. C'est la richesse du don qui crée la paix. Le système est conçu pour transformer des métiers ou des objets en actes de fraternité.
+
+Demander un service est un don en soi, car cela permet à l'autre de cultiver sa propre générosité. Ici, on sème des graines de générosité pour récolter de l'altruisme.
+
+Attention : zone de gratuité absolue pour cadeau réellement efficace.
+Il s'agit d'un site de mise en relation : aucune donnée commerciale n'est exploitée et aucune personne n'est fichée. 
+Les annonces s'effacent automatiquement après la durée de validité choisie.
+                    
+La meilleure justice est encore le pardon.
+Cadeaux sans détour, cadeaux sans demande de retour.
+Regardez la fraternité s'épanouir au gré des dons du monde entier...
+
+Les Graines Semées au Jardin
+Chaque don est une fleur qui ne se fane jamais.
+Registre de la Fraternité
+Le jardin arrose les fleurs..." required></textarea>
             </div>
 
             <button type="submit" class="btn-envoyer" id="btnTexte">ENGENDRER LA FRATERNITÉ UNIVERSELLE</button>
@@ -333,9 +349,6 @@
     </div>
 
     <script>
-    const TOKEN_SECRET = "MonJardinSecuritToken2026";
-    const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbxxToz22V88elCCjxLqjRtsb5iBIC156cbBFRIlTsju2SwOj9yNnKqzAwFITXMg_wij/exec";
-
     function toggleGuide(e) {
         e.stopPropagation();
         const guide = document.getElementById('aide-panneau');
@@ -348,11 +361,44 @@
     function googleTranslateElementInit() { new google.translate.TranslateElement({pageLanguage: 'fr'}, 'google_translate_element'); }
 
     const tree = {
-        "SAVOIR": ["Soutien scolaire & cours", "Art, artisanat & musique", "Mentorat pro & compétences techniques", "Savoir-faire du quotidien", "AUTRE_SUB", "Autres interprétations"],
-        "VIE": ["Repas, graines & eau", "Prêt d'objets, outils & équipement", "Accueil, hébergement & covoiturage", "Loisirs & activités partagées", "AUTRE_SUB", "Autres recommandations"],
-        "AIDE": ["Secours immédiat & petite urgence", "Écoute, présence & soutien aux aînés", "Garde d'enfants & soutien familial", "Soin des animaux & aide à la maison", "AUTRE_SUB", "Autres merveilles"],
-        "REGULATION": ["Aide aux démarches (Aide sociale rapprochée)", "Médiation de voisinage & paix citoyenne", "Organisation d'assemblées & conseils citoyens", "AUTRE_SUB", "Autres conciliations"],
-        "IMPOT": ["Entretien des réseaux vitaux (eau, énergie)", "Voirie & chantiers participatifs", "Espaces verts, forêts & parcs publics", "AUTRE_SUB", "Autres contributions"]
+        "SAVOIR": [
+            "Soutien scolaire & cours",
+            "Art, artisanat & musique",
+            "Mentorat pro & compétences techniques",
+            "Savoir-faire du quotidien",
+            "AUTRE_SUB",
+            "Autres interprétations"
+        ],
+        "VIE": [
+            "Repas, graines & eau",
+            "Prêt d'objets, outils & équipement",
+            "Accueil, hébergement & covoiturage",
+            "Loisirs & activités partagées",
+            "AUTRE_SUB",
+            "Autres recommandations"
+        ],
+        "AIDE": [
+            "Secours immédiat & petite urgence",
+            "Écoute, présence & soutien aux aînés",
+            "Garde d'enfants & soutien familial",
+            "Soin des animaux & aide à la maison",
+            "AUTRE_SUB",
+            "Autres merveilles"
+        ],
+        "REGULATION": [
+            "Aide aux démarches (Aide sociale rapprochée)",
+            "Médiation de voisinage & paix citoyenne",
+            "Organisation d'assemblées & conseils citoyens",
+            "AUTRE_SUB",
+            "Autres conciliations"
+        ],
+        "IMPOT": [
+            "Entretien des réseaux vitaux (eau, énergie)",
+            "Voirie & chantiers participatifs",
+            "Espaces verts, forêts & parcs publics",
+            "AUTRE_SUB",
+            "Autres contributions"
+        ]
     };
 
     function updateSubCats() {
@@ -360,7 +406,9 @@
         const subGroup = document.getElementById('sub_cat_group');
         const subSelect = document.getElementById('sub_cat');
         const extraSub = document.getElementById('extra_sub');
+
         if (extraSub) extraSub.style.display = 'none';
+
         if (cat && tree[cat]) {
             let options = '<option value="">-- Choisir une précision --</option>';
             options += tree[cat].map(s => `<option value="${s}">${s === 'AUTRE_SUB' ? '🌈 Autres distinctions...' : s}</option>`).join('');
@@ -375,7 +423,14 @@
     function checkOther(select, divId) {
         const extraDiv = document.getElementById(divId);
         if (!extraDiv) return;
-        const isOther = (select.value === "AUTRE" || select.value === "AUTRE_PAYS" || select.value === "AUTRE_SUB" || select.value === "AUTRE_CAT");
+
+        const isOther = (
+            select.value === "AUTRE" || 
+            select.value === "AUTRE_PAYS" || 
+            select.value === "AUTRE_SUB" || 
+            select.value === "AUTRE_CAT"
+        );
+
         extraDiv.style.display = isOther ? "block" : "none";
     }
 
@@ -407,9 +462,20 @@
     const animalEmoji = document.getElementById('corps-animal');
     const bulle = document.getElementById('bulle-texte');
     const coffre = document.getElementById('coffre-magique');
-    const citationsFraternite = ["L'essentiel est invisible pour les yeux... 🌹", "On sème une graine de paix ✨", "Un don, c'est une fleur qui éclot 🌸", "La fraternité est un jardin sans fin 🌍", "S'entraider, c'est cultiver l'avenir 🌱", "Nouveau message de solidarité ! 💌", "Regarde la bonté s'envoler... 🕊"];
 
-    let aniX = -200, state = "FLY", targetY = 250, dropCount = 0, isDead = false, direction = 1;
+    const citationsFraternite = [
+        "L'essentiel est invisible pour les yeux... 🌹",
+        "On sème une graine de paix ✨",
+        "Un don, c'est une fleur qui éclot 🌸",
+        "La fraternité est un jardin sans fin 🌍",
+        "S'entraider, c'est cultiver l'avenir 🌱",
+        "Nouveau message de solidarité ! 💌",
+        "Regarde la bonté s'envoler... 🕊"
+    ];
+
+    let aniX = -200, state = "FLY", targetY = 250, dropCount = 0;
+    let isDead = false;
+    let direction = 1;
 
     function animalExplode() {
         if(isDead) return;
@@ -418,7 +484,13 @@
         exploserParticules(rect.left + 20, rect.top + 20, ['⭐', '✨', '🌟'], 40);
         animalEmoji.style.opacity = 0;
         bulle.style.opacity = 0;
-        setTimeout(() => { animalEmoji.style.opacity = 1; isDead = false; aniX = -200; direction = 1; state = "FLY"; }, 3000);
+        setTimeout(() => { 
+            animalEmoji.style.opacity = 1; 
+            isDead = false; 
+            aniX = -200; 
+            direction = 1;
+            state = "FLY";
+        }, 3000);
     }
 
     function messenger() {
@@ -426,19 +498,23 @@
             if (state === "FLY") {
                 aniX += 2 * direction;
                 animalEmoji.style.transform = direction === 1 ? "scaleX(-1)" : "scaleX(1)";
+
                 if (Math.abs(aniX - window.innerWidth/2) < 5) {
                     state = "DROP";
                     dropCount++;
                     bulle.innerText = citationsFraternite[Math.floor(Math.random() * citationsFraternite.length)];
                     bulle.style.opacity = 1;
+
                     coffre.style.transform = "translateX(-50%) scale(1.3)";
                     setTimeout(() => coffre.style.transform = "translateX(-50%) scale(1)", 400);
+
                     if(dropCount >= 3) {
                         setTimeout(() => {
                             exploserParticules(window.innerWidth/2, window.innerHeight - 50, ['🌸', '🌺', '🌻', '🌼', '🌷'], 60);
                             dropCount = 0;
                         }, 500);
                     }
+
                     setTimeout(() => { bulle.style.opacity = 0; state = "EXIT"; }, 2500);
                 }
             } else if (state === "EXIT") {
@@ -468,9 +544,12 @@
 
         const form = document.getElementById('monFormulaire');
         const formData = new FormData(form);
-        formData.append('token', TOKEN_SECRET); // Ajout du jeton de sécurité
 
-        fetch(WEB_APP_URL, {
+        // URL de votre Web App Google Apps Script
+        const url = "https://script.google.com/macros/s/AKfycbxxToz22V88elCCjxLqjRtsb5iBIC156cbBFRIlTsju2SwOj9yNnKqzAwFITXMg_wij/exec";
+
+        // Envoi des données en POST dans le corps de la requête
+        fetch(url, {
             method: 'POST',
             body: formData
         })
@@ -486,6 +565,7 @@
     window.addEventListener('DOMContentLoaded', () => {
         const urlParams = new URLSearchParams(window.location.search);
         const catParam = urlParams.get('cat');
+
         if (catParam) {
             const selectCat = document.getElementById('main_cat');
             if (selectCat) {
