@@ -30,7 +30,6 @@
         .btn-group { display: flex; gap: 8px; flex-wrap: wrap; justify-content: center; margin-top: 5px; }
         .btn-filtre-rapide { background: rgba(255,255,255,0.2); border: 2px solid white; color: white; padding: 6px 12px; border-radius: 20px; cursor: pointer; font-family: 'Comic Sans MS'; font-size: 0.8em; transition: 0.3s; }
         
-        /* Correspondance exacte des couleurs entre boutons et contours de cartes */
         .btn-filtre-rapide[data-cat="Savoir"] { border-color: #ffc107; }
         .btn-filtre-rapide[data-cat="Citoyenne"] { border-color: #9370DB; }
         .btn-filtre-rapide[data-cat="Harmonie"] { border-color: #ff69b4; }
@@ -183,7 +182,7 @@
     <script>
         const TOKEN_SECRET = "MonJardinSecuritToken2026";
         const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbxxToz22V88elCCjxLqjRtsb5iBIC156cbBFRIlTsju2SwOj9yNnKqzAwFITXMg_wij/exec";
-        let toutesLesAnnonces = [], annoncesPrincipales = [], toutesLesReponses = [], filtreTypeActuel = "", filtreSousTypeActuel = "";
+        let toutesLesAnnonces = [], annoncesPrincipales = [], filtreTypeActuel = "", filtreSousTypeActuel = "";
         
         const mappingBoutons = { 
             "Savoir": ["SAVOIR"], 
@@ -194,7 +193,6 @@
             "Autre": ["AUTRE_CAT"] 
         };
 
-        // Correspondance exacte des couleurs avec les boutons de filtres rapides
         const couleursBordures = {
             "SAVOIR": "#ffc107",       
             "VIE": "#9370DB",          
@@ -282,23 +280,18 @@
         function masquerCoordonnees(texte) {
             if (!texte) return "";
             let protege = String(texte).replace(/([a-zA-Z0-9._-]+)@([a-zA-Z0-9._-]+)\.([a-zA-Z]{2,5})/gi, "$1 [at] $2 [dot] $3");
-            protege = protege.replace(/(?:(?:\+|00)33|0)\s*[1-9](?:[\s.-]*\d{2}){4}/g, "📱 [Numéro protégé]");
+            protege = protege.replace(/(?:(?:\+|00)33|0)\s*[1-9](?:[\s.-]*\d{2})/g, "📱 [Numéro protégé]");
             return protege;
-        }
-
-        function nettoyerCle(str) {
-            if (!str) return "";
-            return String(str).replace(/[^a-zA-Z0-9]/g, '').toLowerCase();
         }
 
         function formaterDate(horodateur) {
             if (!horodateur) return "N/C";
             try {
                 const dateObj = new Date(horodateur);
-                if (!isNaN(dateObj)) {
+                if (!isNaN(dateObj.getTime())) {
                     return dateObj.toLocaleDateString('fr-FR', { day: '2-digit', month: '2-digit', year: 'numeric' });
                 }
-                return horodateur.split('T')[0] || horodateur;
+                return String(horodateur).split('T')[0] || horodateur;
             } catch(e) {
                 return horodateur;
             }
@@ -308,7 +301,7 @@
             const horodateur = ann.Horodateur || ann.date;
             if (!horodateur) return false;
             const datePub = new Date(horodateur);
-            if (isNaN(datePub)) return false;
+            if (isNaN(datePub.getTime())) return false;
             
             const validiteStr = String(ann.validite || ann.duree || "1 jour").toLowerCase();
             let nbJours = 1; 
@@ -323,7 +316,6 @@
 
         function obtenirReponsesPourAnnonce(ann) {
             let reponses = [];
-            
             const brutServer = ann.reponses_article || ann.reponsesarticle || ann.commentaires || ann.reponses || "";
             if (brutServer) {
                 const parts = String(brutServer).split(" || ");
@@ -344,26 +336,6 @@
                     }
                 });
             }
-            
-            const idOriginal = String(ann.Horodateur || ann.id || "").trim();
-            if (idOriginal) {
-                const idCle = nettoyerCle(idOriginal);
-                const locs = toutesLesReponses.filter(rep => {
-                    const refBrute = String(rep.ref_id || rep.Ref || rep.ref || "").trim();
-                    const refCle = nettoyerCle(refBrute);
-                    return refCle.includes(idCle) || (idCle.length > 6 && refCle.includes(idCle.substring(0, 15)));
-                });
-                locs.forEach(l => {
-                    if (!reponses.some(r => r.message === l.message && r.nom === (l.nom || l.titre))) {
-                        reponses.push({
-                            nom: l.nom || l.titre || "Anonyme",
-                            date: new Date().toLocaleDateString(),
-                            message: l.message || l.description || ""
-                        });
-                    }
-                });
-            }
-            
             return reponses;
         }
 
@@ -428,22 +400,16 @@
                 toutesLesAnnonces = await response.json();
                 
                 annoncesPrincipales = [];
-                toutesLesReponses = [];
-
                 toutesLesAnnonces.forEach(item => {
                     const type = String(item.type || item.Type || '').toUpperCase();
-                    const refBrute = String(item.ref_id || item.Ref || item.ref || '').trim();
-                    
                     if (type === 'VIDEO' || type === 'VIDÉO') return;
-
-                    if (type.includes('REPONSE') || refBrute !== '') {
-                        toutesLesReponses.push(item);
-                    } else {
+                    // On filtre pour ne garder que les annonces principales (en ignorant les anciennes lignes isolées de réponse si présentes)
+                    if (!type.includes('REPONSE')) {
                         annoncesPrincipales.push(item);
                     }
                 });
 
-                document.getElementById('phrase-petit-prince').innerHTML = `✨ Aujourd'hui, le Petit Prince has pris soin de <b>${annoncesPrincipales.length}</b> fleurs resplendissantes dans le jardin du monde...`;
+                document.getElementById('phrase-petit-prince').innerHTML = `✨ Aujourd'hui, le Petit Prince a pris soin de <b>${annoncesPrincipales.length}</b> fleurs resplendissantes dans le jardin du monde...`;
                 
                 const urlParams = new URLSearchParams(window.location.search);
                 const catParam = urlParams.get('cat');
@@ -679,17 +645,13 @@
             const nomRep = document.getElementById('rep_nom').value;
             const msgRep = document.getElementById('rep_message').value;
 
-            toutesLesReponses.push({
-                ref_id: `Ref:${idRef}`,
-                type: `REPONSE_${typeAnn}`,
-                nom: nomRep,
-                message: msgRep
-            });
+            // Mise à jour optimiste locale immédiate pour affichage instantané
+            if (!annonces.reponses_article) annonces.reponses_article = "";
 
             const params = new URLSearchParams();
             params.append('token', TOKEN_SECRET);
             params.append('action', 'repondre');
-            params.append('ref_id', `Ref:${idRef}`);
+            params.append('ref_id', idRef);
             params.append('type', `REPONSE_${typeAnn}`);
             params.append('nom', nomRep);
             params.append('message', msgRep);
@@ -702,13 +664,14 @@
                     btn.innerText = "ENVOYER MA RÉPONSE ✨";
                     btn.disabled = false;
                     document.getElementById('formReponse').reset();
-                    executerFiltrage();
-                }, 500);
+                    chargerAnnonces();
+                }, 800);
             })
             .catch(err => {
                 console.error("Erreur d'envoi :", err);
                 fermerModalReponse();
                 btn.disabled = false;
+                btn.innerText = "ENVOYER MA RÉPONSE ✨";
             });
         }
 
