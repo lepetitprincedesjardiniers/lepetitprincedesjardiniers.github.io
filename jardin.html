@@ -385,6 +385,11 @@
                     const type = String(item.type || item.Type || '').toUpperCase();
                     const refBrute = String(item.ref_id || item.Ref || item.ref || '').trim();
                     
+                    // Exclut les vidéos YouTube du Ministère sur la page Jardin
+                    if (type === 'VIDEO' || type === 'VIDÉO') {
+                        return;
+                    }
+
                     if (type.includes('REPONSE') || refBrute !== '') {
                         toutesLesReponses.push(item);
                     } else {
