@@ -308,7 +308,6 @@
         function obtenirReponsesPourAnnonce(ann) {
             let reponses = [];
             
-            // 1. Récupération depuis la colonne de la ligne de l'annonce (reponses_article / reponses / commentaires)
             const brutServer = ann.reponses_article || ann.reponsesarticle || ann.commentaires || "";
             if (brutServer) {
                 const parts = String(brutServer).split(" || ");
@@ -330,7 +329,6 @@
                 });
             }
             
-            // 2. Combinaison avec les réponses locales en attente (optimistic UI)
             const idOriginal = String(ann.Horodateur || ann.id || "").trim();
             if (idOriginal) {
                 const idCle = nettoyerCle(idOriginal);
