@@ -3,90 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Jardin Public - Le Don Entier</title>
     <title>Le Jardin de la Fraternité - Registre</title>
     <style>
-        body {
-            background-color: #e8f5e9;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            margin: 0;
-            padding: 40px 20px;
-            color: #2c3e50;
-        }
-        .header-jardin {
-            text-align: center;
-            margin-bottom: 50px;
-        }
-        h1 {
-            color: #27ae60;
-            font-size: 2.5em;
-            margin-bottom: 20px;
-        }
-        .search-container {
-            max-width: 700px;
-            margin: 0 auto;
-        }
-        .search-main-input {
-            width: 100%;
-            padding: 18px 25px;
-            font-size: 1.2em;
-            border-radius: 40px;
-            border: 2px solid #2ecc71;
-            outline: none;
-            box-shadow: 0 4px 15px rgba(46, 204, 113, 0.2);
-            transition: box-shadow 0.3s;
-            box-sizing: border-box;
-        }
-        .search-main-input:focus {
-            box-shadow: 0 4px 20px rgba(46, 204, 113, 0.4);
-        }
-        .grid-dons {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 25px;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-        .carte-don {
-            background: white;
-            padding: 25px;
-            border-radius: 15px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
-            border-top: 5px solid #27ae60;
-            transition: transform 0.2s;
-        }
-        .carte-don:hover {
-            transform: translateY(-5px);
-        }
-        .carte-don h3 {
-            margin-top: 0;
-            color: #2c3e50;
-            font-size: 1.4em;
-        }
-        .etiquette {
-            display: inline-block;
-            background: #f1f8e9;
-            color: #33691e;
-            padding: 5px 10px;
-            border-radius: 15px;
-            font-size: 0.85em;
-            margin-right: 5px;
-            margin-bottom: 10px;
-        }
-        .btn-retour {
-            display: inline-block;
-            margin-top: 40px;
-            padding: 12px 25px;
-            background: #34495e;
-            color: white;
-            text-decoration: none;
-            border-radius: 8px;
-            font-weight: bold;
-            transition: background 0.3s;
-        }
-        .btn-retour:hover {
-            background: #2c3e50;
-        }
         body { font-family: 'Comic Sans MS', cursive; text-align: center; margin: 0; padding: 0; background-color: #FFFF00; color: #000080; min-height: 100vh; padding-bottom: 80px; transition: background 0.3s, color 0.3s; }
         .top-bar { position: relative; width: 100%; min-height: 50px; background: rgba(255,255,255,0.3); padding: 5px 0; display: flex; justify-content: center; align-items: center; }
         #google_translate_element { position: absolute; left: 10px; top: 10px; z-index: 2000; transform: scale(0.85); transform-origin: top left; }
@@ -146,13 +64,12 @@
         .bouton-fermer { position: absolute; top: 15px; right: 15px; background: #FF1493; color: white; border-radius: 50%; width: 40px; height: 40px; cursor: pointer; border: 2px solid white; font-weight: bold; display: flex; align-items: center; justify-content: center; z-index: 10; }
         
         .field-rep { width: 100%; padding: 10px; margin: 8px 0; border: 2px solid #008080; border-radius: 10px; font-family: 'Comic Sans MS'; box-sizing: border-box; }
+        .btn-retour { display: inline-block; margin-top: 20px; padding: 10px 20px; background: #34495e; color: white; text-decoration: none; border-radius: 8px; font-weight: bold; }
         .copyright-link { color: #008080; text-decoration: none; font-weight: bold; }
     </style>
 </head>
 <body>
 
-    <div class="header-jardin">
-        <h1>Le Jardin Public des Fraternels</h1>
     <div class="top-bar">
         <div id="google_translate_element"></div>
         <div class="menu-wrapper">
@@ -179,13 +96,11 @@
 
     <div class="search-box">
         <div class="search-container">
-            <!-- Votre phrase personnalisée dans le moteur de recherche -->
-            <!-- VOTRE PHRASE PERSONNALISÉE DANS LE MOTEUR DE RECHERCHE -->
-            <input type="text" id="searchKeyword" class="search-main-input" onkeyup="executerFiltrage()" placeholder="✨ Votre phrase personnalisée ici (ex: Rechercher un don, un savoir...)">
+            <input type="text" id="searchKeyword" class="search-main-input" onkeyup="executerFiltrage()" placeholder="✨ Rechercher un don, un savoir...">
             
             <div class="search-row">
                 <div class="search-item"><input type="text" id="searchPays" onkeyup="executerFiltrage()" placeholder="📍 Pays"></div>
-                <div class="search-item"><input type="text" id="searchVille" onkeyup="executerFiltrage()" placeholder="🏙️ Ville"></div>
+                <div class="search-item"><input type="text" id="searchVille" onkeyup="executerFiltrage()" placeholder="🏙️️ Ville"></div>
             </div>
             
             <div class="btn-group">
@@ -204,13 +119,15 @@
         </div>
     </div>
 
-    <!-- Grille d'affichage des dons -->
-    <div class="grid-dons" id="listeDons">
-        <!-- Les cartes semées via le formulaire s'afficheront dynamiquement ici -->
     <h3 id="titre-registre" style="color: #008080;">📖 Registre de la Fraternité</h3>
     <div id="mur-messages" class="mur-reel"></div>
 
     <div class="phrase-etoiles" id="phrase-petit-prince" style="font-style: italic; color: #2E7D32; margin: 20px;"></div>
+
+    <div style="text-align: center;">
+        <a href="formulaire.html" class="btn-retour" style="background:#e67e22; margin-right: 10px;">Semer un Don</a>
+        <a href="index.html" class="btn-retour">Retour à l'Accueil</a>
+    </div>
 
     <div id="fond-sombre" onclick="fermerGrandMessage()">
         <div class="message-geant" onclick="event.stopPropagation()">
@@ -219,9 +136,6 @@
         </div>
     </div>
 
-    <div style="text-align: center;">
-        <a href="formulaire.html" class="btn-retour" style="background:#e67e22; margin-right: 10px;">Semer un Don</a>
-        <a href="index.html" class="btn-retour">Retour à l'Accueil</a>
     <div id="modal-reponse" onclick="fermerModalReponse()">
         <div class="form-reponse-box" onclick="event.stopPropagation()">
             <button class="bouton-fermer" onclick="fermerModalReponse()">X</button>
@@ -243,35 +157,13 @@
         </div>
     </div>
 
-    <div class="footer-copyright">
+    <div class="footer-copyright" style="margin-top: 30px;">
         <a href="merci.html" class="copyright-link">© 2000 Le petit prince des jardiniers</a>
     </div>
 
     <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
 
     <script>
-        // Récupération et affichage du don soumis par le formulaire
-        window.onload = function() {
-            const urlParams = new URLSearchParams(window.location.search);
-            const mainCat = urlParams.get('main_cat');
-            const subCat = urlParams.get('sub_cat');
-            const description = urlParams.get('description');
-            
-            const grilleDons = document.getElementById('listeDons');
-
-            // Si un formulaire vient d'être validé, on crée la carte dynamiquement
-            if (mainCat || description) {
-                const nouvelleCarte = document.createElement('div');
-                nouvelleCarte.className = 'carte-don';
-                
-                // Traduction propre du domaine principal pour l'affichage
-                const nomsDomaines = {
-                    "IMPOT": "Trésor Public",
-                    "AIDE": "Aide & Harmonie",
-                    "REGULATION": "Régulation",
-                    "SAVOIR": "Savoirs"
-                };
-                let libelleDomaine = nomsDomaines[mainCat] || mainCat || "Don";
         const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbxxToz22V88elCCjxLqjRtsb5iBIC156cbBFRIlTsju2SwOj9yNnKqzAwFITXMg_wij/exec";
         let toutesLesAnnonces = [], annoncesPrincipales = [], toutesLesReponses = [], filtreTypeActuel = "", filtreSousTypeActuel = "";
         
@@ -284,16 +176,6 @@
             "Autre": ["AUTRE_CAT"] 
         };
 
-                nouvelleCarte.innerHTML = `
-                    <h3>${subCat ? subCat : 'Offre du Jardin'}</h3>
-                    <div>
-                        <span class="etiquette">${libelleDomaine}</span>
-                        ${subCat ? `<span class="etiquette">${subCat}</span>` : ''}
-                    </div>
-                    <p>${description ? description : 'Aucune description fournie.'}</p>
-                `;
-                
-                grilleDons.appendChild(nouvelleCarte);
         const couleursBordures = {
             "SAVOIR": "#ffc107",       
             "VIE": "#9370DB",          
@@ -332,7 +214,7 @@
                 { id: "AUTRE_SUB", label: "Autres merveilles" }
             ],
             "Régulation": [
-                { id: "", label: "⚖️ Toutes les précisions" },
+                { id: "", label: "⚖️️ Toutes les précisions" },
                 { id: "Aide aux démarches (Aide sociale rapprochée)", label: "Aide aux démarches (Aide sociale rapprochée)" },
                 { id: "Médiation de voisinage & paix citoyenne", label: "Médiation de voisinage & paix citoyenne" },
                 { id: "Organisation d'assemblées & conseils citoyens", label: "Organisation d'assemblées & conseils citoyens" },
@@ -403,23 +285,13 @@
             }
         }
 
-            // Gestion du filtre si on arrive depuis les cartes colorées de l'accueil/formulaire
-            const categorie = urlParams.get('cat');
-            const traductions = {
-                "IMPOT": "Trésor Public",
-                "AIDE": "Aide & Harmonie",
-                "REGULATION": "Régulation",
-                "SAVOIR": "Savoirs"
-            };
         function estExpire(ann) {
             const horodateur = ann.Horodateur || ann.date;
             if (!horodateur) return false;
-            
             const datePub = new Date(horodateur);
             if (isNaN(datePub)) return false;
             
             const validiteStr = String(ann.validite || ann.duree || "1 jour").toLowerCase();
-            
             let nbJours = 1; 
             if (validiteStr.includes('7') || validiteStr.includes('semaine')) nbJours = 7;
             else if (validiteStr.includes('30') || validiteStr.includes('mois')) nbJours = 30;
@@ -430,9 +302,6 @@
             return new Date() > dateExpiration;
         }
 
-            if (categorie && traductions[categorie]) {
-                const searchInput = document.getElementById('searchKeyword');
-                searchInput.value = traductions[categorie];
         function obtenirReponsesPourAnnonce(ann) {
             const idOriginal = String(ann.Horodateur || ann.id || "").trim();
             if (!idOriginal) return [];
@@ -479,9 +348,7 @@
                 document.body.appendChild(goutte);
 
                 setTimeout(() => {
-                    const dropY = 40 + Math.random() * 60;
-                    const dropX = (Math.random() * 40 - 20);
-                    goutte.style.transform = `translate(${dropX}px, ${dropY}px) scale(1.3)`;
+                    goutte.style.transform = `translate(${Math.random() * 40 - 20}px, ${40 + Math.random() * 60}px) scale(1.3)`;
                     goutte.style.opacity = '0';
                 }, 20);
 
@@ -514,9 +381,7 @@
                     const type = String(item.type || item.Type || '').toUpperCase();
                     const refBrute = String(item.ref_id || item.Ref || item.ref || '').trim();
                     
-                    if (type === 'VIDEO' || type === 'VIDÉO') {
-                        return;
-                    }
+                    if (type === 'VIDEO' || type === 'VIDÉO') return;
 
                     if (type.includes('REPONSE') || refBrute !== '') {
                         toutesLesReponses.push(item);
@@ -548,7 +413,6 @@
                 console.error("Erreur de chargement :", error);
                 document.getElementById('mur-messages').innerHTML = `<div style="grid-column: span 5; padding: 20px; font-weight: bold; background: white; border-radius: 10px;">Impossible de charger les annonces du jardin... 🌱</div>`;
             }
-        };
         }
 
         function afficherTiroirSousRubriques(cat) {
@@ -580,17 +444,7 @@
             executerFiltrage();
         }
 
-        // Moteur de recherche instantanée
         function executerFiltrage() {
-            const input = document.getElementById('searchKeyword').value.toLowerCase();
-            const cartes = document.querySelectorAll('.carte-don');
-            
-            cartes.forEach(carte => {
-                const texteGlobal = carte.innerText.toLowerCase();
-                if (texteGlobal.includes(input)) {
-                    carte.style.display = "block";
-                } else {
-                    carte.style.display = "none";
             const pi = document.getElementById('searchPays').value.toLowerCase();
             const vi = document.getElementById('searchVille').value.toLowerCase();
             const mi = document.getElementById('searchKeyword').value.toLowerCase();
@@ -618,11 +472,7 @@
                 return matchP && matchV && matchM && matchT && matchSousT;
             });
 
-            filtrées.sort((a, b) => {
-                const dateA = new Date(a.Horodateur || 0);
-                const dateB = new Date(b.Horodateur || 0);
-                return dateB - dateA;
-            });
+            filtrées.sort((a, b) => new Date(b.Horodateur || 0) - new Date(a.Horodateur || 0));
 
             const cont = document.getElementById('mur-messages');
             cont.innerHTML = "";
@@ -640,10 +490,7 @@
                 const datePubli = formaterDate(ann.Horodateur);
                 
                 const listeReponses = obtenirReponsesPourAnnonce(ann);
-                let badgeReponsesHtml = '';
-                if (listeReponses.length > 0) {
-                    badgeReponsesHtml = `<div class="badge-reponses">💬 ${listeReponses.length} réponse(s)</div>`;
-                }
+                let badgeReponsesHtml = listeReponses.length > 0 ? `<div class="badge-reponses">💬 ${listeReponses.length} réponse(s)</div>` : '';
 
                 const d = document.createElement('div');
                 d.className = 'carte-message';
@@ -651,16 +498,15 @@
                 const couleurBord = couleursBordures[typeAnnonce] || "#008080";
                 d.style.borderColor = couleurBord;
                 d.style.boxShadow = `3px 3px 0px ${couleurBord}`;
-
                 d.onclick = () => ouvrirGrandMessage(ann);
 
                 d.innerHTML = `
-                    <div class="nom-prenom"></div>
+                    <div class="nom-prenom">${escapeHtml(nomAnnonce)}</div>
                     <div class="rubrique-tag">${nomBoutonAffiche[typeAnnonce] || "Graine"}</div>
-                    <div class="texte-annonce"></div>
+                    <div class="texte-annonce">"${escapeHtml(masquerCoordonnees(msgAnnonce))}"</div>
                     ${badgeReponsesHtml}
                     <div class="details-bas">
-                        📅 Publié le : ${escapeHtml(datePubli)}<br>
+                        📅 Publié : ${escapeHtml(datePubli)}<br>
                         📍 Localisation : ${escapeHtml(ann.localisation || 'N/C')}<br>
                         📍 Pays : ${escapeHtml(ann.pays_select || 'N/C')}<br>
                         🌍 Portée : ${escapeHtml(ann.rayon_action || 'Locale')}
@@ -668,9 +514,6 @@
                         <button class="btn-repondre">💌 Répondre à cette graine</button>
                     </div>
                 `;
-
-                d.querySelector('.nom-prenom').textContent = nomAnnonce;
-                d.querySelector('.texte-annonce').textContent = `"${masquerCoordonnees(msgAnnonce)}"`;
 
                 const btnArroser = d.querySelector('.btn-arrosage');
                 btnArroser.onclick = (e) => arroser(e, idAnnonce, btnArroser, ann);
@@ -709,9 +552,8 @@
                 htmlReponsesGeant = `<div style="background:#FFF8E7; padding:15px; border-radius:10px; border:2px dashed #E67E22; margin-bottom:15px; text-align:left; max-height: 300px; overflow-y: auto;">
                     <h4 style="color:#E67E22; margin:0 0 10px 0;">💬 Réponses reçues (${listeReponses.length}) :</h4>`;
                 listeReponses.forEach(r => {
-                    const nomReponseur = r.nom || r.Nom || r.prenom || r.Prenom || 'Ami';
                     htmlReponsesGeant += `<div style="margin-bottom:10px; border-bottom:1px solid #ddd; padding-bottom:8px; word-break: break-word;">
-                        <strong style="color:#2E7D32;">${escapeHtml(nomReponseur)} :</strong> 
+                        <strong style="color:#2E7D32;">${escapeHtml(r.nom || 'Ami')} :</strong> 
                         <div style="white-space: pre-line; color: #333; margin-top: 3px;">"${escapeHtml(masquerCoordonnees(r.message || ''))}"</div>
                     </div>`;
                 });
@@ -720,10 +562,10 @@
 
             const divContent = document.getElementById('geant-contenu');
             divContent.innerHTML = `
-                <div style="font-size:1.6em; color:#2E7D32; font-weight:bold; border-bottom:3px solid #008080; margin-bottom:15px; padding-right: 40px;">🌱 Offrande de <span id="geant-nom"></span></div>
-                <div style="background:white; padding:20px; border-radius:15px; border-left:10px solid #FF1493; font-size:1.1em; color:#000080; text-align:left; margin-bottom:15px; white-space: pre-line; word-break: break-word;" id="geant-msg"></div>
+                <div style="font-size:1.6em; color:#2E7D32; font-weight:bold; border-bottom:3px solid #008080; margin-bottom:15px; padding-right: 40px;">🌱 Offrande de ${escapeHtml(ann.nom || "Anonyme")}</div>
+                <div style="background:white; padding:20px; border-radius:15px; border-left:10px solid #FF1493; font-size:1.1em; color:#000080; text-align:left; margin-bottom:15px; white-space: pre-line; word-break: break-word;">"${escapeHtml(masquerCoordonnees(ann.message || ""))}"</div>
                 <div style="text-align:left; background:#E0F2F1; padding:15px; border-radius:10px; font-size:0.95em; margin-bottom:15px; line-height: 1.4;">
-                    <strong>📅 Date de publication :</strong> ${escapeHtml(datePubli)}<br>
+                    <strong>📅 Date :</strong> ${escapeHtml(datePubli)}<br>
                     <strong>📍 Localisation :</strong> ${escapeHtml(ann.localisation || "N/C")}<br>
                     <strong>📍 Pays :</strong> ${escapeHtml(ann.pays_select || "N/C")}<br>
                     <strong>🌍 Portée :</strong> ${escapeHtml(ann.rayon_action || "Locale")}<br>
@@ -732,9 +574,6 @@
                 ${htmlReponsesGeant}
                 <button class="btn-repondre" id="geant-btn-rep" style="font-size: 1.1em; padding: 12px;">💌 Répondre à cette graine</button>
             `;
-
-            document.getElementById('geant-nom').textContent = ann.nom || ann.Nom || ann.prenom || ann.auteur || "Anonyme";
-            document.getElementById('geant-msg').textContent = `"${masquerCoordonnees(ann.message || "")}"`;
 
             document.getElementById('geant-btn-rep').onclick = () => {
                 fermerGrandMessage();
@@ -746,26 +585,17 @@
 
         function ouvrirModalReponse(ann) {
             jouerBip();
-            
-            const id = ann.Horodateur || ann.id || '';
-            const type = ann.type || "";
-            const nom = ann.nom || ann.Nom || ann.prenom || "Anonyme";
-            const message = ann.message || "";
-
-            document.getElementById('rep_id_annonce').value = id;
-            document.getElementById('rep_type_annonce').value = type;
+            document.getElementById('rep_id_annonce').value = ann.Horodateur || ann.id || '';
+            document.getElementById('rep_type_annonce').value = ann.type || "";
 
             const rappel = document.getElementById('rappel-annonce');
-            rappel.innerHTML = `<strong>Graine de <span id="rappel-nom"></span> :</strong> <span id="rappel-msg"></span>`;
-            document.getElementById('rappel-nom').textContent = nom;
-            document.getElementById('rappel-msg').textContent = `"${masquerCoordonnees(message).substring(0, 100)}${message.length > 100 ? '...' : ''}"`;
+            const msgBrut = ann.message || "";
+            rappel.innerHTML = `<strong>Graine de ${escapeHtml(ann.nom || "Anonyme")} :</strong> "${escapeHtml(masquerCoordonnees(msgBrut).substring(0, 100))}${msgBrut.length > 100 ? '...' : ''}"`;
             
             document.getElementById('modal-reponse').style.display = 'flex';
         }
 
-        function fermerModalReponse() {
-            document.getElementById('modal-reponse').style.display = 'none';
-        }
+        function fermerModalReponse() { document.getElementById('modal-reponse').style.display = 'none'; }
 
         function envoyerReponse(e) {
             e.preventDefault();
@@ -794,11 +624,7 @@
             params.append('nom', nomRep);
             params.append('message', msgRep);
 
-            fetch(WEB_APP_URL, {
-                method: 'POST',
-                mode: 'no-cors',
-                body: params
-            })
+            fetch(WEB_APP_URL, { method: 'POST', mode: 'no-cors', body: params })
             .then(() => {
                 btn.innerText = "Réponse envoyée avec succès ! 🌸";
                 setTimeout(() => {
@@ -829,7 +655,6 @@
             }
 
             if (filtreTypeActuel && el) el.classList.add('actif');
-
             afficherTiroirSousRubriques(filtreTypeActuel);
             executerFiltrage();
         }
