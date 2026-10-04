@@ -161,9 +161,10 @@
 
     </main>
 
-    <!-- Modale Visionneuse (Articles / Docs) avec Partage -->
+    <!-- Modale Visionneuse (Articles / Docs) avec Partage & Section Réponses -->
     <div id="content-modal" class="fixed inset-0 z-50 hidden bg-black/70 backdrop-blur-sm flex items-center justify-center p-2 sm:p-6">
-        <div class="bg-white w-full max-w-4xl h-[90vh] sm:h-[85vh] rounded-3xl shadow-2xl overflow-hidden flex flex-col relative border border-orange-200">
+        <div class="bg-white w-full max-w-4xl h-[92vh] sm:h-[88vh] rounded-3xl shadow-2xl overflow-hidden flex flex-col relative border border-orange-200">
+            <!-- Barre de titre de la modale -->
             <div class="bg-joy-dark text-white px-4 sm:px-6 py-4 flex justify-between items-center shrink-0">
                 <h3 id="modal-title" class="font-bold text-base sm:text-lg truncate pr-4">Titre de l'article</h3>
                 <div class="flex items-center gap-3">
@@ -175,8 +176,49 @@
                     </button>
                 </div>
             </div>
-            <div class="flex-grow flex items-center justify-center p-2 sm:p-6 bg-gray-50 relative iframe-container overflow-hidden">
-                <iframe id="modal-iframe" class="w-full h-full max-w-5xl rounded-2xl shadow-2xl bg-black border-0" allow="autoplay; fullscreen"></iframe>
+
+            <!-- Onglets d'action dans la modale (Lecture vs Répondre) -->
+            <div class="bg-orange-50 border-b border-orange-200 px-6 py-2 flex items-center gap-4 shrink-0 text-sm font-bold">
+                <button onclick="switchModalTab('reading')" id="tab-reading-btn" class="text-joy-orange border-b-2 border-joy-orange pb-1 transition cursor-pointer">
+                    <i class="fa-solid fa-book-open mr-1"></i> Lecture de l'article
+                </button>
+                <button onclick="switchModalTab('responses')" id="tab-responses-btn" class="text-gray-500 hover:text-joy-orange pb-1 transition cursor-pointer">
+                    <i class="fa-solid fa-comments mr-1"></i> Réponses citoyennes (<span id="responses-count-badge">0</span>)
+                </button>
+            </div>
+
+            <!-- Contenu de la modale -->
+            <div class="flex-grow relative overflow-hidden flex flex-col bg-gray-50">
+                <!-- Panneau 1 : L'iframe de lecture -->
+                <div id="panel-reading" class="w-full h-full p-2 sm:p-6 iframe-container overflow-hidden flex items-center justify-center">
+                    <iframe id="modal-iframe" class="w-full h-full max-w-5xl rounded-2xl shadow-2xl bg-black border-0" allow="autoplay; fullscreen"></iframe>
+                </div>
+
+                <!-- Panneau 2 : Section pour répondre à l'article -->
+                <div id="panel-responses" class="w-full h-full p-4 sm:p-6 overflow-y-auto hidden space-y-6">
+                    <div class="bg-white p-6 rounded-2xl border border-orange-200 shadow-sm space-y-4">
+                        <h4 class="font-extrabold text-joy-dark text-base flex items-center gap-2">
+                            <i class="fa-solid fa-pen-nib text-joy-orange"></i> Laisser une réponse ou un avis citoyen
+                        </h4>
+                        <div class="space-y-3">
+                            <input type="text5" id="response-author" placeholder="Votre nom ou pseudonyme (ex: Citoyen éclairé)" class="w-full px-4 py-2.5 bg-gray-50 border border-orange-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-joy-orange transition">
+                            <textarea id="response-text" rows="3" placeholder="Exprimez votre point de vue sur cet article..." class="w-full px-4 py-2.5 bg-gray-50 border border-orange-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-joy-orange transition"></textarea>
+                            <div class="flex justify-end">
+                                <button onclick="submitResponse()" class="bg-joy-orange hover:bg-orange-600 text-white font-bold text-xs px-5 py-2.5 rounded-xl transition shadow-md shadow-orange-500/20 cursor-pointer inline-flex items-center gap-2">
+                                    <i class="fa-solid fa-paper-plane"><span> Publier la réponse</span></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Liste des réponses postées -->
+                    <div class="space-y-3">
+                        <h5 class="font-bold text-gray-700 text-sm uppercase tracking-wider">Réponses de la communauté</h5>
+                        <div id="responses-list" class="space-y-3">
+                            <!-- Injecté dynamiquement -->
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -268,6 +310,107 @@
         let displayedArticleLimit = 9; 
         let displayedVideoLimit = 9;
         let currentSelectedCategory = 'Tous';
+        let currentArticleTitle = ''; // Pour gérer les réponses et vues de l'article ouvert
+
+        // --- GESTION DES VUES ---
+        function getArticleViews(title) {
+            if (!title) return 0;
+            const key = 'article_views_' + title.trim();
+            return parseInt(localStorage.getItem(key)) || 0;
+        }
+
+        function incrementArticleViews(title) {
+            if (!title) return 0;
+            const key = 'article_views_' + title.trim();
+            let views = parseInt(localStorage.getItem(key)) || 0;
+            views++;
+            localStorage.setItem(key, views);
+            return views;
+        }
+
+        // --- GESTION DES RÉPONSES AUX ARTICLES ---
+        function getArticleResponses(title) {
+            if (!title) return [];
+            const key = 'article_responses_' + title.trim();
+            try {
+                return JSON.parse(localStorage.getItem(key)) || [];
+            } catch(e) {
+                return [];
+            }
+        }
+
+        function saveArticleResponse(title, author, text) {
+            if (!title || !text.trim()) return;
+            const key = 'article_responses_' + title.trim();
+            const responses = getArticleResponses(title);
+            responses.unshift({
+                author: author.trim() || 'Citoyen Anonyme',
+                text: text.trim(),
+                date: new Date().toLocaleDateString('fr-FR', { day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit' })
+            });
+            localStorage.setItem(key, JSON.stringify(responses));
+        }
+
+        function switchModalTab(tab) {
+            const readingBtn = document.getElementById('tab-reading-btn');
+            const responsesBtn = document.getElementById('tab-responses-btn');
+            const readingPanel = document.getElementById('panel-reading');
+            const responsesPanel = document.getElementById('panel-responses');
+
+            if (tab === 'reading') {
+                readingBtn.className = "text-joy-orange border-b-2 border-joy-orange pb-1 transition cursor-pointer";
+                responsesBtn.className = "text-gray-500 hover:text-joy-orange pb-1 transition cursor-pointer";
+                readingPanel.classList.remove('hidden');
+                responsesPanel.classList.add('hidden');
+            } else {
+                responsesBtn.className = "text-joy-orange border-b-2 border-joy-orange pb-1 transition cursor-pointer";
+                readingBtn.className = "text-gray-500 hover:text-joy-orange pb-1 transition cursor-pointer";
+                responsesPanel.classList.remove('hidden');
+                readingPanel.classList.add('hidden');
+                renderResponsesList();
+            }
+        }
+
+        function renderResponsesList() {
+            const listContainer = document.getElementById('responses-list');
+            const countBadge = document.getElementById('responses-count-badge');
+            const responses = getArticleResponses(currentArticleTitle);
+
+            countBadge.textContent = responses.length;
+
+            if (responses.length === 0) {
+                listContainer.innerHTML = `<div class="text-center py-6 text-gray-400 text-sm bg-white rounded-2xl border border-orange-100">Aucune réponse pour le moment. Soyez le premier à donner votre avis !</div>`;
+                return;
+            }
+
+            let html = '';
+            responses.forEach(resp => {
+                html += `
+                    <div class="bg-white p-4 rounded-2xl border border-orange-100 shadow-sm space-y-1.5">
+                        <div class="flex justify-between items-center text-xs">
+                            <span class="font-extrabold text-joy-dark">${resp.author}</span>
+                            <span class="text-gray-400">${resp.date}</span>
+                        </div>
+                        <p class="text-gray-700 text-sm leading-relaxed">${resp.text}</p>
+                    </div>
+                `;
+            });
+            listContainer.innerHTML = html;
+        }
+
+        function submitResponse() {
+            const authorInput = document.getElementById('response-author');
+            const textInput = document.getElementById('response-text');
+
+            if (!textInput.value.trim()) {
+                alert("Veuillez écrire un message avant de publier.");
+                return;
+            }
+
+            saveArticleResponse(currentArticleTitle, authorInput.value, textInput.value);
+            textInput.value = '';
+            renderResponsesList();
+        }
 
         function getYouTubeId(url) {
             if (!url) return '';
@@ -309,14 +452,29 @@
 
         function openModal(title, url) {
             if (!url) return;
+            currentArticleTitle = title;
+            
+            // Incrémenter les vues à la lecture de l'article principal
+            incrementArticleViews(title);
+
             const modal = document.getElementById('content-modal');
             const modalTitle = document.getElementById('modal-title');
             const iframe = document.getElementById('modal-iframe');
 
             modalTitle.textContent = title;
             iframe.src = getEmbedUrl(url);
+            
+            // Remettre sur l'onglet lecture par défaut à l'ouverture
+            switchModalTab('reading');
+            
+            // Mettre à jour le badge de réponses dans l'onglet
+            document.getElementById('responses-count-badge').textContent = getArticleResponses(title).length;
+
             modal.classList.remove('hidden');
             document.body.style.overflow = 'hidden';
+
+            // Rafraîchir les cartes pour afficher le compteur mis à jour
+            renderArticles();
         }
 
         function openArticleByIndex(index) {
@@ -331,7 +489,6 @@
             document.body.style.overflow = 'auto';
         }
 
-        // Calculer le temps de lecture estimé
         function getReadingTime(text) {
             if (!text) return "1 min";
             const words = text.trim().split(/\s+/).length;
@@ -339,7 +496,6 @@
             return `${minutes} min`;
         }
 
-        // Partager l'article ouvert
         function shareCurrentArticle() {
             const title = document.getElementById('modal-title').textContent;
             if (navigator.share) {
@@ -354,7 +510,6 @@
             }
         }
 
-        // Bascule de la description et synchronisation de la carte voisine
         function toggleDesc(btn, index) {
             const container = btn.closest('.desc-container');
             if (!container) return;
@@ -425,7 +580,6 @@
             renderVideos();
         }
 
-        // Filtrer par catégorie en un clic
         function filterByCategory(category) {
             currentSelectedCategory = category;
             updateCategoryPills();
@@ -477,12 +631,16 @@
             articlesToDisplay.forEach((art, idx) => {
                 const realIndex = allArticles.findIndex(a => a === art);
                 const readingTime = getReadingTime(art.description);
+                const viewsCount = getArticleViews(art.titre);
 
                 html += `
                     <article class="bg-white rounded-3xl border border-orange-100 overflow-hidden shadow-sm hover:shadow-xl hover:-translate-y-1 transition duration-300 flex flex-col justify-between">
                         <div>
                             <div class="h-48 bg-gradient-to-br from-amber-100 to-orange-100 flex items-center justify-center text-joy-orange relative">
                                 <i class="fa-solid fa-newspaper text-4xl"></i>
+                                <span class="absolute bottom-3 left-3 bg-white/90 text-gray-700 text-[11px] font-bold px-2.5 py-1 rounded-lg shadow-sm">
+                                    👁️️ ${viewsCount} vue${viewsCount > 1 ? 's' : ''}
+                                </span>
                                 <span class="absolute bottom-3 right-3 bg-white/90 text-gray-700 text-[11px] font-bold px-2.5 py-1 rounded-lg shadow-sm">
                                     ⏱️ ${readingTime}
                                 </span>
@@ -520,7 +678,6 @@
             }
         }
 
-        // AFFICHAGE DES VIDÉOS
         function renderVideos() {
             const grid = document.getElementById('videos-grid');
             const searchInput = document.getElementById('search-input');
@@ -608,7 +765,6 @@
             renderVideos();
         }
 
-        // Chargement des données Google Sheets
         Papa.parse(csvUrl, {
             download: true,
             header: true,
