@@ -143,6 +143,11 @@
     <div class="form-container">
         <form id="monFormulaire" onsubmit="envoyerDon(event)">
             
+            <!-- Champ Pot de Miel (Honeypot) invisible contre les robots -->
+            <div style="display:none !important;" aria-hidden="true">
+                <input type="text" name="website_hp" id="website_hp" tabindex="-1" autocomplete="off">
+            </div>
+
             <div class="form-group">
                 <label>Identité amoureuse</label>
                 <input type="text" name="nom" placeholder="Ton Prénom de coeur / Pseudo (Enfant, Pro, Citoyen...)" required>
@@ -231,7 +236,7 @@
                     <option value="SAVOIR">💡 SAVOIRS (Apprendre, transmettre, partager un talent)</option>
                     <option value="VIE">🏠 VIE CITOYENNE (De personne à personne : repas, objets, logement, covoiturage)</option>
                     <option value="AIDE">💖 AIDE & HARMONIE (Urgence & Détresse : secours, écoute, aînés, garde)</option>
-                    <option value="REGULATION">⚖️ RÉGULATION (Aide sociale rapprochée, médiation, décisions collectives)</option>
+                    <option value="REGULATION">⚖️️ RÉGULATION (Aide sociale rapprochée, médiation, décisions collectives)</option>
                     <option value="IMPOT">📜 TRÉSOR PUBLIC (Pour la collectivité : réseaux, voirie, chantiers, parcs)</option>
                     <option value="AUTRE_CAT">🌈 AUTRE DOMAINE...</option>
                 </select>
@@ -463,7 +468,7 @@ Le jardin arrose les fleurs..." required></textarea>
         "La fraternité est un jardin sans fin 🌍",
         "S'entraider, c'est cultiver l'avenir 🌱",
         "Nouveau message de solidarité ! 💌",
-        "Regarde la bonté s'envoler... 🕊️️"
+        "Regarde la bonté s'envoler... 🕊"
     ];
     
     let aniX = -200, state = "FLY", targetY = 250, dropCount = 0;
@@ -531,6 +536,15 @@ Le jardin arrose les fleurs..." required></textarea>
 
     function envoyerDon(event) {
         event.preventDefault();
+
+        // Vérification Anti-Robot (Honeypot)
+        const hp = document.getElementById('website_hp').value;
+        if (hp && hp.trim() !== "") {
+            console.warn("Spam détecté !");
+            window.location.href = "merci_annonce.html";
+            return;
+        }
+
         const btn = document.getElementById('btnTexte');
         btn.innerText = "Semailles en cours... 🌱";
         btn.disabled = true;
