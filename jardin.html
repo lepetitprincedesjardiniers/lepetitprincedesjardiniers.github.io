@@ -302,14 +302,16 @@
         }
 
         function obtenirReponsesPourAnnonce(ann) {
-            const idOriginal = String(ann.Horodateur || ann.id || "").trim();
+            const idOriginal = String(ann.Horodateur || ann.date || ann.id || "").trim();
             if (!idOriginal) return [];
             const idCle = nettoyerCle(idOriginal);
 
             return toutesLesReponses.filter(rep => {
-                const refBrute = String(rep.ref_id || rep.Ref || rep.ref || rep.localisation || "").trim();
-                const refCle = nettoyerCle(refBrute);
-                return refCle.includes(idCle) || (idCle.length > 6 && refCle.includes(idCle.substring(0, 15)));
+                const refBrute = String(rep.ref_id || rep.Ref || rep.ref || "").trim();
+                const refNettoyee = refBrute.replace(/^Ref:/i, "").trim();
+                const refCle = nettoyerCle(refNettoyee);
+                
+                return refCle === idCle || (idCle.length > 5 && refCle.includes(idCle)) || (refCle.length > 5 && idCle.includes(refCle));
             });
         }
 
