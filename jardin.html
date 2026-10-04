@@ -28,8 +28,23 @@
         .search-item input { padding: 8px; border-radius: 10px; border: none; text-align: center; }
         
         .btn-group { display: flex; gap: 8px; flex-wrap: wrap; justify-content: center; margin-top: 5px; }
-        .btn-filtre-rapide { background: rgba(255,255,255,0.2); border: 1px solid white; color: white; padding: 6px 12px; border-radius: 20px; cursor: pointer; font-family: 'Comic Sans MS'; font-size: 0.8em; transition: 0.3s; }
-        .btn-filtre-rapide.actif { background: #fff !important; color: #008080 !important; font-weight: bold; }
+        .btn-filtre-rapide { background: rgba(255,255,255,0.2); border: 2px solid white; color: white; padding: 6px 12px; border-radius: 20px; cursor: pointer; font-family: 'Comic Sans MS'; font-size: 0.8em; transition: 0.3s; }
+        
+        /* Correspondance exacte des couleurs entre boutons et contours de cartes */
+        .btn-filtre-rapide[data-cat="Savoir"] { border-color: #ffc107; }
+        .btn-filtre-rapide[data-cat="Citoyenne"] { border-color: #9370DB; }
+        .btn-filtre-rapide[data-cat="Harmonie"] { border-color: #ff69b4; }
+        .btn-filtre-rapide[data-cat="Régulation"] { border-color: #4169E1; }
+        .btn-filtre-rapide[data-cat="Trésor"] { border-color: #00ced1; }
+        .btn-filtre-rapide[data-cat="Autre"] { border-color: #2E7D32; }
+
+        .btn-filtre-rapide.actif[data-cat="Savoir"] { background: #ffc107 !important; color: #000 !important; font-weight: bold; }
+        .btn-filtre-rapide.actif[data-cat="Citoyenne"] { background: #9370DB !important; color: #fff !important; font-weight: bold; }
+        .btn-filtre-rapide.actif[data-cat="Harmonie"] { background: #ff69b4 !important; color: #fff !important; font-weight: bold; }
+        .btn-filtre-rapide.actif[data-cat="Régulation"] { background: #4169E1 !important; color: #fff !important; font-weight: bold; }
+        .btn-filtre-rapide.actif[data-cat="Trésor"] { background: #00ced1 !important; color: #fff !important; font-weight: bold; }
+        .btn-filtre-rapide.actif[data-cat="Autre"] { background: #2E7D32 !important; color: #fff !important; font-weight: bold; }
+        .btn-filtre-rapide.btn-reset.actif { background: #fff !important; color: #008080 !important; font-weight: bold; }
 
         #sous-rubriques-container { display: none; width: 90%; background: rgba(255, 105, 180, 0.25); padding: 10px; border-radius: 15px; border: 2px dashed #ff1493; margin-top: 8px; text-align: center; }
         .select-sous-rubrique { padding: 6px 10px; border-radius: 12px; border: 2px solid #ff1493; font-family: 'Comic Sans MS'; font-size: 0.78em; background: white; color: #008080; font-weight: bold; cursor: pointer; outline: none; width: 80%; max-width: 450px; }
@@ -179,15 +194,16 @@
             "Autre": ["AUTRE_CAT"] 
         };
 
+        // Correspondance exacte des couleurs avec les boutons de filtres rapides
         const couleursBordures = {
             "SAVOIR": "#ffc107",       
             "VIE": "#9370DB",          
             "AIDE": "#ff69b4",         
             "URGENCE": "#ff69b4",      
-            "ECOUTE": "#ff69b4",       
-            "REGULATION": "#9370DB",   
+            "ECOUTE": "#ff69b4",      
+            "REGULATION": "#4169E1",   
             "IMPOT": "#00ced1",        
-            "AUTRE_CAT": "#008080"     
+            "AUTRE_CAT": "#2E7D32"     
         };
 
         const sousRubriquesData = {
@@ -308,7 +324,7 @@
         function obtenirReponsesPourAnnonce(ann) {
             let reponses = [];
             
-            const brutServer = ann.reponses_article || ann.reponsesarticle || ann.commentaires || "";
+            const brutServer = ann.reponses_article || ann.reponsesarticle || ann.commentaires || ann.reponses || "";
             if (brutServer) {
                 const parts = String(brutServer).split(" || ");
                 parts.forEach(p => {
@@ -427,7 +443,7 @@
                     }
                 });
 
-                document.getElementById('phrase-petit-prince').innerHTML = `✨ Aujourd'hui, le Petit Prince a pris soin de <b>${annoncesPrincipales.length}</b> fleurs resplendissantes dans le jardin du monde...`;
+                document.getElementById('phrase-petit-prince').innerHTML = `✨ Aujourd'hui, le Petit Prince has pris soin de <b>${annoncesPrincipales.length}</b> fleurs resplendissantes dans le jardin du monde...`;
                 
                 const urlParams = new URLSearchParams(window.location.search);
                 const catParam = urlParams.get('cat');
@@ -538,10 +554,11 @@
                 d.onclick = () => ouvrirGrandMessage(ann);
 
                 const dejaVote = localStorage.getItem('vote_' + idAnnonce);
-                let texteBoutonArrosage = `💧 Arroser (${ann.votes_arrosage || 0})`;
+                const nbVotes = parseInt(ann.votes_arrosage || ann.arrosage || ann.votes || 0);
+                let texteBoutonArrosage = `💧 Arroser (${nbVotes})`;
                 let styleDesactive = "";
                 if (dejaVote) {
-                    texteBoutonArrosage = `💧 Déjà arrosé (${ann.votes_arrosage || 0})`;
+                    texteBoutonArrosage = `💧 Déjà arrosé (${nbVotes})`;
                     styleDesactive = "disabled";
                 }
 
@@ -580,8 +597,9 @@
             jouerBip();
             animerPluieGouttes(e);
             
-            ann.votes_arrosage = (parseInt(ann.votes_arrosage) || 0) + 1;
-            btn.innerHTML = `💧 Arrosé ! (${ann.votes_arrosage})`;
+            const currentVotes = parseInt(ann.votes_arrosage || ann.arrosage || ann.votes || 0) + 1;
+            ann.votes_arrosage = currentVotes;
+            btn.innerHTML = `💧 Arrosé ! (${currentVotes})`;
             btn.style.background = "#C8E6C9";
             btn.disabled = true;
             
