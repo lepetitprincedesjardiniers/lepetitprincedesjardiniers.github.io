@@ -201,7 +201,7 @@
                             <i class="fa-solid fa-pen-nib text-joy-orange"></i> Laisser une réponse ou un avis citoyen
                         </h4>
                         <div class="space-y-3">
-                            <input type="text5" id="response-author" placeholder="Votre nom ou pseudonyme (ex: Citoyen éclairé)" class="w-full px-4 py-2.5 bg-gray-50 border border-orange-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-joy-orange transition">
+                            <input type="text" id="response-author" placeholder="Votre nom ou pseudonyme (ex: Citoyen éclairé)" class="w-full px-4 py-2.5 bg-gray-50 border border-orange-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-joy-orange transition">
                             <textarea id="response-text" rows="3" placeholder="Exprimez votre point de vue sur cet article..." class="w-full px-4 py-2.5 bg-gray-50 border border-orange-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-joy-orange transition"></textarea>
                             <div class="flex justify-end">
                                 <button onclick="submitResponse()" class="bg-joy-orange hover:bg-orange-600 text-white font-bold text-xs px-5 py-2.5 rounded-xl transition shadow-md shadow-orange-500/20 cursor-pointer inline-flex items-center gap-2">
@@ -310,28 +310,26 @@
         let displayedArticleLimit = 9; 
         let displayedVideoLimit = 9;
         let currentSelectedCategory = 'Tous';
-        let currentArticleTitle = ''; // Pour gérer les réponses et vues de l'article ouvert
+        let currentArticleIndex = 0; // Index unique de l'article actif
+        let currentArticleTitle = '';
 
-        // --- GESTION DES VUES ---
-        function getArticleViews(title) {
-            if (!title) return 0;
-            const key = 'article_views_' + title.trim();
+        // --- GESTION DES VUES PAR INDEX ---
+        function getArticleViews(index) {
+            const key = 'article_views_index_' + index;
             return parseInt(localStorage.getItem(key)) || 0;
         }
 
-        function incrementArticleViews(title) {
-            if (!title) return 0;
-            const key = 'article_views_' + title.trim();
+        function incrementArticleViews(index) {
+            const key = 'article_views_index_' + index;
             let views = parseInt(localStorage.getItem(key)) || 0;
             views++;
             localStorage.setItem(key, views);
             return views;
         }
 
-        // --- GESTION DES RÉPONSES AUX ARTICLES ---
-        function getArticleResponses(title) {
-            if (!title) return [];
-            const key = 'article_responses_' + title.trim();
+        // --- GESTION DES RÉPONSES PAR INDEX ---
+        function getArticleResponses(index) {
+            const key = 'article_responses_index_' + index;
             try {
                 return JSON.parse(localStorage.getItem(key)) || [];
             } catch(e) {
@@ -339,10 +337,10 @@
             }
         }
 
-        function saveArticleResponse(title, author, text) {
-            if (!title || !text.trim()) return;
-            const key = 'article_responses_' + title.trim();
-            const responses = getArticleResponses(title);
+        function saveArticleResponse(index, author, text) {
+            if (!text.trim()) return;
+            const key = 'article_responses_index_' + index;
+            const responses = getArticleResponses(index);
             responses.unshift({
                 author: author.trim() || 'Citoyen Anonyme',
                 text: text.trim(),
@@ -374,7 +372,7 @@
         function renderResponsesList() {
             const listContainer = document.getElementById('responses-list');
             const countBadge = document.getElementById('responses-count-badge');
-            const responses = getArticleResponses(currentArticleTitle);
+            const responses = getArticleResponses(currentArticleIndex);
 
             countBadge.textContent = responses.length;
 
@@ -407,7 +405,7 @@
                 return;
             }
 
-            saveArticleResponse(currentArticleTitle, authorInput.value, textInput.value);
+            saveArticleResponse(currentArticleIndex, authorInput.value, textInput.value);
             textInput.value = '';
             renderResponsesList();
         }
@@ -450,35 +448,34 @@
             container.onclick = null;
         }
 
-        function openModal(title, url) {
+        function openModal(title, url, index) {
             if (!url) return;
-            currentArticleTitle = title;
+            currentArticleIndex = index !== undefined ? index : 0;
+            currentArticleTitle = title || "Article sans titre";
             
-            // Incrémenter les vues à la lecture de l'article principal
-            incrementArticleViews(title);
+            // Incrémenter les vues basées sur l'index unique de l'article
+            incrementArticleViews(currentArticleIndex);
 
             const modal = document.getElementById('content-modal');
             const modalTitle = document.getElementById('modal-title');
             const iframe = document.getElementById('modal-iframe');
 
-            modalTitle.textContent = title;
+            modalTitle.textContent = currentArticleTitle;
             iframe.src = getEmbedUrl(url);
             
-            // Remettre sur l'onglet lecture par défaut à l'ouverture
             switchModalTab('reading');
-            
-            // Mettre à jour le badge de réponses dans l'onglet
-            document.getElementById('responses-count-badge').textContent = getArticleResponses(title).length;
+            document.getElementById('responses-count-badge').textContent = getArticleResponses(currentArticleIndex).length;
 
             modal.classList.remove('hidden');
             document.body.style.overflow = 'hidden';
 
-            // Rafraîchir les cartes pour afficher le compteur mis à jour
             renderArticles();
         }
 
         function openArticleByIndex(index) {
-            if (allArticles[index]) openModal(allArticles[index].titre, allArticles[index].lien);
+            if (allArticles[index]) {
+                openModal(allArticles[index].titre, allArticles[index].lien, index);
+            }
         }
 
         function closeModal() {
@@ -628,10 +625,10 @@
             }
 
             let html = '';
-            articlesToDisplay.forEach((art, idx) => {
+            articlesToDisplay.forEach((art) => {
                 const realIndex = allArticles.findIndex(a => a === art);
                 const readingTime = getReadingTime(art.description);
-                const viewsCount = getArticleViews(art.titre);
+                const viewsCount = getArticleViews(realIndex);
 
                 html += `
                     <article class="bg-white rounded-3xl border border-orange-100 overflow-hidden shadow-sm hover:shadow-xl hover:-translate-y-1 transition duration-300 flex flex-col justify-between">
@@ -639,7 +636,7 @@
                             <div class="h-48 bg-gradient-to-br from-amber-100 to-orange-100 flex items-center justify-center text-joy-orange relative">
                                 <i class="fa-solid fa-newspaper text-4xl"></i>
                                 <span class="absolute bottom-3 left-3 bg-white/90 text-gray-700 text-[11px] font-bold px-2.5 py-1 rounded-lg shadow-sm">
-                                    👁️️ ${viewsCount} vue${viewsCount > 1 ? 's' : ''}
+                                    👁 ${viewsCount} vue${viewsCount > 1 ? 's' : ''}
                                 </span>
                                 <span class="absolute bottom-3 right-3 bg-white/90 text-gray-700 text-[11px] font-bold px-2.5 py-1 rounded-lg shadow-sm">
                                     ⏱️ ${readingTime}
@@ -790,46 +787,17 @@
                     const date = cleanRow.date || "";
 
                     if (!titre) return;
-                    const safeTitle = titre.replace(/'/g, "\\'").replace(/"/g, '&quot;');
 
-                    if (pos === 'alaune-article') {
-                        alauneHTML = `
-                            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center">
-                                <div class="space-y-6">
-                                    <span class="inline-flex items-center gap-2 bg-joy-gold/20 text-joy-gold border border-joy-gold/30 px-3.5 py-1.5 rounded-full text-xs font-black uppercase tracking-wider">
-                                        <i class="fa-solid fa-bolt"></i> À la une • Enquête exclusive
-                                    </span>
-                                    <h2 class="text-3xl sm:text-4xl lg:text-5xl font-extrabold leading-tight tracking-tight text-white">
-                                        ${titre}
-                                    </h2>
-                                    <p class="text-amber-100/80 text-base sm:text-lg leading-relaxed">
-                                        ${desc}
-                                    </p>
-                                    <div class="flex flex-wrap gap-4 pt-2">
-                                        <button onclick="openModal('${safeTitle}', '${lien}')" class="bg-joy-gold text-joy-dark px-6 py-3.5 rounded-xl font-black hover:bg-amber-400 transition shadow-lg shadow-amber-500/20 inline-flex items-center gap-2 cursor-pointer">
-                                            Lire l'enquête <i class="fa-solid fa-arrow-right text-xs"></i>
-                                        </button>
-                                    </div>
-                                </div>
-                                <div class="relative rounded-2xl overflow-hidden shadow-2xl border border-white/10 bg-gray-900 p-6 sm:p-8 flex flex-col justify-center min-h-[250px] sm:min-h-[300px] cursor-pointer group" onclick="openModal('${safeTitle}', '${lien}')">
-                                    <span class="text-xs text-joy-gold font-bold uppercase tracking-wider mb-2">${cat}</span>
-                                    <h3 class="text-xl sm:text-2xl font-bold text-white mb-4 group-hover:text-amber-200 transition">${titre}</h3>
-                                    <p class="text-gray-300 text-sm line-clamp-3">${desc}</p>
-                                    <span class="mt-4 text-xs text-amber-300 font-bold flex items-center gap-1">Cliquez pour lire l'article <i class="fa-solid fa-external-link-alt"></i></span>
-                                </div>
-                            </div>
-                        `;
-                    } else if (pos === 'video' || pos === 'alaune-video' || getYouTubeId(lien)) {
+                    if (pos === 'video' || pos === 'alaune-video' || getYouTubeId(lien)) {
                         allVideos.push({ titre, description: desc, lien, categorie: cat, date });
                     } else {
                         allArticles.push({ titre, description: desc, lien, categorie: cat, date });
                     }
                 });
 
+                // Gérer l'affichage "À la une" en prenant l'article d'index 0 ou désigné
                 const alauneContainer = document.getElementById('alaune-content');
-                if (alauneHTML && alauneContainer) {
-                    alauneContainer.innerHTML = alauneHTML;
-                } else if (allArticles.length > 0) {
+                if (allArticles.length > 0) {
                     const firstArt = allArticles[0];
                     const safeTitle = firstArt.titre.replace(/'/g, "\\'").replace(/"/g, '&quot;');
                     alauneContainer.innerHTML = `
@@ -845,7 +813,7 @@
                                     ${firstArt.description}
                                 </p>
                                 <div class="flex flex-wrap gap-4 pt-2">
-                                    <button onclick="openModal('${safeTitle}', '${firstArt.lien}')" class="bg-joy-gold text-joy-dark px-6 py-3.5 rounded-xl font-black hover:bg-amber-400 transition shadow-lg shadow-amber-500/20 inline-flex items-center gap-2 cursor-pointer">
+                                    <button onclick="openModal('${safeTitle}', '${firstArt.lien}', 0)" class="bg-joy-gold text-joy-dark px-6 py-3.5 rounded-xl font-black hover:bg-amber-400 transition shadow-lg shadow-amber-500/20 inline-flex items-center gap-2 cursor-pointer">
                                         Lire l'article <i class="fa-solid fa-arrow-right text-xs"></i>
                                     </button>
                                 </div>
