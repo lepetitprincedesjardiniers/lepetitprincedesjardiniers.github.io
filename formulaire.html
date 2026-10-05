@@ -46,9 +46,11 @@
         .btn-envoyer { width: 100%; padding: 25px; background: #E67E22; color: white; border: none; border-radius: 20px; cursor: pointer; font-weight: bold; font-size: 1.2em; box-shadow: 0px 4px 0px #b35900; transition: 0.2s; }
         .btn-envoyer:active { transform: translateY(4px); box-shadow: 0px 0px 0px #b35900; }
 
-        footer { margin: 20px 0 80px 0; }
+        footer { margin: 20px 0 80px 0; text-align: center; }
         .copyright-link { color: #008080; text-decoration: none; font-weight: bold; transition: 0.3s; padding: 10px; cursor: pointer; display: inline-block; position: relative; z-index: 20; }
         .copyright-link:hover { color: #E67E22; text-shadow: 0 0 8px #fff; }
+        .journal-footer-link { color: #008080; text-decoration: none; font-weight: bold; display: inline-flex; align-items: center; justify-content: center; margin-top: 10px; transition: 0.3s; }
+        .journal-footer-link:hover { color: #E67E22; text-shadow: 0 0 8px #fff; }
 
         @media (max-width: 768px) {
             .menu-table, .menu-table tbody, .menu-table tr { display: flex; flex-wrap: wrap; justify-content: center; width: 95%; }
@@ -78,9 +80,6 @@
                 <td><a href="vie.html">Vie Citoyenne</a></td>
             </tr>
         </table>
-        <a href="ministere-de-lhonnetete.html" style="position: absolute; right: 20px; top: 50%; transform: translateY(-50%); color: #E67E22; background: transparent; text-decoration: none; font-weight: bold; font-size: 0.95em; white-space: nowrap;">
-            📰 Le Journal ►
-        </a>
     </div>
 
     <div class="guide-trigger" onclick="toggleGuide(event)">🌱 Ouvrir le Guide des Semailles</div>
@@ -325,7 +324,14 @@ Chaque don est une fleur qui ne se fane jamais." required></textarea>
     </div>
 
     <footer>
-        <a href="transition-externe.html" class="copyright-link">© 2000 Le petit prince des jardiniers</a>
+        <div>
+            <a href="merci.html" class="copyright-link">© PINON 2000 — Conçu avec le cœur et l'esprit libre par le #petitploucdesjardiniers.</a>
+        </div>
+        <div>
+            <a href="transition-externe.html" class="journal-footer-link">
+                📰&nbsp;&nbsp;journal de bord du #petitploucdesjardiniers, réflexions de l'auteur du site.
+            </a>
+        </div>
     </footer>
 
     <script>
