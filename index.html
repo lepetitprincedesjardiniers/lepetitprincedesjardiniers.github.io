@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>La Fraternité du Palais Nature - Accueil</title>
-    <meta name="description" content="Bienvenue à La Fraternité du Palais Nature. Partagez vos dons, savoirs, talents et actes de solidarité dans un espace d'entraide et de gratuité absolue." />
+<meta name="description" content="Bienvenue à La Fraternité du Palais Nature. Partagez vos dons, savoirs, talents et actes de solidarité dans un espace d'entraide et de gratuité absolue." />
     <script type="text/javascript">
         function googleTranslateElementInit() {
             new google.translate.TranslateElement({pageLanguage: 'fr'}, 'google_translate_element');
@@ -161,9 +161,7 @@
         #icone-meteo:hover { transform: scale(1.3) rotate(15deg); }
 
         #coffre-magique { position: fixed; font-size: 40px; z-index: 8; cursor: pointer; transition: 4s ease-in-out; filter: drop-shadow(0 0 10px gold); opacity: 0.85; }
-        
-        /* Oiseaux et messagers discrets */
-        .oiseau-volant { position: fixed; font-size: 28px; z-index: 7; transition: transform 14s linear; pointer-events: none; opacity: 0.7; }
+        .oiseau-volant { position: fixed; font-size: 30px; z-index: 7; transition: transform 7s linear; pointer-events: none; opacity: 0.8; }
 
         .journal-volant {
             position: fixed; font-size: 35px; z-index: 15; cursor: pointer;
@@ -171,11 +169,9 @@
         }
         .journal-volant:hover { transform: scale(1.3) rotate(20deg) !important; }
 
-        footer { padding: 35px 0; display: flex; justify-content: center; align-items: center; gap: 20px; flex-wrap: wrap; }
+        footer { padding: 35px 0; }
         .lien-copyright { color: var(--text-color); opacity: 0.5; text-decoration: none; font-weight: bold; font-size: 0.9em; transition: 0.3s; }
         .lien-copyright:hover { opacity: 1; text-shadow: 0 0 10px #fff; }
-        .lien-journal-bas { color: var(--text-color); opacity: 0.8; text-decoration: none; font-weight: bold; font-size: 0.9em; transition: 0.3s; text-shadow: 0 0 10px rgba(253,224,71,0.5); }
-        .lien-journal-bas:hover { opacity: 1; color: #fde047; }
 
         @media (max-width: 950px) {
             .paysage-cosmos { flex-direction: column; gap: 20px; }
@@ -214,6 +210,9 @@
                     <td><a href="vie.html">Vie Citoyenne</a></td>
                 </tr>
             </table>
+            <a href="ministere-de-lhonnetete.html" style="position: absolute; right: 20px; top: 50%; transform: translateY(-50%); color: #fde047; background: transparent; text-decoration: none; font-weight: bold; font-size: 0.95em; white-space: nowrap; text-shadow: 0 0 10px rgba(253,224,71,0.5);">
+                📰 Le Journal ►
+            </a>
         </div>
     </div>
 
@@ -284,7 +283,6 @@
 
     <footer>
         <a href="transition-externe.html" class="lien-copyright">© 2000 le petit prince des jardiniers</a>
-        <a href="ministere-de-lhonnetete.html" class="lien-journal-bas">📰 Le Journal du Ministère de l'honnêteté</a>
     </footer>
 
     <script>
@@ -387,12 +385,76 @@
             }
         }
 
-        // Gestion du son
-        let audio = new Audio('oiseaux.mp3'); audio.loop = true; let enLecture = false;
-        function toggleSon() {
-            if (!enLecture) { audio.play().catch(e=>{}); document.getElementById('btn-son').innerHTML = "🎶"; enLecture = true; } 
-            else { audio.pause(); document.getElementById('btn-son').innerHTML = "🕊️"; enLecture = false; }
+        // Gestion du son et des chants d'oiseaux divers
+        let audio = new Audio('oiseaux.mp3'); 
+        audio.loop = true; 
+        let enLecture = false;
+        let intervalOiseauxDivers = null;
+
+        // Liste de liens de sons d'oiseaux différents (merle, mésange, rossignol, etc.)
+        const audioOiseauxDivers = [
+            'https://upload.wikimedia.org/wikipedia/commons/b/b3/Turdus_merula_-_common_blackbird_singing.ogg',
+            'https://upload.wikimedia.org/wikipedia/commons/1/1d/Parus_major_-_Great_Tit_singing.ogg',
+            'https://upload.wikimedia.org/wikipedia/commons/8/8c/Erithacus_rubecula_-_European_robin_singing.ogg'
+        ];
+
+        function jouerOiseauDivers() {
+            if (!enLecture) return;
+            const randomBirdUrl = audioOiseauxDivers[Math.floor(Math.random() * audioOiseauxDivers.length)];
+            let petitSon = new Audio(randomBirdUrl);
+            petitSon.volume = 0.5;
+            petitSon.play().catch(e => {});
         }
+
+        function toggleSon() {
+            if (!enLecture) { 
+                audio.play().catch(e=>{}); 
+                document.getElementById('btn-son').innerHTML = "🎶"; 
+                enLecture = true; 
+                // Déclenche un son d'oiseau divers toutes les 8 à 15 secondes en plus du son principal
+                intervalOiseauxDivers = setInterval(jouerOiseauDivers, 10000);
+            } else { 
+                audio.pause(); 
+                document.getElementById('btn-son').innerHTML = "🕊️"; 
+                enLecture = false; 
+                if (intervalOiseauxDivers) clearInterval(intervalOiseauxDivers);
+            }
+        }
+
+        // Effet d'émojis colorés lorsqu'on clique sur la page
+        document.addEventListener('click', function(e) {
+            // Ne pas déclencher si on clique sur des éléments interactifs précis pour garder le confort
+            if(['A', 'BUTTON', 'INPUT', 'TEXTAREA'].includes(e.target.tagName)) return;
+            
+            const emojis = ['🌸', '🌺', '🌼', '🌻', '✨', '💖', '🌿', '🌟', '🐦', '🦋'];
+            const x = e.clientX;
+            const y = e.clientY;
+
+            for (let i = 0; i < 6; i++) {
+                const sparkle = document.createElement('div');
+                sparkle.style.position = 'fixed';
+                sparkle.style.left = x + 'px';
+                sparkle.style.top = y + 'px';
+                sparkle.style.fontSize = (Math.random() * 10 + 16) + 'px';
+                sparkle.style.zIndex = '9999';
+                sparkle.style.pointerEvents = 'none';
+                sparkle.innerHTML = emojis[Math.floor(Math.random() * emojis.length)];
+                document.body.appendChild(sparkle);
+
+                const angle = Math.random() * Math.PI * 2;
+                const distance = Math.random() * 80 + 30;
+
+                sparkle.animate([
+                    { transform: 'translate(0, 0) scale(1)', opacity: 1 },
+                    { transform: `translate(${Math.cos(angle) * distance}px, ${Math.sin(angle) * distance}px) scale(0)`, opacity: 0 }
+                ], {
+                    duration: 700,
+                    easing: 'ease-out'
+                });
+
+                setTimeout(() => sparkle.remove(), 700);
+            }
+        });
 
         // Déplacement du coffre magique
         const coffre = document.getElementById('coffre-magique');
@@ -416,19 +478,19 @@
             }
         }
 
-        // Oiseaux / papillons volants (discrets et espacés)
+        // Oiseaux / papillons volants
         function creerMessager() {
             const a = document.createElement('div'); a.className = 'oiseau-volant'; 
             a.innerHTML = ['🕊️', '🦋', '🐝'][Math.floor(Math.random()*3)];
             const fromLeft = Math.random() > 0.5;
-            a.style.top = Math.random() * (window.innerHeight - 100) + 'px';
+            a.style.top = Math.random()*window.innerHeight+'px';
             a.style.left = fromLeft ? '-60px' : '100vw';
             a.style.transform = fromLeft ? 'scaleX(1)' : 'scaleX(-1)';
             document.body.appendChild(a);
             setTimeout(() => a.style.transform += fromLeft ? ' translateX(120vw)' : ' translateX(-120vw)', 100);
-            setTimeout(() => a.remove(), 14000);
+            setTimeout(() => a.remove(), 7000);
         }
-        setInterval(creerMessager, 25000);
+        setInterval(creerMessager, 6000);
 
         // Journal volant
         function creerJournalVolant() {
