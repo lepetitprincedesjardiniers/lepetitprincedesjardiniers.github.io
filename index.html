@@ -364,9 +364,6 @@
                     <td><a href="vie.html">Vie Citoyenne</a></td>
                 </tr>
             </table>
-            <a href="ministere-de-lhonnetete.html" style="position: absolute; right: 20px; top: 50%; transform: translateY(-50%); color: #fde047; background: transparent; text-decoration: none; font-weight: bold; font-size: 0.95em; white-space: nowrap; text-shadow: 0 0 10px rgba(253,224,71,0.5);">
-                📰 Le Journal ►
-            </a>
         </div>
     </div>
 
@@ -493,7 +490,7 @@
         }
 
         // --- GESTION DES ÉMOJIS ET OISEAUX FLOTTANTS ALÉATOIRES ---
-        const emojiList = ['❄️', '💧', '🐦', '🕊️️', '🦅', '✨', '🌸', '🍃'];
+        const emojiList = ['❄️', '💧', '🐦', '🕊', '🦅', '✨', '🌸', '🍃'];
         const activeElements = [];
 
         function createEmoji(specificEmoji = null, startX = null, startY = null) {
@@ -521,7 +518,8 @@
             });
         }
 
-        for (let i = 0; i < 22; i++) {
+        // Réduction du nombre d'émojis flottants (passé de 22 à 12)
+        for (let i = 0; i < 12; i++) {
             createEmoji();
         }
 
@@ -550,7 +548,8 @@
 
             setTimeout(() => bird.remove(), 12000);
         }
-        setInterval(spawnFlyingBird, 6000);
+        // Intervalle de spawn des oiseaux augmenté pour en avoir un peu moins (de 6000 à 10000ms)
+        setInterval(spawnFlyingBird, 10000);
         spawnFlyingBird();
 
         const colorModes = [
@@ -636,7 +635,7 @@
             const icone = document.getElementById('icone-meteo');
             if (etatMeteo === 0) {
                 lancerAverse('💧', '#38bdf8');
-                icone.innerHTML = "🌧️";
+                icone.innerHTML = "🌧️️";
                 icone.title = "Cliquez pour faire tomber de la neige";
                 etatMeteo = 1;
             } else if (etatMeteo === 1) {
