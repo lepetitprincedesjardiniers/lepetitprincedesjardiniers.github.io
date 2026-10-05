@@ -28,8 +28,18 @@
         .search-item input { padding: 8px; border-radius: 10px; border: none; text-align: center; }
 
         .btn-group { display: flex; gap: 8px; flex-wrap: wrap; justify-content: center; margin-top: 5px; }
-        .btn-filtre-rapide { background: rgba(255,255,255,0.2); border: 1px solid white; color: white; padding: 6px 12px; border-radius: 20px; cursor: pointer; font-family: 'Comic Sans MS'; font-size: 0.8em; transition: 0.3s; }
-        .btn-filtre-rapide.actif { background: #fff !important; color: #008080 !important; font-weight: bold; }
+        
+        /* Boutons filtres avec des bordures personnalisées correspondant aux couleurs des rubriques */
+        .btn-filtre-rapide { background: rgba(255,255,255,0.2); border: 2px solid white; color: white; padding: 6px 12px; border-radius: 20px; cursor: pointer; font-family: 'Comic Sans MS'; font-size: 0.8em; transition: 0.3s; font-weight: bold; }
+        .btn-filtre-rapide[data-cat="Savoir"] { border-color: #ffc107; background: rgba(255, 193, 7, 0.2); }
+        .btn-filtre-rapide[data-cat="Citoyenne"] { border-color: #9370DB; background: rgba(147, 112, 219, 0.2); }
+        .btn-filtre-rapide[data-cat="Harmonie"] { border-color: #ff69b4; background: rgba(255, 105, 180, 0.2); }
+        .btn-filtre-rapide[data-cat="Régulation"] { border-color: #9370DB; background: rgba(147, 112, 219, 0.2); }
+        .btn-filtre-rapide[data-cat="Trésor"] { border-color: #00ced1; background: rgba(0, 206, 209, 0.2); }
+        .btn-filtre-rapide[data-cat="Autre"] { border-color: #008080; background: rgba(0, 128, 128, 0.3); }
+
+        .btn-filtre-rapide.actif { background: #fff !important; color: #008080 !important; font-weight: bold; box-shadow: 0 0 10px rgba(255,255,255,0.8); }
+        .btn-reset { border-color: #ffffff !important; background: rgba(255,255,255,0.1); }
 
         #sous-rubriques-container { display: none; width: 90%; background: rgba(255, 105, 180, 0.25); padding: 10px; border-radius: 15px; border: 2px dashed #ff1493; margin-top: 8px; text-align: center; }
         .select-sous-rubrique { padding: 6px 10px; border-radius: 12px; border: 2px solid #ff1493; font-family: 'Comic Sans MS'; font-size: 0.78em; background: white; color: #008080; font-weight: bold; cursor: pointer; outline: none; width: 80%; max-width: 450px; }
@@ -494,7 +504,6 @@
                 const d = document.createElement('div');
                 d.className = 'carte-message';
 
-                // Application dynamique de la couleur de bordure correspondant à la rubrique
                 const couleurBord = couleursBordures[typeAnnonce] || "#008080";
                 d.style.borderColor = couleurBord;
                 d.style.boxShadow = `3px 3px 0px ${couleurBord}`;
