@@ -204,15 +204,16 @@
 
         /* Boutons d'action en haut à droite */
         .boutons-header { position: fixed; top: 20px; right: 20px; z-index: 1000; display: flex; gap: 12px; align-items: center; }
-        #btn-son, #btn-info { background: none; border: none; color: #ffffff; cursor: pointer; font-size: 30px; filter: drop-shadow(0 0 8px rgba(255,255,255,0.8)); transition: 0.3s; padding: 0; }
-        #btn-son:hover, #btn-info:hover { transform: scale(1.25); }
+        #btn-son { background: none; border: none; color: #ffffff; cursor: pointer; font-size: 30px; filter: drop-shadow(0 0 8px rgba(255,255,255,0.8)); transition: 0.3s; padding: 0; }
+        #btn-son:hover { transform: scale(1.25); }
 
-        /* Icônes vagabondes */
-        .icone-jour-nuit { position: fixed; font-size: 38px; z-index: 12; cursor: pointer; transition: 4s ease-in-out, transform 0.3s; filter: drop-shadow(0 0 12px rgba(255, 215, 0, 0.8)); }
-        .icone-jour-nuit:hover { transform: scale(1.3) rotate(20deg); }
+        /* Icônes vagabondes magiques */
+        .icone-vagabonde { position: fixed; font-size: 36px; z-index: 12; cursor: pointer; transition: 4s ease-in-out, transform 0.3s; }
+        .icone-vagabonde:hover { transform: scale(1.3) rotate(15deg); }
 
-        #icone-meteo { position: fixed; font-size: 38px; z-index: 12; cursor: pointer; transition: 4s ease-in-out, transform 0.3s; filter: drop-shadow(0 0 12px rgba(135, 206, 250, 0.8)); }
-        #icone-meteo:hover { transform: scale(1.3) rotate(15deg); }
+        #icone-info { filter: drop-shadow(0 0 10px rgba(253, 224, 71, 0.8)); }
+        #icone-jour-nuit { filter: drop-shadow(0 0 12px rgba(255, 215, 0, 0.8)); }
+        #icone-meteo { filter: drop-shadow(0 0 12px rgba(135, 206, 250, 0.8)); }
 
         #coffre-magique { position: fixed; font-size: 40px; z-index: 8; cursor: pointer; transition: 4s ease-in-out; filter: drop-shadow(0 0 10px gold); opacity: 0.85; }
         .oiseau-volant { position: fixed; font-size: 30px; z-index: 7; transition: transform 7s linear; pointer-events: none; opacity: 0.8; }
@@ -236,9 +237,12 @@
         .fermer-modal:hover { transform: scale(1.2); }
 
         footer { padding: 20px 0 35px 0; }
-        .lien-footer-journal { display: inline-block; color: #fde047; text-decoration: underline; font-weight: bold; font-size: 0.88em; margin-bottom: 12px; transition: 0.3s; text-shadow: 0 0 8px rgba(253,224,71,0.3); }
-        .lien-footer-journal:hover { opacity: 1; transform: scale(1.05); }
-        .lien-copyright { color: var(--text-color); opacity: 0.6; text-decoration: none; font-weight: bold; font-size: 0.88em; transition: 0.3s; }
+        .lien-copyright { color: var(--text-color); opacity: 0.6; text-decoration: none; font-weight: bold; font-size: 0.88em; transition: 0.3s; display: inline-block; margin-bottom: 8px; }
+        .lien-copyright:hover { opacity: 1; }
+        
+        /* Lien du journal discret en bas */
+        .lien-footer-discret { display: block; color: var(--text-color); opacity: 0.45; text-decoration: none; font-size: 0.78em; transition: 0.3s; margin-top: 6px; font-style: italic; }
+        .lien-footer-discret:hover { opacity: 0.85; text-decoration: underline; }
 
         @media (max-width: 950px) {
             .paysage-cosmos { flex-direction: column; gap: 20px; }
@@ -259,18 +263,18 @@
     <div id="google_translate_element"></div>
     
     <div class="boutons-header">
-        <button id="btn-info" onclick="ouvrirModalInfo()" title="À propos & Informations">❓</button>
         <button id="btn-son" onclick="toggleSon()" title="Activer / couper le son">🕊</button>
     </div>
 
-    <!-- Icônes vagabondes magiques -->
-    <div id="icone-jour-nuit" class="icone-jour-nuit" onclick="clicJourNuit()" title="Attrape-moi pour changer le temps !">☀️</div>
-    <div id="icone-meteo" onclick="clicMeteo()" title="Attrape-moi pour faire de la pluie ou de la neige !">☁️</div>
+    <!-- Icônes vagabondes magiques (incluant le ? d'information) -->
+    <div id="icone-info" class="icone-vagabonde" onclick="ouvrirModalInfo()" title="À propos & Informations (Attrape-moi !)">❓</div>
+    <div id="icone-jour-nuit" class="icone-vagabonde" onclick="clicJourNuit()" title="Attrape-moi pour changer le temps !">☀️</div>
+    <div id="icone-meteo" class="icone-vagabonde" onclick="clicMeteo()" title="Attrape-moi pour faire de la pluie ou de la neige !">☁️</div>
 
     <div class="header-container">
         <div class="titre-fraternite">La Fraternité du Palais Nature</div>
 
-        <!-- Texte fixe d'introduction mis à jour -->
+        <!-- Texte fixe d'introduction -->
         <div class="texte-intro-fixe">
             Espace d'entraide et de gratuité absolue ouvert inconditionnellement à toutes et tous, sans distinction de parcours, d'âge, de forme, ou de situation. Partagez vos dons, savoirs, talents et besoins pour recréer de la solidarité authentique, du lien social bienveillant, et nourrir notre générosité collective.
         </div>
@@ -296,6 +300,7 @@
 
     <!-- PAYSAGE COSMOS -->
     <div class="paysage-cosmos">
+
         <!-- COLONNE GAUCHE -->
         <div class="colonne-cosmos">
             <a href="jardin.html?cat=IMPOT" class="rubrique-carte style-tresor flotte-a">
@@ -362,12 +367,11 @@
     </div>
 
     <div id="coffre-magique" onclick="exploserCadeau()" title="Coffre magique">🎁</div>
-    <!-- Éléments volants / magiques -->
     <a href="journal.html" class="journal-volant" id="journal-volant" title="Journal de bord du #petitploucdesjardiniers">📖</a>
 
     <footer>
-        <a href="journal.html" class="lien-footer-journal">journal de bord du #petitploucdesjardiniers, réflexions de l'auteur du site.</a><br>
-        <a href="#" class="lien-copyright" onclick="ouvrirModalInfo(); return false;">© PINON 2000 — Tous droits de partage et d'humanité réservés</a>
+        <a href="#" class="lien-copyright" onclick="ouvrirModalInfo(); return false;">© PINON 2000 — Tous droits de partage et d'humanité réservés</a><br>
+        <a href="journal.html" class="lien-footer-discret">journal de bord du #petitploucdesjardiniers, réflexions de l'auteur du site.</a>
     </footer>
 
     <!-- Fenêtre modale d'information -->
@@ -423,9 +427,45 @@
             icone.title = estEnJour ? 'Passer en mode Nuit étoilée' : 'Passer en mode Jour radieux';
         }
 
-        // Fonction météo (pluie / neige visuelle simple ou effet)
+        // Gestion Météo (Pluie / Neige interactive)
+        let modePluie = true;
         function clicMeteo() {
-            alert("Une douce brise traverse le jardin de la fraternité...");
+            if (modePluie) {
+                lancerAverse('💧');
+                document.getElementById('icone-meteo').innerHTML = "❄️";
+                modePluie = false;
+            } else {
+                lancerAverse('❄️');
+                document.getElementById('icone-meteo').innerHTML = "🌧️️";
+                modePluie = true;
+            }
+        }
+
+        function lancerAverse(symbole) {
+            for (let i = 0; i < 35; i++) {
+                const drop = document.createElement('div');
+                drop.style.position = 'fixed';
+                drop.style.left = Math.random() * window.innerWidth + 'px';
+                drop.style.top = '-30px';
+                drop.style.fontSize = (Math.random() * 12 + 16) + 'px';
+                drop.style.zIndex = '999';
+                drop.style.pointerEvents = 'none';
+                drop.innerHTML = symbole;
+                document.body.appendChild(drop);
+
+                const duree = Math.random() * 2000 + 1500;
+                const decalageX = (Math.random() - 0.5) * 80;
+
+                drop.animate([
+                    { transform: 'translateY(0px) translateX(0px)', opacity: 1 },
+                    { transform: `translateY(${window.innerHeight + 50}px) translateX(${decalageX}px)`, opacity: 0.3 }
+                ], {
+                    duration: duree,
+                    easing: 'linear'
+                });
+
+                setTimeout(() => drop.remove(), duree);
+            }
         }
 
         // Animation aléatoire des éléments volants (coffre, journal, icônes)
@@ -439,6 +479,7 @@
 
         setInterval(() => {
             deplacerElementAleatoirement('coffre-magique');
+            deplacerElementAleatoirement('icone-info');
             deplacerElementAleatoirement('icone-jour-nuit');
             deplacerElementAleatoirement('icone-meteo');
             deplacerElementAleatoirement('journal-volant');
@@ -446,7 +487,7 @@
 
         // Position initiale aléatoire
         window.onload = function() {
-            ['coffre-magique', 'icone-jour-nuit', 'icone-meteo', 'journal-volant'].forEach(id => {
+            ['coffre-magique', 'icone-info', 'icone-jour-nuit', 'icone-meteo', 'journal-volant'].forEach(id => {
                 const el = document.getElementById(id);
                 if(el) {
                     el.style.left = (Math.random() * (window.innerWidth - 100)) + 'px';
@@ -454,6 +495,7 @@
                 }
             });
         };
+
         // Gestion de l'audio d'ambiance
         let audioCtx = null;
         let isPlaying = false;
@@ -468,10 +510,9 @@
                     btn.textContent = "🕊✨";
                     btn.title = "Couper le son d'ambiance";
                     
-                    // Lancement d'une mélodie douce et aléatoire (notes de carillon/harpe)
                     intervalSon = setInterval(() => {
                         if (!isPlaying || !audioCtx) return;
-                        const notes = [261.63, 293.66, 329.63, 392.00, 440.00, 523.25]; // Do, Ré, Mi, Sol, La, Do
+                        const notes = [261.63, 293.66, 329.63, 392.00, 440.00, 523.25];
                         const note = notes[Math.floor(Math.random() * notes.length)];
                         
                         const osc = audioCtx.createOscillator();
