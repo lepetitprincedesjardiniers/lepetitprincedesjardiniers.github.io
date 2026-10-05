@@ -338,7 +338,7 @@
     <!-- Icônes vagabondes magiques -->
     <div id="icone-info" class="icone-vagabonde" onclick="ouvrirModalInfo()" title="À propos & Informations (Attrape-moi !)">❓</div>
     <div id="icone-jour-nuit" class="icone-vagabonde" onclick="clicJourNuit()" title="Attrape-moi pour changer le temps !">☀️</div>
-    <div id="icone-meteo" class="icone-vagabonde" onclick="clicMeteo()" title="Attrape-moi pour faire de la pluie ou de la neige !">☁</div>
+    <div id="icone-meteo" class="icone-vagabonde" onclick="clicMeteo()" title="Attrape-moi pour faire de la pluie ou de la neige !">☁️</div>
 
     <!-- Notification discrète cadeau -->
     <div id="notification-cadeau">🎁 Trésor capturé ! Abondance et partage offerts.</div>
@@ -361,7 +361,7 @@
                     <td><a href="jardin.html?cat=REGULATION">Régulation</a></td>
                     <td><a href="jardin.html?cat=AIDE">Aide & Harmonie</a></td>
                     <td><a href="jardin.html?cat=SAVOIR">Savoirs</a></td>
-                    <td><a href="vie.html">Vie Citoyenne</a></td>
+                    <td><a href="jardin.html?cat=VIE">Vie Citoyenne</a></td>
                 </tr>
             </table>
         </div>
@@ -406,7 +406,7 @@
 
         <!-- COLONNE DROITE -->
         <div class="colonne-cosmos">
-            <a href="jardin.html?cat=REGULATION" class="rubrique-carte style-regulation flotte-c">
+            <a href="jardin.html?cat=VIE" class="rubrique-carte style-regulation flotte-c">
                 <div style="padding-top: 6px;">
                     <h3 style="margin:0; font-size: 1em;">⚖️ Vie citoyenne</h3>
                     <div class="phrases-impots" style="margin-top: 6px;">Expose ta sincérité : la citoyenneté participative y répond avec délicatesse.</div>
@@ -439,7 +439,7 @@
     </div>
 
     <div id="coffre-magique" onclick="exploserCadeau()" title="Coffre magique">🎁</div>
-    <a href="ministere-de-lhonnetete.html" class="journal-volant" id="journal-volant" title="Journal de bord du #petitploucdesjardiniers">📖</a>
+    <a href="journal.html" class="journal-volant" id="journal-volant" title="Journal de bord du #petitploucdesjardiniers">📖</a>
 
     <footer>
         <a href="#" class="lien-copyright" onclick="ouvrirModalInfo(); return false;">© PINON 2000 — Tous droits de partage et d'humanité réservés</a><br>
@@ -518,6 +518,7 @@
             });
         }
 
+        // Réduction du nombre d'émojis flottants (passé de 22 à 12)
         for (let i = 0; i < 12; i++) {
             createEmoji();
         }
@@ -540,13 +541,14 @@
         function spawnFlyingBird() {
             const bird = document.createElement('div');
             bird.className = 'flying-bird';
-            const birds = ['🐦', '🕊️️', '🦅', '🦜'];
+            const birds = ['🐦', '🕊️', '🦅', '🦜'];
             bird.innerText = birds[Math.floor(Math.random() * birds.length)];
             bird.style.top = (Math.random() * (window.innerHeight / 2)) + 'px';
             document.body.appendChild(bird);
 
             setTimeout(() => bird.remove(), 12000);
         }
+        // Intervalle de spawn des oiseaux augmenté pour en avoir un peu moins (de 6000 à 10000ms)
         setInterval(spawnFlyingBird, 10000);
         spawnFlyingBird();
 
@@ -637,7 +639,7 @@
                 icone.title = "Cliquez pour faire tomber de la neige";
                 etatMeteo = 1;
             } else if (etatMeteo === 1) {
-                lancerAverse('❄️', '#ffffff');
+                lancerAverse('❄', '#ffffff');
                 icone.innerHTML = "❄️";
                 icone.title = "Cliquez pour revenir au nuage";
                 etatMeteo = 2;
