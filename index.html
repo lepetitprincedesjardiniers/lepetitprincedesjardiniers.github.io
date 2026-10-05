@@ -56,9 +56,25 @@
         #google_translate_element:hover { opacity: 1; }
 
         .header-container { position: relative; padding-top: 25px; z-index: 100; }
-        .titre-fraternite { display: block; font-size: 2.2em; letter-spacing: 4px; color: #fde047; text-shadow: 0 0 20px rgba(253,224,71,0.4); font-weight: bold; margin-bottom: 12px; }
+        .titre-fraternite { display: block; font-size: 2.2em; letter-spacing: 4px; color: #fde047; text-shadow: 0 0 20px rgba(253,224,71,0.4); font-weight: bold; margin-bottom: 6px; }
 
         body.day-mode .titre-fraternite { color: #d97706; text-shadow: 0 0 15px rgba(217,119,6,0.3); }
+
+        /* Texte fixe d'introduction directement sous le titre principal */
+        .texte-intro-fixe {
+            max-width: 850px;
+            margin: 8px auto 14px auto;
+            padding: 12px 22px;
+            font-size: 0.98em;
+            line-height: 1.5;
+            background: rgba(15, 23, 42, 0.35);
+            backdrop-filter: blur(8px);
+            border-radius: 18px;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+            position: relative;
+            z-index: 10;
+        }
 
         /* Menu pro et épuré */
         .menu-table { margin: 15px auto; border-radius: 12px; background: var(--menu-bg); backdrop-filter: blur(8px); border: 1px solid rgba(255,255,255,0.2); border-collapse: separate; border-spacing: 0; overflow: hidden; position: relative; z-index: 10; box-shadow: 0 8px 32px rgba(0,0,0,0.15); }
@@ -67,40 +83,27 @@
         .menu-table td:hover { background-color: rgba(0, 179, 179, 0.4); }
         .menu-table a { display: block; padding: 10px 18px; text-decoration: none; color: var(--text-color); font-weight: bold; font-size: 0.95em; }
 
-        /* Texte fixe explicatif sous le titre */
-        .texte-intro-fixe {
-            max-width: 850px;
-            margin: 20px auto 10px auto;
-            padding: 15px 25px;
-            font-size: 1.05em;
-            line-height: 1.6;
-            background: rgba(15, 23, 42, 0.35);
-            backdrop-filter: blur(8px);
-            border-radius: 20px;
-            border: 1px solid rgba(255, 255, 255, 0.15);
-            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
-        }
-
-        /* Bandeau défilant bas de page */
+        /* Bandeau défilant bas de page : largeur cadrée sur les rubriques */
         .bandeau-defilant {
-            width: 100%;
+            max-width: 1100px;
+            margin: 30px auto 15px auto;
             overflow: hidden;
             background: rgba(15, 23, 42, 0.55);
             backdrop-filter: blur(6px);
-            border-top: 1px solid rgba(255, 255, 255, 0.15);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.15);
-            padding: 10px 0;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 16px;
+            padding: 9px 0;
             font-size: 0.85em;
             white-space: nowrap;
             position: relative;
             z-index: 20;
-            margin: 35px 0 15px 0;
+            box-shadow: 0 6px 24px rgba(0,0,0,0.2);
         }
 
         .bandeau-contenu {
             display: inline-block;
             white-space: nowrap;
-            animation: defilementInfini 55s linear infinite;
+            animation: defilementInfini 60s linear infinite;
         }
 
         .bandeau-contenu span {
@@ -190,343 +193,7 @@
         .style-regulation:hover { transform: translateY(-5px); border-color: #9370DB; background: rgba(147, 112, 219, 0.2); box-shadow: 0 12px 40px rgba(147,112,219,0.3); }
 
         .style-savoir { border: 2px solid rgba(255, 193, 7, 0.6); }
-        .style-savoir:hover { transform: translateY(-5px); border-color: #ffc107; background: rgba(255, 193, 7, 0.2); box-shadow: 0 12px 40px rgba(255,193,7,0.3); }
+        .style-savoir:hover { transform: translateY(-5px); border-color: #ffc107; background: rgba(255, 193, 7, 0.2); box-shadow: 0 12px 40px rgba(255,193,7,0.2); }
 
         .phrases-impots { font-size: 0.78em; color: var(--text-color); opacity: 0.9; font-weight: bold; margin: 3px 0; line-height: 1.3; }
-        .liste-exemples-discrets { font-size: 0.68em; color: var(--text-color); opacity: 0.7; font-style: italic; list-style: none; padding: 0; margin: 4px 0 0 0; border-top: 1px dashed rgba(255,255,255,0.2); padding-top: 4px; }
-
-        .star { position: fixed; color: white; z-index: -1; opacity: var(--star-opacity); animation: twinkle var(--duration) infinite ease-in-out, moveStar var(--move-duration) linear infinite; transition: opacity 0.5s; }
-        @keyframes twinkle { 0%, 100% { opacity: calc(0.2 * var(--star-opacity)); transform: scale(0.7); } 50% { opacity: var(--star-opacity); transform: scale(1.2); } }
-        @keyframes moveStar { from { transform: translateX(-10vw); } to { transform: translateX(110vw); } }
-
-        #btn-son { position: fixed; top: 20px; right: 20px; z-index: 1000; background: none; border: none; color: var(--text-color); cursor: pointer; font-size: 32px; filter: drop-shadow(0 0 8px rgba(255,255,255,0.5)); transition: 0.3s; }
-        #btn-son:hover { transform: scale(1.2); }
-
-        /* Icône Jour/Nuit vagabonde */
-        .icone-jour-nuit { 
-            position: fixed; font-size: 38px; z-index: 12; cursor: pointer; 
-            transition: 4s ease-in-out, transform 0.3s; 
-            filter: drop-shadow(0 0 12px rgba(255, 215, 0, 0.8)); 
-        }
-        .icone-jour-nuit:hover { transform: scale(1.3) rotate(20deg); }
-
-        /* Icône Météo vagabonde (Pluie/Neige) */
-        #icone-meteo { 
-            position: fixed; font-size: 38px; z-index: 12; cursor: pointer; 
-            transition: 4s ease-in-out, transform 0.3s; 
-            filter: drop-shadow(0 0 12px rgba(135, 206, 250, 0.8)); 
-        }
-        #icone-meteo:hover { transform: scale(1.3) rotate(15deg); }
-
-        #coffre-magique { position: fixed; font-size: 40px; z-index: 8; cursor: pointer; transition: 4s ease-in-out; filter: drop-shadow(0 0 10px gold); opacity: 0.85; }
-        .oiseau-volant { position: fixed; font-size: 30px; z-index: 7; transition: transform 7s linear; pointer-events: none; opacity: 0.8; }
-
-        .journal-volant {
-            position: fixed; font-size: 35px; z-index: 15; cursor: pointer;
-            filter: drop-shadow(0 0 10px #f59e0b); transition: transform 8s linear; text-decoration: none;
-        }
-        .journal-volant:hover { transform: scale(1.3) rotate(20deg) !important; }
-
-        footer { padding: 25px 0 35px 0; }
-        .lien-copyright { color: var(--text-color); opacity: 0.5; text-decoration: none; font-weight: bold; font-size: 0.9em; transition: 0.3s; }
-        .lien-copyright:hover { opacity: 1; text-shadow: 0 0 10px #fff; }
-
-        @media (max-width: 950px) {
-            .paysage-cosmos { flex-direction: column; gap: 20px; }
-            .colonne-cosmos { max-width: 100%; width: 100%; }
-            .titre-fraternite { font-size: 1.5em; }
-            .menu-table, .menu-table tbody, .menu-table tr { display: flex; flex-wrap: wrap; justify-content: center; width: 95%; }
-            .menu-table td { flex: 1 1 28%; text-align: center; padding: 6px 2px; font-size: 0.8em; border-right: none; }
-            .terre-don { width: 250px; height: 250px; }
-            .texte-semis { font-size: 1em; }
-            .rubrique-carte { height: auto; min-height: 190px; }
-            .texte-intro-fixe { width: 90%; font-size: 0.95em; padding: 12px 15px; }
-        }
-    </style>
-</head>
-<body class="night-mode">
-
-    <div id="google_translate_element"></div>
-    <button id="btn-son" onclick="toggleSon()" title="Activer / couper le son">🕊</button>
-
-    <!-- Icônes vagabondes magiques -->
-    <div id="icone-jour-nuit" class="icone-jour-nuit" onclick="clicJourNuit()" title="Attrape-moi pour changer le temps !">☀️</div>
-    <div id="icone-meteo" onclick="clicMeteo()" title="Attrape-moi pour faire de la pluie ou de la neige !">☁️</div>
-
-    <div class="header-container">
-        <div class="titre-fraternite">La Fraternité du Palais Nature</div>
-
-        <div style="position: relative; display: flex; justify-content: center; align-items: center; width: 100%; margin: 15px 0 5px 0;">
-            <table class="menu-table" style="margin: 0 !important;">
-                <tr>
-                    <td><a href="index.html">Accueil</a></td>
-                    <td><a href="formulaire.html">Semer</a></td>
-                    <td><a href="jardin.html">Le Jardin</a></td>
-                    <td><a href="jardin.html?cat=IMPOT">Trésor Public</a></td>
-                    <td><a href="jardin.html?cat=REGULATION">Régulation</a></td>
-                    <td><a href="jardin.html?cat=AIDE">Aide & Harmonie</a></td>
-                    <td><a href="jardin.html?cat=SAVOIR">Savoirs</a></td>
-                    <td><a href="vie.html">Vie Citoyenne</a></td>
-                </tr>
-            </table>
-            <a href="ministere-de-lhonnetete.html" style="position: absolute; right: 20px; top: 50%; transform: translateY(-50%); color: #fde047; background: transparent; text-decoration: none; font-weight: bold; font-size: 0.95em; white-space: nowrap; text-shadow: 0 0 10px rgba(253,224,71,0.5);">
-                📰 Le Journal ►
-            </a>
-        </div>
-    </div>
-
-    <!-- Texte fixe d'introduction posé sous le menu -->
-    <div class="texte-intro-fixe">
-        <b>Un espace d'écoute, de compréhension et de générosité.</b><br>
-        Cultiver l'altruisme, l'équilibre et la richesse sociale pour rompre l'isolement, recréer de vrais liens humains et agir ensemble contre la précarité.
-    </div>
-
-    <!-- Soleil central supérieur -->
-    <a href="formulaire.html" class="soleil-cadre"><h1>ESPACE DU SEMIS DE DON ENTIER</h1></a>
-
-    <!-- PAYSAGE COSMOS -->
-    <div class="paysage-cosmos">
-
-        <!-- COLONNE GAUCHE -->
-        <div class="colonne-cosmos">
-            <a href="jardin.html?cat=IMPOT" class="rubrique-carte style-tresor flotte-a">
-                <div style="padding-top: 6px;">
-                    <h3 style="margin:0; font-size: 1em;">📜 Trésor Public</h3>
-                    <p style="font-size: 0.75em; font-weight: bold; margin: 3px 0;">Un Don pluriel</p>
-                    <div class="phrases-impots">Rassemble les bras et les têtes volontaires pour faire vivre nos biens communs essentiels.</div>
-                </div>
-                <div class="liste-exemples-discrets">
-                    Ex : eau, énergie, voirie et espaces verts.
-                </div>
-            </a>
-
-            <a href="jardin.html?cat=AIDE" class="rubrique-carte style-urgence flotte-b">
-                <div style="padding-top: 6px;">
-                    <h3 style="margin:0; font-size: 1em;">💖 Aide & Harmonie</h3>
-                    <div class="phrases-impots" style="margin-top: 6px;">Entraide et secours du quotidien. Partageons ensemble les câlins du cœur.</div>
-                </div>
-                <div class="liste-exemples-discrets">
-                    Ex : santé, urgence, écoute et réconfort
-                </div>
-            </a>
-        </div>
-
-        <!-- CENTRE : La Terre animée -->
-        <div class="centre-terre-cosmos">
-            <a href="jardin.html" class="terre-don">
-                <div class="texte-semis"><b>Le Jardin Public des Fraternels</b></div>
-            </a>
-        </div>
-
-        <!-- COLONNE DROITE -->
-        <div class="colonne-cosmos">
-            <a href="jardin.html?cat=REGULATION" class="rubrique-carte style-regulation flotte-c">
-                <div style="padding-top: 6px;">
-                    <h3 style="margin:0; font-size: 1em;">⚖️ Vie citoyenne</h3>
-                    <div class="phrases-impots" style="margin-top: 6px;">Expose ta sincérité : la citoyenneté participative y répond avec délicatesse.</div>
-                </div>
-                <div class="liste-exemples-discrets">
-                    Ex : dialogues, chartes, régulation et paix de la cité.
-                </div>
-            </a>
-
-            <a href="jardin.html?cat=SAVOIR" class="rubrique-carte style-savoir flotte-d">
-                <div style="padding-top: 6px;">
-                    <h3 style="margin:0; font-size: 1em;">💡 Savoirs</h3>
-                    <div class="phrases-impots" style="font-size: 0.78em; margin-top: 6px;">Partageons nos connaissances et les trésors de l'intelligence.</div>
-                    <div class="phrases-impots" style="font-size: 0.78em; margin-top: 4px;">Bibliothèque vivante.</div>
-                </div>
-                <div class="liste-exemples-discrets">
-                    Ex : Éclosion, transmettre, créer, ateliers et manuels.
-                </div>
-            </a>
-        </div>
-
-    </div>
-
-    <!-- Bandeau défilant placé en bas (au-dessus du footer) -->
-    <div class="bandeau-defilant">
-        <div class="bandeau-contenu">
-            <span>✦ Espace de gratuité absolue, d'écoute et de compréhension ✦ Cultiver l'altruisme, la générosité et l'équilibre ✦ Retrouver la richesse sociale, le partage et l'entraide ✦ Rompre l'isolement & recréer de vrais liens humains ✦ Agir ensemble contre la misère et la précarité ✦ Échange de dons, savoirs, talents et services ✦ Une alternative citoyenne au système monétaire et aux SEL ✦ Accueil inconditionnel : sans-abri, exclus, marginaux, non-conformistes & esprits libres ✦</span>
-            <span>✦ Espace de gratuité absolue, d'écoute et de compréhension ✦ Cultiver l'altruisme, la générosité et l'équilibre ✦ Retrouver la richesse sociale, le partage et l'entraide ✦ Rompre l'isolement & recréer de vrais liens humains ✦ Agir ensemble contre la misère et la précarité ✦ Échange de dons, savoirs, talents et services ✦ Une alternative citoyenne au système monétaire et aux SEL ✦ Accueil inconditionnel : sans-abri, exclus, marginaux, non-conformistes & esprits libres ✦</span>
-        </div>
-    </div>
-
-    <div id="coffre-magique" onclick="exploserCadeau()" title="Coffre magique">🎁</div>
-
-    <footer>
-        <div style="max-width: 820px; margin: 0 auto 20px auto; padding: 0 15px; font-size: 0.8em; opacity: 0.65; line-height: 1.5; font-style: italic;">
-            La Fraternité du Palais Nature est un espace d'entraide et de gratuité absolue ouvert inconditionnellement à toutes et tous, sans distinction de parcours ou de situation. Partagez vos dons, savoirs, talents et besoins pour recréer du lien et fraterniser.
-        </div>
-        <a href="transition-externe.html" class="lien-copyright">© 2000 le petit prince des jardiniers</a>
-    </footer>
-
-    <script>
-        // Création des étoiles de fond
-        function createStar() {
-            let s = document.createElement('div'); s.className = 'star';
-            s.innerHTML = ['✦','★','✶','✧'][Math.floor(Math.random()*4)];
-            s.style.left = Math.random()*100 + 'vw'; s.style.top = Math.random()*100 + 'vh';
-            s.style.setProperty('--duration', (Math.random()*3+2)+'s');
-            s.style.setProperty('--move-duration', (Math.random()*60+40)+'s');
-            document.body.appendChild(s);
-        }
-        for(let i=0; i<85; i++) createStar();
-
-        // Icône Jour / Nuit vagabonde
-        const iconeJN = document.getElementById('icone-jour-nuit');
-        let jnX = 150, jnY = 150;
-        function moveJourNuit() {
-            jnX = Math.random() * (window.innerWidth - 100);
-            jnY = Math.random() * (window.innerHeight - 100);
-            iconeJN.style.left = jnX + 'px';
-            iconeJN.style.top = jnY + 'px';
-        }
-        setInterval(moveJourNuit, 6000); moveJourNuit();
-
-        function clicJourNuit() {
-            const body = document.body;
-            if (body.classList.contains('night-mode')) {
-                body.classList.replace('night-mode', 'day-mode');
-                iconeJN.innerHTML = "🌙";
-            } else {
-                body.classList.replace('day-mode', 'night-mode');
-                iconeJN.innerHTML = "☀️";
-            }
-            exploserEffetJN(jnX, jnY);
-        }
-
-        function exploserEffetJN(x, y) {
-            const els = ['✨', '🌟', '💫', '☀', '🌙'];
-            for(let i=0; i<15; i++) {
-                const p = document.createElement('div');
-                p.style.position = 'fixed'; p.style.left = x+'px'; p.style.top = y+'px';
-                p.innerHTML = els[Math.floor(Math.random()*els.length)];
-                document.body.appendChild(p);
-                const a = Math.random()*Math.PI*2, d = Math.random()*120+40;
-                p.animate([{transform:'scale(1)', opacity:1}, {transform:`translate(${Math.cos(a)*d}px, ${Math.sin(a)*d}px) scale(0)`, opacity:0}], {duration:800});
-                setTimeout(() => p.remove(), 800);
-            }
-        }
-
-        // Icône Météo vagabonde (Pluie / Neige)
-        const iconeMeteo = document.getElementById('icone-meteo');
-        let mX = 200, mY = 200;
-        let modePluie = true;
-
-        function moveMeteo() {
-            mX = Math.random() * (window.innerWidth - 100);
-            mY = Math.random() * (window.innerHeight - 100);
-            iconeMeteo.style.left = mX + 'px';
-            iconeMeteo.style.top = mY + 'px';
-        }
-        setInterval(moveMeteo, 7000); moveMeteo();
-
-        function clicMeteo() {
-            if (modePluie) {
-                lancerAverse('💧');
-                iconeMeteo.innerHTML = "❄️";
-                modePluie = false;
-            } else {
-                lancerAverse('❄️');
-                iconeMeteo.innerHTML = "🌧️";
-                modePluie = true;
-            }
-        }
-
-        function lancerAverse(symbole) {
-            for (let i = 0; i < 35; i++) {
-                const drop = document.createElement('div');
-                drop.style.position = 'fixed';
-                drop.style.left = Math.random() * window.innerWidth + 'px';
-                drop.style.top = '-30px';
-                drop.style.fontSize = (Math.random() * 12 + 16) + 'px';
-                drop.style.zIndex = '999';
-                drop.style.pointerEvents = 'none';
-                drop.innerHTML = symbole;
-                document.body.appendChild(drop);
-
-                const duree = Math.random() * 2000 + 1500;
-                const decalageX = (Math.random() - 0.5) * 80;
-
-                drop.animate([
-                    { transform: 'translateY(0px) translateX(0px)', opacity: 1 },
-                    { transform: `translateY(${window.innerHeight + 50}px) translateX(${decalageX}px)`, opacity: 0.3 }
-                ], {
-                    duration: duree,
-                    easing: 'linear'
-                });
-
-                setTimeout(() => drop.remove(), duree);
-            }
-        }
-
-        // Gestion du son
-        let audio = new Audio('oiseaux.mp3'); audio.loop = true; let enLecture = false;
-        function toggleSon() {
-            if (!enLecture) { audio.play().catch(e=>{}); document.getElementById('btn-son').innerHTML = "🎶"; enLecture = true; } 
-            else { audio.pause(); document.getElementById('btn-son').innerHTML = "🕊"; enLecture = false; }
-        }
-
-        // Déplacement du coffre magique
-        const coffre = document.getElementById('coffre-magique');
-        let cX = 100, cY = 100;
-        function move() {
-            cX = Math.random()*(window.innerWidth-100); cY = Math.random()*(window.innerHeight-100);
-            coffre.style.left = cX+'px'; coffre.style.top = cY+'px';
-        }
-        setInterval(move, 4500); move();
-
-        function exploserCadeau() {
-            const els = ['🌸', '✨', '🌻', '🌟', '❤️'];
-            for(let i=0; i<20; i++) {
-                const p = document.createElement('div');
-                p.style.position = 'fixed'; p.style.left = cX+'px'; p.style.top = cY+'px';
-                p.innerHTML = els[Math.floor(Math.random()*els.length)];
-                document.body.appendChild(p);
-                const a = Math.random()*Math.PI*2, d = Math.random()*150+50;
-                p.animate([{transform:'scale(1)', opacity:1}, {transform:`translate(${Math.cos(a)*d}px, ${Math.sin(a)*d}px) scale(0)`, opacity:0}], {duration:1000});
-                setTimeout(() => p.remove(), 1000);
-            }
-        }
-
-        // Oiseaux / papillons volants
-        function creerMessager() {
-            const a = document.createElement('div'); a.className = 'oiseau-volant'; 
-            a.innerHTML = ['🕊️', '🦋', '🐝'][Math.floor(Math.random()*3)];
-            const fromLeft = Math.random() > 0.5;
-            a.style.top = Math.random()*window.innerHeight+'px';
-            a.style.left = fromLeft ? '-60px' : '100vw';
-            a.style.transform = fromLeft ? 'scaleX(1)' : 'scaleX(-1)';
-            document.body.appendChild(a);
-            setTimeout(() => a.style.transform += fromLeft ? ' translateX(120vw)' : ' translateX(-120vw)', 100);
-            setTimeout(() => a.remove(), 7000);
-        }
-        setInterval(creerMessager, 6000);
-
-        // Journal volant
-        function creerJournalVolant() {
-            const j = document.createElement('a');
-            j.href = 'https://lepetitprincedesjardiniers.github.io/ministere-de-lhonnetete.html#apropos';
-            j.className = 'journal-volant';
-            j.innerHTML = '📰';
-            j.title = 'Ministère de l\'honnêteté - À propos';
-
-            const fromLeft = Math.random() > 0.5;
-            j.style.top = (Math.random() * (window.innerHeight - 150)) + 'px';
-            j.style.left = fromLeft ? '-70px' : '100vw';
-
-            document.body.appendChild(j);
-
-            setTimeout(() => {
-                j.style.transform = fromLeft 
-                    ? `translateX(120vw) rotate(${Math.random() * 720 - 360}deg)` 
-                    : `translateX(-120vw) rotate(${Math.random() * 720 - 360}deg)`;
-            }, 100);
-
-            setTimeout(() => j.remove(), 8100);
-        }
-        setInterval(creerJournalVolant, 9000);
-    </script>
-</body>
-</html>
+        .liste-exemples-discrets { font-size: 0.68em; color: var(--text-color); opacity: 0.7; font-style: italic; list-style: none; padding: 0; margin: 4px 0 0 0; border-top:
