@@ -284,7 +284,7 @@
     <div id="google_translate_element"></div>
     
     <div class="boutons-header">
-        <button id="btn-son" onclick="toggleSon()" title="Activer / couper les chants d'oiseaux">🕊</button>
+        <button id="btn-son" onclick="toggleSon()" title="Activer / couper l'ambiance sonore">🕊✨</button>
     </div>
 
     <!-- Icônes vagabondes magiques -->
@@ -404,7 +404,7 @@
             <span class="fermer-modal" onclick="fermerModalInfo()">&times;</span>
             <h2 style="color: #fde047; margin-top: 0; font-size: 1.4em;">La Fraternité du Palais Nature</h2>
             <p style="font-size: 0.95em; line-height: 1.6; opacity: 0.95; text-align: left;">
-                Cet espace est un sanctuaire de gratuité absolue et d'entraide inconditionnelle. Ici, point de commerce, de profit ou d'évaluation marchande : vos dons, vos talents, vos savoirs et vos besoins s'offrent et se partagent pour recréer une fraternité humaine sincère et vivante.
+                Cet espace est un sanctuaire du DON entier, responsable et volontaire, une entraide inconditionnelle. Ici, point de marketing, de profilage ou d'évaluation marchande : votre sincérité, vos talents, vos savoirs et vos besoins s'offrent et se partagent pour recréer une fraternité humaine sincère et vivante.
             </p>
             <p style="font-size: 0.85em; opacity: 0.7; font-style: italic; margin-top: 20px;">
                 © PINON 2000 — Conçu avec le cœur et l'esprit libre par le #petitploucdesjardiniers.
@@ -447,11 +447,11 @@
             estEnJour = !estEnJour;
             document.body.classList.toggle('day-mode', estEnJour);
             const icone = document.getElementById('icone-jour-nuit');
-            icone.textContent = estEnJour ? '🌙' : '☀️';
+            icone.textContent = estEnJour ? '🌙' : '☀';
             icone.title = estEnJour ? 'Passer en mode Nuit étoilée' : 'Passer en mode Jour radieux';
         }
 
-        // Gestion Météo cyclique (Nuage simple -> Pluie bleue -> Neige blanche -> Nuage simple)
+        // Gestion Météo cyclique
         let etatMeteo = 0; 
         function clicMeteo() {
             const icone = document.getElementById('icone-meteo');
@@ -527,31 +527,201 @@
             });
         };
 
-        // Générateur de chants d'oiseaux authentiques (synthèse audio intégrée sans lien externe)
+        // --- GÉNÉRATEUR MULTI-OISEAUX & NOTES ÉLECTRONIQUES ---
         let audioCtx = null;
         let isPlaying = false;
         let intervalSon = null;
 
-        function jouerChantOiseau() {
-            if (!audioCtx || !isPlaying) return;
-            
-            // Fréquences élevées et montantes/descendantes typiques des piaillements d'oiseaux
-            const freqBase = 1800 + Math.random() * 1200;
+        // 1. La Mésange (Piaillement aigu et rapide)
+        function oiseauMesange(now) {
             const osc = audioCtx.createOscillator();
             const gain = audioCtx.createGain();
-            
             osc.type = 'sine';
-            osc.frequency.setValueAtTime(freqBase, audioCtx.currentTime);
-            osc.frequency.exponentialRampToValueAtTime(freqBase + (Math.random() * 1000 - 500), audioCtx.currentTime + 0.12);
+            const f = 3000 + Math.random() * 500;
+            osc.frequency.setValueAtTime(f, now);
+            osc.frequency.linearRampToValueAtTime(f + 500, now + 0.03);
+            osc.frequency.linearRampToValueAtTime(f - 200, now + 0.08);
             
-            gain.gain.setValueAtTime(0.03, audioCtx.currentTime);
-            gain.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + 0.15);
+            gain.gain.setValueAtTime(0.001, now);
+            gain.gain.linearRampToValueAtTime(0.02, now + 0.02);
+            gain.gain.exponentialRampToValueAtTime(0.0001, now + 0.1);
             
             osc.connect(gain);
             gain.connect(audioCtx.destination);
+            osc.start(now);
+            osc.stop(now + 0.1);
+        }
+
+        // 2. Le Rossignol (Chant flûté mélodieux)
+        function oiseauRossignol(now) {
+            const osc = audioCtx.createOscillator();
+            const gain = audioCtx.createGain();
+            osc.type = 'sine';
+            const f = 1900 + Math.random() * 400;
+            osc.frequency.setValueAtTime(f, now);
+            osc.frequency.exponentialRampToValueAtTime(f + 900, now + 0.12);
+            osc.frequency.exponentialRampToValueAtTime(f + 300, now + 0.25);
             
-            osc.start();
-            osc.stop(audioCtx.currentTime + 0.15);
+            gain.gain.setValueAtTime(0.001, now);
+            gain.gain.linearRampToValueAtTime(0.025, now + 0.05);
+            gain.gain.exponentialRampToValueAtTime(0.0001, now + 0.28);
+            
+            osc.connect(gain);
+            gain.connect(audioCtx.destination);
+            osc.start(now);
+            osc.stop(now + 0.28);
+        }
+
+        // 3. Le Merle Noir (Notes amples et flûtées posées)
+        function oiseauMerle(now) {
+            const osc = audioCtx.createOscillator();
+            const gain = audioCtx.createGain();
+            osc.type = 'sine';
+            const f = 1200 + Math.random() * 300;
+            osc.frequency.setValueAtTime(f, now);
+            osc.frequency.linearRampToValueAtTime(f + 250, now + 0.15);
+            osc.frequency.linearRampToValueAtTime(f - 150, now + 0.35);
+            
+            gain.gain.setValueAtTime(0.001, now);
+            gain.gain.linearRampToValueAtTime(0.03, now + 0.08);
+            gain.gain.exponentialRampToValueAtTime(0.0001, now + 0.4);
+            
+            osc.connect(gain);
+            gain.connect(audioCtx.destination);
+            osc.start(now);
+            osc.stop(now + 0.4);
+        }
+
+        // 4. Le Coucou (L'appel en tierce descendante)
+        function oiseauCoucou(now) {
+            const f1 = 650; // Premier ton
+            const f2 = 520; // Second ton plus bas
+            
+            // Première note ("Cou")
+            const osc1 = audioCtx.createOscillator();
+            const gain1 = audioCtx.createGain();
+            osc1.type = 'sine';
+            osc1.frequency.setValueAtTime(f1, now);
+            gain1.gain.setValueAtTime(0.001, now);
+            gain1.gain.linearRampToValueAtTime(0.03, now + 0.05);
+            gain1.gain.exponentialRampToValueAtTime(0.0001, now + 0.22);
+            osc1.connect(gain1);
+            gain1.connect(audioCtx.destination);
+            osc1.start(now);
+            osc1.stop(now + 0.22);
+
+            // Deuxième note ("Cou")
+            const osc2 = audioCtx.createOscillator();
+            const gain2 = audioCtx.createGain();
+            osc2.type = 'sine';
+            osc2.frequency.setValueAtTime(f2, now + 0.25);
+            gain2.gain.setValueAtTime(0.001, now + 0.25);
+            gain2.gain.linearRampToValueAtTime(0.03, now + 0.3);
+            gain2.gain.exponentialRampToValueAtTime(0.0001, now + 0.6);
+            osc2.connect(gain2);
+            gain2.connect(audioCtx.destination);
+            osc2.start(now + 0.25);
+            osc2.stop(now + 0.6);
+        }
+
+        // 5. Le Rouge-gorge (Chant cristallin et perlée)
+        function oiseauRougegorge(now) {
+            const osc = audioCtx.createOscillator();
+            const gain = audioCtx.createGain();
+            osc.type = 'triangle';
+            const f = 2400 + Math.random() * 800;
+            osc.frequency.setValueAtTime(f, now);
+            osc.frequency.linearRampToValueAtTime(f - 400, now + 0.05);
+            osc.frequency.linearRampToValueAtTime(f + 300, now + 0.1);
+            
+            gain.gain.setValueAtTime(0.001, now);
+            gain.gain.linearRampToValueAtTime(0.015, now + 0.02);
+            gain.gain.exponentialRampToValueAtTime(0.0001, now + 0.12);
+            
+            osc.connect(gain);
+            gain.connect(audioCtx.destination);
+            osc.start(now);
+            osc.stop(now + 0.12);
+        }
+
+        // 6. L'Alouette (Trille rapide en cascade)
+        function oiseauAlouette(now) {
+            for (let i = 0; i < 4; i++) {
+                const subNow = now + (i * 0.05);
+                const osc = audioCtx.createOscillator();
+                const gain = audioCtx.createGain();
+                osc.type = 'sine';
+                osc.frequency.setValueAtTime(3200 + (i * 200), subNow);
+                gain.gain.setValueAtTime(0.01, subNow);
+                gain.gain.exponentialRampToValueAtTime(0.0001, subNow + 0.04);
+                osc.connect(gain);
+                gain.connect(audioCtx.destination);
+                osc.start(subNow);
+                osc.stop(subNow + 0.04);
+            }
+        }
+
+        // 7. La Tourterelle / Pigeon (Roucoulement doux et grave)
+        function oiseauTourterelle(now) {
+            const osc = audioCtx.createOscillator();
+            const gain = audioCtx.createGain();
+            osc.type = 'sine';
+            osc.frequency.setValueAtTime(280, now);
+            osc.frequency.linearRampToValueAtTime(270, now + 0.3);
+            
+            gain.gain.setValueAtTime(0.001, now);
+            gain.gain.linearRampToValueAtTime(0.025, now + 0.1);
+            gain.gain.exponentialRampToValueAtTime(0.0001, now + 0.35);
+            
+            osc.connect(gain);
+            gain.connect(audioCtx.destination);
+            osc.start(now);
+            osc.stop(now + 0.35);
+        }
+
+        // 8. Note électronique / rétro-futuriste (ta touche robotique/synthé)
+        function noteElectronique(now) {
+            const osc = audioCtx.createOscillator();
+            const gain = audioCtx.createGain();
+            osc.type = Math.random() > 0.5 ? 'square' : 'sawtooth';
+            const notes = [440, 523.25, 659.25, 783.99, 880, 1046.5];
+            const f = notes[Math.floor(Math.random() * notes.length)];
+            
+            osc.frequency.setValueAtTime(f, now);
+            
+            gain.gain.setValueAtTime(0.001, now);
+            gain.gain.linearRampToValueAtTime(0.015, now + 0.05);
+            gain.gain.exponentialRampToValueAtTime(0.0001, now + 0.2);
+            
+            osc.connect(gain);
+            gain.connect(audioCtx.destination);
+            osc.start(now);
+            osc.stop(now + 0.2);
+        }
+
+        // Sélection aléatoire parmi toute cette magnifique volière et la touche électronique
+        function jouerSonAleatoire() {
+            if (!audioCtx || !isPlaying) return;
+            const now = audioCtx.currentTime;
+            const choix = Math.random();
+
+            if (choix < 0.16) {
+                oiseauMesange(now);
+            } else if (choix < 0.32) {
+                oiseauRossignol(now);
+            } else if (choix < 0.48) {
+                oiseauMerle(now);
+            } else if (choix < 0.60) {
+                oiseauCoucou(now);
+            } else if (choix < 0.74) {
+                oiseauRougegorge(now);
+            } else if (choix < 0.84) {
+                oiseauAlouette(now);
+            } else if (choix < 0.92) {
+                oiseauTourterelle(now);
+            } else {
+                noteElectronique(now); // Le clin d'œil électronique/robotique
+            }
         }
 
         function toggleSon() {
@@ -561,16 +731,16 @@
                     audioCtx = new (window.AudioContext || window.webkitAudioContext)();
                     isPlaying = true;
                     btn.textContent = "🕊✨";
-                    btn.title = "Couper les chants d'oiseaux";
+                    btn.title = "Couper l'ambiance sonore";
                     
-                    // Simule des piaillements spontanés et naturels à intervalles aléatoires
                     intervalSon = setInterval(() => {
                         if (!isPlaying) return;
-                        // Fait 2 ou 3 petits "chirps" rapprochés comme un vrai oiseau
-                        jouerChantOiseau();
-                        setTimeout(jouerChantOiseau, 150);
-                        if(Math.random() > 0.5) setTimeout(jouerChantOiseau, 300);
-                    }, 2500);
+                        jouerSonAleatoire();
+                        
+                        if (Math.random() > 0.4) {
+                            setTimeout(() => jouerSonAleatoire(), 200 + Math.random() * 250);
+                        }
+                    }, 1800 + Math.random() * 1500);
                 } catch(e) {
                     console.log("Audio non autorisé sans interaction");
                 }
@@ -579,11 +749,11 @@
                 if (intervalSon) clearInterval(intervalSon);
                 if (audioCtx) audioCtx.close();
                 btn.textContent = "🕊";
-                btn.title = "Activer les chants d'oiseaux";
+                btn.title = "Activer l'ambiance sonore";
             }
         }
 
-        // Effet magique du coffre (Notification + Bouquet de fleurs 💐)
+        // Effet magique du coffre
         function exploserCadeau() {
             const notif = document.getElementById('notification-cadeau');
             notif.classList.add('show');
