@@ -236,34 +236,14 @@
         .fermer-modal { position: absolute; top: 15px; right: 20px; font-size: 28px; cursor: pointer; color: #fde047; transition: 0.2s; }
         .fermer-modal:hover { transform: scale(1.2); }
 
-        /* Notification discrète pour le cadeau */
-        /* Notification discrète cadeau */
-        #notification-cadeau {
-            position: fixed;
-            bottom: 30px;
-            left: 50%;
-            transform: translateX(-50%) translateY(100px);
-            background: rgba(15, 23, 42, 0.9);
-            color: #fde047;
-            padding: 10px 20px;
-            border-radius: 20px;
-            border: 1px solid rgba(253, 224, 71, 0.4);
-            font-size: 0.85em;
-            z-index: 6000;
-            box-shadow: 0 5px 20px rgba(0,0,0,0.5);
-            opacity: 0;
-            transition: transform 0.4s ease, opacity 0.4s ease;
-            pointer-events: none;
-        }
-        #notification-cadeau.show {
-            transform: translateX(-50%) translateY(0);
-            opacity: 1;
-        }
-
+        footer { padding: 20px 0 35px 0; }
+        .lien-copyright { color: var(--text-color); opacity: 0.6; text-decoration: none; font-weight: bold; font-size: 0.88em; transition: 0.3s; display: inline-block; margin-bottom: 8px; }
         footer { padding: 40px 0 45px 0; }
         .lien-copyright { color: var(--text-color); opacity: 0.6; text-decoration: none; font-weight: bold; font-size: 0.88em; transition: 0.3s; display: inline-block; margin-bottom: 15px; }
         .lien-copyright:hover { opacity: 1; }
 
+        /* Lien du journal discret en bas */
+        .lien-footer-discret { display: block; color: var(--text-color); opacity: 0.45; text-decoration: none; font-size: 0.78em; transition: 0.3s; margin-top: 6px; font-style: italic; }
         /* Lien du journal discret en bas (non jaune) */
         .lien-footer-discret { display: block; color: var(--text-color); opacity: 0.45; text-decoration: none; font-size: 0.78em; transition: 0.3s; margin-top: 10px; font-style: italic; }
         .lien-footer-discret:hover { opacity: 0.85; text-decoration: underline; }
@@ -288,16 +268,13 @@
 
     <div class="boutons-header">
         <button id="btn-son" onclick="toggleSon()" title="Activer / couper le son">🕊</button>
-        <button id="btn-son" onclick="toggleSon()" title="Activer / couper les chants d'oiseaux">🕊</button>
     </div>
 
+    <!-- Icônes vagabondes magiques (incluant le ? d'information) -->
     <!-- Icônes vagabondes magiques -->
     <div id="icone-info" class="icone-vagabonde" onclick="ouvrirModalInfo()" title="À propos & Informations (Attrape-moi !)">❓</div>
     <div id="icone-jour-nuit" class="icone-vagabonde" onclick="clicJourNuit()" title="Attrape-moi pour changer le temps !">☀️</div>
     <div id="icone-meteo" class="icone-vagabonde" onclick="clicMeteo()" title="Attrape-moi pour faire de la pluie ou de la neige !">☁️</div>
-
-    <!-- Notification discrète cadeau -->
-    <div id="notification-cadeau">🎁 Trésor capturé ! Abondance et partage offerts.</div>
 
     <div class="header-container">
         <div class="titre-fraternite">La Fraternité du Palais Nature</div>
@@ -389,6 +366,8 @@
     <!-- Bandeau défilant bas de page -->
     <div class="bandeau-defilant">
         <div class="bandeau-contenu">
+            <span>✦ Un espace d'écoute, de compréhension et de générosité ✦ Cultiver l'altruisme, l'équilibre et la richesse sociale pour rompre l'isolement, recréer de vrais liens humains et agir ensemble contre la précarité ✦ Échange de dons, savoirs, talents et services ✦ Une alternative citoyenne au système monétaire et aux SEL ✦ Accueil inconditionnel : sans-abri, exclus, marginaux, non-conformistes & esprits libres ✦</span>
+            <span>✦ Un espace d'écoute, de compréhension et de générosité ✦ Cultiver l'altruisme, l'équilibre et la richesse sociale pour rompre l'isolement, recréer de vrais liens humains et agir ensemble contre la précarité ✦ Échange de dons, savoirs, talents et services ✦ Une alternative citoyenne au système monétaire et aux SEL ✦ Accueil inconditionnel : sans-abri, exclus, marginaux, non-conformistes & esprits libres ✦</span>
             <span>✦ Un espace d'écoute, de compréhension et de générosité ✦ Cultiver l'altruisme, l'équilibre et la richesse sociale pour rompre l'isolement, recréer de vrais liens humains et agir ensemble contre la précarité ✦ Échange de dons, savoirs, talents et services ✦ Une alternative citoyenne au système monétaire ✦ Accueil inconditionnel : sans-abri, exclus, marginaux, SEL, non-conformistes & esprits libres ✦</span>
             <span>✦ Un espace d'écoute, de compréhension et de générosité ✦ Cultiver l'altruisme, l'équilibre et la richesse sociale pour rompre l'isolement, recréer de vrais liens humains et agir ensemble contre la précarité ✦ Échange de dons, savoirs, talents et services ✦ Une alternative citoyenne au système monétaire ✦ Accueil inconditionnel : sans-abri, exclus, marginaux, SEL, non-conformistes & esprits libres ✦</span>
         </div>
@@ -455,31 +434,25 @@
             icone.title = estEnJour ? 'Passer en mode Nuit étoilée' : 'Passer en mode Jour radieux';
         }
 
-        // Gestion Météo cyclique (Nuage simple -> Pluie bleue -> Neige blanche -> Nuage simple)
-        let etatMeteo = 0; // 0: Nuage, 1: Pluie, 2: Neige
-        let etatMeteo = 0; 
+        // Gestion Météo (Pluie / Neige interactive)
+        // Gestion Météo (Pluie en bleu / Neige en blanc)
+        let modePluie = true;
         function clicMeteo() {
-            const icone = document.getElementById('icone-meteo');
-            if (etatMeteo === 0) {
-                // Lancer la pluie bleue
-                lancerAverse('💧', '#38bdf8');
-                icone.innerHTML = "🌧";
-                icone.title = "Cliquez pour faire tomber de la neige";
-                etatMeteo = 1;
-            } else if (etatMeteo === 1) {
-                // Lancer la neige blanche
-                lancerAverse('❄️', '#ffffff');
-                icone.innerHTML = "❄️";
-                icone.title = "Cliquez pour revenir au nuage";
-                etatMeteo = 2;
+            if (modePluie) {
+                lancerAverse('💧');
+                lancerAverse('💧', '#38bdf8'); // Pluie en bleu
+                document.getElementById('icone-meteo').innerHTML = "❄️";
+                modePluie = false;
             } else {
-                // Revenir au nuage simple
-                icone.innerHTML = "☁️";
-                icone.title = "Attrape-moi pour faire de la pluie ou de la neige !";
-                etatMeteo = 0;
+                lancerAverse('❄️');
+                document.getElementById('icone-meteo').innerHTML = "🌧️️";
+                lancerAverse('❄️', '#ffffff'); // Neige en blanc
+                document.getElementById('icone-meteo').innerHTML = "🌧";
+                modePluie = true;
             }
         }
 
+        function lancerAverse(symbole) {
         function lancerAverse(symbole, couleurTexte) {
             for (let i = 0; i < 35; i++) {
                 const drop = document.createElement('div');
@@ -509,7 +482,6 @@
         }
 
         // Animation aléatoire des éléments volants (coffre, journal, icônes)
-        // Animation aléatoire des éléments volants
         function deplacerElementAleatoirement(idElement) {
             const el = document.getElementById(idElement);
             if (!el) return;
@@ -537,33 +509,10 @@
             });
         };
 
-        // Gestion de l'audio d'ambiance originel (notes douces et progressives)
-        // Générateur de chants d'oiseaux authentiques (synthèse audio intégrée sans lien externe)
+        // Gestion de l'audio d'ambiance
         let audioCtx = null;
         let isPlaying = false;
         let intervalSon = null;
-
-        function jouerChantOiseau() {
-            if (!audioCtx || !isPlaying) return;
-            
-            // Fréquences élevées et montantes/descendantes typiques des piaillements d'oiseaux
-            const freqBase = 1800 + Math.random() * 1200;
-            const osc = audioCtx.createOscillator();
-            const gain = audioCtx.createGain();
-            
-            osc.type = 'sine';
-            osc.frequency.setValueAtTime(freqBase, audioCtx.currentTime);
-            osc.frequency.exponentialRampToValueAtTime(freqBase + (Math.random() * 1000 - 500), audioCtx.currentTime + 0.12);
-            
-            gain.gain.setValueAtTime(0.03, audioCtx.currentTime);
-            gain.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + 0.15);
-            
-            osc.connect(gain);
-            gain.connect(audioCtx.destination);
-            
-            osc.start();
-            osc.stop(audioCtx.currentTime + 0.15);
-        }
 
         function toggleSon() {
             const btn = document.getElementById('btn-son');
@@ -573,38 +522,29 @@
                     isPlaying = true;
                     btn.textContent = "🕊✨";
                     btn.title = "Couper le son d'ambiance";
-                    btn.title = "Couper les chants d'oiseaux";
 
-                    // Simule des piaillements spontanés et naturels à intervalles aléatoires
                     intervalSon = setInterval(() => {
                         if (!isPlaying || !audioCtx) return;
                         const notes = [261.63, 293.66, 329.63, 392.00, 440.00, 523.25];
                         const note = notes[Math.floor(Math.random() * notes.length)];
-                        
+
                         const osc = audioCtx.createOscillator();
                         const gain = audioCtx.createGain();
-                        
+
                         osc.type = 'sine';
                         osc.frequency.setValueAtTime(note, audioCtx.currentTime);
-                        
+
                         gain.gain.setValueAtTime(0.05, audioCtx.currentTime);
                         gain.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + 2.5);
-                        
+
                         osc.connect(gain);
                         gain.connect(audioCtx.destination);
-                        
+
                         osc.start();
                         osc.stop(audioCtx.currentTime + 2.5);
                     }, 1200);
-                        if (!isPlaying) return;
-                        // Fait 2 ou 3 petits "chirps" rapprochés comme un vrai oiseau
-                        jouerChantOiseau();
-                        setTimeout(jouerChantOiseau, 150);
-                        if(Math.random() > 0.5) setTimeout(jouerChantOiseau, 300);
-                    }, 2500);
                 } catch(e) {
                     console.log("Audio non autorisé par le navigateur sans interaction préalable");
-                    console.log("Audio non autorisé sans interaction");
                 }
             } else {
                 isPlaying = false;
@@ -612,45 +552,12 @@
                 if (audioCtx) audioCtx.close();
                 btn.textContent = "🕊";
                 btn.title = "Activer le son d'ambiance";
-                btn.title = "Activer les chants d'oiseaux";
             }
         }
 
-        // Effet magique du coffre (Notification discrète + envol de fleurs 💐)
-        // Effet magique du coffre (Notification + Bouquet de fleurs 💐)
+        // Effet magique du coffre
         function exploserCadeau() {
-            const notif = document.getElementById('notification-cadeau');
-            notif.classList.add('show');
-            setTimeout(() => {
-                notif.classList.remove('show');
-            }, 3000);
-
-            // Envol de bouquet / fleurs en complément
-            for (let i = 0; i < 15; i++) {
-                const fleur = document.createElement('div');
-                fleur.style.position = 'fixed';
-                fleur.style.left = (window.innerWidth / 2 + (Math.random() - 0.5) * 100) + 'px';
-                fleur.style.top = (window.innerHeight - 100) + 'px';
-                fleur.style.fontSize = (Math.random() * 10 + 20) + 'px';
-                fleur.style.zIndex = '9999';
-                fleur.style.pointerEvents = 'none';
-                fleur.innerHTML = ['💐', '🌸', '🌼', '🌻', '🌹'][Math.floor(Math.random() * 5)];
-                document.body.appendChild(fleur);
-
-                const duree = Math.random() * 1500 + 1000;
-                const decalageX = (Math.random() - 0.5) * 200;
-                const decalageY = - (Math.random() * 300 + 200);
-
-                fleur.animate([
-                    { transform: 'translate(0px, 0px) scale(0.5)', opacity: 1 },
-                    { transform: `translate(${decalageX}px, ${decalageY}px) scale(1.2) rotate(${Math.random() * 360}deg)`, opacity: 0 }
-                ], {
-                    duration: duree,
-                    easing: 'ease-out'
-                });
-
-                setTimeout(() => fleur.remove(), duree);
-            }
+            alert("🎁 Vous avez ouvert le coffre des trésors cachés ! Bienvenue dans l'abondance du don entier.");
         }
     </script>
 </body>
