@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Le Jardin de la Fraternité - Registre</title>
-    <meta name="description" content="Découvrez le registre du Jardin de la Fraternité : partagez vos dons, talents, savoirs et participez à l'élan de solidarité du monde entier[cite: 6].">
+    <meta name="description" content="Découvrez le registre du Jardin de la Fraternité : partagez vos dons, talents, savoirs et participez à l'élan de solidarité.">
     <style>
         body { font-family: 'Comic Sans MS', cursive; text-align: center; margin: 0; padding: 0; background-color: #FFFF00; color: #000080; min-height: 100vh; padding-bottom: 80px; transition: background 0.3s, color 0.3s; }
         .top-bar { position: relative; width: 100%; min-height: 50px; background: rgba(255,255,255,0.3); padding: 5px 0; display: flex; justify-content: center; align-items: center; }
@@ -20,20 +20,19 @@
         .phrase-rose { color: #ff1493; font-weight: bold; font-size: 1.1em; text-shadow: 1px 1px 2px #ff69b4; margin-top: 5px; }
         .phrase-sous { color: #000080; font-weight: bold; margin: 1px 0; font-size: 0.9em; }
 
-        .search-box { background: #008080; padding: 15px; margin: 10px auto; max-width: 95%; width: 1100px; border-radius: 25px; color: white; box-shadow: 0 8px 20px rgba(0,0,0,0.2); border: 3px solid #fff; }
+        .search-box { background: #008080; padding: 15px; margin: 10px auto; max-width: 95%; width: 1100px; border-radius: 20px; color: white; box-shadow: 0 4px 15px rgba(0,0,0,0.15); border: 2px solid #fff; }
         .search-container { display: flex; flex-direction: column; gap: 10px; align-items: center; }
-        .search-main-input { width: 90%; padding: 12px; border-radius: 15px; border: none; font-size: 1em; text-align: center; font-weight: bold; color: #004D40; }
+        .search-main-input { width: 90%; padding: 10px; border-radius: 12px; border: none; font-size: 0.95em; text-align: center; font-weight: bold; color: #004D40; }
         .search-row { display: flex; gap: 10px; width: 90%; justify-content: center; }
         .search-item { display: flex; flex-direction: column; width: 45%; }
         .search-item input { padding: 8px; border-radius: 10px; border: none; text-align: center; }
 
         .btn-group { display: flex; gap: 8px; flex-wrap: wrap; justify-content: center; margin-top: 5px; }
         
-        /* Boutons filtres avec les nouvelles couleurs distinctes */
         .btn-filtre-rapide { background: rgba(255,255,255,0.2); border: 2px solid white; color: white; padding: 6px 12px; border-radius: 20px; cursor: pointer; font-family: 'Comic Sans MS'; font-size: 0.8em; transition: 0.3s; font-weight: bold; }
         .btn-filtre-rapide[data-cat="Savoir"] { border-color: #ffc107; background: rgba(255, 193, 7, 0.25); }
         .btn-filtre-rapide[data-cat="Citoyenne"] { border-color: #2ECC71; background: rgba(46, 204, 113, 0.25); }
-        .btn-filtre-rapide[data-cat="Harmonie"] { border-color: #ff69b4; background: rgba(255, 105, 180, 0.25);[cite: 6]}
+        .btn-filtre-rapide[data-cat="Harmonie"] { border-color: #ff69b4; background: rgba(255, 105, 180, 0.25); }
         .btn-filtre-rapide[data-cat="Régulation"] { border-color: #9370DB; background: rgba(147, 112, 219, 0.25); }
         .btn-filtre-rapide[data-cat="Trésor"] { border-color: #1E90FF; background: rgba(30, 144, 255, 0.25); }
         .btn-filtre-rapide[data-cat="Autre"] { border-color: #00ced1; background: rgba(0, 206, 209, 0.25); color: #FFFFFF; font-weight: bold; }
@@ -41,40 +40,47 @@
         .btn-filtre-rapide.actif { background: #fff !important; color: #008080 !important; font-weight: bold; box-shadow: 0 0 10px rgba(255,255,255,0.8); }
         .btn-reset { border-color: #ffffff !important; background: rgba(255,255,255,0.1); }
 
-        #sous-rubriques-container { display: none; width: 90%; background: rgba(255, 105, 180, 0.25); padding: 10px; border-radius: 15px; border: 2px dashed #ff1493; margin-top: 8px; text-align: center; }
-        .select-sous-rubrique { padding: 6px 10px; border-radius: 12px; border: 2px solid #ff1493; font-family: 'Comic Sans MS'; font-size: 0.78em; background: white; color: #008080; font-weight: bold; cursor: pointer; outline: none; width: 80%; max-width: 450px; }
+        #sous-rubriques-container { display: none; width: 90%; background: rgba(255, 105, 180, 0.25); padding: 8px; border-radius: 12px; border: 2px dashed #ff1493; margin-top: 5px; text-align: center; }
+        .select-sous-rubrique { padding: 6px 10px; border-radius: 10px; border: 2px solid #ff1493; font-family: 'Comic Sans MS'; font-size: 0.78em; background: white; color: #008080; font-weight: bold; cursor: pointer; outline: none; width: 80%; max-width: 450px; }
 
-        .mur-reel { display: grid; grid-template-columns: repeat(5, minmax(180px, 1fr)); gap: 15px; padding: 10px; max-width: 98vw; margin: 0 auto; align-items: start; }
-        @media (max-width: 1024px) { .mur-reel { grid-template-columns: repeat(3, 1fr); } }
-        @media (max-width: 768px) { .mur-reel { grid-template-columns: repeat(1, 1fr); } }
+        /* Grille plus claire et aérée inspirée du Journal */
+        .mur-reel { display: grid; grid-template-columns: repeat(4, minmax(220px, 1fr)); gap: 15px; padding: 15px; max-width: 1200px; margin: 0 auto; align-items: start; }
+        @media (max-width: 1024px) { .mur-reel { grid-template-columns: repeat(2, 1fr); } }
+        @media (max-width: 600px) { .mur-reel { grid-template-columns: repeat(1, 1fr); } }
 
-        .carte-message { background: white; border: 3px solid #008080; border-radius: 10px; padding: 10px; box-shadow: 3px 3px 0px #008080; display: flex; flex-direction: column; height: 330px; cursor: pointer; position: relative; overflow: hidden; text-align: left; transition: transform 0.2s; }
-        .carte-message:hover { transform: translateY(-3px); }
-        .nom-prenom { color: #2E7D32; font-weight: bold; font-size: 0.85em; border-bottom: 1px solid #eee; margin-bottom: 4px; padding-right: 70px; }
-        .rubrique-tag { font-size: 0.55em; background: #ff1493; color: white; padding: 2px 6px; border-radius: 5px; position: absolute; top: 8px; right: 8px; }
+        .carte-message { background: white; border: 2px solid #008080; border-radius: 12px; padding: 12px; box-shadow: 0 4px 10px rgba(0,0,0,0.08); display: flex; flex-direction: column; min-height: 280px; cursor: pointer; position: relative; overflow: hidden; text-align: left; transition: transform 0.2s, box-shadow 0.2s; }
+        .carte-message:hover { transform: translateY(-3px); box-shadow: 0 6px 15px rgba(0,0,0,0.12); }
+        .nom-prenom { color: #2E7D32; font-weight: bold; font-size: 0.85em; border-bottom: 1px solid #f0f0f0; margin-bottom: 6px; padding-bottom: 4px; padding-right: 70px; }
+        .rubrique-tag { font-size: 0.55em; background: #ff1493; color: white; padding: 2px 6px; border-radius: 6px; position: absolute; top: 10px; right: 10px; }
 
-        .texte-annonce { flex-grow: 1; font-style: italic; color: #000080; overflow-y: auto; font-size: 0.75em; margin: 4px 0; line-height: 1.2; padding-right: 4px; scrollbar-width: thin; white-space: pre-line; word-break: break-word; }
+        .texte-annonce { flex-grow: 1; font-style: italic; color: #000080; overflow-y: auto; font-size: 0.78em; margin: 6px 0; line-height: 1.3; padding-right: 4px; scrollbar-width: thin; white-space: pre-line; word-break: break-word; }
         
         .badge-reponses { font-size: 0.7em; color: #E67E22; font-weight: bold; background: #FFF8E7; border: 1px solid #E67E22; border-radius: 6px; padding: 3px 6px; margin: 4px 0; align-self: flex-start; }
 
-        .btn-arrosage { background: #E1F5FE; border: 1px solid #00BFFF; border-radius: 8px; color: #0277BD; font-size: 0.75em; padding: 4px; cursor: pointer; margin: 2px 0; font-weight: bold; width: 100%; }
+        .btn-arrosage { background: #E1F5FE; border: 1px solid #00BFFF; border-radius: 8px; color: #0277BD; font-size: 0.75em; padding: 5px; cursor: pointer; margin: 3px 0; font-weight: bold; width: 100%; }
         .btn-arrosage:disabled { background: #E0E0E0; border-color: #BDBDBD; color: #757575; cursor: not-allowed; }
-        .btn-repondre { background: #E67E22; border: 1px solid #b35900; border-radius: 8px; color: white; font-size: 0.75em; padding: 5px; cursor: pointer; margin: 2px 0; font-weight: bold; width: 100%; transition: 0.2s; }
-        .btn-repondre:hover { background: #d35400; transform: scale(1.02); }
+        .btn-repondre { background: #E67E22; border: 1px solid #b35900; border-radius: 8px; color: white; font-size: 0.75em; padding: 6px; cursor: pointer; margin: 3px 0; font-weight: bold; width: 100%; transition: 0.2s; }
+        .btn-repondre:hover { background: #d35400; }
 
-        .details-bas { font-size: 0.65em; color: #444; line-height: 1.2; border-top: 1px solid #eee; padding-top: 4px; background: white; flex-shrink: 0; margin-top: auto; }
+        .details-bas { font-size: 0.65em; color: #555; line-height: 1.3; border-top: 1px solid #f0f0f0; padding-top: 6px; background: white; flex-shrink: 0; margin-top: auto; }
+
+        /* Style de la pagination numérique */
+        .pagination-container { display: flex; justify-content: center; align-items: center; gap: 5px; margin: 25px 0; flex-wrap: wrap; }
+        .page-btn { background: white; border: 2px solid #008080; color: #008080; padding: 6px 12px; border-radius: 8px; font-weight: bold; cursor: pointer; font-family: 'Comic Sans MS'; transition: 0.2s; }
+        .page-btn.active { background: #008080; color: white; }
+        .page-btn:hover:not(.active) { background: #E0F2F1; }
 
         body.dark-mode { background-color: #0a0a1a; color: #e0e0e0; }
         .star { position: fixed; background: white; border-radius: 50%; opacity: 0; pointer-events: none; animation: twinkle var(--d) infinite; }
         @keyframes twinkle { 0%, 100% { opacity: 0.3; } 50% { opacity: 1; } }
 
         #fond-sombre, #modal-reponse { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); z-index: 2000; justify-content: center; align-items: center; padding: 10px; box-sizing: border-box; }
-        .message-geant { background: #FFFFF0; width: 95%; max-width: 800px; padding: 25px; border-radius: 25px; border: 8px solid #008080; position: relative; max-height: 85vh; overflow-y: auto; color: #000; text-align: left; box-sizing: border-box; }
-        .form-reponse-box { background: #FFFFFF; width: 90%; max-width: 500px; padding: 25px; border-radius: 20px; border: 6px solid #E67E22; position: relative; text-align: left; color: #000; box-shadow: 0 0 30px rgba(0,0,0,0.5); }
-        .bouton-fermer { position: absolute; top: 15px; right: 15px; background: #FF1493; color: white; border-radius: 50%; width: 40px; height: 40px; cursor: pointer; border: 2px solid white; font-weight: bold; display: flex; align-items: center; justify-content: center; z-index: 10; }
+        .message-geant { background: #FFFFF0; width: 95%; max-width: 800px; padding: 25px; border-radius: 20px; border: 6px solid #008080; position: relative; max-height: 85vh; overflow-y: auto; color: #000; text-align: left; box-sizing: border-box; }
+        .form-reponse-box { background: #FFFFFF; width: 90%; max-width: 500px; padding: 25px; border-radius: 20px; border: 5px solid #E67E22; position: relative; text-align: left; color: #000; box-shadow: 0 0 20px rgba(0,0,0,0.4); }
+        .bouton-fermer { position: absolute; top: 15px; right: 15px; background: #FF1493; color: white; border-radius: 50%; width: 36px; height: 36px; cursor: pointer; border: 2px solid white; font-weight: bold; display: flex; align-items: center; justify-content: center; z-index: 10; }
 
         .field-rep { width: 100%; padding: 10px; margin: 8px 0; border: 2px solid #008080; border-radius: 10px; font-family: 'Comic Sans MS'; box-sizing: border-box; }
-        .btn-retour { display: inline-block; margin-top: 20px; padding: 10px 20px; background: #34495e; color: white; text-decoration: none; border-radius: 8px; font-weight: bold; }
+        .btn-retour { display: inline-block; margin-top: 10px; padding: 10px 20px; background: #34495e; color: white; text-decoration: none; border-radius: 8px; font-weight: bold; }
         .copyright-link { color: #008080; text-decoration: none; font-weight: bold; }
     </style>
 </head>
@@ -100,17 +106,17 @@
         <button id="btn-mode" onclick="basculerModeSombre()">🏮</button>
     </div>
 
-    <h2 style="color:#2E7D32; margin: 10px 0;">🍃 Le Jardin des Cadeaux Existentiels 🍃</h2>
+    <h2 style="color:#2E7D32; margin: 15px 0 5px 0;">🍃 Le Jardin des Cadeaux Existentiels 🍃</h2>
     <div class="phrase-rose">Bienvenue au Jardin des Dons entiers</div>
     <div class="phrase-sous">Talents, savoirs, objets et fraternité.</div>
 
     <div class="search-box">
         <div class="search-container">
-            <input type="text" id="searchKeyword" class="search-main-input" onkeyup="executerFiltrage()" placeholder="✨ Rechercher un don, un savoir...">
+            <input type="text" id="searchKeyword" class="search-main-input" onkeyup="changerFiltreEtResetPage()" placeholder="✨ Rechercher un don, un savoir...">
 
             <div class="search-row">
-                <div class="search-item"><input type="text" id="searchPays" onkeyup="executerFiltrage()" placeholder="📍 Pays"></div>
-                <div class="search-item"><input type="text" id="searchVille" onkeyup="executerFiltrage()" placeholder="🏙 Ville"></div>
+                <div class="search-item"><input type="text" id="searchPays" onkeyup="changerFiltreEtResetPage()" placeholder="📍 Pays"></div>
+                <div class="search-item"><input type="text" id="searchVille" onkeyup="changerFiltreEtResetPage()" placeholder="🏙 Ville"></div>
             </div>
 
             <div class="btn-group">
@@ -129,12 +135,16 @@
         </div>
     </div>
 
-    <h3 id="titre-registre" style="color: #008080;">📖 Registre de la Fraternité</h3>
+    <h3 id="titre-registre" style="color: #008080; margin: 15px 0 5px 0;">📖 Registre de la Fraternité</h3>
+    
     <div id="mur-messages" class="mur-reel"></div>
+    
+    <!-- Conteneur des boutons de pagination numérique -->
+    <div id="pagination-numeros" class="pagination-container"></div>
 
-    <div class="phrase-etoiles" id="phrase-petit-prince" style="font-style: italic; color: #2E7D32; margin: 20px;"></div>
+    <div class="phrase-etoiles" id="phrase-petit-prince" style="font-style: italic; color: #2E7D32; margin: 15px;"></div>
 
-    <div style="text-align: center;">
+    <div style="text-align: center; margin-bottom: 20px;">
         <a href="formulaire.html" class="btn-retour" style="background:#e67e22; margin-right: 10px;">Semer un Don</a>
         <a href="index.html" class="btn-retour">Retour à l'Accueil</a>
     </div>
@@ -161,14 +171,14 @@
                 <input type="text" id="rep_nom" class="field-rep" placeholder="Ton nom de cœur..." required>
 
                 <label style="font-weight: bold; color: #008080; font-size: 0.9em;">Ton Message / Proposition :</label>
-                <textarea id="rep_message" class="field-rep" rows="4" placeholder="Propose ton aide, ton soutien ou pose ta question..." required></textarea>
+                <textarea id="rep_message" class="field-rep" rows="4" placeholder="Propose ton aide, ton soutien..." required></textarea>
 
-                <button type="submit" id="btnSubmitReponse" class="btn-repondre" style="font-size: 1em; padding: 12px; margin-top: 10px;">ENVOYER MA RÉPONSE ✨</button>
+                <button type="submit" id="btnSubmitReponse" class="btn-repondre" style="font-size: 1em; padding: 10px; margin-top: 5px;">ENVOYER MA RÉPONSE ✨</button>
             </form>
         </div>
     </div>
 
-    <div class="footer-copyright" style="margin-top: 30px;">
+    <div class="footer-copyright" style="margin-top: 20px;">
         <a href="merci.html" class="copyright-link">© 2000 Le petit prince des jardiniers</a>
     </div>
 
@@ -177,7 +187,9 @@
     <script>
         const TOKEN_SECRET = "MonJardinSecuritToken2026";
         const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbxnut45uaiH_GhVoNQ4jYzw53thmlc-KHOwhvYfl23Owfh2iyRoT1DBAAeFDepiQCo2/exec";
-        let toutesLesAnnonces = [], annoncesPrincipales = [], filtreTypeActuel = "", filtreSousTypeActuel = "";
+        let annoncesPrincipales = [], filtreTypeActuel = "", filtreSousTypeActuel = "";
+        let pageActuelle = 1;
+        const elementsParPage = 20;
 
         const mappingBoutons = { 
             "Savoir": ["SAVOIR"], 
@@ -188,16 +200,15 @@
             "Autre": ["AUTRE_CAT"] 
         };
 
-        /* Application de vos couleurs exactes : Vie Citoyenne en vert, Régulation en violet, Trésor Public en bleu, etc. */
         const couleursBordures = {
-            "SAVOIR": "#ffc107",       // Jaune / Or
-            "VIE": "#2ECC71",          // Vert (Vie Citoyenne)
-            "AIDE": "#ff69b4",         // Rose (Aide & Harmonie)
-            "URGENCE": "#ff69b4",      // Rose
-            "ECOUTE": "#ff69b4",       // Rose
-            "REGULATION": "#9370DB",   // Violet (Régulation)
-            "IMPOT": "#1E90FF",        // Bleu (Trésor Public)
-            "AUTRE_CAT": "#00ced1"     // Turquoise (Autre domaine)
+            "SAVOIR": "#ffc107",
+            "VIE": "#2ECC71",
+            "AIDE": "#ff69b4",
+            "URGENCE": "#ff69b4",
+            "ECOUTE": "#ff69b4",
+            "REGULATION": "#9370DB",
+            "IMPOT": "#1E90FF",
+            "AUTRE_CAT": "#00ced1"
         };
 
         const sousRubriquesData = {
@@ -318,15 +329,9 @@
                 blocs.forEach(bloc => {
                     const match = bloc.match(/\[(.*?) \((.*?)\)\]\s*:\s*(.*)/);
                     if (match) {
-                        resultatsReponses.push({
-                            nom: match[1],
-                            message: match[3]
-                        });
+                        resultatsReponses.push({ nom: match[1], message: match[3] });
                     } else if (bloc.trim() !== "") {
-                        resultatsReponses.push({
-                            nom: "Ami",
-                            message: bloc.trim()
-                        });
+                        resultatsReponses.push({ nom: "Ami", message: bloc.trim() });
                     }
                 });
             }
@@ -346,7 +351,7 @@
                 gain.connect(audioCtx.destination);
                 osc.start();
                 osc.stop(audioCtx.currentTime + 0.2);
-            } catch(e) { console.log("Audio non supporté"); }
+            } catch(e) {}
         }
 
         function animerPluieGouttes(event) {
@@ -391,10 +396,10 @@
         async function chargerAnnonces() {
             try {
                 const response = await fetch(WEB_APP_URL + "?token=" + TOKEN_SECRET + "&v=" + Date.now());
-                const toutesLesAnnonces = await response.json();
+                const toutesLesDonnees = await response.json();
 
                 annoncesPrincipales = [];
-                toutesLesAnnonces.forEach(item => {
+                toutesLesDonnees.forEach(item => {
                     const type = String(item.type || item.Type || '').toUpperCase();
                     if (type === 'VIDEO' || type === 'VIDÉO') return;
                     annoncesPrincipales.push(item);
@@ -417,11 +422,12 @@
                         }
                     }
                 }
+                pageActuelle = 1;
                 executerFiltrage();
 
             } catch (error) {
                 console.error("Erreur de chargement :", error);
-                document.getElementById('mur-messages').innerHTML = `<div style="grid-column: span 5; padding: 20px; font-weight: bold; background: white; border-radius: 10px;">Impossible de charger les annonces du jardin... 🌱</div>`;
+                document.getElementById('mur-messages').innerHTML = `<div style="grid-column: span 4; padding: 20px; font-weight: bold; background: white; border-radius: 10px;">Impossible de charger les annonces du jardin... 🌱</div>`;
             }
         }
 
@@ -451,6 +457,12 @@
         function changerSousRubrique(selectEl) {
             jouerBip();
             filtreSousTypeActuel = selectEl.value;
+            pageActuelle = 1;
+            executerFiltrage();
+        }
+
+        function changerFiltreEtResetPage() {
+            pageActuelle = 1;
             executerFiltrage();
         }
 
@@ -484,15 +496,24 @@
 
             filtrées.sort((a, b) => new Date(b.Horodateur || 0) - new Date(a.Horodateur || 0));
 
+            // Pagination : découpage des 20 éléments par page
+            const totalPages = Math.ceil(filtrées.length / elementsParPage) || 1;
+            if (pageActuelle > totalPages) pageActuelle = totalPages;
+
+            const debut = (pageActuelle - 1) * elementsParPage;
+            const fin = debut + elementsParPage;
+            const elementsPage = filtrées.slice(debut, fin);
+
             const cont = document.getElementById('mur-messages');
             cont.innerHTML = "";
 
-            if (filtrées.length === 0) {
-                cont.innerHTML = `<div style="grid-column: span 5; padding: 20px; font-weight: bold; background: white; border-radius: 10px; color: #008080;">Aucune annonce trouvée dans le jardin pour l'instant... 🌸</div>`;
+            if (elementsPage.length === 0) {
+                cont.innerHTML = `<div style="grid-column: span 4; padding: 20px; font-weight: bold; background: white; border-radius: 10px; color: #008080;">Aucune annonce trouvée dans le jardin pour l'instant... 🌸</div>`;
+                document.getElementById('pagination-numeros').innerHTML = "";
                 return;
             }
 
-            filtrées.forEach(ann => {
+            elementsPage.forEach(ann => {
                 const idAnnonce = ann.Horodateur || ann.id || '';
                 const nomAnnonce = ann.nom || ann.Nom || ann.prenom || ann.Prenom || ann.auteur || "Anonyme";
                 const typeAnnonce = (ann.type || "").toUpperCase();
@@ -507,7 +528,6 @@
 
                 const couleurBord = couleursBordures[typeAnnonce] || "#008080";
                 d.style.borderColor = couleurBord;
-                d.style.boxShadow = `3px 3px 0px ${couleurBord}`;
                 d.onclick = () => ouvrirGrandMessage(ann);
 
                 const dejaVote = localStorage.getItem('vote_' + idAnnonce);
@@ -544,6 +564,49 @@
 
                 cont.appendChild(d);
             });
+
+            afficherPaginationNumeros(totalPages);
+        }
+
+        function afficherPaginationNumeros(totalPages) {
+            const paginationContainer = document.getElementById('pagination-numeros');
+            paginationContainer.innerHTML = "";
+
+            if (totalPages <= 1) return;
+
+            // Bouton Précédent
+            if (pageActuelle > 1) {
+                const btnPrec = document.createElement('button');
+                btnPrec.className = 'page-btn';
+                btnPrec.innerText = "« Préc.";
+                btnPrec.onclick = () => changerPage(pageActuelle - 1);
+                paginationContainer.appendChild(btnPrec);
+            }
+
+            // Boutons Numérotés
+            for (let i = 1; i <= totalPages; i++) {
+                const btn = document.createElement('button');
+                btn.className = `page-btn ${i === pageActuelle ? 'active' : ''}`;
+                btn.innerText = i;
+                btn.onclick = () => changerPage(i);
+                paginationContainer.appendChild(btn);
+            }
+
+            // Bouton Suivant
+            if (pageActuelle < totalPages) {
+                const btnSuiv = document.createElement('button');
+                btnSuiv.className = 'page-btn';
+                btnSuiv.innerText = "Suiv. »";
+                btnSuiv.onclick = () => changerPage(pageActuelle + 1);
+                paginationContainer.appendChild(btnSuiv);
+            }
+        }
+
+        function changerPage(numPage) {
+            jouerBip();
+            pageActuelle = numPage;
+            executerFiltrage();
+            window.scrollTo({ top: 300, behavior: 'smooth' });
         }
 
         async function arroser(e, id, btn, ann) {
@@ -573,12 +636,12 @@
 
             let htmlReponsesGeant = '';
             if (listeReponses.length > 0) {
-                htmlReponsesGeant = `<div style="background:#FFF8E7; padding:15px; border-radius:10px; border:2px dashed #E67E22; margin-bottom:15px; text-align:left;">
-                    <h4 style="color:#E67E22; margin:0 0 10px 0;">💬 Réponses reçues (${listeReponses.length}) :</h4>`;
+                htmlReponsesGeant = `<div style="background:#FFF8E7; padding:12px; border-radius:10px; border:2px dashed #E67E22; margin-bottom:12px; text-align:left;">
+                    <h4 style="color:#E67E22; margin:0 0 8px 0;">💬 Réponses reçues (${listeReponses.length}) :</h4>`;
                 listeReponses.forEach(r => {
-                    htmlReponsesGeant += `<div style="margin-bottom:10px; border-bottom:1px solid #ddd; padding-bottom:8px; word-break: break-word;">
+                    htmlReponsesGeant += `<div style="margin-bottom:8px; border-bottom:1px solid #ddd; padding-bottom:6px; word-break: break-word;">
                         <strong style="color:#2E7D32;">${escapeHtml(r.nom)} :</strong> 
-                        <div style="white-space: pre-line; color: #333; margin-top: 3px;">"${escapeHtml(masquerCoordonnees(r.message))}"</div>
+                        <div style="white-space: pre-line; color: #333; margin-top: 2px;">"${escapeHtml(masquerCoordonnees(r.message))}"</div>
                     </div>`;
                 });
                 htmlReponsesGeant += `</div>`;
@@ -586,9 +649,9 @@
 
             const divContent = document.getElementById('geant-contenu');
             divContent.innerHTML = `
-                <div style="font-size:1.6em; color:#2E7D32; font-weight:bold; border-bottom:3px solid #008080; margin-bottom:15px; padding-right: 40px;">🌱 Offrande de ${escapeHtml(ann.nom || "Anonyme")}</div>
-                <div style="background:white; padding:20px; border-radius:15px; border-left:10px solid #FF1493; font-size:1.1em; color:#000080; text-align:left; margin-bottom:15px; max-height: 250px; overflow-y: auto; white-space: pre-line; word-break: break-word;">"${escapeHtml(masquerCoordonnees(ann.message || ""))}"</div>
-                <div style="text-align:left; background:#E0F2F1; padding:15px; border-radius:10px; font-size:0.95em; margin-bottom:15px; line-height: 1.4;">
+                <div style="font-size:1.4em; color:#2E7D32; font-weight:bold; border-bottom:3px solid #008080; margin-bottom:12px; padding-right: 40px;">🌱 Offrande de ${escapeHtml(ann.nom || "Anonyme")}</div>
+                <div style="background:white; padding:15px; border-radius:12px; border-left:8px solid #FF1493; font-size:1em; color:#000080; text-align:left; margin-bottom:12px; max-height: 220px; overflow-y: auto; white-space: pre-line; word-break: break-word;">"${escapeHtml(masquerCoordonnees(ann.message || ""))}"</div>
+                <div style="text-align:left; background:#E0F2F1; padding:12px; border-radius:8px; font-size:0.9em; margin-bottom:12px; line-height: 1.3;">
                     <strong>📅 Date :</strong> ${escapeHtml(datePubli)}<br>
                     <strong>📍 Localisation :</strong> ${escapeHtml(ann.localisation || "N/C")}<br>
                     <strong>📍 Pays :</strong> ${escapeHtml(ann.pays_select || "N/C")}<br>
@@ -596,7 +659,7 @@
                     <strong>🚚 Logistique :</strong> ${escapeHtml(ann.logistique || "Main Propre")}
                 </div>
                 ${htmlReponsesGeant}
-                <button class="btn-repondre" id="geant-btn-rep" style="font-size: 1.1em; padding: 12px;">💌 Répondre à cette graine</button>
+                <button class="btn-repondre" id="geant-btn-rep" style="font-size: 1em; padding: 10px;">💌 Répondre à cette graine</button>
             `;
 
             document.getElementById('geant-btn-rep').onclick = () => {
@@ -615,7 +678,7 @@
 
             const rappel = document.getElementById('rappel-annonce');
             const msgBrut = ann.message || "";
-            rappel.innerHTML = `<strong>Graine de ${escapeHtml(ann.nom || "Anonyme")} :</strong> "${escapeHtml(masquerCoordonnees(msgBrut).substring(0, 100))}${msgBrut.length > 100 ? '...' : ''}"`;
+            rappel.innerHTML = `<strong>Graine de ${escapeHtml(ann.nom || "Anonyme")} :</strong> "${escapeHtml(masquerCoordonnees(msgBrut).substring(0, 90))}${msgBrut.length > 90 ? '...' : ''}"`;
 
             document.getElementById('modal-reponse').style.display = 'flex';
         }
@@ -627,7 +690,7 @@
             jouerBip();
 
             const btn = document.getElementById('btnSubmitReponse');
-            btn.innerText = "Envoi de la réponse en cours... 🌱";
+            btn.innerText = "Envoi en cours... 🌱";
             btn.disabled = true;
 
             const idRef = document.getElementById('rep_id_annonce').value;
@@ -644,12 +707,9 @@
             params.append('message', msgRep);
 
             try {
-                await fetch(WEB_APP_URL, {
-                    method: 'POST',
-                    body: params
-                });
+                await fetch(WEB_APP_URL, { method: 'POST', body: params });
 
-                btn.innerText = "Réponse envoyée avec succès ! 🌸";
+                btn.innerText = "Réponse envoyée ! 🌸";
                 setTimeout(() => {
                     fermerModalReponse();
                     btn.innerText = "ENVOYER MA RÉPONSE ✨";
@@ -659,7 +719,7 @@
                 }, 1000);
             } catch (err) {
                 console.error("Erreur d'envoi :", err);
-                alert("Une erreur est survenue lors de l'envoi de la réponse.");
+                alert("Une erreur est survenue lors de l'envoi.");
                 btn.disabled = false;
                 btn.innerText = "ENVOYER MA RÉPONSE ✨";
             }
@@ -679,6 +739,7 @@
 
             if (filtreTypeActuel && el) el.classList.add('actif');
             afficherTiroirSousRubriques(filtreTypeActuel);
+            pageActuelle = 1;
             executerFiltrage();
         }
 
@@ -691,6 +752,7 @@
             filtreSousTypeActuel = "";
             document.querySelectorAll('.btn-filtre-rapide').forEach(b => b.classList.remove('actif'));
             document.getElementById('sous-rubriques-container').style.display = 'none';
+            pageActuelle = 1;
             executerFiltrage();
         }
 
