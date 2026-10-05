@@ -29,14 +29,14 @@
 
         .btn-group { display: flex; gap: 8px; flex-wrap: wrap; justify-content: center; margin-top: 5px; }
         
-        /* Boutons filtres avec des bordures personnalisées correspondant aux couleurs des rubriques */
+        /* 8 couleurs distinctes appliquées aux boutons filtres */
         .btn-filtre-rapide { background: rgba(255,255,255,0.2); border: 2px solid white; color: white; padding: 6px 12px; border-radius: 20px; cursor: pointer; font-family: 'Comic Sans MS'; font-size: 0.8em; transition: 0.3s; font-weight: bold; }
-        .btn-filtre-rapide[data-cat="Savoir"] { border-color: #ffc107; background: rgba(255, 193, 7, 0.2); }
-        .btn-filtre-rapide[data-cat="Citoyenne"] { border-color: #9370DB; background: rgba(147, 112, 219, 0.2); }
-        .btn-filtre-rapide[data-cat="Harmonie"] { border-color: #ff69b4; background: rgba(255, 105, 180, 0.2); }
-        .btn-filtre-rapide[data-cat="Régulation"] { border-color: #9370DB; background: rgba(147, 112, 219, 0.2); }
-        .btn-filtre-rapide[data-cat="Trésor"] { border-color: #00ced1; background: rgba(0, 206, 209, 0.2); }
-        .btn-filtre-rapide[data-cat="Autre"] { border-color: #008080; background: rgba(0, 128, 128, 0.3); }
+        .btn-filtre-rapide[data-cat="Savoir"] { border-color: #ffc107; background: rgba(255, 193, 7, 0.25); }
+        .btn-filtre-rapide[data-cat="Citoyenne"] { border-color: #9370DB; background: rgba(147, 112, 219, 0.25); }
+        .btn-filtre-rapide[data-cat="Harmonie"] { border-color: #ff69b4; background: rgba(255, 105, 180, 0.25);[cite: 6]}
+        .btn-filtre-rapide[data-cat="Régulation"] { border-color: #20B2AA; background: rgba(32, 178, 170, 0.25); }
+        .btn-filtre-rapide[data-cat="Trésor"] { border-color: #00ced1; background: rgba(0, 206, 209, 0.25); }
+        .btn-filtre-rapide[data-cat="Autre"] { border-color: #1E90FF; background: rgba(30, 144, 255, 0.25); color: #FFFFFF; font-weight: bold; }
 
         .btn-filtre-rapide.actif { background: #fff !important; color: #008080 !important; font-weight: bold; box-shadow: 0 0 10px rgba(255,255,255,0.8); }
         .btn-reset { border-color: #ffffff !important; background: rgba(255,255,255,0.1); }
@@ -117,7 +117,7 @@
                 <button class="btn-filtre-rapide" data-cat="Savoir" onclick="rechercheRapide('Savoir', this)">🎓 Savoirs</button>
                 <button class="btn-filtre-rapide" data-cat="Citoyenne" onclick="rechercheRapide('Citoyenne', this)">🏛 Vie Citoyenne</button>
                 <button class="btn-filtre-rapide" data-cat="Harmonie" onclick="rechercheRapide('Harmonie', this)">🤝 Aide & Harmonie</button>
-                <button class="btn-filtre-rapide" data-cat="Régulation" onclick="rechercheRapide('Régulation', this)">⚖️ Régulation</button>
+                <button class="btn-filtre-rapide" data-cat="Régulation" onclick="rechercheRapide('Régulation', this)">⚖️️ Régulation</button>
                 <button class="btn-filtre-rapide" data-cat="Trésor" onclick="rechercheRapide('Trésor', this)">💰 Trésor Public</button>
                 <button class="btn-filtre-rapide" data-cat="Autre" onclick="rechercheRapide('Autre', this)">✨ Autre domaine</button>
                 <button class="btn-filtre-rapide btn-reset" onclick="resetRecherche()">🔄 Tout voir</button>
@@ -188,15 +188,16 @@
             "Autre": ["AUTRE_CAT"] 
         };
 
+        /* Association des 8 couleurs distinctes pour le contour des cartes et des boutons */
         const couleursBordures = {
-            "SAVOIR": "#ffc107",       
-            "VIE": "#9370DB",          
-            "AIDE": "#ff69b4",         
-            "URGENCE": "#ff69b4",      
-            "ECOUTE": "#ff69b4",       
-            "REGULATION": "#9370DB",   
-            "IMPOT": "#00ced1",        
-            "AUTRE_CAT": "#008080"     
+            "SAVOIR": "#ffc107",       // Jaune / Or
+            "VIE": "#9370DB",          // Violet
+            "AIDE": "#ff69b4",         // Rose
+            "URGENCE": "#ff69b4",      // Rose
+            "ECOUTE": "#ff69b4",       // Rose
+            "REGULATION": "#20B2AA",   // Cyan / Vert d'eau
+            "IMPOT": "#00ced1",        // Turquoise
+            "AUTRE_CAT": "#1E90FF"     // Bleu roi
         };
 
         const sousRubriquesData = {
