@@ -5,7 +5,19 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>La Fraternité du Palais Nature - Accueil</title>
-    <meta name="description" content="La Fraternité du Palais Nature : alternative citoyenne au système monétaire et aux SEL. Partagez vos dons, savoirs, talents et entraide dans un espace de gratuité absolue." />
+    <meta name="description" content="La Fraternité du Palais Nature : espace citoyen de gratuité absolue, de don et d'entraide. Un havre d'écoute, d'altruisme et de partage pour recréer du lien social et vivre la fraternité." />
+
+    <!-- Données structurées invisibles pour Google (SEO) -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "NGO",
+      "name": "La Fraternité du Palais Nature",
+      "description": "Espace d'entraide, d'écoute, de don et de gratuité absolue pour cultiver l'altruisme, rompre l'isolement et recréer du lien social.",
+      "url": "https://lepetitprincedesjardiniers.github.io/"
+    }
+    </script>
+
     <script type="text/javascript">
         function googleTranslateElementInit() {
             new google.translate.TranslateElement({pageLanguage: 'fr'}, 'google_translate_element');
@@ -44,8 +56,7 @@
         #google_translate_element:hover { opacity: 1; }
 
         .header-container { position: relative; padding-top: 25px; z-index: 100; }
-        .titre-fraternite { display: block; font-size: 2.2em; letter-spacing: 4px; color: #fde047; text-shadow: 0 0 20px rgba(253,224,71,0.4); font-weight: bold; margin-bottom: 6px; }
-        .sous-titre-seo { font-size: 0.85em; opacity: 0.85; margin: 0 auto 12px auto; font-style: italic; max-width: 800px; line-height: 1.4; }
+        .titre-fraternite { display: block; font-size: 2.2em; letter-spacing: 4px; color: #fde047; text-shadow: 0 0 20px rgba(253,224,71,0.4); font-weight: bold; margin-bottom: 12px; }
 
         body.day-mode .titre-fraternite { color: #d97706; text-shadow: 0 0 15px rgba(217,119,6,0.3); }
 
@@ -56,7 +67,39 @@
         .menu-table td:hover { background-color: rgba(0, 179, 179, 0.4); }
         .menu-table a { display: block; padding: 10px 18px; text-decoration: none; color: var(--text-color); font-weight: bold; font-size: 0.95em; }
 
-        /* Soleil central supérieur */
+        /* Bandeau défilant poétique et discret */
+        .bandeau-defilant {
+            width: 100%;
+            overflow: hidden;
+            background: rgba(15, 23, 42, 0.45);
+            backdrop-filter: blur(6px);
+            border-top: 1px solid rgba(255, 255, 255, 0.15);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+            padding: 8px 0;
+            font-size: 0.85em;
+            white-space: nowrap;
+            position: relative;
+            z-index: 20;
+            margin: 15px 0 10px 0;
+        }
+
+        .bandeau-contenu {
+            display: inline-block;
+            white-space: nowrap;
+            animation: defilementInfini 50s linear infinite;
+        }
+
+        .bandeau-contenu span {
+            padding-right: 50px;
+            opacity: 0.9;
+        }
+
+        @keyframes defilementInfini {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+
+        /* Soleil central supérieur (Inversé : mène au formulaire) */
         .soleil-cadre { width: 150px; height: 150px; background: radial-gradient(circle, #ffeb3b 0%, #ff9800 100%); border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 0 30px rgba(255,152,0,0.6); margin: 25px auto; position: relative; z-index: 20; transition: 0.6s; text-decoration: none; border: 2px solid rgba(255,255,255,0.5); }
         .soleil-cadre h1 { font-size: 0.85em; color: #222; line-height: 1.2; margin: 0; padding: 10px; font-weight: bold; }
         .soleil-cadre:hover { box-shadow: 0 0 50px #fff; transform: scale(1.08) rotate(360deg); }
@@ -102,7 +145,7 @@
             flex: 0 0 auto;
         }
 
-        /* Terre animée */
+        /* Terre animée (Inversée : mène au Jardin) */
         .terre-don { 
             width: 320px; height: 320px; border-radius: 50%; 
             background-image: url('https://upload.wikimedia.org/wikipedia/commons/thumb/c/c3/Solarsystemscope_texture_2k_earth_daymap.jpg/1200px-Solarsystemscope_texture_2k_earth_daymap.jpg'); 
@@ -133,7 +176,7 @@
         .style-regulation:hover { transform: translateY(-5px); border-color: #9370DB; background: rgba(147, 112, 219, 0.2); box-shadow: 0 12px 40px rgba(147,112,219,0.3); }
 
         .style-savoir { border: 2px solid rgba(255, 193, 7, 0.6); }
-        .style-savoir:hover { transform: translateY(-5px); border-color: #ffc107; background: rgba(255, 193, 7, 0.2); box-shadow: 0 12px 40px rgba(255,193,7,0.2); }
+        .style-savoir:hover { transform: translateY(-5px); border-color: #ffc107; background: rgba(255, 193, 7, 0.2); box-shadow: 0 12px 40px rgba(255,193,7,0.3); }
 
         .phrases-impots { font-size: 0.78em; color: var(--text-color); opacity: 0.9; font-weight: bold; margin: 3px 0; line-height: 1.3; }
         .liste-exemples-discrets { font-size: 0.68em; color: var(--text-color); opacity: 0.7; font-style: italic; list-style: none; padding: 0; margin: 4px 0 0 0; border-top: 1px dashed rgba(255,255,255,0.2); padding-top: 4px; }
@@ -189,7 +232,7 @@
 <body class="night-mode">
 
     <div id="google_translate_element"></div>
-    <button id="btn-son" onclick="toggleSon()" title="Activer / couper le son">🕊️</button>
+    <button id="btn-son" onclick="toggleSon()" title="Activer / couper le son">🕊</button>
 
     <!-- Icônes vagabondes magiques -->
     <div id="icone-jour-nuit" class="icone-jour-nuit" onclick="clicJourNuit()" title="Attrape-moi pour changer le temps !">☀️</div>
@@ -197,7 +240,6 @@
 
     <div class="header-container">
         <div class="titre-fraternite">La Fraternité du Palais Nature</div>
-        <div class="sous-titre-seo">Une alternative au système monétaire et aux SEL — Espace citoyen d'entraide, de dons et de gratuité absolue</div>
 
         <div style="position: relative; display: flex; justify-content: center; align-items: center; width: 100%; margin: 15px 0 5px 0;">
             <table class="menu-table" style="margin: 0 !important;">
@@ -218,7 +260,15 @@
         </div>
     </div>
 
-    <!-- Soleil central supérieur -->
+    <!-- Bandeau défilant avec progression poétique, humaine et SEO -->
+    <div class="bandeau-defilant">
+        <div class="bandeau-contenu">
+            <span>✦ Un espace de gratuité absolue, d'écoute et de compréhension ✦ Cultiver l'altruisme, la générosité et l'équilibre ✦ Retrouver la richesse sociale, le partage et l'entraide ✦ Rompre l'isolement & recréer de vrais liens humains ✦ Agir ensemble contre la misère et la précarité ✦ Échange de dons, savoirs, talents et services ✦ Une alternative citoyenne au système monétaire et aux SEL ✦ Accueil inconditionnel : sans-abri, exclus, marginaux, non-conformistes & esprits libres ✦</span>
+            <span>✦ Un espace de gratuité absolue, d'écoute et de compréhension ✦ Cultiver l'altruisme, la générosité et l'équilibre ✦ Retrouver la richesse sociale, le partage et l'entraide ✦ Rompre l'isolement & recréer de vrais liens humains ✦ Agir ensemble contre la misère et la précarité ✦ Échange de dons, savoirs, talents et services ✦ Une alternative citoyenne au système monétaire et aux SEL ✦ Accueil inconditionnel : sans-abri, exclus, marginaux, non-conformistes & esprits libres ✦</span>
+        </div>
+    </div>
+
+    <!-- Soleil central supérieur (Inversé : mène vers le formulaire) -->
     <a href="formulaire.html" class="soleil-cadre"><h1>ESPACE DU SEMIS DE DON ENTIER</h1></a>
 
     <!-- PAYSAGE COSMOS -->
@@ -248,7 +298,7 @@
             </a>
         </div>
 
-        <!-- CENTRE : La Terre animée -->
+        <!-- CENTRE : La Terre animée (Inversée : mène vers le Jardin) -->
         <div class="centre-terre-cosmos">
             <a href="jardin.html" class="terre-don">
                 <div class="texte-semis"><b>Le Jardin Public des Fraternels</b></div>
@@ -284,6 +334,9 @@
     <div id="coffre-magique" onclick="exploserCadeau()" title="Coffre magique">🎁</div>
 
     <footer>
+        <div style="max-width: 820px; margin: 0 auto 20px auto; padding: 0 15px; font-size: 0.8em; opacity: 0.65; line-height: 1.5; font-style: italic;">
+            La Fraternité du Palais Nature est un espace d'entraide et de gratuité absolue ouvert inconditionnellement à toutes et tous, sans distinction de parcours ou de situation. Partagez vos dons, savoirs, talents et besoins pour recréer du lien et fraterniser.
+        </div>
         <a href="transition-externe.html" class="lien-copyright">© 2000 le petit prince des jardiniers</a>
     </footer>
 
@@ -391,7 +444,7 @@
         let audio = new Audio('oiseaux.mp3'); audio.loop = true; let enLecture = false;
         function toggleSon() {
             if (!enLecture) { audio.play().catch(e=>{}); document.getElementById('btn-son').innerHTML = "🎶"; enLecture = true; } 
-            else { audio.pause(); document.getElementById('btn-son').innerHTML = "🕊️"; enLecture = false; }
+            else { audio.pause(); document.getElementById('btn-son').innerHTML = "🕊️️"; enLecture = false; }
         }
 
         // Déplacement du coffre magique
