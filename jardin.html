@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Le Jardin de la Fraternité - Registre</title>
+    <meta name="description" content="Découvrez le registre du Jardin de la Fraternité : partagez vos dons, talents, savoirs et participez à l'élan de solidarité du monde entier.">
     <style>
         body { font-family: 'Comic Sans MS', cursive; text-align: center; margin: 0; padding: 0; background-color: #FFFF00; color: #000080; min-height: 100vh; padding-bottom: 80px; transition: background 0.3s, color 0.3s; }
         .top-bar { position: relative; width: 100%; min-height: 50px; background: rgba(255,255,255,0.3); padding: 5px 0; display: flex; justify-content: center; align-items: center; }
@@ -37,13 +38,15 @@
         @media (max-width: 1024px) { .mur-reel { grid-template-columns: repeat(3, 1fr); } }
         @media (max-width: 768px) { .mur-reel { grid-template-columns: repeat(1, 1fr); } }
 
-        .carte-message { background: white; border: 3px solid #008080; border-radius: 10px; padding: 10px; box-shadow: 3px 3px 0px #008080; display: flex; flex-direction: column; min-height: 330px; cursor: pointer; position: relative; overflow: hidden; text-align: left; transition: transform 0.2s; }
+        .carte-message { background: white; border: 3px solid #008080; border-radius: 10px; padding: 10px; box-shadow: 3px 3px 0px #008080; display: flex; flex-direction: column; height: 330px; cursor: pointer; position: relative; overflow: hidden; text-align: left; transition: transform 0.2s; }
         .carte-message:hover { transform: translateY(-3px); }
         .nom-prenom { color: #2E7D32; font-weight: bold; font-size: 0.85em; border-bottom: 1px solid #eee; margin-bottom: 4px; padding-right: 70px; }
         .rubrique-tag { font-size: 0.55em; background: #ff1493; color: white; padding: 2px 6px; border-radius: 5px; position: absolute; top: 8px; right: 8px; }
 
         .texte-annonce { flex-grow: 1; font-style: italic; color: #000080; overflow-y: auto; font-size: 0.75em; margin: 4px 0; line-height: 1.2; padding-right: 4px; scrollbar-width: thin; white-space: pre-line; word-break: break-word; }
         
+        .badge-reponses { font-size: 0.7em; color: #E67E22; font-weight: bold; background: #FFF8E7; border: 1px solid #E67E22; border-radius: 6px; padding: 3px 6px; margin: 4px 0; align-self: flex-start; }
+
         .btn-arrosage { background: #E1F5FE; border: 1px solid #00BFFF; border-radius: 8px; color: #0277BD; font-size: 0.75em; padding: 4px; cursor: pointer; margin: 2px 0; font-weight: bold; width: 100%; }
         .btn-arrosage:disabled { background: #E0E0E0; border-color: #BDBDBD; color: #757575; cursor: not-allowed; }
         .btn-repondre { background: #E67E22; border: 1px solid #b35900; border-radius: 8px; color: white; font-size: 0.75em; padding: 5px; cursor: pointer; margin: 2px 0; font-weight: bold; width: 100%; transition: 0.2s; }
@@ -164,7 +167,7 @@
     <script>
         const TOKEN_SECRET = "MonJardinSecuritToken2026";
         const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbxnut45uaiH_GhVoNQ4jYzw53thmlc-KHOwhvYfl23Owfh2iyRoT1DBAAeFDepiQCo2/exec";
-        let toutesLesAnnonces = [], annoncesPrincipales = [], toutesLesReponses = [], filtreTypeActuel = "", filtreSousTypeActuel = "";
+        let toutesLesAnnonces = [], annoncesPrincipales = [], filtreTypeActuel = "", filtreSousTypeActuel = "";
 
         const mappingBoutons = { 
             "Savoir": ["SAVOIR"], 
@@ -197,7 +200,7 @@
                 { id: "AUTRE_SUB", label: "Autres interprétations" }
             ],
             "Citoyenne": [
-                { id: "", label: "🏛️️ Toutes les précisions" },
+                { id: "", label: "🏛 Toutes les précisions" },
                 { id: "Repas, graines & eau", label: "Repas, graines & eau" },
                 { id: "Prêt d'objets, outils & équipement", label: "Prêt d'objets, outils & équipement" },
                 { id: "Accueil, hébergement & covoiturage", label: "Accueil, hébergement & covoiturage" },
@@ -298,8 +301,6 @@
 
         function obtenirReponsesPourAnnonce(ann) {
             let resultatsReponses = [];
-
-            // Analyse de la colonne reponses_article de l'annonce
             const champRepDirect = ann.reponses_article || ann.reponses || ann.commentaires || "";
             if (champRepDirect) {
                 const blocs = String(champRepDirect).split("||");
@@ -318,7 +319,6 @@
                     }
                 });
             }
-
             return resultatsReponses;
         }
 
@@ -380,7 +380,7 @@
         async function chargerAnnonces() {
             try {
                 const response = await fetch(WEB_APP_URL + "?token=" + TOKEN_SECRET + "&v=" + Date.now());
-                toutesLesAnnonces = await response.json();
+                const toutesLesAnnonces = await response.json();
 
                 annoncesPrincipales = [];
                 toutesLesAnnonces.forEach(item => {
@@ -490,24 +490,11 @@
 
                 const listeReponses = obtenirReponsesPourAnnonce(ann);
                 
-                let blocReponsesHtml = '';
-                if (listeReponses.length > 0) {
-                    blocReponsesHtml = `<div style="background: #FFF8E7; border: 1px dashed #E67E22; border-radius: 6px; padding: 6px; margin: 4px 0; max-height: 90px; overflow-y: auto; font-size: 0.7em;">
-                        <strong style="color: #E67E22;">💬 Réponses (${listeReponses.length}) :</strong>`;
-                    listeReponses.slice(-2).forEach(r => {
-                        blocReponsesHtml += `<div style="margin-top: 3px; border-top: 1px solid #f0e6d2; padding-top: 2px;">
-                            <span style="color: #2E7D32; font-weight: bold;">${escapeHtml(r.nom)} :</span> ${escapeHtml(masquerCoordonnees(r.message))}
-                        </div>`;
-                    });
-                    blocReponsesHtml += `</div>`;
-                }
+                // Affichage uniquement du nombre de réponses dans la carte (fenêtre de base)
+                let badgeReponsesHtml = listeReponses.length > 0 ? `<div class="badge-reponses">💬 ${listeReponses.length} réponse(s)</div>` : '';
 
                 const d = document.createElement('div');
                 d.className = 'carte-message';
-                if(listeReponses.length > 0) {
-                    d.style.height = 'auto';
-                    d.style.minHeight = '330px';
-                }
 
                 const couleurBord = couleursBordures[typeAnnonce] || "#008080";
                 d.style.borderColor = couleurBord;
@@ -526,7 +513,7 @@
                     <div class="nom-prenom">${escapeHtml(nomAnnonce)}</div>
                     <div class="rubrique-tag">${nomBoutonAffiche[typeAnnonce] || "Graine"}</div>
                     <div class="texte-annonce">"${escapeHtml(masquerCoordonnees(msgAnnonce))}"</div>
-                    ${blocReponsesHtml}
+                    ${badgeReponsesHtml}
                     <div class="details-bas">
                         📅 Publié : ${escapeHtml(datePubli)}<br>
                         📍 Localisation : ${escapeHtml(ann.localisation || 'N/C')}<br>
@@ -577,7 +564,7 @@
 
             let htmlReponsesGeant = '';
             if (listeReponses.length > 0) {
-                htmlReponsesGeant = `<div style="background:#FFF8E7; padding:15px; border-radius:10px; border:2px dashed #E67E22; margin-bottom:15px; text-align:left; max-height: 300px; overflow-y: auto;">
+                htmlReponsesGeant = `<div style="background:#FFF8E7; padding:15px; border-radius:10px; border:2px dashed #E67E22; margin-bottom:15px; text-align:left;">
                     <h4 style="color:#E67E22; margin:0 0 10px 0;">💬 Réponses reçues (${listeReponses.length}) :</h4>`;
                 listeReponses.forEach(r => {
                     htmlReponsesGeant += `<div style="margin-bottom:10px; border-bottom:1px solid #ddd; padding-bottom:8px; word-break: break-word;">
@@ -591,7 +578,10 @@
             const divContent = document.getElementById('geant-contenu');
             divContent.innerHTML = `
                 <div style="font-size:1.6em; color:#2E7D32; font-weight:bold; border-bottom:3px solid #008080; margin-bottom:15px; padding-right: 40px;">🌱 Offrande de ${escapeHtml(ann.nom || "Anonyme")}</div>
-                <div style="background:white; padding:20px; border-radius:15px; border-left:10px solid #FF1493; font-size:1.1em; color:#000080; text-align:left; margin-bottom:15px; white-space: pre-line; word-break: break-word;">"${escapeHtml(masquerCoordonnees(ann.message || ""))}"</div>
+                
+                <!-- Fenêtre agrandie avec barre de défilement (overflow-y: auto) pour les longues annonces -->
+                <div style="background:white; padding:20px; border-radius:15px; border-left:10px solid #FF1493; font-size:1.1em; color:#000080; text-align:left; margin-bottom:15px; max-height: 250px; overflow-y: auto; white-space: pre-line; word-break: break-word;">"${escapeHtml(masquerCoordonnees(ann.message || ""))}"</div>
+                
                 <div style="text-align:left; background:#E0F2F1; padding:15px; border-radius:10px; font-size:0.95em; margin-bottom:15px; line-height: 1.4;">
                     <strong>📅 Date :</strong> ${escapeHtml(datePubli)}<br>
                     <strong>📍 Localisation :</strong> ${escapeHtml(ann.localisation || "N/C")}<br>
