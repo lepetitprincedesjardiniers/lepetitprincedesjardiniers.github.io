@@ -236,12 +236,12 @@
         .fermer-modal { position: absolute; top: 15px; right: 20px; font-size: 28px; cursor: pointer; color: #fde047; transition: 0.2s; }
         .fermer-modal:hover { transform: scale(1.2); }
 
-        footer { padding: 20px 0 35px 0; }
-        .lien-copyright { color: var(--text-color); opacity: 0.6; text-decoration: none; font-weight: bold; font-size: 0.88em; transition: 0.3s; display: inline-block; margin-bottom: 8px; }
+        footer { padding: 40px 0 45px 0; }
+        .lien-copyright { color: var(--text-color); opacity: 0.6; text-decoration: none; font-weight: bold; font-size: 0.88em; transition: 0.3s; display: inline-block; margin-bottom: 15px; }
         .lien-copyright:hover { opacity: 1; }
         
-        /* Lien du journal discret en bas */
-        .lien-footer-discret { display: block; color: var(--text-color); opacity: 0.45; text-decoration: none; font-size: 0.78em; transition: 0.3s; margin-top: 6px; font-style: italic; }
+        /* Lien du journal discret en bas (non jaune) */
+        .lien-footer-discret { display: block; color: var(--text-color); opacity: 0.45; text-decoration: none; font-size: 0.78em; transition: 0.3s; margin-top: 10px; font-style: italic; }
         .lien-footer-discret:hover { opacity: 0.85; text-decoration: underline; }
 
         @media (max-width: 950px) {
@@ -266,7 +266,7 @@
         <button id="btn-son" onclick="toggleSon()" title="Activer / couper le son">🕊</button>
     </div>
 
-    <!-- Icônes vagabondes magiques (incluant le ? d'information) -->
+    <!-- Icônes vagabondes magiques -->
     <div id="icone-info" class="icone-vagabonde" onclick="ouvrirModalInfo()" title="À propos & Informations (Attrape-moi !)">❓</div>
     <div id="icone-jour-nuit" class="icone-vagabonde" onclick="clicJourNuit()" title="Attrape-moi pour changer le temps !">☀️</div>
     <div id="icone-meteo" class="icone-vagabonde" onclick="clicMeteo()" title="Attrape-moi pour faire de la pluie ou de la neige !">☁️</div>
@@ -361,8 +361,8 @@
     <!-- Bandeau défilant bas de page -->
     <div class="bandeau-defilant">
         <div class="bandeau-contenu">
-            <span>✦ Un espace d'écoute, de compréhension et de générosité ✦ Cultiver l'altruisme, l'équilibre et la richesse sociale pour rompre l'isolement, recréer de vrais liens humains et agir ensemble contre la précarité ✦ Échange de dons, savoirs, talents et services ✦ Une alternative citoyenne au système monétaire et aux SEL ✦ Accueil inconditionnel : sans-abri, exclus, marginaux, non-conformistes & esprits libres ✦</span>
-            <span>✦ Un espace d'écoute, de compréhension et de générosité ✦ Cultiver l'altruisme, l'équilibre et la richesse sociale pour rompre l'isolement, recréer de vrais liens humains et agir ensemble contre la précarité ✦ Échange de dons, savoirs, talents et services ✦ Une alternative citoyenne au système monétaire et aux SEL ✦ Accueil inconditionnel : sans-abri, exclus, marginaux, non-conformistes & esprits libres ✦</span>
+            <span>✦ Un espace d'écoute, de compréhension et de générosité ✦ Cultiver l'altruisme, l'équilibre et la richesse sociale pour rompre l'isolement, recréer de vrais liens humains et agir ensemble contre la précarité ✦ Échange de dons, savoirs, talents et services ✦ Une alternative citoyenne au système monétaire ✦ Accueil inconditionnel : sans-abri, exclus, marginaux, SEL, non-conformistes & esprits libres ✦</span>
+            <span>✦ Un espace d'écoute, de compréhension et de générosité ✦ Cultiver l'altruisme, l'équilibre et la richesse sociale pour rompre l'isolement, recréer de vrais liens humains et agir ensemble contre la précarité ✦ Échange de dons, savoirs, talents et services ✦ Une alternative citoyenne au système monétaire ✦ Accueil inconditionnel : sans-abri, exclus, marginaux, SEL, non-conformistes & esprits libres ✦</span>
         </div>
     </div>
 
@@ -427,27 +427,28 @@
             icone.title = estEnJour ? 'Passer en mode Nuit étoilée' : 'Passer en mode Jour radieux';
         }
 
-        // Gestion Météo (Pluie / Neige interactive)
+        // Gestion Météo (Pluie en bleu / Neige en blanc)
         let modePluie = true;
         function clicMeteo() {
             if (modePluie) {
-                lancerAverse('💧');
+                lancerAverse('💧', '#38bdf8'); // Pluie en bleu
                 document.getElementById('icone-meteo').innerHTML = "❄️";
                 modePluie = false;
             } else {
-                lancerAverse('❄️');
-                document.getElementById('icone-meteo').innerHTML = "🌧️️";
+                lancerAverse('❄️', '#ffffff'); // Neige en blanc
+                document.getElementById('icone-meteo').innerHTML = "🌧";
                 modePluie = true;
             }
         }
 
-        function lancerAverse(symbole) {
+        function lancerAverse(symbole, couleurTexte) {
             for (let i = 0; i < 35; i++) {
                 const drop = document.createElement('div');
                 drop.style.position = 'fixed';
                 drop.style.left = Math.random() * window.innerWidth + 'px';
                 drop.style.top = '-30px';
                 drop.style.fontSize = (Math.random() * 12 + 16) + 'px';
+                drop.style.color = couleurTexte;
                 drop.style.zIndex = '999';
                 drop.style.pointerEvents = 'none';
                 drop.innerHTML = symbole;
