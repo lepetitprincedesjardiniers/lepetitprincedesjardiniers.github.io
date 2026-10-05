@@ -48,7 +48,7 @@
         @media (max-width: 1024px) { .mur-reel { grid-template-columns: repeat(2, 1fr); } }
         @media (max-width: 600px) { .mur-reel { grid-template-columns: repeat(1, 1fr); } }
 
-        /* EFFET DE SÉPARATION : Bordure droite élégante aux couleurs de la catégorie */
+        /* EFFET DE SÉPARATION & TAILLE IDENTIQUE DES CELLULES */
         .carte-message { 
             background: white; 
             border: 1px solid #e0e0e0;
@@ -58,7 +58,8 @@
             box-shadow: 0 4px 14px rgba(0,0,0,0.08); 
             display: flex; 
             flex-direction: column; 
-            min-height: 330px; 
+            height: 400px; /* Hauteur fixe et identique pour toutes les cellules */
+            box-sizing: border-box;
             cursor: pointer; 
             position: relative; 
             overflow: hidden; 
@@ -77,11 +78,11 @@
             flex-grow: 1; 
             font-style: italic; 
             color: #000080; 
-            overflow-y: auto; 
+            overflow-y: auto; /* Scrolling déroulant si le texte est trop long */
             font-size: 0.85em; 
             margin: 8px 0; 
             line-height: 1.4; 
-            padding-right: 4px; 
+            padding-right: 6px; 
             scrollbar-width: thin; 
             white-space: pre-line; 
             word-break: break-word; 
@@ -89,11 +90,11 @@
         .texte-annonce::before { content: "“"; color: #ff1493; font-weight: bold; margin-right: 2px; }
         .texte-annonce::after { content: "”"; color: #ff1493; font-weight: bold; margin-left: 2px; }
         
-        .badge-reponses { font-size: 0.75em; color: #E67E22; font-weight: bold; background: #FFF8E7; border: 1px solid #E67E22; border-radius: 6px; padding: 4px 8px; margin: 6px 0; align-self: flex-start; }
+        .badge-reponses { font-size: 0.75em; color: #E67E22; font-weight: bold; background: #FFF8E7; border: 1px solid #E67E22; border-radius: 6px; padding: 4px 8px; margin: 6px 0; align-self: flex-start; flex-shrink: 0; }
 
-        .btn-arrosage { background: #E1F5FE; border: 1px solid #00BFFF; border-radius: 8px; color: #0277BD; font-size: 0.8em; padding: 6px; cursor: pointer; margin: 4px 0; font-weight: bold; width: 100%; position: relative; z-index: 5; }
+        .btn-arrosage { background: #E1F5FE; border: 1px solid #00BFFF; border-radius: 8px; color: #0277BD; font-size: 0.8em; padding: 6px; cursor: pointer; margin: 4px 0; font-weight: bold; width: 100%; position: relative; z-index: 5; flex-shrink: 0; }
         .btn-arrosage:disabled { background: #E0E0E0; border-color: #BDBDBD; color: #757575; cursor: not-allowed; }
-        .btn-repondre { background: #E67E22; border: 1px solid #b35900; border-radius: 8px; color: white; font-size: 0.8em; padding: 7px; cursor: pointer; margin: 4px 0; font-weight: bold; width: 100%; transition: 0.2s; position: relative; z-index: 5; }
+        .btn-repondre { background: #E67E22; border: 1px solid #b35900; border-radius: 8px; color: white; font-size: 0.8em; padding: 7px; cursor: pointer; margin: 4px 0; font-weight: bold; width: 100%; transition: 0.2s; position: relative; z-index: 5; flex-shrink: 0; }
         .btn-repondre:hover { background: #d35400; }
 
         .details-bas { font-size: 0.68em; color: #555; line-height: 1.4; border-top: 1px solid #f0f0f0; padding-top: 8px; background: white; flex-shrink: 0; margin-top: auto; }
@@ -563,7 +564,6 @@
                 d.style.borderRightColor = couleurBord;
                 d.onclick = () => ouvrirGrandMessage(ann);
 
-                // Gestion propre du compteur d'arrosage
                 const dejaVote = localStorage.getItem('vote_' + idAnnonce);
                 const nbArrosages = parseInt(ann.votes_arrosage) || 0;
                 let texteBoutonArrosage = nbArrosages > 0 ? `💧 Arroser (${nbArrosages})` : `💧 Arroser`;
@@ -590,7 +590,7 @@
 
                 const btnArroser = d.querySelector('.btn-arrosage');
                 btnArroser.onclick = (e) => {
-                    e.stopPropagation(); // Empêche l'ouverture de la carte modale principale
+                    e.stopPropagation(); 
                     arroser(e, idAnnonce, btnArroser, ann);
                 };
 
