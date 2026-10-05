@@ -91,9 +91,9 @@
         
         .badge-reponses { font-size: 0.75em; color: #E67E22; font-weight: bold; background: #FFF8E7; border: 1px solid #E67E22; border-radius: 6px; padding: 4px 8px; margin: 6px 0; align-self: flex-start; }
 
-        .btn-arrosage { background: #E1F5FE; border: 1px solid #00BFFF; border-radius: 8px; color: #0277BD; font-size: 0.8em; padding: 6px; cursor: pointer; margin: 4px 0; font-weight: bold; width: 100%; position: relative; }
+        .btn-arrosage { background: #E1F5FE; border: 1px solid #00BFFF; border-radius: 8px; color: #0277BD; font-size: 0.8em; padding: 6px; cursor: pointer; margin: 4px 0; font-weight: bold; width: 100%; position: relative; z-index: 5; }
         .btn-arrosage:disabled { background: #E0E0E0; border-color: #BDBDBD; color: #757575; cursor: not-allowed; }
-        .btn-repondre { background: #E67E22; border: 1px solid #b35900; border-radius: 8px; color: white; font-size: 0.8em; padding: 7px; cursor: pointer; margin: 4px 0; font-weight: bold; width: 100%; transition: 0.2s; }
+        .btn-repondre { background: #E67E22; border: 1px solid #b35900; border-radius: 8px; color: white; font-size: 0.8em; padding: 7px; cursor: pointer; margin: 4px 0; font-weight: bold; width: 100%; transition: 0.2s; position: relative; z-index: 5; }
         .btn-repondre:hover { background: #d35400; }
 
         .details-bas { font-size: 0.68em; color: #555; line-height: 1.4; border-top: 1px solid #f0f0f0; padding-top: 8px; background: white; flex-shrink: 0; margin-top: auto; }
@@ -563,6 +563,7 @@
                 d.style.borderRightColor = couleurBord;
                 d.onclick = () => ouvrirGrandMessage(ann);
 
+                // Gestion propre du compteur d'arrosage
                 const dejaVote = localStorage.getItem('vote_' + idAnnonce);
                 const nbArrosages = parseInt(ann.votes_arrosage) || 0;
                 let texteBoutonArrosage = nbArrosages > 0 ? `💧 Arroser (${nbArrosages})` : `💧 Arroser`;
@@ -588,7 +589,10 @@
                 `;
 
                 const btnArroser = d.querySelector('.btn-arrosage');
-                btnArroser.onclick = (e) => arroser(e, idAnnonce, btnArroser, ann);
+                btnArroser.onclick = (e) => {
+                    e.stopPropagation(); // Empêche l'ouverture de la carte modale principale
+                    arroser(e, idAnnonce, btnArroser, ann);
+                };
 
                 const btnRep = d.querySelector('.btn-repondre');
                 btnRep.onclick = (e) => {
@@ -641,14 +645,13 @@
         }
 
         async function arroser(e, id, btn, ann) {
-            e.stopPropagation();
             if (localStorage.getItem('vote_' + id)) return;
 
             jouerBip();
             animerPluieGouttes(e);
 
             ann.votes_arrosage = (parseInt(ann.votes_arrosage) || 0) + 1;
-            btn.innerHTML = `💧 Arrosé ! (${ann.votes_arrosage})`;
+            btn.innerHTML = `💧 Déjà arrosé (${ann.votes_arrosage})`;
             btn.style.background = "#C8E6C9";
             btn.disabled = true;
 
