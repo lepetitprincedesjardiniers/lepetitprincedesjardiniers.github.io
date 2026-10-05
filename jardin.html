@@ -37,20 +37,19 @@
         @media (max-width: 1024px) { .mur-reel { grid-template-columns: repeat(3, 1fr); } }
         @media (max-width: 768px) { .mur-reel { grid-template-columns: repeat(1, 1fr); } }
 
-        .carte-message { background: white; border: 3px solid #008080; border-radius: 10px; padding: 10px; box-shadow: 3px 3px 0px #008080; display: flex; flex-direction: column; height: 330px; cursor: pointer; position: relative; overflow: hidden; text-align: left; transition: transform 0.2s; }
+        .carte-message { background: white; border: 3px solid #008080; border-radius: 10px; padding: 10px; box-shadow: 3px 3px 0px #008080; display: flex; flex-direction: column; min-height: 330px; cursor: pointer; position: relative; overflow: hidden; text-align: left; transition: transform 0.2s; }
         .carte-message:hover { transform: translateY(-3px); }
         .nom-prenom { color: #2E7D32; font-weight: bold; font-size: 0.85em; border-bottom: 1px solid #eee; margin-bottom: 4px; padding-right: 70px; }
         .rubrique-tag { font-size: 0.55em; background: #ff1493; color: white; padding: 2px 6px; border-radius: 5px; position: absolute; top: 8px; right: 8px; }
 
         .texte-annonce { flex-grow: 1; font-style: italic; color: #000080; overflow-y: auto; font-size: 0.75em; margin: 4px 0; line-height: 1.2; padding-right: 4px; scrollbar-width: thin; white-space: pre-line; word-break: break-word; }
-        .badge-reponses { font-size: 0.7em; color: #E67E22; font-weight: bold; background: #FFF8E7; border: 1px solid #E67E22; border-radius: 6px; padding: 2px 6px; margin: 3px 0; align-self: flex-start; }
-
+        
         .btn-arrosage { background: #E1F5FE; border: 1px solid #00BFFF; border-radius: 8px; color: #0277BD; font-size: 0.75em; padding: 4px; cursor: pointer; margin: 2px 0; font-weight: bold; width: 100%; }
         .btn-arrosage:disabled { background: #E0E0E0; border-color: #BDBDBD; color: #757575; cursor: not-allowed; }
         .btn-repondre { background: #E67E22; border: 1px solid #b35900; border-radius: 8px; color: white; font-size: 0.75em; padding: 5px; cursor: pointer; margin: 2px 0; font-weight: bold; width: 100%; transition: 0.2s; }
         .btn-repondre:hover { background: #d35400; transform: scale(1.02); }
 
-        .details-bas { font-size: 0.65em; color: #444; line-height: 1.2; border-top: 1px solid #eee; padding-top: 4px; background: white; flex-shrink: 0; }
+        .details-bas { font-size: 0.65em; color: #444; line-height: 1.2; border-top: 1px solid #eee; padding-top: 4px; background: white; flex-shrink: 0; margin-top: auto; }
 
         body.dark-mode { background-color: #0a0a1a; color: #e0e0e0; }
         .star { position: fixed; background: white; border-radius: 50%; opacity: 0; pointer-events: none; animation: twinkle var(--d) infinite; }
@@ -306,13 +305,45 @@
             if (!idOriginal) return [];
             const idCle = nettoyerCle(idOriginal);
 
-            return toutesLesReponses.filter(rep => {
+            let resultatsReponses = [];
+
+            // 1. Recherche dans le tableau des réponses chargées de type "REPONSE_..."
+            const repItems = toutesLesReponses.filter(rep => {
                 const refBrute = String(rep.ref_id || rep.Ref || rep.ref || "").trim();
                 const refNettoyee = refBrute.replace(/^Ref:/i, "").trim();
                 const refCle = nettoyerCle(refNettoyee);
-                
                 return refCle === idCle || (idCle.length > 5 && refCle.includes(idCle)) || (refCle.length > 5 && idCle.includes(refCle));
             });
+
+            repItems.forEach(r => {
+                resultatsReponses.push({
+                    nom: r.nom || 'Ami',
+                    message: r.message || ''
+                });
+            });
+
+            // 2. Recherche aussi si les réponses sont stockées directement dans la colonne "reponses_article" de l'annonce
+            const champRepDirect = ann.reponses_article || ann.reponses || ann.commentaires || "";
+            if (champRepDirect) {
+                // Format attendu: [Nom (Date)] : Message || [Nom2 (Date2)] : Message2
+                const blocs = String(champRepDirect).split("||");
+                blocs.forEach(bloc => {
+                    const match = bloc.match(/\[(.*?) \((.*?)\)\]\s*:\s*(.*)/);
+                    if (match) {
+                        resultatsReponses.push({
+                            nom: match[1],
+                            message: match[3]
+                        });
+                    } else if (bloc.trim() !== "") {
+                        resultatsReponses.push({
+                            nom: "Ami",
+                            message: bloc.trim()
+                        });
+                    }
+                });
+            }
+
+            return resultatsReponses;
         }
 
         function jouerBip() {
@@ -491,10 +522,26 @@
                 const datePubli = formaterDate(ann.Horodateur);
 
                 const listeReponses = obtenirReponsesPourAnnonce(ann);
-                let badgeReponsesHtml = listeReponses.length > 0 ? `<div class="badge-reponses">💬 ${listeReponses.length} réponse(s)</div>` : '';
+                
+                // Affichage direct des réponses sous l'annonce dans la carte
+                let blocReponsesHtml = '';
+                if (listeReponses.length > 0) {
+                    blocReponsesHtml = `<div style="background: #FFF8E7; border: 1px dashed #E67E22; border-radius: 6px; padding: 6px; margin: 4px 0; max-height: 90px; overflow-y: auto; font-size: 0.7em;">
+                        <strong style="color: #E67E22;">💬 Réponses (${listeReponses.length}) :</strong>`;
+                    listeReponses.slice(-2).forEach(r => {
+                        blocReponsesHtml += `<div style="margin-top: 3px; border-top: 1px solid #f0e6d2; padding-top: 2px;">
+                            <span style="color: #2E7D32; font-weight: bold;">${escapeHtml(r.nom)} :</span> ${escapeHtml(masquerCoordonnees(r.message))}
+                        </div>`;
+                    });
+                    blocReponsesHtml += `</div>`;
+                }
 
                 const d = document.createElement('div');
                 d.className = 'carte-message';
+                if(listeReponses.length > 0) {
+                    d.style.height = 'auto';
+                    d.style.minHeight = '330px';
+                }
 
                 const couleurBord = couleursBordures[typeAnnonce] || "#008080";
                 d.style.borderColor = couleurBord;
@@ -513,7 +560,7 @@
                     <div class="nom-prenom">${escapeHtml(nomAnnonce)}</div>
                     <div class="rubrique-tag">${nomBoutonAffiche[typeAnnonce] || "Graine"}</div>
                     <div class="texte-annonce">"${escapeHtml(masquerCoordonnees(msgAnnonce))}"</div>
-                    ${badgeReponsesHtml}
+                    ${blocReponsesHtml}
                     <div class="details-bas">
                         📅 Publié : ${escapeHtml(datePubli)}<br>
                         📍 Localisation : ${escapeHtml(ann.localisation || 'N/C')}<br>
@@ -568,8 +615,8 @@
                     <h4 style="color:#E67E22; margin:0 0 10px 0;">💬 Réponses reçues (${listeReponses.length}) :</h4>`;
                 listeReponses.forEach(r => {
                     htmlReponsesGeant += `<div style="margin-bottom:10px; border-bottom:1px solid #ddd; padding-bottom:8px; word-break: break-word;">
-                        <strong style="color:#2E7D32;">${escapeHtml(r.nom || 'Ami')} :</strong> 
-                        <div style="white-space: pre-line; color: #333; margin-top: 3px;">"${escapeHtml(masquerCoordonnees(r.message || ''))}"</div>
+                        <strong style="color:#2E7D32;">${escapeHtml(r.nom)} :</strong> 
+                        <div style="white-space: pre-line; color: #333; margin-top: 3px;">"${escapeHtml(masquerCoordonnees(r.message))}"</div>
                     </div>`;
                 });
                 htmlReponsesGeant += `</div>`;
@@ -612,7 +659,7 @@
 
         function fermerModalReponse() { document.getElementById('modal-reponse').style.display = 'none'; }
 
-        function envoyerReponse(e) {
+        async function envoyerReponse(e) {
             e.preventDefault();
             jouerBip();
 
@@ -625,37 +672,34 @@
             const nomRep = document.getElementById('rep_nom').value;
             const msgRep = document.getElementById('rep_message').value;
 
-            toutesLesReponses.push({
-                ref_id: `Ref:${idRef}`,
-                type: `REPONSE_${typeAnn}`,
-                nom: nomRep,
-                message: msgRep
-            });
-
             const params = new URLSearchParams();
             params.append('token', TOKEN_SECRET);
             params.append('action', 'repondre');
-            params.append('ref_id', `Ref:${idRef}`);
+            params.append('ref_id', idRef);
             params.append('type', `REPONSE_${typeAnn}`);
             params.append('nom', nomRep);
             params.append('message', msgRep);
 
-            fetch(WEB_APP_URL, { method: 'POST', mode: 'no-cors', body: params })
-            .then(() => {
+            try {
+                await fetch(WEB_APP_URL, {
+                    method: 'POST',
+                    body: params
+                });
+
                 btn.innerText = "Réponse envoyée avec succès ! 🌸";
                 setTimeout(() => {
                     fermerModalReponse();
                     btn.innerText = "ENVOYER MA RÉPONSE ✨";
                     btn.disabled = false;
                     document.getElementById('formReponse').reset();
-                    executerFiltrage();
-                }, 500);
-            })
-            .catch(err => {
+                    chargerAnnonces();
+                }, 1000);
+            } catch (err) {
                 console.error("Erreur d'envoi :", err);
-                fermerModalReponse();
+                alert("Une erreur est survenue lors de l'envoi de la réponse.");
                 btn.disabled = false;
-            });
+                btn.innerText = "ENVOYER MA RÉPONSE ✨";
+            }
         }
 
         function rechercheRapide(t, el) {
