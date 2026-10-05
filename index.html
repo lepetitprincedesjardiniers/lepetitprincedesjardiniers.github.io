@@ -35,7 +35,6 @@
             background: var(--bg-gradient);
             color: var(--text-color); overflow-x: hidden; min-height: 100vh; position: relative;
             transition: background 0.8s ease, color 0.8s ease;
-            cursor: pointer;
         }
 
         #google_translate_element { 
@@ -163,56 +162,10 @@
 
         #coffre-magique { position: fixed; font-size: 40px; z-index: 8; cursor: pointer; transition: 4s ease-in-out; filter: drop-shadow(0 0 10px gold); opacity: 0.85; }
         
-        /* Style pour les émojis flottants dynamiques */
-        .floating-emoji {
-            position: absolute;
-            font-size: 2rem;
-            user-select: none;
-            pointer-events: none;
-            z-index: 6;
-            transition: transform 0.5s ease;
-        }
-
-        /* Animation spécifique pour les oiseaux et messagers en vol */
-        @keyframes flyAcross {
-            0% {
-                transform: translate(-100px, 50px) scale(0.8) rotate(-10deg);
-                opacity: 0;
-            }
-            20% {
-                opacity: 1;
-            }
-            50% {
-                transform: translate(50vw, -30px) scale(1) rotate(5deg);
-            }
-            80% {
-                opacity: 1;
-            }
-            100% {
-                transform: translate(105vw, 80px) scale(0.9) rotate(-5deg);
-                opacity: 0;
-            }
-        }
-
-        .flying-bird {
-            position: absolute;
-            font-size: 2.5rem;
-            z-index: 10;
-            pointer-events: none;
-            animation: flyAcross 14s linear forwards;
-        }
-
-        /* Effet arc-en-ciel animé */
-        .rainbow-text {
-            background: linear-gradient(45deg, #ff0000, #ff7f00, #ffff00, #00ff00, #0000ff, #4b0082, #8b00ff);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            animation: rainbowShift 3s infinite linear;
-        }
-
-        @keyframes rainbowShift {
-            0% { filter: hue-rotate(0deg); }
-            100% { filter: hue-rotate(360deg); }
+        /* Oiseaux et messagers discrets et lents */
+        .oiseau-volant { 
+            position: fixed; font-size: 26px; z-index: 7; 
+            transition: transform 14s linear; pointer-events: none; opacity: 0.6; 
         }
 
         .journal-volant {
@@ -244,7 +197,7 @@
 
     <!-- Icônes vagabondes magiques -->
     <div id="icone-jour-nuit" class="icone-jour-nuit" onclick="clicJourNuit()" title="Attrape-moi pour changer le temps !">☀️</div>
-    <div id="icone-meteo" onclick="clicMeteo()" title="Attrape-moi pour faire de la pluie ou de la neige !">☁️</div>
+    <div id="icone-meteo" onclick="clicMeteo()" title="Attrape-moi pour faire de la pluie ou de la neige !">☁️️</div>
 
     <div class="header-container">
         <div class="titre-fraternite">La Fraternité du Palais Nature</div>
@@ -349,106 +302,6 @@
         }
         for(let i=0; i<85; i++) createStar();
 
-        // --- GESTION DES ÉMOJIS ET OISEAUX FLOTTANTS (Version discrète) ---
-        const emojiList = ['❄️', '💧', '🐦', '🕊️', '✨', '🌸'];
-        const activeElements = [];
-
-        function createEmoji(specificEmoji = null, startX = null, startY = null) {
-            const el = document.createElement('div');
-            el.className = 'floating-emoji';
-            el.innerText = specificEmoji || emojiList[Math.floor(Math.random() * emojiList.length)];
-            
-            let x = startX !== null ? startX : Math.random() * window.innerWidth;
-            let y = startY !== null ? startY : Math.random() * window.innerHeight;
-            
-            el.style.left = x + 'px';
-            el.style.top = y + 'px';
-
-            let speedX = (Math.random() - 0.5) * 0.5;
-            let speedY = (Math.random() - 0.5) * 0.5;
-
-            document.body.appendChild(el);
-
-            activeElements.push({
-                element: el,
-                x: x,
-                y: y,
-                speedX: speedX,
-                speedY: speedY
-            });
-        }
-
-        // On réduit le nombre d'éléments de départ pour plus de discrétion
-        for (let i = 0; i < 12; i++) {
-            createEmoji();
-        }
-
-        function animateEmojis() {
-            activeElements.forEach(item => {
-                item.x += item.speedX;
-                item.y += item.speedY;
-
-                if (item.x < 0 || item.x > window.innerWidth - 30) item.speedX *= -1;
-                if (item.y < 0 || item.y > window.innerHeight - 30) item.speedY *= -1;
-
-                item.element.style.left = item.x + 'px';
-                item.element.style.top = item.y + 'px';
-            });
-            requestAnimationFrame(animateEmojis);
-        }
-        requestAnimationFrame(animateEmojis);
-
-        // Oiseaux volants plus rares et discrets (toutes les 15 secondes)
-        function spawnFlyingBird() {
-            const bird = document.createElement('div');
-            bird.className = 'flying-bird';
-            const birds = ['🐦', '🕊️'];
-            bird.innerText = birds[Math.floor(Math.random() * birds.length)];
-            bird.style.top = (Math.random() * (window.innerHeight / 2.5)) + 'px';
-            document.body.appendChild(bird);
-
-            setTimeout(() => bird.remove(), 14000);
-        }
-        setInterval(spawnFlyingBird, 15000);
-
-        // --- SYSTÈME DE CHANGEMENT DE COULEUR AU CLIC ---
-        const colorModes = [
-            () => ({ color: '#ffffff', filter: 'drop-shadow(0 0 5px white)', isRainbow: false }), 
-            () => ({ color: '#ff69b4', filter: 'drop-shadow(0 0 5px #ff1493)', isRainbow: false }), 
-            () => {
-                const colors = ['#00ffff', '#ff4500', '#adff2f', '#ffff00', '#9370db', '#00ff7f'];
-                const rc = colors[Math.floor(Math.random() * colors.length)];
-                return { color: rc, filter: `drop-shadow(0 0 6px ${rc})`, isRainbow: false };
-            },
-            () => ({ color: '', filter: '', isRainbow: true }) 
-        ];
-
-        document.addEventListener('click', (e) => {
-            if (e.target.tagName === 'A' || e.target.tagName === 'BUTTON' || e.target.closest('table')) return;
-
-            const chosenMode = colorModes[Math.floor(Math.random() * colorModes.length)]();
-
-            activeElements.forEach(item => {
-                if (chosenMode.isRainbow) {
-                    item.element.classList.add('rainbow-text');
-                    item.element.style.color = '';
-                    item.element.style.filter = '';
-                } else {
-                    item.element.classList.remove('rainbow-text');
-                    if (item.element.innerText === '❄️' && Math.random() > 0.3) {
-                        item.element.style.color = '#ffffff';
-                        item.element.style.filter = 'drop-shadow(0 0 8px white)';
-                    } else if (item.element.innerText === '💧' && Math.random() > 0.3) {
-                        item.element.style.color = '#ff69b4';
-                        item.element.style.filter = 'drop-shadow(0 0 8px #ff69b4)';
-                    } else {
-                        item.element.style.color = chosenMode.color;
-                        item.element.style.filter = chosenMode.filter;
-                    }
-                }
-            });
-        });
-
         // Icône Jour / Nuit vagabonde
         const iconeJN = document.getElementById('icone-jour-nuit');
         let jnX = 150, jnY = 150;
@@ -505,7 +358,7 @@
                 modePluie = false;
             } else {
                 lancerAverse('❄️');
-                iconeMeteo.innerHTML = "🌧️️";
+                iconeMeteo.innerHTML = "🌧️";
                 modePluie = true;
             }
         }
@@ -541,7 +394,7 @@
         let audio = new Audio('oiseaux.mp3'); audio.loop = true; let enLecture = false;
         function toggleSon() {
             if (!enLecture) { audio.play().catch(e=>{}); document.getElementById('btn-son').innerHTML = "🎶"; enLecture = true; } 
-            else { audio.pause(); document.getElementById('btn-son').innerHTML = "🕊️"; enLecture = false; }
+            else { audio.pause(); document.getElementById('btn-son').innerHTML = "🕊️️"; enLecture = false; }
         }
 
         // Déplacement du coffre magique
@@ -565,6 +418,20 @@
                 setTimeout(() => p.remove(), 1000);
             }
         }
+
+        // Oiseaux / papillons volants (version très discrète et espacée : toutes les 25 secondes)
+        function creerMessager() {
+            const a = document.createElement('div'); a.className = 'oiseau-volant'; 
+            a.innerHTML = ['🕊️', '🦋', '🐝'][Math.floor(Math.random()*3)];
+            const fromLeft = Math.random() > 0.5;
+            a.style.top = Math.random() * (window.innerHeight - 100) + 'px';
+            a.style.left = fromLeft ? '-60px' : '100vw';
+            a.style.transform = fromLeft ? 'scaleX(1)' : 'scaleX(-1)';
+            document.body.appendChild(a);
+            setTimeout(() => a.style.transform += fromLeft ? ' translateX(120vw)' : ' translateX(-120vw)', 100);
+            setTimeout(() => a.remove(), 14000);
+        }
+        setInterval(creerMessager, 25000);
 
         // Journal volant
         function creerJournalVolant() {
