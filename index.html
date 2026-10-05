@@ -199,7 +199,7 @@
             font-size: 2.5rem;
             z-index: 10;
             pointer-events: none;
-            animation: flyAcross 12s linear forwards;
+            animation: flyAcross 14s linear forwards;
         }
 
         /* Effet arc-en-ciel animé */
@@ -349,8 +349,8 @@
         }
         for(let i=0; i<85; i++) createStar();
 
-        // --- GESTION DES ÉMOJIS ET OISEAUX FLOTTANTS ALÉATOIRES ---
-        const emojiList = ['❄️', '💧', '🐦', '🕊️', '🦅', '✨', '🌸', '🍃'];
+        // --- GESTION DES ÉMOJIS ET OISEAUX FLOTTANTS (Version discrète) ---
+        const emojiList = ['❄️', '💧', '🐦', '🕊️', '✨', '🌸'];
         const activeElements = [];
 
         function createEmoji(specificEmoji = null, startX = null, startY = null) {
@@ -364,9 +364,8 @@
             el.style.left = x + 'px';
             el.style.top = y + 'px';
 
-            // Vitesse douce et aléatoire
-            let speedX = (Math.random() - 0.5) * 0.7;
-            let speedY = (Math.random() - 0.5) * 0.7;
+            let speedX = (Math.random() - 0.5) * 0.5;
+            let speedY = (Math.random() - 0.5) * 0.5;
 
             document.body.appendChild(el);
 
@@ -379,12 +378,11 @@
             });
         }
 
-        // Générer une vingtaine d'éléments flottants initiaux sur tout l'écran
-        for (let i = 0; i < 22; i++) {
+        // On réduit le nombre d'éléments de départ pour plus de discrétion
+        for (let i = 0; i < 12; i++) {
             createEmoji();
         }
 
-        // Animation de déplacement fluide en continu
         function animateEmojis() {
             activeElements.forEach(item => {
                 item.x += item.speedX;
@@ -400,34 +398,32 @@
         }
         requestAnimationFrame(animateEmojis);
 
-        // Oiseaux volants automatiques à travers l'écran
+        // Oiseaux volants plus rares et discrets (toutes les 15 secondes)
         function spawnFlyingBird() {
             const bird = document.createElement('div');
             bird.className = 'flying-bird';
-            const birds = ['🐦', '🕊️', '🦅', '🦜'];
+            const birds = ['🐦', '🕊️'];
             bird.innerText = birds[Math.floor(Math.random() * birds.length)];
-            bird.style.top = (Math.random() * (window.innerHeight / 2)) + 'px';
+            bird.style.top = (Math.random() * (window.innerHeight / 2.5)) + 'px';
             document.body.appendChild(bird);
 
-            setTimeout(() => bird.remove(), 12000);
+            setTimeout(() => bird.remove(), 14000);
         }
-        setInterval(spawnFlyingBird, 6000);
-        spawnFlyingBird();
+        setInterval(spawnFlyingBird, 15000);
 
-        // --- SYSTÈME DE CHANGEMENT DE COULEUR AU CLIC (Blanc, Rose, Arc-en-ciel, etc.) ---
+        // --- SYSTÈME DE CHANGEMENT DE COULEUR AU CLIC ---
         const colorModes = [
-            () => ({ color: '#ffffff', filter: 'drop-shadow(0 0 5px white)', isRainbow: false }), // Blanc (flocons)
-            () => ({ color: '#ff69b4', filter: 'drop-shadow(0 0 5px #ff1493)', isRainbow: false }), // Rose (pluie / douceur)
+            () => ({ color: '#ffffff', filter: 'drop-shadow(0 0 5px white)', isRainbow: false }), 
+            () => ({ color: '#ff69b4', filter: 'drop-shadow(0 0 5px #ff1493)', isRainbow: false }), 
             () => {
                 const colors = ['#00ffff', '#ff4500', '#adff2f', '#ffff00', '#9370db', '#00ff7f'];
                 const rc = colors[Math.floor(Math.random() * colors.length)];
                 return { color: rc, filter: `drop-shadow(0 0 6px ${rc})`, isRainbow: false };
             },
-            () => ({ color: '', filter: '', isRainbow: true }) // Dégradé arc-en-ciel
+            () => ({ color: '', filter: '', isRainbow: true }) 
         ];
 
         document.addEventListener('click', (e) => {
-            // Ignorer si on clique sur un lien ou un bouton interactif principal
             if (e.target.tagName === 'A' || e.target.tagName === 'BUTTON' || e.target.closest('table')) return;
 
             const chosenMode = colorModes[Math.floor(Math.random() * colorModes.length)]();
@@ -451,11 +447,6 @@
                     }
                 }
             });
-
-            // Ajouter quelques émojis supplémentaires à l'endroit du clic
-            for(let i = 0; i < 2; i++) {
-                createEmoji(null, e.clientX + (Math.random() * 40 - 20), e.clientY + (Math.random() * 40 - 20));
-            }
         });
 
         // Icône Jour / Nuit vagabonde
@@ -510,11 +501,11 @@
         function clicMeteo() {
             if (modePluie) {
                 lancerAverse('💧');
-                iconeMeteo.innerHTML = "❄️️";
+                iconeMeteo.innerHTML = "❄️";
                 modePluie = false;
             } else {
                 lancerAverse('❄️');
-                iconeMeteo.innerHTML = "🌧️";
+                iconeMeteo.innerHTML = "🌧️️";
                 modePluie = true;
             }
         }
