@@ -141,6 +141,7 @@
 
             <form id="formReponse" onsubmit="envoyerReponse(event)">
                 <input type="hidden" id="rep_id_annonce" name="ref_id">
+                <input type="hidden" id="rep_row_index" name="row_index">
                 <input type="hidden" id="rep_type_annonce" name="type_annonce">
 
                 <label style="font-weight: bold; color: #008080; font-size: 0.9em;">Ton Prénom / Pseudo :</label>
@@ -196,7 +197,7 @@
                 { id: "AUTRE_SUB", label: "Autres interprétations" }
             ],
             "Citoyenne": [
-                { id: "", label: "🏛️ Toutes les précisions" },
+                { id: "", label: "🏛️️ Toutes les précisions" },
                 { id: "Repas, graines & eau", label: "Repas, graines & eau" },
                 { id: "Prêt d'objets, outils & équipement", label: "Prêt d'objets, outils & équipement" },
                 { id: "Accueil, hébergement & covoiturage", label: "Accueil, hébergement & covoiturage" },
@@ -265,11 +266,6 @@
             return protege;
         }
 
-        function nettoyerCle(str) {
-            if (!str) return "";
-            return String(str).replace(/[^a-zA-Z0-9]/g, '').toLowerCase();
-        }
-
         function formaterDate(horodateur) {
             if (!horodateur) return "N/C";
             try {
@@ -301,31 +297,11 @@
         }
 
         function obtenirReponsesPourAnnonce(ann) {
-            const idOriginal = String(ann.Horodateur || ann.date || ann.id || "").trim();
-            if (!idOriginal) return [];
-            const idCle = nettoyerCle(idOriginal);
-
             let resultatsReponses = [];
 
-            // 1. Recherche dans le tableau des réponses chargées de type "REPONSE_..."
-            const repItems = toutesLesReponses.filter(rep => {
-                const refBrute = String(rep.ref_id || rep.Ref || rep.ref || "").trim();
-                const refNettoyee = refBrute.replace(/^Ref:/i, "").trim();
-                const refCle = nettoyerCle(refNettoyee);
-                return refCle === idCle || (idCle.length > 5 && refCle.includes(idCle)) || (refCle.length > 5 && idCle.includes(refCle));
-            });
-
-            repItems.forEach(r => {
-                resultatsReponses.push({
-                    nom: r.nom || 'Ami',
-                    message: r.message || ''
-                });
-            });
-
-            // 2. Recherche aussi si les réponses sont stockées directement dans la colonne "reponses_article" de l'annonce
+            // Analyse de la colonne reponses_article de l'annonce
             const champRepDirect = ann.reponses_article || ann.reponses || ann.commentaires || "";
             if (champRepDirect) {
-                // Format attendu: [Nom (Date)] : Message || [Nom2 (Date2)] : Message2
                 const blocs = String(champRepDirect).split("||");
                 blocs.forEach(bloc => {
                     const match = bloc.match(/\[(.*?) \((.*?)\)\]\s*:\s*(.*)/);
@@ -407,19 +383,10 @@
                 toutesLesAnnonces = await response.json();
 
                 annoncesPrincipales = [];
-                toutesLesReponses = [];
-
                 toutesLesAnnonces.forEach(item => {
                     const type = String(item.type || item.Type || '').toUpperCase();
-                    const refBrute = String(item.ref_id || item.Ref || item.ref || '').trim();
-
                     if (type === 'VIDEO' || type === 'VIDÉO') return;
-
-                    if (type.includes('REPONSE') || refBrute !== '') {
-                        toutesLesReponses.push(item);
-                    } else {
-                        annoncesPrincipales.push(item);
-                    }
+                    annoncesPrincipales.push(item);
                 });
 
                 document.getElementById('phrase-petit-prince').innerHTML = `✨ Aujourd'hui, le Petit Prince a pris soin de <b>${annoncesPrincipales.length}</b> fleurs resplendissantes dans le jardin du monde...`;
@@ -523,7 +490,6 @@
 
                 const listeReponses = obtenirReponsesPourAnnonce(ann);
                 
-                // Affichage direct des réponses sous l'annonce dans la carte
                 let blocReponsesHtml = '';
                 if (listeReponses.length > 0) {
                     blocReponsesHtml = `<div style="background: #FFF8E7; border: 1px dashed #E67E22; border-radius: 6px; padding: 6px; margin: 4px 0; max-height: 90px; overflow-y: auto; font-size: 0.7em;">
@@ -602,7 +568,7 @@
             fd.append('token', TOKEN_SECRET);
             fd.append('action', 'arroser'); 
             fd.append('id', id);
-            fetch(WEB_APP_URL, { method: 'POST', mode: 'no-cors', body: fd });
+            fetch(WEB_APP_URL, { method: 'POST', body: fd });
         }
 
         function ouvrirGrandMessage(ann) {
@@ -647,7 +613,8 @@
 
         function ouvrirModalReponse(ann) {
             jouerBip();
-            document.getElementById('rep_id_annonce').value = ann.Horodateur || ann.id || '';
+            document.getElementById('rep_id_annonce').value = ann.Horodateur || '';
+            document.getElementById('rep_row_index').value = ann.rowIndex || '';
             document.getElementById('rep_type_annonce').value = ann.type || "";
 
             const rappel = document.getElementById('rappel-annonce');
@@ -668,7 +635,7 @@
             btn.disabled = true;
 
             const idRef = document.getElementById('rep_id_annonce').value;
-            const typeAnn = document.getElementById('rep_type_annonce').value;
+            const rowIndex = document.getElementById('rep_row_index').value;
             const nomRep = document.getElementById('rep_nom').value;
             const msgRep = document.getElementById('rep_message').value;
 
@@ -676,7 +643,7 @@
             params.append('token', TOKEN_SECRET);
             params.append('action', 'repondre');
             params.append('ref_id', idRef);
-            params.append('type', `REPONSE_${typeAnn}`);
+            params.append('row_index', rowIndex);
             params.append('nom', nomRep);
             params.append('message', msgRep);
 
