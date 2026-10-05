@@ -5,19 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>La Fraternité du Palais Nature - Accueil</title>
-    <meta name="description" content="La Fraternité du Palais Nature : espace citoyen de gratuité absolue, de don et d'entraide. Un havre d'écoute, d'altruisme et de partage pour recréer du lien social et vivre la fraternité." />
-
-    <!-- Données structurées invisibles pour Google (SEO) -->
-    <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "NGO",
-      "name": "La Fraternité du Palais Nature",
-      "description": "Espace d'entraide, d'écoute, de don et de gratuité absolue pour cultiver l'altruisme, rompre l'isolement et recréer du lien social.",
-      "url": "https://lepetitprincedesjardiniers.github.io/"
-    }
-    </script>
-
+    <meta name="description" content="Bienvenue à La Fraternité du Palais Nature. Partagez vos dons, savoirs, talents et actes de solidarité dans un espace d'entraide et de gratuité absolue." />
     <script type="text/javascript">
         function googleTranslateElementInit() {
             new google.translate.TranslateElement({pageLanguage: 'fr'}, 'google_translate_element');
@@ -47,6 +35,7 @@
             background: var(--bg-gradient);
             color: var(--text-color); overflow-x: hidden; min-height: 100vh; position: relative;
             transition: background 0.8s ease, color 0.8s ease;
+            cursor: pointer;
         }
 
         #google_translate_element { 
@@ -56,72 +45,23 @@
         #google_translate_element:hover { opacity: 1; }
 
         .header-container { position: relative; padding-top: 25px; z-index: 100; }
-        .titre-fraternite { display: block; font-size: 2.2em; letter-spacing: 4px; color: #fde047; text-shadow: 0 0 20px rgba(253,224,71,0.4); font-weight: bold; margin-bottom: 6px; }
+        .titre-fraternite { display: block; font-size: 2.2em; letter-spacing: 4px; color: #fde047; text-shadow: 0 0 20px rgba(253,224,71,0.4); font-weight: bold; margin-bottom: 12px; }
 
         body.day-mode .titre-fraternite { color: #d97706; text-shadow: 0 0 15px rgba(217,119,6,0.3); }
 
-        /* Texte fixe d'introduction */
-        .texte-intro-fixe {
-            max-width: 850px;
-            margin: 8px auto 14px auto;
-            padding: 12px 22px;
-            font-size: 0.98em;
-            line-height: 1.5;
-            background: rgba(15, 23, 42, 0.35);
-            backdrop-filter: blur(8px);
-            border-radius: 18px;
-            border: 1px solid rgba(255, 255, 255, 0.15);
-            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
-            position: relative;
-            z-index: 10;
-        }
-
-        /* Menu de navigation */
+        /* Menu pro et épuré */
         .menu-table { margin: 15px auto; border-radius: 12px; background: var(--menu-bg); backdrop-filter: blur(8px); border: 1px solid rgba(255,255,255,0.2); border-collapse: separate; border-spacing: 0; overflow: hidden; position: relative; z-index: 10; box-shadow: 0 8px 32px rgba(0,0,0,0.15); }
         .menu-table td { border-right: 1px solid rgba(255, 255, 255, 0.1); transition: 0.3s; }
         .menu-table td:last-child { border-right: none; }
         .menu-table td:hover { background-color: rgba(0, 179, 179, 0.4); }
         .menu-table a { display: block; padding: 10px 18px; text-decoration: none; color: var(--text-color); font-weight: bold; font-size: 0.95em; }
 
-        /* Bandeau défilant bas de page */
-        .bandeau-defilant {
-            max-width: 1100px;
-            margin: 30px auto 15px auto;
-            overflow: hidden;
-            background: rgba(15, 23, 42, 0.55);
-            backdrop-filter: blur(6px);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            border-radius: 16px;
-            padding: 9px 0;
-            font-size: 0.85em;
-            white-space: nowrap;
-            position: relative;
-            z-index: 20;
-            box-shadow: 0 6px 24px rgba(0,0,0,0.2);
-        }
-
-        .bandeau-contenu {
-            display: inline-block;
-            white-space: nowrap;
-            animation: defilementInfini 60s linear infinite;
-        }
-
-        .bandeau-contenu span {
-            padding-right: 50px;
-            opacity: 0.9;
-        }
-
-        @keyframes defilementInfini {
-            0% { transform: translateX(0); }
-            100% { transform: translateX(-50%); }
-        }
-
-        /* Soleil central supérieur */
+        /* Soleil central supérieur (Inversé : mène au formulaire) */
         .soleil-cadre { width: 150px; height: 150px; background: radial-gradient(circle, #ffeb3b 0%, #ff9800 100%); border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 0 30px rgba(255,152,0,0.6); margin: 25px auto; position: relative; z-index: 20; transition: 0.6s; text-decoration: none; border: 2px solid rgba(255,255,255,0.5); }
         .soleil-cadre h1 { font-size: 0.85em; color: #222; line-height: 1.2; margin: 0; padding: 10px; font-weight: bold; }
         .soleil-cadre:hover { box-shadow: 0 0 50px #fff; transform: scale(1.08) rotate(360deg); }
 
-        /* Paysage Cosmos */
+        /* --- PAYSAGE COSMOS --- */
         .paysage-cosmos {
             display: flex;
             align-items: center;
@@ -162,7 +102,7 @@
             flex: 0 0 auto;
         }
 
-        /* Terre animée */
+        /* Terre animée (Inversée : mène au Jardin) */
         .terre-don { 
             width: 320px; height: 320px; border-radius: 50%; 
             background-image: url('https://upload.wikimedia.org/wikipedia/commons/thumb/c/c3/Solarsystemscope_texture_2k_earth_daymap.jpg/1200px-Solarsystemscope_texture_2k_earth_daymap.jpg'); 
@@ -175,7 +115,7 @@
         .texte-semis { font-family: 'Georgia', serif; font-style: italic; font-weight: bold; text-shadow: 2px 2px 12px black; font-size: 1.15em; padding: 25px; text-align: center; color: #fff; }
         @keyframes rotationTerre { from { background-position: 0 0; } to { background-position: 1000px 0; } }
 
-        /* Blocs uniformes */
+        /* --- BLOCS UNIFORMES --- */
         .rubrique-carte { 
             background: var(--card-bg); backdrop-filter: blur(12px); 
             border-radius: 30px; padding: 22px; width: 100%; height: 210px; box-sizing: border-box; 
@@ -193,7 +133,7 @@
         .style-regulation:hover { transform: translateY(-5px); border-color: #9370DB; background: rgba(147, 112, 219, 0.2); box-shadow: 0 12px 40px rgba(147,112,219,0.3); }
 
         .style-savoir { border: 2px solid rgba(255, 193, 7, 0.6); }
-        .style-savoir:hover { transform: translateY(-5px); border-color: #ffc107; background: rgba(255, 193, 7, 0.2); box-shadow: 0 12px 40px rgba(255,193,7,0.2); }
+        .style-savoir:hover { transform: translateY(-5px); border-color: #ffc107; background: rgba(255, 193, 7, 0.2); box-shadow: 0 12px 40px rgba(255,193,7,0.3); }
 
         .phrases-impots { font-size: 0.78em; color: var(--text-color); opacity: 0.9; font-weight: bold; margin: 3px 0; line-height: 1.3; }
         .liste-exemples-discrets { font-size: 0.68em; color: var(--text-color); opacity: 0.7; font-style: italic; list-style: none; padding: 0; margin: 4px 0 0 0; border-top: 1px dashed rgba(255,255,255,0.2); padding-top: 4px; }
@@ -202,68 +142,88 @@
         @keyframes twinkle { 0%, 100% { opacity: calc(0.2 * var(--star-opacity)); transform: scale(0.7); } 50% { opacity: var(--star-opacity); transform: scale(1.2); } }
         @keyframes moveStar { from { transform: translateX(-10vw); } to { transform: translateX(110vw); } }
 
-        /* Boutons d'action en haut à droite */
-        .boutons-header { position: fixed; top: 20px; right: 20px; z-index: 1000; display: flex; gap: 12px; align-items: center; }
-        #btn-son { background: none; border: none; color: #ffffff; cursor: pointer; font-size: 30px; filter: drop-shadow(0 0 8px rgba(255,255,255,0.8)); transition: 0.3s; padding: 0; }
-        #btn-son:hover { transform: scale(1.25); }
+        #btn-son { position: fixed; top: 20px; right: 20px; z-index: 1000; background: none; border: none; color: var(--text-color); cursor: pointer; font-size: 32px; filter: drop-shadow(0 0 8px rgba(255,255,255,0.5)); transition: 0.3s; }
+        #btn-son:hover { transform: scale(1.2); }
 
-        /* Icônes vagabondes magiques */
-        .icone-vagabonde { position: fixed; font-size: 36px; z-index: 12; cursor: pointer; transition: 4s ease-in-out, transform 0.3s; }
-        .icone-vagabonde:hover { transform: scale(1.3) rotate(15deg); }
+        /* Icône Jour/Nuit vagabonde */
+        .icone-jour-nuit { 
+            position: fixed; font-size: 38px; z-index: 12; cursor: pointer; 
+            transition: 4s ease-in-out, transform 0.3s; 
+            filter: drop-shadow(0 0 12px rgba(255, 215, 0, 0.8)); 
+        }
+        .icone-jour-nuit:hover { transform: scale(1.3) rotate(20deg); }
 
-        #icone-info { filter: drop-shadow(0 0 10px rgba(253, 224, 71, 0.8)); }
-        #icone-jour-nuit { filter: drop-shadow(0 0 12px rgba(255, 215, 0, 0.8)); }
-        #icone-meteo { filter: drop-shadow(0 0 12px rgba(135, 206, 250, 0.8)); }
+        /* Icône Météo vagabonde (Pluie/Neige) */
+        #icone-meteo { 
+            position: fixed; font-size: 38px; z-index: 12; cursor: pointer; 
+            transition: 4s ease-in-out, transform 0.3s; 
+            filter: drop-shadow(0 0 12px rgba(135, 206, 250, 0.8)); 
+        }
+        #icone-meteo:hover { transform: scale(1.3) rotate(15deg); }
 
         #coffre-magique { position: fixed; font-size: 40px; z-index: 8; cursor: pointer; transition: 4s ease-in-out; filter: drop-shadow(0 0 10px gold); opacity: 0.85; }
+        
+        /* Style pour les émojis flottants dynamiques */
+        .floating-emoji {
+            position: absolute;
+            font-size: 2rem;
+            user-select: none;
+            pointer-events: none;
+            z-index: 6;
+            transition: transform 0.5s ease;
+        }
 
-        .journal-volant { position: fixed; font-size: 35px; z-index: 15; cursor: pointer; filter: drop-shadow(0 0 10px #f59e0b); transition: transform 8s linear; text-decoration: none; }
+        /* Animation spécifique pour les oiseaux et messagers en vol */
+        @keyframes flyAcross {
+            0% {
+                transform: translate(-100px, 50px) scale(0.8) rotate(-10deg);
+                opacity: 0;
+            }
+            20% {
+                opacity: 1;
+            }
+            50% {
+                transform: translate(50vw, -30px) scale(1) rotate(5deg);
+            }
+            80% {
+                opacity: 1;
+            }
+            100% {
+                transform: translate(105vw, 80px) scale(0.9) rotate(-5deg);
+                opacity: 0;
+            }
+        }
+
+        .flying-bird {
+            position: absolute;
+            font-size: 2.5rem;
+            z-index: 10;
+            pointer-events: none;
+            animation: flyAcross 12s linear forwards;
+        }
+
+        /* Effet arc-en-ciel animé */
+        .rainbow-text {
+            background: linear-gradient(45deg, #ff0000, #ff7f00, #ffff00, #00ff00, #0000ff, #4b0082, #8b00ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: rainbowShift 3s infinite linear;
+        }
+
+        @keyframes rainbowShift {
+            0% { filter: hue-rotate(0deg); }
+            100% { filter: hue-rotate(360deg); }
+        }
+
+        .journal-volant {
+            position: fixed; font-size: 35px; z-index: 15; cursor: pointer;
+            filter: drop-shadow(0 0 10px #f59e0b); transition: transform 8s linear; text-decoration: none;
+        }
         .journal-volant:hover { transform: scale(1.3) rotate(20deg) !important; }
 
-        /* Fenêtre modale d'information à l'écran */
-        .modal-overlay {
-            display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
-            background: rgba(0, 0, 0, 0.75); backdrop-filter: blur(8px); z-index: 5000;
-            align-items: center; justify-content: center; opacity: 0; transition: opacity 0.3s ease;
-        }
-        .modal-overlay.active { display: flex; opacity: 1; }
-        .modal-contenu {
-            background: rgba(15, 23, 42, 0.95); border: 2px solid rgba(253, 224, 71, 0.5);
-            border-radius: 24px; padding: 30px; max-width: 550px; width: 85%; color: #fff;
-            box-shadow: 0 0 40px rgba(0,0,0,0.8); position: relative; text-align: center;
-        }
-        .fermer-modal { position: absolute; top: 15px; right: 20px; font-size: 28px; cursor: pointer; color: #fde047; transition: 0.2s; }
-        .fermer-modal:hover { transform: scale(1.2); }
-
-        /* Notification discrète cadeau */
-        #notification-cadeau {
-            position: fixed;
-            bottom: 30px;
-            left: 50%;
-            transform: translateX(-50%) translateY(100px);
-            background: rgba(15, 23, 42, 0.9);
-            color: #fde047;
-            padding: 10px 20px;
-            border-radius: 20px;
-            border: 1px solid rgba(253, 224, 71, 0.4);
-            font-size: 0.85em;
-            z-index: 6000;
-            box-shadow: 0 5px 20px rgba(0,0,0,0.5);
-            opacity: 0;
-            transition: transform 0.4s ease, opacity 0.4s ease;
-            pointer-events: none;
-        }
-        #notification-cadeau.show {
-            transform: translateX(-50%) translateY(0);
-            opacity: 1;
-        }
-
-        footer { padding: 40px 0 45px 0; }
-        .lien-copyright { color: var(--text-color); opacity: 0.6; text-decoration: none; font-weight: bold; font-size: 0.88em; transition: 0.3s; display: inline-block; margin-bottom: 15px; }
-        .lien-copyright:hover { opacity: 1; }
-        
-        .lien-footer-discret { display: block; color: var(--text-color); opacity: 0.45; text-decoration: none; font-size: 0.78em; transition: 0.3s; margin-top: 10px; font-style: italic; }
-        .lien-footer-discret:hover { opacity: 0.85; text-decoration: underline; }
+        footer { padding: 35px 0; }
+        .lien-copyright { color: var(--text-color); opacity: 0.5; text-decoration: none; font-weight: bold; font-size: 0.9em; transition: 0.3s; }
+        .lien-copyright:hover { opacity: 1; text-shadow: 0 0 10px #fff; }
 
         @media (max-width: 950px) {
             .paysage-cosmos { flex-direction: column; gap: 20px; }
@@ -274,36 +234,22 @@
             .terre-don { width: 250px; height: 250px; }
             .texte-semis { font-size: 1em; }
             .rubrique-carte { height: auto; min-height: 190px; }
-            .texte-intro-fixe { width: 90%; font-size: 0.9em; padding: 10px 15px; }
-            .bandeau-defilant { width: 92%; }
         }
     </style>
 </head>
 <body class="night-mode">
 
     <div id="google_translate_element"></div>
-    
-    <div class="boutons-header">
-        <button id="btn-son" onclick="toggleSon()" title="Activer / couper l'ambiance sonore">🕊✨</button>
-    </div>
+    <button id="btn-son" onclick="toggleSon()" title="Activer / couper le son">🕊️</button>
 
     <!-- Icônes vagabondes magiques -->
-    <div id="icone-info" class="icone-vagabonde" onclick="ouvrirModalInfo()" title="À propos & Informations (Attrape-moi !)">❓</div>
-    <div id="icone-jour-nuit" class="icone-vagabonde" onclick="clicJourNuit()" title="Attrape-moi pour changer le temps !">☀️</div>
-    <div id="icone-meteo" class="icone-vagabonde" onclick="clicMeteo()" title="Attrape-moi pour faire de la pluie ou de la neige !">☁️</div>
-
-    <!-- Notification discrète cadeau -->
-    <div id="notification-cadeau">🎁 Trésor capturé ! Abondance et partage offerts.</div>
+    <div id="icone-jour-nuit" class="icone-jour-nuit" onclick="clicJourNuit()" title="Attrape-moi pour changer le temps !">☀️</div>
+    <div id="icone-meteo" onclick="clicMeteo()" title="Attrape-moi pour faire de la pluie ou de la neige !">☁️</div>
 
     <div class="header-container">
         <div class="titre-fraternite">La Fraternité du Palais Nature</div>
 
-        <!-- Texte fixe d'introduction -->
-        <div class="texte-intro-fixe">
-            Espace d'entraide et de gratuité absolue ouvert inconditionnellement à toutes et tous, sans distinction de parcours, d'âge, de forme, ou de situation. Partagez vos dons, savoirs, talents et besoins pour recréer de la solidarité authentique, du lien social bienveillant, et nourrir notre générosité collective.
-        </div>
-
-        <div style="display: flex; justify-content: center; align-items: center; width: 100%; margin: 15px 0 5px 0;">
+        <div style="position: relative; display: flex; justify-content: center; align-items: center; width: 100%; margin: 15px 0 5px 0;">
             <table class="menu-table" style="margin: 0 !important;">
                 <tr>
                     <td><a href="index.html">Accueil</a></td>
@@ -316,10 +262,13 @@
                     <td><a href="vie.html">Vie Citoyenne</a></td>
                 </tr>
             </table>
+            <a href="ministere-de-lhonnetete.html" style="position: absolute; right: 20px; top: 50%; transform: translateY(-50%); color: #fde047; background: transparent; text-decoration: none; font-weight: bold; font-size: 0.95em; white-space: nowrap; text-shadow: 0 0 10px rgba(253,224,71,0.5);">
+                📰 Le Journal ►
+            </a>
         </div>
     </div>
 
-    <!-- Soleil central supérieur -->
+    <!-- Soleil central supérieur (Inversé : mène vers le formulaire) -->
     <a href="formulaire.html" class="soleil-cadre"><h1>ESPACE DU SEMIS DE DON ENTIER</h1></a>
 
     <!-- PAYSAGE COSMOS -->
@@ -349,7 +298,7 @@
             </a>
         </div>
 
-        <!-- CENTRE : La Terre animée -->
+        <!-- CENTRE : La Terre animée (Inversée : mène vers le Jardin) -->
         <div class="centre-terre-cosmos">
             <a href="jardin.html" class="terre-don">
                 <div class="texte-semis"><b>Le Jardin Public des Fraternels</b></div>
@@ -382,104 +331,201 @@
 
     </div>
 
-    <!-- Bandeau défilant bas de page -->
-    <div class="bandeau-defilant">
-        <div class="bandeau-contenu">
-            <span>✦ Un espace d'écoute, de compréhension et de générosité ✦ Cultiver l'altruisme, l'équilibre et la richesse sociale pour rompre l'isolement, recréer de vrais liens humains et agir ensemble contre la précarité ✦ Échange de dons, savoirs, talents et services ✦ Une alternative citoyenne au système monétaire ✦ Accueil inconditionnel : sans-abri, exclus, marginaux, SEL, non-conformistes & esprits libres ✦</span>
-            <span>✦ Un espace d'écoute, de compréhension et de générosité ✦ Cultiver l'altruisme, l'équilibre et la richesse sociale pour rompre l'isolement, recréer de vrais liens humains et agir ensemble contre la précarité ✦ Échange de dons, savoirs, talents et services ✦ Une alternative citoyenne au système monétaire ✦ Accueil inconditionnel : sans-abri, exclus, marginaux, SEL, non-conformistes & esprits libres ✦</span>
-        </div>
-    </div>
-
     <div id="coffre-magique" onclick="exploserCadeau()" title="Coffre magique">🎁</div>
-    <a href="journal.html" class="journal-volant" id="journal-volant" title="Journal de bord du #petitploucdesjardiniers">📖</a>
 
     <footer>
-        <a href="#" class="lien-copyright" onclick="ouvrirModalInfo(); return false;">© PINON 2000 — Tous droits de partage et d'humanité réservés</a><br>
-        <a href="journal.html" class="lien-footer-discret">journal de bord du #petitploucdesjardiniers, réflexions de l'auteur du site.</a>
+        <a href="transition-externe.html" class="lien-copyright">© 2000 le petit prince des jardiniers</a>
     </footer>
 
-    <!-- Fenêtre modale d'information -->
-    <div id="modalInfo" class="modal-overlay" onclick="fermerModalClicExterieur(event)">
-        <div class="modal-contenu">
-            <span class="fermer-modal" onclick="fermerModalInfo()">&times;</span>
-            <h2 style="color: #fde047; margin-top: 0; font-size: 1.4em;">La Fraternité du Palais Nature</h2>
-            <p style="font-size: 0.95em; line-height: 1.6; opacity: 0.95; text-align: left;">
-                Cet espace est un sanctuaire du DON entier, responsable et volontaire, une entraide inconditionnelle. Ici, point de marketing, de profilage ou d'évaluation marchande : votre sincérité, vos talents, vos savoirs et vos besoins s'offrent et se partagent pour recréer une fraternité humaine sincère et vivante.
-            </p>
-            <p style="font-size: 0.85em; opacity: 0.7; font-style: italic; margin-top: 20px;">
-                © PINON 2000 — Conçu avec le cœur et l'esprit libre par le #petitploucdesjardiniers.
-            </p>
-        </div>
-    </div>
-
     <script>
-        // Génération des étoiles en arrière-plan
-        const numStars = 120;
-        for (let i = 0; i < numStars; i++) {
-            let star = document.createElement('div');
-            star.className = 'star';
-            star.style.width = Math.random() * 3 + 'px';
-            star.style.height = star.style.width;
-            star.style.top = Math.random() * 100 + 'vh';
-            star.style.left = Math.random() * 100 + 'vw';
-            star.style.setProperty('--duration', (Math.random() * 3 + 2) + 's');
-            star.style.setProperty('--move-duration', (Math.random() * 30 + 20) + 's');
-            star.style.animationDelay = (Math.random() * 5) + 's';
-            document.body.appendChild(star);
+        // Création des étoiles de fond
+        function createStar() {
+            let s = document.createElement('div'); s.className = 'star';
+            s.innerHTML = ['✦','★','✶','✧'][Math.floor(Math.random()*4)];
+            s.style.left = Math.random()*100 + 'vw'; s.style.top = Math.random()*100 + 'vh';
+            s.style.setProperty('--duration', (Math.random()*3+2)+'s');
+            s.style.setProperty('--move-duration', (Math.random()*60+40)+'s');
+            document.body.appendChild(s);
+        }
+        for(let i=0; i<85; i++) createStar();
+
+        // --- GESTION DES ÉMOJIS ET OISEAUX FLOTTANTS ALÉATOIRES ---
+        const emojiList = ['❄️', '💧', '🐦', '🕊️', '🦅', '✨', '🌸', '🍃'];
+        const activeElements = [];
+
+        function createEmoji(specificEmoji = null, startX = null, startY = null) {
+            const el = document.createElement('div');
+            el.className = 'floating-emoji';
+            el.innerText = specificEmoji || emojiList[Math.floor(Math.random() * emojiList.length)];
+            
+            let x = startX !== null ? startX : Math.random() * window.innerWidth;
+            let y = startY !== null ? startY : Math.random() * window.innerHeight;
+            
+            el.style.left = x + 'px';
+            el.style.top = y + 'px';
+
+            // Vitesse douce et aléatoire
+            let speedX = (Math.random() - 0.5) * 0.7;
+            let speedY = (Math.random() - 0.5) * 0.7;
+
+            document.body.appendChild(el);
+
+            activeElements.push({
+                element: el,
+                x: x,
+                y: y,
+                speedX: speedX,
+                speedY: speedY
+            });
         }
 
-        // Gestion de la fenêtre modale d'information
-        function ouvrirModalInfo() {
-            document.getElementById('modalInfo').classList.add('active');
+        // Générer une vingtaine d'éléments flottants initiaux sur tout l'écran
+        for (let i = 0; i < 22; i++) {
+            createEmoji();
         }
-        function fermerModalInfo() {
-            document.getElementById('modalInfo').classList.remove('active');
+
+        // Animation de déplacement fluide en continu
+        function animateEmojis() {
+            activeElements.forEach(item => {
+                item.x += item.speedX;
+                item.y += item.speedY;
+
+                if (item.x < 0 || item.x > window.innerWidth - 30) item.speedX *= -1;
+                if (item.y < 0 || item.y > window.innerHeight - 30) item.speedY *= -1;
+
+                item.element.style.left = item.x + 'px';
+                item.element.style.top = item.y + 'px';
+            });
+            requestAnimationFrame(animateEmojis);
         }
-        function fermerModalClicExterieur(event) {
-            if (event.target === document.getElementById('modalInfo')) {
-                fermerModalInfo();
+        requestAnimationFrame(animateEmojis);
+
+        // Oiseaux volants automatiques à travers l'écran
+        function spawnFlyingBird() {
+            const bird = document.createElement('div');
+            bird.className = 'flying-bird';
+            const birds = ['🐦', '🕊️', '🦅', '🦜'];
+            bird.innerText = birds[Math.floor(Math.random() * birds.length)];
+            bird.style.top = (Math.random() * (window.innerHeight / 2)) + 'px';
+            document.body.appendChild(bird);
+
+            setTimeout(() => bird.remove(), 12000);
+        }
+        setInterval(spawnFlyingBird, 6000);
+        spawnFlyingBird();
+
+        // --- SYSTÈME DE CHANGEMENT DE COULEUR AU CLIC (Blanc, Rose, Arc-en-ciel, etc.) ---
+        const colorModes = [
+            () => ({ color: '#ffffff', filter: 'drop-shadow(0 0 5px white)', isRainbow: false }), // Blanc (flocons)
+            () => ({ color: '#ff69b4', filter: 'drop-shadow(0 0 5px #ff1493)', isRainbow: false }), // Rose (pluie / douceur)
+            () => {
+                const colors = ['#00ffff', '#ff4500', '#adff2f', '#ffff00', '#9370db', '#00ff7f'];
+                const rc = colors[Math.floor(Math.random() * colors.length)];
+                return { color: rc, filter: `drop-shadow(0 0 6px ${rc})`, isRainbow: false };
+            },
+            () => ({ color: '', filter: '', isRainbow: true }) // Dégradé arc-en-ciel
+        ];
+
+        document.addEventListener('click', (e) => {
+            // Ignorer si on clique sur un lien ou un bouton interactif principal
+            if (e.target.tagName === 'A' || e.target.tagName === 'BUTTON' || e.target.closest('table')) return;
+
+            const chosenMode = colorModes[Math.floor(Math.random() * colorModes.length)]();
+
+            activeElements.forEach(item => {
+                if (chosenMode.isRainbow) {
+                    item.element.classList.add('rainbow-text');
+                    item.element.style.color = '';
+                    item.element.style.filter = '';
+                } else {
+                    item.element.classList.remove('rainbow-text');
+                    if (item.element.innerText === '❄️' && Math.random() > 0.3) {
+                        item.element.style.color = '#ffffff';
+                        item.element.style.filter = 'drop-shadow(0 0 8px white)';
+                    } else if (item.element.innerText === '💧' && Math.random() > 0.3) {
+                        item.element.style.color = '#ff69b4';
+                        item.element.style.filter = 'drop-shadow(0 0 8px #ff69b4)';
+                    } else {
+                        item.element.style.color = chosenMode.color;
+                        item.element.style.filter = chosenMode.filter;
+                    }
+                }
+            });
+
+            // Ajouter quelques émojis supplémentaires à l'endroit du clic
+            for(let i = 0; i < 2; i++) {
+                createEmoji(null, e.clientX + (Math.random() * 40 - 20), e.clientY + (Math.random() * 40 - 20));
             }
-        }
+        });
 
-        // Mode Jour / Nuit
-        let estEnJour = false;
+        // Icône Jour / Nuit vagabonde
+        const iconeJN = document.getElementById('icone-jour-nuit');
+        let jnX = 150, jnY = 150;
+        function moveJourNuit() {
+            jnX = Math.random() * (window.innerWidth - 100);
+            jnY = Math.random() * (window.innerHeight - 100);
+            iconeJN.style.left = jnX + 'px';
+            iconeJN.style.top = jnY + 'px';
+        }
+        setInterval(moveJourNuit, 6000); moveJourNuit();
+
         function clicJourNuit() {
-            estEnJour = !estEnJour;
-            document.body.classList.toggle('day-mode', estEnJour);
-            const icone = document.getElementById('icone-jour-nuit');
-            icone.textContent = estEnJour ? '🌙' : '☀';
-            icone.title = estEnJour ? 'Passer en mode Nuit étoilée' : 'Passer en mode Jour radieux';
+            const body = document.body;
+            if (body.classList.contains('night-mode')) {
+                body.classList.replace('night-mode', 'day-mode');
+                iconeJN.innerHTML = "🌙";
+            } else {
+                body.classList.replace('day-mode', 'night-mode');
+                iconeJN.innerHTML = "☀️";
+            }
+            exploserEffetJN(jnX, jnY);
         }
 
-        // Gestion Météo cyclique
-        let etatMeteo = 0; 
-        function clicMeteo() {
-            const icone = document.getElementById('icone-meteo');
-            if (etatMeteo === 0) {
-                lancerAverse('💧', '#38bdf8');
-                icone.innerHTML = "🌧";
-                icone.title = "Cliquez pour faire tomber de la neige";
-                etatMeteo = 1;
-            } else if (etatMeteo === 1) {
-                lancerAverse('❄️', '#ffffff');
-                icone.innerHTML = "❄️";
-                icone.title = "Cliquez pour revenir au nuage";
-                etatMeteo = 2;
-            } else {
-                icone.innerHTML = "☁️";
-                icone.title = "Attrape-moi pour faire de la pluie ou de la neige !";
-                etatMeteo = 0;
+        function exploserEffetJN(x, y) {
+            const els = ['✨', '🌟', '💫', '☀', '🌙'];
+            for(let i=0; i<15; i++) {
+                const p = document.createElement('div');
+                p.style.position = 'fixed'; p.style.left = x+'px'; p.style.top = y+'px';
+                p.innerHTML = els[Math.floor(Math.random()*els.length)];
+                document.body.appendChild(p);
+                const a = Math.random()*Math.PI*2, d = Math.random()*120+40;
+                p.animate([{transform:'scale(1)', opacity:1}, {transform:`translate(${Math.cos(a)*d}px, ${Math.sin(a)*d}px) scale(0)`, opacity:0}], {duration:800});
+                setTimeout(() => p.remove(), 800);
             }
         }
 
-        function lancerAverse(symbole, couleurTexte) {
+        // Icône Météo vagabonde (Pluie / Neige)
+        const iconeMeteo = document.getElementById('icone-meteo');
+        let mX = 200, mY = 200;
+        let modePluie = true;
+
+        function moveMeteo() {
+            mX = Math.random() * (window.innerWidth - 100);
+            mY = Math.random() * (window.innerHeight - 100);
+            iconeMeteo.style.left = mX + 'px';
+            iconeMeteo.style.top = mY + 'px';
+        }
+        setInterval(moveMeteo, 7000); moveMeteo();
+
+        function clicMeteo() {
+            if (modePluie) {
+                lancerAverse('💧');
+                iconeMeteo.innerHTML = "❄️️";
+                modePluie = false;
+            } else {
+                lancerAverse('❄️');
+                iconeMeteo.innerHTML = "🌧️";
+                modePluie = true;
+            }
+        }
+
+        function lancerAverse(symbole) {
             for (let i = 0; i < 35; i++) {
                 const drop = document.createElement('div');
                 drop.style.position = 'fixed';
                 drop.style.left = Math.random() * window.innerWidth + 'px';
                 drop.style.top = '-30px';
                 drop.style.fontSize = (Math.random() * 12 + 16) + 'px';
-                drop.style.color = couleurTexte;
                 drop.style.zIndex = '999';
                 drop.style.pointerEvents = 'none';
                 drop.innerHTML = symbole;
@@ -500,293 +546,58 @@
             }
         }
 
-        // Animation aléatoire des éléments volants
-        function deplacerElementAleatoirement(idElement) {
-            const el = document.getElementById(idElement);
-            if (!el) return;
-            const x = Math.random() * (window.innerWidth - 80);
-            const y = Math.random() * (window.innerHeight - 150) + 50;
-            el.style.transform = `translate(${x}px, ${y}px)`;
-        }
-
-        setInterval(() => {
-            deplacerElementAleatoirement('coffre-magique');
-            deplacerElementAleatoirement('icone-info');
-            deplacerElementAleatoirement('icone-jour-nuit');
-            deplacerElementAleatoirement('icone-meteo');
-            deplacerElementAleatoirement('journal-volant');
-        }, 9000);
-
-        window.onload = function() {
-            ['coffre-magique', 'icone-info', 'icone-jour-nuit', 'icone-meteo', 'journal-volant'].forEach(id => {
-                const el = document.getElementById(id);
-                if(el) {
-                    el.style.left = (Math.random() * (window.innerWidth - 100)) + 'px';
-                    el.style.top = (Math.random() * (window.innerHeight - 150) + 50) + 'px';
-                }
-            });
-        };
-
-        // --- GÉNÉRATEUR MULTI-OISEAUX & NOTES ÉLECTRONIQUES ---
-        let audioCtx = null;
-        let isPlaying = false;
-        let intervalSon = null;
-
-        // 1. La Mésange (Piaillement aigu et rapide)
-        function oiseauMesange(now) {
-            const osc = audioCtx.createOscillator();
-            const gain = audioCtx.createGain();
-            osc.type = 'sine';
-            const f = 3000 + Math.random() * 500;
-            osc.frequency.setValueAtTime(f, now);
-            osc.frequency.linearRampToValueAtTime(f + 500, now + 0.03);
-            osc.frequency.linearRampToValueAtTime(f - 200, now + 0.08);
-            
-            gain.gain.setValueAtTime(0.001, now);
-            gain.gain.linearRampToValueAtTime(0.02, now + 0.02);
-            gain.gain.exponentialRampToValueAtTime(0.0001, now + 0.1);
-            
-            osc.connect(gain);
-            gain.connect(audioCtx.destination);
-            osc.start(now);
-            osc.stop(now + 0.1);
-        }
-
-        // 2. Le Rossignol (Chant flûté mélodieux)
-        function oiseauRossignol(now) {
-            const osc = audioCtx.createOscillator();
-            const gain = audioCtx.createGain();
-            osc.type = 'sine';
-            const f = 1900 + Math.random() * 400;
-            osc.frequency.setValueAtTime(f, now);
-            osc.frequency.exponentialRampToValueAtTime(f + 900, now + 0.12);
-            osc.frequency.exponentialRampToValueAtTime(f + 300, now + 0.25);
-            
-            gain.gain.setValueAtTime(0.001, now);
-            gain.gain.linearRampToValueAtTime(0.025, now + 0.05);
-            gain.gain.exponentialRampToValueAtTime(0.0001, now + 0.28);
-            
-            osc.connect(gain);
-            gain.connect(audioCtx.destination);
-            osc.start(now);
-            osc.stop(now + 0.28);
-        }
-
-        // 3. Le Merle Noir (Notes amples et flûtées posées)
-        function oiseauMerle(now) {
-            const osc = audioCtx.createOscillator();
-            const gain = audioCtx.createGain();
-            osc.type = 'sine';
-            const f = 1200 + Math.random() * 300;
-            osc.frequency.setValueAtTime(f, now);
-            osc.frequency.linearRampToValueAtTime(f + 250, now + 0.15);
-            osc.frequency.linearRampToValueAtTime(f - 150, now + 0.35);
-            
-            gain.gain.setValueAtTime(0.001, now);
-            gain.gain.linearRampToValueAtTime(0.03, now + 0.08);
-            gain.gain.exponentialRampToValueAtTime(0.0001, now + 0.4);
-            
-            osc.connect(gain);
-            gain.connect(audioCtx.destination);
-            osc.start(now);
-            osc.stop(now + 0.4);
-        }
-
-        // 4. Le Coucou (L'appel en tierce descendante)
-        function oiseauCoucou(now) {
-            const f1 = 650; // Premier ton
-            const f2 = 520; // Second ton plus bas
-            
-            // Première note ("Cou")
-            const osc1 = audioCtx.createOscillator();
-            const gain1 = audioCtx.createGain();
-            osc1.type = 'sine';
-            osc1.frequency.setValueAtTime(f1, now);
-            gain1.gain.setValueAtTime(0.001, now);
-            gain1.gain.linearRampToValueAtTime(0.03, now + 0.05);
-            gain1.gain.exponentialRampToValueAtTime(0.0001, now + 0.22);
-            osc1.connect(gain1);
-            gain1.connect(audioCtx.destination);
-            osc1.start(now);
-            osc1.stop(now + 0.22);
-
-            // Deuxième note ("Cou")
-            const osc2 = audioCtx.createOscillator();
-            const gain2 = audioCtx.createGain();
-            osc2.type = 'sine';
-            osc2.frequency.setValueAtTime(f2, now + 0.25);
-            gain2.gain.setValueAtTime(0.001, now + 0.25);
-            gain2.gain.linearRampToValueAtTime(0.03, now + 0.3);
-            gain2.gain.exponentialRampToValueAtTime(0.0001, now + 0.6);
-            osc2.connect(gain2);
-            gain2.connect(audioCtx.destination);
-            osc2.start(now + 0.25);
-            osc2.stop(now + 0.6);
-        }
-
-        // 5. Le Rouge-gorge (Chant cristallin et perlée)
-        function oiseauRougegorge(now) {
-            const osc = audioCtx.createOscillator();
-            const gain = audioCtx.createGain();
-            osc.type = 'triangle';
-            const f = 2400 + Math.random() * 800;
-            osc.frequency.setValueAtTime(f, now);
-            osc.frequency.linearRampToValueAtTime(f - 400, now + 0.05);
-            osc.frequency.linearRampToValueAtTime(f + 300, now + 0.1);
-            
-            gain.gain.setValueAtTime(0.001, now);
-            gain.gain.linearRampToValueAtTime(0.015, now + 0.02);
-            gain.gain.exponentialRampToValueAtTime(0.0001, now + 0.12);
-            
-            osc.connect(gain);
-            gain.connect(audioCtx.destination);
-            osc.start(now);
-            osc.stop(now + 0.12);
-        }
-
-        // 6. L'Alouette (Trille rapide en cascade)
-        function oiseauAlouette(now) {
-            for (let i = 0; i < 4; i++) {
-                const subNow = now + (i * 0.05);
-                const osc = audioCtx.createOscillator();
-                const gain = audioCtx.createGain();
-                osc.type = 'sine';
-                osc.frequency.setValueAtTime(3200 + (i * 200), subNow);
-                gain.gain.setValueAtTime(0.01, subNow);
-                gain.gain.exponentialRampToValueAtTime(0.0001, subNow + 0.04);
-                osc.connect(gain);
-                gain.connect(audioCtx.destination);
-                osc.start(subNow);
-                osc.stop(subNow + 0.04);
-            }
-        }
-
-        // 7. La Tourterelle / Pigeon (Roucoulement doux et grave)
-        function oiseauTourterelle(now) {
-            const osc = audioCtx.createOscillator();
-            const gain = audioCtx.createGain();
-            osc.type = 'sine';
-            osc.frequency.setValueAtTime(280, now);
-            osc.frequency.linearRampToValueAtTime(270, now + 0.3);
-            
-            gain.gain.setValueAtTime(0.001, now);
-            gain.gain.linearRampToValueAtTime(0.025, now + 0.1);
-            gain.gain.exponentialRampToValueAtTime(0.0001, now + 0.35);
-            
-            osc.connect(gain);
-            gain.connect(audioCtx.destination);
-            osc.start(now);
-            osc.stop(now + 0.35);
-        }
-
-        // 8. Note électronique / rétro-futuriste (ta touche robotique/synthé)
-        function noteElectronique(now) {
-            const osc = audioCtx.createOscillator();
-            const gain = audioCtx.createGain();
-            osc.type = Math.random() > 0.5 ? 'square' : 'sawtooth';
-            const notes = [440, 523.25, 659.25, 783.99, 880, 1046.5];
-            const f = notes[Math.floor(Math.random() * notes.length)];
-            
-            osc.frequency.setValueAtTime(f, now);
-            
-            gain.gain.setValueAtTime(0.001, now);
-            gain.gain.linearRampToValueAtTime(0.015, now + 0.05);
-            gain.gain.exponentialRampToValueAtTime(0.0001, now + 0.2);
-            
-            osc.connect(gain);
-            gain.connect(audioCtx.destination);
-            osc.start(now);
-            osc.stop(now + 0.2);
-        }
-
-        // Sélection aléatoire parmi toute cette magnifique volière et la touche électronique
-        function jouerSonAleatoire() {
-            if (!audioCtx || !isPlaying) return;
-            const now = audioCtx.currentTime;
-            const choix = Math.random();
-
-            if (choix < 0.16) {
-                oiseauMesange(now);
-            } else if (choix < 0.32) {
-                oiseauRossignol(now);
-            } else if (choix < 0.48) {
-                oiseauMerle(now);
-            } else if (choix < 0.60) {
-                oiseauCoucou(now);
-            } else if (choix < 0.74) {
-                oiseauRougegorge(now);
-            } else if (choix < 0.84) {
-                oiseauAlouette(now);
-            } else if (choix < 0.92) {
-                oiseauTourterelle(now);
-            } else {
-                noteElectronique(now); // Le clin d'œil électronique/robotique
-            }
-        }
-
+        // Gestion du son
+        let audio = new Audio('oiseaux.mp3'); audio.loop = true; let enLecture = false;
         function toggleSon() {
-            const btn = document.getElementById('btn-son');
-            if (!isPlaying) {
-                try {
-                    audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-                    isPlaying = true;
-                    btn.textContent = "🕊✨";
-                    btn.title = "Couper l'ambiance sonore";
-                    
-                    intervalSon = setInterval(() => {
-                        if (!isPlaying) return;
-                        jouerSonAleatoire();
-                        
-                        if (Math.random() > 0.4) {
-                            setTimeout(() => jouerSonAleatoire(), 200 + Math.random() * 250);
-                        }
-                    }, 1800 + Math.random() * 1500);
-                } catch(e) {
-                    console.log("Audio non autorisé sans interaction");
-                }
-            } else {
-                isPlaying = false;
-                if (intervalSon) clearInterval(intervalSon);
-                if (audioCtx) audioCtx.close();
-                btn.textContent = "🕊";
-                btn.title = "Activer l'ambiance sonore";
-            }
+            if (!enLecture) { audio.play().catch(e=>{}); document.getElementById('btn-son').innerHTML = "🎶"; enLecture = true; } 
+            else { audio.pause(); document.getElementById('btn-son').innerHTML = "🕊️"; enLecture = false; }
         }
 
-        // Effet magique du coffre
+        // Déplacement du coffre magique
+        const coffre = document.getElementById('coffre-magique');
+        let cX = 100, cY = 100;
+        function move() {
+            cX = Math.random()*(window.innerWidth-100); cY = Math.random()*(window.innerHeight-100);
+            coffre.style.left = cX+'px'; coffre.style.top = cY+'px';
+        }
+        setInterval(move, 4500); move();
+
         function exploserCadeau() {
-            const notif = document.getElementById('notification-cadeau');
-            notif.classList.add('show');
-            setTimeout(() => {
-                notif.classList.remove('show');
-            }, 3000);
-
-            for (let i = 0; i < 15; i++) {
-                const fleur = document.createElement('div');
-                fleur.style.position = 'fixed';
-                fleur.style.left = (window.innerWidth / 2 + (Math.random() - 0.5) * 100) + 'px';
-                fleur.style.top = (window.innerHeight - 100) + 'px';
-                fleur.style.fontSize = (Math.random() * 10 + 20) + 'px';
-                fleur.style.zIndex = '9999';
-                fleur.style.pointerEvents = 'none';
-                fleur.innerHTML = ['💐', '🌸', '🌼', '🌻', '🌹'][Math.floor(Math.random() * 5)];
-                document.body.appendChild(fleur);
-
-                const duree = Math.random() * 1500 + 1000;
-                const decalageX = (Math.random() - 0.5) * 200;
-                const decalageY = - (Math.random() * 300 + 200);
-
-                fleur.animate([
-                    { transform: 'translate(0px, 0px) scale(0.5)', opacity: 1 },
-                    { transform: `translate(${decalageX}px, ${decalageY}px) scale(1.2) rotate(${Math.random() * 360}deg)`, opacity: 0 }
-                ], {
-                    duration: duree,
-                    easing: 'ease-out'
-                });
-
-                setTimeout(() => fleur.remove(), duree);
+            const els = ['🌸', '✨', '🌻', '🌟', '❤️'];
+            for(let i=0; i<20; i++) {
+                const p = document.createElement('div');
+                p.style.position = 'fixed'; p.style.left = cX+'px'; p.style.top = cY+'px';
+                p.innerHTML = els[Math.floor(Math.random()*els.length)];
+                document.body.appendChild(p);
+                const a = Math.random()*Math.PI*2, d = Math.random()*150+50;
+                p.animate([{transform:'scale(1)', opacity:1}, {transform:`translate(${Math.cos(a)*d}px, ${Math.sin(a)*d}px) scale(0)`, opacity:0}], {duration:1000});
+                setTimeout(() => p.remove(), 1000);
             }
         }
+
+        // Journal volant
+        function creerJournalVolant() {
+            const j = document.createElement('a');
+            j.href = 'https://lepetitprincedesjardiniers.github.io/ministere-de-lhonnetete.html#apropos';
+            j.className = 'journal-volant';
+            j.innerHTML = '📰';
+            j.title = 'Ministère de l\'honnêteté - À propos';
+
+            const fromLeft = Math.random() > 0.5;
+            j.style.top = (Math.random() * (window.innerHeight - 150)) + 'px';
+            j.style.left = fromLeft ? '-70px' : '100vw';
+
+            document.body.appendChild(j);
+
+            setTimeout(() => {
+                j.style.transform = fromLeft 
+                    ? `translateX(120vw) rotate(${Math.random() * 720 - 360}deg)` 
+                    : `translateX(-120vw) rotate(${Math.random() * 720 - 360}deg)`;
+            }, 100);
+
+            setTimeout(() => j.remove(), 8100);
+        }
+        setInterval(creerJournalVolant, 9000);
     </script>
 </body>
 </html>
