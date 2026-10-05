@@ -162,11 +162,8 @@
 
         #coffre-magique { position: fixed; font-size: 40px; z-index: 8; cursor: pointer; transition: 4s ease-in-out; filter: drop-shadow(0 0 10px gold); opacity: 0.85; }
         
-        /* Oiseaux et messagers discrets et lents */
-        .oiseau-volant { 
-            position: fixed; font-size: 26px; z-index: 7; 
-            transition: transform 14s linear; pointer-events: none; opacity: 0.6; 
-        }
+        /* Oiseaux et messagers discrets */
+        .oiseau-volant { position: fixed; font-size: 28px; z-index: 7; transition: transform 14s linear; pointer-events: none; opacity: 0.7; }
 
         .journal-volant {
             position: fixed; font-size: 35px; z-index: 15; cursor: pointer;
@@ -174,9 +171,11 @@
         }
         .journal-volant:hover { transform: scale(1.3) rotate(20deg) !important; }
 
-        footer { padding: 35px 0; }
+        footer { padding: 35px 0; display: flex; justify-content: center; align-items: center; gap: 20px; flex-wrap: wrap; }
         .lien-copyright { color: var(--text-color); opacity: 0.5; text-decoration: none; font-weight: bold; font-size: 0.9em; transition: 0.3s; }
         .lien-copyright:hover { opacity: 1; text-shadow: 0 0 10px #fff; }
+        .lien-journal-bas { color: var(--text-color); opacity: 0.8; text-decoration: none; font-weight: bold; font-size: 0.9em; transition: 0.3s; text-shadow: 0 0 10px rgba(253,224,71,0.5); }
+        .lien-journal-bas:hover { opacity: 1; color: #fde047; }
 
         @media (max-width: 950px) {
             .paysage-cosmos { flex-direction: column; gap: 20px; }
@@ -197,7 +196,7 @@
 
     <!-- Icônes vagabondes magiques -->
     <div id="icone-jour-nuit" class="icone-jour-nuit" onclick="clicJourNuit()" title="Attrape-moi pour changer le temps !">☀️</div>
-    <div id="icone-meteo" onclick="clicMeteo()" title="Attrape-moi pour faire de la pluie ou de la neige !">☁️️</div>
+    <div id="icone-meteo" onclick="clicMeteo()" title="Attrape-moi pour faire de la pluie ou de la neige !">☁️</div>
 
     <div class="header-container">
         <div class="titre-fraternite">La Fraternité du Palais Nature</div>
@@ -215,9 +214,6 @@
                     <td><a href="vie.html">Vie Citoyenne</a></td>
                 </tr>
             </table>
-            <a href="ministere-de-lhonnetete.html" style="position: absolute; right: 20px; top: 50%; transform: translateY(-50%); color: #fde047; background: transparent; text-decoration: none; font-weight: bold; font-size: 0.95em; white-space: nowrap; text-shadow: 0 0 10px rgba(253,224,71,0.5);">
-                📰 Le Journal ►
-            </a>
         </div>
     </div>
 
@@ -288,6 +284,7 @@
 
     <footer>
         <a href="transition-externe.html" class="lien-copyright">© 2000 le petit prince des jardiniers</a>
+        <a href="ministere-de-lhonnetete.html" class="lien-journal-bas">📰 Le Journal du Ministère de l'honnêteté</a>
     </footer>
 
     <script>
@@ -394,7 +391,7 @@
         let audio = new Audio('oiseaux.mp3'); audio.loop = true; let enLecture = false;
         function toggleSon() {
             if (!enLecture) { audio.play().catch(e=>{}); document.getElementById('btn-son').innerHTML = "🎶"; enLecture = true; } 
-            else { audio.pause(); document.getElementById('btn-son').innerHTML = "🕊️️"; enLecture = false; }
+            else { audio.pause(); document.getElementById('btn-son').innerHTML = "🕊️"; enLecture = false; }
         }
 
         // Déplacement du coffre magique
@@ -419,7 +416,7 @@
             }
         }
 
-        // Oiseaux / papillons volants (version très discrète et espacée : toutes les 25 secondes)
+        // Oiseaux / papillons volants (discrets et espacés)
         function creerMessager() {
             const a = document.createElement('div'); a.className = 'oiseau-volant'; 
             a.innerHTML = ['🕊️', '🦋', '🐝'][Math.floor(Math.random()*3)];
