@@ -10,13 +10,28 @@
         .top-bar { position: relative; width: 100%; min-height: 50px; background: rgba(255,255,255,0.3); padding: 5px 0; display: flex; justify-content: center; align-items: center; }
         #google_translate_element { position: absolute; left: 10px; top: 10px; z-index: 2000; transform: scale(0.85); transform-origin: top left; }
 
-        .menu-wrapper { position: relative; display: flex; justify-content: center; align-items: center; width: 100%; margin: 5px 0; flex-wrap: wrap; gap: 5px; }
+        .menu-wrapper { position: relative; display: flex; justify-content: center; align-items: center; width: 100%; margin: 5px 0; }
         .menu-table { margin: 0 !important; border-radius: 10px; background-color: #008080; border-collapse: collapse; }
         .menu-table td { padding: 8px 15px; border: 1px solid #FFFFFF; }
         .menu-table a { text-decoration: none; color: #FFFFFF; font-weight: bold; font-size: 0.85em; }
 
-        .btn-boite-mail { background: #E67E22; color: white; border: 2px solid white; padding: 8px 12px; border-radius: 10px; font-weight: bold; font-family: 'Comic Sans MS'; cursor: pointer; font-size: 0.85em; box-shadow: 0 2px 8px rgba(0,0,0,0.2); transition: 0.2s; }
-        .btn-boite-mail:hover { background: #d35400; transform: scale(1.03); }
+        /* Style discret pour le bouton boîte de réception */
+        .btn-boite-mail { 
+            background: rgba(0, 128, 128, 0.1); 
+            color: #008080; 
+            border: 1.5px solid #008080; 
+            padding: 5px 14px; 
+            border-radius: 20px; 
+            font-weight: bold; 
+            font-family: 'Comic Sans MS'; 
+            cursor: pointer; 
+            font-size: 0.8em; 
+            transition: all 0.2s ease; 
+        }
+        .btn-boite-mail:hover { 
+            background: #008080; 
+            color: white; 
+        }
 
         #btn-mode { position: absolute; right: 10px; top: 10px; background: #444; color: #FFD700; border: 1px solid #222; border-radius: 5px; cursor: pointer; font-size: 14px; padding: 2px 5px; z-index: 1001; }
         .phrase-rose { color: #ff1493; font-weight: bold; font-size: 1.1em; text-shadow: 1px 1px 2px #ff69b4; margin-top: 5px; }
@@ -138,8 +153,6 @@
                     <td><a href="jardin.html?cat=VIE">Vie Citoyenne</a></td>
                 </tr>
             </table>
-            <!-- BOUTON D'ACCÈS À LA BOÎTE DE RÉCEPTION INTERNE -->
-            <button class="btn-boite-mail" onclick="ouvrirModalBoite()">📩 Ma boîte de réception</button>
         </div>
         <button id="btn-mode" onclick="basculerModeSombre()">🏮</button>
     </div>
@@ -173,7 +186,12 @@
         </div>
     </div>
 
-    <h3 id="titre-registre" style="color: #008080; margin: 15px 0 5px 0;">📖 Registre de la Fraternité</h3>
+    <!-- BOUTON ACCÈS BOÎTE DE RÉCEPTION DISCRET SOUS LA RECHERCHE -->
+    <div style="margin: 8px 0 4px 0;">
+        <button class="btn-boite-mail" onclick="ouvrirModalBoite()">📩 Consulter mes messages privés</button>
+    </div>
+
+    <h3 id="titre-registre" style="color: #008080; margin: 10px 0 5px 0;">📖 Registre de la Fraternité</h3>
 
     <div id="mur-messages" class="mur-reel"></div>
 
@@ -355,7 +373,7 @@
         function masquerCoordonnees(texte) {
             if (!texte) return "";
             let protege = String(texte).replace(/([a-zA-Z0-9._-]+)@([a-zA-Z0-9._-]+)\.([a-zA-Z]{2,5})/gi, "$1 [at] $2 [dot] $3");
-            protege = protege.replace(/(?:(?:\+|00)33|0)\s*[1-9](?:[\s.-]*\d{2})/g, "📱 [Numéro protégé]");
+            protege = protege.replace(/(?:(?:\+|00)33|0)\s*[1-9](?:[\s.-]*\d{2}){4}/g, "📱 [Numéro protégé]");
             return protege;
         }
 
