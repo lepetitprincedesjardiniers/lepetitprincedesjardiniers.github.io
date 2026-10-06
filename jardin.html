@@ -15,22 +15,24 @@
         .menu-table td { padding: 8px 15px; border: 1px solid #FFFFFF; }
         .menu-table a { text-decoration: none; color: #FFFFFF; font-weight: bold; font-size: 0.85em; }
 
-        /* Style discret pour le bouton boîte de réception */
+        /* Style orange bien visible pour le bouton boîte de réception */
         .btn-boite-mail { 
-            background: rgba(0, 128, 128, 0.1); 
-            color: #008080; 
-            border: 1.5px solid #008080; 
-            padding: 5px 14px; 
+            background: #E67E22; 
+            color: #FFFFFF; 
+            border: 2px solid #D35400; 
+            padding: 8px 18px; 
             border-radius: 20px; 
             font-weight: bold; 
             font-family: 'Comic Sans MS'; 
             cursor: pointer; 
-            font-size: 0.8em; 
+            font-size: 0.9em; 
+            box-shadow: 0 4px 10px rgba(0,0,0,0.15);
             transition: all 0.2s ease; 
         }
         .btn-boite-mail:hover { 
-            background: #008080; 
-            color: white; 
+            background: #D35400; 
+            transform: translateY(-2px);
+            box-shadow: 0 6px 14px rgba(0,0,0,0.2);
         }
 
         #btn-mode { position: absolute; right: 10px; top: 10px; background: #444; color: #FFD700; border: 1px solid #222; border-radius: 5px; cursor: pointer; font-size: 14px; padding: 2px 5px; z-index: 1001; }
@@ -186,12 +188,13 @@
         </div>
     </div>
 
-    <!-- BOUTON ACCÈS BOÎTE DE RÉCEPTION DISCRET SOUS LA RECHERCHE -->
-    <div style="margin: 8px 0 4px 0;">
+    <!-- BOUTON ACCÈS BOÎTE DE RÉCEPTION EN ORANGE -->
+    <div style="margin: 15px 0 10px 0;">
         <button class="btn-boite-mail" onclick="ouvrirModalBoite()">📩 Consulter mes messages privés</button>
     </div>
 
-    <h3 id="titre-registre" style="color: #008080; margin: 10px 0 5px 0;">📖 Registre de la Fraternité</h3>
+    <!-- TITRE AVEC MARGE SUPÉRIEURE ACCRUE ET STYLE RENFORCÉ -->
+    <h3 id="titre-registre" style="color: #004D40; margin: 30px 0 10px 0; font-size: 1.4em; text-shadow: 1px 1px 2px rgba(255, 255, 255, 0.9); font-weight: bold;">📖 Registre de la Fraternité</h3>
 
     <div id="mur-messages" class="mur-reel"></div>
 
@@ -226,7 +229,6 @@
                 <label style="font-weight: bold; color: #008080; font-size: 0.9em;">Ton Prénom / Pseudo :</label>
                 <input type="text" id="rep_nom" class="field-rep" placeholder="Ton nom de cœur..." required>
 
-                <!-- Choix du mode d'envoi -->
                 <label style="font-weight: bold; color: #008080; font-size: 0.9em; margin-top: 10px;">Mode de réponse :</label>
                 <select id="rep_mode" class="field-rep">
                     <option value="repondre">🔓 Commentaire public (visible sous l'annonce)</option>
@@ -773,7 +775,6 @@
 
         function fermerModalReponse() { document.getElementById('modal-reponse').style.display = 'none'; }
 
-        // --- GESTION DE LA BOÎTE DE RÉCEPTION INTERNE ---
         function ouvrirModalBoite() {
             jouerBip();
             document.getElementById('modal-boite').style.display = 'flex';
@@ -855,7 +856,7 @@
             const rowIndex = document.getElementById('rep_row_index').value;
             const nomRep = document.getElementById('rep_nom').value;
             const msgRep = document.getElementById('rep_message').value;
-            const modeEnvoi = document.getElementById('rep_mode').value; // 'repondre' (public) ou 'prive' (interne)
+            const modeEnvoi = document.getElementById('rep_mode').value;
 
             const params = new URLSearchParams();
             params.append('token', TOKEN_SECRET);
