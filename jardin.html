@@ -206,6 +206,16 @@
                 <label style="font-weight: bold; color: #008080; font-size: 0.9em;">Ton Message / Proposition :</label>
                 <textarea id="rep_message" class="field-rep" rows="4" placeholder="Propose ton aide, ton soutien..." required></textarea>
 
+                <div style="margin: 10px 0; text-align: left;">
+                    <label style="font-weight: bold; color: #008080; font-size: 0.9em; display: block; margin-bottom: 5px;">Type de réponse :</label>
+                    <label style="font-size: 0.85em; color: #333; cursor: pointer; display: block; margin-bottom: 5px;">
+                        <input type="radio" name="rep_type_choix" value="publique" checked> 💬 Répondre publiquement sur le site
+                    </label>
+                    <label style="font-size: 0.85em; color: #333; cursor: pointer; display: block;">
+                        <input type="radio" name="rep_type_choix" value="privee"> ✉️️ Envoyer un e-mail privé et direct à l'auteur (anonyme)
+                    </label>
+                </div>
+
                 <button type="submit" id="btnSubmitReponse" class="btn-repondre" style="font-size: 1em; padding: 10px; margin-top: 5px;">ENVOYER MA RÉPONSE ✨</button>
             </form>
         </div>
@@ -224,7 +234,7 @@
 
     <script>
         const TOKEN_SECRET = "MonJardinSecuritToken2026";
-        const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbxnut45uaiH_GhVoNQ4jYzw53thmlc-KHOwhvYfl23Owfh2iyRoT1DBAAeFDepiQCo2/exec";
+        const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbymicN9vLw30Otxbfw9UUCl7Bqs9Kq6ZHlBkm-9xktyhw7zLTFh-U-hLAewuDrqQVpoAA/exec";
         let annoncesPrincipales = [], filtreTypeActuel = "", filtreSousTypeActuel = "";
         let pageActuelle = 1;
         const elementsParPage = 20;
@@ -737,6 +747,7 @@
             const rowIndex = document.getElementById('rep_row_index').value;
             const nomRep = document.getElementById('rep_nom').value;
             const msgRep = document.getElementById('rep_message').value;
+            const typeReponseChoisi = document.querySelector('input[name="rep_type_choix"]:checked')?.value || 'publique';
 
             const params = new URLSearchParams();
             params.append('token', TOKEN_SECRET);
@@ -745,6 +756,7 @@
             params.append('row_index', rowIndex);
             params.append('nom', nomRep);
             params.append('message', msgRep);
+            params.append('type_reponse', typeReponseChoisi);
 
             try {
                 await fetch(WEB_APP_URL, { method: 'POST', body: params });
