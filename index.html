@@ -156,6 +156,7 @@
             display: flex;
             flex-direction: column;
             align-items: center;
+            gap: 20px;
             flex: 0 0 auto;
         }
 
@@ -192,7 +193,7 @@
         .style-citoyen:hover { transform: translateY(-5px); border-color: #10b981; background: rgba(16, 185, 129, 0.2); box-shadow: 0 12px 40px rgba(16, 185, 129, 0.35); }
 
         /* Régulation (Violet) */
-        .style-regulation { border: 2px solid #9370DB; }
+        .style-regulation { border: 2px solid #9370DB; width: 320px; height: 180px; }
         .style-regulation:hover { transform: translateY(-5px); border-color: #9370DB; background: rgba(147, 112, 219, 0.2); box-shadow: 0 12px 40px rgba(147,112,219,0.35); }
 
         /* Savoirs (Jaune) */
@@ -319,8 +320,8 @@
             .menu-table, .menu-table tbody, .menu-table tr { display: flex; flex-wrap: wrap; justify-content: center; width: 95%; }
             .menu-table td { flex: 1 1 28%; text-align: center; padding: 6px 2px; font-size: 0.8em; border-right: none; }
             .terre-don { width: 250px; height: 250px; }
-            .texte-semis { font-size: 1em; }
             .rubrique-carte { height: auto; min-height: 190px; }
+            .style-regulation { width: 100%; height: auto; }
             .texte-intro-fixe { width: 90%; font-size: 0.9em; padding: 10px 15px; }
             .bandeau-defilant { width: 92%; }
         }
@@ -392,7 +393,28 @@
                     Ex : santé, urgence, écoute et réconfort
                 </div>
             </a>
-            
+        </div>
+
+        <!-- CENTRE : La Terre animée + Régulation en dessous -->
+        <div class="centre-terre-cosmos">
+            <a href="jardin.html" class="terre-don">
+                <div class="texte-semis"><b>Le Jardin Public des Fraternels</b></div>
+            </a>
+
+            <!-- Régulation placée sous la Terre -->
+            <a href="jardin.html?cat=REGULATION" class="rubrique-carte style-regulation flotte-c">
+                <div style="padding-top: 2px;">
+                    <h3 style="margin:0; font-size: 0.95em;">⚖️️ Régulation</h3>
+                    <div class="phrases-impots texte-blanc" style="margin-top: 4px;">Aide sociale rapprochée, médiation entre camarades & Paix citoyenne</div>
+                </div>
+                <div class="liste-exemples-discrets" style="margin-top: 2px; padding-top: 2px;">
+                    Ex : dialogues, chartes, régulation et paix de la cité.
+                </div>
+            </a>
+        </div>
+
+        <!-- COLONNE DROITE -->
+        <div class="colonne-cosmos">
             <!-- 3. Vie Citoyenne (gardée intacte) -->
             <a href="vie.html" class="rubrique-carte style-citoyen flotte-e">
                 <div style="padding-top: 6px;">
@@ -403,29 +425,8 @@
                     Ex : agora, propositions, assemblées et décisions.
                 </div>
             </a>
-        </div>
 
-        <!-- CENTRE : La Terre animée -->
-        <div class="centre-terre-cosmos">
-            <a href="jardin.html" class="terre-don">
-                <div class="texte-semis"><b>Le Jardin Public des Fraternels</b></div>
-            </a>
-        </div>
-
-        <!-- COLONNE DROITE -->
-        <div class="colonne-cosmos">
-            <!-- 4. Régulation (avec le texte en blanc) -->
-            <a href="jardin.html?cat=REGULATION" class="rubrique-carte style-regulation flotte-c">
-                <div style="padding-top: 6px;">
-                    <h3 style="margin:0; font-size: 1em;">⚖️ Régulation</h3>
-                    <div class="phrases-impots texte-blanc" style="margin-top: 6px;">Aide sociale rapprochée, médiation entres camarades & Paix citoyenne</div>
-                </div>
-                <div class="liste-exemples-discrets">
-                    Ex : dialogues, chartes, régulation et paix de la cité.
-                </div>
-            </a>
-
-            <!-- 5. Savoirs -->
+            <!-- 4. Savoirs -->
             <a href="jardin.html?cat=SAVOIR" class="rubrique-carte style-savoir flotte-d">
                 <div style="padding-top: 6px;">
                     <h3 style="margin:0; font-size: 1em;">💡 Savoirs</h3>
