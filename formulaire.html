@@ -3,325 +3,127 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Semer un Don - Le Petit Prince des Jardiniers</title>
-    <meta name="description" content="Semez une graine de générosité ! Offrez un don, un service, un savoir ou un objet sur La Fraternité du Palais Nature pour cultiver l'altruisme au quotidien." />
+    <title>Le Jardin de la Fraternité - Semer un Don</title>
+    <meta name="description" content="Semez une graine de générosité : partagez vos dons, objets, talents et compétences au Jardin de la Fraternité.">
     <style>
-        body { font-family: 'Comic Sans MS', cursive; text-align: center; margin: 0; padding: 0; background-color: #FFFF00; color: #000080; overflow-x: hidden; min-height: 100vh; }
-        #google_translate_element { position: absolute; top: 5px; left: 5px; z-index: 1000; opacity: 0.7; transform: scale(0.8); }
+        body { font-family: 'Comic Sans MS', cursive; text-align: center; margin: 0; padding: 0; background-color: #FFFF00; color: #000080; min-height: 100vh; padding-bottom: 80px; transition: background 0.3s, color 0.3s; }
+        .top-bar { position: relative; width: 100%; min-height: 50px; background: rgba(255,255,255,0.3); padding: 5px 0; display: flex; justify-content: center; align-items: center; }
+        #google_translate_element { position: absolute; left: 10px; top: 10px; z-index: 2000; transform: scale(0.85); transform-origin: top left; }
 
-        .menu-table { margin: 20px auto 5px auto; border-radius: 10px; background-color: #008080; border-collapse: collapse; margin-left: auto; margin-right: auto;}
-        .menu-table td { padding: 10px 15px; border: 1px solid #FFFFFF; transition: 0.3s; }
-        .menu-table td:hover { background-color: #00b3b3; }
+        .menu-wrapper { position: relative; display: flex; justify-content: center; align-items: center; width: 100%; margin: 5px 0; }
+        .menu-table { margin: 0 !important; border-radius: 10px; background-color: #008080; border-collapse: collapse; }
+        .menu-table td { padding: 8px 15px; border: 1px solid #FFFFFF; }
         .menu-table a { text-decoration: none; color: #FFFFFF; font-weight: bold; font-size: 0.85em; }
 
-        .guide-trigger { color: #008080; font-size: 0.9em; cursor: pointer; text-decoration: underline; font-weight: bold; display: inline-block; margin-bottom: 15px; transition: 0.3s; }
-        .guide-trigger:hover { color: #E67E22; transform: scale(1.1); }
+        #btn-mode { position: absolute; right: 10px; top: 10px; background: #444; color: #FFD700; border: 1px solid #222; border-radius: 5px; cursor: pointer; font-size: 14px; padding: 2px 5px; z-index: 1001; }
+        .phrase-rose { color: #ff1493; font-weight: bold; font-size: 1.1em; text-shadow: 1px 1px 2px #ff69b4; margin-top: 5px; }
+        .phrase-sous { color: #000080; font-weight: bold; margin: 1px 0; font-size: 0.9em; }
 
-        .discreet-help { font-size: 0.75em; color: #008080; cursor: pointer; text-decoration: none; font-style: italic; display: block; margin-top: 5px; margin-bottom: 10px; text-align: right; opacity: 0.8; }
-        .discreet-help:hover { text-decoration: underline; opacity: 1; }
+        .form-container { background: #008080; padding: 25px; margin: 20px auto; max-width: 90%; width: 800px; border-radius: 20px; color: white; box-shadow: 0 4px 15px rgba(0,0,0,0.15); border: 2px solid #fff; text-align: left; box-sizing: border-box; }
+        .form-group { margin-bottom: 15px; }
+        .form-group label { display: block; font-weight: bold; margin-bottom: 5px; font-size: 0.95em; color: #FFFF00; }
+        .form-control { width: 100%; padding: 10px; border-radius: 10px; border: none; font-family: 'Comic Sans MS', cursive; font-size: 0.9em; box-sizing: border-box; }
+        textarea.form-control { resize: vertical; min-height: 220px; }
+        .form-row { display: flex; gap: 15px; flex-wrap: wrap; }
+        .form-row .form-group { flex: 1; min-width: 220px; }
 
-        #aide-panneau { 
-            display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); 
-            width: 90%; max-width: 420px; background: #008080; color: white; padding: 20px; 
-            border-radius: 20px; box-shadow: 0px 0px 50px rgba(0,0,0,0.5); z-index: 2000; border: 4px solid #FFFF00;
-        }
-        #aide-panneau h4 { margin-top: 0; color: #FFFF00; text-align: center; border-bottom: 2px solid #FFFF00; padding-bottom: 5px; }
-        .close-modal { position: absolute; top: 10px; right: 15px; cursor: pointer; font-size: 1.5em; font-weight: bold; color: #FFFF00; }
-        .aide-section { margin-bottom: 12px; text-align: left; font-size: 0.9em; }
-        .aide-titre { font-weight: bold; color: #FFFF00; display: block; margin-bottom: 3px; }
+        .btn-submit { background: #E67E22; color: white; border: 2px solid #D35400; padding: 12px 25px; border-radius: 20px; font-weight: bold; font-family: 'Comic Sans MS'; cursor: pointer; font-size: 1.1em; box-shadow: 0 4px 10px rgba(0,0,0,0.15); transition: all 0.2s ease; width: 100%; margin-top: 10px; }
+        .btn-submit:hover { background: #D35400; transform: translateY(-2px); box-shadow: 0 6px 14px rgba(0,0,0,0.2); }
 
-        #overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.3); z-index: 1999; }
+        .guide-box { background: #FFFFFF; color: #008080; padding: 15px 20px; border-radius: 15px; margin-bottom: 20px; border: 2px dashed #ff1493; }
+        .guide-box h3 { margin-top: 0; color: #ff1493; font-size: 1.1em; }
+        .guide-box ul { padding-left: 20px; margin: 5px 0; font-size: 0.85em; }
 
-        .form-container { background: white; padding: 30px; border-radius: 20px; display: inline-block; margin-top: 10px; box-shadow: 0px 10px 20px rgba(0,0,0,0.1); width: 95%; max-width: 800px; margin-bottom: 80px; position: relative; z-index: 10; }
-        .form-group { text-align: left; margin: 15px 20px; }
-        label { font-weight: bold; color: #008080; display: block; margin-bottom: 5px; }
-        .sous-label { font-size: 0.75em; color: #006666; margin-bottom: 5px; display: block; font-style: italic; }
+        .btn-retour { display: inline-block; margin-top: 10px; padding: 10px 20px; background: #34495e; color: white; text-decoration: none; border-radius: 8px; font-weight: bold; }
+        .copyright-link { color: #008080; text-decoration: none; font-weight: bold; }
+        .journal-footer-link { color: #008080; text-decoration: none; font-weight: bold; font-size: 0.9em; display: inline-block; margin-top: 8px; }
+        .journal-footer-link:hover { text-decoration: underline; }
 
-        input, select, textarea { width: 100%; padding: 12px; margin-bottom: 10px; border: 2px solid #008080; border-radius: 10px; font-family: 'Comic Sans MS'; font-size: 1em; box-sizing: border-box; }
-        textarea { min-height: 220px; resize: vertical; background-color: #fffdf0; font-size: 0.9em; line-height: 1.5; color: #000080; }
-
-        .extra-field { display: none; animation: fadeIn 0.3s; background: #f0fdf4; padding: 10px; border-radius: 10px; margin-top: 5px; margin-bottom: 10px; border: 1px dashed #008080; }
-        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-
-        .btn-envoyer { width: 100%; padding: 25px; background: #E67E22; color: white; border: none; border-radius: 20px; cursor: pointer; font-weight: bold; font-size: 1.2em; box-shadow: 0px 4px 0px #b35900; transition: 0.2s; }
-        .btn-envoyer:active { transform: translateY(4px); box-shadow: 0px 0px 0px #b35900; }
-
-        footer { margin: 20px 0 80px 0; text-align: center; }
-        .copyright-link { color: #008080; text-decoration: none; font-weight: bold; transition: 0.3s; padding: 10px; cursor: pointer; display: inline-block; position: relative; z-index: 20; }
-        .copyright-link:hover { color: #E67E22; text-shadow: 0 0 8px #fff; }
-        .journal-footer-link { color: #008080; text-decoration: none; font-weight: bold; display: inline-flex; align-items: center; justify-content: center; margin-top: 10px; transition: 0.3s; }
-        .journal-footer-link:hover { color: #E67E22; text-shadow: 0 0 8px #fff; }
-
-        @media (max-width: 768px) {
-            .menu-table, .menu-table tbody, .menu-table tr { display: flex; flex-wrap: wrap; justify-content: center; width: 95%; }
-            .menu-table td { flex: 1 1 28%; text-align: center; padding: 8px 2px; font-size: 0.8em; }
-            .form-container { width: 90%; padding: 15px; margin-bottom: 50px; }
-            .form-group { margin: 10px 0; }
-            input, select, textarea { padding: 10px; font-size: 0.95em; }
-            .btn-envoyer { padding: 15px; font-size: 1em; }
-            #aide-panneau { width: 85%; max-height: 80vh; overflow-y: auto; padding: 15px; }
-        }
+        body.dark-mode { background-color: #0a0a1a; color: #e0e0e0; }
+        .star { position: fixed; background: white; border-radius: 50%; opacity: 0; pointer-events: none; animation: twinkle var(--d) infinite; }
+        @keyframes twinkle { 0%, 100% { opacity: 0.3; } 50% { opacity: 1; } }
     </style>
 </head>
 <body>
 
-    <div id="google_translate_element"></div>
-
-    <div style="position: relative; display: flex; justify-content: center; align-items: center; width: 100%; margin: 20px 0 5px 0;">
-        <table class="menu-table" style="margin: 0 !important;">
-            <tr>
-                <td><a href="index.html">Accueil</a></td>
-                <td><a href="formulaire.html">Semer</a></td>
-                <td><a href="jardin.html">Le Jardin</a></td>
-                <td><a href="jardin.html?cat=IMPOT">Trésor Public</a></td>
-                <td><a href="jardin.html?cat=REGULATION">Régulation</a></td>
-                <td><a href="jardin.html?cat=AIDE">Aide & Harmonie</a></td>
-                <td><a href="jardin.html?cat=SAVOIR">Savoirs</a></td>
-                <td><a href="vie.html">Vie Citoyenne</a></td>
-                <td><a href="jardin.html?cat=VIE">Vie Citoyenne</a></td>
-            </tr>
-        </table>
+    <div class="top-bar">
+        <div id="google_translate_element"></div>
+        <div class="menu-wrapper">
+            <table class="menu-table">
+                <tr>
+                    <td><a href="index.html">Accueil</a></td>
+                    <td><a href="formulaire.html">Semer</a></td>
+                    <td><a href="jardin.html">Le Jardin</a></td>
+                    <td><a href="jardin.html?cat=IMPOT">Trésor Public</a></td>
+                    <td><a href="jardin.html?cat=REGULATION">Régulation</a></td>
+                    <td><a href="jardin.html?cat=AIDE">Aide & Harmonie</a></td>
+                    <td><a href="jardin.html?cat=SAVOIR">Savoirs</a></td>
+                    <td><a href="vie.html">Vie Citoyenne</a></td>
+                    <td><a href="jardin.html?cat=VIE">Vie Citoyenne</a></td>
+                </tr>
+            </table>
+        </div>
+        <button id="btn-mode" onclick="basculerModeSombre()">🏮</button>
     </div>
 
-    <div class="guide-trigger" onclick="toggleGuide(event)">🌱 Ouvrir le Guide des Semailles</div>
-
-    <div id="overlay" onclick="toggleGuide(event)"></div>
-    <div id="aide-panneau">
-        <span class="close-modal" onclick="toggleGuide(event)">×</span>
-        <h4>🌟 Guide des Semailles</h4>
-
-        <div class="aide-section">
-            <span class="aide-titre">💡 SAVOIRS</span>
-            • Enseignement, cours & soutien scolaire.<br>
-            • Transmettre un art, un artisanat ou un savoir-faire.<br>
-            • Mentorat professionnel & conseils techniques.
-            • Enseignement, cours & soutien scolaire[cite: 4].<br>
-            • Transmettre un art, un artisanat ou un savoir-faire[cite: 4].<br>
-            • Mentorat professionnel & conseils techniques[cite: 4].
-        </div>
-
-        <div class="aide-section">
-            <span class="aide-titre">🏠 VIE CITOYENNE</span>
-            • Repas, graines & partage d'eau.<br>
-            • Prêt ou don d'objets, de vêtements et d'outils.<br>
-            • Logement, accueil ponctuel & covoiturage.
-            • Repas, graines & partage d'eau[cite: 4].<br>
-            • Prêt ou don d'objets, de vêtements et d'outils[cite: 4].<br>
-            • Logement, accueil ponctuel & covoiturage[cite: 4].
-        </div>
-
-        <div class="aide-section">
-            <span class="aide-titre">💖 AIDE & HARMONIE</span>
-            • <b>Urgence :</b> entraide immédiate & secours du quotidien.<br>
-            • <b>Détresse :</b> écoute attentive, soutien aux aînés & garde d'enfants.<br>
-            • Ménage, soutien quotidien & soin des animaux.
-            • <b>Urgence :</b> entraide immédiate & secours du quotidien[cite: 4].<br>
-            • <b>Détresse :</b> écoute attentive, soutien aux aînés & garde d'enfants[cite: 4].<br>
-            • Ménage, soutien quotidien & soin des animaux[cite: 4].
-        </div>
-
-        <div class="aide-section">
-            <span class="aide-titre">⚖️ RÉGULATION</span>
-            • Aide sociale rapprochée.<br>
-            • Médiation entre voisins & paix citoyenne.<br>
-            • Assemblées & décisions collectives.
-            • Aide sociale rapprochée[cite: 4].<br>
-            • Médiation entre voisins & paix citoyenne[cite: 4].<br>
-            • Assemblées & décisions collectives[cite: 4].
-        </div>
-
-        <div class="aide-section">
-            <span class="aide-titre">📜 TRÉSOR PUBLIC</span>
-            • Don pluriel : bras et têtes volontaires au service du bien-être collectif.<br>
-            • Entretien des réseaux vitaux (eau publique, électricité, voirie).<br>
-            • Chantiers collectifs, parcs & espaces verts.
-            • Don pluriel : bras et têtes volontaires au service du bien-être collectif[cite: 4].<br>
-            • Entretien des réseaux vitaux (eau publique, électricité, voirie)[cite: 4].<br>
-            • Chantiers collectifs, parcs & espaces verts[cite: 4].
-        </div>
-    </div>
-
-    <h2 style="color:#E67E22;">🌍 Engendrer la Fraternité Universelle</h2>
+    <h2 style="color:#2E7D32; margin: 15px 0 5px 0;">🌱 Semer une Graine au Jardin 🌱</h2>
+    <div class="phrase-rose">Offrez vos dons, compétences et fraternité</div>
+    <div class="phrase-sous">Chaque don est une fleur qui ne se fane jamais.</div>
 
     <div class="form-container">
-        <form id="monFormulaire" onsubmit="envoyerDon(event)">
-            <!-- Jeton de sécurité pour l'API Google Apps Script -->
-            <input type="hidden" name="token" value="MonJardinSecuritToken2026">
 
-            <!-- Champ Anti-Spam (honeypot caché) -->
-            <div style="display:none;" aria-hidden="true">
-                <input type="text" name="website_hp" tabindex="-1" autocomplete="off">
+        <div class="guide-box">
+            <h3>📖 Guide des Semailles</h3>
+            <p style="font-size:0.85em; margin: 5px 0;">Choisissez la catégorie qui correspond le mieux à votre offrande :</p>
+            <ul>
+                <li><strong>🎓 Savoirs :</strong> Cours, soutien scolaire, mentorat, compétences artisanales ou techniques.</li>
+                <li><strong>🏛 Vie Citoyenne :</strong> Partage de repas, prêt d'outils, hébergement, covoiturage, activités.</li>
+                <li><strong>🤝 Aide & Harmonie :</strong> Secours immédiat, écoute, soutien aux personnes âgées, garde d'enfants/animaux.</li>
+                <li><strong>⚖ Régulation :</strong> Aide aux démarches, médiation de voisinage, conseils citoyens.</li>
+                <li><strong>💰 Trésor Public :</strong> Entretien d'équipements vitaux, chantiers participatifs, espaces verts.</li>
+                <li><strong>✨ Autre domaine :</strong> Tout autre acte de générosité spontané.</li>
+            </ul>
+        </div>
+
+        <form id="formSemer" onsubmit="envoyerAnnonce(event)">
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="nom">Ton Prénom / Pseudo :</label>
+                    <input type="text" id="nom" name="nom" class="form-control" placeholder="Ex: Jean du Jardin" required>
+                </div>
+                <div class="form-group">
+                    <label for="email">Ton Adresse E-mail (pour recevoir tes réponses) :</label>
+                    <input type="email" id="email" name="email" class="form-control" placeholder="ton.email@exemple.com" required>
+                </div>
             </div>
 
-            <div class="form-group">
-                <label>Identité amoureuse</label>
-                <input type="text" name="nom" placeholder="Ton Prénom de coeur / Pseudo (Enfant, Pro, Citoyen...)" required>
-            </div>
-
-            <div class="form-group">
-                <label>Provenance & Territoire</label>
-                <div style="display: flex; gap: 10px; margin-bottom: 5px;">
-                    <select name="pays_select" id="pays_select" onchange="checkOther(this, 'extra_pays')" style="flex: 1.5;">
-                        <option value="" selected>-- Pays / Royaume --</option>
-                        <optgroup label="✨ Territoires de l'Imaginaire">
-                            <option value="B612">L'astéroïde B 612</option>
-                            <option value="Merveilles">Le Pays des Merveilles</option>
-                            <option value="Utopie">L'Archipel d'Utopie</option>
-                            <option value="Gentillesse">Pays de la grande gentillesse</option>
-                            <option value="Nulle-Part">Le Pays de Nulle-Part</option>
-                        </optgroup>
-                        <optgroup label="🌍 Europe">
-                            <option value="France">France (et Outre-mer)</option>
-                            <option value="Belgique">Belgique</option>
-                            <option value="Suisse">Suisse</option>
-                            <option value="Luxembourg">Luxembourg</option>
-                            <option value="Monaco">Monaco</option>
-                            <option value="Allemagne">Allemagne</option>
-                            <option value="Italie">Italie</option>
-                            <option value="Espagne">Espagne</option>
-                            <option value="Portugal">Portugal</option>
-                            <option value="Royaume-Uni">Royaume-Uni</option>
-                        </optgroup>
-                        <optgroup label="❄️ Pays Nordiques">
-                            <option value="Suede">Suède</option>
-                            <option value="Norvege">Norvège</option>
-                            <option value="Danemark">Danemark</option>
-                            <option value="Finlande">Finlande</option>
-                            <option value="Islande">Islande</option>
-                        </optgroup>
-                        <optgroup label="🔍 Petits Pays & Territoires">
-                            <option value="Andorre">Andorre</option>
-                            <option value="Liechtenstein">Liechtenstein</option>
-                            <option value="Malte">Malte</option>
-                            <option value="Saint-Marin">Saint-Marin</option>
-                            <option value="Vatican">Vatican</option>
-                            <option value="Guyane">Guyane Française</option>
-                            <option value="Polynesie">Polynésie</option>
-                            <option value="Nouvelle-Caledonie">Nouvelle-Calédonie</option>
-                        </optgroup>
-                        <optgroup label="🌍 Afrique">
-                            <option value="Algérie">Algérie</option>
-                            <option value="Maroc">Maroc</option>
-                            <option value="Sénégal">Sénégal</option>
-                            <option value="Tunisie">Tunisie</option>
-                            <option value="Côte d'Ivoire">Côte d'Ivoire</option>
-                            <option value="Congo">Congo</option>
-                            <option value="Mali">Mali</option>
-                            <option value="Madagascar">Madagascar</option>
-                        </optgroup>
-                        <optgroup label="🌏 Asie">
-                            <option value="Chine">Chine</option>
-                            <option value="Japon">Japon</option>
-                            <option value="Inde">Inde</option>
-                            <option value="Vietnam">Vietnam</option>
-                            <option value="Liban">Liban</option>
-                        </optgroup>
-                        <optgroup label="🌍 Amériques & Océanie">
-                            <option value="Canada">Canada / Québec</option>
-                            <option value="Haïti">Haïti</option>
-                            <option value="USA">États-Unis</option>
-                            <option value="Brésil">Brésil</option>
-                            <option value="Argentine">Argentine</option>
-                            <option value="Australie">Australie</option>
-                        </optgroup>
-                        <option value="AUTRE_PAYS">🌐 Un pays secret...</option>
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="type">Catégorie du Don :</label>
+                    <select id="type" name="type" class="form-control" onchange="mettreAJourSousCategories()" required>
+                        <option value="">-- Choisir une catégorie --</option>
+                        <option value="SAVOIR">🎓 Savoirs</option>
+                        <option value="VIE">🏛 Vie Citoyenne</option>
+                        <option value="AIDE">🤝 Aide & Harmonie</option>
+                        <option value="REGULATION">⚖ Régulation</option>
+                        <option value="IMPOT">💰 Trésor Public</option>
+                        <option value="AUTRE_CAT">✨ Autre domaine</option>
                     </select>
                 </div>
-                <div id="extra_pays" class="extra-field">
-                    <input type="text" name="pays_precision" placeholder="Nom de ton pays secret...">
-                </div>
-                <input type="text" name="localisation" placeholder="Ville, Code Postal ou Quartier précis..." required>
-            </div>
-
-            <div class="form-group">
-                <label>Destination du semis</label>
-                <select name="type" id="main_cat" onchange="updateSubCats(); checkOther(this, 'extra_cat');" required>
-                    <option value="">-- Domaine d'action --</option>
-                    <option value="SAVOIR">💡 SAVOIRS (Apprendre, transmettre, partager un talent)</option>
-                    <option value="VIE">🏠 VIE CITOYENNE (De personne à personne : repas, objets, logement, covoiturage)</option>
-                    <option value="AIDE">💖 AIDE & HARMONIE (Urgence & Détresse : secours, écoute, aînés, garde)</option>
-                    <option value="REGULATION">⚖ RÉGULATION (Aide sociale rapprochée, médiation, décisions collectives)</option>
-                    <option value="IMPOT">📜 TRÉSOR PUBLIC (Pour la collectivité : réseaux, voirie, chantiers, parcs)</option>
-                    <option value="AUTRE_CAT">🌈 AUTRE DOMAINE...</option>
-                </select>
-
-                <div id="extra_cat" class="extra-field">
-                    <input type="text" name="cat_precision" placeholder="Précise ton domaine d'action sur mesure...">
-                </div>
-
-                <a class="discreet-help" onclick="toggleGuide(event)">❓ Précision ? Ouvrir le guide des semailles</a>
-            </div>
-
-            <div id="sub_cat_group" class="form-group" style="display:none;">
-                <label>Précision de la graine</label>
-                <select name="sousType" id="sub_cat" onchange="checkOther(this, 'extra_sub')"></select>
-                <div id="extra_sub" class="extra-field">
-                    <input type="text" name="sub_precision" placeholder="Décris ta spécialité précise...">
+                <div class="form-group">
+                    <label for="sousType">Précision / Sous-rubrique :</label>
+                    <select id="sousType" name="sousType" class="form-control">
+                        <option value="">-- Sélectionner d'abord une catégorie --</option>
+                    </select>
                 </div>
             </div>
 
             <div class="form-group">
-                <label>Rayon d'action</label>
-                <select name="rayon_action">
-                    <option value="sur place">sur place</option>
-                    <option value="rayon 10 km">rayon 10 km</option>
-                    <option value="rayon 50 km">rayon 50 km</option>
-                    <option value="national">national</option>
-                    <option value="international">international</option>
-                    <option value="extra terrestre">extra terrestre</option>
-                    <option value="universel">universel</option>
-                    <option value="infinie">infinie</option>
-                </select>
-            </div>
-
-            <div class="form-group">
-                <label>Cycle de Vie (Durée de validité)</label>
-                <select name="duree_validite" onchange="checkOther(this, 'extra_cycle')" required>
-                    <option value="1">🌱 Un jour (Une herbe sauvage)</option>
-                    <option value="7">🌸 Une semaine (Une fleur des champs)</option>
-                    <option value="30" selected>🌿 Un mois (Un bel arbuste)</option>
-                    <option value="90">🌳 Trois mois (Un chêne robuste)</option>
-                    <option value="365">🌲 Un an (Une forêt éternelle)</option>
-                    <option value="AUTRE">Autres durées...</option>
-                </select>
-                <div id="extra_cycle" class="extra-field">
-                    <input type="text" name="cycle_precision" id="input_cycle_precision" placeholder="Nombre de jours uniquement (ex: 15)">
-                </div>
-            </div>
-
-            <div class="form-group">
-                <label>Logistique & Acheminement</label>
-                <span class="sous-label">Comment le don voyage-t-il ?</span>
-                <select name="logistique" onchange="checkOther(this, 'extra_log')" required>
-                    <optgroup label="🤝 Humain & Proximité">
-                        <option value="Main Propre">Remise en main propre (Lieu public)</option>
-                        <option value="Moi-même">J'assure le transport moi-même</option>
-                        <option value="Récupérer">À récupérer sur place</option>
-                        <option value="Covoit">Covoiturage humain (Je t'emmène)</option>
-                        <option value="AUTRE">autres</option>
-                    </optgroup>
-                    <optgroup label="🚚 Expédition & Route">
-                        <option value="Relais">Point Relais</option>
-                        <option value="Poste">Courrier</option>
-                        <option value="Colis-voiturage">Colis-voiturage (Via un voyageur)</option>
-                        <option value="Transporteur">Fret Camion / Logistique lourde</option>
-                    </optgroup>
-                    <optgroup label="🚀 Immatériel">
-                        <option value="Numérique">Transfert Numérique / Visio</option>
-                        <option value="Téléphone">Appel téléphonique / Soutien oral</option>
-                        <option value="Pensée">Ondes de fraternité</option>
-                    </optgroup>
-                </select>
-                <div id="extra_log" class="extra-field">
-                    <input type="text" name="log_precision" placeholder="Détaillez votre option logistique...">
-                </div>
-            </div>
-
-            <div class="form-group">
-                <label>Description du Don amoureux</label>
-               <textarea name="message" placeholder="
+                <label for="message">Ton Message / Proposition :</label>
+                <textarea id="message" name="message" class="form-control" placeholder="
                       Les Graines Semées au Jardin :
-                   
+                    
 Ici, on sème des graines de générosité pour récolter de l'altruisme.
 Le système est conçu pour transformer des métiers, des objets et des talents en actes de fraternité.
 Tout s'offre sans compter : c'est la richesse du don qui crée la paix.
@@ -341,111 +143,193 @@ pourront voir leur durée raccourcie par « Le petit plouc des jardiniers ».
 Regardez la fraternité s'épanouir au gré des dons du monde entier...
 Chaque don est une fleur qui ne se fane jamais.
 La meilleure justice est encore le pardon.          " required></textarea>
-
             </div>
 
-            <button type="submit" class="btn-envoyer" id="btnTexte">ENGENDRER LA FRATERNITÉ UNIVERSELLE</button>
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="pays_select">Pays :</label>
+                    <input type="text" id="pays_select" name="pays_select" class="form-control" placeholder="Ex: France, Belgique..." required>
+                </div>
+                <div class="form-group">
+                    <label for="localisation">Ville / Région :</label>
+                    <input type="text" id="localisation" name="localisation" class="form-control" placeholder="Ex: Bordeaux, Lyon..." required>
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="rayon_action">Rayon d'action :</label>
+                    <select id="rayon_action" name="rayon_action" class="form-control">
+                        <option value="Locale">Locale (Ville & environs)</option>
+                        <option value="Régionale">Régionale</option>
+                        <option value="Nationale">Nationale</option>
+                        <option value="Mondiale / En ligne">Mondiale / En ligne</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="logistique">Logistique :</label>
+                    <select id="logistique" name="logistique" class="form-control">
+                        <option value="Main Propre">Main Propre</option>
+                        <option value="A distance / En ligne">À distance / En ligne</option>
+                        <option value="Envoi postal">Envoi postal</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="validite">Durée de publication :</label>
+                    <select id="validite" name="validite" class="form-control">
+                        <option value="1 jour">1 jour</option>
+                        <option value="7 jours">7 jours</option>
+                        <option value="30 jours">30 jours</option>
+                        <option value="Permanent">Permanent</option>
+                    </select>
+                </div>
+            </div>
+
+            <button type="submit" id="btnSubmitForm" class="btn-submit">🌱 SEMER CETTE GRAINE 🌱</button>
         </form>
+
+    </div>
+
+    <div style="text-align: center; margin-bottom: 20px;">
+        <a href="jardin.html" class="btn-retour" style="background:#008080; margin-right: 10px;">📖 Consulter le Jardin</a>
+        <a href="index.html" class="btn-retour">Retour à l'Accueil</a>
     </div>
 
     <footer>
-        <div>
-            <a href="merci.html" class="copyright-link">© PINON 2000 — Conçu avec le cœur et l'esprit libre par le #petitploucdesjardiniers.</a>
-        </div>
-        <div>
-            <a href="transition-externe.html" class="journal-footer-link">
-                📰&nbsp;&nbsp;journal de bord du #petitploucdesjardiniers, réflexions de l'auteur du site.
-                📰&nbsp;&nbsp;journal de bord du #petitploucdesjardiniers, réflexions de l'auteur du site[cite: 4].
-            </a>
+        <div class="footer-copyright" style="margin-top: 20px; text-align: center;">
+            <div>
+                <a href="merci.html" class="copyright-link">© PINON 2000 — Conçu avec le cœur et l'esprit libre par le #petitploucdesjardiniers.</a>
+            </div>
+            <div>
+                <a href="transition-externe.html" class="journal-footer-link">📰 journal de bord du #petitploucdesjardiniers, réflexions de l'auteur du site.</a>
+            </div>
         </div>
     </footer>
 
+    <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+
     <script>
-    const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbxnut45uaiH_GhVoNQ4jYzw53thmlc-KHOwhvYfl23Owfh2iyRoT1DBAAeFDepiQCo2/exec";
+        const TOKEN_SECRET = "MonJardinSecuritToken2026";
+        const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbxnut45uaiH_GhVoNQ4jYzw53thmlc-KHOwhvYfl23Owfh2iyRoT1DBAAeFDepiQCo2/exec";
 
-    function toggleGuide(e) {
-        e.stopPropagation();
-        const guide = document.getElementById('aide-panneau');
-        const overlay = document.getElementById('overlay');
-        const isVisible = (guide.style.display === 'block');
-        guide.style.display = isVisible ? 'none' : 'block';
-        overlay.style.display = isVisible ? 'none' : 'block';
-    }
+        const sousRubriquesData = {
+            "SAVOIR": [
+                { id: "Soutien scolaire & cours", label: "Soutien scolaire & cours" },
+                { id: "Art, artisanat & musique", label: "Art, artisanat & musique" },
+                { id: "Mentorat pro & compétences techniques", label: "Mentorat pro & compétences techniques" },
+                { id: "Savoir-faire du quotidien", label: "Savoir-faire du quotidien" },
+                { id: "Bibliothèque vivante", label: "Bibliothèque vivante" },
+                { id: "AUTRE_SUB", label: "Autres interprétations" }
+            ],
+            "VIE": [
+                { id: "Repas, graines & eau", label: "Repas, graines & eau" },
+                { id: "Prêt d'objets, outils & équipement", label: "Prêt d'objets, outils & équipement" },
+                { id: "Accueil, hébergement & covoiturage", label: "Accueil, hébergement & covoiturage" },
+                { id: "Loisirs & activités partagées", label: "Loisirs & activités partagées" },
+                { id: "AUTRE_SUB", label: "Autres recommandations" }
+            ],
+            "AIDE": [
+                { id: "Secours immédiat & petite urgence", label: "Secours immédiat & petite urgence" },
+                { id: "Écoute, présence & soutien aux aînés", label: "Écoute, présence & soutien aux aînés" },
+                { id: "Garde d'enfants & soutien familial", label: "Garde d'enfants & soutien familial" },
+                { id: "Soin des animaux & aide à la maison", label: "Soin des animaux & aide à la maison" },
+                { id: "AUTRE_SUB", label: "Autres merveilles" }
+            ],
+            "REGULATION": [
+                { id: "Aide aux démarches (Aide sociale rapprochée)", label: "Aide aux démarches (Aide sociale rapprochée)" },
+                { id: "Médiation de voisinage & paix citoyenne", label: "Médiation de voisinage & paix citoyenne" },
+                { id: "Organisation d'assemblées & conseils citoyens", label: "Organisation d'assemblées & conseils citoyens" },
+                { id: "AUTRE_SUB", label: "Autres conciliations" }
+            ],
+            "IMPOT": [
+                { id: "Entretien des réseaux vitaux (eau, énergie)", label: "Entretien des réseaux vitaux (eau, énergie)" },
+                { id: "Voirie & chantiers participatifs", label: "Voirie & chantiers participatifs" },
+                { id: "Espaces verts, forêts & parcs publics", label: "Espaces verts, forêts & parcs publics" },
+                { id: "AUTRE_SUB", label: "Autres contributions" }
+            ],
+            "AUTRE_CAT": [
+                { id: "Général", label: "Général / Sans précision" }
+            ]
+        };
 
-    function googleTranslateElementInit() { new google.translate.TranslateElement({pageLanguage: 'fr'}, 'google_translate_element'); }
-
-    const tree = {
-        "SAVOIR": ["Soutien scolaire & cours", "Art, artisanat & musique", "Mentorat pro & compétences techniques", "Savoir-faire du quotidien", "AUTRE_SUB", "Autres interprétations"],
-        "VIE": ["Repas, graines & eau", "Prêt d'objets, outils & équipement", "Accueil, hébergement & covoiturage", "Loisirs & activités partagées", "AUTRE_SUB", "Autres recommandations"],
-        "AIDE": ["Secours immédiat & petite urgence", "Écoute, présence & soutien aux aînés", "Garde d'enfants & soutien familial", "Soin des animaux & aide à la maison", "AUTRE_SUB", "Autres merveilles"],
-        "REGULATION": ["Aide aux démarches (Aide sociale rapprochée)", "Médiation de voisinage & paix citoyenne", "Organisation d'assemblées & conseils citoyens", "AUTRE_SUB", "Autres conciliations"],
-        "IMPOT": ["Entretien des réseaux vitaux (eau, énergie)", "Voirie & chantiers participatifs", "Espaces verts, forêts & parcs publics", "AUTRE_SUB", "Autres contributions"]
-    };
-
-    function updateSubCats() {
-        const cat = document.getElementById('main_cat').value;
-        const subGroup = document.getElementById('sub_cat_group');
-        const subSelect = document.getElementById('sub_cat');
-        const extraSub = document.getElementById('extra_sub');
-
-        if (extraSub) extraSub.style.display = 'none';
-
-        if (cat && tree[cat]) {
-            let options = '<option value="">-- Choisir une précision --</option>';
-            options += tree[cat].map(s => `<option value="${s}">${s === 'AUTRE_SUB' ? '🌈 Autres distinctions...' : s}</option>`).join('');
-            subSelect.innerHTML = options;
-            subGroup.style.display = 'block';
-        } else { 
-            subGroup.style.display = 'none'; 
-            subSelect.innerHTML = '';
+        function googleTranslateElementInit() {
+            new google.translate.TranslateElement({pageLanguage: 'fr'}, 'google_translate_element');
         }
-    }
 
-    function checkOther(select, divId) {
-        const extraDiv = document.getElementById(divId);
-        if (!extraDiv) return;
-        const isOther = (select.value === "AUTRE" || select.value === "AUTRE_PAYS" || select.value === "AUTRE_SUB" || select.value === "AUTRE_CAT");
-        extraDiv.style.display = isOther ? "block" : "none";
-    }
-
-    function envoyerDon(event) {
-        event.preventDefault();
-
-        // Vérification de la durée personnalisée (chiffres uniquement)
-        const selectCycle = document.querySelector('select[name="duree_validite"]');
-        if (selectCycle && selectCycle.value === "AUTRE") {
-            const inputCyclePrecision = document.getElementById('input_cycle_precision');
-            const valeurSaisie = inputCyclePrecision.value.trim();
-            const regexChiffresSeulement = /^\d+$/;
-
-            if (!regexChiffresSeulement.test(valeurSaisie)) {
-                alert("⚠️ Pour la durée personnalisée, veuillez indiquer un nombre en jours uniquement (chiffres seulement, sans lettres).");
-                inputCyclePrecision.focus();
-                return;
+        function basculerModeSombre() {
+            document.body.classList.toggle('dark-mode');
+            if (document.body.classList.contains('dark-mode')) {
+                for(let i=0; i<60; i++) {
+                    let s = document.createElement('div'); s.className = 'star';
+                    s.style.left = Math.random()*100+'vw'; s.style.top = Math.random()*100+'vh';
+                    s.style.width = s.style.height = Math.random()*3+'px';
+                    s.style.setProperty('--d', (Math.random()*3+2)+'s');
+                    document.body.appendChild(s);
+                }
+            } else {
+                document.querySelectorAll('.star').forEach(s => s.remove());
             }
         }
 
-        const btn = document.getElementById('btnTexte');
-        btn.innerText = "Semailles en cours... 🌱";
-        btn.disabled = true;
+        function mettreAJourSousCategories() {
+            const catSelect = document.getElementById('type').value;
+            const subSelect = document.getElementById('sousType');
+            subSelect.innerHTML = "";
 
-        const form = document.getElementById('monFormulaire');
-        const formData = new FormData(form);
-
-        fetch(WEB_APP_URL, { method: 'POST', body: formData })
-        .then(() => { window.location.href = "merci_annonce.html"; })
-        .catch(() => { window.location.href = "merci_annonce.html"; });
-    }
-
-    window.addEventListener('DOMContentLoaded', () => {
-        const urlParams = new URLSearchParams(window.location.search);
-        const catParam = urlParams.get('cat');
-        if (catParam) {
-            const selectCat = document.getElementById('main_cat');
-            if (selectCat) { selectCat.value = catParam.toUpperCase(); updateSubCats(); }
+            if (sousRubriquesData[catSelect]) {
+                sousRubriquesData[catSelect].forEach(item => {
+                    const opt = document.createElement('option');
+                    opt.value = item.id;
+                    opt.textContent = item.label;
+                    subSelect.appendChild(opt);
+                });
+            } else {
+                const opt = document.createElement('option');
+                opt.value = "";
+                opt.textContent = "-- Sélectionner d'abord une catégorie --";
+                subSelect.appendChild(opt);
+            }
         }
-    });
+
+        async function envoyerAnnonce(e) {
+            e.preventDefault();
+            const btn = document.getElementById('btnSubmitForm');
+            btn.innerText = "Semaison en cours... 🌱";
+            btn.disabled = true;
+
+            const formData = new FormData(document.getElementById('formSemer'));
+            const params = new URLSearchParams();
+            params.append('token', TOKEN_SECRET);
+            params.append('action', 'poster');
+
+            for (let [key, val] of formData.entries()) {
+                params.append(key, val);
+            }
+
+            try {
+                const response = await fetch(WEB_APP_URL, {
+                    method: 'POST',
+                    body: params
+                });
+                const res = await response.json();
+
+                if (res.result === "success") {
+                    btn.innerText = "Graine semée avec succès ! 🌸";
+                    setTimeout(() => {
+                        window.location.href = "jardin.html";
+                    }, 1500);
+                } else {
+                    alert("Erreur : " + (res.message || "Envoi impossible"));
+                    btn.innerText = "🌱 SEMER CETTE GRAINE 🌱";
+                    btn.disabled = false;
+                }
+            } catch (err) {
+                console.error("Erreur d'envoi :", err);
+                alert("Une erreur s'est produite lors de la semaison.");
+                btn.innerText = "🌱 SEMER CETTE GRAINE 🌱";
+                btn.disabled = false;
+            }
+        }
     </script>
-    <script src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
 </body>
 </html>
