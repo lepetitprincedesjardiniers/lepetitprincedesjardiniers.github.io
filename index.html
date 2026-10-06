@@ -7,7 +7,6 @@
     <title>La Fraternité du Palais Nature - Accueil</title>
     <meta name="description" content="La Fraternité du Palais Nature : espace citoyen de gratuité absolue, de don et d'entraide. Un havre d'écoute, d'altruisme et de partage pour recréer du lien social et vivre la fraternité." />
 
-    <!-- Données structurées invisibles pour Google (SEO) -->
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
@@ -61,7 +60,6 @@
 
         body.day-mode .titre-fraternite { color: #d97706; text-shadow: 0 0 15px rgba(217,119,6,0.3); }
 
-        /* Texte fixe d'introduction */
         .texte-intro-fixe {
             max-width: 850px;
             margin: 8px auto 14px auto;
@@ -77,14 +75,12 @@
             z-index: 10;
         }
 
-        /* Menu pro et épuré */
         .menu-table { margin: 15px auto; border-radius: 12px; background: var(--menu-bg); backdrop-filter: blur(8px); border: 1px solid rgba(255,255,255,0.2); border-collapse: separate; border-spacing: 0; overflow: hidden; position: relative; z-index: 10; box-shadow: 0 8px 32px rgba(0,0,0,0.15); }
         .menu-table td { border-right: 1px solid rgba(255, 255, 255, 0.1); transition: 0.3s; }
         .menu-table td:last-child { border-right: none; }
         .menu-table td:hover { background-color: rgba(0, 179, 179, 0.4); }
         .menu-table a { display: block; padding: 10px 18px; text-decoration: none; color: var(--text-color); font-weight: bold; font-size: 0.95em; }
 
-        /* Bandeau défilant bas de page */
         .bandeau-defilant {
             max-width: 1100px;
             margin: 30px auto 15px auto;
@@ -117,7 +113,6 @@
             100% { transform: translateX(-50%); }
         }
 
-        /* Soleil central supérieur */
         .soleil-cadre { width: 150px; height: 150px; background: radial-gradient(circle, #ffeb3b 0%, #ff9800 100%); border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 0 30px rgba(255,152,0,0.6); margin: 25px auto; position: relative; z-index: 20; transition: 0.6s; text-decoration: none; border: 2px solid rgba(255,255,255,0.5); }
         .soleil-cadre h1 { font-size: 0.85em; color: #222; line-height: 1.2; margin: 0; padding: 10px; font-weight: bold; }
         .soleil-cadre:hover { box-shadow: 0 0 50px #fff; transform: scale(1.08) rotate(360deg); }
@@ -145,6 +140,7 @@
         .flotte-b { animation: floatOrganique 8.1s ease-in-out infinite; animation-delay: -1.5s; }
         .flotte-c { animation: floatOrganique 7.5s ease-in-out infinite; animation-delay: -3s; }
         .flotte-d { animation: floatOrganique 8.5s ease-in-out infinite; animation-delay: -2s; }
+        .flotte-e { animation: floatOrganique 7.8s ease-in-out infinite; animation-delay: -1s; }
 
         .colonne-cosmos {
             display: flex;
@@ -163,7 +159,6 @@
             flex: 0 0 auto;
         }
 
-        /* Terre animée */
         .terre-don { 
             width: 320px; height: 320px; border-radius: 50%; 
             background-image: url('https://upload.wikimedia.org/wikipedia/commons/thumb/c/c3/Solarsystemscope_texture_2k_earth_daymap.jpg/1200px-Solarsystemscope_texture_2k_earth_daymap.jpg'); 
@@ -176,7 +171,7 @@
         .texte-semis { font-family: 'Georgia', serif; font-style: italic; font-weight: bold; text-shadow: 2px 2px 12px black; font-size: 1.15em; padding: 25px; text-align: center; color: #fff; }
         @keyframes rotationTerre { from { background-position: 0 0; } to { background-position: 1000px 0; } }
 
-        /* --- BLOCS UNIFORMES AVEC COULEURS DE BORDURES IDENTIQUES À JARDIN.HTML --- */
+        /* --- BLOCS UNIFORMES --- */
         .rubrique-carte { 
             background: var(--card-bg); backdrop-filter: blur(12px); 
             border-radius: 30px; padding: 22px; width: 100%; height: 210px; box-sizing: border-box; 
@@ -184,19 +179,23 @@
             box-shadow: 0 8px 32px rgba(0,0,0,0.15); text-align: center;
         }
 
-        /* Trésor Public : #1E90FF (comme sur jardin.html) */
+        /* Trésor Public (Bleu) */
         .style-tresor { border: 2px solid #1E90FF; }
         .style-tresor:hover { transform: translateY(-5px); border-color: #1E90FF; background: rgba(30, 144, 255, 0.2); box-shadow: 0 12px 40px rgba(30, 144, 255, 0.35); }
 
-        /* Aide & Harmonie : #ff69b4 (comme sur jardin.html) */
+        /* Aide & Harmonie (Rose) */
         .style-urgence { border: 2px solid #ff69b4; }
         .style-urgence:hover { transform: translateY(-5px); border-color: #ff69b4; background: rgba(255, 105, 180, 0.2); box-shadow: 0 12px 40px rgba(255,105,180,0.35); }
 
-        /* Vie Citoyenne / Régulation : #9370DB (comme sur jardin.html) */
+        /* Vie Citoyenne (Émeraude) */
+        .style-citoyen { border: 2px solid #10b981; }
+        .style-citoyen:hover { transform: translateY(-5px); border-color: #10b981; background: rgba(16, 185, 129, 0.2); box-shadow: 0 12px 40px rgba(16, 185, 129, 0.35); }
+
+        /* Régulation (Violet) */
         .style-regulation { border: 2px solid #9370DB; }
         .style-regulation:hover { transform: translateY(-5px); border-color: #9370DB; background: rgba(147, 112, 219, 0.2); box-shadow: 0 12px 40px rgba(147,112,219,0.35); }
 
-        /* Savoirs : #ffc107 (comme sur jardin.html) */
+        /* Savoirs (Jaune) */
         .style-savoir { border: 2px solid #ffc107; }
         .style-savoir:hover { transform: translateY(-5px); border-color: #ffc107; background: rgba(255, 193, 7, 0.2); box-shadow: 0 12px 40px rgba(255,193,7,0.35); }
 
@@ -208,12 +207,10 @@
         @keyframes twinkle { 0%, 100% { opacity: calc(0.2 * var(--star-opacity)); transform: scale(0.7); } 50% { opacity: var(--star-opacity); transform: scale(1.2); } }
         @keyframes moveStar { from { transform: translateX(-10vw); } to { transform: translateX(110vw); } }
 
-        /* Boutons d'action en haut à droite */
         .boutons-header { position: fixed; top: 20px; right: 20px; z-index: 1000; display: flex; gap: 12px; align-items: center; }
         #btn-son { background: none; border: none; color: var(--text-color); cursor: pointer; font-size: 32px; filter: drop-shadow(0 0 8px rgba(255,255,255,0.5)); transition: 0.3s; padding: 0; }
         #btn-son:hover { transform: scale(1.2); }
 
-        /* Icônes vagabondes magiques */
         .icone-vagabonde { 
             position: fixed; font-size: 38px; z-index: 12; cursor: pointer; 
             transition: 4s ease-in-out, transform 0.3s; 
@@ -256,7 +253,6 @@
             animation: flyAcross 12s linear forwards;
         }
 
-        /* Fenêtre modale d'information à l'écran */
         .modal-overlay {
             display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
             background: rgba(0, 0, 0, 0.75); backdrop-filter: blur(8px); z-index: 5000;
@@ -271,7 +267,6 @@
         .fermer-modal { position: absolute; top: 15px; right: 20px; font-size: 28px; cursor: pointer; color: #fde047; transition: 0.2s; }
         .fermer-modal:hover { transform: scale(1.2); }
 
-        /* Notification discrète cadeau */
         #notification-cadeau {
             position: fixed;
             bottom: 30px;
@@ -293,7 +288,6 @@
             opacity: 1;
         }
 
-        /* Effet arc-en-ciel animé */
         .rainbow-text {
             background: linear-gradient(45deg, #ff0000, #ff7f00, #ffff00, #00ff00, #0000ff, #4b0082, #8b00ff);
             -webkit-background-clip: text;
@@ -340,18 +334,15 @@
         <button id="btn-son" onclick="toggleSon()" title="Activer / couper l'ambiance sonore">🕊️</button>
     </div>
 
-    <!-- Icônes vagabondes magiques -->
     <div id="icone-info" class="icone-vagabonde" onclick="ouvrirModalInfo()" title="À propos & Informations (Attrape-moi !)">❓</div>
-    <div id="icone-jour-nuit" class="icone-vagabonde" onclick="clicJourNuit()" title="Attrape-moi pour changer le temps !">☀️</div>
+    <div id="icone-jour-nuit" class="icone-vagabonde" onclick="clicJourNuit()" title="Attrape-moi pour changer le temps !">☀️️</div>
     <div id="icone-meteo" class="icone-vagabonde" onclick="clicMeteo()" title="Attrape-moi pour faire de la pluie ou de la neige !">☁️</div>
 
-    <!-- Notification discrète cadeau -->
     <div id="notification-cadeau">🎁 Trésor capturé ! Abondance et partage offerts.</div>
 
     <div class="header-container">
         <div class="titre-fraternite">La Fraternité du Palais Nature</div>
 
-        <!-- Texte fixe d'introduction -->
         <div class="texte-intro-fixe">
             Espace d'entraide et de gratuité absolue ouvert inconditionnellement à toutes et tous, sans distinction de parcours, d'âge, de forme, ou de situation. Partagez vos dons, savoirs, talents et besoins pour recréer de la solidarité authentique, du lien social bienveillant, et nourrir notre générosité collective.
         </div>
@@ -372,7 +363,6 @@
         </div>
     </div>
 
-    <!-- Soleil central supérieur -->
     <a href="formulaire.html" class="soleil-cadre"><h1>ESPACE DU SEMIS DE DON ENTIER</h1></a>
 
     <!-- PAYSAGE COSMOS -->
@@ -380,6 +370,7 @@
 
         <!-- COLONNE GAUCHE -->
         <div class="colonne-cosmos">
+            <!-- 1. Trésor Public -->
             <a href="jardin.html?cat=IMPOT" class="rubrique-carte style-tresor flotte-a">
                 <div style="padding-top: 6px;">
                     <h3 style="margin:0; font-size: 1em;">📜 Trésor Public</h3>
@@ -391,6 +382,7 @@
                 </div>
             </a>
 
+            <!-- 2. Aide & Harmonie -->
             <a href="jardin.html?cat=AIDE" class="rubrique-carte style-urgence flotte-b">
                 <div style="padding-top: 6px;">
                     <h3 style="margin:0; font-size: 1em;">💖 Aide & Harmonie</h3>
@@ -398,6 +390,17 @@
                 </div>
                 <div class="liste-exemples-discrets">
                     Ex : santé, urgence, écoute et réconfort
+                </div>
+            </a>
+            
+            <!-- 3. Vie Citoyenne (gardée intacte) -->
+            <a href="vie.html" class="rubrique-carte style-citoyen flotte-e">
+                <div style="padding-top: 6px;">
+                    <h3 style="margin:0; font-size: 1em;">🏛️ Vie citoyenne</h3>
+                    <div class="phrases-impots" style="margin-top: 6px;">Espace de débats, d'initiatives locales et de participation à la vie de la communauté.</div>
+                </div>
+                <div class="liste-exemples-discrets">
+                    Ex : agora, propositions, assemblées et décisions.
                 </div>
             </a>
         </div>
@@ -411,9 +414,10 @@
 
         <!-- COLONNE DROITE -->
         <div class="colonne-cosmos">
+            <!-- 4. Régulation (avec le texte en blanc) -->
             <a href="jardin.html?cat=REGULATION" class="rubrique-carte style-regulation flotte-c">
                 <div style="padding-top: 6px;">
-                    <h3 style="margin:0; font-size: 1em;">⚖️ Vie citoyenne</h3>
+                    <h3 style="margin:0; font-size: 1em;">⚖️ Régulation</h3>
                     <div class="phrases-impots texte-blanc" style="margin-top: 6px;">Aide sociale rapprochée, médiation entres camarades & Paix citoyenne</div>
                 </div>
                 <div class="liste-exemples-discrets">
@@ -421,6 +425,7 @@
                 </div>
             </a>
 
+            <!-- 5. Savoirs -->
             <a href="jardin.html?cat=SAVOIR" class="rubrique-carte style-savoir flotte-d">
                 <div style="padding-top: 6px;">
                     <h3 style="margin:0; font-size: 1em;">💡 Savoirs</h3>
@@ -466,7 +471,6 @@
     </div>
 
     <script>
-        // Génération des étoiles en arrière-plan
         const numStars = 120;
         for (let i = 0; i < numStars; i++) {
             let star = document.createElement('div');
@@ -481,20 +485,10 @@
             document.body.appendChild(star);
         }
 
-        // Gestion de la fenêtre modale d'information
-        function ouvrirModalInfo() {
-            document.getElementById('modalInfo').classList.add('active');
-        }
-        function fermerModalInfo() {
-            document.getElementById('modalInfo').classList.remove('active');
-        }
-        function fermerModalClicExterieur(event) {
-            if (event.target === document.getElementById('modalInfo')) {
-                fermerModalInfo();
-            }
-        }
+        function ouvrirModalInfo() { document.getElementById('modalInfo').classList.add('active'); }
+        function fermerModalInfo() { document.getElementById('modalInfo').classList.remove('active'); }
+        function fermerModalClicExterieur(event) { if (event.target === document.getElementById('modalInfo')) fermerModalInfo(); }
 
-        // --- GESTION DES ÉMOJIS ET OISEAUX FLOTTANTS ALÉATOIRES ---
         const emojiList = ['❄️', '💧', '🐦', '🕊', '🦅', '✨', '🌸', '🍃'];
         const activeElements = [];
 
@@ -502,41 +496,24 @@
             const el = document.createElement('div');
             el.className = 'floating-emoji';
             el.innerText = specificEmoji || emojiList[Math.floor(Math.random() * emojiList.length)];
-            
             let x = startX !== null ? startX : Math.random() * window.innerWidth;
             let y = startY !== null ? startY : Math.random() * window.innerHeight;
-            
             el.style.left = x + 'px';
             el.style.top = y + 'px';
-
             let speedX = (Math.random() - 0.5) * 0.7;
             let speedY = (Math.random() - 0.5) * 0.7;
-
             document.body.appendChild(el);
-
-            activeElements.push({
-                element: el,
-                x: x,
-                y: y,
-                speedX: speedX,
-                speedY: speedY
-            });
+            activeElements.push({ element: el, x: x, y: y, speedX: speedX, speedY: speedY });
         }
 
-        for (let i = 0; i < 12; i++) {
-            createEmoji();
-        }
+        for (let i = 0; i < 12; i++) createEmoji();
 
         function animateEmojis() {
             activeElements.forEach(item => {
-                item.x += item.speedX;
-                item.y += item.speedY;
-
+                item.x += item.speedX; item.y += item.speedY;
                 if (item.x < 0 || item.x > window.innerWidth - 30) item.speedX *= -1;
                 if (item.y < 0 || item.y > window.innerHeight - 30) item.speedY *= -1;
-
-                item.element.style.left = item.x + 'px';
-                item.element.style.top = item.y + 'px';
+                item.element.style.left = item.x + 'px'; item.element.style.top = item.y + 'px';
             });
             requestAnimationFrame(animateEmojis);
         }
@@ -549,63 +526,40 @@
             bird.innerText = birds[Math.floor(Math.random() * birds.length)];
             bird.style.top = (Math.random() * (window.innerHeight / 2)) + 'px';
             document.body.appendChild(bird);
-
             setTimeout(() => bird.remove(), 12000);
         }
-        setInterval(spawnFlyingBird, 10000);
-        spawnFlyingBird();
+        setInterval(spawnFlyingBird, 10000); spawnFlyingBird();
 
         const colorModes = [
             () => ({ color: '#ffffff', filter: 'drop-shadow(0 0 5px white)', isRainbow: false }),
             () => ({ color: '#ff69b4', filter: 'drop-shadow(0 0 5px #ff1493)', isRainbow: false }),
-            () => {
-                const colors = ['#00ffff', '#ff4500', '#adff2f', '#ffff00', '#9370db', '#00ff7f'];
-                const rc = colors[Math.floor(Math.random() * colors.length)];
-                return { color: rc, filter: `drop-shadow(0 0 6px ${rc})`, isRainbow: false };
-            },
+            () => { const colors = ['#00ffff', '#ff4500', '#adff2f', '#ffff00', '#9370db', '#00ff7f']; const rc = colors[Math.floor(Math.random() * colors.length)]; return { color: rc, filter: `drop-shadow(0 0 6px ${rc})`, isRainbow: false }; },
             () => ({ color: '', filter: '', isRainbow: true })
         ];
 
         document.addEventListener('click', (e) => {
             if (e.target.tagName === 'A' || e.target.tagName === 'BUTTON' || e.target.closest('table')) return;
-
             const chosenMode = colorModes[Math.floor(Math.random() * colorModes.length)]();
-
             activeElements.forEach(item => {
                 if (chosenMode.isRainbow) {
-                    item.element.classList.add('rainbow-text');
-                    item.element.style.color = '';
-                    item.element.style.filter = '';
+                    item.element.classList.add('rainbow-text'); item.element.style.color = ''; item.element.style.filter = '';
                 } else {
-                    item.element.classList.remove('rainbow-text');
-                    item.element.style.color = chosenMode.color;
-                    item.element.style.filter = chosenMode.filter;
+                    item.element.classList.remove('rainbow-text'); item.element.style.color = chosenMode.color; item.element.style.filter = chosenMode.filter;
                 }
             });
-
-            for(let i = 0; i < 2; i++) {
-                createEmoji(null, e.clientX + (Math.random() * 40 - 20), e.clientY + (Math.random() * 40 - 20));
-            }
+            for(let i = 0; i < 2; i++) createEmoji(null, e.clientX + (Math.random() * 40 - 20), e.clientY + (Math.random() * 40 - 20));
         });
 
-        // Icône Jour / Nuit vagabonde
         const iconeJN = document.getElementById('icone-jour-nuit');
         let jnX = 150, jnY = 150;
-        function moveJourNuit() {
-            jnX = Math.random() * (window.innerWidth - 100);
-            jnY = Math.random() * (window.innerHeight - 100);
-            iconeJN.style.left = jnX + 'px';
-            iconeJN.style.top = jnY + 'px';
-        }
+        function moveJourNuit() { jnX = Math.random() * (window.innerWidth - 100); jnY = Math.random() * (window.innerHeight - 100); iconeJN.style.left = jnX + 'px'; iconeJN.style.top = jnY + 'px'; }
         setInterval(moveJourNuit, 6000); moveJourNuit();
 
         let estEnJour = false;
         function clicJourNuit() {
-            estEnJour = !estEnJour;
-            document.body.classList.toggle('day-mode', estEnJour);
+            estEnJour = !estEnJour; document.body.classList.toggle('day-mode', estEnJour);
             const icone = document.getElementById('icone-jour-nuit');
-            icone.textContent = estEnJour ? '🌙' : '☀️';
-            icone.title = estEnJour ? 'Passer en mode Nuit étoilée' : 'Passer en mode Jour radieux';
+            icone.textContent = estEnJour ? '🌙' : '☀️'; icone.title = estEnJour ? 'Passer en mode Nuit étoilée' : 'Passer en mode Jour radieux';
             exploserEffetJN(jnX, jnY);
         }
 
@@ -613,166 +567,81 @@
             const els = ['✨', '🌟', '💫', '☀️', '🌙'];
             for(let i=0; i<15; i++) {
                 const p = document.createElement('div');
-                p.style.position = 'fixed'; p.style.left = x+'px'; p.style.top = y+'px';
-                p.innerHTML = els[Math.floor(Math.random()*els.length)];
-                document.body.appendChild(p);
+                p.style.position = 'fixed'; p.style.left = x+'px'; p.style.top = y+'px'; p.innerHTML = els[Math.floor(Math.random()*els.length)]; document.body.appendChild(p);
                 const a = Math.random()*Math.PI*2, d = Math.random()*120+40;
                 p.animate([{transform:'scale(1)', opacity:1}, {transform:`translate(${Math.cos(a)*d}px, ${Math.sin(a)*d}px) scale(0)`, opacity:0}], {duration:800});
                 setTimeout(() => p.remove(), 800);
             }
         }
 
-        // Icône Météo vagabonde
         const iconeMeteo = document.getElementById('icone-meteo');
         let mX = 200, mY = 200;
-        function moveMeteo() {
-            mX = Math.random() * (window.innerWidth - 100);
-            mY = Math.random() * (window.innerHeight - 100);
-            iconeMeteo.style.left = mX + 'px';
-            iconeMeteo.style.top = mY + 'px';
-        }
+        function moveMeteo() { mX = Math.random() * (window.innerWidth - 100); mY = Math.random() * (window.innerHeight - 100); iconeMeteo.style.left = mX + 'px'; iconeMeteo.style.top = mY + 'px'; }
         setInterval(moveMeteo, 7000); moveMeteo();
 
         let etatMeteo = 0; 
         function clicMeteo() {
             const icone = document.getElementById('icone-meteo');
-            if (etatMeteo === 0) {
-                lancerAverse('💧', '#38bdf8');
-                icone.innerHTML = "🌧";
-                icone.title = "Cliquez pour faire tomber de la neige";
-                etatMeteo = 1;
-            } else if (etatMeteo === 1) {
-                lancerAverse('❄️', '#ffffff');
-                icone.innerHTML = "❄️";
-                icone.title = "Cliquez pour revenir au nuage";
-                etatMeteo = 2;
-            } else {
-                icone.innerHTML = "☁️";
-                icone.title = "Attrape-moi pour faire de la pluie ou de la neige !";
-                etatMeteo = 0;
-            }
+            if (etatMeteo === 0) { lancerAverse('💧', '#38bdf8'); icone.innerHTML = "🌧"; icone.title = "Cliquez pour faire tomber de la neige"; etatMeteo = 1; } 
+            else if (etatMeteo === 1) { lancerAverse('❄️', '#ffffff'); icone.innerHTML = "❄️"; icone.title = "Cliquez pour revenir au nuage"; etatMeteo = 2; } 
+            else { icone.innerHTML = "☁️"; icone.title = "Attrape-moi pour faire de la pluie ou de la neige !"; etatMeteo = 0; }
         }
 
         function lancerAverse(symbole, couleurTexte) {
             for (let i = 0; i < 35; i++) {
                 const drop = document.createElement('div');
-                drop.style.position = 'fixed';
-                drop.style.left = Math.random() * window.innerWidth + 'px';
-                drop.style.top = '-30px';
-                drop.style.fontSize = (Math.random() * 12 + 16) + 'px';
-                drop.style.color = couleurTexte;
-                drop.style.zIndex = '999';
-                drop.style.pointerEvents = 'none';
-                drop.innerHTML = symbole;
+                drop.style.position = 'fixed'; drop.style.left = Math.random() * window.innerWidth + 'px'; drop.style.top = '-30px';
+                drop.style.fontSize = (Math.random() * 12 + 16) + 'px'; drop.style.color = couleurTexte; drop.style.zIndex = '999'; drop.style.pointerEvents = 'none'; drop.innerHTML = symbole;
                 document.body.appendChild(drop);
-
-                const duree = Math.random() * 2000 + 1500;
-                const decalageX = (Math.random() - 0.5) * 80;
-
-                drop.animate([
-                    { transform: 'translateY(0px) translateX(0px)', opacity: 1 },
-                    { transform: `translateY(${window.innerHeight + 50}px) translateX(${decalageX}px)`, opacity: 0.3 }
-                ], {
-                    duration: duree,
-                    easing: 'linear'
-                });
-
+                const duree = Math.random() * 2000 + 1500; const decalageX = (Math.random() - 0.5) * 80;
+                drop.animate([{ transform: 'translateY(0px) translateX(0px)', opacity: 1 }, { transform: `translateY(${window.innerHeight + 50}px) translateX(${decalageX}px)`, opacity: 0.3 }], { duration: duree, easing: 'linear' });
                 setTimeout(() => drop.remove(), duree);
             }
         }
 
         function deplacerElementAleatoirement(idElement) {
-            const el = document.getElementById(idElement);
-            if (!el) return;
-            const x = Math.random() * (window.innerWidth - 80);
-            const y = Math.random() * (window.innerHeight - 150) + 50;
+            const el = document.getElementById(idElement); if (!el) return;
+            const x = Math.random() * (window.innerWidth - 80); const y = Math.random() * (window.innerHeight - 150) + 50;
             el.style.transform = `translate(${x}px, ${y}px)`;
         }
 
         setInterval(() => {
-            deplacerElementAleatoirement('coffre-magique');
-            deplacerElementAleatoirement('icone-info');
-            deplacerElementAleatoirement('icone-jour-nuit');
-            deplacerElementAleatoirement('icone-meteo');
-            deplacerElementAleatoirement('journal-volant');
+            deplacerElementAleatoirement('coffre-magique'); deplacerElementAleatoirement('icone-info');
+            deplacerElementAleatoirement('icone-jour-nuit'); deplacerElementAleatoirement('icone-meteo'); deplacerElementAleatoirement('journal-volant');
         }, 9000);
 
         window.onload = function() {
             ['coffre-magique', 'icone-info', 'icone-jour-nuit', 'icone-meteo', 'journal-volant'].forEach(id => {
                 const el = document.getElementById(id);
-                if(el) {
-                    el.style.left = (Math.random() * (window.innerWidth - 100)) + 'px';
-                    el.style.top = (Math.random() * (window.innerHeight - 150) + 50) + 'px';
-                }
+                if(el) { el.style.left = (Math.random() * (window.innerWidth - 100)) + 'px'; el.style.top = (Math.random() * (window.innerHeight - 150) + 50) + 'px'; }
             });
         };
 
-        // --- AMBIANCE SONORE : CHANTS D'OISEAUX SYNTHÉTIQUES ET NATURELS EN ALTERNANCE ---
-        let audioCtx = null;
-        let isPlaying = false;
-        let intervalSon = null;
-        let tourSynthetique = true;
-        let oiseauAudio = null;
-
-        // Échantillons d'oiseaux naturels (libres de droits)
-        const sonsOiseauxNaturels = [
-            'https://upload.wikimedia.org/wikipedia/commons/3/30/Nightingale_song.ogg',
-            'https://upload.wikimedia.org/wikipedia/commons/e/e4/Luscinia_megarhynchos_-_Thrush_Nightingale_XC189679.ogg'
-        ];
+        let audioCtx = null; let isPlaying = false; let intervalSon = null; let tourSynthetique = true; let oiseauAudio = null;
+        const sonsOiseauxNaturels = ['https://upload.wikimedia.org/wikipedia/commons/3/30/Nightingale_song.ogg', 'https://upload.wikimedia.org/wikipedia/commons/e/e4/Luscinia_megarhynchos_-_Thrush_Nightingale_XC189679.ogg'];
 
         function jouerChantSynthetique() {
             if (!audioCtx || !isPlaying) return;
-            const now = audioCtx.currentTime;
-            const osc = audioCtx.createOscillator();
-            const gain = audioCtx.createGain();
-            
-            osc.type = 'sine';
-            const f = 1700 + Math.random() * 800;
-            osc.frequency.setValueAtTime(f, now);
-            osc.frequency.linearRampToValueAtTime(f + 300, now + 0.12);
-            
-            // Volume baissé (doux et discret)
-            gain.gain.setValueAtTime(0.0005, now);
-            gain.gain.linearRampToValueAtTime(0.008, now + 0.03);
-            gain.gain.exponentialRampToValueAtTime(0.0001, now + 0.22);
-            
-            osc.connect(gain);
-            gain.connect(audioCtx.destination);
-            osc.start(now);
-            osc.stop(now + 0.22);
+            const now = audioCtx.currentTime; const osc = audioCtx.createOscillator(); const gain = audioCtx.createGain();
+            osc.type = 'sine'; const f = 1700 + Math.random() * 800;
+            osc.frequency.setValueAtTime(f, now); osc.frequency.linearRampToValueAtTime(f + 300, now + 0.12);
+            gain.gain.setValueAtTime(0.0005, now); gain.gain.linearRampToValueAtTime(0.008, now + 0.03); gain.gain.exponentialRampToValueAtTime(0.0001, now + 0.22);
+            osc.connect(gain); gain.connect(audioCtx.destination); osc.start(now); osc.stop(now + 0.22);
         }
 
         function jouerChantNaturel() {
             if (!isPlaying) return;
             try {
-                if (oiseauAudio) {
-                    oiseauAudio.pause();
-                    oiseauAudio.currentTime = 0;
-                }
+                if (oiseauAudio) { oiseauAudio.pause(); oiseauAudio.currentTime = 0; }
                 const srcUrl = sonsOiseauxNaturels[Math.floor(Math.random() * sonsOiseauxNaturels.length)];
-                oiseauAudio = new Audio(srcUrl);
-                oiseauAudio.volume = 0.08; // Volume modéré/doux
-                
-                oiseauAudio.play().then(() => {
-                    setTimeout(() => {
-                        if (oiseauAudio) oiseauAudio.pause();
-                    }, 2200);
-                }).catch(e => {
-                    jouerChantSynthetique();
-                });
-            } catch(e) {
-                jouerChantSynthetique();
-            }
+                oiseauAudio = new Audio(srcUrl); oiseauAudio.volume = 0.08;
+                oiseauAudio.play().then(() => { setTimeout(() => { if (oiseauAudio) oiseauAudio.pause(); }, 2200); }).catch(e => { jouerChantSynthetique(); });
+            } catch(e) { jouerChantSynthetique(); }
         }
 
         function alternerChantsOiseaux() {
             if (!isPlaying) return;
-            if (tourSynthetique) {
-                jouerChantSynthetique();
-                setTimeout(() => { if (isPlaying) jouerChantSynthetique(); }, 250);
-            } else {
-                jouerChantNaturel();
-            }
+            if (tourSynthetique) { jouerChantSynthetique(); setTimeout(() => { if (isPlaying) jouerChantSynthetique(); }, 250); } else { jouerChantNaturel(); }
             tourSynthetique = !tourSynthetique;
         }
 
@@ -780,57 +649,32 @@
             const btn = document.getElementById('btn-son');
             if (!isPlaying) {
                 try {
-                    if (!audioCtx) {
-                        audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-                    } else if (audioCtx.state === 'suspended') {
-                        audioCtx.resume();
-                    }
-                    isPlaying = true;
-                    btn.textContent = "🎶";
-                    btn.title = "Couper l'ambiance sonore";
-                    
-                    alternerChantsOiseaux();
-                    intervalSon = setInterval(() => {
-                        if (!isPlaying) return;
-                        alternerChantsOiseaux();
-                    }, 3500);
-                } catch(e) {
-                    console.log("Audio non autorisé sans interaction");
-                }
+                    if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+                    else if (audioCtx.state === 'suspended') audioCtx.resume();
+                    isPlaying = true; btn.textContent = "🎶"; btn.title = "Couper l'ambiance sonore";
+                    alternerChantsOiseaux(); intervalSon = setInterval(() => { if (isPlaying) alternerChantsOiseaux(); }, 3500);
+                } catch(e) { console.log("Audio non autorisé"); }
             } else {
                 isPlaying = false;
                 if (intervalSon) clearInterval(intervalSon);
-                if (oiseauAudio) {
-                    oiseauAudio.pause();
-                    oiseauAudio.currentTime = 0;
-                }
-                if (audioCtx && audioCtx.state === 'running') {
-                    audioCtx.suspend();
-                }
-                btn.textContent = "🕊️";
-                btn.title = "Activer l'ambiance sonore";
+                if (oiseauAudio) { oiseauAudio.pause(); oiseauAudio.currentTime = 0; }
+                if (audioCtx && audioCtx.state === 'running') audioCtx.suspend();
+                btn.textContent = "🕊️"; btn.title = "Activer l'ambiance sonore";
             }
         }
 
         const coffre = document.getElementById('coffre-magique');
         let cX = 100, cY = 100;
-        function moveCoffre() {
-            cX = Math.random()*(window.innerWidth-100); cY = Math.random()*(window.innerHeight-100);
-            coffre.style.left = cX+'px'; coffre.style.top = cY+'px';
-        }
+        function moveCoffre() { cX = Math.random()*(window.innerWidth-100); cY = Math.random()*(window.innerHeight-100); coffre.style.left = cX+'px'; coffre.style.top = cY+'px'; }
         setInterval(moveCoffre, 4500); moveCoffre();
 
         function exploserCadeau() {
             const notif = document.getElementById('notification-cadeau');
-            notif.classList.add('show');
-            setTimeout(() => { notif.classList.remove('show'); }, 3000);
-
+            notif.classList.add('show'); setTimeout(() => { notif.classList.remove('show'); }, 3000);
             for(let i=0; i<20; i++) {
                 const p = document.createElement('div');
-                p.style.position = 'fixed'; p.style.left = cX+'px'; p.style.top = cY+'px';
-                p.innerHTML = ['🌸', '✨', '🌻', '🌟', '❤️'][Math.floor(Math.random()*5)];
-                document.body.appendChild(p);
-                const a = Math.random()*Math.PI*2, d = Math.random()*150+50;
+                p.style.position = 'fixed'; p.style.left = cX+'px'; p.style.top = cY+'px'; p.innerHTML = ['🌸', '✨', '🌻', '🌟', '❤️'][Math.floor(Math.random()*5)];
+                document.body.appendChild(p); const a = Math.random()*Math.PI*2, d = Math.random()*150+50;
                 p.animate([{transform:'scale(1)', opacity:1}, {transform:`translate(${Math.cos(a)*d}px, ${Math.sin(a)*d}px) scale(0)`, opacity:0}], {duration:1000});
                 setTimeout(() => p.remove(), 1000);
             }
