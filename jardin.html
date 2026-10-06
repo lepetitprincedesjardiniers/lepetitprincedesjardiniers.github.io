@@ -624,7 +624,6 @@
             const msgBrut = ann.message || "";
             rappel.innerHTML = `<strong>Graine de ${escapeHtml(ann.nom || "Anonyme")} :</strong> “${escapeHtml(masquerCoordonnees(msgBrut).substring(0, 90))}${msgBrut.length > 90 ? '...' : ''}”`;
 
-            // Reset par défaut sur le public
             document.getElementById('rep_mode').value = "public";
             changerModeReponse("public");
             document.getElementById('formReponse').reset();
@@ -668,20 +667,22 @@
             btn.disabled = true;
 
             const mode = document.getElementById('rep_mode').value;
-            const params = new URLSearchParams();
-            params.append('token', TOKEN_SECRET);
-            params.append('action', mode === 'prive' ? 'prive' : 'repondre');
-            params.append('ref_id', document.getElementById('rep_id_annonce').value);
-            params.append('row_index', document.getElementById('rep_row_index').value);
-            params.append('nom', document.getElementById('rep_nom').value);
-            params.append('message', document.getElementById('rep_message').value);
+            
+            // CORRECTION INTÉGRÉE : Passage des paramètres via l'URL pour contourner la redirection Google Apps Script
+            const url = new URL(WEB_APP_URL);
+            url.searchParams.append('token', TOKEN_SECRET);
+            url.searchParams.append('action', mode === 'prive' ? 'prive' : 'repondre');
+            url.searchParams.append('ref_id', document.getElementById('rep_id_annonce').value);
+            url.searchParams.append('row_index', document.getElementById('rep_row_index').value);
+            url.searchParams.append('nom', document.getElementById('rep_nom').value);
+            url.searchParams.append('message', document.getElementById('rep_message').value);
             
             if (mode === 'prive') {
-                params.append('emailExpediteur', document.getElementById('rep_email_expediteur').value);
+                url.searchParams.append('emailExpediteur', document.getElementById('rep_email_expediteur').value);
             }
 
             try {
-                const res = await fetch(WEB_APP_URL, { method: 'POST', body: params });
+                const res = await fetch(url.toString(), { method: 'POST' });
                 const data = await res.json().catch(() => ({}));
 
                 btn.innerText = mode === 'prive' ? "E-mail privé envoyé ! 📨" : "Réponse publiée ! 🌸";
