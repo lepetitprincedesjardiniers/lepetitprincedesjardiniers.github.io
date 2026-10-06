@@ -117,7 +117,7 @@
             100% { transform: translateX(-50%); }
         }
 
-        /* Soleil central supérieur (Inversé : mène au formulaire) */
+        /* Soleil central supérieur */
         .soleil-cadre { width: 150px; height: 150px; background: radial-gradient(circle, #ffeb3b 0%, #ff9800 100%); border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 0 30px rgba(255,152,0,0.6); margin: 25px auto; position: relative; z-index: 20; transition: 0.6s; text-decoration: none; border: 2px solid rgba(255,255,255,0.5); }
         .soleil-cadre h1 { font-size: 0.85em; color: #222; line-height: 1.2; margin: 0; padding: 10px; font-weight: bold; }
         .soleil-cadre:hover { box-shadow: 0 0 50px #fff; transform: scale(1.08) rotate(360deg); }
@@ -163,7 +163,7 @@
             flex: 0 0 auto;
         }
 
-        /* Terre animée (Inversée : mène au Jardin) */
+        /* Terre animée */
         .terre-don { 
             width: 320px; height: 320px; border-radius: 50%; 
             background-image: url('https://upload.wikimedia.org/wikipedia/commons/thumb/c/c3/Solarsystemscope_texture_2k_earth_daymap.jpg/1200px-Solarsystemscope_texture_2k_earth_daymap.jpg'); 
@@ -176,7 +176,7 @@
         .texte-semis { font-family: 'Georgia', serif; font-style: italic; font-weight: bold; text-shadow: 2px 2px 12px black; font-size: 1.15em; padding: 25px; text-align: center; color: #fff; }
         @keyframes rotationTerre { from { background-position: 0 0; } to { background-position: 1000px 0; } }
 
-        /* --- BLOCS UNIFORMES --- */
+        /* --- BLOCS UNIFORMES AVEC COULEURS DE BORDURES IDENTIQUES À JARDIN.HTML --- */
         .rubrique-carte { 
             background: var(--card-bg); backdrop-filter: blur(12px); 
             border-radius: 30px; padding: 22px; width: 100%; height: 210px; box-sizing: border-box; 
@@ -184,19 +184,24 @@
             box-shadow: 0 8px 32px rgba(0,0,0,0.15); text-align: center;
         }
 
-        .style-tresor { border: 2px solid rgba(0, 206, 209, 0.6); }
-        .style-tresor:hover { transform: translateY(-5px); border-color: #00ced1; background: rgba(0, 206, 209, 0.2); box-shadow: 0 12px 40px rgba(0,206,209,0.3); }
+        /* Trésor Public : #1E90FF (comme sur jardin.html) */
+        .style-tresor { border: 2px solid #1E90FF; }
+        .style-tresor:hover { transform: translateY(-5px); border-color: #1E90FF; background: rgba(30, 144, 255, 0.2); box-shadow: 0 12px 40px rgba(30, 144, 255, 0.35); }
 
-        .style-urgence { border: 2px solid rgba(255, 105, 180, 0.6); }
-        .style-urgence:hover { transform: translateY(-5px); border-color: #ff69b4; background: rgba(255, 105, 180, 0.2); box-shadow: 0 12px 40px rgba(255,105,180,0.3); }
+        /* Aide & Harmonie : #ff69b4 (comme sur jardin.html) */
+        .style-urgence { border: 2px solid #ff69b4; }
+        .style-urgence:hover { transform: translateY(-5px); border-color: #ff69b4; background: rgba(255, 105, 180, 0.2); box-shadow: 0 12px 40px rgba(255,105,180,0.35); }
 
-        .style-regulation { border: 2px solid rgba(147, 112, 219, 0.6); }
-        .style-regulation:hover { transform: translateY(-5px); border-color: #9370DB; background: rgba(147, 112, 219, 0.2); box-shadow: 0 12px 40px rgba(147,112,219,0.3); }
+        /* Vie Citoyenne / Régulation : #9370DB (comme sur jardin.html) */
+        .style-regulation { border: 2px solid #9370DB; }
+        .style-regulation:hover { transform: translateY(-5px); border-color: #9370DB; background: rgba(147, 112, 219, 0.2); box-shadow: 0 12px 40px rgba(147,112,219,0.35); }
 
-        .style-savoir { border: 2px solid rgba(255, 193, 7, 0.6); }
-        .style-savoir:hover { transform: translateY(-5px); border-color: #ffc107; background: rgba(255, 193, 7, 0.2); box-shadow: 0 12px 40px rgba(255,193,7,0.3); }
+        /* Savoirs : #ffc107 (comme sur jardin.html) */
+        .style-savoir { border: 2px solid #ffc107; }
+        .style-savoir:hover { transform: translateY(-5px); border-color: #ffc107; background: rgba(255, 193, 7, 0.2); box-shadow: 0 12px 40px rgba(255,193,7,0.35); }
 
         .phrases-impots { font-size: 0.78em; color: var(--text-color); opacity: 0.9; font-weight: bold; margin: 3px 0; line-height: 1.3; }
+        .texte-blanc { color: #ffffff !important; }
         .liste-exemples-discrets { font-size: 0.68em; color: var(--text-color); opacity: 0.7; font-style: italic; list-style: none; padding: 0; margin: 4px 0 0 0; border-top: 1px dashed rgba(255,255,255,0.2); padding-top: 4px; }
 
         .star { position: fixed; color: white; z-index: -1; opacity: var(--star-opacity); animation: twinkle var(--duration) infinite ease-in-out, moveStar var(--move-duration) linear infinite; transition: opacity 0.5s; }
@@ -367,7 +372,7 @@
         </div>
     </div>
 
-    <!-- Soleil central supérieur (Inversé : mène vers le formulaire) -->
+    <!-- Soleil central supérieur -->
     <a href="formulaire.html" class="soleil-cadre"><h1>ESPACE DU SEMIS DE DON ENTIER</h1></a>
 
     <!-- PAYSAGE COSMOS -->
@@ -397,7 +402,7 @@
             </a>
         </div>
 
-        <!-- CENTRE : La Terre animée (Inversée : mène vers le Jardin) -->
+        <!-- CENTRE : La Terre animée -->
         <div class="centre-terre-cosmos">
             <a href="jardin.html" class="terre-don">
                 <div class="texte-semis"><b>Le Jardin Public des Fraternels</b></div>
@@ -409,7 +414,7 @@
             <a href="jardin.html?cat=REGULATION" class="rubrique-carte style-regulation flotte-c">
                 <div style="padding-top: 6px;">
                     <h3 style="margin:0; font-size: 1em;">⚖️ Vie citoyenne</h3>
-                    <div class="phrases-impots" style="margin-top: 6px;">Expose ta sincérité : la citoyenneté participative y répond avec délicatesse.</div>
+                    <div class="phrases-impots texte-blanc" style="margin-top: 6px;">Aide sociale rapprochée, médiation entres camarades & Paix citoyenne</div>
                 </div>
                 <div class="liste-exemples-discrets">
                     Ex : dialogues, chartes, régulation et paix de la cité.
@@ -430,20 +435,6 @@
 
     </div>
 
-    <!-- RUBRIQUE RÉGULATION (CASE EN BAS) -->
-    <div style="display: flex; justify-content: center; max-width: 340px; margin: 10px auto 25px auto; padding: 0 20px;">
-        <a href="jardin.html?cat=REGULATION" class="rubrique-carte style-regulation flotte-c">
-            <div style="padding-top: 6px;">
-                <h3 style="margin:0; font-size: 1em;">⚖️ Régulation</h3>
-                <p style="font-size: 0.78em; font-weight: bold; margin: 4px 0 2px 0;">Aide sociale rapprochée</p>
-                <div class="phrases-impots">Médiation entre voisins & paix citoyenne</div>
-            </div>
-            <div class="liste-exemples-discrets">
-                Ex : gestion de conflits de voisinage, conciliation citoyenne, écoute de proximité.
-            </div>
-        </a>
-    </div>
-
     <!-- Bandeau défilant bas de page -->
     <div class="bandeau-defilant">
         <div class="bandeau-contenu">
@@ -453,7 +444,7 @@
     </div>
 
     <div id="coffre-magique" onclick="exploserCadeau()" title="Coffre magique">🎁</div>
-    <a href="ministere-de-lhonnetete.html" class="journal-volant" id="journal-volant" title="Journal de bord du #petitploucdesjardiniers">📖</a>
+    <a href="journal.html" class="journal-volant" id="journal-volant" title="Journal de bord du #petitploucdesjardiniers">📖</a>
 
     <footer>
         <a href="#" class="lien-copyright" onclick="ouvrirModalInfo(); return false;">© PINON 2000 — Tous droits de partage et d'humanité réservés</a><br>
@@ -532,7 +523,6 @@
             });
         }
 
-        // Réduction du nombre d'émojis flottants
         for (let i = 0; i < 12; i++) {
             createEmoji();
         }
@@ -717,62 +707,106 @@
             });
         };
 
-        // Ambiance sonore Web Audio API + fichier oiseaux.mp3 aléatoire
+        // --- AMBIANCE SONORE : CHANTS D'OISEAUX SYNTHÉTIQUES ET NATURELS EN ALTERNANCE ---
         let audioCtx = null;
         let isPlaying = false;
         let intervalSon = null;
-        const audioOiseauxMp3 = new Audio('oiseaux.mp3');
+        let tourSynthetique = true;
+        let oiseauAudio = null;
 
-        function jouerSonAleatoire() {
-            if (!isPlaying) return;
+        // Échantillons d'oiseaux naturels (libres de droits)
+        const sonsOiseauxNaturels = [
+            'https://upload.wikimedia.org/wikipedia/commons/3/30/Nightingale_song.ogg',
+            'https://upload.wikimedia.org/wikipedia/commons/e/e4/Luscinia_megarhynchos_-_Thrush_Nightingale_XC189679.ogg'
+        ];
 
-            // 35% de chance de jouer le fichier audio mp3
-            if (Math.random() < 0.35) {
-                audioOiseauxMp3.currentTime = 0;
-                audioOiseauxMp3.play().catch(e => console.log("Audio oiseaux.mp3 non chargé ou bloqué :", e));
-                return;
-            }
-
-            // Synthèse sonore Web Audio existante
-            if (!audioCtx) return;
+        function jouerChantSynthetique() {
+            if (!audioCtx || !isPlaying) return;
             const now = audioCtx.currentTime;
             const osc = audioCtx.createOscillator();
             const gain = audioCtx.createGain();
-            osc.type = 'sine';
-            const f = 1500 + Math.random() * 1000;
-            osc.frequency.setValueAtTime(f, now);
-            osc.frequency.linearRampToValueAtTime(f + 300, now + 0.1);
             
-            gain.gain.setValueAtTime(0.001, now);
-            gain.gain.linearRampToValueAtTime(0.02, now + 0.02);
-            gain.gain.exponentialRampToValueAtTime(0.0001, now + 0.2);
+            osc.type = 'sine';
+            const f = 1700 + Math.random() * 800;
+            osc.frequency.setValueAtTime(f, now);
+            osc.frequency.linearRampToValueAtTime(f + 300, now + 0.12);
+            
+            // Volume baissé (doux et discret)
+            gain.gain.setValueAtTime(0.0005, now);
+            gain.gain.linearRampToValueAtTime(0.008, now + 0.03);
+            gain.gain.exponentialRampToValueAtTime(0.0001, now + 0.22);
             
             osc.connect(gain);
             gain.connect(audioCtx.destination);
             osc.start(now);
-            osc.stop(now + 0.2);
+            osc.stop(now + 0.22);
+        }
+
+        function jouerChantNaturel() {
+            if (!isPlaying) return;
+            try {
+                if (oiseauAudio) {
+                    oiseauAudio.pause();
+                    oiseauAudio.currentTime = 0;
+                }
+                const srcUrl = sonsOiseauxNaturels[Math.floor(Math.random() * sonsOiseauxNaturels.length)];
+                oiseauAudio = new Audio(srcUrl);
+                oiseauAudio.volume = 0.08; // Volume modéré/doux
+                
+                oiseauAudio.play().then(() => {
+                    setTimeout(() => {
+                        if (oiseauAudio) oiseauAudio.pause();
+                    }, 2200);
+                }).catch(e => {
+                    jouerChantSynthetique();
+                });
+            } catch(e) {
+                jouerChantSynthetique();
+            }
+        }
+
+        function alternerChantsOiseaux() {
+            if (!isPlaying) return;
+            if (tourSynthetique) {
+                jouerChantSynthetique();
+                setTimeout(() => { if (isPlaying) jouerChantSynthetique(); }, 250);
+            } else {
+                jouerChantNaturel();
+            }
+            tourSynthetique = !tourSynthetique;
         }
 
         function toggleSon() {
             const btn = document.getElementById('btn-son');
             if (!isPlaying) {
                 try {
-                    audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+                    if (!audioCtx) {
+                        audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+                    } else if (audioCtx.state === 'suspended') {
+                        audioCtx.resume();
+                    }
                     isPlaying = true;
                     btn.textContent = "🎶";
                     btn.title = "Couper l'ambiance sonore";
                     
+                    alternerChantsOiseaux();
                     intervalSon = setInterval(() => {
                         if (!isPlaying) return;
-                        jouerSonAleatoire();
-                    }, 2000);
+                        alternerChantsOiseaux();
+                    }, 3500);
                 } catch(e) {
                     console.log("Audio non autorisé sans interaction");
                 }
             } else {
                 isPlaying = false;
                 if (intervalSon) clearInterval(intervalSon);
-                if (audioCtx) audioCtx.close();
+                if (oiseauAudio) {
+                    oiseauAudio.pause();
+                    oiseauAudio.currentTime = 0;
+                }
+                if (audioCtx && audioCtx.state === 'running') {
+                    audioCtx.suspend();
+                }
                 btn.textContent = "🕊️";
                 btn.title = "Activer l'ambiance sonore";
             }
