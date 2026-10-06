@@ -129,22 +129,20 @@
 
     <div class="form-container">
         <form id="monFormulaire" onsubmit="envoyerDon(event)">
-            <!-- Jeton de sécurité pour l'API Google Apps Script -->
             <input type="hidden" name="token" value="MonJardinSecuritToken2026">
 
-            <!-- Champ Anti-Spam (honeypot caché) -->
             <div style="display:none;" aria-hidden="true">
                 <input type="text" name="website_hp" tabindex="-1" autocomplete="off">
             </div>
 
             <div class="form-group">
                 <label>Identité amoureuse</label>
-                <input type="text" name="nom" placeholder="Ton Prénom de coeur / Pseudo (Enfant, Pro, Citoyen...)" required>
+                <input type="text" name="nom" placeholder="Ton Prénom de coeur / Pseudo..." required>
             </div>
 
             <div class="form-group">
                 <label>Ton E-mail</label>
-                <input type="email" name="email_auteur" placeholder="tonemail@exemple.com (ton e-mail sera anonymisé, n'apparaîtra pas sur le site)">
+                <input type="email" name="email_auteur" placeholder="tonemail@exemple.com">
                 <span class="sous-label">Permet de recevoir directement et anonymement les réponses privées par e-mail.</span>
             </div>
 
@@ -153,100 +151,42 @@
                 <div style="display: flex; gap: 10px; margin-bottom: 5px;">
                     <select name="pays_select" id="pays_select" onchange="checkOther(this, 'extra_pays')" style="flex: 1.5;" required>
                         <option value="" selected>-- Pays / Royaume --</option>
-                        <optgroup label="✨ Territoires de l'Imaginaire">
-                            <option value="B612">L'astéroïde B 612</option>
-                            <option value="Merveilles">Le Pays des Merveilles</option>
-                            <option value="Utopie">L'Archipel d'Utopie</option>
-                            <option value="Gentillesse">Pays de la grande gentillesse</option>
-                            <option value="Nulle-Part">Le Pays de Nulle-Part</option>
-                        </optgroup>
-                        <optgroup label="🌍 Europe">
-                            <option value="France">France (et Outre-mer)</option>
-                            <option value="Belgique">Belgique</option>
-                            <option value="Suisse">Suisse</option>
-                            <option value="Luxembourg">Luxembourg</option>
-                            <option value="Monaco">Monaco</option>
-                            <option value="Allemagne">Allemagne</option>
-                            <option value="Italie">Italie</option>
-                            <option value="Espagne">Espagne</option>
-                            <option value="Portugal">Portugal</option>
-                            <option value="Royaume-Uni">Royaume-Uni</option>
-                        </optgroup>
-                        <optgroup label="❄️ Pays Nordiques">
-                            <option value="Suede">Suède</option>
-                            <option value="Norvege">Norvège</option>
-                            <option value="Danemark">Danemark</option>
-                            <option value="Finlande">Finlande</option>
-                            <option value="Islande">Islande</option>
-                        </optgroup>
-                        <optgroup label="🔍 Petits Pays & Territoires">
-                            <option value="Andorre">Andorre</option>
-                            <option value="Liechtenstein">Liechtenstein</option>
-                            <option value="Malte">Malte</option>
-                            <option value="Saint-Marin">Saint-Marin</option>
-                            <option value="Vatican">Vatican</option>
-                            <option value="Guyane">Guyane Française</option>
-                            <option value="Polynesie">Polynésie</option>
-                            <option value="Nouvelle-Caledonie">Nouvelle-Calédonie</option>
-                        </optgroup>
-                        <optgroup label="🌍 Afrique">
-                            <option value="Algérie">Algérie</option>
-                            <option value="Maroc">Maroc</option>
-                            <option value="Sénégal">Sénégal</option>
-                            <option value="Tunisie">Tunisie</option>
-                            <option value="Côte d'Ivoire">Côte d'Ivoire</option>
-                            <option value="Congo">Congo</option>
-                            <option value="Mali">Mali</option>
-                            <option value="Madagascar">Madagascar</option>
-                        </optgroup>
-                        <optgroup label="🌏 Asie">
-                            <option value="Chine">Chine</option>
-                            <option value="Japon">Japon</option>
-                            <option value="Inde">Inde</option>
-                            <option value="Vietnam">Vietnam</option>
-                            <option value="Liban">Liban</option>
-                        </optgroup>
-                        <optgroup label="🌍 Amériques & Océanie">
-                            <option value="Canada">Canada / Québec</option>
-                            <option value="Haïti">Haïti</option>
-                            <option value="USA">États-Unis</option>
-                            <option value="Brésil">Brésil</option>
-                            <option value="Argentine">Argentine</option>
-                            <option value="Australie">Australie</option>
-                        </optgroup>
+                        <option value="France">France (et Outre-mer)</option>
+                        <option value="Belgique">Belgique</option>
+                        <option value="Suisse">Suisse</option>
+                        <option value="Luxembourg">Luxembourg</option>
+                        <option value="Canada">Canada / Québec</option>
                         <option value="AUTRE_PAYS">🌐 Un pays secret...</option>
                     </select>
                 </div>
                 <div id="extra_pays" class="extra-field">
                     <input type="text" name="pays_precision" placeholder="Nom de ton pays secret...">
                 </div>
-                <input type="text" name="localisation" placeholder="Ville, Département ou &quot;En ligne / À distance&quot;" required>
+                <input type="text" name="localisation" placeholder="Ville, Département..." required>
             </div>
 
             <div class="form-group">
                 <label>Destination du semis</label>
                 <select name="type" id="main_cat" onchange="updateSubCats(); checkOther(this, 'extra_cat');" required>
                     <option value="">-- Domaine d'action --</option>
-                    <option value="SAVOIR">💡 SAVOIRS (Apprendre, transmettre, partager un talent)</option>
-                    <option value="VIE">🏠 VIE CITOYENNE (De personne à personne : repas, objets, logement, covoiturage)</option>
-                    <option value="AIDE">💖 AIDE & HARMONIE (Urgence & Détresse : secours, écoute, aînés, garde)</option>
-                    <option value="REGULATION">⚖ RÉGULATION (Aide sociale rapprochée, médiation, décisions collectives)</option>
-                    <option value="IMPOT">📜 TRÉSOR PUBLIC (Pour la collectivité : réseaux, voirie, chantiers, parcs)</option>
+                    <option value="SAVOIR">💡 SAVOIRS (Apprendre, transmettre)</option>
+                    <option value="VIE">🏠 VIE CITOYENNE (Repas, objets, logement)</option>
+                    <option value="AIDE">💖 AIDE & HARMONIE (Secours, écoute)</option>
+                    <option value="REGULATION">⚖ RÉGULATION (Médiation, aide sociale)</option>
+                    <option value="IMPOT">📜 TRÉSOR PUBLIC (Réseaux, voirie, parcs)</option>
                     <option value="AUTRE_CAT">🌈 AUTRE DOMAINE...</option>
                 </select>
 
                 <div id="extra_cat" class="extra-field">
-                    <input type="text" name="cat_precision" placeholder="Précise ton domaine d'action sur mesure...">
+                    <input type="text" name="cat_precision" placeholder="Précise ton domaine d'action...">
                 </div>
-
-                <a class="discreet-help" onclick="toggleGuide(event)">❓ Précision ? Ouvrir le guide des semailles</a>
             </div>
 
             <div id="sub_cat_group" class="form-group" style="display:none;">
                 <label>Précision de la graine</label>
                 <select name="sousType" id="sub_cat" onchange="checkOther(this, 'extra_sub')"></select>
                 <div id="extra_sub" class="extra-field">
-                    <input type="text" name="sub_precision" placeholder="Décris ta spécialité précise...">
+                    <input type="text" name="sub_precision" placeholder="Décris ta spécialité...">
                 </div>
             </div>
 
@@ -258,49 +198,32 @@
                     <option value="rayon 50 km">rayon 50 km</option>
                     <option value="national">national</option>
                     <option value="international">international</option>
-                    <option value="extra terrestre">extra terrestre</option>
                     <option value="universel">universel</option>
-                    <option value="infinie">infinie</option>
                 </select>
             </div>
 
             <div class="form-group">
                 <label>Cycle de Vie (Durée de validité)</label>
                 <select name="duree_validite" onchange="checkOther(this, 'extra_cycle')" required>
-                    <option value="1">🌱 Un jour (Une herbe sauvage)</option>
-                    <option value="7">🌸 Une semaine (Une fleur des champs)</option>
-                    <option value="30" selected>🌿 Un mois (Un bel arbuste)</option>
-                    <option value="90">🌳 Trois mois (Un chêne robuste)</option>
-                    <option value="365">🌲 Un an (Une forêt éternelle)</option>
+                    <option value="1">🌱 Un jour</option>
+                    <option value="7">🌸 Une semaine</option>
+                    <option value="30" selected>🌿 Un mois</option>
+                    <option value="90">🌳 Trois mois</option>
+                    <option value="365">🌲 Un an</option>
                     <option value="AUTRE">Autres durées...</option>
                 </select>
                 <div id="extra_cycle" class="extra-field">
-                    <input type="text" name="cycle_precision" id="input_cycle_precision" placeholder="Nombre de jours uniquement (ex: 15)">
+                    <input type="text" name="cycle_precision" id="input_cycle_precision" placeholder="Nombre de jours (ex: 15)">
                 </div>
             </div>
 
             <div class="form-group">
                 <label>Logistique & Acheminement</label>
-                <span class="sous-label">Comment le don voyage-t-il ?</span>
                 <select name="logistique" onchange="checkOther(this, 'extra_log')" required>
-                    <optgroup label="🤝 Humain & Proximité">
-                        <option value="Main Propre">Remise en main propre (Lieu public)</option>
-                        <option value="Moi-même">J'assure le transport moi-même</option>
-                        <option value="Récupérer">À récupérer sur place</option>
-                        <option value="Covoit">Covoiturage humain (Je t'emmène)</option>
-                        <option value="AUTRE">autres</option>
-                    </optgroup>
-                    <optgroup label="🚚 Expédition & Route">
-                        <option value="Relais">Point Relais</option>
-                        <option value="Poste">Courrier</option>
-                        <option value="Colis-voiturage">Colis-voiturage (Via un voyageur)</option>
-                        <option value="Transporteur">Fret Camion / Logistique lourde</option>
-                    </optgroup>
-                    <optgroup label="🚀 Immatériel">
-                        <option value="Numérique">Transfert Numérique / Visio</option>
-                        <option value="Téléphone">Appel téléphonique / Soutien oral</option>
-                        <option value="Pensée">Ondes de fraternité</option>
-                    </optgroup>
+                    <option value="Main Propre">Remise en main propre</option>
+                    <option value="Moi-même">Transport assuré par mes soins</option>
+                    <option value="Numérique">Transfert Numérique / Visio</option>
+                    <option value="AUTRE">autres</option>
                 </select>
                 <div id="extra_log" class="extra-field">
                     <input type="text" name="log_precision" placeholder="Détaillez votre option logistique...">
@@ -309,19 +232,7 @@
 
             <div class="form-group">
                 <label>Description du Don amoureux</label>
-               <textarea name="message" placeholder="Ici, on sème des graines de générosité pour récolter de l'altruisme. Le système est conçu pour transformer des métiers, des objets et des talents en actes de fraternité. Tout s'offre sans compter : c'est la richesse du don qui crée la paix.
-Cadeaux entiers, sans détour ; cadeaux honnêtes, sans demande de retour.
-
-Demander un service est un don en soi, car cela permet à l'autre de cultiver sa propre générosité.
-Attention : zone de gratuité absolue pour un cadeau réellement efficace.
-
-Il s'agit d'un site de mise en relation : aucune donnée commerciale n'est exploitée et aucune personne n'est fichée.
-Les annonces s'effacent automatiquement après la durée de validité choisie. Afin de garantir un espace sain et transparent, les annonces ambiguës ou hors de l'esprit de gentillesse et de gratuité absolue pourront voir leur durée raccourcie par « Le petit plouc des jardiniers ».
-
-La meilleure justice est encore le pardon.
-Regardez la fraternité s'épanouir au gré des dons du monde entier...
-
-Les Graines Semées au Jardin : chaque don est une fleur qui ne se fane jamais." required></textarea>
+               <textarea name="message" placeholder="Ici, on sème des graines de générosité..." required></textarea>
             </div>
 
             <button type="submit" class="btn-envoyer" id="btnTexte">ENGENDRER LA FRATERNITÉ UNIVERSELLE</button>
@@ -334,13 +245,14 @@ Les Graines Semées au Jardin : chaque don est une fleur qui ne se fane jamais."
         </div>
         <div>
             <a href="transition-externe.html" class="journal-footer-link">
-                📰&nbsp;&nbsp;journal de bord du #petitploucdesjardiniers, réflexions de l'auteur du site[cite: 5].
+                📰&nbsp;&nbsp;journal de bord du #petitploucdesjardiniers[cite: 5].
             </a>
         </div>
     </footer>
 
     <script>
-    const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbymicN9vLw30Otxbfw9UUCl7Bqs9Kq6ZHlBkm-9xktyhw7zLTFh-U-hLAewuDrqQVpoAA/exec";
+    // URL mise à jour avec ton nouveau déploiement
+    const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbxnut45uaiH_GhVoNQ4jYzw53thmlc-KHOwhvYfl23Owfh2iyRoT1DBAAeFDepiQCo2/exec";
 
     function toggleGuide(e) {
         e.stopPropagation();
@@ -354,11 +266,11 @@ Les Graines Semées au Jardin : chaque don est une fleur qui ne se fane jamais."
     function googleTranslateElementInit() { new google.translate.TranslateElement({pageLanguage: 'fr'}, 'google_translate_element'); }
 
     const tree = {
-        "SAVOIR": ["Soutien scolaire & cours", "Art, artisanat & musique", "Mentorat pro & compétences techniques", "Savoir-faire du quotidien", "AUTRE_SUB", "Autres interprétations"],
-        "VIE": ["Repas, graines & eau", "Prêt d'objets, outils & équipement", "Accueil, hébergement & covoiturage", "Loisirs & activités partagées", "AUTRE_SUB", "Autres recommandations"],
-        "AIDE": ["Secours immédiat & petite urgence", "Écoute, présence & soutien aux aînés", "Garde d'enfants & soutien familial", "Soin des animaux & aide à la maison", "AUTRE_SUB", "Autres merveilles"],
-        "REGULATION": ["Aide aux démarches (Aide sociale rapprochée)", "Médiation de voisinage & paix citoyenne", "Organisation d'assemblées & conseils citoyens", "AUTRE_SUB", "Autres conciliations"],
-        "IMPOT": ["Entretien des réseaux vitaux (eau, énergie)", "Voirie & chantiers participatifs", "Espaces verts, forêts & parcs publics", "AUTRE_SUB", "Autres contributions"]
+        "SAVOIR": ["Soutien scolaire & cours", "Art, artisanat & musique", "Mentorat pro & compétences techniques", "Savoir-faire du quotidien", "AUTRE_SUB"],
+        "VIE": ["Repas, graines & eau", "Prêt d'objets, outils & équipement", "Accueil, hébergement & covoiturage", "Loisirs & activités partagées", "AUTRE_SUB"],
+        "AIDE": ["Secours immédiat & petite urgence", "Écoute, présence & soutien aux aînés", "Garde d'enfants & soutien familial", "Soin des animaux & aide à la maison", "AUTRE_SUB"],
+        "REGULATION": ["Aide aux démarches", "Médiation de voisinage & paix citoyenne", "Organisation d'assemblées & conseils citoyens", "AUTRE_SUB"],
+        "IMPOT": ["Entretien des réseaux vitaux", "Voirie & chantiers participatifs", "Espaces verts, forêts & parcs publics", "AUTRE_SUB"]
     };
 
     function updateSubCats() {
@@ -389,21 +301,6 @@ Les Graines Semées au Jardin : chaque don est une fleur qui ne se fane jamais."
 
     function envoyerDon(event) {
         event.preventDefault();
-
-        // Vérification de la durée personnalisée (chiffres uniquement)
-        const selectCycle = document.querySelector('select[name="duree_validite"]');
-        if (selectCycle && selectCycle.value === "AUTRE") {
-            const inputCyclePrecision = document.getElementById('input_cycle_precision');
-            const valeurSaisie = inputCyclePrecision.value.trim();
-            const regexChiffresSeulement = /^\d+$/;
-            
-            if (!regexChiffresSeulement.test(valeurSaisie)) {
-                alert("⚠️ Pour la durée personnalisée, veuillez indiquer un nombre en jours uniquement (chiffres seulement, sans lettres).");
-                inputCyclePrecision.focus();
-                return;
-            }
-        }
-
         const btn = document.getElementById('btnTexte');
         btn.innerText = "Semailles en cours... 🌱";
         btn.disabled = true;
@@ -415,15 +312,6 @@ Les Graines Semées au Jardin : chaque don est une fleur qui ne se fane jamais."
         .then(() => { window.location.href = "merci_annonce.html"; })
         .catch(() => { window.location.href = "merci_annonce.html"; });
     }
-
-    window.addEventListener('DOMContentLoaded', () => {
-        const urlParams = new URLSearchParams(window.location.search);
-        const catParam = urlParams.get('cat');
-        if (catParam) {
-            const selectCat = document.getElementById('main_cat');
-            if (selectCat) { selectCat.value = catParam.toUpperCase(); updateSubCats(); }
-        }
-    });
     </script>
     <script src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
 </body>
