@@ -3,316 +3,804 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Semer un Don - Le Petit Prince des Jardiniers</title>
-    <meta name="description" content="Semez une graine de générosité ! Offrez un don, un service, un savoir ou un objet sur La Fraternité du Palais Nature pour cultiver l'altruisme au quotidien." />
+    <title>Le Jardin de la Fraternité - Registre</title>
+    <meta name="description" content="Découvrez le registre du Jardin de la Fraternité : partagez vos dons, talents, savoirs et participez à l'élan de solidarité.">
     <style>
-        body { font-family: 'Comic Sans MS', cursive; text-align: center; margin: 0; padding: 0; background-color: #FFFF00; color: #000080; overflow-x: hidden; min-height: 100vh; }
-        #google_translate_element { position: absolute; top: 5px; left: 5px; z-index: 1000; opacity: 0.7; transform: scale(0.8); }
+        body { font-family: 'Comic Sans MS', cursive; text-align: center; margin: 0; padding: 0; background-color: #FFFF00; color: #000080; min-height: 100vh; padding-bottom: 80px; transition: background 0.3s, color 0.3s; }
+        .top-bar { position: relative; width: 100%; min-height: 50px; background: rgba(255,255,255,0.3); padding: 5px 0; display: flex; justify-content: center; align-items: center; }
+        #google_translate_element { position: absolute; left: 10px; top: 10px; z-index: 2000; transform: scale(0.85); transform-origin: top left; }
 
-        .menu-table { margin: 20px auto 5px auto; border-radius: 10px; background-color: #008080; border-collapse: collapse; margin-left: auto; margin-right: auto;}
-        .menu-table td { padding: 10px 15px; border: 1px solid #FFFFFF; transition: 0.3s; }
-        .menu-table td:hover { background-color: #00b3b3; }
+        .menu-wrapper { position: relative; display: flex; justify-content: center; align-items: center; width: 100%; margin: 5px 0; }
+        .menu-table { margin: 0 !important; border-radius: 10px; background-color: #008080; border-collapse: collapse; }
+        .menu-table td { padding: 8px 15px; border: 1px solid #FFFFFF; }
         .menu-table a { text-decoration: none; color: #FFFFFF; font-weight: bold; font-size: 0.85em; }
 
-        .guide-trigger { color: #008080; font-size: 0.9em; cursor: pointer; text-decoration: underline; font-weight: bold; display: inline-block; margin-bottom: 15px; transition: 0.3s; }
-        .guide-trigger:hover { color: #E67E22; transform: scale(1.1); }
+        #btn-mode { position: absolute; right: 10px; top: 10px; background: #444; color: #FFD700; border: 1px solid #222; border-radius: 5px; cursor: pointer; font-size: 14px; padding: 2px 5px; z-index: 1001; }
+        .phrase-rose { color: #ff1493; font-weight: bold; font-size: 1.1em; text-shadow: 1px 1px 2px #ff69b4; margin-top: 5px; }
+        .phrase-sous { color: #000080; font-weight: bold; margin: 1px 0; font-size: 0.9em; }
 
-        .discreet-help { font-size: 0.75em; color: #008080; cursor: pointer; text-decoration: none; font-style: italic; display: block; margin-top: 5px; margin-bottom: 10px; text-align: right; opacity: 0.8; }
-        .discreet-help:hover { text-decoration: underline; opacity: 1; }
+        .search-box { background: #008080; padding: 15px; margin: 10px auto; max-width: 95%; width: 1100px; border-radius: 20px; color: white; box-shadow: 0 4px 15px rgba(0,0,0,0.15); border: 2px solid #fff; }
+        .search-container { display: flex; flex-direction: column; gap: 10px; align-items: center; }
+        .search-main-input { width: 90%; padding: 10px; border-radius: 12px; border: none; font-size: 0.95em; text-align: center; font-weight: bold; color: #004D40; }
+        .search-row { display: flex; gap: 10px; width: 90%; justify-content: center; }
+        .search-item { display: flex; flex-direction: column; width: 45%; }
+        .search-item input { padding: 8px; border-radius: 10px; border: none; text-align: center; }
 
-        #aide-panneau { 
-            display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); 
-            width: 90%; max-width: 420px; background: #008080; color: white; padding: 20px; 
-            border-radius: 20px; box-shadow: 0px 0px 50px rgba(0,0,0,0.5); z-index: 2000; border: 4px solid #FFFF00;
+        .btn-group { display: flex; gap: 8px; flex-wrap: wrap; justify-content: center; margin-top: 5px; }
+
+        .btn-filtre-rapide { background: rgba(255,255,255,0.2); border: 2px solid white; color: white; padding: 6px 12px; border-radius: 20px; cursor: pointer; font-family: 'Comic Sans MS'; font-size: 0.8em; transition: 0.3s; font-weight: bold; }
+        .btn-filtre-rapide[data-cat="Savoir"] { border-color: #ffc107; background: rgba(255, 193, 7, 0.25); }
+        .btn-filtre-rapide[data-cat="Citoyenne"] { border-color: #2ECC71; background: rgba(46, 204, 113, 0.25); }
+        .btn-filtre-rapide[data-cat="Harmonie"] { border-color: #ff69b4; background: rgba(255, 105, 180, 0.25); }
+        .btn-filtre-rapide[data-cat="Régulation"] { border-color: #9370DB; background: rgba(147, 112, 219, 0.25); }
+        .btn-filtre-rapide[data-cat="Trésor"] { border-color: #1E90FF; background: rgba(30, 144, 255, 0.25); }
+        .btn-filtre-rapide[data-cat="Autre"] { border-color: #00ced1; background: rgba(0, 206, 209, 0.25); color: #FFFFFF; font-weight: bold; }
+
+        .btn-filtre-rapide.actif { background: #fff !important; color: #008080 !important; font-weight: bold; box-shadow: 0 0 10px rgba(255,255,255,0.8); }
+        .btn-reset { border-color: #ffffff !important; background: rgba(255,255,255,0.1); }
+
+        #sous-rubriques-container { display: none; width: 90%; background: rgba(255, 105, 180, 0.25); padding: 8px; border-radius: 12px; border: 2px dashed #ff1493; margin-top: 5px; text-align: center; }
+        .select-sous-rubrique { padding: 6px 10px; border-radius: 10px; border: 2px solid #ff1493; font-family: 'Comic Sans MS'; font-size: 0.78em; background: white; color: #008080; font-weight: bold; cursor: pointer; outline: none; width: 80%; max-width: 450px; }
+
+        .mur-reel { display: grid; grid-template-columns: repeat(3, minmax(280px, 1fr)); gap: 20px; padding: 15px; max-width: 1200px; margin: 0 auto; align-items: start; }
+        @media (max-width: 1024px) { .mur-reel { grid-template-columns: repeat(2, 1fr); } }
+        @media (max-width: 600px) { .mur-reel { grid-template-columns: repeat(1, 1fr); } }
+
+        .carte-message { 
+            background: white; 
+            border: 1px solid #e0e0e0;
+            border-right: 5px solid #008080; 
+            border-radius: 12px; 
+            padding: 16px; 
+            box-shadow: 0 4px 14px rgba(0,0,0,0.08); 
+            display: flex; 
+            flex-direction: column; 
+            height: 400px; 
+            box-sizing: border-box;
+            cursor: pointer; 
+            position: relative; 
+            overflow: hidden; 
+            text-align: left; 
+            transition: transform 0.25s ease, box-shadow 0.25s ease; 
         }
-        #aide-panneau h4 { margin-top: 0; color: #FFFF00; text-align: center; border-bottom: 2px solid #FFFF00; padding-bottom: 5px; }
-        .close-modal { position: absolute; top: 10px; right: 15px; cursor: pointer; font-size: 1.5em; font-weight: bold; color: #FFFF00; }
-        .aide-section { margin-bottom: 12px; text-align: left; font-size: 0.9em; }
-        .aide-titre { font-weight: bold; color: #FFFF00; display: block; margin-bottom: 3px; }
+        .carte-message:hover { transform: translateY(-4px); box-shadow: 0 6px 20px rgba(0,0,0,0.14); }
+        .nom-prenom { color: #2E7D32; font-weight: bold; font-size: 0.95em; border-bottom: 1px solid #f0f0f0; margin-bottom: 8px; padding-bottom: 6px; padding-right: 90px; }
 
-        #overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.3); z-index: 1999; }
+        .rubrique-tag { font-size: 0.6em; color: white; padding: 3px 8px; border-radius: 6px; position: absolute; top: 12px; right: 12px; font-weight: bold; }
 
-        .form-container { background: white; padding: 30px; border-radius: 20px; display: inline-block; margin-top: 10px; box-shadow: 0px 10px 20px rgba(0,0,0,0.1); width: 95%; max-width: 800px; margin-bottom: 80px; position: relative; z-index: 10; }
-        .form-group { text-align: left; margin: 15px 20px; }
-        label { font-weight: bold; color: #008080; display: block; margin-bottom: 5px; }
-        .sous-label { font-size: 0.75em; color: #006666; margin-bottom: 5px; display: block; font-style: italic; }
-
-        input, select, textarea { width: 100%; padding: 12px; margin-bottom: 10px; border: 2px solid #008080; border-radius: 10px; font-family: 'Comic Sans MS'; font-size: 1em; box-sizing: border-box; }
-        textarea { min-height: 220px; resize: vertical; background-color: #fffdf0; font-size: 0.9em; line-height: 1.5; color: #000080; }
-
-        .extra-field { display: none; animation: fadeIn 0.3s; background: #f0fdf4; padding: 10px; border-radius: 10px; margin-top: 5px; margin-bottom: 10px; border: 1px dashed #008080; }
-        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-
-        .btn-envoyer { width: 100%; padding: 25px; background: #E67E22; color: white; border: none; border-radius: 20px; cursor: pointer; font-weight: bold; font-size: 1.2em; box-shadow: 0px 4px 0px #b35900; transition: 0.2s; }
-        .btn-envoyer:active { transform: translateY(4px); box-shadow: 0px 0px 0px #b35900; }
-
-        footer { margin: 20px 0 80px 0; text-align: center; }
-        .copyright-link { color: #008080; text-decoration: none; font-weight: bold; transition: 0.3s; padding: 10px; cursor: pointer; display: inline-block; position: relative; z-index: 20; }
-        .copyright-link:hover { color: #E67E22; text-shadow: 0 0 8px #fff; }
-        .journal-footer-link { color: #008080; text-decoration: none; font-weight: bold; display: inline-flex; align-items: center; justify-content: center; margin-top: 10px; transition: 0.3s; }
-        .journal-footer-link:hover { color: #E67E22; text-shadow: 0 0 8px #fff; }
-
-        @media (max-width: 768px) {
-            .menu-table, .menu-table tbody, .menu-table tr { display: flex; flex-wrap: wrap; justify-content: center; width: 95%; }
-            .menu-table td { flex: 1 1 28%; text-align: center; padding: 8px 2px; font-size: 0.8em; }
-            .form-container { width: 90%; padding: 15px; margin-bottom: 50px; }
-            .form-group { margin: 10px 0; }
-            input, select, textarea { padding: 10px; font-size: 0.95em; }
-            .btn-envoyer { padding: 15px; font-size: 1em; }
-            #aide-panneau { width: 85%; max-height: 80vh; overflow-y: auto; padding: 15px; }
+        .texte-annonce { 
+            flex-grow: 1; 
+            font-style: italic; 
+            color: #000080; 
+            overflow-y: auto; 
+            font-size: 0.85em; 
+            margin: 8px 0; 
+            line-height: 1.4; 
+            padding-right: 6px; 
+            scrollbar-width: thin; 
+            white-space: pre-line; 
+            word-break: break-word; 
         }
+        .texte-annonce::before { content: "“"; color: #ff1493; font-weight: bold; margin-right: 2px; }
+        .texte-annonce::after { content: "”"; color: #ff1493; font-weight: bold; margin-left: 2px; }
+
+        .badge-reponses { font-size: 0.75em; color: #E67E22; font-weight: bold; background: #FFF8E7; border: 1px solid #E67E22; border-radius: 6px; padding: 4px 8px; margin: 6px 0; align-self: flex-start; flex-shrink: 0; }
+
+        .btn-arrosage { background: #E1F5FE; border: 1px solid #00BFFF; border-radius: 8px; color: #0277BD; font-size: 0.8em; padding: 6px; cursor: pointer; margin: 4px 0; font-weight: bold; width: 100%; position: relative; z-index: 5; flex-shrink: 0; }
+        .btn-arrosage:disabled { background: #E0E0E0; border-color: #BDBDBD; color: #757575; cursor: not-allowed; }
+        .btn-repondre { background: #E67E22; border: 1px solid #b35900; border-radius: 8px; color: white; font-size: 0.8em; padding: 7px; cursor: pointer; margin: 4px 0; font-weight: bold; width: 100%; transition: 0.2s; position: relative; z-index: 5; flex-shrink: 0; }
+        .btn-repondre:hover { background: #d35400; }
+
+        .details-bas { font-size: 0.68em; color: #555; line-height: 1.4; border-top: 1px solid #f0f0f0; padding-top: 8px; background: white; flex-shrink: 0; margin-top: auto; }
+
+        .pagination-container { display: flex; justify-content: center; align-items: center; gap: 5px; margin: 25px 0; flex-wrap: wrap; }
+        .page-btn { background: white; border: 2px solid #008080; color: #008080; padding: 6px 12px; border-radius: 8px; font-weight: bold; cursor: pointer; font-family: 'Comic Sans MS'; transition: 0.2s; }
+        .page-btn.active { background: #008080; color: white; }
+        .page-btn:hover:not(.active) { background: #E0F2F1; }
+
+        body.dark-mode { background-color: #0a0a1a; color: #e0e0e0; }
+        .star { position: fixed; background: white; border-radius: 50%; opacity: 0; pointer-events: none; animation: twinkle var(--d) infinite; }
+        @keyframes twinkle { 0%, 100% { opacity: 0.3; } 50% { opacity: 1; } }
+
+        #fond-sombre, #modal-reponse { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); z-index: 2000; justify-content: center; align-items: center; padding: 10px; box-sizing: border-box; }
+        .message-geant { background: #FFFFF0; width: 95%; max-width: 800px; padding: 25px; border-radius: 20px; border: 6px solid #008080; position: relative; max-height: 85vh; overflow-y: auto; color: #000; text-align: left; box-sizing: border-box; }
+        .form-reponse-box { background: #FFFFFF; width: 90%; max-width: 500px; padding: 25px; border-radius: 20px; border: 5px solid #E67E22; position: relative; text-align: left; color: #000; box-shadow: 0 0 20px rgba(0,0,0,0.4); max-height: 90vh; overflow-y: auto; }
+        .bouton-fermer { position: absolute; top: 15px; right: 15px; background: #FF1493; color: white; border-radius: 50%; width: 36px; height: 36px; cursor: pointer; border: 2px solid white; font-weight: bold; display: flex; align-items: center; justify-content: center; z-index: 10; }
+
+        .field-rep { width: 100%; padding: 10px; margin: 6px 0; border: 2px solid #008080; border-radius: 10px; font-family: 'Comic Sans MS'; box-sizing: border-box; }
+        .btn-retour { display: inline-block; margin-top: 10px; padding: 10px 20px; background: #34495e; color: white; text-decoration: none; border-radius: 8px; font-weight: bold; }
+        .copyright-link { color: #008080; text-decoration: none; font-weight: bold; }
+        .journal-footer-link { color: #008080; text-decoration: none; font-weight: bold; font-size: 0.9em; display: inline-block; margin-top: 8px; }
+        .journal-footer-link:hover { text-decoration: underline; }
     </style>
 </head>
 <body>
 
-    <div id="google_translate_element"></div>
-
-    <div style="position: relative; display: flex; justify-content: center; align-items: center; width: 100%; margin: 20px 0 5px 0;">
-        <table class="menu-table" style="margin: 0 !important;">
-            <tr>
-                <td><a href="index.html">Accueil</a></td>
-                <td><a href="formulaire.html">Semer</a></td>
-                <td><a href="jardin.html">Le Jardin</a></td>
-                <td><a href="jardin.html?cat=IMPOT">Trésor Public</a></td>
-                <td><a href="jardin.html?cat=REGULATION">Régulation</a></td>
-                <td><a href="jardin.html?cat=AIDE">Aide & Harmonie</a></td>
-                <td><a href="jardin.html?cat=SAVOIR">Savoirs</a></td>
-                <td><a href="jardin.html?cat=VIE">Vie Citoyenne</a></td>
-            </tr>
-        </table>
+    <div class="top-bar">
+        <div id="google_translate_element"></div>
+        <div class="menu-wrapper">
+            <table class="menu-table">
+                <tr>
+                    <td><a href="index.html">Accueil</a></td>
+                    <td><a href="formulaire.html">Semer</a></td>
+                    <td><a href="jardin.html">Le Jardin</a></td>
+                    <td><a href="jardin.html?cat=IMPOT">Trésor Public</a></td>
+                    <td><a href="jardin.html?cat=REGULATION">Régulation</a></td>
+                    <td><a href="jardin.html?cat=AIDE">Aide & Harmonie</a></td>
+                    <td><a href="jardin.html?cat=SAVOIR">Savoirs</a></td>
+                    <td><a href="vie.html">Vie Citoyenne</a></td>
+                </tr>
+            </table>
+        </div>
+        <button id="btn-mode" onclick="basculerModeSombre()">🏮</button>
     </div>
 
-    <div class="guide-trigger" onclick="toggleGuide(event)">🌱 Ouvrir le Guide des Semailles</div>
+    <h2 style="color:#2E7D32; margin: 15px 0 5px 0;">🍃 Le Jardin des Cadeaux Existentiels 🍃</h2>
+    <div class="phrase-rose">Bienvenue au Jardin des Dons entiers</div>
+    <div class="phrase-sous">Talents, savoirs, objets et fraternité.</div>
 
-    <div id="overlay" onclick="toggleGuide(event)"></div>
-    <div id="aide-panneau">
-        <span class="close-modal" onclick="toggleGuide(event)">×</span>
-        <h4>🌟 Guide des Semailles</h4>
+    <div class="search-box">
+        <div class="search-container">
+            <input type="text" id="searchKeyword" class="search-main-input" onkeyup="changerFiltreEtResetPage()" placeholder="✨ Rechercher un don, un savoir...">
 
-        <div class="aide-section">
-            <span class="aide-titre">💡 SAVOIRS</span>
-            • Enseignement, cours & soutien scolaire[cite: 5].<br>
-            • Transmettre un art, un artisanat ou un savoir-faire[cite: 5].<br>
-            • Mentorat professionnel & conseils techniques[cite: 5].
-        </div>
+            <div class="search-row">
+                <div class="search-item"><input type="text" id="searchPays" onkeyup="changerFiltreEtResetPage()" placeholder="📍 Pays"></div>
+                <div class="search-item"><input type="text" id="searchVille" onkeyup="changerFiltreEtResetPage()" placeholder="🏙 Ville"></div>
+            </div>
 
-        <div class="aide-section">
-            <span class="aide-titre">🏠 VIE CITOYENNE</span>
-            • Repas, graines & partage d'eau[cite: 5].<br>
-            • Prêt ou don d'objets, de vêtements et d'outils[cite: 5].<br>
-            • Logement, accueil ponctuel & covoiturage[cite: 5].
-        </div>
+            <div class="btn-group">
+                <button class="btn-filtre-rapide" data-cat="Savoir" onclick="rechercheRapide('Savoir', this)">🎓 Savoirs</button>
+                <button class="btn-filtre-rapide" data-cat="Citoyenne" onclick="rechercheRapide('Citoyenne', this)">🏛 Vie Citoyenne</button>
+                <button class="btn-filtre-rapide" data-cat="Harmonie" onclick="rechercheRapide('Harmonie', this)">🤝 Aide & Harmonie</button>
+                <button class="btn-filtre-rapide" data-cat="Régulation" onclick="rechercheRapide('Régulation', this)">⚖ Régulation</button>
+                <button class="btn-filtre-rapide" data-cat="Trésor" onclick="rechercheRapide('Trésor', this)">💰 Trésor Public</button>
+                <button class="btn-filtre-rapide" data-cat="Autre" onclick="rechercheRapide('Autre', this)">✨ Autre domaine</button>
+                <button class="btn-filtre-rapide btn-reset" onclick="resetRecherche()">🔄 Tout voir</button>
+            </div>
 
-        <div class="aide-section">
-            <span class="aide-titre">💖 AIDE & HARMONIE</span>
-            • <b>Urgence :</b> entraide immédiate & secours du quotidien[cite: 5].<br>
-            • <b>Détresse :</b> écoute attentive, soutien aux aînés & garde d'enfants[cite: 5].<br>
-            • Ménage, soutien quotidien & soin des animaux[cite: 5].
-        </div>
-
-        <div class="aide-section">
-            <span class="aide-titre">⚖️ RÉGULATION</span>
-            • Aide sociale rapprochée[cite: 5].<br>
-            • Médiation entre voisins & paix citoyenne[cite: 5].<br>
-            • Assemblées & décisions collectives[cite: 5].
-        </div>
-
-        <div class="aide-section">
-            <span class="aide-titre">📜 TRÉSOR PUBLIC</span>
-            • Don pluriel : bras et têtes volontaires au service du bien-être collectif[cite: 5].<br>
-            • Entretien des réseaux vitaux (eau publique, électricité, voirie)[cite: 5].<br>
-            • Chantiers collectifs, parcs & espaces verts[cite: 5].
+            <div id="sous-rubriques-container">
+                <select id="selectSousRubrique" class="select-sous-rubrique" onchange="changerSousRubrique(this)"></select>
+            </div>
         </div>
     </div>
 
-    <h2 style="color:#E67E22;">🌍 Engendrer la Fraternité Universelle</h2>
+    <h3 id="titre-registre" style="color: #008080; margin: 15px 0 5px 0;">📖 Registre de la Fraternité</h3>
 
-    <div class="form-container">
-        <form id="monFormulaire" onsubmit="envoyerDon(event)">
-            <input type="hidden" name="token" value="MonJardinSecuritToken2026">
+    <div id="mur-messages" class="mur-reel"></div>
 
-            <div style="display:none;" aria-hidden="true">
-                <input type="text" name="website_hp" tabindex="-1" autocomplete="off">
-            </div>
+    <div id="pagination-numeros" class="pagination-container"></div>
 
-            <div class="form-group">
-                <label>Identité amoureuse</label>
-                <input type="text" name="nom" placeholder="Ton Prénom de coeur / Pseudo..." required>
-            </div>
+    <div class="phrase-etoiles" id="phrase-petit-prince" style="font-style: italic; color: #2E7D32; margin: 15px;"></div>
 
-            <div class="form-group">
-                <label>Ton E-mail</label>
-                <input type="email" name="email_auteur" placeholder="tonemail@exemple.com">
-                <span class="sous-label">Permet de recevoir directement et anonymement les réponses privées par e-mail.</span>
-            </div>
-
-            <div class="form-group">
-                <label>Provenance & Territoire</label>
-                <div style="display: flex; gap: 10px; margin-bottom: 5px;">
-                    <select name="pays_select" id="pays_select" onchange="checkOther(this, 'extra_pays')" style="flex: 1.5;" required>
-                        <option value="" selected>-- Pays / Royaume --</option>
-                        <option value="France">France (et Outre-mer)</option>
-                        <option value="Belgique">Belgique</option>
-                        <option value="Suisse">Suisse</option>
-                        <option value="Luxembourg">Luxembourg</option>
-                        <option value="Canada">Canada / Québec</option>
-                        <option value="AUTRE_PAYS">🌐 Un pays secret...</option>
-                    </select>
-                </div>
-                <div id="extra_pays" class="extra-field">
-                    <input type="text" name="pays_precision" placeholder="Nom de ton pays secret...">
-                </div>
-                <input type="text" name="localisation" placeholder="Ville, Département..." required>
-            </div>
-
-            <div class="form-group">
-                <label>Destination du semis</label>
-                <select name="type" id="main_cat" onchange="updateSubCats(); checkOther(this, 'extra_cat');" required>
-                    <option value="">-- Domaine d'action --</option>
-                    <option value="SAVOIR">💡 SAVOIRS (Apprendre, transmettre)</option>
-                    <option value="VIE">🏠 VIE CITOYENNE (Repas, objets, logement)</option>
-                    <option value="AIDE">💖 AIDE & HARMONIE (Secours, écoute)</option>
-                    <option value="REGULATION">⚖ RÉGULATION (Médiation, aide sociale)</option>
-                    <option value="IMPOT">📜 TRÉSOR PUBLIC (Réseaux, voirie, parcs)</option>
-                    <option value="AUTRE_CAT">🌈 AUTRE DOMAINE...</option>
-                </select>
-
-                <div id="extra_cat" class="extra-field">
-                    <input type="text" name="cat_precision" placeholder="Précise ton domaine d'action...">
-                </div>
-            </div>
-
-            <div id="sub_cat_group" class="form-group" style="display:none;">
-                <label>Précision de la graine</label>
-                <select name="sousType" id="sub_cat" onchange="checkOther(this, 'extra_sub')"></select>
-                <div id="extra_sub" class="extra-field">
-                    <input type="text" name="sub_precision" placeholder="Décris ta spécialité...">
-                </div>
-            </div>
-
-            <div class="form-group">
-                <label>Rayon d'action</label>
-                <select name="rayon_action">
-                    <option value="sur place">sur place</option>
-                    <option value="rayon 10 km">rayon 10 km</option>
-                    <option value="rayon 50 km">rayon 50 km</option>
-                    <option value="national">national</option>
-                    <option value="international">international</option>
-                    <option value="universel">universel</option>
-                </select>
-            </div>
-
-            <div class="form-group">
-                <label>Cycle de Vie (Durée de validité)</label>
-                <select name="duree_validite" onchange="checkOther(this, 'extra_cycle')" required>
-                    <option value="1">🌱 Un jour</option>
-                    <option value="7">🌸 Une semaine</option>
-                    <option value="30" selected>🌿 Un mois</option>
-                    <option value="90">🌳 Trois mois</option>
-                    <option value="365">🌲 Un an</option>
-                    <option value="AUTRE">Autres durées...</option>
-                </select>
-                <div id="extra_cycle" class="extra-field">
-                    <input type="text" name="cycle_precision" id="input_cycle_precision" placeholder="Nombre de jours (ex: 15)">
-                </div>
-            </div>
-
-            <div class="form-group">
-                <label>Logistique & Acheminement</label>
-                <select name="logistique" onchange="checkOther(this, 'extra_log')" required>
-                    <option value="Main Propre">Remise en main propre</option>
-                    <option value="Moi-même">Transport assuré par mes soins</option>
-                    <option value="Numérique">Transfert Numérique / Visio</option>
-                    <option value="AUTRE">autres</option>
-                </select>
-                <div id="extra_log" class="extra-field">
-                    <input type="text" name="log_precision" placeholder="Détaillez votre option logistique...">
-                </div>
-            </div>
-
-            <div class="form-group">
-                <label>Description du Don amoureux</label>
-               <textarea name="message" placeholder="Ici, on sème des graines de générosité..." required></textarea>
-            </div>
-
-            <button type="submit" class="btn-envoyer" id="btnTexte">ENGENDRER LA FRATERNITÉ UNIVERSELLE</button>
-        </form>
+    <div style="text-align: center; margin-bottom: 20px;">
+        <a href="formulaire.html" class="btn-retour" style="background:#e67e22; margin-right: 10px;">Semer un Don</a>
+        <a href="index.html" class="btn-retour">Retour à l'Accueil</a>
     </div>
 
-    <footer>
+    <!-- Fenêtre Grand Message -->
+    <div id="fond-sombre" onclick="fermerGrandMessage()">
+        <div class="message-geant" onclick="event.stopPropagation()">
+            <button class="bouton-fermer" onclick="fermerGrandMessage()">X</button>
+            <div id="geant-contenu"></div>
+        </div>
+    </div>
+
+    <!-- Modal de Réponse -->
+    <div id="modal-reponse" onclick="fermerModalReponse()">
+        <div class="form-reponse-box" onclick="event.stopPropagation()">
+            <button class="bouton-fermer" onclick="fermerModalReponse()">X</button>
+            <h3 id="modal-titre" style="color: #E67E22; margin-top: 0;">💌 Répondre à cette graine</h3>
+            <div id="rappel-annonce" style="font-size: 0.85em; background: #fffdf0; padding: 10px; border-radius: 8px; border-left: 4px solid #E67E22; margin-bottom: 12px; color: #444;"></div>
+
+            <form id="formReponse" onsubmit="envoyerReponse(event)">
+                <input type="hidden" id="rep_id_annonce" name="ref_id">
+                <input type="hidden" id="rep_row_index" name="row_index">
+                <input type="hidden" id="rep_type_annonce" name="type_annonce">
+                <input type="hidden" id="rep_type_action" name="action" value="repondre">
+
+                <label style="font-weight: bold; color: #008080; font-size: 0.85em;">Mode de réponse :</label>
+                <select id="rep_mode" class="field-rep" onchange="changerModeReponse(this.value)">
+                    <option value="public">💬 Réponse publique (sur le site)</option>
+                    <option value="prive">✉️ Message privé (par e-mail sécurisé)</option>
+                </select>
+
+                <label style="font-weight: bold; color: #008080; font-size: 0.85em;">Ton Prénom / Pseudo :</label>
+                <input type="text" id="rep_nom" class="field-rep" placeholder="Ton nom de cœur..." required>
+
+                <div id="bloc-email-expediteur" style="display: none;">
+                    <label style="font-weight: bold; color: #2E7D32; font-size: 0.85em;">Ton E-mail (pour que l'auteur puisse te répondre) :</label>
+                    <input type="email" id="rep_email_expediteur" class="field-rep" placeholder="tonemail@exemple.com">
+                </div>
+
+                <label style="font-weight: bold; color: #008080; font-size: 0.85em;">Ton Message :</label>
+                <textarea id="rep_message" class="field-rep" rows="4" placeholder="Propose ton aide, ton soutien..." required></textarea>
+
+                <button type="submit" id="btnSubmitReponse" class="btn-repondre" style="font-size: 1em; padding: 10px; margin-top: 5px;">ENVOYER MA RÉPONSE ✨</button>
+            </form>
+        </div>
+    </div>
+
+    <div class="footer-copyright" style="margin-top: 20px; text-align: center;">
         <div>
             <a href="merci.html" class="copyright-link">© PINON 2000 — Conçu avec le cœur et l'esprit libre par le #petitploucdesjardiniers.</a>
         </div>
         <div>
-            <a href="transition-externe.html" class="journal-footer-link">
-                📰&nbsp;&nbsp;journal de bord du #petitploucdesjardiniers[cite: 5].
-            </a>
+            <a href="transition-externe.html" class="journal-footer-link">📰 journal de bord du #petitploucdesjardiniers, réflexions de l'auteur du site.</a>
         </div>
-    </footer>
+    </div>
+
+    <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
 
     <script>
-    // URL mise à jour avec ton nouveau déploiement
-    const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbxnut45uaiH_GhVoNQ4jYzw53thmlc-KHOwhvYfl23Owfh2iyRoT1DBAAeFDepiQCo2/exec";
+        const TOKEN_SECRET = "MonJardinSecuritToken2026";
+        const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbxnut45uaiH_GhVoNQ4jYzw53thmlc-KHOwhvYfl23Owfh2iyRoT1DBAAeFDepiQCo2/exec";
+        let annoncesPrincipales = [], filtreTypeActuel = "", filtreSousTypeActuel = "";
+        let pageActuelle = 1;
+        const elementsParPage = 20;
 
-    function toggleGuide(e) {
-        e.stopPropagation();
-        const guide = document.getElementById('aide-panneau');
-        const overlay = document.getElementById('overlay');
-        const isVisible = (guide.style.display === 'block');
-        guide.style.display = isVisible ? 'none' : 'block';
-        overlay.style.display = isVisible ? 'none' : 'block';
-    }
+        const mappingBoutons = { 
+            "Savoir": ["SAVOIR"], 
+            "Citoyenne": ["VIE"], 
+            "Harmonie": ["AIDE", "URGENCE", "ECOUTE"], 
+            "Régulation": ["REGULATION"], 
+            "Trésor": ["IMPOT"], 
+            "Autre": ["AUTRE_CAT"] 
+        };
 
-    function googleTranslateElementInit() { new google.translate.TranslateElement({pageLanguage: 'fr'}, 'google_translate_element'); }
+        const couleursBordures = {
+            "SAVOIR": "#ffc107", 
+            "VIE": "#2ECC71", 
+            "AIDE": "#ff69b4",
+            "URGENCE": "#ff69b4", 
+            "ECOUTE": "#ff69b4", 
+            "REGULATION": "#9370DB",
+            "IMPOT": "#1E90FF", 
+            "AUTRE_CAT": "#00ced1"
+        };
 
-    const tree = {
-        "SAVOIR": ["Soutien scolaire & cours", "Art, artisanat & musique", "Mentorat pro & compétences techniques", "Savoir-faire du quotidien", "AUTRE_SUB"],
-        "VIE": ["Repas, graines & eau", "Prêt d'objets, outils & équipement", "Accueil, hébergement & covoiturage", "Loisirs & activités partagées", "AUTRE_SUB"],
-        "AIDE": ["Secours immédiat & petite urgence", "Écoute, présence & soutien aux aînés", "Garde d'enfants & soutien familial", "Soin des animaux & aide à la maison", "AUTRE_SUB"],
-        "REGULATION": ["Aide aux démarches", "Médiation de voisinage & paix citoyenne", "Organisation d'assemblées & conseils citoyens", "AUTRE_SUB"],
-        "IMPOT": ["Entretien des réseaux vitaux", "Voirie & chantiers participatifs", "Espaces verts, forêts & parcs publics", "AUTRE_SUB"]
-    };
+        const sousRubriquesData = {
+            "Savoir": [
+                { id: "", label: "🎓 Toutes les précisions" },
+                { id: "Soutien scolaire & cours", label: "Soutien scolaire & cours" },
+                { id: "Art, artisanat & musique", label: "Art, artisanat & musique" },
+                { id: "Mentorat pro & compétences techniques", label: "Mentorat pro & compétences techniques" },
+                { id: "Savoir-faire du quotidien", label: "Savoir-faire du quotidien" },
+                { id: "Bibliothèque vivante", label: "Bibliothèque vivante" },
+                { id: "AUTRE_SUB", label: "Autres interprétations" }
+            ],
+            "Citoyenne": [
+                { id: "", label: "🏛 Toutes les précisions" },
+                { id: "Repas, graines & eau", label: "Repas, graines & eau" },
+                { id: "Prêt d'objets, outils & équipement", label: "Prêt d'objets, outils & équipement" },
+                { id: "Accueil, hébergement & covoiturage", label: "Accueil, hébergement & covoiturage" },
+                { id: "Loisirs & activités partagées", label: "Loisirs & activités partagées" },
+                { id: "AUTRE_SUB", label: "Autres recommandations" }
+            ],
+            "Harmonie": [
+                { id: "", label: "🤝 Toutes les précisions" },
+                { id: "Secours immédiat & petite urgence", label: "Secours immédiat & petite urgence" },
+                { id: "Écoute, présence & soutien aux aînés", label: "Écoute, présence & soutien aux aînés" },
+                { id: "Garde d'enfants & soutien familial", label: "Garde d'enfants & soutien familial" },
+                { id: "Soin des animaux & aide à la maison", label: "Soin des animaux & aide à la maison" },
+                { id: "AUTRE_SUB", label: "Autres merveilles" }
+            ],
+            "Régulation": [
+                { id: "", label: "⚖ Toutes les précisions" },
+                { id: "Aide aux démarches (Aide sociale rapprochée)", label: "Aide aux démarches (Aide sociale rapprochée)" },
+                { id: "Médiation de voisinage & paix citoyenne", label: "Médiation de voisinage & paix citoyenne" },
+                { id: "Organisation d'assemblées & conseils citoyens", label: "Organisation d'assemblées & conseils citoyens" },
+                { id: "AUTRE_SUB", label: "Autres conciliations" }
+            ],
+            "Trésor": [
+                { id: "", label: "💰 Toutes les précisions" },
+                { id: "Entretien des réseaux vitaux (eau, énergie)", label: "Entretien des réseaux vitaux (eau, énergie)" },
+                { id: "Voirie & chantiers participatifs", label: "Voirie & chantiers participatifs" },
+                { id: "Espaces verts, forêts & parcs publics", label: "Espaces verts, forêts & parcs publics" },
+                { id: "AUTRE_SUB", label: "Autres contributions" }
+            ],
+            "Autre": [{ id: "", label: "✨ Toutes les précisions" }]
+        };
 
-    function updateSubCats() {
-        const cat = document.getElementById('main_cat').value;
-        const subGroup = document.getElementById('sub_cat_group');
-        const subSelect = document.getElementById('sub_cat');
-        const extraSub = document.getElementById('extra_sub');
+        const paramToBouton = {
+            "SAVOIR": "Savoir", "VIE": "Citoyenne", "AIDE": "Harmonie",
+            "URGENCE": "Harmonie", "ECOUTE": "Harmonie", "REGULATION": "Régulation",
+            "IMPOT": "Trésor", "AUTRE_CAT": "Autre"
+        };
 
-        if (extraSub) extraSub.style.display = 'none';
+        const nomBoutonAffiche = { 
+            "SAVOIR": "Savoir", "VIE": "Vie Citoyenne", "AIDE": "Aide & Harmonie", 
+            "URGENCE": "Urgences (Santé & Secours)", "ECOUTE": "Écoute et réconfort", 
+            "REGULATION": "Régulation", "IMPOT": "Trésor Public", "AUTRE_CAT": "Autre domaine" 
+        };
 
-        if (cat && tree[cat]) {
-            let options = '<option value="">-- Choisir une précision --</option>';
-            options += tree[cat].map(s => `<option value="${s}">${s === 'AUTRE_SUB' ? '🌈 Autres distinctions...' : s}</option>`).join('');
-            subSelect.innerHTML = options;
-            subGroup.style.display = 'block';
-        } else { 
-            subGroup.style.display = 'none'; 
-            subSelect.innerHTML = '';
+        function googleTranslateElementInit() { new google.translate.TranslateElement({pageLanguage: 'fr'}, 'google_translate_element'); }
+
+        function escapeHtml(str) {
+            return String(str || '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
         }
-    }
 
-    function checkOther(select, divId) {
-        const extraDiv = document.getElementById(divId);
-        if (!extraDiv) return;
-        const isOther = (select.value === "AUTRE" || select.value === "AUTRE_PAYS" || select.value === "AUTRE_SUB" || select.value === "AUTRE_CAT");
-        extraDiv.style.display = isOther ? "block" : "none";
-    }
+        function masquerCoordonnees(texte) {
+            if (!texte) return "";
+            let protege = String(texte).replace(/([a-zA-Z0-9._-]+)@([a-zA-Z0-9._-]+)\.([a-zA-Z]{2,5})/gi, "$1 [at] $2 [dot] $3");
+            protege = protege.replace(/(?:(?:\+|00)33|0)\s*[1-9](?:[\s.-]*\d{2}){4}/g, "📱 [Numéro protégé]");
+            return protege;
+        }
 
-    function envoyerDon(event) {
-        event.preventDefault();
-        const btn = document.getElementById('btnTexte');
-        btn.innerText = "Semailles en cours... 🌱";
-        btn.disabled = true;
+        function formaterDate(horodateur) {
+            if (!horodateur) return "N/C";
+            try {
+                const dateObj = new Date(horodateur);
+                if (!isNaN(dateObj)) return dateObj.toLocaleDateString('fr-FR', { day: '2-digit', month: '2-digit', year: 'numeric' });
+                return horodateur.split('T')[0] || horodateur;
+            } catch(e) { return horodateur; }
+        }
 
-        const form = document.getElementById('monFormulaire');
-        const formData = new FormData(form);
+        function estExpire(ann) {
+            const horodateur = ann.Horodateur || ann.date;
+            if (!horodateur) return false;
+            const datePub = new Date(horodateur);
+            if (isNaN(datePub)) return false;
 
-        fetch(WEB_APP_URL, { method: 'POST', body: formData })
-        .then(() => { window.location.href = "merci_annonce.html"; })
-        .catch(() => { window.location.href = "merci_annonce.html"; });
-    }
+            const validiteStr = String(ann.validite || ann.duree || "1 jour").toLowerCase();
+            let nbJours = 1; 
+            if (validiteStr.includes('7') || validiteStr.includes('semaine')) nbJours = 7;
+            else if (validiteStr.includes('30') || validiteStr.includes('mois')) nbJours = 30;
+            else if (validiteStr.includes('1') || validiteStr.includes('jour')) nbJours = 1;
+            else if (validiteStr.includes('illimité') || validiteStr.includes('permanent')) return false;
+
+            const dateExpiration = new Date(datePub.getTime() + (nbJours * 24 * 60 * 60 * 1000));
+            return new Date() > dateExpiration;
+        }
+
+        function obtenirReponsesPourAnnonce(ann) {
+            let resultatsReponses = [];
+            const champRepDirect = ann.reponses_article || ann.reponses || ann.commentaires || "";
+            if (champRepDirect) {
+                const blocs = String(champRepDirect).split("||");
+                blocs.forEach(bloc => {
+                    const match = bloc.match(/\[(.*?) \((.*?)\)\]\s*:\s*(.*)/);
+                    if (match) {
+                        resultatsReponses.push({ nom: match[1], message: match[3] });
+                    } else if (bloc.trim() !== "") {
+                        resultatsReponses.push({ nom: "Ami", message: bloc.trim() });
+                    }
+                });
+            }
+            return resultatsReponses;
+        }
+
+        function jouerBip() {
+            try {
+                const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+                const osc = audioCtx.createOscillator();
+                const gain = audioCtx.createGain();
+                osc.type = 'sine';
+                osc.frequency.setValueAtTime(587.33, audioCtx.currentTime);
+                gain.gain.setValueAtTime(0.03, audioCtx.currentTime);
+                gain.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + 0.2);
+                osc.connect(gain); gain.connect(audioCtx.destination);
+                osc.start(); osc.stop(audioCtx.currentTime + 0.2);
+            } catch(e) {}
+        }
+
+        function animerPluieGouttes(event) {
+            const rect = event.target.getBoundingClientRect();
+            const x = rect.left + rect.width / 2, y = rect.top;
+            for (let i = 0; i < 6; i++) {
+                const goutte = document.createElement('div');
+                goutte.innerHTML = '💧';
+                goutte.style.position = 'fixed';
+                goutte.style.left = (x + (Math.random() * 50 - 25)) + 'px';
+                goutte.style.top = y + 'px';
+                goutte.style.fontSize = (14 + Math.random() * 10) + 'px';
+                goutte.style.pointerEvents = 'none';
+                goutte.style.zIndex = '3000';
+                goutte.style.transition = 'transform 0.7s ease-out, opacity 0.7s ease-out';
+                goutte.style.opacity = '1';
+                document.body.appendChild(goutte);
+
+                setTimeout(() => {
+                    goutte.style.transform = `translate(${Math.random() * 50 - 25}px, -${30 + Math.random() * 50}px) scale(1.4)`;
+                    goutte.style.opacity = '0';
+                }, 20);
+
+                setTimeout(() => goutte.remove(), 750);
+            }
+        }
+
+        function basculerModeSombre() {
+            document.body.classList.toggle('dark-mode');
+            if (document.body.classList.contains('dark-mode')) {
+                for(let i=0; i<60; i++) {
+                    let s = document.createElement('div'); s.className = 'star';
+                    s.style.left = Math.random()*100+'vw'; s.style.top = Math.random()*100+'vh';
+                    s.style.width = s.style.height = Math.random()*3+'px';
+                    s.style.setProperty('--d', (Math.random()*3+2)+'s');
+                    document.body.appendChild(s);
+                }
+            } else { document.querySelectorAll('.star').forEach(s => s.remove()); }
+        }
+
+        async function chargerAnnonces() {
+            try {
+                const response = await fetch(WEB_APP_URL + "?token=" + TOKEN_SECRET + "&v=" + Date.now());
+                const toutesLesDonnees = await response.json();
+
+                annoncesPrincipales = [];
+                toutesLesDonnees.forEach(item => {
+                    const type = String(item.type || item.Type || '').toUpperCase();
+                    if (type === 'VIDEO' || type === 'VIDÉO') return;
+                    annoncesPrincipales.push(item);
+                });
+
+                document.getElementById('phrase-petit-prince').innerHTML = `✨ Aujourd'hui, le Petit Prince a pris soin de <b>${annoncesPrincipales.length}</b> fleurs resplendissantes dans le jardin du monde...`;
+
+                const urlParams = new URLSearchParams(window.location.search);
+                const catParam = urlParams.get('cat');
+
+                if (catParam) {
+                    const nomBouton = paramToBouton[catParam];
+                    if (nomBouton) {
+                        const btnTarget = document.querySelector(`.btn-filtre-rapide[data-cat="${nomBouton}"]`);
+                        if (btnTarget) {
+                            filtreTypeActuel = nomBouton;
+                            document.querySelectorAll('.btn-filtre-rapide').forEach(b => b.classList.remove('actif'));
+                            btnTarget.classList.add('actif');
+                            afficherTiroirSousRubriques(nomBouton);
+                        }
+                    }
+                }
+                pageActuelle = 1;
+                executerFiltrage();
+
+            } catch (error) {
+                console.error("Erreur de chargement :", error);
+                document.getElementById('mur-messages').innerHTML = `<div style="grid-column: span 3; padding: 20px; font-weight: bold; background: white; border-radius: 10px;">Impossible de charger les annonces du jardin... 🌱</div>`;
+            }
+        }
+
+        function afficherTiroirSousRubriques(cat) {
+            const conteneurSous = document.getElementById('sous-rubriques-container');
+            const selectSous = document.getElementById('selectSousRubrique');
+
+            if (sousRubriquesData[cat] && sousRubriquesData[cat].length > 1) {
+                conteneurSous.style.display = 'block';
+                selectSous.innerHTML = "";
+
+                sousRubriquesData[cat].forEach(sub => {
+                    const option = document.createElement('option');
+                    option.value = sub.id;
+                    option.textContent = sub.label;
+                    if ((sub.id === "" && !filtreSousTypeActuel) || (sub.id !== "" && filtreSousTypeActuel === sub.id)) {
+                        option.selected = true;
+                    }
+                    selectSous.appendChild(option);
+                });
+            } else {
+                conteneurSous.style.display = 'none';
+                selectSous.innerHTML = "";
+            }
+        }
+
+        function changerSousRubrique(selectEl) {
+            jouerBip();
+            filtreSousTypeActuel = selectEl.value;
+            pageActuelle = 1;
+            executerFiltrage();
+        }
+
+        function changerFiltreEtResetPage() {
+            pageActuelle = 1;
+            executerFiltrage();
+        }
+
+        function executerFiltrage() {
+            const pi = document.getElementById('searchPays').value.toLowerCase();
+            const vi = document.getElementById('searchVille').value.toLowerCase();
+            const mi = document.getElementById('searchKeyword').value.toLowerCase();
+
+            const filtrées = annoncesPrincipales.filter(ann => {
+                if (estExpire(ann)) return false;
+
+                const matchP = pi === "" || (ann.pays_select || "").toLowerCase().startsWith(pi);
+                const matchV = vi === "" || (ann.localisation || "").toLowerCase().startsWith(vi);
+                const matchM = mi === "" || (ann.message || "").toLowerCase().includes(mi);
+
+                let matchT = true;
+                if (filtreTypeActuel !== "") {
+                    const catsPermises = mappingBoutons[filtreTypeActuel] || [];
+                    matchT = catsPermises.includes(ann.type);
+                }
+
+                let matchSousT = true;
+                if (filtreTypeActuel !== "" && filtreSousTypeActuel !== "") {
+                    const subVal = ann.sousType || ann.sub_precision || "";
+                    matchSousT = subVal.toLowerCase().includes(filtreSousTypeActuel.toLowerCase());
+                }
+
+                return matchP && matchV && matchM && matchT && matchSousT;
+            });
+
+            filtrées.sort((a, b) => new Date(b.Horodateur || 0) - new Date(a.Horodateur || 0));
+
+            const totalPages = Math.ceil(filtrées.length / elementsParPage) || 1;
+            if (pageActuelle > totalPages) pageActuelle = totalPages;
+
+            const elementsPage = filtrées.slice((pageActuelle - 1) * elementsParPage, pageActuelle * elementsParPage);
+            const cont = document.getElementById('mur-messages');
+            cont.innerHTML = "";
+
+            if (elementsPage.length === 0) {
+                cont.innerHTML = `<div style="grid-column: span 3; padding: 20px; font-weight: bold; background: white; border-radius: 10px; color: #008080;">Aucune annonce trouvée dans le jardin pour l'instant... 🌸</div>`;
+                document.getElementById('pagination-numeros').innerHTML = "";
+                return;
+            }
+
+            elementsPage.forEach(ann => {
+                const idAnnonce = ann.Horodateur || ann.id || '';
+                const nomAnnonce = ann.nom || ann.Nom || ann.prenom || ann.Prenom || ann.auteur || "Anonyme";
+                const typeAnnonce = (ann.type || "").toUpperCase();
+                const msgAnnonce = ann.message || "";
+                const datePubli = formaterDate(ann.Horodateur);
+                const validiteAnnonce = ann.validite || ann.duree || "1 jour";
+
+                const listeReponses = obtenirReponsesPourAnnonce(ann);
+                let badgeReponsesHtml = listeReponses.length > 0 ? `<div class="badge-reponses">💬 ${listeReponses.length} réponse(s)</div>` : '';
+
+                const d = document.createElement('div');
+                d.className = 'carte-message';
+                d.style.borderRightColor = couleursBordures[typeAnnonce] || "#008080";
+
+                const dejaVote = localStorage.getItem('vote_' + idAnnonce);
+                const nbArrosages = parseInt(ann.votes_arrosage) || 0;
+                let texteBoutonArrosage = nbArrosages > 0 ? `💧 Arroser (${nbArrosages})` : `💧 Arroser`;
+                let styleDesactive = "";
+                if (dejaVote) {
+                    texteBoutonArrosage = nbArrosages > 0 ? `💧 Déjà arrosé (${nbArrosages})` : `💧 Déjà arrosé`;
+                    styleDesactive = "disabled";
+                }
+
+                d.innerHTML = `
+                    <div class="nom-prenom">${escapeHtml(nomAnnonce)}</div>
+                    <div class="rubrique-tag" style="background-color: ${couleursBordures[typeAnnonce] || "#008080"};">${escapeHtml(nomBoutonAffiche[typeAnnonce] || "Graine")}</div>
+                    <div class="texte-annonce">${escapeHtml(masquerCoordonnees(msgAnnonce))}</div>
+                    ${badgeReponsesHtml}
+                    <div class="details-bas">
+                        📅 Publié : ${escapeHtml(datePubli)} &nbsp;|&nbsp; ⏳ Validité : ${escapeHtml(validiteAnnonce)}<br>
+                        📍 ${escapeHtml(ann.localisation || 'N/C')} (${escapeHtml(ann.pays_select || 'N/C')})
+                        <button class="btn-arrosage" ${styleDesactive}>${texteBoutonArrosage}</button>
+                        <button class="btn-repondre">💌 Répondre à cette graine</button>
+                    </div>
+                `;
+
+                d.addEventListener('click', () => ouvrirGrandMessage(ann));
+
+                const btnArroser = d.querySelector('.btn-arrosage');
+                btnArroser.addEventListener('click', (e) => { e.stopPropagation(); arroser(e, idAnnonce, btnArroser, ann); });
+
+                const btnRep = d.querySelector('.btn-repondre');
+                btnRep.addEventListener('click', (e) => { e.stopPropagation(); ouvrirModalReponse(ann); });
+
+                cont.appendChild(d);
+            });
+
+            afficherPaginationNumeros(totalPages);
+        }
+
+        function afficherPaginationNumeros(totalPages) {
+            const paginationContainer = document.getElementById('pagination-numeros');
+            paginationContainer.innerHTML = "";
+
+            if (totalPages <= 1) return;
+
+            if (pageActuelle > 1) {
+                const btnPrec = document.createElement('button');
+                btnPrec.className = 'page-btn'; 
+                btnPrec.innerText = "« Préc.";
+                btnPrec.onclick = () => changerPage(pageActuelle - 1);
+                paginationContainer.appendChild(btnPrec);
+            }
+
+            for (let i = 1; i <= totalPages; i++) {
+                const btn = document.createElement('button');
+                btn.className = `page-btn ${i === pageActuelle ? 'active' : ''}`;
+                btn.innerText = i; 
+                btn.onclick = () => changerPage(i);
+                paginationContainer.appendChild(btn);
+            }
+
+            if (pageActuelle < totalPages) {
+                const btnSuiv = document.createElement('button');
+                btnSuiv.className = 'page-btn'; 
+                btnSuiv.innerText = "Suiv. »";
+                btnSuiv.onclick = () => changerPage(pageActuelle + 1);
+                paginationContainer.appendChild(btnSuiv);
+            }
+        }
+
+        function changerPage(numPage) {
+            jouerBip(); 
+            pageActuelle = numPage; 
+            executerFiltrage();
+            window.scrollTo({ top: 300, behavior: 'smooth' });
+        }
+
+        async function arroser(e, id, btn, ann) {
+            if (localStorage.getItem('vote_' + id)) return;
+
+            jouerBip(); 
+            animerPluieGouttes(e);
+
+            ann.votes_arrosage = (parseInt(ann.votes_arrosage) || 0) + 1;
+            btn.innerHTML = `💧 Déjà arrosé (${ann.votes_arrosage})`;
+            btn.style.background = "#C8E6C9"; 
+            btn.disabled = true;
+            localStorage.setItem('vote_' + id, 'true');
+
+            const fd = new URLSearchParams(); 
+            fd.append('token', TOKEN_SECRET); 
+            fd.append('action', 'arroser'); 
+            fd.append('id', id);
+            fetch(WEB_APP_URL, { method: 'POST', body: fd });
+        }
+
+        function ouvrirGrandMessage(ann) {
+            const listeReponses = obtenirReponsesPourAnnonce(ann);
+            const datePubli = formaterDate(ann.Horodateur);
+            const validiteAnnonce = ann.validite || ann.duree || "1 jour";
+
+            let htmlReponsesGeant = '';
+            if (listeReponses.length > 0) {
+                htmlReponsesGeant = `<div style="background:#FFF8E7; padding:12px; border-radius:10px; border:2px dashed #E67E22; margin-bottom:12px; text-align:left;">
+                    <h4 style="color:#E67E22; margin:0 0 8px 0;">💬 Contributions publiques (${listeReponses.length}) :</h4>`;
+                listeReponses.forEach(r => {
+                    htmlReponsesGeant += `<div style="margin-bottom:8px; border-bottom:1px solid #ddd; padding-bottom:6px; word-break: break-word;">
+                        <strong style="color:#2E7D32;">${escapeHtml(r.nom)} :</strong> 
+                        <div style="white-space: pre-line; color: #333; margin-top: 2px;">“${escapeHtml(masquerCoordonnees(r.message))}”</div>
+                    </div>`;
+                });
+                htmlReponsesGeant += `</div>`;
+            }
+
+            const divContent = document.getElementById('geant-contenu');
+            divContent.innerHTML = `
+                <div style="font-size:1.4em; color:#2E7D32; font-weight:bold; border-bottom:3px solid #008080; margin-bottom:12px; padding-right: 40px;">🌱 Offrande de ${escapeHtml(ann.nom || "Anonyme")}</div>
+                <div style="background:white; padding:15px; border-radius:12px; border-left:8px solid #FF1493; font-size:1em; color:#000080; text-align:left; margin-bottom:12px; max-height: 220px; overflow-y: auto; white-space: pre-line; word-break: break-word;">“${escapeHtml(masquerCoordonnees(ann.message || ""))}”</div>
+                <div style="text-align:left; background:#E0F2F1; padding:12px; border-radius:8px; font-size:0.9em; margin-bottom:12px; line-height: 1.4;">
+                    <strong>📅 Date de publication :</strong> ${escapeHtml(datePubli)}<br>
+                    <strong>⏳ Durée de validité :</strong> ${escapeHtml(validiteAnnonce)}<br>
+                    <strong>📍 Localisation :</strong> ${escapeHtml(ann.localisation || "N/C")} (${escapeHtml(ann.pays_select || "N/C")})<br>
+                    <strong>🌍 Portée :</strong> ${escapeHtml(ann.rayon_action || "Locale")}<br>
+                    <strong>🚚 Logistique :</strong> ${escapeHtml(ann.logistique || "Main Propre")}
+                </div>
+                ${htmlReponsesGeant}
+                <button class="btn-repondre" id="geant-btn-rep" style="font-size: 1em; padding: 10px; margin-top: 5px;">💌 Répondre à cette graine (Public ou Privé)</button>
+            `;
+
+            document.getElementById('geant-btn-rep').onclick = () => {
+                fermerGrandMessage();
+                ouvrirModalReponse(ann);
+            };
+
+            document.getElementById('fond-sombre').style.display = 'flex';
+        }
+
+        function ouvrirModalReponse(ann) {
+            jouerBip();
+            document.getElementById('rep_id_annonce').value = ann.Horodateur || ann.ref_id || '';
+            document.getElementById('rep_row_index').value = ann.rowIndex || '';
+            document.getElementById('rep_type_annonce').value = ann.type || "";
+            
+            const rappel = document.getElementById('rappel-annonce');
+            const msgBrut = ann.message || "";
+            rappel.innerHTML = `<strong>Graine de ${escapeHtml(ann.nom || "Anonyme")} :</strong> “${escapeHtml(masquerCoordonnees(msgBrut).substring(0, 90))}${msgBrut.length > 90 ? '...' : ''}”`;
+
+            document.getElementById('rep_mode').value = "public";
+            changerModeReponse("public");
+            document.getElementById('formReponse').reset();
+            document.getElementById('rep_id_annonce').value = ann.Horodateur || ann.ref_id || '';
+
+            document.getElementById('modal-reponse').style.display = 'flex';
+        }
+
+        function changerModeReponse(mode) {
+            const blocEmail = document.getElementById('bloc-email-expediteur');
+            const champEmail = document.getElementById('rep_email_expediteur');
+            const actionInput = document.getElementById('rep_type_action');
+            const titreModal = document.getElementById('modal-titre');
+            const btnSubmit = document.getElementById('btnSubmitReponse');
+
+            if (mode === 'prive') {
+                blocEmail.style.display = 'block';
+                champEmail.required = true;
+                actionInput.value = 'prive';
+                titreModal.innerHTML = "✉️ Envoyer un message privé (par e-mail)";
+                titreModal.style.color = "#2E7D32";
+                btnSubmit.style.background = "#2E7D32";
+            } else {
+                blocEmail.style.display = 'none';
+                champEmail.required = false;
+                actionInput.value = 'repondre';
+                titreModal.innerHTML = "💌 Répondre publiquement";
+                titreModal.style.color = "#E67E22";
+                btnSubmit.style.background = "#E67E22";
+            }
+        }
+
+        function fermerModalReponse() { document.getElementById('modal-reponse').style.display = 'none'; }
+
+        async function envoyerReponse(e) {
+            e.preventDefault();
+            jouerBip();
+
+            const btn = document.getElementById('btnSubmitReponse');
+            const mode = document.getElementById('rep_mode').value;
+            btn.innerText = "Envoi en cours... 🌱";
+            btn.disabled = true;
+
+            const params = new URLSearchParams();
+            params.append('token', TOKEN_SECRET);
+            params.append('action', mode === 'prive' ? 'prive' : 'repondre');
+            params.append('ref_id', document.getElementById('rep_id_annonce').value);
+            params.append('row_index', document.getElementById('rep_row_index').value);
+            params.append('nom', document.getElementById('rep_nom').value);
+            params.append('message', document.getElementById('rep_message').value);
+            
+            if (mode === 'prive') {
+                params.append('emailExpediteur', document.getElementById('rep_email_expediteur').value);
+            }
+
+            try {
+                await fetch(WEB_APP_URL, { method: 'POST', body: params });
+                btn.innerText = mode === 'prive' ? "E-mail privé envoyé ! 📨" : "Réponse publiée ! 🌸";
+                setTimeout(() => {
+                    fermerModalReponse();
+                    btn.innerText = "ENVOYER MA RÉPONSE ✨";
+                    btn.disabled = false;
+                    document.getElementById('formReponse').reset();
+                    chargerAnnonces();
+                }, 1200);
+            } catch (err) {
+                console.error("Erreur d'envoi :", err);
+                alert("Une erreur est survenue lors de l'envoi.");
+                btn.disabled = false;
+                btn.innerText = "ENVOYER MA RÉPONSE ✨";
+            }
+        }
+
+        function rechercheRapide(t, el) {
+            jouerBip();
+            document.querySelectorAll('.btn-filtre-rapide').forEach(b => b.classList.remove('actif'));
+
+            if (filtreTypeActuel === t) {
+                filtreTypeActuel = "";
+                filtreSousTypeActuel = "";
+            } else {
+                filtreTypeActuel = t;
+                filtreSousTypeActuel = "";
+                if (el) el.classList.add('actif');
+            }
+            afficherTiroirSousRubriques(filtreTypeActuel);
+            pageActuelle = 1;
+            executerFiltrage();
+        }
+
+        function resetRecherche() {
+            jouerBip();
+            document.getElementById('searchKeyword').value = ""; 
+            document.getElementById('searchPays').value = ""; 
+            document.getElementById('searchVille').value = "";
+            filtreTypeActuel = ""; 
+            filtreSousTypeActuel = "";
+            document.querySelectorAll('.btn-filtre-rapide').forEach(b => b.classList.remove('actif'));
+            document.getElementById('sous-rubriques-container').style.display = 'none';
+            pageActuelle = 1;
+            executerFiltrage();
+        }
+
+        function fermerGrandMessage() { document.getElementById('fond-sombre').style.display = 'none'; }
+
+        window.onload = chargerAnnonces;
     </script>
-    <script src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
 </body>
 </html>
