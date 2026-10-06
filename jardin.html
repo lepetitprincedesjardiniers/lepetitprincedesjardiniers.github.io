@@ -806,21 +806,31 @@
                 }
 
                 let html = "";
-                resultats.forEach((item, index) => {
+                resultats.forEach((item) => {
                     let listePrivesHtml = "<div style='color: #777; font-style: italic; font-size: 0.85em;'>Aucun message privé reçu pour cette annonce pour l'instant.</div>";
                     
                     if (item.messages_prives && item.messages_prives.trim() !== "") {
                         listePrivesHtml = "";
-                        const blocs = item.messages_prives.split("||");
-                        blocs.forEach(bloc => {
-                            const match = bloc.match(/\[(.*?) \((.*?)\)\]\s*:\s*(.*)/);
+                        const blocs = item.messages_prives.split("||").map(b => b.trim()).filter(b => b !== "");
+                        
+                        // Mettre les plus récents en haut tout en gardant l'index exact pour la suppression
+                        const blocsInverses = blocs.map((texte, idxOriginal) => ({ texte, idxOriginal })).reverse();
+
+                        blocsInverses.forEach(obj => {
+                            const match = obj.texte.match(/\[(.*?) \((.*?)\)\]\s*:\s*(.*)/);
+                            const rowId = item.rowIndex;
+
                             if (match) {
-                                listePrivesHtml += `<div style="background: #fff; border-left: 4px solid #E67E22; padding: 8px; margin-bottom: 6px; border-radius: 6px; font-size: 0.85em;">
+                                listePrivesHtml += `<div style="background: #fff; border-left: 4px solid #E67E22; padding: 8px; margin-bottom: 6px; border-radius: 6px; font-size: 0.85em; position: relative;">
+                                    <button onclick="supprimerMessagePrive(${rowId}, ${obj.idxOriginal})" style="float: right; background: #e74c3c; color: white; border: none; border-radius: 4px; padding: 3px 8px; font-size: 0.75em; cursor: pointer; font-family: 'Comic Sans MS';">🗑 Supprimer</button>
                                     <strong style="color: #2E7D32;">${escapeHtml(match[1])}</strong> <span style="font-size: 0.75em; color: #888;">(${escapeHtml(match[2])})</span><br>
-                                    <div style="color: #333; margin-top: 4px; white-space: pre-line;">“${escapeHtml(match[3])}”</div>
+                                    <div style="color: #333; margin-top: 4px; white-space: pre-line; padding-right: 75px;">“${escapeHtml(match[3])}”</div>
                                 </div>`;
-                            } else if (bloc.trim() !== "") {
-                                listePrivesHtml += `<div style="background: #fff; border-left: 4px solid #E67E22; padding: 8px; margin-bottom: 6px; border-radius: 6px; font-size: 0.85em; color: #333;">${escapeHtml(bloc.trim())}</div>`;
+                            } else {
+                                listePrivesHtml += `<div style="background: #fff; border-left: 4px solid #E67E22; padding: 8px; margin-bottom: 6px; border-radius: 6px; font-size: 0.85em; color: #333; position: relative;">
+                                    <button onclick="supprimerMessagePrive(${rowId}, ${obj.idxOriginal})" style="float: right; background: #e74c3c; color: white; border: none; border-radius: 4px; padding: 3px 8px; font-size: 0.75em; cursor: pointer; font-family: 'Comic Sans MS';">🗑 Supprimer</button>
+                                    <div style="padding-right: 75px;">${escapeHtml(obj.texte)}</div>
+                                </div>`;
                             }
                         });
                     }
@@ -841,6 +851,31 @@
             } catch (err) {
                 console.error("Erreur de récupération :", err);
                 container.innerHTML = `<div style="text-align: center; color: #d9534f; font-weight: bold; padding: 20px;">Erreur lors du chargement de la boîte de réception.</div>`;
+            }
+        }
+
+        async function supprimerMessagePrive(rowIndex, msgIndex) {
+            if (!confirm("Confirmes-tu la suppression de ce message privé ?")) return;
+            
+            jouerBip();
+            const params = new URLSearchParams();
+            params.append('token', TOKEN_SECRET);
+            params.append('action', 'supprimer_prive');
+            params.append('row_index', rowIndex);
+            params.append('msg_index', msgIndex);
+
+            try {
+                const response = await fetch(WEB_APP_URL, { method: 'POST', body: params });
+                const result = await response.json();
+
+                if (result.result === "success") {
+                    chargerBoiteReception();
+                } else {
+                    alert("Erreur lors de la suppression : " + (result.message || "Action non autorisée"));
+                }
+            } catch (err) {
+                console.error("Erreur suppression :", err);
+                alert("Une erreur est survenue lors de la suppression.");
             }
         }
 
