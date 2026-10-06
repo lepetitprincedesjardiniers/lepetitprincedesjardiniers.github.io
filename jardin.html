@@ -42,12 +42,10 @@
         #sous-rubriques-container { display: none; width: 90%; background: rgba(255, 105, 180, 0.25); padding: 8px; border-radius: 12px; border: 2px dashed #ff1493; margin-top: 5px; text-align: center; }
         .select-sous-rubrique { padding: 6px 10px; border-radius: 10px; border: 2px solid #ff1493; font-family: 'Comic Sans MS'; font-size: 0.78em; background: white; color: #008080; font-weight: bold; cursor: pointer; outline: none; width: 80%; max-width: 450px; }
 
-        /* Grille des cartes sur 3 colonnes */
         .mur-reel { display: grid; grid-template-columns: repeat(3, minmax(280px, 1fr)); gap: 20px; padding: 15px; max-width: 1200px; margin: 0 auto; align-items: start; }
         @media (max-width: 1024px) { .mur-reel { grid-template-columns: repeat(2, 1fr); } }
         @media (max-width: 600px) { .mur-reel { grid-template-columns: repeat(1, 1fr); } }
 
-        /* EFFET DE SÉPARATION & TAILLE IDENTIQUE DES CELLULES */
         .carte-message { 
             background: white; 
             border: 1px solid #e0e0e0;
@@ -190,6 +188,7 @@
         </div>
     </div>
 
+    <!-- MODALE DE RÉPONSE MISE À JOUR (Public ou Privé) -->
     <div id="modal-reponse" onclick="fermerModalReponse()">
         <div class="form-reponse-box" onclick="event.stopPropagation()">
             <button class="bouton-fermer" onclick="fermerModalReponse()">X</button>
@@ -203,6 +202,19 @@
 
                 <label style="font-weight: bold; color: #008080; font-size: 0.9em;">Ton Prénom / Pseudo :</label>
                 <input type="text" id="rep_nom" class="field-rep" placeholder="Ton nom de cœur..." required>
+
+                <!-- Choix du mode d'envoi : Public ou Privé -->
+                <label style="font-weight: bold; color: #008080; font-size: 0.9em; margin-top: 10px;">Mode de réponse :</label>
+                <select id="rep_mode" class="field-rep" onchange="changerModeReponse(this)">
+                    <option value="repondre">🔓 Commentaire public (visible sous l'annonce)</option>
+                    <option value="prive">💌 Message privé (par e-mail secret à l'auteur)</option>
+                </select>
+
+                <!-- Champ e-mail affiché uniquement si mode privé sélectionné -->
+                <div id="bloc_email_expediteur" style="display: none;">
+                    <label style="font-weight: bold; color: #008080; font-size: 0.9em;">Ton E-mail (pour que l'auteur puisse te répondre) :</label>
+                    <input type="email" id="rep_email_exp" class="field-rep" placeholder="ton.email@exemple.com">
+                </div>
 
                 <label style="font-weight: bold; color: #008080; font-size: 0.9em;">Ton Message / Proposition :</label>
                 <textarea id="rep_message" class="field-rep" rows="4" placeholder="Propose ton aide, ton soutien..." required></textarea>
@@ -726,6 +738,17 @@
 
         function fermerModalReponse() { document.getElementById('modal-reponse').style.display = 'none'; }
 
+        function changerModeReponse(selectEl) {
+            const blocEmail = document.getElementById('bloc_email_expediteur');
+            if (selectEl.value === 'prive') {
+                blocEmail.style.display = 'block';
+                document.getElementById('rep_email_exp').required = true;
+            } else {
+                blocEmail.style.display = 'none';
+                document.getElementById('rep_email_exp').required = false;
+            }
+        }
+
         async function envoyerReponse(e) {
             e.preventDefault();
             jouerBip();
@@ -738,26 +761,36 @@
             const rowIndex = document.getElementById('rep_row_index').value;
             const nomRep = document.getElementById('rep_nom').value;
             const msgRep = document.getElementById('rep_message').value;
+            const modeEnvoi = document.getElementById('rep_mode').value; // 'repondre' ou 'prive'
+            const emailExpediteur = document.getElementById('rep_email_exp') ? document.getElementById('rep_email_exp').value : "";
 
             const params = new URLSearchParams();
             params.append('token', TOKEN_SECRET);
-            params.append('action', 'repondre');
+            params.append('action', modeEnvoi);
             params.append('ref_id', idRef);
             params.append('row_index', rowIndex);
             params.append('nom', nomRep);
             params.append('message', msgRep);
+            params.append('emailExpediteur', emailExpediteur);
 
             try {
-                await fetch(WEB_APP_URL, { method: 'POST', body: params });
+                const response = await fetch(WEB_APP_URL, { method: 'POST', body: params });
+                const resultat = await response.json();
 
-                btn.innerText = "Réponse envoyée ! 🌸";
-                setTimeout(() => {
-                    fermerModalReponse();
-                    btn.innerText = "ENVOYER MA RÉPONSE ✨";
-                    btn.disabled = false;
-                    document.getElementById('formReponse').reset();
-                    chargerAnnonces();
-                }, 1000);
+                if (resultat.result === "error") {
+                    alert("Erreur : " + resultat.message);
+                } else {
+                    btn.innerText = modeEnvoi === 'prive' ? "Message privé envoyé ! 💌" : "Réponse publiée ! 🌸";
+                    setTimeout(() => {
+                        fermerModalReponse();
+                        btn.innerText = "ENVOYER MA RÉPONSE ✨";
+                        btn.disabled = false;
+                        document.getElementById('formReponse').reset();
+                        const blocEmail = document.getElementById('bloc_email_expediteur');
+                        if (blocEmail) blocEmail.style.display = 'none';
+                        chargerAnnonces();
+                    }, 1200);
+                }
             } catch (err) {
                 console.error("Erreur d'envoi :", err);
                 alert("Une erreur est survenue lors de l'envoi.");
