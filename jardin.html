@@ -27,96 +27,38 @@
         .search-item input { padding: 8px; border-radius: 10px; border: none; text-align: center; }
 
         .btn-group { display: flex; gap: 8px; flex-wrap: wrap; justify-content: center; margin-top: 5px; }
-        
         .btn-filtre-rapide { background: rgba(255,255,255,0.2); border: 2px solid white; color: white; padding: 6px 12px; border-radius: 20px; cursor: pointer; font-family: 'Comic Sans MS'; font-size: 0.8em; transition: 0.3s; font-weight: bold; }
-        .btn-filtre-rapide[data-cat="Savoir"] { border-color: #ffc107; background: rgba(255, 193, 7, 0.25); }
-        .btn-filtre-rapide[data-cat="Citoyenne"] { border-color: #2ECC71; background: rgba(46, 204, 113, 0.25); }
-        .btn-filtre-rapide[data-cat="Harmonie"] { border-color: #ff69b4; background: rgba(255, 105, 180, 0.25); }
-        .btn-filtre-rapide[data-cat="Régulation"] { border-color: #9370DB; background: rgba(147, 112, 219, 0.25); }
-        .btn-filtre-rapide[data-cat="Trésor"] { border-color: #1E90FF; background: rgba(30, 144, 255, 0.25); }
-        .btn-filtre-rapide[data-cat="Autre"] { border-color: #00ced1; background: rgba(0, 206, 209, 0.25); color: #FFFFFF; font-weight: bold; }
-
-        .btn-filtre-rapide.actif { background: #fff !important; color: #008080 !important; font-weight: bold; box-shadow: 0 0 10px rgba(255,255,255,0.8); }
+        .btn-filtre-rapide.actif { background: #fff !important; color: #008080 !important; font-weight: bold; }
         .btn-reset { border-color: #ffffff !important; background: rgba(255,255,255,0.1); }
 
-        #sous-rubriques-container { display: none; width: 90%; background: rgba(255, 105, 180, 0.25); padding: 8px; border-radius: 12px; border: 2px dashed #ff1493; margin-top: 5px; text-align: center; }
-        .select-sous-rubrique { padding: 6px 10px; border-radius: 10px; border: 2px solid #ff1493; font-family: 'Comic Sans MS'; font-size: 0.78em; background: white; color: #008080; font-weight: bold; cursor: pointer; outline: none; width: 80%; max-width: 450px; }
-
-        /* Grille des cartes sur 3 colonnes */
         .mur-reel { display: grid; grid-template-columns: repeat(3, minmax(280px, 1fr)); gap: 20px; padding: 15px; max-width: 1200px; margin: 0 auto; align-items: start; }
         @media (max-width: 1024px) { .mur-reel { grid-template-columns: repeat(2, 1fr); } }
         @media (max-width: 600px) { .mur-reel { grid-template-columns: repeat(1, 1fr); } }
 
-        /* EFFET DE SÉPARATION & TAILLE IDENTIQUE DES CELLULES */
         .carte-message { 
-            background: white; 
-            border: 1px solid #e0e0e0;
-            border-right: 5px solid #008080; 
-            border-radius: 12px; 
-            padding: 16px; 
-            box-shadow: 0 4px 14px rgba(0,0,0,0.08); 
-            display: flex; 
-            flex-direction: column; 
-            height: 400px; 
-            box-sizing: border-box;
-            cursor: pointer; 
-            position: relative; 
-            overflow: hidden; 
-            text-align: left; 
-            transition: transform 0.25s ease, box-shadow 0.25s ease; 
-        }
-        .carte-message:hover { 
-            transform: translateY(-4px); 
-            box-shadow: 0 6px 20px rgba(0,0,0,0.14); 
+            background: white; border: 1px solid #e0e0e0; border-right: 5px solid #008080; border-radius: 12px; padding: 16px; 
+            box-shadow: 0 4px 14px rgba(0,0,0,0.08); display: flex; flex-direction: column; height: 400px; box-sizing: border-box;
+            cursor: pointer; position: relative; overflow: hidden; text-align: left; transition: transform 0.25s ease; 
         }
         .nom-prenom { color: #2E7D32; font-weight: bold; font-size: 0.95em; border-bottom: 1px solid #f0f0f0; margin-bottom: 8px; padding-bottom: 6px; padding-right: 90px; }
-        
         .rubrique-tag { font-size: 0.6em; color: white; padding: 3px 8px; border-radius: 6px; position: absolute; top: 12px; right: 12px; font-weight: bold; }
-
-        .texte-annonce { 
-            flex-grow: 1; 
-            font-style: italic; 
-            color: #000080; 
-            overflow-y: auto; 
-            font-size: 0.85em; 
-            margin: 8px 0; 
-            line-height: 1.4; 
-            padding-right: 6px; 
-            scrollbar-width: thin; 
-            white-space: pre-line; 
-            word-break: break-word; 
-        }
-        .texte-annonce::before { content: "“"; color: #ff1493; font-weight: bold; margin-right: 2px; }
-        .texte-annonce::after { content: "”"; color: #ff1493; font-weight: bold; margin-left: 2px; }
+        .texte-annonce { flex-grow: 1; font-style: italic; color: #000080; overflow-y: auto; font-size: 0.85em; margin: 8px 0; line-height: 1.4; white-space: pre-line; word-break: break-word; }
         
-        .badge-reponses { font-size: 0.75em; color: #E67E22; font-weight: bold; background: #FFF8E7; border: 1px solid #E67E22; border-radius: 6px; padding: 4px 8px; margin: 6px 0; align-self: flex-start; flex-shrink: 0; }
+        .btn-arrosage { background: #E1F5FE; border: 1px solid #00BFFF; border-radius: 8px; color: #0277BD; font-size: 0.8em; padding: 6px; cursor: pointer; margin: 4px 0; font-weight: bold; width: 100%; }
+        .btn-repondre { background: #E67E22; border: 1px solid #b35900; border-radius: 8px; color: white; font-size: 0.8em; padding: 7px; cursor: pointer; margin: 4px 0; font-weight: bold; width: 100%; }
+        .details-bas { font-size: 0.68em; color: #555; line-height: 1.4; border-top: 1px solid #f0f0f0; padding-top: 8px; background: white; margin-top: auto; }
 
-        .btn-arrosage { background: #E1F5FE; border: 1px solid #00BFFF; border-radius: 8px; color: #0277BD; font-size: 0.8em; padding: 6px; cursor: pointer; margin: 4px 0; font-weight: bold; width: 100%; position: relative; z-index: 5; flex-shrink: 0; }
-        .btn-arrosage:disabled { background: #E0E0E0; border-color: #BDBDBD; color: #757575; cursor: not-allowed; }
-        .btn-repondre { background: #E67E22; border: 1px solid #b35900; border-radius: 8px; color: white; font-size: 0.8em; padding: 7px; cursor: pointer; margin: 4px 0; font-weight: bold; width: 100%; transition: 0.2s; position: relative; z-index: 5; flex-shrink: 0; }
-        .btn-repondre:hover { background: #d35400; }
-
-        .details-bas { font-size: 0.68em; color: #555; line-height: 1.4; border-top: 1px solid #f0f0f0; padding-top: 8px; background: white; flex-shrink: 0; margin-top: auto; }
-
-        .pagination-container { display: flex; justify-content: center; align-items: center; gap: 5px; margin: 25px 0; flex-wrap: wrap; }
-        .page-btn { background: white; border: 2px solid #008080; color: #008080; padding: 6px 12px; border-radius: 8px; font-weight: bold; cursor: pointer; font-family: 'Comic Sans MS'; transition: 0.2s; }
+        .pagination-container { display: flex; justify-content: center; align-items: center; gap: 5px; margin: 25px 0; }
+        .page-btn { background: white; border: 2px solid #008080; color: #008080; padding: 6px 12px; border-radius: 8px; font-weight: bold; cursor: pointer; }
         .page-btn.active { background: #008080; color: white; }
-        .page-btn:hover:not(.active) { background: #E0F2F1; }
 
         body.dark-mode { background-color: #0a0a1a; color: #e0e0e0; }
-        .star { position: fixed; background: white; border-radius: 50%; opacity: 0; pointer-events: none; animation: twinkle var(--d) infinite; }
-        @keyframes twinkle { 0%, 100% { opacity: 0.3; } 50% { opacity: 1; } }
-
-        #fond-sombre, #modal-reponse { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); z-index: 2000; justify-content: center; align-items: center; padding: 10px; box-sizing: border-box; }
-        .message-geant { background: #FFFFF0; width: 95%; max-width: 800px; padding: 25px; border-radius: 20px; border: 6px solid #008080; position: relative; max-height: 85vh; overflow-y: auto; color: #000; text-align: left; box-sizing: border-box; }
-        .form-reponse-box { background: #FFFFFF; width: 90%; max-width: 500px; padding: 25px; border-radius: 20px; border: 5px solid #E67E22; position: relative; text-align: left; color: #000; box-shadow: 0 0 20px rgba(0,0,0,0.4); }
-        .bouton-fermer { position: absolute; top: 15px; right: 15px; background: #FF1493; color: white; border-radius: 50%; width: 36px; height: 36px; cursor: pointer; border: 2px solid white; font-weight: bold; display: flex; align-items: center; justify-content: center; z-index: 10; }
-
+        #fond-sombre, #modal-reponse { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); z-index: 2000; justify-content: center; align-items: center; }
+        .message-geant { background: #FFFFF0; width: 95%; max-width: 800px; padding: 25px; border-radius: 20px; border: 6px solid #008080; position: relative; max-height: 85vh; overflow-y: auto; color: #000; text-align: left; }
+        .form-reponse-box { background: #FFFFFF; width: 90%; max-width: 500px; padding: 25px; border-radius: 20px; border: 5px solid #E67E22; position: relative; text-align: left; color: #000; }
+        .bouton-fermer { position: absolute; top: 15px; right: 15px; background: #FF1493; color: white; border-radius: 50%; width: 36px; height: 36px; cursor: pointer; border: 2px solid white; font-weight: bold; display: flex; align-items: center; justify-content: center; }
         .field-rep { width: 100%; padding: 10px; margin: 8px 0; border: 2px solid #008080; border-radius: 10px; font-family: 'Comic Sans MS'; box-sizing: border-box; }
         .btn-retour { display: inline-block; margin-top: 10px; padding: 10px 20px; background: #34495e; color: white; text-decoration: none; border-radius: 8px; font-weight: bold; }
-        .copyright-link { color: #008080; text-decoration: none; font-weight: bold; }
-        .journal-footer-link { color: #008080; text-decoration: none; font-weight: bold; font-size: 0.9em; display: inline-block; margin-top: 8px; }
-        .journal-footer-link:hover { text-decoration: underline; }
     </style>
 </head>
 <body>
@@ -159,23 +101,16 @@
                 <button class="btn-filtre-rapide" data-cat="Harmonie" onclick="rechercheRapide('Harmonie', this)">🤝 Aide & Harmonie</button>
                 <button class="btn-filtre-rapide" data-cat="Régulation" onclick="rechercheRapide('Régulation', this)">⚖ Régulation</button>
                 <button class="btn-filtre-rapide" data-cat="Trésor" onclick="rechercheRapide('Trésor', this)">💰 Trésor Public</button>
-                <button class="btn-filtre-rapide" data-cat="Autre" onclick="rechercheRapide('Autre', this)">✨ Autre domaine</button>
                 <button class="btn-filtre-rapide btn-reset" onclick="resetRecherche()">🔄 Tout voir</button>
-            </div>
-
-            <div id="sous-rubriques-container">
-                <select id="selectSousRubrique" class="select-sous-rubrique" onchange="changerSousRubrique(this)"></select>
             </div>
         </div>
     </div>
 
-    <h3 id="titre-registre" style="color: #008080; margin: 15px 0 5px 0;">📖 Registre de la Fraternité</h3>
+    <h3 style="color: #008080; margin: 15px 0 5px 0;">📖 Registre de la Fraternité</h3>
     
     <div id="mur-messages" class="mur-reel"></div>
-    
     <div id="pagination-numeros" class="pagination-container"></div>
-
-    <div class="phrase-etoiles" id="phrase-petit-prince" style="font-style: italic; color: #2E7D32; margin: 15px;"></div>
+    <div id="phrase-petit-prince" style="font-style: italic; color: #2E7D32; margin: 15px;"></div>
 
     <div style="text-align: center; margin-bottom: 20px;">
         <a href="formulaire.html" class="btn-retour" style="background:#e67e22; margin-right: 10px;">Semer un Don</a>
@@ -193,7 +128,7 @@
         <div class="form-reponse-box" onclick="event.stopPropagation()">
             <button class="bouton-fermer" onclick="fermerModalReponse()">X</button>
             <h3 style="color: #E67E22; margin-top: 0;">💌 Répondre à cette graine</h3>
-            <div id="rappel-annonce" style="font-size: 0.85em; background: #fffdf0; padding: 10px; border-radius: 8px; border-left: 4px solid #E67E22; margin-bottom: 15px; color: #444;"></div>
+            <div id="rappel-annonce" style="font-size: 0.85em; background: #fffdf0; padding: 10px; border-radius: 8px; margin-bottom: 15px; color: #444;"></div>
 
             <form id="formReponse" onsubmit="envoyerReponse(event)">
                 <input type="hidden" id="rep_id_annonce" name="ref_id">
@@ -203,127 +138,39 @@
                 <label style="font-weight: bold; color: #008080; font-size: 0.9em;">Ton Prénom / Pseudo :</label>
                 <input type="text" id="rep_nom" class="field-rep" placeholder="Ton nom de cœur..." required>
 
-                <label style="font-weight: bold; color: #008080; font-size: 0.9em;">Ton Message / Proposition :</label>
-                <textarea id="rep_message" class="field-rep" rows="4" placeholder="Propose ton aide, ton soutien..." required></textarea>
-
-                <div style="margin: 10px 0; text-align: left;">
-                    <label style="font-weight: bold; color: #008080; font-size: 0.9em; display: block; margin-bottom: 5px;">Type de réponse :</label>
-                    <label style="font-size: 0.85em; color: #333; cursor: pointer; display: block; margin-bottom: 5px;">
-                        <input type="radio" name="rep_type_choix" value="publique" checked> 💬 Répondre publiquement sur le site
-                    </label>
-                    <label style="font-size: 0.85em; color: #333; cursor: pointer; display: block;">
-                        <input type="radio" name="rep_type_choix" value="privee"> ✉️️ Envoyer un e-mail privé et direct à l'auteur (anonyme)
-                    </label>
-                </div>
+                <label style="font-weight: bold; color: #008080; font-size: 0.9em;">Ton Message :</label>
+                <textarea id="rep_message" class="field-rep" rows="4" placeholder="Propose ton aide..." required></textarea>
 
                 <button type="submit" id="btnSubmitReponse" class="btn-repondre" style="font-size: 1em; padding: 10px; margin-top: 5px;">ENVOYER MA RÉPONSE ✨</button>
             </form>
         </div>
     </div>
 
-    <div class="footer-copyright" style="margin-top: 20px; text-align: center;">
-        <div>
-            <a href="merci.html" class="copyright-link">© PINON 2000 — Conçu avec le cœur et l'esprit libre par le #petitploucdesjardiniers.</a>
-        </div>
-        <div>
-            <a href="transition-externe.html" class="journal-footer-link">📰 journal de bord du #petitploucdesjardiniers, réflexions de l'auteur du site.</a>
-        </div>
-    </div>
-
-    <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
-
     <script>
         const TOKEN_SECRET = "MonJardinSecuritToken2026";
-        const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbymicN9vLw30Otxbfw9UUCl7Bqs9Kq6ZHlBkm-9xktyhw7zLTFh-U-hLAewuDrqQVpoAA/exec";
-        let annoncesPrincipales = [], filtreTypeActuel = "", filtreSousTypeActuel = "";
+        // URL mise à jour avec ton nouveau déploiement
+        const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbxnut45uaiH_GhVoNQ4jYzw53thmlc-KHOwhvYfl23Owfh2iyRoT1DBAAeFDepiQCo2/exec";
+        
+        let annoncesPrincipales = [], filtreTypeActuel = "";
         let pageActuelle = 1;
         const elementsParPage = 20;
 
         const mappingBoutons = { 
             "Savoir": ["SAVOIR"], 
             "Citoyenne": ["VIE"], 
-            "Harmonie": ["AIDE", "URGENCE", "ECOUTE"], 
+            "Harmonie": ["AIDE"], 
             "Régulation": ["REGULATION"], 
-            "Trésor": ["IMPOT"], 
-            "Autre": ["AUTRE_CAT"] 
+            "Trésor": ["IMPOT"]
         };
 
         const couleursBordures = {
-            "SAVOIR": "#ffc107",
-            "VIE": "#2ECC71",
-            "AIDE": "#ff69b4",
-            "URGENCE": "#ff69b4",
-            "ECOUTE": "#ff69b4",
-            "REGULATION": "#9370DB",
-            "IMPOT": "#1E90FF",
-            "AUTRE_CAT": "#00ced1"
-        };
-
-        const sousRubriquesData = {
-            "Savoir": [
-                { id: "", label: "🎓 Toutes les précisions" },
-                { id: "Soutien scolaire & cours", label: "Soutien scolaire & cours" },
-                { id: "Art, artisanat & musique", label: "Art, artisanat & musique" },
-                { id: "Mentorat pro & compétences techniques", label: "Mentorat pro & compétences techniques" },
-                { id: "Savoir-faire du quotidien", label: "Savoir-faire du quotidien" },
-                { id: "Bibliothèque vivante", label: "Bibliothèque vivante" },
-                { id: "AUTRE_SUB", label: "Autres interprétations" }
-            ],
-            "Citoyenne": [
-                { id: "", label: "🏛 Toutes les précisions" },
-                { id: "Repas, graines & eau", label: "Repas, graines & eau" },
-                { id: "Prêt d'objets, outils & équipement", label: "Prêt d'objets, outils & équipement" },
-                { id: "Accueil, hébergement & covoiturage", label: "Accueil, hébergement & covoiturage" },
-                { id: "Loisirs & activités partagées", label: "Loisirs & activités partagées" },
-                { id: "AUTRE_SUB", label: "Autres recommandations" }
-            ],
-            "Harmonie": [
-                { id: "", label: "🤝 Toutes les précisions" },
-                { id: "Secours immédiat & petite urgence", label: "Secours immédiat & petite urgence" },
-                { id: "Écoute, présence & soutien aux aînés", label: "Écoute, présence & soutien aux aînés" },
-                { id: "Garde d'enfants & soutien familial", label: "Garde d'enfants & soutien familial" },
-                { id: "Soin des animaux & aide à la maison", label: "Soin des animaux & aide à la maison" },
-                { id: "AUTRE_SUB", label: "Autres merveilles" }
-            ],
-            "Régulation": [
-                { id: "", label: "⚖ Toutes les précisions" },
-                { id: "Aide aux démarches (Aide sociale rapprochée)", label: "Aide aux démarches (Aide sociale rapprochée)" },
-                { id: "Médiation de voisinage & paix citoyenne", label: "Médiation de voisinage & paix citoyenne" },
-                { id: "Organisation d'assemblées & conseils citoyens", label: "Organisation d'assemblées & conseils citoyens" },
-                { id: "AUTRE_SUB", label: "Autres conciliations" }
-            ],
-            "Trésor": [
-                { id: "", label: "💰 Toutes les précisions" },
-                { id: "Entretien des réseaux vitaux (eau, énergie)", label: "Entretien des réseaux vitaux (eau, énergie)" },
-                { id: "Voirie & chantiers participatifs", label: "Voirie & chantiers participatifs" },
-                { id: "Espaces verts, forêts & parcs publics", label: "Espaces verts, forêts & parcs publics" },
-                { id: "AUTRE_SUB", label: "Autres contributions" }
-            ],
-            "Autre": [
-                { id: "", label: "✨ Toutes les précisions" }
-            ]
-        };
-
-        const paramToBouton = {
-            "SAVOIR": "Savoir",
-            "VIE": "Citoyenne",
-            "AIDE": "Harmonie",
-            "URGENCE": "Harmonie",  
-            "ECOUTE": "Harmonie",   
-            "REGULATION": "Régulation",
-            "IMPOT": "Trésor",
-            "AUTRE_CAT": "Autre"
+            "SAVOIR": "#ffc107", "VIE": "#2ECC71", "AIDE": "#ff69b4",
+            "REGULATION": "#9370DB", "IMPOT": "#1E90FF"
         };
 
         const nomBoutonAffiche = { 
-            "SAVOIR": "Savoir", 
-            "VIE": "Vie Citoyenne", 
-            "AIDE": "Aide & Harmonie", 
-            "URGENCE": "Urgences (Santé & Secours)", 
-            "ECOUTE": "Écoute et réconfort", 
-            "REGULATION": "Régulation", 
-            "IMPOT": "Trésor Public", 
-            "AUTRE_CAT": "Autre domaine" 
+            "SAVOIR": "Savoir", "VIE": "Vie Citoyenne", "AIDE": "Aide & Harmonie", 
+            "REGULATION": "Régulation", "IMPOT": "Trésor Public" 
         };
 
         function googleTranslateElementInit() { new google.translate.TranslateElement({pageLanguage: 'fr'}, 'google_translate_element'); }
@@ -332,182 +179,23 @@
             return String(str || '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
         }
 
-        function masquerCoordonnees(texte) {
-            if (!texte) return "";
-            let protege = String(texte).replace(/([a-zA-Z0-9._-]+)@([a-zA-Z0-9._-]+)\.([a-zA-Z]{2,5})/gi, "$1 [at] $2 [dot] $3");
-            protege = protege.replace(/(?:(?:\+|00)33|0)\s*[1-9](?:[\s.-]*\d{2}){4}/g, "📱 [Numéro protégé]");
-            return protege;
-        }
-
-        function formaterDate(horodateur) {
-            if (!horodateur) return "N/C";
-            try {
-                const dateObj = new Date(horodateur);
-                if (!isNaN(dateObj)) {
-                    return dateObj.toLocaleDateString('fr-FR', { day: '2-digit', month: '2-digit', year: 'numeric' });
-                }
-                return horodateur.split('T')[0] || horodateur;
-            } catch(e) {
-                return horodateur;
-            }
-        }
-
-        function estExpire(ann) {
-            const horodateur = ann.Horodateur || ann.date;
-            if (!horodateur) return false;
-            const datePub = new Date(horodateur);
-            if (isNaN(datePub)) return false;
-
-            const validiteStr = String(ann.validite || ann.duree || "1 jour").toLowerCase();
-            let nbJours = 1; 
-            if (validiteStr.includes('7') || validiteStr.includes('semaine')) nbJours = 7;
-            else if (validiteStr.includes('30') || validiteStr.includes('mois')) nbJours = 30;
-            else if (validiteStr.includes('1') || validiteStr.includes('jour')) nbJours = 1;
-            else if (validiteStr.includes('illimité') || validiteStr.includes('permanent')) return false;
-
-            const dateExpiration = new Date(datePub.getTime() + (nbJours * 24 * 60 * 60 * 1000));
-            return new Date() > dateExpiration;
-        }
-
-        function obtenirReponsesPourAnnonce(ann) {
-            let resultatsReponses = [];
-            const champRepDirect = ann.reponses_article || ann.reponses || ann.commentaires || "";
-            if (champRepDirect) {
-                const blocs = String(champRepDirect).split("||");
-                blocs.forEach(bloc => {
-                    const match = bloc.match(/\[(.*?) \((.*?)\)\]\s*:\s*(.*)/);
-                    if (match) {
-                        resultatsReponses.push({ nom: match[1], message: match[3] });
-                    } else if (bloc.trim() !== "") {
-                        resultatsReponses.push({ nom: "Ami", message: bloc.trim() });
-                    }
-                });
-            }
-            return resultatsReponses;
-        }
-
-        function jouerBip() {
-            try {
-                const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-                const osc = audioCtx.createOscillator();
-                const gain = audioCtx.createGain();
-                osc.type = 'sine';
-                osc.frequency.setValueAtTime(587.33, audioCtx.currentTime);
-                gain.gain.setValueAtTime(0.03, audioCtx.currentTime);
-                gain.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + 0.2);
-                osc.connect(gain);
-                gain.connect(audioCtx.destination);
-                osc.start();
-                osc.stop(audioCtx.currentTime + 0.2);
-            } catch(e) {}
-        }
-
-        function animerPluieGouttes(event) {
-            const rect = event.target.getBoundingClientRect();
-            const x = rect.left + rect.width / 2;
-            const y = rect.top;
-
-            for (let i = 0; i < 6; i++) {
-                const goutte = document.createElement('div');
-                goutte.innerHTML = '💧';
-                goutte.style.position = 'fixed';
-                goutte.style.left = (x + (Math.random() * 50 - 25)) + 'px';
-                goutte.style.top = y + 'px';
-                goutte.style.fontSize = (14 + Math.random() * 10) + 'px';
-                goutte.style.pointerEvents = 'none';
-                goutte.style.zIndex = '3000';
-                goutte.style.transition = 'transform 0.7s ease-out, opacity 0.7s ease-out';
-                goutte.style.opacity = '1';
-                document.body.appendChild(goutte);
-
-                setTimeout(() => {
-                    goutte.style.transform = `translate(${Math.random() * 50 - 25}px, -${30 + Math.random() * 50}px) scale(1.4)`;
-                    goutte.style.opacity = '0';
-                }, 20);
-
-                setTimeout(() => goutte.remove(), 750);
-            }
-        }
-
-        function basculerModeSombre() {
-            document.body.classList.toggle('dark-mode');
-            if (document.body.classList.contains('dark-mode')) {
-                for(let i=0; i<60; i++) {
-                    let s = document.createElement('div'); s.className = 'star';
-                    s.style.left = Math.random()*100+'vw'; s.style.top = Math.random()*100+'vh';
-                    s.style.width = s.style.height = Math.random()*3+'px';
-                    s.style.setProperty('--d', (Math.random()*3+2)+'s');
-                    document.body.appendChild(s);
-                }
-            } else { document.querySelectorAll('.star').forEach(s => s.remove()); }
-        }
-
         async function chargerAnnonces() {
             try {
                 const response = await fetch(WEB_APP_URL + "?token=" + TOKEN_SECRET + "&v=" + Date.now());
                 const toutesLesDonnees = await response.json();
 
-                annoncesPrincipales = [];
-                toutesLesDonnees.forEach(item => {
+                annoncesPrincipales = toutesLesDonnees.filter(item => {
                     const type = String(item.type || item.Type || '').toUpperCase();
-                    if (type === 'VIDEO' || type === 'VIDÉO') return;
-                    annoncesPrincipales.push(item);
+                    return type !== 'VIDEO' && type !== 'VIDÉO';
                 });
 
-                document.getElementById('phrase-petit-prince').innerHTML = `✨ Aujourd'hui, le Petit Prince a pris soin de <b>${annoncesPrincipales.length}</b> fleurs resplendissantes dans le jardin du monde...`;
-
-                const urlParams = new URLSearchParams(window.location.search);
-                const catParam = urlParams.get('cat');
-
-                if (catParam) {
-                    const nomBouton = paramToBouton[catParam];
-                    if (nomBouton) {
-                        const btnTarget = document.querySelector(`.btn-filtre-rapide[data-cat="${nomBouton}"]`);
-                        if (btnTarget) {
-                            filtreTypeActuel = nomBouton;
-                            document.querySelectorAll('.btn-filtre-rapide').forEach(b => b.classList.remove('actif'));
-                            btnTarget.classList.add('actif');
-                            afficherTiroirSousRubriques(nomBouton);
-                        }
-                    }
-                }
-                pageActuelle = 1;
+                document.getElementById('phrase-petit-prince').innerHTML = `✨ Le Jardin prend soin de <b>${annoncesPrincipales.length}</b> fleurs resplendissantes...`;
                 executerFiltrage();
 
             } catch (error) {
                 console.error("Erreur de chargement :", error);
-                document.getElementById('mur-messages').innerHTML = `<div style="grid-column: span 3; padding: 20px; font-weight: bold; background: white; border-radius: 10px;">Impossible de charger les annonces du jardin... 🌱</div>`;
+                document.getElementById('mur-messages').innerHTML = `<div style="grid-column: span 3; padding: 20px; font-weight: bold; background: white;">Impossible de charger les annonces du jardin... 🌱</div>`;
             }
-        }
-
-        function afficherTiroirSousRubriques(cat) {
-            const conteneurSous = document.getElementById('sous-rubriques-container');
-            const selectSous = document.getElementById('selectSousRubrique');
-
-            if (sousRubriquesData[cat] && sousRubriquesData[cat].length > 1) {
-                conteneurSous.style.display = 'block';
-                selectSous.innerHTML = "";
-
-                sousRubriquesData[cat].forEach(sub => {
-                    const option = document.createElement('option');
-                    option.value = sub.id;
-                    option.textContent = sub.label;
-                    if ((sub.id === "" && !filtreSousTypeActuel) || (sub.id !== "" && filtreSousTypeActuel === sub.id)) {
-                        option.selected = true;
-                    }
-                    selectSous.appendChild(option);
-                });
-            } else {
-                conteneurSous.style.display = 'none';
-                selectSous.innerHTML = "";
-            }
-        }
-
-        function changerSousRubrique(selectEl) {
-            jouerBip();
-            filtreSousTypeActuel = selectEl.value;
-            pageActuelle = 1;
-            executerFiltrage();
         }
 
         function changerFiltreEtResetPage() {
@@ -521,294 +209,76 @@
             const mi = document.getElementById('searchKeyword').value.toLowerCase();
 
             const filtrées = annoncesPrincipales.filter(ann => {
-                if (estExpire(ann)) return false;
-
                 const matchP = pi === "" || (ann.pays_select || "").toLowerCase().startsWith(pi);
                 const matchV = vi === "" || (ann.localisation || "").toLowerCase().startsWith(vi);
-                const texteMsg = (ann.message || "").toLowerCase();
-                const matchM = mi === "" || texteMsg.includes(mi);
+                const matchM = mi === "" || (ann.message || "").toLowerCase().includes(mi);
 
                 let matchT = true;
                 if (filtreTypeActuel !== "") {
                     const catsPermises = mappingBoutons[filtreTypeActuel] || [];
                     matchT = catsPermises.includes(ann.type);
                 }
-
-                let matchSousT = true;
-                if (filtreTypeActuel !== "" && filtreSousTypeActuel !== "") {
-                    const subVal = ann.sousType || ann.sub_precision || "";
-                    matchSousT = subVal.toLowerCase().includes(filtreSousTypeActuel.toLowerCase());
-                }
-
-                return matchP && matchV && matchM && matchT && matchSousT;
+                return matchP && matchV && matchM && matchT;
             });
 
-            filtrées.sort((a, b) => new Date(b.Horodateur || 0) - new Date(a.Horodateur || 0));
-
             const totalPages = Math.ceil(filtrées.length / elementsParPage) || 1;
-            if (pageActuelle > totalPages) pageActuelle = totalPages;
-
-            const debut = (pageActuelle - 1) * elementsParPage;
-            const fin = debut + elementsParPage;
-            const elementsPage = filtrées.slice(debut, fin);
+            const elementsPage = filtrées.slice((pageActuelle - 1) * elementsParPage, pageActuelle * elementsParPage);
 
             const cont = document.getElementById('mur-messages');
             cont.innerHTML = "";
 
             if (elementsPage.length === 0) {
-                cont.innerHTML = `<div style="grid-column: span 3; padding: 20px; font-weight: bold; background: white; border-radius: 10px; color: #008080;">Aucune annonce trouvée dans le jardin pour l'instant... 🌸</div>`;
+                cont.innerHTML = `<div style="grid-column: span 3; padding: 20px; font-weight: bold; background: white;">Aucune annonce trouvée dans le jardin... 🌸</div>`;
                 document.getElementById('pagination-numeros').innerHTML = "";
                 return;
             }
 
             elementsPage.forEach(ann => {
-                const idAnnonce = ann.Horodateur || ann.id || '';
-                const nomAnnonce = ann.nom || ann.Nom || ann.prenom || ann.Prenom || ann.auteur || "Anonyme";
-                const typeAnnonce = (ann.type || "").toUpperCase();
-                const msgAnnonce = ann.message || "";
-                const datePubli = formaterDate(ann.Horodateur);
-                const validiteAnnonce = ann.validite || ann.duree || "1 jour";
-
-                const listeReponses = obtenirReponsesPourAnnonce(ann);
-                let badgeReponsesHtml = listeReponses.length > 0 ? `<div class="badge-reponses">💬 ${listeReponses.length} réponse(s)</div>` : '';
-
                 const d = document.createElement('div');
                 d.className = 'carte-message';
-
-                const couleurBord = couleursBordures[typeAnnonce] || "#008080";
-                d.style.borderRightColor = couleurBord;
-                d.onclick = () => ouvrirGrandMessage(ann);
-
-                const dejaVote = localStorage.getItem('vote_' + idAnnonce);
-                const nbArrosages = parseInt(ann.votes_arrosage) || 0;
-                let texteBoutonArrosage = nbArrosages > 0 ? `💧 Arroser (${nbArrosages})` : `💧 Arroser`;
-                let styleDesactive = "";
-                if (dejaVote) {
-                    texteBoutonArrosage = nbArrosages > 0 ? `💧 Déjà arrosé (${nbArrosages})` : `💧 Déjà arrosé`;
-                    styleDesactive = "disabled";
-                }
-
-                const couleurTag = couleursBordures[typeAnnonce] || "#008080";
+                const couleurTag = couleursBordures[ann.type] || "#008080";
+                d.style.borderRightColor = couleurTag;
+                d.onclick = () =>ouvrirGrandMessage(ann);
 
                 d.innerHTML = `
-                    <div class="nom-prenom">${escapeHtml(nomAnnonce)}</div>
-                    <div class="rubrique-tag" style="background-color: ${couleurTag};">${escapeHtml(nomBoutonAffiche[typeAnnonce] || "Graine")}</div>
-                    <div class="texte-annonce">${escapeHtml(masquerCoordonnees(msgAnnonce))}</div>
-                    ${badgeReponsesHtml}
+                    <div class="nom-prenom">${escapeHtml(ann.nom || "Anonyme")}</div>
+                    <div class="rubrique-tag" style="background-color: ${couleurTag};">${escapeHtml(nomBoutonAffiche[ann.type] || "Graine")}</div>
+                    <div class="texte-annonce">${escapeHtml(ann.message || "")}</div>
                     <div class="details-bas">
-                        📅 Publié : ${escapeHtml(datePubli)} &nbsp;|&nbsp; ⏳ Validité : ${escapeHtml(validiteAnnonce)}<br>
-                        📍 ${escapeHtml(ann.localisation || 'N/C')} (${escapeHtml(ann.pays_select || 'N/C')}) &nbsp;|&nbsp; 🌍 ${escapeHtml(ann.rayon_action || 'Locale')}
-                        <button class="btn-arrosage" ${styleDesactive}>${texteBoutonArrosage}</button>
-                        <button class="btn-repondre">💌 Répondre à cette graine</button>
+                        📅 Publié : ${escapeHtml(ann.Horodateur || '')}<br>
+                        📍 ${escapeHtml(ann.localisation || 'N/C')} (${escapeHtml(ann.pays_select || 'N/C')})
+                        <button class="btn-arrosage">💧 Arroser</button>
+                        <button class="btn-repondre">💌 Répondre</button>
                     </div>
                 `;
-
-                const btnArroser = d.querySelector('.btn-arrosage');
-                btnArroser.onclick = (e) => {
-                    e.stopPropagation(); 
-                    arroser(e, idAnnonce, btnArroser, ann);
-                };
-
-                const btnRep = d.querySelector('.btn-repondre');
-                btnRep.onclick = (e) => {
-                    e.stopPropagation();
-                    ouvrirModalReponse(ann);
-                };
-
                 cont.appendChild(d);
             });
-
-            afficherPaginationNumeros(totalPages);
-        }
-
-        function afficherPaginationNumeros(totalPages) {
-            const paginationContainer = document.getElementById('pagination-numeros');
-            paginationContainer.innerHTML = "";
-
-            if (totalPages <= 1) return;
-
-            if (pageActuelle > 1) {
-                const btnPrec = document.createElement('button');
-                btnPrec.className = 'page-btn';
-                btnPrec.innerText = "« Préc.";
-                btnPrec.onclick = () => changerPage(pageActuelle - 1);
-                paginationContainer.appendChild(btnPrec);
-            }
-
-            for (let i = 1; i <= totalPages; i++) {
-                const btn = document.createElement('button');
-                btn.className = `page-btn ${i === pageActuelle ? 'active' : ''}`;
-                btn.innerText = i;
-                btn.onclick = () => changerPage(i);
-                paginationContainer.appendChild(btn);
-            }
-
-            if (pageActuelle < totalPages) {
-                const btnSuiv = document.createElement('button');
-                btnSuiv.className = 'page-btn';
-                btnSuiv.innerText = "Suiv. »";
-                btnSuiv.onclick = () => changerPage(pageActuelle + 1);
-                paginationContainer.appendChild(btnSuiv);
-            }
-        }
-
-        function changerPage(numPage) {
-            jouerBip();
-            pageActuelle = numPage;
-            executerFiltrage();
-            window.scrollTo({ top: 300, behavior: 'smooth' });
-        }
-
-        async function arroser(e, id, btn, ann) {
-            if (localStorage.getItem('vote_' + id)) return;
-
-            jouerBip();
-            animerPluieGouttes(e);
-
-            ann.votes_arrosage = (parseInt(ann.votes_arrosage) || 0) + 1;
-            btn.innerHTML = `💧 Déjà arrosé (${ann.votes_arrosage})`;
-            btn.style.background = "#C8E6C9";
-            btn.disabled = true;
-
-            localStorage.setItem('vote_' + id, 'true');
-
-            const fd = new URLSearchParams(); 
-            fd.append('token', TOKEN_SECRET);
-            fd.append('action', 'arroser'); 
-            fd.append('id', id);
-            fetch(WEB_APP_URL, { method: 'POST', body: fd });
-        }
-
-        function ouvrirGrandMessage(ann) {
-            const listeReponses = obtenirReponsesPourAnnonce(ann);
-            const datePubli = formaterDate(ann.Horodateur);
-            const validiteAnnonce = ann.validite || ann.duree || "1 jour";
-
-            let htmlReponsesGeant = '';
-            if (listeReponses.length > 0) {
-                htmlReponsesGeant = `<div style="background:#FFF8E7; padding:12px; border-radius:10px; border:2px dashed #E67E22; margin-bottom:12px; text-align:left;">
-                    <h4 style="color:#E67E22; margin:0 0 8px 0;">💬 Réponses reçues (${listeReponses.length}) :</h4>`;
-                listeReponses.forEach(r => {
-                    htmlReponsesGeant += `<div style="margin-bottom:8px; border-bottom:1px solid #ddd; padding-bottom:6px; word-break: break-word;">
-                        <strong style="color:#2E7D32;">${escapeHtml(r.nom)} :</strong> 
-                        <div style="white-space: pre-line; color: #333; margin-top: 2px;">“${escapeHtml(masquerCoordonnees(r.message))}”</div>
-                    </div>`;
-                });
-                htmlReponsesGeant += `</div>`;
-            }
-
-            const divContent = document.getElementById('geant-contenu');
-            divContent.innerHTML = `
-                <div style="font-size:1.4em; color:#2E7D32; font-weight:bold; border-bottom:3px solid #008080; margin-bottom:12px; padding-right: 40px;">🌱 Offrande de ${escapeHtml(ann.nom || "Anonyme")}</div>
-                <div style="background:white; padding:15px; border-radius:12px; border-left:8px solid #FF1493; font-size:1em; color:#000080; text-align:left; margin-bottom:12px; max-height: 220px; overflow-y: auto; white-space: pre-line; word-break: break-word;">“${escapeHtml(masquerCoordonnees(ann.message || ""))}”</div>
-                <div style="text-align:left; background:#E0F2F1; padding:12px; border-radius:8px; font-size:0.9em; margin-bottom:12px; line-height: 1.4;">
-                    <strong>📅 Date de publication :</strong> ${escapeHtml(datePubli)}<br>
-                    <strong>⏳ Durée de validité :</strong> ${escapeHtml(validiteAnnonce)}<br>
-                    <strong>📍 Localisation :</strong> ${escapeHtml(ann.localisation || "N/C")} (${escapeHtml(ann.pays_select || "N/C")})<br>
-                    <strong>🌍 Portée :</strong> ${escapeHtml(ann.rayon_action || "Locale")}<br>
-                    <strong>🚚 Logistique :</strong> ${escapeHtml(ann.logistique || "Main Propre")}
-                </div>
-                ${htmlReponsesGeant}
-                <button class="btn-repondre" id="geant-btn-rep" style="font-size: 1em; padding: 10px;">💌 Répondre à cette graine</button>
-            `;
-
-            document.getElementById('geant-btn-rep').onclick = () => {
-                fermerGrandMessage();
-                ouvrirModalReponse(ann);
-            };
-
-            document.getElementById('fond-sombre').style.display = 'flex';
-        }
-
-        function ouvrirModalReponse(ann) {
-            jouerBip();
-            document.getElementById('rep_id_annonce').value = ann.Horodateur || '';
-            document.getElementById('rep_row_index').value = ann.rowIndex || '';
-            document.getElementById('rep_type_annonce').value = ann.type || "";
-
-            const rappel = document.getElementById('rappel-annonce');
-            const msgBrut = ann.message || "";
-            rappel.innerHTML = `<strong>Graine de ${escapeHtml(ann.nom || "Anonyme")} :</strong> “${escapeHtml(masquerCoordonnees(msgBrut).substring(0, 90))}${msgBrut.length > 90 ? '...' : ''}”`;
-
-            document.getElementById('modal-reponse').style.display = 'flex';
-        }
-
-        function fermerModalReponse() { document.getElementById('modal-reponse').style.display = 'none'; }
-
-        async function envoyerReponse(e) {
-            e.preventDefault();
-            jouerBip();
-
-            const btn = document.getElementById('btnSubmitReponse');
-            btn.innerText = "Envoi en cours... 🌱";
-            btn.disabled = true;
-
-            const idRef = document.getElementById('rep_id_annonce').value;
-            const rowIndex = document.getElementById('rep_row_index').value;
-            const nomRep = document.getElementById('rep_nom').value;
-            const msgRep = document.getElementById('rep_message').value;
-            const typeReponseChoisi = document.querySelector('input[name="rep_type_choix"]:checked')?.value || 'publique';
-
-            const params = new URLSearchParams();
-            params.append('token', TOKEN_SECRET);
-            params.append('action', 'repondre');
-            params.append('ref_id', idRef);
-            params.append('row_index', rowIndex);
-            params.append('nom', nomRep);
-            params.append('message', msgRep);
-            params.append('type_reponse', typeReponseChoisi);
-
-            try {
-                await fetch(WEB_APP_URL, { method: 'POST', body: params });
-
-                btn.innerText = "Réponse envoyée ! 🌸";
-                setTimeout(() => {
-                    fermerModalReponse();
-                    btn.innerText = "ENVOYER MA RÉPONSE ✨";
-                    btn.disabled = false;
-                    document.getElementById('formReponse').reset();
-                    chargerAnnonces();
-                }, 1000);
-            } catch (err) {
-                console.error("Erreur d'envoi :", err);
-                alert("Une erreur est survenue lors de l'envoi.");
-                btn.disabled = false;
-                btn.innerText = "ENVOYER MA RÉPONSE ✨";
-            }
         }
 
         function rechercheRapide(t, el) {
-            jouerBip();
             document.querySelectorAll('.btn-filtre-rapide').forEach(b => b.classList.remove('actif'));
-
-            if (filtreTypeActuel === t) {
-                filtreTypeActuel = "";
-                filtreSousTypeActuel = "";
-            } else {
-                filtreTypeActuel = t;
-                filtreSousTypeActuel = ""; 
-            }
-
+            filtreTypeActuel = (filtreTypeActuel === t) ? "" : t;
             if (filtreTypeActuel && el) el.classList.add('actif');
-            afficherTiroirSousRubriques(filtreTypeActuel);
             pageActuelle = 1;
             executerFiltrage();
         }
 
         function resetRecherche() {
-            jouerBip();
             document.getElementById('searchKeyword').value = ""; 
             document.getElementById('searchPays').value = ""; 
             document.getElementById('searchVille').value = "";
-            filtreTypeActuel = ""; 
-            filtreSousTypeActuel = "";
+            filtreTypeActuel = "";
             document.querySelectorAll('.btn-filtre-rapide').forEach(b => b.classList.remove('actif'));
-            document.getElementById('sous-rubriques-container').style.display = 'none';
             pageActuelle = 1;
             executerFiltrage();
         }
 
+        function ouvrirGrandMessage(ann) {
+            document.getElementById('geant-contenu').innerHTML = `<h3>${escapeHtml(ann.nom)}</h3><p>${escapeHtml(ann.message)}</p>`;
+            document.getElementById('fond-sombre').style.display = 'flex';
+        }
         function fermerGrandMessage() { document.getElementById('fond-sombre').style.display = 'none'; }
+        function fermerModalReponse() { document.getElementById('modal-reponse').style.display = 'none'; }
 
         window.onload = chargerAnnonces;
     </script>
