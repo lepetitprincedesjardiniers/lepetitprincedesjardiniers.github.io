@@ -364,8 +364,8 @@
                     <td><a href="jardin.html?cat=REGULATION">Régulation</a></td>
                     <td><a href="jardin.html?cat=AIDE">Aide & Harmonie</a></td>
                     <td><a href="jardin.html?cat=SAVOIR">Savoirs</a></td>
-                    <td><a href="vie.html">Vie Citoyenne</a></td>
                     <td><a href="jardin.html?cat=VIE">Vie Citoyenne</a></td>
+                    <td><a href="vie.html">Vie Citoyenne</a></td>
                 </tr>
             </table>
         </div>
@@ -443,11 +443,11 @@
     </div>
 
     <div id="coffre-magique" onclick="exploserCadeau()" title="Coffre magique">🎁</div>
-    <a href="journal.html" class="journal-volant" id="journal-volant" title="Journal de bord du #petitploucdesjardiniers">📖</a>
     <a href="ministere-de-lhonnetete.html" class="journal-volant" id="journal-volant" title="Journal de bord du #petitploucdesjardiniers">📖</a>
 
     <footer>
         <a href="#" class="lien-copyright" onclick="ouvrirModalInfo(); return false;">© PINON 2000 — Tous droits de partage et d'humanité réservés</a><br>
+        <a href="merci.html" class="lien-copyright">© PINON 2000 — Tous droits de partage et d'humanité réservés</a><br>
         <a href="ministere-de-lhonnetete.html" class="lien-footer-discret">journal de bord du #petitploucdesjardiniers, réflexions de l'auteur du site.</a>
     </footer>
 
@@ -707,16 +707,14 @@
             });
         };
 
-        // Gestion du son avec volume réglé à 0.102
+        // Gestion du son avec volume réglé à 0.12
         let isPlaying = false;
 
         function toggleSon() {
             const btn = document.getElementById('btn-son');
             const audioOiseau = document.getElementById('audio-oiseau');
 
-            // Volume réglé précisément à 0.102 pour un fond sonore très discret
-            audioOiseau.volume = 0.102; 
-            // Volume réglé précisément pour un fond sonore très discret
+            // Volume réglé à 0.12 pour un fond sonore discret
             audioOiseau.volume = 0.12; 
 
             if (!isPlaying) {
@@ -761,3 +759,4 @@
         }
     </script>
 </body>
+</html>
