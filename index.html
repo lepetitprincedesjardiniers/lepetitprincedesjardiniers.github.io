@@ -117,7 +117,7 @@
             100% { transform: translateX(-50%); }
         }
 
-        /* Soleil central supérieur */
+        /* Soleil central supérieur (Inversé : mène au formulaire) */
         .soleil-cadre { width: 150px; height: 150px; background: radial-gradient(circle, #ffeb3b 0%, #ff9800 100%); border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 0 30px rgba(255,152,0,0.6); margin: 25px auto; position: relative; z-index: 20; transition: 0.6s; text-decoration: none; border: 2px solid rgba(255,255,255,0.5); }
         .soleil-cadre h1 { font-size: 0.85em; color: #222; line-height: 1.2; margin: 0; padding: 10px; font-weight: bold; }
         .soleil-cadre:hover { box-shadow: 0 0 50px #fff; transform: scale(1.08) rotate(360deg); }
@@ -127,9 +127,9 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 75px; /* Écartement augmenté pour éloigner les cartes de la Terre */
+            gap: 45px;
             flex-wrap: wrap;
-            max-width: 1400px;
+            max-width: 1350px;
             margin: 20px auto;
             position: relative;
             z-index: 5;
@@ -161,10 +161,9 @@
             flex-direction: column;
             align-items: center;
             flex: 0 0 auto;
-            margin: 0 25px; /* Espace de sécurité supplémentaire autour de la Terre */
         }
 
-        /* Terre animée */
+        /* Terre animée (Inversée : mène au Jardin) */
         .terre-don { 
             width: 320px; height: 320px; border-radius: 50%; 
             background-image: url('https://upload.wikimedia.org/wikipedia/commons/thumb/c/c3/Solarsystemscope_texture_2k_earth_daymap.jpg/1200px-Solarsystemscope_texture_2k_earth_daymap.jpg'); 
@@ -188,14 +187,12 @@
         .style-tresor { border: 2px solid rgba(0, 206, 209, 0.6); }
         .style-tresor:hover { transform: translateY(-5px); border-color: #00ced1; background: rgba(0, 206, 209, 0.2); box-shadow: 0 12px 40px rgba(0,206,209,0.3); }
 
+        /* Carte Aide & Harmonie joliment colorée en rose vif, sans aucun décalage vertical */
         .style-urgence { border: 2px solid rgba(255, 105, 180, 0.6); }
         .style-urgence:hover { transform: translateY(-5px); border-color: #ff69b4; background: rgba(255, 105, 180, 0.2); box-shadow: 0 12px 40px rgba(255,105,180,0.3); }
 
-        .style-aide { border: 2px solid rgba(147, 112, 219, 0.6); }
-        .style-regulation:hover { transform: translateY(-5px); border-color: #9370DB; background: rgba(147, 112, 219, 0.2); box-shadow: 0 12px 40px rgba(147,112,219,0.3); }
-
-        .style-regulation { border: 2px solid rgba(147, 112, 219, 0.6); margin-top: 60px;}
-        .style-regulation:hover { transform: translateY(-5px); border-color: #9370DB; background: rgba(147, 112, 219, 0.2); box-shadow: 0 12px 40px rgba(147,112,219,0.3); }
+        .style-vie { border: 2px solid rgba(147, 112, 219, 0.6); }
+        .style-vie:hover { transform: translateY(-5px); border-color: #9370DB; background: rgba(147, 112, 219, 0.2); box-shadow: 0 12px 40px rgba(147,112,219,0.3); }
 
         .style-savoir { border: 2px solid rgba(255, 193, 7, 0.6); }
         .style-savoir:hover { transform: translateY(-5px); border-color: #ffc107; background: rgba(255, 193, 7, 0.2); box-shadow: 0 12px 40px rgba(255,193,7,0.3); }
@@ -255,7 +252,7 @@
             animation: flyAcross 12s linear forwards;
         }
 
-        /* Fenêtre modale d'information */
+        /* Fenêtre modale d'information à l'écran */
         .modal-overlay {
             display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
             background: rgba(0, 0, 0, 0.75); backdrop-filter: blur(8px); z-index: 5000;
@@ -314,10 +311,12 @@
         .lien-copyright { color: var(--text-color); opacity: 0.5; text-decoration: none; font-weight: bold; font-size: 0.9em; transition: 0.3s; display: inline-block; margin-bottom: 10px; }
         .lien-copyright:hover { opacity: 1; text-shadow: 0 0 10px #fff; }
 
+        .lien-footer-discret { display: block; color: var(--text-color); opacity: 0.45; text-decoration: none; font-size: 0.78em; transition: 0.3s; margin-top: 5px; font-style: italic; }
+        .lien-footer-discret:hover { opacity: 0.85; text-decoration: underline; }
+
         @media (max-width: 950px) {
             .paysage-cosmos { flex-direction: column; gap: 20px; }
             .colonne-cosmos { max-width: 100%; width: 100%; }
-            .centre-terre-cosmos { margin: 0; }
             .titre-fraternite { font-size: 1.5em; }
             .menu-table, .menu-table tbody, .menu-table tr { display: flex; flex-wrap: wrap; justify-content: center; width: 95%; }
             .menu-table td { flex: 1 1 28%; text-align: center; padding: 6px 2px; font-size: 0.8em; border-right: none; }
@@ -363,21 +362,20 @@
                     <td><a href="jardin.html?cat=REGULATION">Régulation</a></td>
                     <td><a href="jardin.html?cat=AIDE">Aide & Harmonie</a></td>
                     <td><a href="jardin.html?cat=SAVOIR">Savoirs</a></td>
-                    <td><a href="jardin.html?cat=VIE">Vie Citoyenne</a></td>
+                    <td><a href="vie.html">Vie Citoyenne</a></td>
                 </tr>
             </table>
         </div>
     </div>
 
-    <!-- Soleil central supérieur -->
+    <!-- Soleil central supérieur (Inversé : mène vers le formulaire) -->
     <a href="formulaire.html" class="soleil-cadre"><h1>ESPACE DU SEMIS DE DON ENTIER</h1></a>
 
     <!-- PAYSAGE COSMOS -->
-   <div class="paysage-cosmos">
+    <div class="paysage-cosmos">
 
         <!-- COLONNE GAUCHE -->
         <div class="colonne-cosmos">
-            <!-- 1. Trésor Public -->
             <a href="jardin.html?cat=IMPOT" class="rubrique-carte style-tresor flotte-a">
                 <div style="padding-top: 6px;">
                     <h3 style="margin:0; font-size: 1em;">📜 Trésor Public</h3>
@@ -389,7 +387,6 @@
                 </div>
             </a>
 
-            <!-- 2. Aide & Harmonie -->
             <a href="jardin.html?cat=AIDE" class="rubrique-carte style-urgence flotte-b">
                 <div style="padding-top: 6px;">
                     <h3 style="margin:0; font-size: 1em;">💖 Aide & Harmonie</h3>
@@ -401,38 +398,25 @@
             </a>
         </div>
 
-        <!-- CENTRE : La Terre animée + Régulation en dessous -->
+        <!-- CENTRE : La Terre animée (Inversée : mène vers le Jardin) -->
         <div class="centre-terre-cosmos">
             <a href="jardin.html" class="terre-don">
                 <div class="texte-semis"><b>Le Jardin Public des Fraternels</b></div>
-            </a>
-
-            <!-- Régulation placée sous la Terre -->
-            <a href="jardin.html?cat=REGULATION" class="rubrique-carte style-regulation flotte-c">
-                <div style="padding-top: 2px;">
-                    <h3 style="margin:0; font-size: 0.95em;">⚖️️ Régulation</h3>
-                    <div class="phrases-impots texte-blanc" style="margin-top: 4px;">Aide sociale rapprochée, médiation entre camarades & Paix citoyenne</div>
-                </div>
-                <div class="liste-exemples-discrets" style="margin-top: 2px; padding-top: 2px;">
-                    Ex : dialogues, chartes, régulation et paix de la cité.
-                </div>
             </a>
         </div>
 
         <!-- COLONNE DROITE -->
         <div class="colonne-cosmos">
-            <!-- 3. Vie Citoyenne -->
-            <a href="vie.html" class="rubrique-carte style-citoyen flotte-e">
+            <a href="jardin.html?cat=REGULATION" class="rubrique-carte style-vie flotte-c">
                 <div style="padding-top: 6px;">
-                    <h3 style="margin:0; font-size: 1em;">🏛️ Vie citoyenne</h3>
-                    <div class="phrases-impots" style="margin-top: 6px;">Espace de débats, d'initiatives locales et de participation à la vie de la communauté.</div>
+                    <h3 style="margin:0; font-size: 1em;">⚖️ Vie citoyenne</h3>
+                    <div class="phrases-impots" style="margin-top: 6px;">Expose ta sincérité : la citoyenneté participative y répond avec délicatesse.</div>
                 </div>
                 <div class="liste-exemples-discrets">
-                    Ex : agora, propositions, assemblées et décisions.
+                    Ex : dialogues, chartes, régulation et paix de la cité.
                 </div>
             </a>
 
-            <!-- 4. Savoirs -->
             <a href="jardin.html?cat=SAVOIR" class="rubrique-carte style-savoir flotte-d">
                 <div style="padding-top: 6px;">
                     <h3 style="margin:0; font-size: 1em;">💡 Savoirs</h3>
@@ -445,6 +429,8 @@
             </a>
         </div>
 
+    </div>
+
     <!-- Bandeau défilant bas de page -->
     <div class="bandeau-defilant">
         <div class="bandeau-contenu">
@@ -454,12 +440,11 @@
     </div>
 
     <div id="coffre-magique" onclick="exploserCadeau()" title="Coffre magique">🎁</div>
-    <a href="ministere-de-lhonnetete.html" class="journal-volant" id="journal-volant" title="Journal de bord du #petitploucdesjardiniers">📖</a>
+    <a href="journal.html" class="journal-volant" id="journal-volant" title="Journal de bord du #petitploucdesjardiniers">📖</a>
 
     <footer>
-        <a href="merci.html" class="lien-copyright";">© PINON 2000 — Tous droits de partage et d'humanité réservés</a>
-        <br>
-        <a href="ministere-de-lhonnetete.html" class="lien-copyright";">journal de bord du #petitploucdesjardiniers, réflexions de l'auteur du site.</a></a>
+        <a href="#" class="lien-copyright" onclick="ouvrirModalInfo(); return false;">© PINON 2000 — Tous droits de partage et d'humanité réservés</a><br>
+        <a href="ministere-de-lhonnetete.html" class="lien-footer-discret">journal de bord du #petitploucdesjardiniers, réflexions de l'auteur du site.</a>
     </footer>
 
     <!-- Fenêtre modale d'information -->
