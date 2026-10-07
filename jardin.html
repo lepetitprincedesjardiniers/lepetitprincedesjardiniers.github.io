@@ -398,10 +398,10 @@
             if (isNaN(datePub)) return false;
 
             const validiteStr = String(ann.validite || ann.duree || ann.Validite || ann.Validité || "1 jour").toLowerCase();
-            let nbJours = 1; 
+            let nbJours = 365; // Par défaut large pour ne pas masquer à tort
             if (validiteStr.includes('7') || validiteStr.includes('semaine')) nbJours = 7;
             else if (validiteStr.includes('30') || validiteStr.includes('mois')) nbJours = 30;
-            else if (validiteStr.includes('1') || validiteStr.includes('jour')) nbJours = 1;
+            else if (validiteStr.includes('1') && !validiteStr.includes('365')) nbJours = 1;
             else if (validiteStr.includes('illimité') || validiteStr.includes('permanent')) return false;
 
             const dateExpiration = new Date(datePub.getTime() + (nbJours * 24 * 60 * 60 * 1000));
@@ -488,10 +488,18 @@
 
                 annoncesPrincipales = [];
                 toutesLesDonnees.forEach(item => {
-                    const typeNormalise = String(item.type || item.Type || item.Catégorie || item.categorie || item.Rubrique || '').toUpperCase();
-                    if (typeNormalise === 'VIDEO' || typeNormalise === 'VIDÉO') return;
+                    let typeBrut = String(item.type || item.Type || item.Catégorie || item.categorie || item.Rubrique || '').trim().toUpperCase();
+                    if (typeBrut === 'VIDEO' || typeBrut === 'VIDÉO') return;
                     
-                    // On unifie les noms de propriétés pour éviter les plantages
+                    // Normalisation intelligente pour éviter tout blocage d'affichage
+                    let typeNormalise = "AUTRE_CAT";
+                    if (typeBrut.includes("SAVOIR")) typeNormalise = "SAVOIR";
+                    else if (typeBrut.includes("VIE") || typeBrut.includes("CITOYEN")) typeNormalise = "VIE";
+                    else if (typeBrut.includes("AIDE") || typeBrut.includes("HARMONIE")) typeNormalise = "AIDE";
+                    else if (typeBrut.includes("REGULATION") || typeBrut.includes("RÉGULATION")) typeNormalise = "REGULATION";
+                    else if (typeBrut.includes("IMPOT") || typeBrut.includes("TRÉSOR") || typeBrut.includes("TRESOR")) typeNormalise = "IMPOT";
+                    else if (typeBrut !== "") typeNormalise = typeBrut;
+
                     item.type = typeNormalise;
                     item.Horodateur = item.Horodateur || item.horodateur || item.Date || item.date || item.Timestamp;
                     item.nom = item.nom || item.Nom || item.prenom || item.Prenom || item.auteur || item.Auteur;
@@ -822,7 +830,6 @@
                         listePrivesHtml = "";
                         const blocs = item.messages_prives.split("||").map(b => b.trim()).filter(b => b !== "");
                         
-                        // Mettre les plus récents en haut tout en gardant l'index exact pour la suppression
                         const blocsInverses = blocs.map((texte, idxOriginal) => ({ texte, idxOriginal })).reverse();
 
                         blocsInverses.forEach(obj => {
