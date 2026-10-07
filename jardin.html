@@ -151,7 +151,6 @@
                     <td><a href="jardin.html?cat=REGULATION">Régulation</a></td>
                     <td><a href="jardin.html?cat=AIDE">Aide & Harmonie</a></td>
                     <td><a href="jardin.html?cat=SAVOIR">Savoirs</a></td>
-                    <td><a href="vie.html">Vie Citoyenne</a></td>
                     <td><a href="jardin.html?cat=VIE">Vie Citoyenne</a></td>
                 </tr>
             </table>
@@ -398,7 +397,7 @@
             const datePub = new Date(horodateur);
             if (isNaN(datePub)) return false;
 
-            const validiteStr = String(ann.validite || ann.duree || "1 jour").toLowerCase();
+            const validiteStr = String(ann.validite || ann.duree || ann.Validite || ann.Validité || "1 jour").toLowerCase();
             let nbJours = 1; 
             if (validiteStr.includes('7') || validiteStr.includes('semaine')) nbJours = 7;
             else if (validiteStr.includes('30') || validiteStr.includes('mois')) nbJours = 30;
@@ -411,7 +410,7 @@
 
         function obtenirReponsesPourAnnonce(ann) {
             let resultatsReponses = [];
-            const champRepDirect = ann.reponses_article || ann.reponses || ann.commentaires || "";
+            const champRepDirect = ann.reponses_article || ann.reponses || ann.commentaires || ann.Reponses || "";
             if (champRepDirect) {
                 const blocs = String(champRepDirect).split("||");
                 blocs.forEach(bloc => {
@@ -489,8 +488,18 @@
 
                 annoncesPrincipales = [];
                 toutesLesDonnees.forEach(item => {
-                    const type = String(item.type || item.Type || '').toUpperCase();
-                    if (type === 'VIDEO' || type === 'VIDÉO') return;
+                    const typeNormalise = String(item.type || item.Type || item.Catégorie || item.categorie || item.Rubrique || '').toUpperCase();
+                    if (typeNormalise === 'VIDEO' || typeNormalise === 'VIDÉO') return;
+                    
+                    // On unifie les noms de propriétés pour éviter les plantages
+                    item.type = typeNormalise;
+                    item.Horodateur = item.Horodateur || item.horodateur || item.Date || item.date || item.Timestamp;
+                    item.nom = item.nom || item.Nom || item.prenom || item.Prenom || item.auteur || item.Auteur;
+                    item.message = item.message || item.Message || item.annonce || item.Annonce || item.description || item.Description;
+                    item.pays_select = item.pays_select || item.Pays || item.pays || item.Pays_select;
+                    item.localisation = item.localisation || item.Localisation || item.ville || item.Ville;
+                    item.validite = item.validite || item.Validite || item.Validité || item.duree || item.Duree;
+
                     annoncesPrincipales.push(item);
                 });
 
@@ -603,11 +612,11 @@
 
             elementsPage.forEach(ann => {
                 const idAnnonce = ann.Horodateur || ann.id || '';
-                const nomAnnonce = ann.nom || ann.Nom || ann.prenom || ann.Prenom || ann.auteur || "Anonyme";
+                const nomAnnonce = ann.nom || "Anonyme";
                 const typeAnnonce = (ann.type || "").toUpperCase();
                 const msgAnnonce = ann.message || "";
                 const datePubli = formaterDate(ann.Horodateur);
-                const validiteAnnonce = ann.validite || ann.duree || "1 jour";
+                const validiteAnnonce = ann.validite || "1 jour";
 
                 const listeReponses = obtenirReponsesPourAnnonce(ann);
                 let badgeReponsesHtml = listeReponses.length > 0 ? `<div class="badge-reponses">💬 ${listeReponses.length} réponse(s)</div>` : '';
@@ -722,7 +731,7 @@
         function ouvrirGrandMessage(ann) {
             const listeReponses = obtenirReponsesPourAnnonce(ann);
             const datePubli = formaterDate(ann.Horodateur);
-            const validiteAnnonce = ann.validite || ann.duree || "1 jour";
+            const validiteAnnonce = ann.validite || "1 jour";
 
             let htmlReponsesGeant = '';
             if (listeReponses.length > 0) {
