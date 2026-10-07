@@ -7,28 +7,38 @@
 <body bgcolor="#FFFF00" text="#000080" style="font-family:'Comic Sans MS', cursive; text-align:center;">
     <br><br>
     <div style="font-size: 70px;">✨ 🌹 ✨ 🌵 ✨ 🌹 ✨</div>
-    <br>
+    <font size="6" color="#2E7D32"><b>C'est pour quoi ? Tu oses me contacter...</b></font><br>
+    <font size="5">"Laisse-moi le temps de me réveiller."</font>
+    <br><br>
     <table border="4" cellpadding="30" bgcolor="#FFFFFF" align="center" style="border-color:#E67E22; border-radius:40px; max-width:600px; box-shadow: 10px 10px 0px #008080;">
         <tr>
             <td>
-                <!-- Formulaire de contact direct mis à jour -->
+                <hr style="margin: 10px 0 20px 0; border: 1px dashed #E67E22;">
+
+                <!-- Formulaire de contact direct -->
                 <form id="form-contact-interne" onsubmit="envoyerMessageInterne(event)" style="text-align: left; max-width: 450px; margin: 0 auto;">
                     <label style="font-size: 0.85em; font-weight: bold; color: #2E7D32;">Ton Prénom / Pseudo :</label><br>
                     <input type="text" id="contact_nom" required style="width: 100%; padding: 8px; margin: 5px 0 12px 0; border: 2px solid #008080; border-radius: 8px; font-family: 'Comic Sans MS'; box-sizing: border-box;" placeholder="Ton nom de cœur..."><br>
 
                     <label style="font-size: 0.85em; font-weight: bold; color: #2E7D32;">Ton Adresse E-mail :</label><br>
                     <input type="email" id="contact_email" required style="width: 100%; padding: 8px; margin: 5px 0 5px 0; border: 2px solid #008080; border-radius: 8px; font-family: 'Comic Sans MS'; box-sizing: border-box;" placeholder="ton.email@exemple.com"><br>
-                    <!-- Mention de confidentialité sous l'e-mail -->
-                    <div style="font-size: 0.78em; color: #555; margin-bottom: 12px; font-style: italic;">
+                    
+                    <!-- Mention de confidentialité présentée proprement -->
+                    <div style="font-size: 0.78em; color: #004D40; background: #F0F7F4; padding: 6px 10px; border-radius: 6px; margin-bottom: 12px; font-style: italic; border-left: 3px solid #008080;">
                         🔒 Ton adresse e-mail reste strictement confidentielle et protégée.
                     </div>
 
                     <label style="font-size: 0.85em; font-weight: bold; color: #2E7D32;">Ton Message :</label><br>
-                    <textarea id="contact_message" rows="5" required style="width: 100%; padding: 8px; margin: 5px 0 8px 0; border: 2px solid #008080; border-radius: 8px; font-family: 'Comic Sans MS'; box-sizing: border-box;" placeholder="Veuillez avoir l'obligeance de me laisser un message, ou de poster votre propre annonce. Depuis quand on se vouvoie ?"></textarea><br>
+                    <textarea id="contact_message" rows="5" required style="width: 100%; padding: 8px; margin: 5px 0 12px 0; border: 2px solid #008080; border-radius: 8px; font-family: 'Comic Sans MS'; box-sizing: border-box;" placeholder="Veuillez avoir l'obligeance de me laisser un message, ou de poster votre propre annonce. Depuis quand on se vouvoie ?"></textarea><br>
                     
-                    <!-- Explication pour consulter la réponse avec les liens directs vers jardin.html -->
-                    <div style="background: #E8F8F5; padding: 10px; border-radius: 8px; border: 1px solid #008080; margin-bottom: 15px; font-size: 0.80em; color: #004D40; line-height: 1.4;">
-                        📩 <b>Comment consulter ta réponse ?</b> Tu pourras revenir à tout moment sur <a href="jardin.html" style="color: #008080; font-weight: bold; text-decoration: underline;">Le Jardin</a>, cliquer sur le bouton <a href="jardin.html" style="color: #E67E22; font-weight: bold; text-decoration: underline;">"Consulter mes messages privés"</a> et entrer ton e-mail pour lire ma réponse directement sur le site, dans un délai maximum de 97 jours !
+                    <!-- Bloc d'explication avec un vrai style de titre mis en page -->
+                    <div style="background: #E8F8F5; padding: 15px; border-radius: 12px; border: 2px solid #008080; margin-bottom: 18px; text-align: left;">
+                        <div style="font-size: 0.95em; font-weight: bold; color: #004D40; margin-bottom: 6px; border-bottom: 1px dashed #008080; padding-bottom: 4px;">
+                            📩 Comment consulter ta réponse ?
+                        </div>
+                        <div style="font-size: 0.82em; color: #004D40; line-height: 1.4;">
+                            Tu pourras revenir à tout moment sur <a href="jardin.html" style="color: #008080; font-weight: bold; text-decoration: underline;">Le Jardin</a>, cliquer sur le bouton <a href="jardin.html" style="color: #E67E22; font-weight: bold; text-decoration: underline;">"Consulter mes messages privés"</a> et entrer ton e-mail pour lire ma réponse directement sur le site, dans un délai maximum de 97 jours !
+                        </div>
                     </div>
 
                     <button type="submit" id="btn-envoyer-contact" style="width: 100%; padding: 12px; background-color: #E67E22; color: white; border-radius: 8px; cursor: pointer; border: none; font-weight: bold; font-family: 'Comic Sans MS'; font-size: 1em;">ENVOYER DANS LE JARDIN 💌</button>
