@@ -329,11 +329,11 @@
 </head>
 <body class="night-mode">
 
+    <!-- Élément audio pour jouer oiseaux.mp3 sur la page sans recharger -->
+    <audio id="audio-oiseaux" src="oiseaux.mp3" preload="auto" loop></audio>
+
     <div id="google_translate_element"></div>
     
-    <!-- Élément audio pour le chant des oiseaux -->
-    <audio id="sonOiseaux" src="oiseaux.mp3" preload="auto" loop></audio>
-
     <div class="boutons-header">
         <button id="btn-son" onclick="toggleSon()" title="Activer / couper l'ambiance sonore">🕊️</button>
     </div>
@@ -351,7 +351,7 @@
 
         <!-- Texte fixe d'introduction -->
         <div class="texte-intro-fixe">
-            Espace d'entraide et de gratuité absolue ouvert inconditionnellement à toutes et tous, sans distinction de parcours, d'âge, de forme, ou de situation. Partagez vos dons, savoirs, talents et besoins pour recréer de la solidarité authentique, du lien social bienveillant, et nourrir notre générosité collective.[cite: 4]
+            Espace d'entraide et de gratuité absolue ouvert inconditionnellement à toutes et tous, sans distinction de parcours, d'âge, de forme, ou de situation. Partagez vos dons, savoirs, talents et besoins pour recréer de la solidarité authentique, du lien social bienveillant, et nourrir notre générosité collective.
         </div>
 
         <div style="position: relative; display: flex; justify-content: center; align-items: center; width: 100%; margin: 15px 0 5px 0;">
@@ -364,7 +364,7 @@
                     <td><a href="jardin.html?cat=REGULATION">Régulation</a></td>
                     <td><a href="jardin.html?cat=AIDE">Aide & Harmonie</a></td>
                     <td><a href="jardin.html?cat=SAVOIR">Savoirs</a></td>
-                    <td><a href="vie.html">Vie Citoyenne</a></td>
+                    <td><a href="jardin.html?cat=VIE">Vie Citoyenne</a></td>
                 </tr>
             </table>
         </div>
@@ -436,16 +436,16 @@
     <!-- Bandeau défilant bas de page -->
     <div class="bandeau-defilant">
         <div class="bandeau-contenu">
-            <span>✦ Un espace d'écoute, de compréhension et de générosité ✦ Cultiver l'altruisme, l'équilibre et la richesse sociale pour rompre l'isolement, recréer de vrais liens humains et agir ensemble contre la précarité ✦ Échange de dons, savoirs, talents et services ✦ Une alternative citoyenne au système monétaire ✦ Accueil inconditionnel : sans-abri, exclus, marginaux, SEL, non-conformistes & esprits libres ✦[cite: 4]</span>
-            <span>✦ Un espace d'écoute, de compréhension et de générosité ✦ Cultiver l'altruisme, l'équilibre et la richesse sociale pour rompre l'isolement, recréer de vrais liens humains et agir ensemble contre la précarité ✦ Échange de dons, savoirs, talents et services ✦ Une alternative citoyenne au système monétaire ✦ Accueil inconditionnel : sans-abri, exclus, marginaux, SEL, non-conformistes & esprits libres ✦[cite: 4]</span>
+            <span>✦ Un espace d'écoute, de compréhension et de générosité ✦ Cultiver l'altruisme, l'équilibre et la richesse sociale pour rompre l'isolement, recréer de vrais liens humains et agir ensemble contre la précarité ✦ Échange de dons, savoirs, talents et services ✦ Une alternative citoyenne au système monétaire ✦ Accueil inconditionnel : sans-abri, exclus, marginaux, SEL, non-conformistes & esprits libres ✦</span>
+            <span>✦ Un espace d'écoute, de compréhension et de générosité ✦ Cultiver l'altruisme, l'équilibre et la richesse sociale pour rompre l'isolement, recréer de vrais liens humains et agir ensemble contre la précarité ✦ Échange de dons, savoirs, talents et services ✦ Une alternative citoyenne au système monétaire ✦ Accueil inconditionnel : sans-abri, exclus, marginaux, SEL, non-conformistes & esprits libres ✦</span>
         </div>
     </div>
 
     <div id="coffre-magique" onclick="exploserCadeau()" title="Coffre magique">🎁</div>
-    <a href="journal.html" class="journal-volant" id="journal-volant" title="Journal de bord du #petitploucdesjardiniers">📖</a>
+    <a href="ministere-de-lhonnetete.html" class="journal-volant" id="journal-volant" title="Journal de bord du #petitploucdesjardiniers">📖</a>
 
     <footer>
-        <a href="#" class="lien-copyright" onclick="ouvrirModalInfo(); return false;">© PINON 2000 — Tous droits de partage et d'humanité réservés</a><br>
+        <a href="merci.html" class="lien-copyright">© PINON 2000 — Tous droits de partage et d'humanité réservés</a><br>
         <a href="ministere-de-lhonnetete.html" class="lien-footer-discret">journal de bord du #petitploucdesjardiniers, réflexions de l'auteur du site.</a>
     </footer>
 
@@ -455,7 +455,7 @@
             <span class="fermer-modal" onclick="fermerModalInfo()">&times;</span>
             <h2 style="color: #fde047; margin-top: 0; font-size: 1.4em;">La Fraternité du Palais Nature</h2>
             <p style="font-size: 0.95em; line-height: 1.6; opacity: 0.95; text-align: left;">
-                Cet espace est un sanctuaire du DON entier, responsable et volontaire, une entraide inconditionnelle. Ici, point de marketing, de profilage ou d'évaluation marchande : votre sincérité, vos talents, vos savoirs et vos besoins s'offrent et se partagent pour recréer une fraternité humaine sincère et vivante.[cite: 4]
+                Cet espace est un sanctuaire du DON entier, responsable et volontaire, une entraide inconditionnelle. Ici, point de marketing, de profilage ou d'évaluation marchande : votre sincérité, vos talents, vos savoirs et vos besoins s'offrent et se partagent pour recréer une fraternité humaine sincère et vivante.
             </p>
             <p style="font-size: 0.85em; opacity: 0.7; font-style: italic; margin-top: 20px;">
                 © PINON 2000 — Conçu avec le cœur et l'esprit libre par le #petitploucdesjardiniers.
@@ -521,6 +521,7 @@
             });
         }
 
+        // Réduction du nombre d'émojis flottants (passé de 22 à 12)
         for (let i = 0; i < 12; i++) {
             createEmoji();
         }
@@ -550,6 +551,7 @@
 
             setTimeout(() => bird.remove(), 12000);
         }
+        // Intervalle de spawn des oiseaux augmenté pour en avoir un peu moins (de 6000 à 10000ms)
         setInterval(spawnFlyingBird, 10000);
         spawnFlyingBird();
 
@@ -705,23 +707,22 @@
             });
         };
 
-        // --- GESTION DU SON AVEC le fichier oiseaux.mp3 ---
+        // Contrôle audio avec oiseaux.mp3
+        const audioElement = document.getElementById('audio-oiseaux');
         let isPlaying = false;
 
         function toggleSon() {
             const btn = document.getElementById('btn-son');
-            const audio = document.getElementById('sonOiseaux');
-
             if (!isPlaying) {
-                audio.play().then(() => {
+                audioElement.play().then(() => {
                     isPlaying = true;
                     btn.textContent = "🎶";
                     btn.title = "Couper l'ambiance sonore";
-                }).catch(e => {
-                    console.log("Lecture audio empêchée ou fichier oiseaux.mp3 introuvable :", e);
+                }).catch(error => {
+                    console.log("La lecture automatique a été bloquée ou le fichier est introuvable :", error);
                 });
             } else {
-                audio.pause();
+                audioElement.pause();
                 isPlaying = false;
                 btn.textContent = "🕊️";
                 btn.title = "Activer l'ambiance sonore";
