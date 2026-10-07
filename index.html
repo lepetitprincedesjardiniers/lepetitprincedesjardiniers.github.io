@@ -162,6 +162,7 @@
             flex-direction: column;
             align-items: center;
             flex: 0 0 auto;
+            gap: 25px;
         }
 
         /* Terre animée (Inversée : mène au Jardin) */
@@ -191,7 +192,7 @@
         .style-urgence { border: 2px solid rgba(255, 105, 180, 0.6); }
         .style-urgence:hover { transform: translateY(-5px); border-color: #ff69b4; background: rgba(255, 105, 180, 0.2); box-shadow: 0 12px 40px rgba(255,105,180,0.3); }
 
-        .style-regulation { border: 2px solid rgba(147, 112, 219, 0.6); }
+        .style-regulation { border: 2px solid rgba(147, 112, 219, 0.6); width: 320px; }
         .style-regulation:hover { transform: translateY(-5px); border-color: #9370DB; background: rgba(147, 112, 219, 0.2); box-shadow: 0 12px 40px rgba(147,112,219,0.3); }
 
         .style-savoir { border: 2px solid rgba(255, 193, 7, 0.6); }
@@ -210,7 +211,7 @@
 
         /* Boutons d'action en haut à droite */
         .boutons-header { position: fixed; top: 20px; right: 20px; z-index: 1000; display: flex; gap: 12px; align-items: center; }
-        #btn-son { background: none; border: none; color: var(--text-color); cursor: pointer; font-size: 32px; filter: drop-shadow(0 0 8px rgba(255,255,255,0.5)); transition: 0.3s; padding: 0; }
+        #btn-son { text-decoration: none; font-size: 32px; filter: drop-shadow(0 0 8px rgba(255,255,255,0.5)); transition: 0.3s; display: inline-flex; align-items: center; justify-content: center; }
         #btn-son:hover { transform: scale(1.2); }
 
         /* Icônes vagabondes magiques */
@@ -327,6 +328,7 @@
             .terre-don { width: 250px; height: 250px; }
             .texte-semis { font-size: 1em; }
             .rubrique-carte { height: auto; min-height: 190px; }
+            .style-regulation { width: 100%; }
             .texte-intro-fixe { width: 90%; font-size: 0.9em; padding: 10px 15px; }
             .bandeau-defilant { width: 92%; }
         }
@@ -337,7 +339,7 @@
     <div id="google_translate_element"></div>
     
     <div class="boutons-header">
-        <button id="btn-son" onclick="toggleSon()" title="Activer / couper l'ambiance sonore">🕊️</button>
+        <a href="oiseaux.mp3" id="btn-son" title="Écouter les oiseaux">🕊️</a>
     </div>
 
     <!-- Icônes vagabondes magiques -->
@@ -400,27 +402,14 @@
                     Ex : santé, urgence, écoute et réconfort
                 </div>
             </a>
-
-            <a href="vie.html" class="rubrique-carte style-citoyen flotte-e">
-                <div style="padding-top: 6px;">
-                    <h3 style="margin:0; font-size: 1em;">🏛️ Vie citoyenne</h3>
-                    <div class="phrases-impots" style="margin-top: 6px;">Espace de débats, d'initiatives locales et de participation à la vie de la communauté.</div>
-                </div>
-                <div class="liste-exemples-discrets">
-                    Ex : agora, propositions, assemblées et décisions.
-                </div>
-            </a>
         </div>
 
-        <!-- CENTRE : La Terre animée (Inversée : mène vers le Jardin) -->
+        <!-- CENTRE : La Terre animée ET la case Régulation en dessous -->
         <div class="centre-terre-cosmos">
             <a href="jardin.html" class="terre-don">
                 <div class="texte-semis"><b>Le Jardin Public des Fraternels</b></div>
             </a>
-        </div>
 
-        <!-- COLONNE DROITE -->
-        <div class="colonne-cosmos">
             <a href="jardin.html?cat=REGULATION" class="rubrique-carte style-regulation flotte-c">
                 <div style="padding-top: 6px;">
                     <h3 style="margin:0; font-size: 1em;">⚖️ Régulation</h3>
@@ -430,8 +419,21 @@
                     Ex : dialogues, chartes, régulation et paix de la cité.
                 </div>
             </a>
+        </div>
 
-            <a href="jardin.html?cat=SAVOIR" class="rubrique-carte style-savoir flotte-d">
+        <!-- COLONNE DROITE (Vie citoyenne au-dessus de Savoirs) -->
+        <div class="colonne-cosmos">
+            <a href="vie.html" class="rubrique-carte style-citoyen flotte-d">
+                <div style="padding-top: 6px;">
+                    <h3 style="margin:0; font-size: 1em;">🏛️ Vie citoyenne</h3>
+                    <div class="phrases-impots" style="margin-top: 6px;">Espace de débats, d'initiatives locales et de participation à la vie de la communauté.</div>
+                </div>
+                <div class="liste-exemples-discrets">
+                    Ex : agora, propositions, assemblées et décisions.
+                </div>
+            </a>
+
+            <a href="jardin.html?cat=SAVOIR" class="rubrique-carte style-savoir flotte-e">
                 <div style="padding-top: 6px;">
                     <h3 style="margin:0; font-size: 1em;">💡 Savoirs</h3>
                     <div class="phrases-impots" style="font-size: 0.78em; margin-top: 6px;">Partageons nos connaissances et les trésors de l'intelligence.</div>
@@ -716,56 +718,6 @@
                 }
             });
         };
-
-        // Ambiance sonore Web Audio API
-        let audioCtx = null;
-        let isPlaying = false;
-        let intervalSon = null;
-
-        function jouerSonAleatoire() {
-            if (!audioCtx || !isPlaying) return;
-            const now = audioCtx.currentTime;
-            const osc = audioCtx.createOscillator();
-            const gain = audioCtx.createGain();
-            osc.type = 'sine';
-            const f = 1500 + Math.random() * 1000;
-            osc.frequency.setValueAtTime(f, now);
-            osc.frequency.linearRampToValueAtTime(f + 300, now + 0.1);
-            
-            gain.gain.setValueAtTime(0.001, now);
-            gain.gain.linearRampToValueAtTime(0.02, now + 0.02);
-            gain.gain.exponentialRampToValueAtTime(0.0001, now + 0.2);
-            
-            osc.connect(gain);
-            gain.connect(audioCtx.destination);
-            osc.start(now);
-            osc.stop(now + 0.2);
-        }
-
-        function toggleSon() {
-            const btn = document.getElementById('btn-son');
-            if (!isPlaying) {
-                try {
-                    audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-                    isPlaying = true;
-                    btn.textContent = "🎶";
-                    btn.title = "Couper l'ambiance sonore";
-                    
-                    intervalSon = setInterval(() => {
-                        if (!isPlaying) return;
-                        jouerSonAleatoire();
-                    }, 2000);
-                } catch(e) {
-                    console.log("Audio non autorisé sans interaction");
-                }
-            } else {
-                isPlaying = false;
-                if (intervalSon) clearInterval(intervalSon);
-                if (audioCtx) audioCtx.close();
-                btn.textContent = "🕊️";
-                btn.title = "Activer l'ambiance sonore";
-            }
-        }
 
         const coffre = document.getElementById('coffre-magique');
         let cX = 100, cY = 100;
