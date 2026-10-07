@@ -1,863 +1,760 @@
 <!DOCTYPE html>
-<html lang="fr" class="scroll-smooth">
+<html lang="fr">
 <head>
+    <meta name="google-site-verification" content="35YGSTJv911M05cdP6FHHcnj57ZBCs7iprQJzsXtT4Q" />
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Ministère de l'honnêteté | Journal de l'actualité et de la vérité</title>
-    <meta name="description" content="Espace d'information libre et indépendant, le journal du Ministère de l'honnêteté propose enquêtes et reportages pour les citoyens." />
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        joy: {
-                            dark: '#1e1b4b',
-                            orange: '#f97316',
-                            gold: '#f59e0b',
-                            bg: '#fffbf5',
-                        }
-                    }
-                }
-            }
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>La Fraternité du Palais Nature - Accueil</title>
+    <meta name="description" content="La Fraternité du Palais Nature : espace citoyen de gratuité absolue, de don et d'entraide. Un havre d'écoute, d'altruisme et de partage pour recréer du lien social et vivre la fraternité." />
+
+    <!-- Données structurées invisibles pour Google (SEO) -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "NGO",
+      "name": "La Fraternité du Palais Nature",
+      "description": "Espace d'entraide, d'écoute, de don et de gratuité absolue pour cultiver l'altruisme, rompre l'isolement et recréer du lien social.",
+      "url": "https://lepetitprincedesjardiniers.github.io/"
+    }
+    </script>
+
+    <script type="text/javascript">
+        function googleTranslateElementInit() {
+            new google.translate.TranslateElement({pageLanguage: 'fr'}, 'google_translate_element');
         }
     </script>
+    <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+
     <style>
-        .desc-content { display: none; }
-        .desc-content.expanded { display: block; }
-        .arrow-icon { transition: transform 0.3s ease; }
-        .arrow-icon.rotated { transform: rotate(180deg); }
-        html, body { max-width: 100% !important; overflow-x: hidden !important; }
-        .iframe-container { -webkit-overflow-scrolling: touch; }
-        .desc-text {
-            display: -webkit-box;
-            -webkit-line-clamp: 5;
-            -webkit-box-orient: vertical;
-            overflow: hidden;
+        :root {
+            --bg-gradient: radial-gradient(circle at center, #0f172a 0%, #000000 100%);
+            --text-color: #ffffff;
+            --card-bg: rgba(15, 23, 42, 0.45);
+            --menu-bg: rgba(0, 128, 128, 0.25);
+            --star-opacity: 1;
         }
-        .desc-text.line-clamp-none {
-            display: block;
-            -webkit-line-clamp: unset;
-            overflow: visible;
+
+        body.day-mode {
+            --bg-gradient: radial-gradient(circle at center, #e0f7fa 0%, #80deea 100%);
+            --text-color: #1e293b;
+            --card-bg: rgba(255, 255, 255, 0.65);
+            --menu-bg: rgba(255, 255, 255, 0.4);
+            --star-opacity: 0;
+        }
+
+        body { 
+            font-family: 'Comic Sans MS', cursive, sans-serif; text-align: center; margin: 0; padding: 0; 
+            background: var(--bg-gradient);
+            color: var(--text-color); overflow-x: hidden; min-height: 100vh; position: relative;
+            transition: background 0.8s ease, color 0.8s ease;
+            cursor: pointer;
+        }
+
+        #google_translate_element { 
+            position: absolute; top: 15px; left: 15px; z-index: 3000; 
+            opacity: 0.7; transform: scale(0.85); transition: 0.3s;
+        }
+        #google_translate_element:hover { opacity: 1; }
+
+        .header-container { position: relative; padding-top: 25px; z-index: 100; }
+        .titre-fraternite { display: block; font-size: 2.2em; letter-spacing: 4px; color: #fde047; text-shadow: 0 0 20px rgba(253,224,71,0.4); font-weight: bold; margin-bottom: 12px; }
+
+        body.day-mode .titre-fraternite { color: #d97706; text-shadow: 0 0 15px rgba(217,119,6,0.3); }
+
+        /* Texte fixe d'introduction */
+        .texte-intro-fixe {
+            max-width: 850px;
+            margin: 8px auto 14px auto;
+            padding: 12px 22px;
+            font-size: 0.98em;
+            line-height: 1.5;
+            background: rgba(15, 23, 42, 0.35);
+            backdrop-filter: blur(8px);
+            border-radius: 18px;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+            position: relative;
+            z-index: 10;
+        }
+
+        /* Menu pro et épuré */
+        .menu-table { margin: 15px auto; border-radius: 12px; background: var(--menu-bg); backdrop-filter: blur(8px); border: 1px solid rgba(255,255,255,0.2); border-collapse: separate; border-spacing: 0; overflow: hidden; position: relative; z-index: 10; box-shadow: 0 8px 32px rgba(0,0,0,0.15); }
+        .menu-table td { border-right: 1px solid rgba(255, 255, 255, 0.1); transition: 0.3s; }
+        .menu-table td:last-child { border-right: none; }
+        .menu-table td:hover { background-color: rgba(0, 179, 179, 0.4); }
+        .menu-table a { display: block; padding: 10px 18px; text-decoration: none; color: var(--text-color); font-weight: bold; font-size: 0.95em; }
+
+        /* Bandeau défilant bas de page */
+        .bandeau-defilant {
+            max-width: 1100px;
+            margin: 30px auto 15px auto;
+            overflow: hidden;
+            background: rgba(15, 23, 42, 0.55);
+            backdrop-filter: blur(6px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 16px;
+            padding: 9px 0;
+            font-size: 0.85em;
+            white-space: nowrap;
+            position: relative;
+            z-index: 20;
+            box-shadow: 0 6px 24px rgba(0,0,0,0.2);
+        }
+
+        .bandeau-contenu {
+            display: inline-block;
+            white-space: nowrap;
+            animation: defilementInfini 60s linear infinite;
+        }
+
+        .bandeau-contenu span {
+            padding-right: 50px;
+            opacity: 0.9;
+        }
+
+        @keyframes defilementInfini {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+
+        /* Soleil central supérieur (Inversé : mène au formulaire) */
+        .soleil-cadre { width: 150px; height: 150px; background: radial-gradient(circle, #ffeb3b 0%, #ff9800 100%); border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 0 30px rgba(255,152,0,0.6); margin: 25px auto; position: relative; z-index: 20; transition: 0.6s; text-decoration: none; border: 2px solid rgba(255,255,255,0.5); }
+        .soleil-cadre h1 { font-size: 0.85em; color: #222; line-height: 1.2; margin: 0; padding: 10px; font-weight: bold; }
+        .soleil-cadre:hover { box-shadow: 0 0 50px #fff; transform: scale(1.08) rotate(360deg); }
+
+        /* --- PAYSAGE COSMOS --- */
+        .paysage-cosmos {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 45px;
+            flex-wrap: wrap;
+            max-width: 1350px;
+            margin: 20px auto;
+            position: relative;
+            z-index: 5;
+            padding: 20px;
+        }
+
+        @keyframes floatOrganique {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-6px); }
+        }
+
+        .flotte-a { animation: floatOrganique 7.2s ease-in-out infinite; }
+        .flotte-b { animation: floatOrganique 8.1s ease-in-out infinite; animation-delay: -1.5s; }
+        .flotte-c { animation: floatOrganique 7.5s ease-in-out infinite; animation-delay: -3s; }
+        .flotte-d { animation: floatOrganique 8.5s ease-in-out infinite; animation-delay: -2s; }
+
+        .colonne-cosmos {
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+            align-items: center;
+            flex: 1;
+            min-width: 310px;
+            max-width: 340px;
+        }
+
+        .centre-terre-cosmos {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            flex: 0 0 auto;
+        }
+
+        /* Terre animée (Inversée : mène au Jardin) */
+        .terre-don { 
+            width: 320px; height: 320px; border-radius: 50%; 
+            background-image: url('https://upload.wikimedia.org/wikipedia/commons/thumb/c/c3/Solarsystemscope_texture_2k_earth_daymap.jpg/1200px-Solarsystemscope_texture_2k_earth_daymap.jpg'); 
+            background-size: cover; display: flex; align-items: center; justify-content: center; 
+            text-decoration: none; color: white; box-shadow: inset -35px -35px 70px rgba(0,0,0,0.9), 0 0 40px rgba(0,128,128,0.3); 
+            animation: rotationTerre 45s linear infinite; position: relative; z-index: 5; transition: transform 0.8s;
+            border: 3px solid rgba(255,255,255,0.2);
+        }
+        .terre-don:hover { transform: scale(1.05); box-shadow: inset -35px -35px 70px rgba(0,0,0,0.9), 0 0 60px rgba(255,255,255,0.5); }
+        .texte-semis { font-family: 'Georgia', serif; font-style: italic; font-weight: bold; text-shadow: 2px 2px 12px black; font-size: 1.15em; padding: 25px; text-align: center; color: #fff; }
+        @keyframes rotationTerre { from { background-position: 0 0; } to { background-position: 1000px 0; } }
+
+        /* --- BLOCS UNIFORMES --- */
+        .rubrique-carte { 
+            background: var(--card-bg); backdrop-filter: blur(12px); 
+            border-radius: 30px; padding: 22px; width: 100%; height: 210px; box-sizing: border-box; 
+            transition: 0.4s; text-decoration: none; display: flex; flex-direction: column; justify-content: space-between; 
+            box-shadow: 0 8px 32px rgba(0,0,0,0.15); text-align: center;
+        }
+
+        .style-tresor { border: 2px solid rgba(0, 206, 209, 0.6); }
+        .style-tresor:hover { transform: translateY(-5px); border-color: #00ced1; background: rgba(0, 206, 209, 0.2); box-shadow: 0 12px 40px rgba(0,206,209,0.3); }
+
+        .style-urgence { border: 2px solid rgba(255, 105, 180, 0.6); }
+        .style-urgence:hover { transform: translateY(-5px); border-color: #ff69b4; background: rgba(255, 105, 180, 0.2); box-shadow: 0 12px 40px rgba(255,105,180,0.3); }
+
+        .style-regulation { border: 2px solid rgba(147, 112, 219, 0.6); }
+        .style-regulation:hover { transform: translateY(-5px); border-color: #9370DB; background: rgba(147, 112, 219, 0.2); box-shadow: 0 12px 40px rgba(147,112,219,0.3); }
+
+        .style-savoir { border: 2px solid rgba(255, 193, 7, 0.6); }
+        .style-savoir:hover { transform: translateY(-5px); border-color: #ffc107; background: rgba(255, 193, 7, 0.2); box-shadow: 0 12px 40px rgba(255,193,7,0.3); }
+
+        .phrases-impots { font-size: 0.78em; color: var(--text-color); opacity: 0.9; font-weight: bold; margin: 3px 0; line-height: 1.3; }
+        .liste-exemples-discrets { font-size: 0.68em; color: var(--text-color); opacity: 0.7; font-style: italic; list-style: none; padding: 0; margin: 4px 0 0 0; border-top: 1px dashed rgba(255,255,255,0.2); padding-top: 4px; }
+
+        .star { position: fixed; color: white; z-index: -1; opacity: var(--star-opacity); animation: twinkle var(--duration) infinite ease-in-out, moveStar var(--move-duration) linear infinite; transition: opacity 0.5s; }
+        @keyframes twinkle { 0%, 100% { opacity: calc(0.2 * var(--star-opacity)); transform: scale(0.7); } 50% { opacity: var(--star-opacity); transform: scale(1.2); } }
+        @keyframes moveStar { from { transform: translateX(-10vw); } to { transform: translateX(110vw); } }
+
+        /* Boutons d'action en haut à droite */
+        .boutons-header { position: fixed; top: 20px; right: 20px; z-index: 1000; display: flex; gap: 12px; align-items: center; }
+        #btn-son { background: none; border: none; color: var(--text-color); cursor: pointer; font-size: 32px; filter: drop-shadow(0 0 8px rgba(255,255,255,0.5)); transition: 0.3s; padding: 0; }
+        #btn-son:hover { transform: scale(1.2); }
+
+        /* Icônes vagabondes magiques */
+        .icone-vagabonde { 
+            position: fixed; font-size: 38px; z-index: 12; cursor: pointer; 
+            transition: 4s ease-in-out, transform 0.3s; 
+        }
+        .icone-vagabonde:hover { transform: scale(1.3) rotate(15deg); }
+
+        #icone-info { filter: drop-shadow(0 0 10px rgba(253, 224, 71, 0.8)); animation: pulseQuestion 2s infinite ease-in-out; }
+        #icone-jour-nuit { filter: drop-shadow(0 0 12px rgba(255, 215, 0, 0.8)); }
+        #icone-meteo { filter: drop-shadow(0 0 12px rgba(135, 206, 250, 0.8)); }
+
+        @keyframes pulseQuestion {
+            0%, 100% { transform: scale(1); filter: drop-shadow(0 0 8px rgba(253, 224, 71, 0.8)); }
+            50% { transform: scale(1.18); filter: drop-shadow(0 0 18px rgba(253, 224, 71, 1)); }
+        }
+
+        #coffre-magique { position: fixed; font-size: 40px; z-index: 8; cursor: pointer; transition: 4s ease-in-out; filter: drop-shadow(0 0 10px gold); opacity: 0.85; }
+        
+        .floating-emoji {
+            position: absolute;
+            font-size: 2rem;
+            user-select: none;
+            pointer-events: none;
+            z-index: 6;
+            transition: transform 0.5s ease;
+        }
+
+        @keyframes flyAcross {
+            0% { transform: translate(-100px, 50px) scale(0.8) rotate(-10deg); opacity: 0; }
+            20% { opacity: 1; }
+            50% { transform: translate(50vw, -30px) scale(1) rotate(5deg); }
+            80% { opacity: 1; }
+            100% { transform: translate(105vw, 80px) scale(0.9) rotate(-5deg); opacity: 0; }
+        }
+
+        .flying-bird {
+            position: absolute;
+            font-size: 2.5rem;
+            z-index: 10;
+            pointer-events: none;
+            animation: flyAcross 12s linear forwards;
+        }
+
+        /* Fenêtre modale d'information à l'écran */
+        .modal-overlay {
+            display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+            background: rgba(0, 0, 0, 0.75); backdrop-filter: blur(8px); z-index: 5000;
+            align-items: center; justify-content: center; opacity: 0; transition: opacity 0.3s ease;
+        }
+        .modal-overlay.active { display: flex; opacity: 1; }
+        .modal-contenu {
+            background: rgba(15, 23, 42, 0.95); border: 2px solid rgba(253, 224, 71, 0.5);
+            border-radius: 24px; padding: 30px; max-width: 550px; width: 85%; color: #fff;
+            box-shadow: 0 0 40px rgba(0,0,0,0.8); position: relative; text-align: center;
+        }
+        .fermer-modal { position: absolute; top: 15px; right: 20px; font-size: 28px; cursor: pointer; color: #fde047; transition: 0.2s; }
+        .fermer-modal:hover { transform: scale(1.2); }
+
+        /* Notification discrète cadeau */
+        #notification-cadeau {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%) translateY(100px);
+            background: rgba(15, 23, 42, 0.9);
+            color: #fde047;
+            padding: 10px 20px;
+            border-radius: 20px;
+            border: 1px solid rgba(253, 224, 71, 0.4);
+            font-size: 0.85em;
+            z-index: 6000;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.5);
+            opacity: 0;
+            transition: transform 0.4s ease, opacity 0.4s ease;
+        }
+        #notification-cadeau.show {
+            transform: translateX(-50%) translateY(0);
+            opacity: 1;
+        }
+
+        /* Effet arc-en-ciel animé */
+        .rainbow-text {
+            background: linear-gradient(45deg, #ff0000, #ff7f00, #ffff00, #00ff00, #0000ff, #4b0082, #8b00ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: rainbowShift 3s infinite linear;
+        }
+        @keyframes rainbowShift {
+            0% { filter: hue-rotate(0deg); }
+            100% { filter: hue-rotate(360deg); }
+        }
+
+        .journal-volant {
+            position: fixed; font-size: 35px; z-index: 15; cursor: pointer;
+            filter: drop-shadow(0 0 10px #f59e0b); transition: transform 8s linear; text-decoration: none;
+        }
+        .journal-volant:hover { transform: scale(1.3) rotate(20deg) !important; }
+
+        footer { padding: 35px 0; }
+        .lien-copyright { color: var(--text-color); opacity: 0.5; text-decoration: none; font-weight: bold; font-size: 0.9em; transition: 0.3s; display: inline-block; margin-bottom: 10px; }
+        .lien-copyright:hover { opacity: 1; text-shadow: 0 0 10px #fff; }
+
+        .lien-footer-discret { display: block; color: var(--text-color); opacity: 0.45; text-decoration: none; font-size: 0.78em; transition: 0.3s; margin-top: 5px; font-style: italic; }
+        .lien-footer-discret:hover { opacity: 0.85; text-decoration: underline; }
+
+        @media (max-width: 950px) {
+            .paysage-cosmos { flex-direction: column; gap: 20px; }
+            .colonne-cosmos { max-width: 100%; width: 100%; }
+            .titre-fraternite { font-size: 1.5em; }
+            .menu-table, .menu-table tbody, .menu-table tr { display: flex; flex-wrap: wrap; justify-content: center; width: 95%; }
+            .menu-table td { flex: 1 1 28%; text-align: center; padding: 6px 2px; font-size: 0.8em; border-right: none; }
+            .terre-don { width: 250px; height: 250px; }
+            .texte-semis { font-size: 1em; }
+            .rubrique-carte { height: auto; min-height: 190px; }
+            .texte-intro-fixe { width: 90%; font-size: 0.9em; padding: 10px 15px; }
+            .bandeau-defilant { width: 92%; }
         }
     </style>
 </head>
-<body class="bg-joy-bg text-gray-900 font-sans antialiased">
+<body class="night-mode">
 
-    <!-- En-tête / Navigation -->
-    <header class="sticky top-0 z-50 bg-joy-bg/90 backdrop-blur-md border-b border-orange-100 shadow-sm">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex justify-between items-center h-20">
-                <div class="flex items-center space-x-3">
-                    <div class="bg-gradient-to-br from-joy-gold to-joy-orange text-white p-2.5 rounded-xl shadow-md shrink-0">
-                        <i class="fa-solid fa-scale-balanced text-xl"></i>
-                    </div>
-                    <div>
-                        <span class="text-[10px] sm:text-xs uppercase tracking-widest font-extrabold text-joy-orange block">Média indépendant</span>
-                        <h1 class="text-lg sm:text-2xl font-black tracking-tight text-joy-dark truncate max-w-[200px] sm:max-w-none">Ministère de l'honnêteté</h1>
-                    </div>
-                </div>
+    <!-- Fichier audio interne pointant vers oiseaux.mp3 -->
+    <audio id="audio-oiseau" src="oiseaux.mp3" preload="auto" loop></audio>
 
-                <nav class="hidden md:flex items-center space-x-8 text-sm font-semibold text-gray-700">
-                    <a href="#articles" class="hover:text-joy-orange transition">Articles</a>
-                    <a href="#videos" class="hover:text-joy-orange transition">Vidéos</a>
-                    <a href="#apropos" class="hover:text-joy-orange transition">Notre Mission</a>
-                    <a href="https://lepetitprincedesjardiniers.github.io/index.html" class="text-joy-orange hover:text-orange-600 transition flex items-center gap-1.5 font-bold text-xs bg-orange-50 px-3.5 py-2 rounded-xl border border-orange-200">
-                        <i class="fa-solid fa-arrow-left text-xs"></i> Petites Annonces Citoyennes
-                    </a>
-                </nav>
-            </div>
+    <div id="google_translate_element"></div>
+    
+    <div class="boutons-header">
+        <button id="btn-son" onclick="toggleSon()" title="Activer / couper l'ambiance sonore">🕊️</button>
+    </div>
+
+    <!-- Icônes vagabondes magiques -->
+    <div id="icone-info" class="icone-vagabonde" onclick="ouvrirModalInfo()" title="À propos & Informations (Attrape-moi !)">❓</div>
+    <div id="icone-jour-nuit" class="icone-vagabonde" onclick="clicJourNuit()" title="Attrape-moi pour changer le temps !">☀️</div>
+    <div id="icone-meteo" class="icone-vagabonde" onclick="clicMeteo()" title="Attrape-moi pour faire de la pluie ou de la neige !">☁️</div>
+
+    <!-- Notification discrète cadeau -->
+    <div id="notification-cadeau">🎁 Trésor capturé ! Abondance et partage offerts.</div>
+
+    <div class="header-container">
+        <div class="titre-fraternite">La Fraternité du Palais Nature</div>
+
+        <!-- Texte fixe d'introduction -->
+        <div class="texte-intro-fixe">
+            Espace d'entraide et de gratuité absolue ouvert inconditionnellement à toutes et tous, sans distinction de parcours, d'âge, de forme, ou de situation. Partagez vos dons, savoirs, talents et besoins pour recréer de la solidarité authentique, du lien social bienveillant, et nourrir notre générosité collective.
         </div>
-    </header>
 
-    <!-- Section "À la une" dynamique -->
-    <section id="alaune-container" class="py-12 lg:py-16 bg-gradient-to-br from-joy-dark via-indigo-950 to-orange-950 text-white relative overflow-hidden">
-        <div class="absolute -top-24 -right-24 w-96 h-96 bg-joy-orange/20 rounded-full blur-3xl pointer-events-none"></div>
-        <div class="absolute -bottom-24 -left-24 w-96 h-96 bg-joy-gold/10 rounded-full blur-3xl pointer-events-none"></div>
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10" id="alaune-content">
-            <div class="text-center py-12 text-amber-200">Chargement de l'actualité...</div>
-        </div>
-    </section>
-
-    <!-- Contenu Principal -->
-    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 space-y-20">
-
-        <!-- Section Articles -->
-        <section id="articles" class="space-y-8">
-            <div class="flex flex-col lg:flex-row justify-between items-start lg:items-end gap-4 border-b border-orange-200 pb-4">
-                <div>
-                    <span class="text-xs uppercase tracking-widest font-extrabold text-joy-orange block">Publications récentes</span>
-                    <h2 class="text-3xl font-extrabold text-joy-dark">Articles & Décryptages</h2>
-                </div>
-                
-                <div class="flex flex-col sm:flex-row items-center gap-3 w-full lg:w-auto">
-                    <div id="category-filters" class="flex flex-wrap gap-2 w-full sm:w-auto">
-                        <button onclick="filterByCategory('Tous')" class="cat-pill active bg-joy-orange text-white px-3 py-2 rounded-xl text-xs font-bold transition shadow-sm cursor-pointer">Tous</button>
-                    </div>
-                    <div class="w-full sm:w-72">
-                        <div class="relative">
-                            <span class="absolute inset-y-0 left-0 flex items-center pl-3.5 pointer-events-none text-gray-400">
-                                <i class="fa-solid fa-search"></i>
-                            </span>
-                            <input type="text" id="search-input" oninput="filterContent()" placeholder="Rechercher articles..." class="w-full pl-10 pr-4 py-2 bg-white border border-orange-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-joy-orange shadow-sm transition">
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div id="articles-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                <div class="col-span-full text-center py-12 text-gray-500 font-medium">Chargement des articles...</div>
-            </div>
-
-            <div id="load-more-container" class="text-center pt-6 hidden">
-                <button onclick="showMoreArticles()" class="bg-orange-50 hover:bg-joy-orange hover:text-white text-joy-orange font-bold text-sm px-6 py-3 rounded-xl transition border border-orange-200 shadow-sm cursor-pointer inline-flex items-center gap-2">
-                    <span>Charger plus d'articles</span> <i class="fa-solid fa-chevron-down text-xs"></i>
-                </button>
-            </div>
-        </section>
-
-        <!-- Section Vidéos & Reportages -->
-        <section id="videos" class="space-y-8 bg-white p-6 sm:p-12 rounded-3xl border border-orange-100 shadow-md">
-            <div class="flex flex-col sm:flex-row justify-between items-start sm:items-end gap-4 border-b border-orange-100 pb-4">
-                <div>
-                    <span class="text-xs uppercase tracking-widest font-extrabold text-joy-orange block">Format multimédia</span>
-                    <h2 class="text-3xl font-extrabold text-joy-dark">Vidéos & Reportages</h2>
-                </div>
-                <a href="https://www.youtube.com/@lepetitploucdesjardiniers" target="_blank" class="text-sm font-bold text-gray-700 hover:text-joy-orange transition flex items-center gap-2 bg-orange-50 px-4 py-2 rounded-xl">
-                    <i class="fa-brands fa-youtube text-red-600 text-lg"></i> Chaîne vidéo
-                </a>
-            </div>
-
-            <div id="videos-grid" class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                <div class="col-span-full text-center py-12 text-gray-500 font-medium">Chargement des vidéos...</div>
-            </div>
-
-            <div id="load-more-videos-container" class="text-center pt-6 hidden">
-                <button onclick="showMoreVideos()" class="bg-orange-50 hover:bg-joy-orange hover:text-white text-joy-orange font-bold text-sm px-6 py-3 rounded-xl transition border border-orange-200 shadow-sm cursor-pointer inline-flex items-center gap-2">
-                    <span>Charger plus de vidéos</span> <i class="fa-solid fa-chevron-down text-xs"></i>
-                </button>
-            </div>
-        </section>
-
-        <!-- Section Notre Mission -->
-        <section id="apropos" class="max-w-3xl mx-auto text-center space-y-6 py-8 bg-gradient-to-r from-amber-100/50 via-orange-100/30 to-amber-100/50 p-6 sm:p-8 rounded-3xl border border-orange-200/50">
-            <div class="w-14 h-14 bg-joy-orange text-white rounded-2xl flex items-center justify-center mx-auto shadow-lg shadow-orange-500/20">
-                <i class="fa-solid fa-shield-halved text-2xl"></i>
-            </div>
-            <h2 class="text-2xl sm:text-3xl font-extrabold text-joy-dark">Notre engagement envers vous</h2>
-            <p class="text-gray-700 leading-relaxed text-base sm:text-lg">
-                Le <strong>Ministère de l'honnêteté</strong> est un espace d'information libre et vibrant, conçu pour les citoyens qui exigent de la rigueur, de la joie de débattre et de la transparence.
-            </p>
-        </section>
-
-    </main>
-
-    <!-- Modale Visionneuse -->
-    <div id="content-modal" class="fixed inset-0 z-50 hidden bg-black/70 backdrop-blur-sm flex items-center justify-center p-2 sm:p-6">
-        <div class="bg-white w-full max-w-4xl h-[92vh] sm:h-[88vh] rounded-3xl shadow-2xl overflow-hidden flex flex-col relative border border-orange-200">
-            <div class="bg-joy-dark text-white px-4 sm:px-6 py-4 flex justify-between items-center shrink-0">
-                <h3 id="modal-title" class="font-bold text-base sm:text-lg truncate pr-4">Titre de l'article</h3>
-                <div class="flex items-center gap-3">
-                    <button onclick="shareCurrentArticle()" class="bg-white/10 hover:bg-white/20 text-amber-300 px-3 py-1.5 rounded-lg text-xs font-bold inline-flex items-center gap-1.5 transition cursor-pointer">
-                        <i class="fa-solid fa-share-nodes"></i> <span class="hidden sm:inline">Partager</span>
-                    </button>
-                    <button onclick="closeModal()" class="text-gray-300 hover:text-white text-xl font-bold w-10 h-10 rounded-full bg-white/10 flex items-center justify-center transition shrink-0 cursor-pointer">
-                        <i class="fa-solid fa-xmark"></i>
-                    </button>
-                </div>
-            </div>
-
-            <div class="bg-orange-50 border-b border-orange-200 px-6 py-2 flex items-center gap-4 shrink-0 text-sm font-bold">
-                <button onclick="switchModalTab('reading')" id="tab-reading-btn" class="text-joy-orange border-b-2 border-joy-orange pb-1 transition cursor-pointer">
-                    <i class="fa-solid fa-book-open mr-1"></i> Lecture de l'article
-                </button>
-                <button onclick="switchModalTab('responses')" id="tab-responses-btn" class="text-gray-500 hover:text-joy-orange pb-1 transition cursor-pointer">
-                    <i class="fa-solid fa-comments mr-1"></i> Réponses citoyennes (<span id="responses-count-badge">0</span>)
-                </button>
-            </div>
-
-            <div class="flex-grow relative overflow-hidden flex flex-col bg-gray-50">
-                <div id="panel-reading" class="w-full h-full p-2 sm:p-6 iframe-container overflow-hidden flex items-center justify-center">
-                    <iframe id="modal-iframe" class="w-full h-full max-w-5xl rounded-2xl shadow-2xl bg-black border-0" allow="autoplay; fullscreen"></iframe>
-                </div>
-
-                <div id="panel-responses" class="w-full h-full p-4 sm:p-6 overflow-y-auto hidden space-y-6">
-                    <div class="bg-white p-6 rounded-2xl border border-orange-200 shadow-sm space-y-4">
-                        <h4 class="font-extrabold text-joy-dark text-base flex items-center gap-2">
-                            <i class="fa-solid fa-pen-nib text-joy-orange"></i> Laisser une réponse ou un avis citoyen
-                        </h4>
-                        <div class="space-y-3">
-                            <input type="text" id="response-author" placeholder="Votre nom ou pseudonyme (ex: Citoyen éclairé)" class="w-full px-4 py-2.5 bg-gray-50 border border-orange-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-joy-orange transition">
-                            <textarea id="response-text" rows="3" placeholder="Exprimez votre point de vue sur cet article..." class="w-full px-4 py-2.5 bg-gray-50 border border-orange-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-joy-orange transition"></textarea>
-                            <div class="flex justify-end">
-                                <button onclick="submitResponse(event)" class="bg-joy-orange hover:bg-orange-600 text-white font-bold text-xs px-5 py-2.5 rounded-xl transition shadow-md shadow-orange-500/20 cursor-pointer inline-flex items-center gap-2">
-                                    <i class="fa-solid fa-paper-plane"></i><span> Publier la réponse</span>
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="space-y-3">
-                        <h5 class="font-bold text-gray-700 text-sm uppercase tracking-wider">Réponses de la communauté</h5>
-                        <div id="responses-list" class="space-y-3"></div>
-                    </div>
-                </div>
-            </div>
+        <div style="position: relative; display: flex; justify-content: center; align-items: center; width: 100%; margin: 15px 0 5px 0;">
+            <table class="menu-table" style="margin: 0 !important;">
+                <tr>
+                    <td><a href="index.html">Accueil</a></td>
+                    <td><a href="formulaire.html">Semer</a></td>
+                    <td><a href="jardin.html">Le Jardin</a></td>
+                    <td><a href="jardin.html?cat=IMPOT">Trésor Public</a></td>
+                    <td><a href="jardin.html?cat=REGULATION">Régulation</a></td>
+                    <td><a href="jardin.html?cat=AIDE">Aide & Harmonie</a></td>
+                    <td><a href="jardin.html?cat=SAVOIR">Savoirs</a></td>
+                    <td><a href="vie.html">Vie Citoyenne</a></td>
+                </tr>
+            </table>
         </div>
     </div>
 
-    <!-- Modale Courrier -->
-    <div id="courrier-modal" class="fixed inset-0 z-50 hidden bg-black/70 backdrop-blur-sm flex items-center justify-center p-4 sm:p-6">
-        <div class="bg-white w-full max-w-lg rounded-3xl shadow-2xl overflow-hidden flex flex-col relative border border-orange-200 p-6 sm:p-8 text-center space-y-6">
-            <button onclick="closeCourrierModal()" class="absolute top-4 right-4 text-gray-400 hover:text-gray-700 text-xl font-bold w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center transition cursor-pointer">
-                <i class="fa-solid fa-xmark"></i>
-            </button>
-            <div class="w-16 h-16 bg-joy-orange text-white rounded-2xl flex items-center justify-center mx-auto shadow-lg shadow-orange-500/20">
-                <i class="fa-solid fa-envelope-open-text text-2xl"></i>
-            </div>
-            <h3 class="text-2xl font-extrabold text-joy-dark">Courrier des lecteurs</h3>
-            <p class="text-gray-800 text-lg font-semibold leading-relaxed">
-                Ne perds pas ton temps sur ton ordi, <span class="text-joy-orange underline decoration-wavy">va discuter dans ton quartier !</span>
-            </p>
-            <div>
-                <button onclick="closeCourrierModal()" class="bg-joy-orange text-white font-bold text-sm px-6 py-3 rounded-xl hover:bg-orange-600 transition shadow-md shadow-orange-500/20 cursor-pointer">
-                    J'ai compris, j'y vais ! 🌳
-                </button>
-            </div>
+    <!-- Soleil central supérieur (Inversé : mène vers le formulaire) -->
+    <a href="formulaire.html" class="soleil-cadre"><h1>ESPACE DU SEMIS DE DON ENTIER</h1></a>
+
+    <!-- PAYSAGE COSMOS -->
+    <div class="paysage-cosmos">
+
+        <!-- COLONNE GAUCHE -->
+        <div class="colonne-cosmos">
+            <a href="jardin.html?cat=IMPOT" class="rubrique-carte style-tresor flotte-a">
+                <div style="padding-top: 6px;">
+                    <h3 style="margin:0; font-size: 1em;">📜 Trésor Public</h3>
+                    <p style="font-size: 0.75em; font-weight: bold; margin: 3px 0;">Un Don pluriel</p>
+                    <div class="phrases-impots">Rassemble les bras et les têtes volontaires pour faire vivre nos biens communs essentiels.</div>
+                </div>
+                <div class="liste-exemples-discrets">
+                    Ex : eau, énergie, voirie et espaces verts.
+                </div>
+            </a>
+
+            <a href="jardin.html?cat=AIDE" class="rubrique-carte style-urgence flotte-b">
+                <div style="padding-top: 6px;">
+                    <h3 style="margin:0; font-size: 1em;">💖 Aide & Harmonie</h3>
+                    <div class="phrases-impots" style="margin-top: 6px;">Entraide et secours du quotidien. Partageons ensemble les câlins du cœur.</div>
+                </div>
+                <div class="liste-exemples-discrets">
+                    Ex : santé, urgence, écoute et réconfort
+                </div>
+            </a>
+        </div>
+
+        <!-- CENTRE : La Terre animée (Inversée : mène vers le Jardin) -->
+        <div class="centre-terre-cosmos">
+            <a href="jardin.html" class="terre-don">
+                <div class="texte-semis"><b>Le Jardin Public des Fraternels</b></div>
+            </a>
+        </div>
+
+        <!-- COLONNE DROITE -->
+        <div class="colonne-cosmos">
+            <a href="jardin.html?cat=REGULATION" class="rubrique-carte style-regulation flotte-c">
+                <div style="padding-top: 6px;">
+                    <h3 style="margin:0; font-size: 1em;">⚖️ Vie citoyenne</h3>
+                    <div class="phrases-impots" style="margin-top: 6px;">Expose ta sincérité : la citoyenneté participative y répond avec délicatesse.</div>
+                </div>
+                <div class="liste-exemples-discrets">
+                    Ex : dialogues, chartes, régulation et paix de la cité.
+                </div>
+            </a>
+
+            <a href="jardin.html?cat=SAVOIR" class="rubrique-carte style-savoir flotte-d">
+                <div style="padding-top: 6px;">
+                    <h3 style="margin:0; font-size: 1em;">💡 Savoirs</h3>
+                    <div class="phrases-impots" style="font-size: 0.78em; margin-top: 6px;">Partageons nos connaissances et les trésors de l'intelligence.</div>
+                    <div class="phrases-impots" style="font-size: 0.78em; margin-top: 4px;">Bibliothèque vivante.</div>
+                </div>
+                <div class="liste-exemples-discrets">
+                    Ex : Éclosion, transmettre, créer, ateliers et manuels.
+                </div>
+            </a>
+        </div>
+
+    </div>
+
+    <!-- Bandeau défilant bas de page -->
+    <div class="bandeau-defilant">
+        <div class="bandeau-contenu">
+            <span>✦ Un espace d'écoute, de compréhension et de générosité ✦ Cultiver l'altruisme, l'équilibre et la richesse sociale pour rompre l'isolement, recréer de vrais liens humains et agir ensemble contre la précarité ✦ Échange de dons, savoirs, talents et services ✦ Une alternative citoyenne au système monétaire ✦ Accueil inconditionnel : sans-abri, exclus, marginaux, SEL, non-conformistes & esprits libres ✦</span>
+            <span>✦ Un espace d'écoute, de compréhension et de générosité ✦ Cultiver l'altruisme, l'équilibre et la richesse sociale pour rompre l'isolement, recréer de vrais liens humains et agir ensemble contre la précarité ✦ Échange de dons, savoirs, talents et services ✦ Une alternative citoyenne au système monétaire ✦ Accueil inconditionnel : sans-abri, exclus, marginaux, SEL, non-conformistes & esprits libres ✦</span>
         </div>
     </div>
 
-    <!-- Modale Contact -->
-    <div id="contact-modal" class="fixed inset-0 z-50 hidden bg-black/70 backdrop-blur-sm flex items-center justify-center p-4 sm:p-6">
-        <div class="bg-white w-full max-w-lg rounded-3xl shadow-2xl overflow-hidden flex flex-col relative border border-orange-200 p-6 sm:p-8 text-center space-y-6">
-            <button onclick="closeContactModal()" class="absolute top-4 right-4 text-gray-400 hover:text-gray-700 text-xl font-bold w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center transition cursor-pointer">
-                <i class="fa-solid fa-xmark"></i>
-            </button>
-            <div class="w-16 h-16 bg-joy-orange text-white rounded-2xl flex items-center justify-center mx-auto shadow-lg shadow-orange-500/20">
-                <i class="fa-solid fa-user-secret text-2xl"></i>
-            </div>
-            <h3 class="text-2xl font-extrabold text-joy-dark">Contact</h3>
-            <p class="text-gray-800 text-lg font-semibold leading-relaxed">
-                Je ne parle pas aux inconnu(es) <span class="text-joy-orange block mt-2">mais si tu me rencontres, sois gentille avec nous !</span>
-            </p>
-            <div>
-                <button onclick="closeContactModal()" class="bg-joy-orange text-white font-bold text-sm px-6 py-3 rounded-xl hover:bg-orange-600 transition shadow-md shadow-orange-500/20 cursor-pointer">
-                    Promis ! 🤝
-                </button>
-            </div>
-        </div>
-    </div>
+    <div id="coffre-magique" onclick="exploserCadeau()" title="Coffre magique">🎁</div>
+    <a href="ministere-de-lhonnetete.html" class="journal-volant" id="journal-volant" title="Journal de bord du #petitploucdesjardiniers">📖</a>
 
-    <!-- Pied de page -->
-    <footer class="bg-joy-dark text-white border-t border-indigo-900">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-            <div class="flex flex-col md:flex-row justify-between items-center gap-6 border-b border-indigo-900 pb-8 text-center md:text-left">
-                <div class="flex items-center space-x-3 justify-center">
-                    <div class="bg-joy-orange text-white p-2.5 rounded-xl">
-                        <i class="fa-solid fa-scale-balanced text-lg"></i>
-                    </div>
-                    <span class="font-black text-lg tracking-tight">Ministère de l'honnêteté</span>
-                </div>
-                <div class="flex space-x-6 text-amber-300 justify-center">
-                    <a href="#" class="hover:text-white transition text-xl"><i class="fa-brands fa-x-twitter"></i></a>
-                    <a href="https://www.youtube.com/@lepetitploucdesjardiniers" target="_blank" class="hover:text-white transition text-xl"><i class="fa-brands fa-youtube"></i></a>
-                    <a href="#" class="hover:text-white transition text-xl"><i class="fa-brands fa-instagram"></i></a>
-                </div>
-            </div>
-            <div class="flex flex-col sm:flex-row justify-between items-center gap-4 pt-8 text-xs text-indigo-300 text-center sm:text-left">
-                <p>&copy; 2026 Ministère de l'honnêteté. Propulsé par LePetitPloucsDesJardiniers</p>
-                <div class="flex flex-wrap justify-center items-center gap-4 sm:space-x-6">
-                    <button onclick="openContactModal(event)" class="text-amber-300 hover:text-white transition font-bold cursor-pointer bg-transparent border-0 p-0 inline-flex items-center gap-1.5">
-                        <i class="fa-solid fa-address-book"></i> Contact
-                    </button>
-                    <button onclick="openCourrierModal(event)" class="text-amber-300 hover:text-white transition font-bold cursor-pointer bg-transparent border-0 p-0 inline-flex items-center gap-1.5">
-                        <i class="fa-solid fa-envelope"></i> Courrier des lecteurs
-                    </button>
-                    <a href="https://lepetitprincedesjardiniers.github.io/index.html" class="hover:text-white transition font-bold">Retour aux Petites Annonces Citoyennes</a>
-                </div>
-            </div>
-        </div>
+    <footer>
+        <a href="#" class="lien-copyright" onclick="ouvrirModalInfo(); return false;">© PINON 2000 — Tous droits de partage et d'humanité réservés</a><br>
+        <a href="ministere-de-lhonnetete.html" class="lien-footer-discret">journal de bord du #petitploucdesjardiniers, réflexions de l'auteur du site.</a>
     </footer>
 
-    <!-- Scripts JS -->
+    <!-- Fenêtre modale d'information -->
+    <div id="modalInfo" class="modal-overlay" onclick="fermerModalClicExterieur(event)">
+        <div class="modal-contenu">
+            <span class="fermer-modal" onclick="fermerModalInfo()">&times;</span>
+            <h2 style="color: #fde047; margin-top: 0; font-size: 1.4em;">La Fraternité du Palais Nature</h2>
+            <p style="font-size: 0.95em; line-height: 1.6; opacity: 0.95; text-align: left;">
+                Cet espace est un sanctuaire du DON entier, responsable et volontaire, une entraide inconditionnelle. Ici, point de marketing, de profilage ou d'évaluation marchande : votre sincérité, vos talents, vos savoirs et vos besoins s'offrent et se partagent pour recréer une fraternité humaine sincère et vivante.
+            </p>
+            <p style="font-size: 0.85em; opacity: 0.7; font-style: italic; margin-top: 20px;">
+                © PINON 2000 — Conçu avec le cœur et l'esprit libre par le #petitploucdesjardiniers.
+            </p>
+        </div>
+    </div>
+
     <script>
-        const sheetID = "1jJZm_WSIMgM5r-Y5zTSrC8FUiLhRN-dOcPnIcSyTpSI";
-        const gid = "1311533436";
-        const csvUrl = `https://docs.google.com/spreadsheets/d/${sheetID}/export?format=csv&gid=${gid}`;
-        const scriptUrl = "https://script.google.com/macros/s/AKfycbxxToz22V88elCCjxLqjRtsb5iBIC156cbBFRIlTsju2SwOj9yNnKqzAwFITXMg_wij/exec";
-
-        let allArticles = []; 
-        let allVideos = [];
-        let allResponses = {}; 
-        let displayedArticleLimit = 6; 
-        let displayedVideoLimit = 6;
-        let currentSelectedCategory = 'Tous';
-        let currentArticleIndex = 0; 
-        let currentArticleTitle = '';
-
-        function getReadingTime(text) {
-            if (!text) return "1 min de lecture";
-            const words = text.trim().split(/\s+/).length;
-            const minutes = Math.max(1, Math.ceil(words / 200));
-            return `${minutes} min de lecture`;
+        // Génération des étoiles en arrière-plan
+        const numStars = 120;
+        for (let i = 0; i < numStars; i++) {
+            let star = document.createElement('div');
+            star.className = 'star';
+            star.style.width = Math.random() * 3 + 'px';
+            star.style.height = star.style.width;
+            star.style.top = Math.random() * 100 + 'vh';
+            star.style.left = Math.random() * 100 + 'vw';
+            star.style.setProperty('--duration', (Math.random() * 3 + 2) + 's');
+            star.style.setProperty('--move-duration', (Math.random() * 30 + 20) + 's');
+            star.style.animationDelay = (Math.random() * 5) + 's';
+            document.body.appendChild(star);
         }
 
-        function getArticleViews(index) {
-            const key = 'article_views_index_' + index;
-            return parseInt(localStorage.getItem(key)) || 0;
+        // Gestion de la fenêtre modale d'information
+        function ouvrirModalInfo() {
+            document.getElementById('modalInfo').classList.add('active');
         }
-
-        function incrementArticleViews(index) {
-            const key = 'article_views_index_' + index;
-            let views = parseInt(localStorage.getItem(key)) || 0;
-            views++;
-            localStorage.setItem(key, views);
-            return views;
+        function fermerModalInfo() {
+            document.getElementById('modalInfo').classList.remove('active');
         }
-
-        function getArticleResponses(index) {
-            return allResponses[index] || [];
-        }
-
-        function submitResponse(e) {
-            const authorInput = document.getElementById('response-author');
-            const textInput = document.getElementById('response-text');
-
-            const author = authorInput.value.trim() || 'Citoyen Anonyme';
-            const text = textInput.value.trim();
-
-            if (!text) {
-                alert("Veuillez écrire un message avant de publier.");
-                return;
+        function fermerModalClicExterieur(event) {
+            if (event.target === document.getElementById('modalInfo')) {
+                fermerModalInfo();
             }
+        }
 
-            const formData = new URLSearchParams();
-            formData.append('position', 'reponse');
-            formData.append('ref_id', currentArticleIndex);
-            formData.append('titre', author);       
-            formData.append('description', text);    
+        // --- GESTION DES ÉMOJIS ET OISEAUX FLOTTANTS ALÉATOIRES ---
+        const emojiList = ['❄️', '💧', '🐦', '🕊', '🦅', '✨', '🌸', '🍃'];
+        const activeElements = [];
 
-            const submitBtn = e ? e.target.closest('button') : null;
-            let originalContent = "";
-            if (submitBtn) {
-                originalContent = submitBtn.innerHTML;
-                submitBtn.innerHTML = `<i class="fa-solid fa-spinner fa-spin"></i> Envoi...`;
-                submitBtn.disabled = true;
-            }
+        function createEmoji(specificEmoji = null, startX = null, startY = null) {
+            const el = document.createElement('div');
+            el.className = 'floating-emoji';
+            el.innerText = specificEmoji || emojiList[Math.floor(Math.random() * emojiList.length)];
+            
+            let x = startX !== null ? startX : Math.random() * window.innerWidth;
+            let y = startY !== null ? startY : Math.random() * window.innerHeight;
+            
+            el.style.left = x + 'px';
+            el.style.top = y + 'px';
 
-            fetch(scriptUrl, {
-                method: 'POST',
-                body: formData
-            })
-            .then(response => response.json())
-            .then(result => {
-                if (result.result === 'success') {
-                    textInput.value = '';
-                    authorInput.value = '';
-                    loadDataFromSheet();
-                    closeModal();
-                } else {
-                    alert("Erreur lors de l'enregistrement : " + (result.message || 'Inconnue'));
-                }
-            })
-            .catch(error => {
-                console.error('Erreur:', error);
-                alert("Erreur de connexion avec la base de données.");
-            })
-            .finally(() => {
-                if (submitBtn) {
-                    submitBtn.innerHTML = originalContent;
-                    submitBtn.disabled = false;
-                }
+            let speedX = (Math.random() - 0.5) * 0.7;
+            let speedY = (Math.random() - 0.5) * 0.7;
+
+            document.body.appendChild(el);
+
+            activeElements.push({
+                element: el,
+                x: x,
+                y: y,
+                speedX: speedX,
+                speedY: speedY
             });
         }
 
-        function switchModalTab(tab) {
-            const readingBtn = document.getElementById('tab-reading-btn');
-            const responsesBtn = document.getElementById('tab-responses-btn');
-            const readingPanel = document.getElementById('panel-reading');
-            const responsesPanel = document.getElementById('panel-responses');
+        for (let i = 0; i < 12; i++) {
+            createEmoji();
+        }
 
-            if (tab === 'reading') {
-                readingBtn.className = "text-joy-orange border-b-2 border-joy-orange pb-1 transition cursor-pointer";
-                responsesBtn.className = "text-gray-500 hover:text-joy-orange pb-1 transition cursor-pointer";
-                readingPanel.classList.remove('hidden');
-                responsesPanel.classList.add('hidden');
+        function animateEmojis() {
+            activeElements.forEach(item => {
+                item.x += item.speedX;
+                item.y += item.speedY;
+
+                if (item.x < 0 || item.x > window.innerWidth - 30) item.speedX *= -1;
+                if (item.y < 0 || item.y > window.innerHeight - 30) item.speedY *= -1;
+
+                item.element.style.left = item.x + 'px';
+                item.element.style.top = item.y + 'px';
+            });
+            requestAnimationFrame(animateEmojis);
+        }
+        requestAnimationFrame(animateEmojis);
+
+        function spawnFlyingBird() {
+            const bird = document.createElement('div');
+            bird.className = 'flying-bird';
+            const birds = ['🐦', '🕊️', '🦅', '🦜'];
+            bird.innerText = birds[Math.floor(Math.random() * birds.length)];
+            bird.style.top = (Math.random() * (window.innerHeight / 2)) + 'px';
+            document.body.appendChild(bird);
+
+            setTimeout(() => bird.remove(), 12000);
+        }
+        setInterval(spawnFlyingBird, 10000);
+        spawnFlyingBird();
+
+        const colorModes = [
+            () => ({ color: '#ffffff', filter: 'drop-shadow(0 0 5px white)', isRainbow: false }),
+            () => ({ color: '#ff69b4', filter: 'drop-shadow(0 0 5px #ff1493)', isRainbow: false }),
+            () => {
+                const colors = ['#00ffff', '#ff4500', '#adff2f', '#ffff00', '#9370db', '#00ff7f'];
+                const rc = colors[Math.floor(Math.random() * colors.length)];
+                return { color: rc, filter: `drop-shadow(0 0 6px ${rc})`, isRainbow: false };
+            },
+            () => ({ color: '', filter: '', isRainbow: true })
+        ];
+
+        document.addEventListener('click', (e) => {
+            if (e.target.tagName === 'A' || e.target.tagName === 'BUTTON' || e.target.closest('table')) return;
+
+            const chosenMode = colorModes[Math.floor(Math.random() * colorModes.length)]();
+
+            activeElements.forEach(item => {
+                if (chosenMode.isRainbow) {
+                    item.element.classList.add('rainbow-text');
+                    item.element.style.color = '';
+                    item.element.style.filter = '';
+                } else {
+                    item.element.classList.remove('rainbow-text');
+                    item.element.style.color = chosenMode.color;
+                    item.element.style.filter = chosenMode.filter;
+                }
+            });
+
+            for(let i = 0; i < 2; i++) {
+                createEmoji(null, e.clientX + (Math.random() * 40 - 20), e.clientY + (Math.random() * 40 - 20));
+            }
+        });
+
+        // Icône Jour / Nuit vagabonde
+        const iconeJN = document.getElementById('icone-jour-nuit');
+        let jnX = 150, jnY = 150;
+        function moveJourNuit() {
+            jnX = Math.random() * (window.innerWidth - 100);
+            jnY = Math.random() * (window.innerHeight - 100);
+            iconeJN.style.left = jnX + 'px';
+            iconeJN.style.top = jnY + 'px';
+        }
+        setInterval(moveJourNuit, 6000); moveJourNuit();
+
+        let estEnJour = false;
+        function clicJourNuit() {
+            estEnJour = !estEnJour;
+            document.body.classList.toggle('day-mode', estEnJour);
+            const icone = document.getElementById('icone-jour-nuit');
+            icone.textContent = estEnJour ? '🌙' : '☀️';
+            icone.title = estEnJour ? 'Passer en mode Nuit étoilée' : 'Passer en mode Jour radieux';
+            exploserEffetJN(jnX, jnY);
+        }
+
+        function exploserEffetJN(x, y) {
+            const els = ['✨', '🌟', '💫', '☀️', '🌙'];
+            for(let i=0; i<15; i++) {
+                const p = document.createElement('div');
+                p.style.position = 'fixed'; p.style.left = x+'px'; p.style.top = y+'px';
+                p.innerHTML = els[Math.floor(Math.random()*els.length)];
+                document.body.appendChild(p);
+                const a = Math.random()*Math.PI*2, d = Math.random()*120+40;
+                p.animate([{transform:'scale(1)', opacity:1}, {transform:`translate(${Math.cos(a)*d}px, ${Math.sin(a)*d}px) scale(0)`, opacity:0}], {duration:800});
+                setTimeout(() => p.remove(), 800);
+            }
+        }
+
+        // Icône Météo vagabonde
+        const iconeMeteo = document.getElementById('icone-meteo');
+        let mX = 200, mY = 200;
+        function moveMeteo() {
+            mX = Math.random() * (window.innerWidth - 100);
+            mY = Math.random() * (window.innerHeight - 100);
+            iconeMeteo.style.left = mX + 'px';
+            iconeMeteo.style.top = mY + 'px';
+        }
+        setInterval(moveMeteo, 7000); moveMeteo();
+
+        let etatMeteo = 0; 
+        function clicMeteo() {
+            const icone = document.getElementById('icone-meteo');
+            if (etatMeteo === 0) {
+                lancerAverse('💧', '#38bdf8');
+                icone.innerHTML = "🌧";
+                icone.title = "Cliquez pour faire tomber de la neige";
+                etatMeteo = 1;
+            } else if (etatMeteo === 1) {
+                lancerAverse('❄️', '#ffffff');
+                icone.innerHTML = "❄️";
+                icone.title = "Cliquez pour revenir au nuage";
+                etatMeteo = 2;
             } else {
-                responsesBtn.className = "text-joy-orange border-b-2 border-joy-orange pb-1 transition cursor-pointer";
-                readingBtn.className = "text-gray-500 hover:text-joy-orange pb-1 transition cursor-pointer";
-                responsesPanel.classList.remove('hidden');
-                readingPanel.classList.add('hidden');
-                renderResponsesList();
+                icone.innerHTML = "☁️";
+                icone.title = "Attrape-moi pour faire de la pluie ou de la neige !";
+                etatMeteo = 0;
             }
         }
 
-        function renderResponsesList() {
-            const listContainer = document.getElementById('responses-list');
-            const countBadge = document.getElementById('responses-count-badge');
-            const responses = getArticleResponses(currentArticleIndex);
+        function lancerAverse(symbole, couleurTexte) {
+            for (let i = 0; i < 35; i++) {
+                const drop = document.createElement('div');
+                drop.style.position = 'fixed';
+                drop.style.left = Math.random() * window.innerWidth + 'px';
+                drop.style.top = '-30px';
+                drop.style.fontSize = (Math.random() * 12 + 16) + 'px';
+                drop.style.color = couleurTexte;
+                drop.style.zIndex = '999';
+                drop.style.pointerEvents = 'none';
+                drop.innerHTML = symbole;
+                document.body.appendChild(drop);
 
-            countBadge.textContent = responses.length;
+                const duree = Math.random() * 2000 + 1500;
+                const decalageX = (Math.random() - 0.5) * 80;
 
-            if (responses.length === 0) {
-                listContainer.innerHTML = `<div class="text-center py-6 text-gray-400 text-sm bg-white rounded-2xl border border-orange-100">Aucune réponse pour le moment. Soyez le premier à donner votre avis !</div>`;
-                return;
+                drop.animate([
+                    { transform: 'translateY(0px) translateX(0px)', opacity: 1 },
+                    { transform: `translateY(${window.innerHeight + 50}px) translateX(${decalageX}px)`, opacity: 0.3 }
+                ], {
+                    duration: duree,
+                    easing: 'linear'
+                });
+
+                setTimeout(() => drop.remove(), duree);
             }
+        }
 
-            let html = '';
-            responses.forEach(resp => {
-                html += `
-                    <div class="bg-white p-4 rounded-2xl border border-orange-100 shadow-sm space-y-1.5">
-                        <div class="flex justify-between items-center text-xs">
-                            <span class="font-extrabold text-joy-dark">${resp.author}</span>
-                            <span class="text-gray-400">${resp.date}</span>
-                        </div>
-                        <p class="text-gray-700 text-sm leading-relaxed">${resp.text}</p>
-                    </div>
-                `;
+        function deplacerElementAleatoirement(idElement) {
+            const el = document.getElementById(idElement);
+            if (!el) return;
+            const x = Math.random() * (window.innerWidth - 80);
+            const y = Math.random() * (window.innerHeight - 150) + 50;
+            el.style.transform = `translate(${x}px, ${y}px)`;
+        }
+
+        setInterval(() => {
+            deplacerElementAleatoirement('coffre-magique');
+            deplacerElementAleatoirement('icone-info');
+            deplacerElementAleatoirement('icone-jour-nuit');
+            deplacerElementAleatoirement('icone-meteo');
+            deplacerElementAleatoirement('journal-volant');
+        }, 9000);
+
+        window.onload = function() {
+            ['coffre-magique', 'icone-info', 'icone-jour-nuit', 'icone-meteo', 'journal-volant'].forEach(id => {
+                const el = document.getElementById(id);
+                if(el) {
+                    el.style.left = (Math.random() * (window.innerWidth - 100)) + 'px';
+                    el.style.top = (Math.random() * (window.innerHeight - 150) + 50) + 'px';
+                }
             });
-            listContainer.innerHTML = html;
-        }
+        };
 
-        function getYouTubeId(url) {
-            if (!url) return '';
-            const cleanUrl = url.trim(); 
-            const regExp = /(?:youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/|youtube\.com\/shorts\/)([^"&?\/\s]{11})/i;
-            const match = cleanUrl.match(regExp);
-            return match ? match[1] : '';
-        }
+        // Gestion du son avec volume réglé à 0.12
+        let isPlaying = false;
 
-        function getEmbedUrl(url) {
-            if (!url) return '';
-            const cleanUrl = url.trim();
-            if (cleanUrl.includes('docs.google.com/document/d/')) {
-                const match = cleanUrl.match(/\/document\/d\/([a-zA-Z0-9-_]+)/);
-                return match ? `https://docs.google.com/document/d/${match[1]}/preview` : cleanUrl;
-            }
-            const videoId = getYouTubeId(cleanUrl);
-            if (videoId) {
-                return `https://www.youtube.com/embed/${videoId}?autoplay=1`;
-            }
-            return cleanUrl;
-        }
-
-        function playVideoInline(containerId, videoId) {
-            const container = document.getElementById(containerId);
-            if (!container || !videoId) return;
-            container.innerHTML = `
-                <iframe width="100%" height="100%" 
-                    src="https://www.youtube.com/embed/${videoId}?autoplay=1" 
-                    title="YouTube video player" 
-                    frameborder="0" 
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
-                    allowfullscreen
-                    style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;">
-                </iframe>
-            `;
-            container.onclick = null;
-        }
-
-        function openModal(title, url, index) {
-            if (!url) return;
-            currentArticleIndex = index !== undefined ? index : 0;
-            currentArticleTitle = title || "Article sans titre";
+        function toggleSon() {
+            const btn = document.getElementById('btn-son');
+            const audioOiseau = document.getElementById('audio-oiseau');
             
-            incrementArticleViews(currentArticleIndex);
-
-            const modal = document.getElementById('content-modal');
-            const modalTitle = document.getElementById('modal-title');
-            const iframe = document.getElementById('modal-iframe');
-
-            modalTitle.textContent = currentArticleTitle;
-            iframe.src = getEmbedUrl(url);
+            // Volume réglé à 0.12 pour un fond sonore discret
+            audioOiseau.volume = 0.12; 
             
-            switchModalTab('reading');
-            document.getElementById('responses-count-badge').textContent = getArticleResponses(currentArticleIndex).length;
-
-            modal.classList.remove('hidden');
-            document.body.style.overflow = 'hidden';
-
-            renderArticles();
-        }
-
-        function openArticleByIndex(index) {
-            if (allArticles[index]) {
-                openModal(allArticles[index].titre, allArticles[index].lien, index);
-            }
-        }
-
-        function closeModal() {
-            const modal = document.getElementById('content-modal');
-            const iframe = document.getElementById('modal-iframe');
-            modal.classList.add('hidden');
-            iframe.src = ''; 
-            document.body.style.overflow = 'auto';
-        }
-
-        function shareCurrentArticle() {
-            const title = document.getElementById('modal-title').textContent;
-            if (navigator.share) {
-                navigator.share({
-                    title: title,
-                    text: "Découvre cette lecture indépendante sur le Ministère de l'honnêteté :",
-                    url: window.location.href
-                }).catch(() => {});
+            if (!isPlaying) {
+                audioOiseau.play().then(() => {
+                    isPlaying = true;
+                    btn.textContent = "🎶";
+                    btn.title = "Couper l'ambiance sonore";
+                }).catch(e => {
+                    console.log("Lecture audio bloquée ou fichier introuvable :", e);
+                });
             } else {
-                navigator.clipboard.writeText(window.location.href);
-                alert("Lien copié dans le presse-papier !");
+                audioOiseau.pause();
+                audioOiseau.currentTime = 0;
+                isPlaying = false;
+                btn.textContent = "🕊️";
+                btn.title = "Activer l'ambiance sonore";
             }
         }
 
-        function toggleDesc(btn, index) {
-            const container = btn.closest('.desc-container');
-            if (!container) return;
-
-            const content = container.querySelector('.desc-content');
-            const descText = container.querySelector('.desc-text');
-            const icon = btn.querySelector('.arrow-icon');
-
-            const isExpanded = container.classList.toggle('expanded');
-            if (descText) {
-                descText.classList.toggle('line-clamp-5', !isExpanded);
-                descText.classList.toggle('line-clamp-none', isExpanded);
-            }
-            if (content) {
-                content.classList.toggle('expanded', isExpanded);
-            }
-            if (icon) {
-                icon.classList.toggle('rotated', isExpanded);
-            }
+        const coffre = document.getElementById('coffre-magique');
+        let cX = 100, cY = 100;
+        function moveCoffre() {
+            cX = Math.random()*(window.innerWidth-100); cY = Math.random()*(window.innerHeight-100);
+            coffre.style.left = cX+'px'; coffre.style.top = cY+'px';
         }
+        setInterval(moveCoffre, 4500); moveCoffre();
 
-        function openCourrierModal(e) {
-            if (e) e.preventDefault();
-            document.getElementById('courrier-modal').classList.remove('hidden');
-            document.body.style.overflow = 'hidden';
-        }
+        function exploserCadeau() {
+            const notif = document.getElementById('notification-cadeau');
+            notif.classList.add('show');
+            setTimeout(() => { notif.classList.remove('show'); }, 3000);
 
-        function closeCourrierModal() {
-            document.getElementById('courrier-modal').classList.add('hidden');
-            document.body.style.overflow = 'auto';
-        }
-
-        function openContactModal(e) {
-            if (e) e.preventDefault();
-            document.getElementById('contact-modal').classList.remove('hidden');
-            document.body.style.overflow = 'hidden';
-        }
-
-        function closeContactModal() {
-            document.getElementById('contact-modal').classList.add('hidden');
-            document.body.style.overflow = 'auto';
-        }
-
-        document.getElementById('content-modal').addEventListener('click', function(e) {
-            if (e.target === this) closeModal();
-        });
-        document.getElementById('courrier-modal').addEventListener('click', function(e) {
-            if (e.target === this) closeCourrierModal();
-        });
-        document.getElementById('contact-modal').addEventListener('click', function(e) {
-            if (e.target === this) closeContactModal();
-        });
-
-        function filterContent() {
-            displayedArticleLimit = 6;
-            displayedVideoLimit = 6;
-            renderArticles();
-            renderVideos();
-        }
-
-        function filterByCategory(category) {
-            currentSelectedCategory = category;
-            displayedArticleLimit = 6;
-            updateCategoryPills();
-            renderArticles();
-        }
-
-        function updateCategoryPills() {
-            const container = document.getElementById('category-filters');
-            if (!container) return;
-            
-            const categories = ['Tous', ...new Set(allArticles.map(a => (a.categorie || 'Général').trim()))];
-            
-            let pillsHtml = '';
-            categories.forEach(cat => {
-                const isActive = currentSelectedCategory.toLowerCase() === cat.toLowerCase();
-                const btnClass = isActive 
-                    ? "cat-pill active bg-joy-orange text-white px-3 py-2 rounded-xl text-xs font-bold transition shadow-sm cursor-pointer"
-                    : "cat-pill bg-white text-gray-700 hover:bg-orange-50 border border-orange-200 px-3 py-2 rounded-xl text-xs font-bold transition shadow-sm cursor-pointer";
-                
-                pillsHtml += `<button onclick="filterByCategory('${cat}')" class="${btnClass}">${cat}</button>`;
-            });
-            
-            container.innerHTML = pillsHtml;
-        }
-
-        function renderArticles() {
-            const grid = document.getElementById('articles-grid');
-            const searchInput = document.getElementById('search-input');
-            const loadMoreContainer = document.getElementById('load-more-container');
-
-            const query = searchInput ? searchInput.value.toLowerCase().trim() : "";
-
-            const filtered = allArticles.filter(item => {
-                const matchesQuery = `${item.titre || ''} ${item.description || ''} ${item.categorie || ''}`.toLowerCase().includes(query);
-                const matchesCategory = currentSelectedCategory === 'Tous' || (item.categorie || '').trim().toLowerCase() === currentSelectedCategory.toLowerCase();
-                return matchesQuery && matchesCategory;
-            });
-
-            const limit = query ? filtered.length : displayedArticleLimit;
-            const articlesToDisplay = filtered.slice(0, limit);
-
-            if (filtered.length === 0) {
-                if (grid) grid.innerHTML = `<div class="col-span-full text-center py-12 text-gray-500 font-medium bg-white rounded-3xl border border-orange-100">Aucun article trouvé.</div>`;
-                if (loadMoreContainer) loadMoreContainer.classList.add('hidden');
-                return;
-            }
-
-            let html = '';
-            articlesToDisplay.forEach((art) => {
-                const realIndex = allArticles.findIndex(a => a === art);
-                const viewsCount = getArticleViews(realIndex);
-                const responseCount = (allResponses[realIndex] || []).length;
-                const readingTime = getReadingTime(art.description);
-
-                html += `
-                    <article class="bg-white rounded-3xl border border-orange-100 overflow-hidden shadow-sm hover:shadow-xl hover:-translate-y-1 transition duration-300 flex flex-col justify-between">
-                        <div>
-                            <div class="h-48 bg-gradient-to-br from-amber-100 to-orange-100 flex items-center justify-center text-joy-orange relative">
-                                <i class="fa-solid fa-newspaper text-4xl"></i>
-                                <span class="absolute bottom-3 left-3 bg-white/90 text-gray-700 text-[11px] font-bold px-2.5 py-1 rounded-lg shadow-sm">
-                                    👁 ${viewsCount} vue${viewsCount > 1 ? 's' : ''}
-                                </span>
-                                <span class="absolute bottom-3 right-3 bg-white/90 text-gray-700 text-[11px] font-bold px-2.5 py-1 rounded-lg shadow-sm">
-                                    💬 ${responseCount} réponse${responseCount > 1 ? 's' : ''}
-                                </span>
-                            </div>
-                            <div class="p-6 space-y-3">
-                                <div class="flex items-center justify-between text-xs font-bold gap-2">
-                                    <span class="bg-amber-100 text-amber-800 px-3 py-1 rounded-full truncate">${art.categorie || 'Article'}</span>
-                                    <span class="text-gray-400 font-normal shrink-0">${art.date ? art.date + ' • ' : ''}${readingTime}</span>
-                                </div>
-                                <h3 class="text-xl font-extrabold text-gray-900 leading-snug line-clamp-2">
-                                    ${art.titre}
-                                </h3>
-                                <p class="text-gray-600 text-sm leading-relaxed line-clamp-3">
-                                    ${art.description || ''}
-                                </p>
-                            </div>
-                        </div>
-                        <div class="p-6 pt-0">
-                            <button onclick="openArticleByIndex(${realIndex})" class="text-joy-orange font-bold text-sm hover:underline inline-flex items-center gap-1.5 cursor-pointer bg-transparent border-0 p-0">
-                                Lire l'article complet <i class="fa-solid fa-arrow-right text-xs"></i>
-                            </button>
-                        </div>
-                    </article>
-                `;
-            });
-
-            if (grid) grid.innerHTML = html;
-
-            if (loadMoreContainer) {
-                if (!query && displayedArticleLimit < filtered.length) {
-                    loadMoreContainer.classList.remove('hidden');
-                } else {
-                    loadMoreContainer.classList.add('hidden');
-                }
+            for(let i=0; i<20; i++) {
+                const p = document.createElement('div');
+                p.style.position = 'fixed'; p.style.left = cX+'px'; p.style.top = cY+'px';
+                p.innerHTML = ['🌸', '✨', '🌻', '🌟', '❤️'][Math.floor(Math.random()*5)];
+                document.body.appendChild(p);
+                const a = Math.random()*Math.PI*2, d = Math.random()*150+50;
+                p.animate([{transform:'scale(1)', opacity:1}, {transform:`translate(${Math.cos(a)*d}px, ${Math.sin(a)*d}px) scale(0)`, opacity:0}], {duration:1000});
+                setTimeout(() => p.remove(), 1000);
             }
         }
-
-        function renderVideos() {
-            const grid = document.getElementById('videos-grid');
-            const searchInput = document.getElementById('search-input');
-            const loadMoreContainer = document.getElementById('load-more-videos-container');
-
-            const query = searchInput ? searchInput.value.toLowerCase().trim() : "";
-
-            const filtered = allVideos.filter(item => {
-                const searchStr = `${item.titre || ''} ${item.description || ''} ${item.categorie || ''}`.toLowerCase();
-                return searchStr.includes(query);
-            });
-
-            const limit = query ? filtered.length : displayedVideoLimit;
-            const videosToDisplay = filtered.slice(0, limit);
-
-            if (filtered.length === 0) {
-                if (grid) grid.innerHTML = `<div class="col-span-full text-center py-12 text-gray-500 font-medium bg-white rounded-3xl border border-orange-100">Aucune vidéo trouvée.</div>`;
-                if (loadMoreContainer) loadMoreContainer.classList.add('hidden');
-                return;
-            }
-
-            let html = '';
-            videosToDisplay.forEach((vid, idx) => {
-                const videoId = getYouTubeId(vid.lien);
-                const thumbUrl = videoId ? `https://img.youtube.com/vi/${videoId}/hqdefault.jpg` : '';
-                const uniqueId = `video-container-${idx}-${Math.random().toString(36).substring(2, 7)}`;
-                const descriptionText = vid.description || 'Aucune description fournie.';
-
-                html += `
-                    <div class="bg-white rounded-3xl border border-orange-100 overflow-hidden shadow-sm flex flex-col justify-between p-5 sm:p-6 space-y-4">
-                        <div class="space-y-3">
-                            <div class="space-y-1.5">
-                                <div class="flex items-center justify-between text-xs font-bold gap-2">
-                                    <span class="bg-amber-100 text-amber-800 px-3 py-1 rounded-full truncate">${vid.categorie || 'Vidéo'}</span>
-                                    <span class="text-gray-400 font-normal shrink-0">${vid.date || ''}</span>
-                                </div>
-                                <h3 class="text-lg font-extrabold text-joy-dark leading-snug">${vid.titre}</h3>
-                            </div>
-
-                            <div id="${uniqueId}" onclick="playVideoInline('${uniqueId}', '${videoId}')" class="overflow-hidden relative shadow-md aspect-video flex items-center justify-center cursor-pointer group bg-gray-900 bg-cover bg-center rounded-2xl" style="background-image: url('${thumbUrl}');">
-                                <div class="absolute inset-0 bg-black/30 group-hover:bg-black/10 transition duration-300"></div>
-                                <div class="w-14 h-14 bg-joy-orange text-white rounded-full flex items-center justify-center shadow-xl z-10 group-hover:scale-110 transition duration-300">
-                                    <i class="fa-solid fa-play ml-1"></i>
-                                </div>
-                            </div>
-
-                            <div class="desc-container space-y-2 pt-1" data-index="${idx}">
-                                <div class="desc-text text-gray-700 text-sm leading-relaxed whitespace-pre-line line-clamp-5">
-                                    ${descriptionText}
-                                </div>
-
-                                <div class="text-center py-1">
-                                    <button onclick="toggleDesc(this, ${idx})" class="bg-orange-50 hover:bg-joy-orange text-joy-orange hover:text-white w-9 h-9 rounded-full inline-flex items-center justify-center transition shadow-sm cursor-pointer" aria-label="Développer les détails">
-                                        <i class="fa-solid fa-chevron-down arrow-icon text-xs"></i>
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                `;
-            });
-
-            if (grid) grid.innerHTML = html;
-
-            if (loadMoreContainer) {
-                if (!query && displayedVideoLimit < filtered.length) {
-                    loadMoreContainer.classList.remove('hidden');
-                } else {
-                    loadMoreContainer.classList.add('hidden');
-                }
-            }
-        }
-
-        function showMoreArticles() {
-            displayedArticleLimit += 6;
-            renderArticles();
-        }
-
-        function showMoreVideos() {
-            displayedVideoLimit += 6;
-            renderVideos();
-        }
-
-        function loadDataFromSheet() {
-            Papa.parse(csvUrl, {
-                download: true,
-                header: true,
-                skipEmptyLines: true,
-                complete: function(results) {
-                    const data = results.data;
-                    allArticles = [];
-                    allVideos = [];
-                    allResponses = {};
-
-                    data.forEach((row) => {
-                        const cleanRow = {};
-                        Object.keys(row).forEach(key => {
-                            const cleanKey = key.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").trim();
-                            cleanRow[cleanKey] = row[key];
-                        });
-
-                        const pos = (cleanRow.position || "").trim().toLowerCase();
-                        const titre = cleanRow.titre || "";
-                        const desc = cleanRow.description || "";
-                        const lien = cleanRow.lien || "#";
-                        const date = cleanRow.date || cleanRow.horodateur || "";
-
-                        if (!titre && !desc) return;
-
-                        let rawResponses = "";
-                        Object.keys(cleanRow).forEach(k => {
-                            if (k.includes('reponse') || k.includes('commentaire')) {
-                                rawResponses = cleanRow[k] || "";
-                            }
-                        });
-
-                        const articleIndex = allArticles.length;
-                        if (rawResponses) {
-                            allResponses[articleIndex] = [];
-                            const items = rawResponses.split('||');
-                            items.forEach(item => {
-                                const trimmed = item.trim();
-                                if (trimmed) {
-                                    const match = trimmed.match(/^\[(.*?)\]\s*:\s*(.+)$/);
-                                    if (match) {
-                                        const authorDate = match[1];
-                                        const text = match[2];
-                                        const lastOpenParen = authorDate.lastIndexOf('(');
-                                        let author = authorDate;
-                                        let respDate = "";
-                                        if (lastOpenParen !== -1) {
-                                            author = authorDate.substring(0, lastOpenParen).trim();
-                                            respDate = authorDate.substring(lastOpenParen + 1, authorDate.length - 1).trim();
-                                        }
-                                        allResponses[articleIndex].push({ author, text, date: respDate });
-                                    } else {
-                                        allResponses[articleIndex].push({ author: "Citoyen", text: trimmed, date: "" });
-                                    }
-                                }
-                            });
-                        }
-
-                        if (pos === 'video' || pos === 'alaune-video' || getYouTubeId(lien)) {
-                            allVideos.push({ titre, description: desc, lien, categorie: cleanRow.categorie || 'Vidéo', date });
-                        } else {
-                            allArticles.push({ titre, description: desc, lien, categorie: cleanRow.categorie || 'Général', date });
-                        }
-                    });
-
-                    const alauneContainer = document.getElementById('alaune-content');
-                    if (allArticles.length > 0) {
-                        const firstArt = allArticles[0];
-                        const safeTitle = firstArt.titre.replace(/'/g, "\\'").replace(/"/g, '&quot;');
-                        alauneContainer.innerHTML = `
-                            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center">
-                                <div class="space-y-6">
-                                    <span class="inline-flex items-center gap-2 bg-joy-gold/20 text-joy-gold border border-joy-gold/30 px-3.5 py-1.5 rounded-full text-xs font-black uppercase tracking-wider">
-                                        <i class="fa-solid fa-bolt"></i> À la une
-                                    </span>
-                                    <h2 class="text-3xl sm:text-4xl lg:text-5xl font-extrabold leading-tight tracking-tight text-white">
-                                        ${firstArt.titre}
-                                    </h2>
-                                    <p class="text-amber-100/80 text-base sm:text-lg leading-relaxed">
-                                        ${firstArt.description}
-                                    </p>
-                                    <div class="flex flex-wrap gap-4 pt-2">
-                                        <button onclick="openModal('${safeTitle}', '${firstArt.lien}', 0)" class="bg-joy-gold text-joy-dark px-6 py-3.5 rounded-xl font-black hover:bg-amber-400 transition shadow-lg shadow-amber-500/20 inline-flex items-center gap-2 cursor-pointer">
-                                            Lire l'article <i class="fa-solid fa-arrow-right text-xs"></i>
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-                        `;
-                    }
-
-                    updateCategoryPills();
-                    renderArticles();
-                    renderVideos();
-                },
-                error: function(err) {
-                    console.error("Erreur PapaParse :", err);
-                    const artGrid = document.getElementById('articles-grid');
-                    if (artGrid) artGrid.innerHTML = `<div class="col-span-full text-center py-12 text-red-500 font-medium">Erreur de chargement des données.</div>`;
-                }
-            });
-        }
-
-        loadDataFromSheet();
     </script>
 </body>
 </html>
