@@ -705,12 +705,15 @@
             });
         };
 
-        // Gestion du son avec le fichier local oiseaux.mp3
+        // Gestion du son avec volume réglé à 0.102
         let isPlaying = false;
 
         function toggleSon() {
             const btn = document.getElementById('btn-son');
             const audioOiseau = document.getElementById('audio-oiseau');
+            
+            // Volume réglé précisément à 0.102 pour un fond sonore très discret
+            audioOiseau.volume = 0.102; 
             
             if (!isPlaying) {
                 audioOiseau.play().then(() => {
