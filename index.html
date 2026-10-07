@@ -705,14 +705,14 @@
             });
         };
 
-        // Gestion du son avec volume réglé à 0.102
+        // Gestion du son avec volume réglé à 0.12
         let isPlaying = false;
 
         function toggleSon() {
             const btn = document.getElementById('btn-son');
             const audioOiseau = document.getElementById('audio-oiseau');
             
-            // Volume réglé précisément pour un fond sonore très discret
+            // Volume réglé à 0.12 pour un fond sonore discret
             audioOiseau.volume = 0.12; 
             
             if (!isPlaying) {
