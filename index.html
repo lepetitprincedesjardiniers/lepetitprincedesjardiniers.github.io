@@ -145,7 +145,6 @@
         .flotte-b { animation: floatOrganique 8.1s ease-in-out infinite; animation-delay: -1.5s; }
         .flotte-c { animation: floatOrganique 7.5s ease-in-out infinite; animation-delay: -3s; }
         .flotte-d { animation: floatOrganique 8.5s ease-in-out infinite; animation-delay: -2s; }
-        .flotte-e { animation: floatOrganique 7.8s ease-in-out infinite; animation-delay: -1s; }
 
         .colonne-cosmos {
             display: flex;
@@ -162,7 +161,6 @@
             flex-direction: column;
             align-items: center;
             flex: 0 0 auto;
-            gap: 25px;
         }
 
         /* Terre animée (Inversée : mène au Jardin) */
@@ -192,17 +190,13 @@
         .style-urgence { border: 2px solid rgba(255, 105, 180, 0.6); }
         .style-urgence:hover { transform: translateY(-5px); border-color: #ff69b4; background: rgba(255, 105, 180, 0.2); box-shadow: 0 12px 40px rgba(255,105,180,0.3); }
 
-        .style-regulation { border: 2px solid rgba(147, 112, 219, 0.6); width: 320px; }
+        .style-regulation { border: 2px solid rgba(147, 112, 219, 0.6); }
         .style-regulation:hover { transform: translateY(-5px); border-color: #9370DB; background: rgba(147, 112, 219, 0.2); box-shadow: 0 12px 40px rgba(147,112,219,0.3); }
 
         .style-savoir { border: 2px solid rgba(255, 193, 7, 0.6); }
         .style-savoir:hover { transform: translateY(-5px); border-color: #ffc107; background: rgba(255, 193, 7, 0.2); box-shadow: 0 12px 40px rgba(255,193,7,0.3); }
 
-        .style-citoyen { border: 2px solid #10b981; }
-        .style-citoyen:hover { transform: translateY(-5px); border-color: #10b981; background: rgba(16, 185, 129, 0.2); box-shadow: 0 12px 40px rgba(16, 185, 129, 0.35); }
-
         .phrases-impots { font-size: 0.78em; color: var(--text-color); opacity: 0.9; font-weight: bold; margin: 3px 0; line-height: 1.3; }
-        .texte-blanc { color: #ffffff !important; }
         .liste-exemples-discrets { font-size: 0.68em; color: var(--text-color); opacity: 0.7; font-style: italic; list-style: none; padding: 0; margin: 4px 0 0 0; border-top: 1px dashed rgba(255,255,255,0.2); padding-top: 4px; }
 
         .star { position: fixed; color: white; z-index: -1; opacity: var(--star-opacity); animation: twinkle var(--duration) infinite ease-in-out, moveStar var(--move-duration) linear infinite; transition: opacity 0.5s; }
@@ -211,7 +205,7 @@
 
         /* Boutons d'action en haut à droite */
         .boutons-header { position: fixed; top: 20px; right: 20px; z-index: 1000; display: flex; gap: 12px; align-items: center; }
-        #btn-son { text-decoration: none; font-size: 32px; filter: drop-shadow(0 0 8px rgba(255,255,255,0.5)); transition: 0.3s; display: inline-flex; align-items: center; justify-content: center; }
+        #btn-son { background: none; border: none; color: var(--text-color); cursor: pointer; font-size: 32px; filter: drop-shadow(0 0 8px rgba(255,255,255,0.5)); transition: 0.3s; padding: 0; }
         #btn-son:hover { transform: scale(1.2); }
 
         /* Icônes vagabondes magiques */
@@ -328,7 +322,6 @@
             .terre-don { width: 250px; height: 250px; }
             .texte-semis { font-size: 1em; }
             .rubrique-carte { height: auto; min-height: 190px; }
-            .style-regulation { width: 100%; }
             .texte-intro-fixe { width: 90%; font-size: 0.9em; padding: 10px 15px; }
             .bandeau-defilant { width: 92%; }
         }
@@ -338,8 +331,11 @@
 
     <div id="google_translate_element"></div>
     
+    <!-- Élément audio pour le chant des oiseaux -->
+    <audio id="sonOiseaux" src="oiseaux.mp3" preload="auto" loop></audio>
+
     <div class="boutons-header">
-        <a href="oiseaux.mp3" id="btn-son" title="Écouter les oiseaux">🕊️</a>
+        <button id="btn-son" onclick="toggleSon()" title="Activer / couper l'ambiance sonore">🕊️</button>
     </div>
 
     <!-- Icônes vagabondes magiques -->
@@ -355,7 +351,7 @@
 
         <!-- Texte fixe d'introduction -->
         <div class="texte-intro-fixe">
-            Espace d'entraide et de gratuité absolue ouvert inconditionnellement à toutes et tous, sans distinction de parcours, d'âge, de forme, ou de situation. Partagez vos dons, savoirs, talents et besoins pour recréer de la solidarité authentique, du lien social bienveillant, et nourrir notre générosité collective.
+            Espace d'entraide et de gratuité absolue ouvert inconditionnellement à toutes et tous, sans distinction de parcours, d'âge, de forme, ou de situation. Partagez vos dons, savoirs, talents et besoins pour recréer de la solidarité authentique, du lien social bienveillant, et nourrir notre générosité collective.[cite: 4]
         </div>
 
         <div style="position: relative; display: flex; justify-content: center; align-items: center; width: 100%; margin: 15px 0 5px 0;">
@@ -368,7 +364,7 @@
                     <td><a href="jardin.html?cat=REGULATION">Régulation</a></td>
                     <td><a href="jardin.html?cat=AIDE">Aide & Harmonie</a></td>
                     <td><a href="jardin.html?cat=SAVOIR">Savoirs</a></td>
-                    <td><a href="jardin.html?cat=VIE">Vie Citoyenne</a></td>
+                    <td><a href="vie.html">Vie Citoyenne</a></td>
                 </tr>
             </table>
         </div>
@@ -404,36 +400,26 @@
             </a>
         </div>
 
-        <!-- CENTRE : La Terre animée ET la case Régulation en dessous -->
+        <!-- CENTRE : La Terre animée (Inversée : mène vers le Jardin) -->
         <div class="centre-terre-cosmos">
             <a href="jardin.html" class="terre-don">
                 <div class="texte-semis"><b>Le Jardin Public des Fraternels</b></div>
             </a>
+        </div>
 
+        <!-- COLONNE DROITE -->
+        <div class="colonne-cosmos">
             <a href="jardin.html?cat=REGULATION" class="rubrique-carte style-regulation flotte-c">
                 <div style="padding-top: 6px;">
-                    <h3 style="margin:0; font-size: 1em;">⚖️ Régulation</h3>
-                    <div class="phrases-impots texte-blanc" style="margin-top: 6px;">Aide sociale rapprochée, médiation entre camarades & Paix citoyenne</div>
+                    <h3 style="margin:0; font-size: 1em;">⚖️ Vie citoyenne</h3>
+                    <div class="phrases-impots" style="margin-top: 6px;">Expose ta sincérité : la citoyenneté participative y répond avec délicatesse.</div>
                 </div>
                 <div class="liste-exemples-discrets">
                     Ex : dialogues, chartes, régulation et paix de la cité.
                 </div>
             </a>
-        </div>
 
-        <!-- COLONNE DROITE (Vie citoyenne au-dessus de Savoirs) -->
-        <div class="colonne-cosmos">
-            <a href="jardin.html?cat=VIE" class="rubrique-carte style-citoyen flotte-d">
-                <div style="padding-top: 6px;">
-                    <h3 style="margin:0; font-size: 1em;">🏛️ Vie citoyenne</h3>
-                    <div class="phrases-impots" style="margin-top: 6px;">Espace de débats, d'initiatives locales et de participation à la vie de la communauté.</div>
-                </div>
-                <div class="liste-exemples-discrets">
-                    Ex : agora, propositions, assemblées et décisions.
-                </div>
-            </a>
-
-            <a href="jardin.html?cat=SAVOIR" class="rubrique-carte style-savoir flotte-e">
+            <a href="jardin.html?cat=SAVOIR" class="rubrique-carte style-savoir flotte-d">
                 <div style="padding-top: 6px;">
                     <h3 style="margin:0; font-size: 1em;">💡 Savoirs</h3>
                     <div class="phrases-impots" style="font-size: 0.78em; margin-top: 6px;">Partageons nos connaissances et les trésors de l'intelligence.</div>
@@ -450,8 +436,8 @@
     <!-- Bandeau défilant bas de page -->
     <div class="bandeau-defilant">
         <div class="bandeau-contenu">
-            <span>✦ Un espace d'écoute, de compréhension et de générosité ✦ Cultiver l'altruisme, l'équilibre et la richesse sociale pour rompre l'isolement, recréer de vrais liens humains et agir ensemble contre la précarité ✦ Échange de dons, savoirs, talents et services ✦ Une alternative citoyenne au système monétaire ✦ Accueil inconditionnel : sans-abri, exclus, marginaux, SEL, non-conformistes & esprits libres ✦</span>
-            <span>✦ Un espace d'écoute, de compréhension et de générosité ✦ Cultiver l'altruisme, l'équilibre et la richesse sociale pour rompre l'isolement, recréer de vrais liens humains et agir ensemble contre la précarité ✦ Échange de dons, savoirs, talents et services ✦ Une alternative citoyenne au système monétaire ✦ Accueil inconditionnel : sans-abri, exclus, marginaux, SEL, non-conformistes & esprits libres ✦</span>
+            <span>✦ Un espace d'écoute, de compréhension et de générosité ✦ Cultiver l'altruisme, l'équilibre et la richesse sociale pour rompre l'isolement, recréer de vrais liens humains et agir ensemble contre la précarité ✦ Échange de dons, savoirs, talents et services ✦ Une alternative citoyenne au système monétaire ✦ Accueil inconditionnel : sans-abri, exclus, marginaux, SEL, non-conformistes & esprits libres ✦[cite: 4]</span>
+            <span>✦ Un espace d'écoute, de compréhension et de générosité ✦ Cultiver l'altruisme, l'équilibre et la richesse sociale pour rompre l'isolement, recréer de vrais liens humains et agir ensemble contre la précarité ✦ Échange de dons, savoirs, talents et services ✦ Une alternative citoyenne au système monétaire ✦ Accueil inconditionnel : sans-abri, exclus, marginaux, SEL, non-conformistes & esprits libres ✦[cite: 4]</span>
         </div>
     </div>
 
@@ -459,7 +445,7 @@
     <a href="journal.html" class="journal-volant" id="journal-volant" title="Journal de bord du #petitploucdesjardiniers">📖</a>
 
     <footer>
-        <a href="merci.html" class="lien-copyright">© PINON 2000 — Tous droits de partage et d'humanité réservés</a><br>
+        <a href="#" class="lien-copyright" onclick="ouvrirModalInfo(); return false;">© PINON 2000 — Tous droits de partage et d'humanité réservés</a><br>
         <a href="ministere-de-lhonnetete.html" class="lien-footer-discret">journal de bord du #petitploucdesjardiniers, réflexions de l'auteur du site.</a>
     </footer>
 
@@ -469,7 +455,7 @@
             <span class="fermer-modal" onclick="fermerModalInfo()">&times;</span>
             <h2 style="color: #fde047; margin-top: 0; font-size: 1.4em;">La Fraternité du Palais Nature</h2>
             <p style="font-size: 0.95em; line-height: 1.6; opacity: 0.95; text-align: left;">
-                Cet espace est un sanctuaire du DON entier, responsable et volontaire, une entraide inconditionnelle. Ici, point de marketing, de profilage ou d'évaluation marchande : votre sincérité, vos talents, vos savoirs et vos besoins s'offrent et se partagent pour recréer une fraternité humaine sincère et vivante.
+                Cet espace est un sanctuaire du DON entier, responsable et volontaire, une entraide inconditionnelle. Ici, point de marketing, de profilage ou d'évaluation marchande : votre sincérité, vos talents, vos savoirs et vos besoins s'offrent et se partagent pour recréer une fraternité humaine sincère et vivante.[cite: 4]
             </p>
             <p style="font-size: 0.85em; opacity: 0.7; font-style: italic; margin-top: 20px;">
                 © PINON 2000 — Conçu avec le cœur et l'esprit libre par le #petitploucdesjardiniers.
@@ -718,6 +704,29 @@
                 }
             });
         };
+
+        // --- GESTION DU SON AVEC le fichier oiseaux.mp3 ---
+        let isPlaying = false;
+
+        function toggleSon() {
+            const btn = document.getElementById('btn-son');
+            const audio = document.getElementById('sonOiseaux');
+
+            if (!isPlaying) {
+                audio.play().then(() => {
+                    isPlaying = true;
+                    btn.textContent = "🎶";
+                    btn.title = "Couper l'ambiance sonore";
+                }).catch(e => {
+                    console.log("Lecture audio empêchée ou fichier oiseaux.mp3 introuvable :", e);
+                });
+            } else {
+                audio.pause();
+                isPlaying = false;
+                btn.textContent = "🕊️";
+                btn.title = "Activer l'ambiance sonore";
+            }
+        }
 
         const coffre = document.getElementById('coffre-magique');
         let cX = 100, cY = 100;
