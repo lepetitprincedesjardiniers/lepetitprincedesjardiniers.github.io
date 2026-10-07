@@ -161,6 +161,7 @@
             flex-direction: column;
             align-items: center;
             flex: 0 0 auto;
+            margin: 40px 0; /* Sécurise un espace pour que les cases ne touchent pas la Terre */
         }
 
         /* Terre animée (Inversée : mène au Jardin) */
@@ -314,7 +315,7 @@
         .lien-footer-discret:hover { opacity: 0.85; text-decoration: underline; }
 
         @media (max-width: 950px) {
-            .paysage-cosmos { flex-direction: column; gap: 20px; }
+            .paysage-cosmos { flex-direction: column; gap: 45px; }
             .colonne-cosmos { max-width: 100%; width: 100%; }
             .titre-fraternite { font-size: 1.5em; }
             .menu-table, .menu-table tbody, .menu-table tr { display: flex; flex-wrap: wrap; justify-content: center; width: 95%; }
@@ -328,9 +329,6 @@
     </style>
 </head>
 <body class="night-mode">
-
-    <!-- Élément audio pour jouer oiseaux.mp3 sur la page sans recharger -->
-    <audio id="audio-oiseaux" src="oiseaux.mp3" preload="auto" loop></audio>
 
     <div id="google_translate_element"></div>
     
@@ -364,21 +362,20 @@
                     <td><a href="jardin.html?cat=REGULATION">Régulation</a></td>
                     <td><a href="jardin.html?cat=AIDE">Aide & Harmonie</a></td>
                     <td><a href="jardin.html?cat=SAVOIR">Savoirs</a></td>
-                    <td><a href="jardin.html?cat=VIE">Vie Citoyenne</a></td>
+                    <td><a href="vie.html">Vie Citoyenne</a></td>
                 </tr>
             </table>
         </div>
     </div>
 
-    <!-- Soleil central supérieur (Inversé : mène vers le formulaire) -->
+    <!-- Soleil central supérieur (Inversé : mène au formulaire) -->
     <a href="formulaire.html" class="soleil-cadre"><h1>ESPACE DU SEMIS DE DON ENTIER</h1></a>
 
     <!-- PAYSAGE COSMOS -->
-   <div class="paysage-cosmos">
+    <div class="paysage-cosmos">
 
         <!-- COLONNE GAUCHE -->
         <div class="colonne-cosmos">
-            <!-- 1. Trésor Public -->
             <a href="jardin.html?cat=IMPOT" class="rubrique-carte style-tresor flotte-a">
                 <div style="padding-top: 6px;">
                     <h3 style="margin:0; font-size: 1em;">📜 Trésor Public</h3>
@@ -390,7 +387,6 @@
                 </div>
             </a>
 
-            <!-- 2. Aide & Harmonie -->
             <a href="jardin.html?cat=AIDE" class="rubrique-carte style-urgence flotte-b">
                 <div style="padding-top: 6px;">
                     <h3 style="margin:0; font-size: 1em;">💖 Aide & Harmonie</h3>
@@ -402,39 +398,25 @@
             </a>
         </div>
 
-        <!-- CENTRE : La Terre animée + Régulation en dessous -->
+        <!-- CENTRE : La Terre animée (Inversée : mène vers le Jardin) -->
         <div class="centre-terre-cosmos">
             <a href="jardin.html" class="terre-don">
                 <div class="texte-semis"><b>Le Jardin Public des Fraternels</b></div>
-            </a>
-
-            <!-- Régulation placée sous la Terre -->
-            <a href="jardin.html?cat=REGULATION" class="rubrique-carte style-regulation flotte-c">
-                <div style="padding-top: 2px;">
-                    <h3 style="margin:0; font-size: 0.95em;">⚖️️ Régulation</h3>
-                    <div class="phrases-impots texte-blanc" style="margin-top: 4px;">Aide sociale rapprochée, médiation entre camarades & Paix citoyenne</div>
-                </div>
-                <div class="liste-exemples-discrets" style="margin-top: 2px; padding-top: 2px;">
-                    Ex : dialogues, chartes, régulation et paix de la cité.
-                </div>
             </a>
         </div>
 
         <!-- COLONNE DROITE -->
         <div class="colonne-cosmos">
-            <!-- 3. Vie Citoyenne (gardée intacte) -->
-            <a href="jardin.html?cat=VIE">Vie Citoyenne</a></td>" class="rubrique-carte style-citoyen flotte-e">
-            <a href="vie.html" class="rubrique-carte style-citoyen flotte-e">
+            <a href="jardin.html?cat=REGULATION" class="rubrique-carte style-regulation flotte-c">
                 <div style="padding-top: 6px;">
-                    <h3 style="margin:0; font-size: 1em;">🏛️ Vie citoyenne</h3>
-                    <div class="phrases-impots" style="margin-top: 6px;">Espace de débats, d'initiatives locales et de participation à la vie de la communauté.</div>
+                    <h3 style="margin:0; font-size: 1em;">⚖️ Vie citoyenne</h3>
+                    <div class="phrases-impots" style="margin-top: 6px;">Expose ta sincérité : la citoyenneté participative y répond avec délicatesse.</div>
                 </div>
                 <div class="liste-exemples-discrets">
-                    Ex : agora, propositions, assemblées et décisions.
+                    Ex : dialogues, chartes, régulation et paix de la cité.
                 </div>
             </a>
 
-            <!-- 4. Savoirs -->
             <a href="jardin.html?cat=SAVOIR" class="rubrique-carte style-savoir flotte-d">
                 <div style="padding-top: 6px;">
                     <h3 style="margin:0; font-size: 1em;">💡 Savoirs</h3>
@@ -449,7 +431,6 @@
 
     </div>
 
-
     <!-- Bandeau défilant bas de page -->
     <div class="bandeau-defilant">
         <div class="bandeau-contenu">
@@ -462,7 +443,7 @@
     <a href="ministere-de-lhonnetete.html" class="journal-volant" id="journal-volant" title="Journal de bord du #petitploucdesjardiniers">📖</a>
 
     <footer>
-        <a href="merci.html" class="lien-copyright">© PINON 2000 — Tous droits de partage et d'humanité réservés</a><br>
+        <a href="#" class="lien-copyright" onclick="ouvrirModalInfo(); return false;">© PINON 2000 — Tous droits de partage et d'humanité réservés</a><br>
         <a href="ministere-de-lhonnetete.html" class="lien-footer-discret">journal de bord du #petitploucdesjardiniers, réflexions de l'auteur du site.</a>
     </footer>
 
@@ -568,7 +549,7 @@
 
             setTimeout(() => bird.remove(), 12000);
         }
-        // Intervalle de spawn des oiseaux augmenté pour en avoir un peu moins (de 6000 à 10000ms)
+        // Intervalle de spawn des oiseaux
         setInterval(spawnFlyingBird, 10000);
         spawnFlyingBird();
 
@@ -724,22 +705,21 @@
             });
         };
 
-        // Contrôle audio avec oiseaux.mp3
-        const audioElement = document.getElementById('audio-oiseaux');
+        // Ambiance sonore : Fichier oiseaux.mp3 au volume réduit des 3/4
+        let audioOiseaux = new Audio('oiseaux.mp3');
+        audioOiseaux.volume = 0.25;
+        audioOiseaux.loop = true;
         let isPlaying = false;
 
         function toggleSon() {
             const btn = document.getElementById('btn-son');
             if (!isPlaying) {
-                audioElement.play().then(() => {
-                    isPlaying = true;
-                    btn.textContent = "🎶";
-                    btn.title = "Couper l'ambiance sonore";
-                }).catch(error => {
-                    console.log("La lecture automatique a été bloquée ou le fichier est introuvable :", error);
-                });
+                audioOiseaux.play().catch(e => console.log("Audio non autorisé sans interaction"));
+                isPlaying = true;
+                btn.textContent = "🎶";
+                btn.title = "Couper l'ambiance sonore";
             } else {
-                audioElement.pause();
+                audioOiseaux.pause();
                 isPlaying = false;
                 btn.textContent = "🕊️";
                 btn.title = "Activer l'ambiance sonore";
