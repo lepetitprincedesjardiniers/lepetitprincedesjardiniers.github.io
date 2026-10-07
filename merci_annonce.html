@@ -125,7 +125,10 @@
     </div>
 
     <!-- Chant des oiseaux en fond -->
-    <audio autoplay loop volume="0.1"><source src="oiseaux.mp3" type="audio/mpeg"></audio>
+    <audio id="fond-audio" autoplay loop><source src="oiseaux.mp3" type="audio/mpeg"></audio>
+    <script>
+        document.getElementById('fond-audio').volume = 0.3;
+    </script>
 
     <!-- Barre du haut identique à la page Jardin -->
     <div class="top-bar">
