@@ -225,7 +225,7 @@
         }
 
         #coffre-magique { position: fixed; font-size: 40px; z-index: 8; cursor: pointer; transition: 4s ease-in-out; filter: drop-shadow(0 0 10px gold); opacity: 0.85; }
-        
+
         .floating-emoji {
             position: absolute;
             font-size: 2rem;
@@ -333,7 +333,7 @@
     <audio id="audio-oiseau" src="oiseaux.mp3" preload="auto" loop></audio>
 
     <div id="google_translate_element"></div>
-    
+
     <div class="boutons-header">
         <button id="btn-son" onclick="toggleSon()" title="Activer / couper l'ambiance sonore">🕊️</button>
     </div>
@@ -365,6 +365,7 @@
                     <td><a href="jardin.html?cat=AIDE">Aide & Harmonie</a></td>
                     <td><a href="jardin.html?cat=SAVOIR">Savoirs</a></td>
                     <td><a href="vie.html">Vie Citoyenne</a></td>
+                    <td><a href="jardin.html?cat=VIE">Vie Citoyenne</a></td>
                 </tr>
             </table>
         </div>
@@ -442,10 +443,11 @@
     </div>
 
     <div id="coffre-magique" onclick="exploserCadeau()" title="Coffre magique">🎁</div>
+    <a href="journal.html" class="journal-volant" id="journal-volant" title="Journal de bord du #petitploucdesjardiniers">📖</a>
     <a href="ministere-de-lhonnetete.html" class="journal-volant" id="journal-volant" title="Journal de bord du #petitploucdesjardiniers">📖</a>
 
     <footer>
-        <a href="merci.html" class="lien-copyright">© PINON 2000 — Tous droits de partage et d'humanité réservés</a><br>
+        <a href="#" class="lien-copyright" onclick="ouvrirModalInfo(); return false;">© PINON 2000 — Tous droits de partage et d'humanité réservés</a><br>
         <a href="ministere-de-lhonnetete.html" class="lien-footer-discret">journal de bord du #petitploucdesjardiniers, réflexions de l'auteur du site.</a>
     </footer>
 
@@ -500,10 +502,10 @@
             const el = document.createElement('div');
             el.className = 'floating-emoji';
             el.innerText = specificEmoji || emojiList[Math.floor(Math.random() * emojiList.length)];
-            
+
             let x = startX !== null ? startX : Math.random() * window.innerWidth;
             let y = startY !== null ? startY : Math.random() * window.innerHeight;
-            
+
             el.style.left = x + 'px';
             el.style.top = y + 'px';
 
@@ -705,15 +707,18 @@
             });
         };
 
-        // Gestion du son avec volume réglé à 0.12
+        // Gestion du son avec volume réglé à 0.102
         let isPlaying = false;
 
         function toggleSon() {
             const btn = document.getElementById('btn-son');
             const audioOiseau = document.getElementById('audio-oiseau');
-            
+
+            // Volume réglé précisément à 0.102 pour un fond sonore très discret
+            audioOiseau.volume = 0.102; 
+            // Volume réglé précisément pour un fond sonore très discret
             audioOiseau.volume = 0.12; 
-            
+
             if (!isPlaying) {
                 audioOiseau.play().then(() => {
                     isPlaying = true;
@@ -756,4 +761,3 @@
         }
     </script>
 </body>
-</html>
