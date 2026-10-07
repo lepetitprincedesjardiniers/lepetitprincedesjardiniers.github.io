@@ -329,8 +329,8 @@
 </head>
 <body class="night-mode">
 
-    <!-- Fichier audio interne pour le chant d'oiseau -->
-    <audio id="audio-oiseau" src="oiseau.mp3" preload="auto" loop></audio>
+    <!-- Fichier audio interne pointant vers oiseaux.mp3 -->
+    <audio id="audio-oiseau" src="oiseaux.mp3" preload="auto" loop></audio>
 
     <div id="google_translate_element"></div>
     
@@ -442,8 +442,7 @@
     </div>
 
     <div id="coffre-magique" onclick="exploserCadeau()" title="Coffre magique">🎁</div>
-    <!-- Journal volant redirigeant vers ministere-de-lhonnetete.html -->
-    <a href="ministere-de-lhonnetete.html" class="journal-volant" id="journal-volant" title="Journal de bord du #petitploucdesjardiniers">📖</a>
+    <a href="journal.html" class="journal-volant" id="journal-volant" title="Journal de bord du #petitploucdesjardiniers">📖</a>
 
     <footer>
         <a href="#" class="lien-copyright" onclick="ouvrirModalInfo(); return false;">© PINON 2000 — Tous droits de partage et d'humanité réservés</a><br>
@@ -706,7 +705,7 @@
             });
         };
 
-        // Gestion du son avec le fichier local oiseau.mp3
+        // Gestion du son avec le fichier local oiseaux.mp3
         let isPlaying = false;
 
         function toggleSon() {
@@ -719,7 +718,7 @@
                     btn.textContent = "🎶";
                     btn.title = "Couper l'ambiance sonore";
                 }).catch(e => {
-                    console.log("Lecture audio bloquée ou fichier oiseau.mp3 introuvable :", e);
+                    console.log("Lecture audio bloquée ou fichier introuvable :", e);
                 });
             } else {
                 audioOiseau.pause();
