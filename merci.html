@@ -8,17 +8,19 @@
     <br><br>
     <div style="font-size: 70px;">✨ 🌹 ✨ 🌵 ✨ 🌹 ✨</div>
     <font size="7" color="#2E7D32"><b>MESSAGE SEMÉ !</b></font>
+    <font size="7" color="#2E7D32"><b>C'est pourquoi? </b></font>
     <br><br>
     <table border="4" cellpadding="30" bgcolor="#FFFFFF" align="center" style="border-color:#E67E22; border-radius:40px; max-width:600px; box-shadow: 10px 10px 0px #008080;">
         <tr>
             <td>
-                <font size="5">"Ton message a bien été reçu dans notre jardin."</font><br><br>
-                <font size="6" color="#FF0000"><b>"Tu as osé me contacter...<br>Attends-toi à une réponse !"</b></font><br><br>
-                <font size="4"><i>Le Petit Prince prépare son avion pour te répondre.</i></font>
+                <font size="5">"C'est pour quoi?"</font><br><br>  
+                <font size="5">"Laisse moi le temps de me réveiller."</font><br><br>
+                <font size="6" color="#FF0000"><b>"Tu as osé me contacter...Tu peux me laisser un message, ou poster ton annonce<br>Depuis quand on se vouvoie? Attends-toi à une réponse !"</b></font><br><br>
+                <font size="4"><i>Le Petit Plouc prépare sa cervelle pour te répondre.</i></font>
                 
                 <hr style="margin: 25px 0; border: 1px dashed #E67E22;">
 
-                <!-- Section de contact direct reliée à votre boîte interne -->
+                <!-- Formulaire de contact direct relié à votre boîte interne -->
                 <font size="4" color="#008080"><b>Besoin de nous envoyer un autre message ?</b></font><br><br>
                 
                 <form id="form-contact-interne" onsubmit="envoyerMessageInterne(event)" style="text-align: left; max-width: 450px; margin: 0 auto;">
@@ -55,7 +57,7 @@
             btn.innerText = "Envoi en cours... 🌱";
             btn.disabled = true;
             statut.style.color = "#008080";
-            statut.innerText = "Le Petit Prince achemine votre message...";
+            statut.innerText = "Le Petit Plouc achemine ton message...";
 
             const nom = document.getElementById('contact_nom').value;
             const email = document.getElementById('contact_email').value;
@@ -79,7 +81,7 @@
                     btn.innerText = "ENVOYER DANS LE JARDIN 💌";
                 } else {
                     statut.style.color = "#2E7D32";
-                    statut.innerText = "✨ Message bien semé dans votre boîte interne !";
+                    statut.innerText = "✨ Message bien semé dans la boîte interne !";
                     btn.innerText = "ENVOYÉ AVEC SUCCÈS 🌸";
                     document.getElementById('form-contact-interne').reset();
                     setTimeout(() => {
