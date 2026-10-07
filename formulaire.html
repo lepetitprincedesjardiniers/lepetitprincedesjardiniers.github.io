@@ -47,10 +47,10 @@
         .btn-envoyer:active { transform: translateY(4px); box-shadow: 0px 0px 0px #b35900; }
 
         footer { margin: 20px 0 80px 0; text-align: center; }
-        .copyright-link { color: #008080; text-decoration: none; font-weight: bold; transition: 0.3s; padding: 10px; cursor: pointer; display: inline-block; position: relative; z-index: 20; }
-        .copyright-link:hover { color: #E67E22; text-shadow: 0 0 8px #fff; }
-        .journal-footer-link { color: #008080; text-decoration: none; font-weight: bold; display: inline-block; margin-top: 8px; transition: 0.3s; }
-        .journal-footer-link:hover { color: #E67E22; text-shadow: 0 0 8px #fff; }
+        .lien-copyright { color: #008080; text-decoration: none; font-weight: bold; transition: 0.3s; padding: 10px; cursor: pointer; display: inline-block; position: relative; z-index: 20; }
+        .lien-copyright:hover { color: #E67E22; text-shadow: 0 0 8px #fff; }
+        .lien-footer-discret { display: block; color: #008080; text-decoration: none; font-size: 0.85em; transition: 0.3s; margin-top: 8px; font-style: italic; opacity: 0.85; }
+        .lien-footer-discret:hover { color: #E67E22; text-decoration: underline; opacity: 1; }
 
         @media (max-width: 768px) {
             .menu-table, .menu-table tbody, .menu-table tr { display: flex; flex-wrap: wrap; justify-content: center; width: 95%; }
@@ -222,7 +222,6 @@
                     <input type="text" name="pays_precision" placeholder="Nom de ton pays secret...">
                 </div>
                 <input type="text" name="localisation" placeholder=" Ex.:Ville, code postal, quartier précis, à distance" required>
-                <input type="text" name="localisation" placeholder=" Ex: Ville, code postal, quartier précis, à distance" required>
             </div>
 
             <div class="form-group">
@@ -290,7 +289,7 @@
                         <option value="Moi-même">J'assure le transport moi-même</option>
                         <option value="Récupérer">À récupérer sur place</option>
                         <option value="Covoit">Covoiturage humain (Je t'emmène)</option>
-                        <option value="Covoit">Numérique</option>
+                        <option value="Numérique">Numérique</option>
                         <option value="AUTRE">autres</option>
                     </optgroup>
                     <optgroup label="🚚 Expédition & Route">
@@ -342,14 +341,8 @@ La meilleure justice est encore le pardon.          " required></textarea>
     </div>
 
     <footer>
-        <div class="footer-copyright" style="margin-top: 20px; text-align: center;">
-            <div>
-                <a href="merci.html" class="copyright-link">© PINON 2000 — Conçu avec le cœur et l'esprit libre par le #petitploucdesjardiniers.</a>
-            </div>
-            <div>
-                <a href="transition-externe.html" class="journal-footer-link">📰 journal de bord du #petitploucdesjardiniers, réflexions de l'auteur du site.</a>
-            </div>
-        </div>
+        <a href="#" class="lien-copyright" onclick="return false;">© PINON 2000 — Tous droits de partage et d'humanité réservés</a><br>
+        <a href="ministere-de-lhonnetete.html" class="lien-footer-discret">journal de bord du #petitploucdesjardiniers, réflexions de l'auteur du site.</a>
     </footer>
 
     <script>
