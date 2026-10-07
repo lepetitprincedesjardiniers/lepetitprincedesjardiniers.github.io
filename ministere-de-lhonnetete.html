@@ -18,10 +18,6 @@
                             orange: '#f97316', // Orange chaleureux
                             gold: '#f59e0b',   // Or solaire
                             bg: '#fffbf5',     // Fond ambré très doux
-                            dark: '#1e1b4b',
-                            orange: '#f97316',
-                            gold: '#f59e0b',
-                            bg: '#fffbf5',
                         }
                     }
                 }
@@ -77,10 +73,13 @@
     </header>
 
     <!-- Section "À la une" dynamique -->
+    <section id="alaune-container" class="py-10 lg:py-14 bg-gradient-to-br from-joy-dark via-indigo-950 to-slate-900 text-white relative overflow-hidden border-b border-indigo-900/50">
+        <div class="absolute -top-24 -right-24 w-96 h-96 bg-joy-orange/15 rounded-full blur-3xl pointer-events-none"></div>
     <section id="alaune-container" class="py-12 lg:py-16 bg-gradient-to-br from-joy-dark via-indigo-950 to-orange-950 text-white relative overflow-hidden">
         <div class="absolute -top-24 -right-24 w-96 h-96 bg-joy-orange/20 rounded-full blur-3xl pointer-events-none"></div>
         <div class="absolute -bottom-24 -left-24 w-96 h-96 bg-joy-gold/10 rounded-full blur-3xl pointer-events-none"></div>
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10" id="alaune-content">
+            <div class="text-center py-12 text-amber-200">Chargement de l'actualité en direct...</div>
             <div class="text-center py-12 text-amber-200">Chargement de l'actualité...</div>
         </div>
     </section>
@@ -198,8 +197,6 @@
                             <div class="flex justify-end">
                                 <button onclick="submitResponse()" class="bg-joy-orange hover:bg-orange-600 text-white font-bold text-xs px-5 py-2.5 rounded-xl transition shadow-md shadow-orange-500/20 cursor-pointer inline-flex items-center gap-2">
                                     <i class="fa-solid fa-paper-plane"><span> Publier la réponse</span></i>
-                                <button onclick="submitResponse(event)" class="bg-joy-orange hover:bg-orange-600 text-white font-bold text-xs px-5 py-2.5 rounded-xl transition shadow-md shadow-orange-500/20 cursor-pointer inline-flex items-center gap-2">
-                                    <i class="fa-solid fa-paper-plane"></i><span> Publier la réponse</span>
                                 </button>
                             </div>
                         </div>
@@ -299,11 +296,45 @@
         let allResponses = {}; 
         let displayedArticleLimit = 9; 
         let displayedVideoLimit = 9;
-        let displayedArticleLimit = 6; 
-        let displayedVideoLimit = 6;
         let currentSelectedCategory = 'Tous';
         let currentArticleIndex = 0; 
         let currentArticleTitle = '';
+
+        // Analyseur de date robuste pour trier correctement les éléments
+        function parseDate(dateStr) {
+            if (!dateStr) return 0;
+            const str = String(dateStr).trim();
+            if (!str) return 0;
+
+            // Pattern FR: JJ/MM/AAAA ou JJ-MM-AAAA
+            const frMatch = str.match(/^(\d{1,2})[\/\-](\d{1,2})[\/\-](\d{4})(?:\s+(\d{1,2}):(\d{1,2})(?::(\d{1,2}))?)?/);
+            if (frMatch) {
+                const day = parseInt(frMatch[1], 10);
+                const month = parseInt(frMatch[2], 10) - 1;
+                const year = parseInt(frMatch[3], 10);
+                const hours = frMatch[4] ? parseInt(frMatch[4], 10) : 0;
+                const mins = frMatch[5] ? parseInt(frMatch[5], 10) : 0;
+                const secs = frMatch[6] ? parseInt(frMatch[6], 10) : 0;
+                const d = new Date(year, month, day, hours, mins, secs);
+                return isNaN(d.getTime()) ? 0 : d.getTime();
+            }
+
+            // Pattern ISO: AAAA-MM-JJ
+            const isoMatch = str.match(/^(\d{4})[\/\-](\d{1,2})[\/\-](\d{1,2})(?:\s+(\d{1,2}):(\d{1,2})(?::(\d{1,2}))?)?/);
+            if (isoMatch) {
+                const year = parseInt(isoMatch[1], 10);
+                const month = parseInt(isoMatch[2], 10) - 1;
+                const day = parseInt(isoMatch[3], 10);
+                const hours = isoMatch[4] ? parseInt(isoMatch[4], 10) : 0;
+                const mins = isoMatch[5] ? parseInt(isoMatch[5], 10) : 0;
+                const secs = isoMatch[6] ? parseInt(isoMatch[6], 10) : 0;
+                const d = new Date(year, month, day, hours, mins, secs);
+                return isNaN(d.getTime()) ? 0 : d.getTime();
+            }
+
+            const parsed = Date.parse(str);
+            return isNaN(parsed) ? 0 : parsed;
+        }
 
         // Fonction pour estimer le temps de lecture
         function getReadingTime(text) {
@@ -331,7 +362,6 @@
         }
 
         function submitResponse() {
-        function submitResponse(e) {
             const authorInput = document.getElementById('response-author');
             const textInput = document.getElementById('response-text');
 
@@ -353,13 +383,6 @@
             const originalContent = submitBtn.innerHTML;
             submitBtn.innerHTML = `<i class="fa-solid fa-spinner fa-spin"></i> Envoi...`;
             submitBtn.disabled = true;
-            const submitBtn = e ? e.target.closest('button') : null;
-            let originalContent = "";
-            if (submitBtn) {
-                originalContent = submitBtn.innerHTML;
-                submitBtn.innerHTML = `<i class="fa-solid fa-spinner fa-spin"></i> Envoi...`;
-                submitBtn.disabled = true;
-            }
 
             fetch(scriptUrl, {
                 method: 'POST',
@@ -371,8 +394,8 @@
                     textInput.value = '';
                     authorInput.value = '';
                     loadDataFromSheet();
-                    closeModal(); // Ferme la modale automatiquement après la contribution réussie
                     closeModal();
+                    closeModal(); // Ferme la modale automatiquement après la contribution réussie
                 } else {
                     alert("Erreur lors de l'enregistrement : " + (result.message || 'Inconnue'));
                 }
@@ -384,10 +407,6 @@
             .finally(() => {
                 submitBtn.innerHTML = originalContent;
                 submitBtn.disabled = false;
-                if (submitBtn) {
-                    submitBtn.innerHTML = originalContent;
-                    submitBtn.disabled = false;
-                }
             });
         }
 
@@ -524,7 +543,6 @@
             } else {
                 navigator.clipboard.writeText(window.location.href);
                 alert("Lien copié dans le presse-papier ! 📋✨");
-                alert("Lien copié dans le presse-papier !");
             }
         }
 
@@ -582,15 +600,12 @@
         });
 
         function filterContent() {
-            displayedArticleLimit = 6;
-            displayedVideoLimit = 6;
             renderArticles();
             renderVideos();
         }
 
         function filterByCategory(category) {
             currentSelectedCategory = category;
-            displayedArticleLimit = 6;
             updateCategoryPills();
             renderArticles();
         }
@@ -628,7 +643,6 @@
             });
 
             const limit = (query || currentSelectedCategory !== 'Tous') ? filtered.length : displayedArticleLimit;
-            const limit = query ? filtered.length : displayedArticleLimit;
             const articlesToDisplay = filtered.slice(0, limit);
 
             if (filtered.length === 0) {
@@ -682,7 +696,6 @@
 
             if (loadMoreContainer) {
                 if (!query && currentSelectedCategory === 'Tous' && displayedArticleLimit < filtered.length) {
-                if (!query && displayedArticleLimit < filtered.length) {
                     loadMoreContainer.classList.remove('hidden');
                 } else {
                     loadMoreContainer.classList.add('hidden');
@@ -707,7 +720,6 @@
 
             if (filtered.length === 0) {
                 if (grid) grid.innerHTML = `<div class="col-span-full text-center py-12 text-gray-500 font-medium bg-white rounded-3xl border border-orange-100">Aucune vidéo trouvée pour "${query}".</div>`;
-                if (grid) grid.innerHTML = `<div class="col-span-full text-center py-12 text-gray-500 font-medium bg-white rounded-3xl border border-orange-100">Aucune vidéo trouvée.</div>`;
                 if (loadMoreContainer) loadMoreContainer.classList.add('hidden');
                 return;
             }
@@ -755,25 +767,15 @@
 
             if (grid) grid.innerHTML = html;
             if (loadMoreContainer) loadMoreContainer.classList.add('hidden');
-
-            if (loadMoreContainer) {
-                if (!query && displayedVideoLimit < filtered.length) {
-                    loadMoreContainer.classList.remove('hidden');
-                } else {
-                    loadMoreContainer.classList.add('hidden');
-                }
-            }
         }
 
         function showMoreArticles() {
             displayedArticleLimit += 9;
-            displayedArticleLimit += 6;
             renderArticles();
         }
 
         function showMoreVideos() {
             displayedVideoLimit += 9;
-            displayedVideoLimit += 6;
             renderVideos();
         }
 
@@ -783,13 +785,15 @@
                 header: true,
                 skipEmptyLines: true,
                 complete: function(results) {
+                    const rawData = results.data;
+                    let allItems = [];
                     const data = results.data;
                     allArticles = [];
                     allVideos = [];
                     allResponses = {};
 
+                    rawData.forEach((row, sheetIndex) => {
                     data.forEach((row, index) => {
-                    data.forEach((row) => {
                         const cleanRow = {};
                         Object.keys(row).forEach(key => {
                             const cleanKey = key.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").trim();
@@ -804,6 +808,8 @@
 
                         if (!titre && !desc) return;
 
+                        const isVideo = (pos === 'video' || pos === 'alaune-video' || getYouTubeId(lien) !== '');
+                        
                         let rawResponses = "";
                         Object.keys(cleanRow).forEach(k => {
                             if (k.includes('reponse') || k.includes('commentaire')) {
@@ -811,6 +817,23 @@
                             }
                         });
 
+                        allItems.push({
+                            sheetIndex,
+                            timestamp: parseDate(date),
+                            titre,
+                            description: desc,
+                            lien,
+                            categorie: cleanRow.categorie || (isVideo ? 'Vidéo' : 'Général'),
+                            date,
+                            isVideo,
+                            rawResponses
+                        });
+                    });
+
+                    // Tri absolu : la publication la plus récente par date (ou par ordre de saisie) arrive à l'index 0
+                    allItems.sort((a, b) => {
+                        if (b.timestamp !== a.timestamp) {
+                            return b.timestamp - a.timestamp;
                         const articleIndex = allArticles.length;
                         if (rawResponses) {
                             allResponses[articleIndex] = [];
@@ -836,15 +859,140 @@
                                 }
                             });
                         }
+                        return b.sheetIndex - a.sheetIndex;
+                    });
 
+                    allArticles = [];
+                    allVideos = [];
+                    allResponses = {};
+
+                    allItems.forEach((item) => {
+                        if (item.isVideo) {
+                            allVideos.push(item);
                         if (pos === 'video' || pos === 'alaune-video' || getYouTubeId(lien)) {
                             allVideos.push({ titre, description: desc, lien, categorie: cleanRow.categorie || 'Vidéo', date });
                         } else {
+                            const articleIndex = allArticles.length;
+                            allArticles.push(item);
+
+                            if (item.rawResponses) {
+                                allResponses[articleIndex] = [];
+                                const items = item.rawResponses.split('||');
+                                items.forEach(respStr => {
+                                    const trimmed = respStr.trim();
+                                    if (trimmed) {
+                                        const match = trimmed.match(/^\[(.*?)\]\s*:\s*(.+)$/);
+                                        if (match) {
+                                            const authorDate = match[1];
+                                            const text = match[2];
+                                            const lastOpenParen = authorDate.lastIndexOf('(');
+                                            let author = authorDate;
+                                            let respDate = "";
+                                            if (lastOpenParen !== -1) {
+                                                author = authorDate.substring(0, lastOpenParen).trim();
+                                                respDate = authorDate.substring(lastOpenParen + 1, authorDate.length - 1).trim();
+                                            }
+                                            allResponses[articleIndex].push({ author, text, date: respDate });
+                                        } else {
+                                            allResponses[articleIndex].push({ author: "Citoyen", text: trimmed, date: "" });
+                                        }
+                                    }
+                                });
+                            }
                             allArticles.push({ titre, description: desc, lien, categorie: cleanRow.categorie || 'Général', date });
                         }
                     });
 
+                    // La publication 'À la une' est STRICTEMENT la plus récente de toute la base
                     const alauneContainer = document.getElementById('alaune-content');
+                    if (allItems.length > 0) {
+                        const latestItem = allItems[0];
+                        const safeTitle = latestItem.titre.replace(/'/g, "\\'").replace(/"/g, '&quot;');
+
+                        if (latestItem.isVideo) {
+                            const videoId = getYouTubeId(latestItem.lien);
+                            alauneContainer.innerHTML = `
+                                <div class="max-w-6xl mx-auto">
+                                    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
+                                        <div class="lg:col-span-7 space-y-5">
+                                            <div class="flex items-center gap-3">
+                                                <span class="inline-flex items-center gap-2 bg-joy-orange/20 text-joy-orange border border-joy-orange/30 px-3.5 py-1.5 rounded-full text-xs font-black uppercase tracking-wider">
+                                                    <i class="fa-solid fa-video"></i> À la une • Vidéo récente
+                                                </span>
+                                                ${latestItem.date ? `<span class="text-xs text-amber-200/70 font-semibold"><i class="fa-regular fa-clock mr-1"></i>${latestItem.date}</span>` : ''}
+                                            </div>
+                                            
+                                            <h2 class="text-2xl sm:text-3xl lg:text-4xl font-black leading-tight tracking-tight text-white">
+                                                ${latestItem.titre}
+                                            </h2>
+                                            
+                                            <p class="text-amber-100/80 text-sm sm:text-base leading-relaxed line-clamp-3">
+                                                ${latestItem.description}
+                                            </p>
+                                            
+                                            <div class="flex flex-wrap gap-3 pt-1">
+                                                <button onclick="openModal('${safeTitle}', '${latestItem.lien}', 0)" class="bg-joy-orange hover:bg-orange-600 text-white px-5 py-3 rounded-xl text-xs font-extrabold transition shadow-lg shadow-orange-500/20 inline-flex items-center gap-2 cursor-pointer">
+                                                    <i class="fa-solid fa-expand text-xs"></i> Visionner en grand écran
+                                                </button>
+                                            </div>
+                                        </div>
+
+                                        <div class="lg:col-span-5 w-full max-w-md mx-auto">
+                                            <div class="relative aspect-video rounded-2xl overflow-hidden shadow-2xl border border-white/15 bg-black">
+                                                ${videoId ? `
+                                                    <iframe class="w-full h-full rounded-2xl" src="https://www.youtube.com/embed/${videoId}" title="${safeTitle}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                                                ` : `
+                                                    <div class="w-full h-full flex items-center justify-center bg-indigo-950">
+                                                        <i class="fa-solid fa-play text-4xl text-joy-orange"></i>
+                                                    </div>
+                                                `}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            `;
+                        } else {
+                            const artIndex = allArticles.findIndex(a => a === latestItem);
+                            const validIndex = artIndex !== -1 ? artIndex : 0;
+
+                            alauneContainer.innerHTML = `
+                                <div class="max-w-6xl mx-auto">
+                                    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
+                                        <div class="lg:col-span-7 space-y-5">
+                                            <div class="flex items-center gap-3">
+                                                <span class="inline-flex items-center gap-2 bg-joy-gold/20 text-joy-gold border border-joy-gold/30 px-3.5 py-1.5 rounded-full text-xs font-black uppercase tracking-wider">
+                                                    <i class="fa-solid fa-bolt"></i> À la une • Article récent
+                                                </span>
+                                                ${latestItem.date ? `<span class="text-xs text-amber-200/70 font-semibold"><i class="fa-regular fa-clock mr-1"></i>${latestItem.date}</span>` : ''}
+                                            </div>
+                                            
+                                            <h2 class="text-2xl sm:text-3xl lg:text-4xl font-black leading-tight tracking-tight text-white">
+                                                ${latestItem.titre}
+                                            </h2>
+                                            
+                                            <p class="text-amber-100/80 text-sm sm:text-base leading-relaxed line-clamp-3">
+                                                ${latestItem.description}
+                                            </p>
+                                            
+                                            <div class="flex flex-wrap gap-3 pt-1">
+                                                <button onclick="openArticleByIndex(${validIndex})" class="bg-joy-gold hover:bg-amber-400 text-joy-dark px-5 py-3 rounded-xl text-xs font-black transition shadow-lg shadow-amber-500/20 inline-flex items-center gap-2 cursor-pointer">
+                                                    Lire l'article complet <i class="fa-solid fa-arrow-right text-xs"></i>
+                                                </button>
+                                            </div>
+                                        </div>
+
+                                        <div class="lg:col-span-5 w-full max-w-md mx-auto">
+                                            <div class="bg-white/5 border border-white/10 rounded-2xl p-6 backdrop-blur-md space-y-4 shadow-xl text-center">
+                                                <div class="w-16 h-16 bg-joy-gold/20 text-joy-gold rounded-2xl flex items-center justify-center mx-auto text-2xl">
+                                                    <i class="fa-solid fa-newspaper"></i>
+                                                </div>
+                                                <div>
+                                                    <span class="text-xs font-extrabold text-amber-300 uppercase tracking-wider block">${latestItem.categorie || 'Dernier article'}</span>
+                                                    <p class="text-xs text-amber-100/70 italic mt-1">${getReadingTime(latestItem.description)}</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                     if (allArticles.length > 0) {
                         const firstArt = allArticles[0];
                         const safeTitle = firstArt.titre.replace(/'/g, "\\'").replace(/"/g, '&quot;');
@@ -863,23 +1011,9 @@
                                     <button onclick="openModal('${safeTitle}', '${firstArt.lien}', 0)" class="bg-joy-gold text-joy-dark px-6 py-3.5 rounded-xl font-black hover:bg-amber-400 transition shadow-lg shadow-amber-500/20 inline-flex items-center gap-2 cursor-pointer">
                                         Lire l'article <i class="fa-solid fa-arrow-right text-xs"></i>
                                     </button>
-                            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center">
-                                <div class="space-y-6">
-                                    <span class="inline-flex items-center gap-2 bg-joy-gold/20 text-joy-gold border border-joy-gold/30 px-3.5 py-1.5 rounded-full text-xs font-black uppercase tracking-wider">
-                                        <i class="fa-solid fa-bolt"></i> À la une
-                                    </span>
-                                    <h2 class="text-3xl sm:text-4xl lg:text-5xl font-extrabold leading-tight tracking-tight text-white">
-                                        ${firstArt.titre}
-                                    </h2>
-                                    <p class="text-amber-100/80 text-base sm:text-lg leading-relaxed">
-                                        ${firstArt.description}
-                                    </p>
-                                    <div class="flex flex-wrap gap-4 pt-2">
-                                        <button onclick="openModal('${safeTitle}', '${firstArt.lien}', 0)" class="bg-joy-gold text-joy-dark px-6 py-3.5 rounded-xl font-black hover:bg-amber-400 transition shadow-lg shadow-amber-500/20 inline-flex items-center gap-2 cursor-pointer">
-                                            Lire l'article <i class="fa-solid fa-arrow-right text-xs"></i>
-                                        </button>
-                                    </div>
                                 </div>
+                            `;
+                        }
                             </div>
                         `;
                     }
