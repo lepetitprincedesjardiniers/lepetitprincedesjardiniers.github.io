@@ -14,13 +14,13 @@
             <td>
                 <font size="5">"C'est pour quoi ?"</font><br><br>  
                 <font size="5">"Laisse-moi le temps de me réveiller."</font><br><br>
-                <font size="6" color="#FF0000"><b>"Tu as osé me contacter... Tu peux me laisser un message, ou poster ton annonce.<br>Depuis quand on se vouvoie ? Attends-toi à une réponse !"</b></font><br><br>
+                <font size="6" color="#FF0000"><b>"Tu oses me contacter ... Veuillez avoir l'obligeance de me laisser un message, ou de  poster votre propre  annonce.<br>Depuis quand on se vouvoie ?"</b></font><br><br>
                 <font size="4"><i>Le Petit Plouc prépare sa cervelle pour te répondre.</i></font>
                 
                 <hr style="margin: 25px 0; border: 1px dashed #E67E22;">
 
                 <!-- Formulaire de contact direct relié à votre boîte interne -->
-                <font size="4" color="#008080"><b>Besoin de nous envoyer un autre message ?</b></font><br><br>
+                <font size="4" color="#008080"><b></b></font><br><br>
                 
                 <form id="form-contact-interne" onsubmit="envoyerMessageInterne(event)" style="text-align: left; max-width: 450px; margin: 0 auto;">
                     <label style="font-size: 0.85em; font-weight: bold; color: #2E7D32;">Ton Prénom / Pseudo :</label><br>
@@ -80,7 +80,7 @@
                     btn.innerText = "ENVOYER DANS LE JARDIN 💌";
                 } else {
                     statut.style.color = "#2E7D32";
-                    statut.innerText = "✨ Message bien semé dans la boîte interne !";
+                    statut.innerText = "✨ Message bien semé dans la boîte interne du site !";
                     btn.innerText = "ENVOYÉ AVEC SUCCÈS 🌸";
                     document.getElementById('form-contact-interne').reset();
                     setTimeout(() => {
