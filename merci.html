@@ -7,14 +7,33 @@
 <body bgcolor="#FFFF00" text="#000080" style="font-family:'Comic Sans MS', cursive; text-align:center;">
     <br><br>
     <div style="font-size: 70px;">✨ 🌹 ✨ 🌵 ✨ 🌹 ✨</div>
-    <font size="7" color="#2E7D32"><b>C'est pourquoi? </b></font>
+    <font size="7" color="#2E7D32"><b>MESSAGE SEMÉ !</b></font>
     <br><br>
     <table border="4" cellpadding="30" bgcolor="#FFFFFF" align="center" style="border-color:#E67E22; border-radius:40px; max-width:600px; box-shadow: 10px 10px 0px #008080;">
         <tr>
             <td>
-                <font size="5">"Laisse moi le temps de me réveiller."</font><br><br>
-                <font size="6" color="#FF0000"><b>"Tu as osé me contacter...Tu peux me laisser un message, ou poster ton annonce<br>Depuis quand on se vouvoie? Attends-toi à une réponse !"</b></font><br><br>
-                <font size="4"><i>Le Petit Plouc prépare sa cervelle pour te répondre.</i></font>
+                <font size="5">"Ton message a bien été reçu dans notre jardin[cite: 1]."</font><br><br>
+                <font size="6" color="#FF0000"><b>"Tu as osé me contacter...<br>Attends-toi à une réponse !"[cite: 1]</b></font><br><br>
+                <font size="4"><i>Le Petit Prince prépare son avion pour te répondre[cite: 1].</i></font>
+                
+                <hr style="margin: 25px 0; border: 1px dashed #E67E22;">
+
+                <!-- Formulaire de contact relié à votre boîte mail interne -->
+                <font size="4" color="#008080"><b>Besoin de nous envoyer un autre message ?</b></font><br><br>
+                
+                <form id="form-contact-interne" onsubmit="envoyerMessageInterne(event)" style="text-align: left; max-width: 450px; margin: 0 auto;">
+                    <label style="font-size: 0.85em; font-weight: bold; color: #2E7D32;">Ton Prénom / Pseudo :</label><br>
+                    <input type="text" id="contact_nom" required style="width: 100%; padding: 8px; margin: 5px 0 12px 0; border: 2px solid #008080; border-radius: 8px; font-family: 'Comic Sans MS'; box-sizing: border-box;" placeholder="Ton nom de cœur..."><br>
+
+                    <label style="font-size: 0.85em; font-weight: bold; color: #2E7D32;">Ton Adresse E-mail :</label><br>
+                    <input type="email" id="contact_email" required style="width: 100%; padding: 8px; margin: 5px 0 12px 0; border: 2px solid #008080; border-radius: 8px; font-family: 'Comic Sans MS'; box-sizing: border-box;" placeholder="ton.email@exemple.com"><br>
+
+                    <label style="font-size: 0.85em; font-weight: bold; color: #2E7D32;">Ton Message :</label><br>
+                    <textarea id="contact_message" rows="4" required style="width: 100%; padding: 8px; margin: 5px 0 15px 0; border: 2px solid #008080; border-radius: 8px; font-family: 'Comic Sans MS'; box-sizing: border-box;" placeholder="Écris ton message ici..."></textarea><br>
+
+                    <button type="submit" id="btn-envoyer-contact" style="width: 100%; padding: 12px; background-color: #E67E22; color: white; border-radius: 8px; cursor: pointer; border: none; font-weight: bold; font-family: 'Comic Sans MS'; font-size: 1em;">ENVOYER DANS LE JARDIN 💌</button>
+                </form>
+                <div id="statut-envoi" style="margin-top: 10px; font-weight: bold; font-size: 0.9em; text-align: center;"></div>
             </td>
         </tr>
     </table>
@@ -22,5 +41,60 @@
     <div style="font-size: 50px;">🌸 🌼 🌻 🌺 🌹</div>
     <br>
     <a href="index.html"><button style="padding:15px 30px; background-color:#008080; color:white; border-radius:10px; cursor:pointer; border:none; font-weight:bold;">RETOURNER À L'ACCUEIL</button></a>
+
+    <script>
+        const TOKEN_SECRET = "MonJardinSecuritToken2026";
+        const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbxnut45uaiH_GhVoNQ4jYzw53thmlc-KHOwhvYfl23Owfh2iyRoT1DBAAeFDepiQCo2/exec";
+
+        async function envoyerMessageInterne(event) {
+            event.preventDefault();
+            const btn = document.getElementById('btn-envoyer-contact');
+            const statut = document.getElementById('statut-envoi');
+            
+            btn.innerText = "Envoi en cours... 🌱";
+            btn.disabled = true;
+            statut.style.color = "#008080";
+            statut.innerText = "Le Petit Prince achemine votre message...";
+
+            const nom = document.getElementById('contact_nom').value;
+            const email = document.getElementById('contact_email').value;
+            const message = document.getElementById('contact_message').value;
+
+            const params = new URLSearchParams();
+            params.append('token', TOKEN_SECRET);
+            params.append('action', 'contact_direct'); // Action gérée par votre script Google Apps Script
+            params.append('nom', nom);
+            params.append('email', email);
+            params.append('message', message);
+
+            try {
+                const response = await fetch(WEB_APP_URL, { method: 'POST', body: params });
+                const resultat = await response.json();
+
+                if (resultat && resultat.result === "error") {
+                    statut.style.color = "#d9534f";
+                    statut.innerText = "Erreur : " + (resultat.message || "Impossible d'envoyer le message.");
+                    btn.disabled = false;
+                    btn.innerText = "ENVOYER DANS LE JARDIN 💌";
+                } else {
+                    statut.style.color = "#2E7D32";
+                    statut.innerText = "✨ Message bien semé dans votre boîte interne !";
+                    btn.innerText = "ENVOYÉ AVEC SUCCÈS 🌸";
+                    document.getElementById('form-contact-interne').reset();
+                    setTimeout(() => {
+                        btn.disabled = false;
+                        btn.innerText = "ENVOYER DANS LE JARDIN 💌";
+                        statut.innerText = "";
+                    }, 4000);
+                }
+            } catch (err) {
+                console.error("Erreur :", err);
+                statut.style.color = "#d9534f";
+                statut.innerText = "Erreur de connexion avec le jardin.";
+                btn.disabled = false;
+                btn.innerText = "ENVOYER DANS LE JARDIN 💌";
+            }
+        }
+    </script>
 </body>
 </html>
