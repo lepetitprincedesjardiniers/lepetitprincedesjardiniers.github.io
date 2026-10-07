@@ -14,14 +14,17 @@
             <td>
                 <font size="5">"C'est pour quoi ?"</font><br><br>  
                 <font size="5">"Laisse-moi le temps de me réveiller."</font><br><br>
-                <font size="6" color="#FF0000"><b>"Tu oses me contacter ... Veuillez avoir l'obligeance de me laisser un message, ou de  poster votre propre  annonce.<br>Depuis quand on se vouvoie ?"</b></font><br><br>
+                
+                <!-- Texte du haut remis en forme et en couleur harmonieuse (remplacement du rouge vif) -->
+                <div style="background: #FFF3CD; padding: 15px; border-radius: 12px; border: 2px dashed #E67E22; margin: 15px 0; color: #856404; font-size: 0.95em;">
+                    <b>"Tu oses me contacter... Veuillez avoir l'obligeance de me laisser un message, ou de poster votre propre annonce.<br>Depuis quand on se vouvoie ?"</b>
+                </div><br>
+
                 <font size="4"><i>Le Petit Plouc prépare sa cervelle pour te répondre.</i></font>
                 
                 <hr style="margin: 25px 0; border: 1px dashed #E67E22;">
 
                 <!-- Formulaire de contact direct relié à votre boîte interne -->
-                <font size="4" color="#008080"><b></b></font><br><br>
-                
                 <form id="form-contact-interne" onsubmit="envoyerMessageInterne(event)" style="text-align: left; max-width: 450px; margin: 0 auto;">
                     <label style="font-size: 0.85em; font-weight: bold; color: #2E7D32;">Ton Prénom / Pseudo :</label><br>
                     <input type="text" id="contact_nom" required style="width: 100%; padding: 8px; margin: 5px 0 12px 0; border: 2px solid #008080; border-radius: 8px; font-family: 'Comic Sans MS'; box-sizing: border-box;" placeholder="Ton nom de cœur..."><br>
@@ -35,6 +38,13 @@
                     <button type="submit" id="btn-envoyer-contact" style="width: 100%; padding: 12px; background-color: #E67E22; color: white; border-radius: 8px; cursor: pointer; border: none; font-weight: bold; font-family: 'Comic Sans MS'; font-size: 1em;">ENVOYER DANS LE JARDIN 💌</button>
                 </form>
                 <div id="statut-envoi" style="margin-top: 10px; font-weight: bold; font-size: 0.9em; text-align: center;"></div>
+
+                <!-- Explications sur la confidentialité et lien direct vers la page jardin.html -->
+                <div style="background: #E8F8F5; padding: 15px; border-radius: 12px; border: 2px solid #008080; margin-top: 25px; font-size: 0.85em; color: #004D40; text-align: left; line-height: 1.5;">
+                    🔒 <b>Confidentialité :</b> Ton adresse e-mail reste strictement confidentielle et protégée contre les robots spammeurs.<br><br>
+                    📩 <b>Comment consulter ma réponse ?</b> 
+                    Tu pourras revenir à tout moment sur <a href="jardin.html" style="color: #E67E22; font-weight: bold; text-decoration: underline;">Le Jardin (jardin.html)</a>, cliquer sur le bouton <b>"Consulter mes messages privés"</b> et entrer ton e-mail pour lire ma réponse directement sur le site !
+                </div>
             </td>
         </tr>
     </table>
