@@ -297,7 +297,6 @@
         let currentArticleIndex = 0; 
         let currentArticleTitle = '';
 
-        // Fonction pour estimer le temps de lecture
         function getReadingTime(text) {
             if (!text) return "1 min de lecture";
             const words = text.trim().split(/\s+/).length;
@@ -355,7 +354,7 @@
                     textInput.value = '';
                     authorInput.value = '';
                     loadDataFromSheet();
-                    closeModal(); // Ferme la modale automatiquement après la contribution réussie
+                    closeModal();
                 } else {
                     alert("Erreur lors de l'enregistrement : " + (result.message || 'Inconnue'));
                 }
@@ -750,7 +749,11 @@
                     allVideos = [];
                     allResponses = {};
 
-                    data.forEach((row, index) => {
+                    // Traitement dans l'ordre inverse : la dernière publication saisie est en haut
+                    const reversedData = [...data].reverse();
+                    let latestPub = null;
+
+                    reversedData.forEach((row) => {
                         const cleanRow = {};
                         Object.keys(row).forEach(key => {
                             const cleanKey = key.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").trim();
@@ -765,6 +768,21 @@
 
                         if (!titre && !desc) return;
 
+                        const isVideo = (pos === 'video' || pos === 'alaune-video' || getYouTubeId(lien) !== '');
+                        const pubItem = { 
+                            titre, 
+                            description: desc, 
+                            lien, 
+                            categorie: cleanRow.categorie || (isVideo ? 'Vidéo' : 'Général'), 
+                            date,
+                            isVideo
+                        };
+
+                        // Conserve la toute première publication lue (donc la plus récente dans le fichier)
+                        if (!latestPub) {
+                            latestPub = pubItem;
+                        }
+
                         let rawResponses = "";
                         Object.keys(cleanRow).forEach(k => {
                             if (k.includes('reponse') || k.includes('commentaire')) {
@@ -772,63 +790,110 @@
                             }
                         });
 
-                        const articleIndex = allArticles.length;
-                        if (rawResponses) {
-                            allResponses[articleIndex] = [];
-                            const items = rawResponses.split('||');
-                            items.forEach(item => {
-                                const trimmed = item.trim();
-                                if (trimmed) {
-                                    const match = trimmed.match(/^\[(.*?)\]\s*:\s*(.+)$/);
-                                    if (match) {
-                                        const authorDate = match[1];
-                                        const text = match[2];
-                                        const lastOpenParen = authorDate.lastIndexOf('(');
-                                        let author = authorDate;
-                                        let respDate = "";
-                                        if (lastOpenParen !== -1) {
-                                            author = authorDate.substring(0, lastOpenParen).trim();
-                                            respDate = authorDate.substring(lastOpenParen + 1, authorDate.length - 1).trim();
-                                        }
-                                        allResponses[articleIndex].push({ author, text, date: respDate });
-                                    } else {
-                                        allResponses[articleIndex].push({ author: "Citoyen", text: trimmed, date: "" });
-                                    }
-                                }
-                            });
-                        }
-
-                        if (pos === 'video' || pos === 'alaune-video' || getYouTubeId(lien)) {
-                            allVideos.push({ titre, description: desc, lien, categorie: cleanRow.categorie || 'Vidéo', date });
+                        if (isVideo) {
+                            allVideos.push(pubItem);
                         } else {
-                            allArticles.push({ titre, description: desc, lien, categorie: cleanRow.categorie || 'Général', date });
+                            const articleIndex = allArticles.length;
+                            if (rawResponses) {
+                                allResponses[articleIndex] = [];
+                                const items = rawResponses.split('||');
+                                items.forEach(item => {
+                                    const trimmed = item.trim();
+                                    if (trimmed) {
+                                        const match = trimmed.match(/^\[(.*?)\]\s*:\s*(.+)$/);
+                                        if (match) {
+                                            const authorDate = match[1];
+                                            const text = match[2];
+                                            const lastOpenParen = authorDate.lastIndexOf('(');
+                                            let author = authorDate;
+                                            let respDate = "";
+                                            if (lastOpenParen !== -1) {
+                                                author = authorDate.substring(0, lastOpenParen).trim();
+                                                respDate = authorDate.substring(lastOpenParen + 1, authorDate.length - 1).trim();
+                                            }
+                                            allResponses[articleIndex].push({ author, text, date: respDate });
+                                        } else {
+                                            allResponses[articleIndex].push({ author: "Citoyen", text: trimmed, date: "" });
+                                        }
+                                    }
+                                });
+                            }
+                            allArticles.push(pubItem);
                         }
                     });
 
+                    // Affichage de la toute dernière publication dans la section "À la une"
                     const alauneContainer = document.getElementById('alaune-content');
-                    if (allArticles.length > 0) {
-                        const firstArt = allArticles[0];
-                        const safeTitle = firstArt.titre.replace(/'/g, "\\'").replace(/"/g, '&quot;');
-                        alauneContainer.innerHTML = `
-                            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center">
-                                <div class="space-y-6">
-                                    <span class="inline-flex items-center gap-2 bg-joy-gold/20 text-joy-gold border border-joy-gold/30 px-3.5 py-1.5 rounded-full text-xs font-black uppercase tracking-wider">
-                                        <i class="fa-solid fa-bolt"></i> À la une
-                                    </span>
-                                    <h2 class="text-3xl sm:text-4xl lg:text-5xl font-extrabold leading-tight tracking-tight text-white">
-                                        ${firstArt.titre}
-                                    </h2>
-                                    <p class="text-amber-100/80 text-base sm:text-lg leading-relaxed">
-                                        ${firstArt.description}
-                                    </p>
-                                    <div class="flex flex-wrap gap-4 pt-2">
-                                        <button onclick="openModal('${safeTitle}', '${firstArt.lien}', 0)" class="bg-joy-gold text-joy-dark px-6 py-3.5 rounded-xl font-black hover:bg-amber-400 transition shadow-lg shadow-amber-500/20 inline-flex items-center gap-2 cursor-pointer">
-                                            Lire l'article <i class="fa-solid fa-arrow-right text-xs"></i>
-                                        </button>
+                    if (latestPub) {
+                        const safeTitle = latestPub.titre.replace(/'/g, "\\'").replace(/"/g, '&quot;');
+                        
+                        if (latestPub.isVideo) {
+                            const videoId = getYouTubeId(latestPub.lien);
+                            const embedHtml = videoId 
+                                ? `<div class="aspect-video w-full rounded-2xl overflow-hidden shadow-2xl border border-white/10 bg-black">
+                                     <iframe class="w-full h-full" src="https://www.youtube.com/embed/${videoId}" title="${safeTitle}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                                   </div>`
+                                : `<div class="aspect-video w-full rounded-2xl overflow-hidden shadow-2xl border border-white/10 bg-joy-dark flex items-center justify-center text-joy-orange">
+                                     <i class="fa-solid fa-video text-6xl"></i>
+                                   </div>`;
+
+                            alauneContainer.innerHTML = `
+                                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center">
+                                    <div class="space-y-6">
+                                        <span class="inline-flex items-center gap-2 bg-joy-orange/20 text-joy-orange border border-joy-orange/30 px-3.5 py-1.5 rounded-full text-xs font-black uppercase tracking-wider">
+                                            <i class="fa-solid fa-video"></i> À la une • Vidéo
+                                        </span>
+                                        <h2 class="text-3xl sm:text-4xl lg:text-5xl font-extrabold leading-tight tracking-tight text-white">
+                                            ${latestPub.titre}
+                                        </h2>
+                                        <p class="text-amber-100/80 text-base sm:text-lg leading-relaxed whitespace-pre-line line-clamp-4">
+                                            ${latestPub.description}
+                                        </p>
+                                        <div class="flex flex-wrap gap-4 pt-2">
+                                            <button onclick="openModal('${safeTitle}', '${latestPub.lien}', 0)" class="bg-joy-orange text-white px-6 py-3.5 rounded-xl font-black hover:bg-orange-600 transition shadow-lg shadow-orange-500/20 inline-flex items-center gap-2 cursor-pointer">
+                                                <i class="fa-solid fa-play text-xs"></i> Visionner grand écran
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <div class="w-full">
+                                        ${embedHtml}
                                     </div>
                                 </div>
-                            </div>
-                        `;
+                            `;
+                        } else {
+                            const artIndex = allArticles.findIndex(a => a === latestPub);
+                            const validIndex = artIndex !== -1 ? artIndex : 0;
+
+                            alauneContainer.innerHTML = `
+                                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center">
+                                    <div class="space-y-6">
+                                        <span class="inline-flex items-center gap-2 bg-joy-gold/20 text-joy-gold border border-joy-gold/30 px-3.5 py-1.5 rounded-full text-xs font-black uppercase tracking-wider">
+                                            <i class="fa-solid fa-newspaper"></i> À la une • Article
+                                        </span>
+                                        <h2 class="text-3xl sm:text-4xl lg:text-5xl font-extrabold leading-tight tracking-tight text-white">
+                                            ${latestPub.titre}
+                                        </h2>
+                                        <p class="text-amber-100/80 text-base sm:text-lg leading-relaxed line-clamp-4">
+                                            ${latestPub.description}
+                                        </p>
+                                        <div class="flex flex-wrap gap-4 pt-2">
+                                            <button onclick="openArticleByIndex(${validIndex})" class="bg-joy-gold text-joy-dark px-6 py-3.5 rounded-xl font-black hover:bg-amber-400 transition shadow-lg shadow-amber-500/20 inline-flex items-center gap-2 cursor-pointer">
+                                                Lire l'article <i class="fa-solid fa-arrow-right text-xs"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <div class="hidden lg:flex items-center justify-center p-8 bg-white/5 rounded-3xl border border-white/10 backdrop-blur-sm">
+                                        <div class="text-center space-y-4">
+                                            <div class="w-20 h-20 bg-joy-gold/20 text-joy-gold rounded-2xl flex items-center justify-center mx-auto text-3xl">
+                                                <i class="fa-solid fa-newspaper"></i>
+                                            </div>
+                                            <span class="text-xs font-bold text-amber-200/60 uppercase tracking-widest block">${latestPub.categorie || 'Dernier article'}</span>
+                                            <p class="text-sm text-gray-300 italic max-w-xs">${latestPub.date ? 'Publié le ' + latestPub.date : 'Dernière publication'}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            `;
+                        }
                     }
 
                     updateCategoryPills();
