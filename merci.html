@@ -7,23 +7,10 @@
 <body bgcolor="#FFFF00" text="#000080" style="font-family:'Comic Sans MS', cursive; text-align:center;">
     <br><br>
     <div style="font-size: 70px;">✨ 🌹 ✨ 🌵 ✨ 🌹 ✨</div>
-    <font size="7" color="#2E7D32"><b>C'est pour quoi ? Tu oses me contacter... </b></font>
-    <br><br>
+    <br>
     <table border="4" cellpadding="30" bgcolor="#FFFFFF" align="center" style="border-color:#E67E22; border-radius:40px; max-width:600px; box-shadow: 10px 10px 0px #008080;">
         <tr>
             <td>
-                <font size="5">"Laisse-moi le temps de me réveiller."</font><br><br>
-                
-                <!-- Texte du haut mis en forme -->
-                <div style="background: #FFF3CD; padding: 15px; border-radius: 12px; border: 2px dashed #E67E22; margin: 15px 0; color: #856404; font-size: 0.95em;">
-                    <b>" Veuillez avoir l'obligeance de me laisser un message, ou de poster votre propre annonce.
-                        <br>Depuis quand on se vouvoie ?"</b>
-                </div><br>
-
-                <font size="4"><i>Le Petit Plouc prépare sa cervelle pour te répondre.</i></font>
-                
-                <hr style="margin: 25px 0; border: 1px dashed #E67E22;">
-
                 <!-- Formulaire de contact direct mis à jour -->
                 <form id="form-contact-interne" onsubmit="envoyerMessageInterne(event)" style="text-align: left; max-width: 450px; margin: 0 auto;">
                     <label style="font-size: 0.85em; font-weight: bold; color: #2E7D32;">Ton Prénom / Pseudo :</label><br>
@@ -37,7 +24,7 @@
                     </div>
 
                     <label style="font-size: 0.85em; font-weight: bold; color: #2E7D32;">Ton Message :</label><br>
-                    <textarea id="contact_message" rows="4" required style="width: 100%; padding: 8px; margin: 5px 0 8px 0; border: 2px solid #008080; border-radius: 8px; font-family: 'Comic Sans MS'; box-sizing: border-box;" placeholder="Écris ton message ici..."></textarea><br>
+                    <textarea id="contact_message" rows="5" required style="width: 100%; padding: 8px; margin: 5px 0 8px 0; border: 2px solid #008080; border-radius: 8px; font-family: 'Comic Sans MS'; box-sizing: border-box;" placeholder="Veuillez avoir l'obligeance de me laisser un message, ou de poster votre propre annonce. Depuis quand on se vouvoie ?"></textarea><br>
                     
                     <!-- Explication pour consulter la réponse avec les liens directs vers jardin.html -->
                     <div style="background: #E8F8F5; padding: 10px; border-radius: 8px; border: 1px solid #008080; margin-bottom: 15px; font-size: 0.80em; color: #004D40; line-height: 1.4;">
@@ -58,7 +45,7 @@
     <!-- Script de transmission vers votre Google Apps Script -->
     <script>
         const TOKEN_SECRET = "MonJardinSecuritToken2026";
-        const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbxnut45uaiH_GhVoNQ4jYzw53thmlc-KHOwhvYfl23Owfh2iyRoT1DBAAeFDepiQCo2/exec";[cite: 8]
+        const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbxnut45uaiH_GhVoNQ4jYzw53thmlc-KHOwhvYfl23Owfh2iyRoT1DBAAeFDepiQCo2/exec";
 
         async function envoyerMessageInterne(event) {
             event.preventDefault();
@@ -68,7 +55,8 @@
             btn.innerText = "Envoi en cours... 🌱";
             btn.disabled = true;
             statut.style.color = "#008080";
-            statut.innerText = "Le Petit Plouc achemine ton message...";
+            // Texte de validation personnalisé à l'envoi
+            statut.innerText = "Le Petit Plouc prépare sa cervelle pour te répondre. Laisse-lui le temps de se réveiller.";
 
             const nom = document.getElementById('contact_nom').value;
             const email = document.getElementById('contact_email').value;
